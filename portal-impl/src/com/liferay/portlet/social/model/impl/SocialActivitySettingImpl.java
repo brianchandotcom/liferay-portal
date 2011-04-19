@@ -14,34 +14,8 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-
 /**
- * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
-public class SocialActivityImpl extends SocialActivityBaseImpl {
-
-	public SocialActivityImpl() {
-	}
-
-	public AssetEntry getAssetEntry() {
-		if (_assetEntry == null && getClassName() != null && getClassPK() > 0) {
-			try {
-				_assetEntry = AssetEntryLocalServiceUtil.getEntry(
-					getClassName(), getClassPK());
-			} catch (Exception e) {
-			}
-		}
-
-		return _assetEntry;
-	}
-
-	public void setAssetEntry(AssetEntry assetEntry) {
-		_assetEntry = assetEntry;
-	}
-
-	private AssetEntry _assetEntry;
-
+public class SocialActivitySettingImpl extends SocialActivitySettingBaseImpl {
 }

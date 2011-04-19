@@ -3089,6 +3089,68 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl">
+		<attributes>
+			<id name="activityAchievementId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="name" />
+			<basic name="unlockDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="unlockedBy" />
+			<basic name="firstUnlock" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl">
+		<attributes>
+			<id name="activityLimitId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="activityKey" />
+			<basic name="statName" />
+			<basic name="value" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl">
+		<attributes>
+			<id name="activitySettingId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="classNameId" />
+			<basic name="activityKey" />
+			<basic name="name" />
+			<basic name="value" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivityStatsEntryModelImpl">
+		<attributes>
+			<id name="activityStatsEntryId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="classType" />
+			<basic name="statName" />
+			<basic name="currentValue" />
+			<basic name="overallValue" />
+			<basic name="graceValue" />
+			<basic name="statPeriodStart" />
+			<basic name="statPeriodEnd" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityAssetEntryModelImpl">
 		<attributes>
 			<id name="equityAssetEntryId" />
@@ -4122,6 +4184,26 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityImpl" name="SocialActivity">
 		<table name="SocialActivity" />
+		<attributes>
+			<transient name="assetEntry" />
+		</attributes>
+	</entity>
+	<entity class="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" name="SocialActivityAchievement">
+		<table name="SocialActivityAchievement" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" name="SocialActivityLimit">
+		<table name="SocialActivityLimit" />
+		<attributes>
+			<transient name="count" />
+		</attributes>
+	</entity>
+	<entity class="com.liferay.portlet.social.model.impl.SocialActivitySettingImpl" name="SocialActivitySetting">
+		<table name="SocialActivitySetting" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.social.model.impl.SocialActivityStatsEntryImpl" name="SocialActivityStatsEntry">
+		<table name="SocialActivityStats" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialEquityAssetEntryImpl" name="SocialEquityAssetEntry">

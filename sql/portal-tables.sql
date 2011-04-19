@@ -1866,6 +1866,53 @@ create table SocialActivity (
 	receiverUserId LONG
 );
 
+create table SocialActivityAchievement (
+	activityAchievementId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	name VARCHAR(75) null,
+	unlockDate DATE null,
+	unlockedBy LONG,
+	firstUnlock BOOLEAN
+);
+
+create table SocialActivityLimit (
+	activityLimitId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG,
+	activityKey INTEGER,
+	statName VARCHAR(75) null,
+	value VARCHAR(75) null
+);
+
+create table SocialActivitySetting (
+	activitySettingId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	activityKey INTEGER,
+	name VARCHAR(75) null,
+	value VARCHAR(1024) null
+);
+
+create table SocialActivityStats (
+	activityStatsEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	classPK LONG,
+	classType INTEGER,
+	statName VARCHAR(75) null,
+	currentValue INTEGER,
+	overallValue INTEGER,
+	graceValue INTEGER,
+	statPeriodStart INTEGER,
+	statPeriodEnd INTEGER
+);
+
 create table SocialEquityAssetEntry (
 	equityAssetEntryId LONG not null primary key,
 	groupId LONG,

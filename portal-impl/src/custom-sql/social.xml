@@ -632,4 +632,115 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.countTopUsersByCounters">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT classPK) AS COUNT_VALUE
+			FROM
+				SocialActivityStats
+			WHERE
+				(statName IN ([$RANKING_COUNTER_NAMES$])) AND
+				(statPeriodEnd = -1) AND
+				(statPeriodStart + [$CURRENT_STAT_PERIOD_LENGTH$] >= [$ACTIVITY_DATE$]) AND
+				(classNameId = [$CLASSNAME_ID$]) AND
+				(groupId = [$GROUP_ID$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.findStatsByNameAndPeriod">
+		<![CDATA[
+			SELECT
+				statName, SUM(currentValue) currentValue, statPeriodStart, statPeriodEnd
+			FROM
+				SocialActivityStats
+			WHERE
+				(groupId = ?) AND
+				(statName = ?) AND
+				(statPeriodStart >= ?) AND
+				(
+					(statPeriodEnd <= ?) OR
+					(statPeriodEnd = -1)
+				)
+			GROUP BY
+				statName, statPeriodStart, statPeriodEnd
+			ORDER BY
+				statPeriodStart
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.findStatsDistributionByNameAndPeriod">
+		<![CDATA[
+			SELECT
+				classNameId, statName, SUM(currentValue) currentValue
+			FROM
+				SocialActivityStats
+			WHERE
+				(groupId = ?) AND
+				(statName = ?) AND
+				(statPeriodStart >= ?) AND
+				(
+					(statPeriodEnd <= ?) OR
+					(statPeriodEnd = -1)
+				)
+			GROUP BY
+				classNameId, statName
+			ORDER BY
+				currentValue DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.findTagsByCounter">
+		<![CDATA[
+			SELECT
+    			t.tagId, t.name, t.modifiedDate, SUM(sas.currentValue) popularity
+			FROM
+    			AssetTag t
+        			INNER JOIN AssetEntries_AssetTags aeat ON (t.tagId = aeat.tagId)
+            			INNER JOIN AssetEntry ae ON (ae.entryId = aeat.entryId)
+                			INNER JOIN SocialActivityStats sas ON (sas.classNameId = ae.classNameId) AND (sas.classPK = ae.classPK)
+			WHERE
+				(sas.groupid = ?) AND
+    			(sas.statName = ?) AND
+				(sas.statPeriodStart >= ?) AND
+				(
+					(sas.statPeriodEnd <= ?) OR
+					(sas.statPeriodEnd = -1)
+				)
+			GROUP BY
+				t.tagId, t.name, t.modifiedDate
+   		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.findTopUsersByCounters">
+		<![CDATA[
+			SELECT
+				classPK 
+			FROM
+				SocialActivityStats
+			WHERE
+				(statName IN ([$RANKING_COUNTER_NAMES$])) AND
+				(statPeriodEnd = -1) AND
+				(statPeriodStart + [$CURRENT_STAT_PERIOD_LENGTH$] >= [$ACTIVITY_DATE$]) AND
+				(classNameId = [$CLASSNAME_ID$]) AND
+				(groupId = [$GROUP_ID$])
+			GROUP BY
+				classPK
+			ORDER BY
+				SUM(currentValue)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityStatsEntryFinder.findUserStatsByCounters">
+		<![CDATA[
+			SELECT
+				{SocialActivityStats.*}
+			FROM
+				SocialActivityStats
+			WHERE
+				(statName IN ([$SELECTED_COUNTER_NAMES$])) AND
+				(statPeriodEnd = -1) AND
+				(statPeriodStart + [$CURRENT_STAT_PERIOD_LENGTH$] >= [$ACTIVITY_DATE$]) AND
+				(classNameId = [$CLASSNAME_ID$]) AND
+				(groupId = [$GROUP_ID$]) AND
+				(classPK IN ([$USER_IDS$]))
+			ORDER BY
+				classPK
+		]]>
+	</sql>
+
 </custom-sql>

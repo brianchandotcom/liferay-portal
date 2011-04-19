@@ -14,34 +14,24 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.social.util.SocialStatsUtil;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
-public class SocialActivityImpl extends SocialActivityBaseImpl {
+public class SocialActivityStatsEntryImpl
+	extends SocialActivityStatsEntryBaseImpl {
 
-	public SocialActivityImpl() {
-	}
+	public boolean isPeriodActive() {
+		if (getStatPeriodStart() == SocialStatsUtil.getCurrentPeriodStart()) {
+			if ((getStatPeriodEnd() == -1) ||
+				(getStatPeriodEnd() == SocialStatsUtil.getCurrentPeriodEnd())) {
 
-	public AssetEntry getAssetEntry() {
-		if (_assetEntry == null && getClassName() != null && getClassPK() > 0) {
-			try {
-				_assetEntry = AssetEntryLocalServiceUtil.getEntry(
-					getClassName(), getClassPK());
-			} catch (Exception e) {
+				return true;
 			}
 		}
 
-		return _assetEntry;
+		return false;
 	}
-
-	public void setAssetEntry(AssetEntry assetEntry) {
-		_assetEntry = assetEntry;
-	}
-
-	private AssetEntry _assetEntry;
 
 }

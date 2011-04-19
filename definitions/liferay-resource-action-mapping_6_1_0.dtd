@@ -92,7 +92,7 @@ The model-resource element defines the permissions and social equity rules of
 the model.
 -->
 <!ELEMENT model-resource (model-name, portlet-ref, permissions?,
-social-equity?) >
+social-equity?, social-activities?) >
 
 <!--
 The model-name element is the name of the model.
@@ -103,6 +103,39 @@ The model-name element is the name of the model.
 The portlet-ref element is the name of the portlet that the model belongs to.
 -->
 <!ELEMENT portlet-ref (portlet-name*) >
+
+<!ELEMENT social-activities (activity*) >
+
+<!ELEMENT activity (activity-key, language-key, log-activity?, handler-class?,
+contribution-value?, contribution-limit?, contribution-limit-period?,
+participation-value?, participation-limit?, particiaption-limit-period?,
+counter*) >
+
+<!ELEMENT activity-key (#PCDATA) >
+
+<!ELEMENT language-key (#PCDATA) >
+
+<!ELEMENT log-activity (#PCDATA) >
+
+<!ELEMENT handler-class (#PCDATA) >
+
+<!ELEMENT contribution-value (#PCDATA) >
+
+<!ELEMENT contribution-limit (#PCDATA) >
+
+<!ATTLIST contribution-limit period (day|lifetime|period) #REQUIRED >
+
+<!ELEMENT participation-limit (#PCDATA) >
+
+<!ATTLIST participation-limit period (day|lifetime|period) #REQUIRED >
+
+<!ELEMENT counter (name, owner, increment?) >
+
+<!ELEMENT name (#PCDATA) >
+
+<!ELEMENT owner (#PCDATA) >
+
+<!ELEMENT increment (#PCDATA) >
 
 <!--
 The social-equity element specifies the social equity mappings for different

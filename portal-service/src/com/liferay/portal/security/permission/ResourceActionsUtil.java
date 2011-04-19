@@ -25,10 +25,12 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialEquityActionMapping;
 
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,6 +39,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Daeyoung Song
+ * @author Zsolt Berentey
  */
 public class ResourceActionsUtil {
 
@@ -249,6 +252,31 @@ public class ResourceActionsUtil {
 
 		return getResourceActions().getRoles(
 			companyId, group, modelResource, roleTypes);
+	}
+
+	public static String[] getSocialActivityClassNames() {
+		return getResourceActions().getSocialActivityClassNames();
+	}
+
+	public static Collection<String> getSocialActivityCounters() {
+		return getResourceActions().getSocialActivityCounters();
+	}
+
+	public static Collection<String> getSocialActivityCounters(int ownerType) {
+		return getResourceActions().getSocialActivityCounters(ownerType);
+	}
+
+	public static SocialActivityDefinition getSocialActivityDefinition(
+		String modelName, int activityKey) {
+
+		return getResourceActions().getSocialActivityDefinition(
+			modelName, activityKey);
+	}
+
+	public static List<SocialActivityDefinition> getSocialActivityDefinitions(
+		String modelName) {
+
+		return getResourceActions().getSocialActivityDefinitions(modelName);
 	}
 
 	public static SocialEquityActionMapping getSocialEquityActionMapping(

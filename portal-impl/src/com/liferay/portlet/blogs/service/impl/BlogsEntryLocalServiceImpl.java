@@ -292,11 +292,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ratingsStatsLocalService.deleteStats(
 			BlogsEntry.class.getName(), entry.getEntryId());
 
-		// Social
-
-		socialActivityLocalService.deleteActivities(
-			BlogsEntry.class.getName(), entry.getEntryId());
-
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);

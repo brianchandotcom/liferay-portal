@@ -486,11 +486,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getCompanyId(), WikiPage.class.getName(),
 			page.getResourcePrimKey());
 
-		// Social
-
-		socialActivityLocalService.deleteActivities(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
 		// Message boards
 
 		mbMessageLocalService.deleteDiscussionMessages(

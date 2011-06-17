@@ -460,10 +460,6 @@ public class StagingImpl implements Staging {
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
 				serviceContext);
 
-			checkDefaultLayoutSetBranches(
-				userId, liveGroup, branchingPublic, branchingPrivate, false,
-				serviceContext);
-
 			GroupLocalServiceUtil.updateGroup(
 				liveGroup.getGroupId(), typeSettingsProperties.toString());
 
@@ -482,6 +478,10 @@ public class StagingImpl implements Staging {
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
 					false, parameterMap, null, null);
 			}
+
+			checkDefaultLayoutSetBranches(
+				userId, liveGroup, branchingPublic, branchingPrivate, false,
+				serviceContext);
 		}
 		else {
 			GroupLocalServiceUtil.updateGroup(

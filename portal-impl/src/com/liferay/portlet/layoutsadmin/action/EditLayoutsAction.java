@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -154,6 +155,9 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (cmd.equals("delete_layout_revision")) {
 				deleteLayoutRevision(actionRequest);
+			}
+			else if (cmd.equals("enable")) {
+				enableLayout(actionRequest);
 			}
 			else if (cmd.equals("publish_to_live")) {
 				StagingUtil.publishToLive(actionRequest);
@@ -462,6 +466,46 @@ public class EditLayoutsAction extends PortletAction {
 		if (!hasPermission) {
 			throw new PrincipalException();
 		}
+	}
+
+	protected void enableLayout(ActionRequest actionRequest)
+		throws Exception {
+
+		long incompleteLayoutRevisionId = ParamUtil.getLong(
+			actionRequest, "incompleteLayoutRevisionId");
+
+		LayoutRevision incompleteLayoutRevision =
+			LayoutRevisionLocalServiceUtil.getLayoutRevision(
+				incompleteLayoutRevisionId);
+
+		String variationName = ParamUtil.getString(
+			actionRequest, "variationName",
+			incompleteLayoutRevision.getVariationName());
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		LayoutRevisionLocalServiceUtil.addLayoutRevision(
+			serviceContext.getUserId(),
+			incompleteLayoutRevision.getLayoutSetBranchId(),
+			incompleteLayoutRevision.getLayoutRevisionId(),
+			false, variationName, incompleteLayoutRevision.getPlid(),
+			incompleteLayoutRevision.isPrivateLayout(),
+			incompleteLayoutRevision.getName(),
+			incompleteLayoutRevision.getTitle(),
+			incompleteLayoutRevision.getDescription(),
+			incompleteLayoutRevision.getKeywords(),
+			incompleteLayoutRevision.getRobots(),
+			incompleteLayoutRevision.getTypeSettings(),
+			incompleteLayoutRevision.getIconImage(),
+			incompleteLayoutRevision.getIconImageId(),
+			incompleteLayoutRevision.getThemeId(),
+			incompleteLayoutRevision.getColorSchemeId(),
+			incompleteLayoutRevision.getWapThemeId(),
+			incompleteLayoutRevision.getWapColorSchemeId(),
+			incompleteLayoutRevision.getCss(), serviceContext);
 	}
 
 	protected void deleteLayoutRevision(ActionRequest actionRequest)

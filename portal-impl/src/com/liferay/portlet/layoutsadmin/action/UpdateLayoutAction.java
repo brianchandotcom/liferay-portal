@@ -33,6 +33,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -153,7 +154,8 @@ public class UpdateLayoutAction extends JSONAction {
 		long layoutPrototypeId = ParamUtil.getLong(
 			request, "layoutPrototypeId");
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
 
 		Layout layout = null;
 

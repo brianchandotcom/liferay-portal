@@ -44,7 +44,8 @@ public class LayoutSetBranchLocalServiceImpl
 
 	public LayoutSetBranch addLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout, String name,
-			String description, ServiceContext serviceContext)
+			String description, long copyLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout branch
@@ -80,7 +81,9 @@ public class LayoutSetBranchLocalServiceImpl
 
 		// Revisions
 
-		if (layoutSetBranch.isMaster()) {
+		if (layoutSetBranch.isMaster() ||
+			copyLayoutSetBranchId == LayoutSetBranchConstants.ALL_BRANCHES) {
+
 			List<Layout> layouts = layoutPersistence.findByG_P(
 				layoutSetBranch.getGroupId(),
 				layoutSetBranch.getPrivateLayout());
@@ -98,6 +101,32 @@ public class LayoutSetBranchLocalServiceImpl
 					layout.getThemeId(), layout.getColorSchemeId(),
 					layout.getWapThemeId(), layout.getWapColorSchemeId(),
 					layout.getCss(), serviceContext);
+			}
+		}
+		else if (copyLayoutSetBranchId > 0) {
+			List<LayoutRevision> layoutRevisions =
+				layoutRevisionLocalService.getLayoutRevisions(
+					copyLayoutSetBranchId, true);
+
+			for (LayoutRevision layoutRevision : layoutRevisions) {
+				layoutRevisionLocalService.addLayoutRevision(
+					userId, layoutSetBranchId,
+					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
+					true, layoutRevision.getVariationName(),
+					layoutRevision.getPlid(),
+					layoutRevision.getPrivateLayout(),
+					layoutRevision.getName(), layoutRevision.getTitle(),
+					layoutRevision.getDescription(),
+					layoutRevision.getKeywords(),
+					layoutRevision.getRobots(),
+					layoutRevision.getTypeSettings(),
+					layoutRevision.isIconImage(),
+					layoutRevision.getIconImageId(),
+					layoutRevision.getThemeId(),
+					layoutRevision.getColorSchemeId(),
+					layoutRevision.getWapThemeId(),
+					layoutRevision.getWapColorSchemeId(),
+					layoutRevision.getCss(), serviceContext);
 			}
 		}
 

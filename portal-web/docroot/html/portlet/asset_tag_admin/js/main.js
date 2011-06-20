@@ -1058,10 +1058,18 @@ AUI().add(
 					},
 
 					_mergeTag: function(fromId, toId, callback) {
+						var serviceParameterTypes = [
+           					'long',
+           					'long',
+           					'boolean'
+           				];
+
 						Liferay.Service.Asset.AssetTag.mergeTags(
 							{
 								fromTagId: fromId,
-								toTagId: toId
+								toTagId: toId,
+								overrideProperties: true,
+								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
 							},
 							callback
 						);

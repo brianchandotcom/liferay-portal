@@ -286,6 +286,172 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @return the matching d l contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R_P(
+		long companyId, long repositoryId, java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param start the lower bound of the range of d l contents
+	* @param end the upper bound of the range of d l contents (not inclusive)
+	* @return the range of matching d l contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R_P(
+		long companyId, long repositoryId, java.lang.String path, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param start the lower bound of the range of d l contents
+	* @param end the upper bound of the range of d l contents (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d l contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R_P(
+		long companyId, long repositoryId, java.lang.String path, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first d l content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d l content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_P_First(
+		long companyId, long repositoryId, java.lang.String path,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the last d l content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d l content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_P_Last(
+		long companyId, long repositoryId, java.lang.String path,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the d l contents before and after the current d l content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param contentId the primary key of the current d l content
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d l content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a d l content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent[] findByC_R_P_PrevAndNext(
+		long contentId, long companyId, long repositoryId,
+		java.lang.String path,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the d l content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param version the version
+	* @return the matching d l content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_P_V(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the d l content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param version the version
+	* @return the matching d l content, or <code>null</code> if a matching d l content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_P_V(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d l content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param version the version
+	* @return the matching d l content, or <code>null</code> if a matching d l content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_P_V(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the d l contents.
 	*
 	* @return the d l contents
@@ -357,6 +523,32 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
+	* Removes all the d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_R_P(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the d l content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param version the version
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_R_P_V(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
 	* Removes all the d l contents from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -391,6 +583,33 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public int countByC_P_R_P_V(long companyId, java.lang.String portletId,
 		long repositoryId, java.lang.String path, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @return the number of matching d l contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_R_P(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of d l contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @param version the version
+	* @return the number of matching d l contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_R_P_V(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

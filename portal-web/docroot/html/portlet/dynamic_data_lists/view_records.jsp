@@ -80,11 +80,15 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
+	row.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
+
 	PortletURL rowURL = renderResponse.createRenderURL();
 
 	rowURL.setParameter("struts_action", "/dynamic_data_lists/view_record");
 	rowURL.setParameter("redirect", currentURL);
 	rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
+	rowURL.setParameter("version", record.getVersion());
+	rowURL.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
 
 	// Columns
 
@@ -116,8 +120,6 @@ for (int i = 0; i < results.size(); i++) {
 		else {
 			row.addText(value);
 		}
-
-		row.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
 	}
 
 	if (editable) {

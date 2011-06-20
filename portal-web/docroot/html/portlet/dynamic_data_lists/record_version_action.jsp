@@ -20,9 +20,24 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DDLRecordVersion recordVersion = (DDLRecordVersion)row.getObject();
+
+long detailDDMTemplateId = GetterUtil.getLong((String)row.getParameter("detailDDMTemplateId"));
 %>
 
 <liferay-ui:icon-menu>
+	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="viewRecordVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="recordId" value="<%= String.valueOf(recordVersion.getRecordId()) %>" />
+		<portlet:param name="version" value="<%= recordVersion.getVersion() %>" />
+		<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-ui:icon
+		image="view"
+		url="<%= viewRecordVersionURL %>"
+	/>
+
 	<portlet:actionURL var="revertURL">
 		<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

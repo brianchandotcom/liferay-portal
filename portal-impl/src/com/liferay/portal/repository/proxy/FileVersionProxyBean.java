@@ -21,14 +21,15 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Map;
 
 /**
  * @author Mika Koivisto
  */
-public class FileVersionProxyBean extends RepositoryModelProxyBean
-	implements FileVersion {
+public class FileVersionProxyBean
+	extends RepositoryModelProxyBean implements FileVersion {
 
 	public FileVersionProxyBean(
 		FileVersion fileVersion, ClassLoader classLoader) {
@@ -61,7 +62,7 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 	public ExpandoBridge getExpandoBridge() {
 		ExpandoBridge expandoBridge = _fileVersion.getExpandoBridge();
 
-		return (ExpandoBridge) newProxyInstance(
+		return (ExpandoBridge)newProxyInstance(
 			expandoBridge, ExpandoBridge.class);
 	}
 
@@ -73,9 +74,7 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 		return _fileVersion.getExtraSettings();
 	}
 
-	public FileEntry getFileEntry()
-		throws PortalException, SystemException {
-
+	public FileEntry getFileEntry() throws PortalException, SystemException {
 		FileEntry fileEntry = _fileVersion.getFileEntry();
 
 		return newFileEntryProxyBean(fileEntry);
@@ -105,12 +104,12 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 		return _fileVersion.getModelClass();
 	}
 
-	public Date getModifiedDate() {
-		return _fileVersion.getModifiedDate();
-	}
-
 	public String getModelClassName() {
 		return _fileVersion.getModelClassName();
+	}
+
+	public Date getModifiedDate() {
+		return _fileVersion.getModifiedDate();
 	}
 
 	public long getPrimaryKey() {
@@ -141,9 +140,7 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 		return _fileVersion.getStatusByUserName();
 	}
 
-	public String getStatusByUserUuid()
-		throws SystemException {
-
+	public String getStatusByUserUuid() throws SystemException {
 		return _fileVersion.getStatusByUserUuid();
 	}
 
@@ -163,9 +160,7 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 		return _fileVersion.getUserName();
 	}
 
-	public String getUserUuid()
-		throws SystemException {
-
+	public String getUserUuid() throws SystemException {
 		return _fileVersion.getUserUuid();
 	}
 
@@ -197,16 +192,16 @@ public class FileVersionProxyBean extends RepositoryModelProxyBean
 		return _fileVersion.isPending();
 	}
 
-	public void setGroupId(long groupId) {
-		_fileVersion.setGroupId(groupId);
-	}
-
 	public void setCompanyId(long companyId) {
 		_fileVersion.setCompanyId(companyId);
 	}
 
 	public void setCreateDate(Date date) {
 		_fileVersion.setCreateDate(date);
+	}
+
+	public void setGroupId(long groupId) {
+		_fileVersion.setGroupId(groupId);
 	}
 
 	public void setModifiedDate(Date date) {

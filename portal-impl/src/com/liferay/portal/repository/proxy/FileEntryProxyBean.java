@@ -25,6 +25,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ import java.util.Map;
 /**
  * @author Mika Koivisto
  */
-public class FileEntryProxyBean extends RepositoryModelProxyBean
-	implements FileEntry {
+public class FileEntryProxyBean
+	extends RepositoryModelProxyBean implements FileEntry {
 
 	public FileEntryProxyBean(FileEntry fileEntry, ClassLoader classLoader) {
 		super(classLoader);
@@ -44,7 +45,7 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
-	
+
 		return _fileEntry.containsPermission(permissionChecker, actionId);
 	}
 
@@ -78,8 +79,8 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 
 	public ExpandoBridge getExpandoBridge() {
 		ExpandoBridge expandoBridge = _fileEntry.getExpandoBridge();
-	
-		return (ExpandoBridge) newProxyInstance(
+
+		return (ExpandoBridge)newProxyInstance(
 			expandoBridge, ExpandoBridge.class);
 	}
 
@@ -112,11 +113,10 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 
 		List<FileVersion> fileVersions = _fileEntry.getFileVersions(status);
 
-		return toFileVersionProxyBeanList(fileVersions);
+		return toFileVersionProxyBeans(fileVersions);
 	}
 
 	public Folder getFolder() {
-
 		Folder folder = _fileEntry.getFolder();
 
 		return newFolderProxyBean(folder);
@@ -143,10 +143,9 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 	}
 
 	public Lock getLock() {
-
 		Lock lock = _fileEntry.getLock();
 
-		return (Lock) newProxyInstance(lock, Lock.class);
+		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	public String getMimeType() {
@@ -257,22 +256,16 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 		return _fileEntry.isSupportsSocial();
 	}
 
-	public FileEntry toEscapedModel() {
-		FileEntry fileEntry = _fileEntry.toEscapedModel();
-	
-		return newFileEntryProxyBean(fileEntry);
-	}
-
-	public void setGroupId(long groupId) {
-		_fileEntry.setGroupId(groupId);
-	}
-
 	public void setCompanyId(long companyId) {
 		_fileEntry.setCompanyId(companyId);
 	}
 
 	public void setCreateDate(Date date) {
 		_fileEntry.setCreateDate(date);
+	}
+
+	public void setGroupId(long groupId) {
+		_fileEntry.setGroupId(groupId);
 	}
 
 	public void setModifiedDate(Date date) {
@@ -293,6 +286,12 @@ public class FileEntryProxyBean extends RepositoryModelProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_fileEntry.setUserUuid(userUuid);
+	}
+
+	public FileEntry toEscapedModel() {
+		FileEntry fileEntry = _fileEntry.toEscapedModel();
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	private FileEntry _fileEntry;

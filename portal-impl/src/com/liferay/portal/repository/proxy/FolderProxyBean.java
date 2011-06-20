@@ -14,17 +14,14 @@
 
 package com.liferay.portal.repository.proxy;
 
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
-import java.lang.reflect.Proxy;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +29,8 @@ import java.util.Map;
 /**
  * @author Mika Koivisto
  */
-public class FolderProxyBean extends RepositoryModelProxyBean implements Folder {
+public class FolderProxyBean
+	extends RepositoryModelProxyBean implements Folder {
 
 	public FolderProxyBean(Folder folder, ClassLoader classLoader) {
 		super(classLoader);
@@ -47,12 +45,10 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.containsPermission(permissionChecker, actionId);
 	}
 
-	public List<Folder> getAncestors()
-		throws PortalException, SystemException {
-
+	public List<Folder> getAncestors() throws PortalException, SystemException {
 		List<Folder> folders = _folder.getAncestors();
 
-		return toFolderProxyBeanList(folders);
+		return toFolderProxyBeans(folders);
 	}
 
 	public Map<String, Serializable> getAttributes() {
@@ -72,9 +68,9 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 	}
 
 	public ExpandoBridge getExpandoBridge() {
-		ExpandoBridge expandoBridge =  _folder.getExpandoBridge();
+		ExpandoBridge expandoBridge = _folder.getExpandoBridge();
 
-		return (ExpandoBridge) newProxyInstance(
+		return (ExpandoBridge)newProxyInstance(
 			expandoBridge, ExpandoBridge.class);
 	}
 
@@ -90,10 +86,6 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.getLastPostDate();
 	}
 
-	public Date getModifiedDate() {
-		return _folder.getModifiedDate();
-	}
-
 	public Object getModel() {
 		return _folder.getModel();
 	}
@@ -106,13 +98,15 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.getModelClassName();
 	}
 
+	public Date getModifiedDate() {
+		return _folder.getModifiedDate();
+	}
+
 	public String getName() {
 		return _folder.getName();
 	}
 
-	public Folder getParentFolder()
-		throws PortalException, SystemException {
-
+	public Folder getParentFolder() throws PortalException, SystemException {
 		Folder folder = _folder.getParentFolder();
 
 		return newFolderProxyBean(folder);
@@ -122,12 +116,12 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.getParentFolderId();
 	}
 
-	public Serializable getPrimaryKeyObj() {
-		return _folder.getPrimaryKeyObj();
-	}
-
 	public long getPrimaryKey() {
 		return _folder.getPrimaryKey();
+	}
+
+	public Serializable getPrimaryKeyObj() {
+		return _folder.getPrimaryKeyObj();
 	}
 
 	public long getRepositoryId() {
@@ -142,9 +136,7 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.getUserName();
 	}
 
-	public String getUserUuid()
-		throws SystemException {
-
+	public String getUserUuid() throws SystemException {
 		return _folder.getUserUuid();
 	}
 
@@ -172,20 +164,20 @@ public class FolderProxyBean extends RepositoryModelProxyBean implements Folder 
 		return _folder.isLocked();
 	}
 
-	public boolean isSupportsLocking() {
-		return _folder.isSupportsLocking();
-	}
-
-	public boolean isSupportsMetadata() {
-		return _folder.isSupportsMetadata();
-	}
-
 	public boolean isMountPoint() {
 		return _folder.isMountPoint();
 	}
 
 	public boolean isRoot() {
 		return _folder.isRoot();
+	}
+
+	public boolean isSupportsLocking() {
+		return _folder.isSupportsLocking();
+	}
+
+	public boolean isSupportsMetadata() {
+		return _folder.isSupportsMetadata();
 	}
 
 	public boolean isSupportsShortcuts() {

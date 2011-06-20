@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 
 import java.lang.reflect.Proxy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public abstract class RepositoryModelProxyBean {
 
-	RepositoryModelProxyBean(ClassLoader classLoader) {
+	public RepositoryModelProxyBean(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
 
@@ -39,18 +40,20 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		FileEntry fileEntryProxy = (FileEntry) newProxyInstance(
+		FileEntry fileEntryProxy = (FileEntry)newProxyInstance(
 			fileEntry, FileEntry.class);
 
 		return new FileEntryProxyBean(fileEntryProxy, _classLoader);
 	}
 
-	protected FileVersionProxyBean newFileVersionProxyBean(FileVersion fileVersion) {
+	protected FileVersionProxyBean newFileVersionProxyBean(
+		FileVersion fileVersion) {
+
 		if (fileVersion == null) {
 			return null;
 		}
 
-		FileVersion fileVersionProxy = (FileVersion) newProxyInstance(
+		FileVersion fileVersionProxy = (FileVersion)newProxyInstance(
 			fileVersion, FileVersion.class);
 
 		return new FileVersionProxyBean(fileVersionProxy, _classLoader);
@@ -61,7 +64,7 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		Folder folderProxy = (Folder) newProxyInstance(folder, Folder.class);
+		Folder folderProxy = (Folder)newProxyInstance(folder, Folder.class);
 
 		return new FolderProxyBean(folderProxy, _classLoader);
 	}
@@ -78,13 +81,13 @@ public abstract class RepositoryModelProxyBean {
 
 	protected Object newProxyBean(Object bean) {
 		if (bean instanceof FileEntry) {
-			return newFileEntryProxyBean((FileEntry) bean);
+			return newFileEntryProxyBean((FileEntry)bean);
 		}
 		else if (bean instanceof FileVersion) {
-			return newFileVersionProxyBean((FileVersion) bean);
+			return newFileVersionProxyBean((FileVersion)bean);
 		}
 		else if (bean instanceof Folder) {
-			return newFolderProxyBean((Folder) bean);
+			return newFolderProxyBean((Folder)bean);
 		}
 		else {
 			return bean;
@@ -97,19 +100,19 @@ public abstract class RepositoryModelProxyBean {
 		}
 
 		return Proxy.newProxyInstance(
-			_classLoader, new Class[]{clazz},
+			_classLoader, new Class[] {clazz},
 			new ClassLoaderBeanHandler(bean, _classLoader));
 	}
 
-	protected List<FileEntry> toFileEntryProxyBeanList(
+	protected List<FileEntry> toFileEntryProxyBeans(
 		List<FileEntry> fileEntries) {
 
 		if ((fileEntries == null) || fileEntries.isEmpty()) {
 			return fileEntries;
 		}
 
-		List<FileEntry> fileEntryProxyBeans =
-			new ArrayList<FileEntry>(fileEntries.size());
+		List<FileEntry> fileEntryProxyBeans = new ArrayList<FileEntry>(
+			fileEntries.size());
 
 		for (FileEntry fileEntry : fileEntries) {
 			fileEntryProxyBeans.add(newFileEntryProxyBean(fileEntry));
@@ -122,28 +125,28 @@ public abstract class RepositoryModelProxyBean {
 		return fileEntryProxyBeans;
 	}
 
-	protected List<FileVersion> toFileVersionProxyBeanList(
-		List<FileVersion> fileVersionList) {
+	protected List<FileVersion> toFileVersionProxyBeans(
+		List<FileVersion> fileVersions) {
 
-		if ((fileVersionList == null) || fileVersionList.isEmpty()) {
-			return fileVersionList;
+		if ((fileVersions == null) || fileVersions.isEmpty()) {
+			return fileVersions;
 		}
 
-		List<FileVersion> fileVersionProxyBeanList =
-			new ArrayList<FileVersion>(fileVersionList.size());
+		List<FileVersion> fileVersionProxyBeans = new ArrayList<FileVersion>(
+			fileVersions.size());
 
-		for (FileVersion fileVersion : fileVersionList) {
-			fileVersionProxyBeanList.add(newFileVersionProxyBean(fileVersion));
+		for (FileVersion fileVersion : fileVersions) {
+			fileVersionProxyBeans.add(newFileVersionProxyBean(fileVersion));
 		}
 
-		if (fileVersionList instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileVersion>(fileVersionList);
+		if (fileVersions instanceof UnmodifiableList) {
+			return new UnmodifiableList<FileVersion>(fileVersions);
 		}
 
-		return fileVersionProxyBeanList;
+		return fileVersionProxyBeans;
 	}
 
-	protected List<Folder> toFolderProxyBeanList(List<Folder> folders) {
+	protected List<Folder> toFolderProxyBeans(List<Folder> folders) {
 		if ((folders == null) || folders.isEmpty()) {
 			return folders;
 		}
@@ -161,24 +164,22 @@ public abstract class RepositoryModelProxyBean {
 		return folderProxyBeans;
 	}
 
-	protected List<Object> toObjectProxyBeanList(
-		List<Object> objects) {
-
+	protected List<Object> toObjectProxyBeans(List<Object> objects) {
 		if ((objects == null) || objects.isEmpty()) {
 			return objects;
 		}
 
-		List<Object> objectBeans = new ArrayList<Object>();
+		List<Object> objectProxyBeans = new ArrayList<Object>();
 
 		for (Object object : objects) {
-			objectBeans.add(newProxyBean(object));
+			objectProxyBeans.add(newProxyBean(object));
 		}
 
 		if (objects instanceof UnmodifiableList) {
-			return new UnmodifiableList<Object>(objectBeans);
+			return new UnmodifiableList<Object>(objectProxyBeans);
 		}
 
-		return objectBeans;
+		return objectProxyBeans;
 	}
 
 	private ClassLoader _classLoader;

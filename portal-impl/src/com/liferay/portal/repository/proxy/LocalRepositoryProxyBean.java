@@ -24,13 +24,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.InputStream;
+
 import java.util.List;
 
 /**
  * @author Mika Koivisto
  */
-public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
-	implements LocalRepository {
+public class LocalRepositoryProxyBean
+	extends RepositoryModelProxyBean implements LocalRepository {
 
 	public LocalRepositoryProxyBean(
 		LocalRepository localRepository, ClassLoader classLoader) {
@@ -47,8 +48,8 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _localRepository.addFileEntry(
-			userId, folderId, mimeType, title, description, changeLog, is,
-			size, serviceContext);
+			userId, folderId, mimeType, title, description, changeLog, is, size,
+			serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
@@ -84,21 +85,20 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 			long folderId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		List<FileEntry> fileEntryList = _localRepository.getFileEntries(
+		List<FileEntry> fileEntries = _localRepository.getFileEntries(
 			folderId, start, end, obc);
 
-		return toFileEntryProxyBeanList(fileEntryList);
+		return toFileEntryProxyBeans(fileEntries);
 	}
 
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws SystemException {
 
-		List<Object> objectList =
-			_localRepository.getFileEntriesAndFileShortcuts(
-				folderId, status, start, end);
+		List<Object> objects = _localRepository.getFileEntriesAndFileShortcuts(
+			folderId, status, start, end);
 
-		return toObjectProxyBeanList(objectList);
+		return toObjectProxyBeans(objects);
 	}
 
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
@@ -155,6 +155,7 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException, SystemException {
+
 		return _localRepository.getFolder(parentFolderId, title);
 	}
 
@@ -165,7 +166,7 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 		List<Folder> folderList = _localRepository.getFolders(
 			parentFolderId, start, end, obc);
 
-		return toFolderProxyBeanList(folderList);
+		return toFolderProxyBeans(folderList);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -173,11 +174,11 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 			OrderByComparator obc)
 		throws SystemException {
 
-		List<Object> objectList =
+		List<Object> objects =
 			_localRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, start, end, obc);
 
-		return toObjectProxyBeanList(objectList);
+		return toObjectProxyBeans(objects);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -241,12 +242,14 @@ public class LocalRepositoryProxyBean extends RepositoryModelProxyBean
 	}
 
 	public Folder updateFolder(
-		long folderId, long parentFolderId, String title, String description,
-		ServiceContext serviceContext)
+			long folderId, long parentFolderId, String title,
+			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
 		return _localRepository.updateFolder(
 			folderId, parentFolderId, title, description, serviceContext);
 	}
 
 	private LocalRepository _localRepository;
+
 }

@@ -31,13 +31,14 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
 import java.io.InputStream;
+
 import java.util.List;
 
 /**
  * @author Mika Koivisto
  */
-public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
-	implements BaseRepository {
+public class BaseRepositoryProxyBean
+	extends RepositoryModelProxyBean implements BaseRepository {
 
 	public BaseRepositoryProxyBean(
 		BaseRepository baseRepository, ClassLoader classLoader) {
@@ -76,7 +77,6 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 		_baseRepository.cancelCheckOut(fileEntryId);
 	}
-
 
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
@@ -151,7 +151,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
 			folderId, start, end, obc);
 
-		return toFileEntryProxyBeanList(fileEntries);
+		return toFileEntryProxyBeans(fileEntries);
 	}
 
 	public List<FileEntry> getFileEntries(
@@ -162,17 +162,17 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
 			folderId, documentTypeId, start, end, obc);
 
-		return toFileEntryProxyBeanList(fileEntries);
+		return toFileEntryProxyBeans(fileEntries);
 	}
 
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws SystemException {
 
-		List<Object> list = _baseRepository.getFileEntriesAndFileShortcuts(
+		List<Object> objects = _baseRepository.getFileEntriesAndFileShortcuts(
 			folderId, status, start, end);
 
-		return toObjectProxyBeanList(list);
+		return toObjectProxyBeans(objects);
 	}
 
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
@@ -184,6 +184,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 	public int getFileEntriesCount(long folderId)
 		throws SystemException {
+
 		return _baseRepository.getFileEntriesCount(folderId);
 	}
 
@@ -245,10 +246,10 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 			long parentFolderId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		List<Folder> list = _baseRepository.getFolders(
+		List<Folder> folders = _baseRepository.getFolders(
 			parentFolderId, start, end, obc);
 
-		return toFolderProxyBeanList(list);
+		return toFolderProxyBeans(folders);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -256,11 +257,11 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 			OrderByComparator obc)
 		throws SystemException {
 
-		List<Object> list =
+		List<Object> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, start, end, obc);
 
-		return toObjectProxyBeanList(list);
+		return toObjectProxyBeans(objects);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -289,14 +290,6 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		return newLocalRepositoryProxyBean(localRepository);
 	}
 
-	public String[] getSupportedConfigurations() {
-		return _baseRepository.getSupportedConfigurations();
-	}
-
-	public String[][] getSupportedParameters() {
-		return _baseRepository.getSupportedParameters();
-	}
-
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
 			OrderByComparator obc)
@@ -305,7 +298,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		List<FileEntry> fileEntries = _baseRepository.getRepositoryFileEntries(
 			userId, rootFolderId, start, end, obc);
 
-		return toFileEntryProxyBeanList(fileEntries);
+		return toFileEntryProxyBeans(fileEntries);
 	}
 
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
@@ -325,6 +318,14 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		return _baseRepository.getSubfolderIds(folderId, recurse);
 	}
 
+	public String[] getSupportedConfigurations() {
+		return _baseRepository.getSupportedConfigurations();
+	}
+
+	public String[][] getSupportedParameters() {
+		return _baseRepository.getSupportedParameters();
+	}
+
 	public void initRepository() throws PortalException, SystemException {
 		_baseRepository.initRepository();
 	}
@@ -334,7 +335,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 		Lock lock = _baseRepository.lockFolder(folderId);
 
-		return (Lock) newProxyInstance(lock, Lock.class);
+		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	public Lock lockFolder(
@@ -345,7 +346,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		Lock lock = _baseRepository.lockFolder(
 			folderId, owner, inheritable, expirationTime);
 
-		return (Lock) newProxyInstance(lock, Lock.class);
+		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	public FileEntry moveFileEntry(
@@ -375,7 +376,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 		Lock lock = _baseRepository.refreshFileEntryLock(
 			lockUuid, expirationTime);
 
-		return (Lock) newProxyInstance(lock, Lock.class);
+		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	public Lock refreshFolderLock(String lockUuid, long expirationTime)
@@ -383,7 +384,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 		Lock lock = _baseRepository.refreshFolderLock(lockUuid, expirationTime);
 
-		return (Lock) newProxyInstance(lock, Lock.class);
+		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	public void revertFileEntry(
@@ -399,19 +400,19 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 	public void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
-	
+
 		_baseRepository.setCompanyLocalService(companyLocalService);
 	}
 
 	public void setCounterLocalService(
 		CounterLocalService counterLocalService) {
-	
+
 		_baseRepository.setCounterLocalService(counterLocalService);
 	}
 
 	public void setDLAppHelperLocalService(
-			DLAppHelperLocalService dlAppHelperLocalService) {
-	
+		DLAppHelperLocalService dlAppHelperLocalService) {
+
 		_baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
 	}
 
@@ -425,7 +426,7 @@ public class BaseRepositoryProxyBean extends RepositoryModelProxyBean
 
 	public void setTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
-	
+
 		_baseRepository.setTypeSettingsProperties(typeSettingsProperties);
 	}
 

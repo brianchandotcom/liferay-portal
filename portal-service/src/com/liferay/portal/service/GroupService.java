@@ -103,6 +103,12 @@ public interface GroupService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String[] classNames, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroup(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

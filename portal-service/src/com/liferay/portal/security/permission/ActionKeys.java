@@ -22,6 +22,9 @@ public class ActionKeys {
 
 	public static final String ACCESS = "ACCESS";
 
+	public static final String ACCESS_CONTROL_PANEL =
+		"ACCESS_CONTROL_PANEL";
+
 	public static final String ACCESS_IN_CONTROL_PANEL =
 		"ACCESS_IN_CONTROL_PANEL";
 

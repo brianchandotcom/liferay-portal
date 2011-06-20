@@ -14,12 +14,18 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -29,9 +35,11 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -161,6 +169,93 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return groupLocalService.getUserOrganizationsGroups(userId, start, end);
+	}
+
+	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
+		throws SystemException, PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		if (user == null || user.isDefaultUser()) {
+			return Collections.emptyList();
+		}
+
+		List<Group> userPlaces = new UniqueList<Group>();
+
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (max != QueryUtil.ALL_POS) {
+			start = 0;
+			end = max;
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, Group.class.getName())) {
+
+			LinkedHashMap<String, Object> groupParams =
+				new LinkedHashMap<String, Object>();
+
+			groupParams.put("usersGroups", new Long(getUserId()));
+
+			userPlaces.addAll(
+				groupLocalService.search(
+					user.getCompanyId(), null, null, groupParams, start, end));
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, Organization.class.getName())) {
+
+			LinkedHashMap<String, Object> organizationParams =
+				new LinkedHashMap<String, Object>();
+
+			organizationParams.put("usersOrgs", new Long(getUserId()));
+
+			List<Organization> userOrgs = organizationLocalService.search(
+				user.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+				null, null, null, organizationParams, start, end);
+
+			for (Organization organization : userOrgs) {
+				userPlaces.add(0, organization.getGroup());
+
+				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+					for (Organization ancestorOrganization :
+							organization.getAncestors()) {
+
+						userPlaces.add(0, ancestorOrganization.getGroup());
+					}
+				}
+			}
+		}
+
+		if ((classNames == null) ||
+			ArrayUtil.contains(classNames, User.class.getName())) {
+
+			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+
+				Group userGroup = user.getGroup();
+
+				userPlaces.add(0, userGroup);
+			}
+		}
+
+		if (PortalPermissionUtil.contains(
+			getPermissionChecker(), ActionKeys.ACCESS_CONTROL_PANEL)) {
+
+			Group controlPanelGroup = groupLocalService.getGroup(
+				user.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+			userPlaces.add(0, controlPanelGroup);
+		}
+
+		if ((max != QueryUtil.ALL_POS) && (userPlaces.size() > max)) {
+			userPlaces = ListUtil.subList(userPlaces, start, end);
+		}
+
+		return Collections.unmodifiableList(userPlaces);
+
 	}
 
 	public boolean hasUserGroup(long userId, long groupId)

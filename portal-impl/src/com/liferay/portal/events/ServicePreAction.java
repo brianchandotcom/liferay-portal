@@ -84,6 +84,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -612,12 +613,12 @@ public class ServicePreAction extends Action {
 		throws PortalException, SystemException {
 
 		return isViewableGroup(
-			user, groupId, privateLayout, 0, permissionChecker);
+			user, groupId, privateLayout, 0, null, permissionChecker);
 	}
 
 	protected boolean isViewableGroup(
 			User user, long groupId, boolean privateLayout, long layoutId,
-			PermissionChecker permissionChecker)
+			String controlPanelCategory, PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -699,11 +700,18 @@ public class ServicePreAction extends Action {
 		// Control panel layouts are only viewable by authenticated users
 
 		if (group.isControlPanel()) {
-			if (user.isDefaultUser()) {
-				return false;
+			if (PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ACCESS_CONTROL_PANEL)) {
+
+				return true;
 			}
 			else {
-				return true;
+				if (controlPanelCategory != null) {
+					return true;
+				}
+				else {
+					return false;
+				}
 			}
 		}
 
@@ -1203,7 +1211,8 @@ public class ServicePreAction extends Action {
 
 				boolean isViewableGroup = isViewableGroup(
 					user, layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), permissionChecker);
+					layout.getLayoutId(), controlPanelCategory,
+					permissionChecker);
 
 				if (!isViewableGroup && group.isStagingGroup()) {
 					layout = null;

@@ -83,7 +83,7 @@ public class EditRecordAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
-				setForward(actionRequest, "portlet.dynamic_data_mapping.error");
+				setForward(actionRequest, "portlet.dynamic_data_lists.error");
 			}
 			else if (e instanceof StorageFieldRequiredException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());

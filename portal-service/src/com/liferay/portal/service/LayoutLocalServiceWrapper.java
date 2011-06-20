@@ -400,10 +400,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 	}
 
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean incomplete, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.getLayouts(groupId, privateLayout,
-			parentLayoutId, start, end);
+			parentLayoutId, incomplete, start, end);
 	}
 
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(

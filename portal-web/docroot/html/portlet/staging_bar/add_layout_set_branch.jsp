@@ -33,6 +33,27 @@
 			<aui:input name="name" />
 
 			<aui:input name="description" />
+
+			<%
+			List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+			%>
+
+			<c:if test="<%= layoutSetBranches.size() > 1 %>">
+				<aui:select label="copy-pages-from-backstage" name="copyLayoutSetBranchId">
+					<aui:option label="all-backstages" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
+					<aui:option label="none-empty-backstage" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
+
+					<%
+					for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+					%>
+
+						<aui:option label="<%= layoutSetBranch.getName() %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+					<%
+					}
+					%>
+				</aui:select>
+			</c:if>
 		</aui:fieldset>
 
 		<aui:button-row>

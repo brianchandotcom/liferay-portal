@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -36,8 +35,7 @@ import java.io.Serializable;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl
  * @generated
  */
-public interface DLFileEntryMetadataModel extends AttachedModel,
-	BaseModel<DLFileEntryMetadata> {
+public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,39 +86,18 @@ public interface DLFileEntryMetadataModel extends AttachedModel,
 	public void setFileEntryMetadataId(long fileEntryMetadataId);
 
 	/**
-	 * Returns the fully qualified class name of this d l file entry metadata.
+	 * Returns the d d m storage ID of this d l file entry metadata.
 	 *
-	 * @return the fully qualified class name of this d l file entry metadata
+	 * @return the d d m storage ID of this d l file entry metadata
 	 */
-	public String getClassName();
+	public long getDDMStorageId();
 
 	/**
-	 * Returns the class name ID of this d l file entry metadata.
+	 * Sets the d d m storage ID of this d l file entry metadata.
 	 *
-	 * @return the class name ID of this d l file entry metadata
+	 * @param DDMStorageId the d d m storage ID of this d l file entry metadata
 	 */
-	public long getClassNameId();
-
-	/**
-	 * Sets the class name ID of this d l file entry metadata.
-	 *
-	 * @param classNameId the class name ID of this d l file entry metadata
-	 */
-	public void setClassNameId(long classNameId);
-
-	/**
-	 * Returns the class p k of this d l file entry metadata.
-	 *
-	 * @return the class p k of this d l file entry metadata
-	 */
-	public long getClassPK();
-
-	/**
-	 * Sets the class p k of this d l file entry metadata.
-	 *
-	 * @param classPK the class p k of this d l file entry metadata
-	 */
-	public void setClassPK(long classPK);
+	public void setDDMStorageId(long DDMStorageId);
 
 	/**
 	 * Returns the d d m structure ID of this d l file entry metadata.

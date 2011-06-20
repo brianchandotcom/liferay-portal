@@ -659,12 +659,10 @@ public class PortletImporter {
 
 		if (existingAssetVocabulary == null) {
 			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					portletDataContext.getCompanyId());
-
-			long companyGroupId = companyGroup.getGroupId();
+				portletDataContext.getCompanyId());
 
 			existingAssetVocabulary = AssetVocabularyUtil.fetchByG_N(
-				companyGroupId, assetVocabulary.getName());
+				companyGroup.getGroupId(), assetVocabulary.getName());
 		}
 
 		if (existingAssetVocabulary == null) {
@@ -1030,12 +1028,10 @@ public class PortletImporter {
 
 				if (assetCategory == null) {
 					Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-							portletDataContext.getCompanyId());
-
-					long companyGroupId = companyGroup.getGroupId();
+						portletDataContext.getCompanyId());
 
 					assetCategory = AssetCategoryUtil.fetchByUUID_G(
-						assetCategoryUuid, companyGroupId);
+						assetCategoryUuid, companyGroup.getGroupId());
 				}
 
 				if (assetCategory != null) {

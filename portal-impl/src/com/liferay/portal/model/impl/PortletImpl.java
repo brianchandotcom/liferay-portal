@@ -64,6 +64,7 @@ import com.liferay.portlet.social.model.SocialRequestInterpreter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -566,7 +567,7 @@ public class PortletImpl extends PortletModelImpl implements Portlet {
 	 */
 	public List<Indexer> getIndexerInstances() {
 		if (getIndexerClasses().isEmpty()) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());

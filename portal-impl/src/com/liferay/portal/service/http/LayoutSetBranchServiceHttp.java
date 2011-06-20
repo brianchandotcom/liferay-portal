@@ -55,6 +55,7 @@ public class LayoutSetBranchServiceHttp {
 	public static com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		java.lang.String name, java.lang.String description,
+		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -63,7 +64,8 @@ public class LayoutSetBranchServiceHttp {
 					"addLayoutSetBranch", _addLayoutSetBranchParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, name, description, serviceContext);
+					privateLayout, name, description, copyLayoutSetBranchId,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -239,7 +241,7 @@ public class LayoutSetBranchServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetBranchServiceHttp.class);
 	private static final Class<?>[] _addLayoutSetBranchParameterTypes0 = new Class[] {
 			long.class, boolean.class, java.lang.String.class,
-			java.lang.String.class,
+			java.lang.String.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutSetBranchParameterTypes1 = new Class[] {

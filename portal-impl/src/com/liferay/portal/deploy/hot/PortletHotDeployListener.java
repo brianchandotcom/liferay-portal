@@ -481,6 +481,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		unregisterClpMessageListeners(servletContext);
 
+		PortletContextBagPool.remove(servletContextName);
+
 		if (_log.isInfoEnabled()) {
 			if (portlets.size() == 1) {
 				_log.info(

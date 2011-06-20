@@ -175,6 +175,10 @@ public class AssetEntryQuery {
 		return _layout;
 	}
 
+	public long getLinkedAssetEntryId() {
+		return _linkedAssetEntryId;
+	}
+
 	public int getEnd() {
 		return _end;
 	}
@@ -273,6 +277,10 @@ public class AssetEntryQuery {
 		_layout = layout;
 	}
 
+	public void setLinkedAssetEntryId(long assetEntryId) {
+		_linkedAssetEntryId = assetEntryId;
+	}
+
 	public void setEnd(int end) {
 		_end = end;
 	}
@@ -367,6 +375,7 @@ public class AssetEntryQuery {
 	private boolean _excludeZeroViewCount;
 	private Date _expirationDate;
 	private long[] _groupIds = new long[0];
+	private long _linkedAssetEntryId = 0;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];
 	private long[] _notAnyCategoryIds = new long[0];

@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -72,6 +74,15 @@ public class GetLayoutsAction extends JSONAction {
 				layout);
 
 			if (layoutRevision != null) {
+				User user = themeDisplay.getUser();
+
+				long recentLayoutSetBranchId =
+					StagingUtil.getRecentLayoutSetBranchId(user);
+
+				if (StagingUtil.isIncomplete(layout, recentLayoutSetBranchId)) {
+					jsonObject.put("incomplete", true);
+				}
+
 				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
 
 				LayoutSetBranch layoutSetBranch =

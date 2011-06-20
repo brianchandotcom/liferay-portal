@@ -58,6 +58,12 @@
 		<column name="data" type="Blob" />
 		<column name="size" type="long" />
 
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="version" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="C_P_R_P" return-type="Collection">
@@ -69,6 +75,17 @@
 		<finder name="C_P_R_P_V" return-type="DLContent" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="portletId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="path" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="C_R_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="path" />
+		</finder>
+		<finder name="C_R_P_V" return-type="DLContent" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="repositoryId" />
 			<finder-column name="path" />
 			<finder-column name="version" />

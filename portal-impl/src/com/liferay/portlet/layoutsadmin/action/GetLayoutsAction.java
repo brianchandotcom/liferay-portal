@@ -101,7 +101,7 @@ public class GetLayoutsAction extends JSONAction {
 		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
 
 		return LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, start, end);
+			groupId, privateLayout, parentLayoutId, true, start, end);
 	}
 
 }

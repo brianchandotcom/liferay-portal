@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
@@ -766,6 +767,34 @@ public class StagingImpl implements Staging {
 		}
 
 		return parameterMap;
+	}
+
+	public boolean isIncomplete(Layout layout, long layoutSetBranchId) {
+		LayoutRevision layoutRevision = null;
+
+		try {
+			layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(
+				layoutSetBranchId, layout.getPlid(), true);
+
+			return false;
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(
+				layoutSetBranchId, layout.getPlid(), false);
+		}
+		catch (Exception e) {
+		}
+
+		if (layoutRevision == null ||
+			layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public void publishLayout(

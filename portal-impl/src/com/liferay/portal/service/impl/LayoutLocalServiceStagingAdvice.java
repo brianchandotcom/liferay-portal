@@ -17,6 +17,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,8 +26,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutStagingHandler;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.lang.reflect.Method;
@@ -55,10 +60,12 @@ public class LayoutLocalServiceStagingAdvice
 
 		Object[] arguments = methodInvocation.getArguments();
 
+		boolean showIncomplete = false;
+
 		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
 				methodName)) {
 
-			return wrapReturnValue(methodInvocation.proceed());
+			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
 		}
 
 		Object returnValue = null;
@@ -75,6 +82,13 @@ public class LayoutLocalServiceStagingAdvice
 				(Boolean)arguments[12], (byte[])arguments[13],
 				(ServiceContext)arguments[14]);
 		}
+		else if (methodName.equals("getLayouts")) {
+			if (arguments.length == 6) {
+				showIncomplete = (Boolean)arguments[3];
+			}
+
+			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
+		}
 		else {
 			try {
 				Class<?> clazz = getClass();
@@ -89,7 +103,7 @@ public class LayoutLocalServiceStagingAdvice
 			}
 		}
 
-		returnValue = wrapReturnValue(returnValue);
+		returnValue = wrapReturnValue(returnValue, showIncomplete);
 
 		return returnValue;
 	}
@@ -347,7 +361,9 @@ public class LayoutLocalServiceStagingAdvice
 			new LayoutStagingHandler(layout));
 	}
 
-	protected List<Layout> wrapLayouts(List<Layout> layouts) {
+	protected List<Layout> wrapLayouts(
+		List<Layout> layouts, boolean showIncomplete) {
+
 		if (layouts.isEmpty()) {
 			return layouts;
 		}
@@ -360,25 +376,48 @@ public class LayoutLocalServiceStagingAdvice
 			return layouts;
 		}
 
+		long layoutSetBranchId = 0;
+
+		if (!showIncomplete) {
+			try {
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					User user = UserLocalServiceUtil.getUser(userId);
+
+					layoutSetBranchId =
+						StagingUtil.getRecentLayoutSetBranchId(user);
+				}
+			}
+			catch(Exception e) {
+			}
+		}
+
 		List<Layout> wrappedLayouts = new ArrayList<Layout>(layouts.size());
 
-		wrappedLayouts.add(wrappedFirstLayout);
+		for (int i = 0; i < layouts.size(); i++) {
+			Layout wrappedLayout = wrapLayout(layouts.get(i));
 
-		for (int i = 1; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
+			if (showIncomplete ||
+				!StagingUtil.isIncomplete(wrappedLayout, layoutSetBranchId)) {
 
-			wrappedLayouts.add(wrapLayout(layout));
+				wrappedLayouts.add(wrappedLayout);
+			}
 		}
 
 		return wrappedLayouts;
 	}
 
-	protected Object wrapReturnValue(Object returnValue) {
+	protected Object wrapReturnValue(
+		Object returnValue, boolean showIncomplete) {
+
 		if (returnValue instanceof Layout) {
 			returnValue = wrapLayout((Layout)returnValue);
 		}
 		else if (returnValue instanceof List<?>) {
-			returnValue = wrapLayouts((List<Layout>)returnValue);
+			returnValue = wrapLayouts(
+				(List<Layout>)returnValue, showIncomplete);
 		}
 
 		return returnValue;
@@ -388,6 +427,7 @@ public class LayoutLocalServiceStagingAdvice
 		new HashSet<String>();
 
 	static {
+		_layoutLocalServiceStagingAdviceMethodNames.add("getLayouts");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLookAndFeel");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateName");

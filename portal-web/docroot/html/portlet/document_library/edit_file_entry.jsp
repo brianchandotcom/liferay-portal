@@ -301,7 +301,7 @@ else if (fileEntryType != null) {
 						try {
 							DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-							fields = StorageEngineUtil.getFields(fileEntryMetadata.getClassPK());
+							fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
 						}
 						catch (Exception e) {
 						}

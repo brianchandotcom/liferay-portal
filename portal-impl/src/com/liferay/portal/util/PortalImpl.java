@@ -2504,7 +2504,7 @@ public class PortalImpl implements Portal {
 				else {
 					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 						group.getGroupId(), privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 1);
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
 
 					if (!layouts.isEmpty()) {
 						layout = layouts.get(0);

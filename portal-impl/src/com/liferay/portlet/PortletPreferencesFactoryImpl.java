@@ -66,6 +66,7 @@ import javax.xml.stream.events.XMLEvent;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Minhchau Dang
  */
 public class PortletPreferencesFactoryImpl
 	implements PortletPreferencesFactory {
@@ -75,10 +76,6 @@ public class PortletPreferencesFactoryImpl
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			new PortletPreferencesImpl();
-
-		if (Validator.isNull(xml)) {
-			return portletPreferencesImpl;
-		}
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -508,6 +505,10 @@ public class PortletPreferencesFactoryImpl
 	protected void populateMap(
 			String xml, Map<String, Preference> preferencesMap)
 		throws SystemException {
+
+		if (Validator.isNull(xml)) {
+			return;
+		}
 
 		XMLEventReader xmlEventReader = null;
 

@@ -22,6 +22,7 @@
 		<portlet-name>90</portlet-name>
 		<permissions>
 			<supports>
+				<action-key>ACCESS_CONTROL_PANEL</action-key>
 				<action-key>ADD_COMMUNITY</action-key>
 				<action-key>ADD_LAYOUT_PROTOTYPE</action-key>
 				<action-key>ADD_LAYOUT_SET_PROTOTYPE</action-key>

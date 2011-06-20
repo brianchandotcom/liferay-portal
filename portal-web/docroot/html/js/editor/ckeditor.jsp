@@ -84,6 +84,10 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			CKEDITOR.instances['<%= name %>'].destroy();
 		},
 
+		focus: function() {
+			CKEDITOR.instances['<%= name %>'].focus();
+		},
+
 		getCkData: function() {
 			var data = CKEDITOR.instances['<%= name %>'].getData();
 

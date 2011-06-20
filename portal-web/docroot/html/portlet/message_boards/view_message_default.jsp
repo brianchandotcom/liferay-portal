@@ -143,7 +143,18 @@ MBThread thread = messageDisplay.getThread();
 				addQuickReplyDiv.show();
 
 				addQuickReplyDiv.one('#<portlet:namespace />parentMessageId').val(messageId);
-				addQuickReplyDiv.one('textarea').focus();
+
+				var editorInput = addQuickReplyDiv.one('textarea');
+
+				if (editorInput) {
+					var editorInstanceName = editorInput.get('id');
+
+					var editorInstance = window[editorInstanceName];
+
+					if (editorInstance) {
+						A.setTimeout(editorInstance.focus, 50, editorInstance);
+					}
+				}
 			}
 			else {
 				addQuickReplyDiv.hide();

@@ -176,8 +176,7 @@
 
 		<!-- Other fields -->
 
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
+		<column name="DDMStorageId" type="long" />
 		<column name="DDMStructureId" type="long" />
 		<column name="fileEntryTypeId" type="long" />
 		<column name="fileEntryId" type="long" />

@@ -1271,7 +1271,7 @@ public class DLFileEntryLocalServiceImpl
 					fileVersionId);
 
 			Fields fields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getClassPK());
+				dlFileEntryMetadata.getDDMStorageId());
 
 			fieldsMap.put(ddmStructure.getStructureId(), fields);
 		}

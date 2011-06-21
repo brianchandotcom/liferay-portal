@@ -24,6 +24,8 @@ if (layout != null) {
 }
 %>
 
+<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
 <c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 
 	<%

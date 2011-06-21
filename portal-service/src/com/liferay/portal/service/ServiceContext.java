@@ -231,11 +231,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	public String getUuid() {
-		String uuid = _uuid;
-
-		_uuid = null;
-
-		return uuid;
+		return _uuid;
 	}
 
 	public int getWorkflowAction() {

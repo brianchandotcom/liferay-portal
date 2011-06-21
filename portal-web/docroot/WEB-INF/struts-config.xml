@@ -574,6 +574,16 @@
 
 		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
 
+		<action path="/dynamic_data_list_display/view_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
+			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record" />
+			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
+		</action>
+
+		<action path="/dynamic_data_list_display/view_record_history" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
+			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record_history" />
+			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
+		</action>
+
 		<!-- Dynamic Data Lists -->
 
 		<action path="/dynamic_data_lists/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">

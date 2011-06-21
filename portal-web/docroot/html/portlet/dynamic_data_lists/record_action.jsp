@@ -33,6 +33,7 @@ long detailDDMTemplateId = GetterUtil.getLong((String)row.getParameter("detailDD
 		<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+		<portlet:param name="version" value="<%= record.getVersion() %>" />
 		<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
 	</liferay-portlet:renderURL>
 

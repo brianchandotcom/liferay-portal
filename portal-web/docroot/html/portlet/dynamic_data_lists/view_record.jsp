@@ -28,7 +28,9 @@ long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
 long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 
-DDLRecordVersion recordVersion = record.getRecordVersion();
+String version = ParamUtil.getString(request, "version");
+
+DDLRecordVersion recordVersion = record.getRecordVersion(version);
 %>
 
 <liferay-ui:header

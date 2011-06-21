@@ -132,6 +132,9 @@ public class EditRecordAction extends PortletAction {
 	protected void revertRecordVersion(ActionRequest actionRequest)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
 		String version = ParamUtil.getString(actionRequest, "version");
@@ -140,7 +143,7 @@ public class EditRecordAction extends PortletAction {
 			DDLRecord.class.getName(), actionRequest);
 
 		DDLRecordLocalServiceUtil.revertRecordVersion(
-			recordId, version, serviceContext);
+			themeDisplay.getUserId(), recordId, version, serviceContext);
 	}
 
 	protected DDLRecord updateRecord(ActionRequest actionRequest)

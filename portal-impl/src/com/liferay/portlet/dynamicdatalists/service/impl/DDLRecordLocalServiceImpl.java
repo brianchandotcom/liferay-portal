@@ -184,7 +184,8 @@ public class DDLRecordLocalServiceImpl
 			ddlRecordVersionPersistence.findByRecordId(recordId);
 
 		if (recordVersions.isEmpty()) {
-			throw new NoSuchRecordVersionException();
+			throw new NoSuchRecordVersionException(
+				"No record versions found for recordId " + recordId);
 		}
 
 		recordVersions = ListUtil.copy(recordVersions);
@@ -256,7 +257,8 @@ public class DDLRecordLocalServiceImpl
 	}
 
 	public void revertRecordVersion(
-			long recordId, String version, ServiceContext serviceContext)
+			long userId, long recordId, String version,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDLRecordVersion recordVersion = getRecordVersion(recordId, version);
@@ -265,19 +267,15 @@ public class DDLRecordLocalServiceImpl
 			return;
 		}
 
-		User user = userPersistence.findByPrimaryKey(recordVersion.getUserId());
+		boolean majorVersion = true;
+		int displayIndex = recordVersion.getDisplayIndex();
 
-		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
+		Fields fields = StorageEngineUtil.getFields(
+			recordVersion.getDDMStorageId());
 
-		record.setVersionUserId(user.getUserId());
-		record.setVersionUserName(user.getFullName());
-		record.setModifiedDate(serviceContext.getModifiedDate(null));
-		record.setDDMStorageId(recordVersion.getDDMStorageId());
-		record.setRecordSetId(recordVersion.getRecordSetId());
-		record.setVersion(recordVersion.getVersion());
-		record.setDisplayIndex(recordVersion.getDisplayIndex());
-
-		ddlRecordPersistence.update(record, false);
+		updateRecord(
+			userId, recordId, majorVersion, displayIndex, fields, false,
+			serviceContext);
 	}
 
 	public void updateAsset(

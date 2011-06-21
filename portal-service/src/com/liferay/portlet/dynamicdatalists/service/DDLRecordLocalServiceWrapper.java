@@ -360,11 +360,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService {
 		return _ddlRecordLocalService.getRecordVersionsCount(recordId);
 	}
 
-	public void revertRecordVersion(long recordId, java.lang.String version,
+	public void revertRecordVersion(long userId, long recordId,
+		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ddlRecordLocalService.revertRecordVersion(recordId, version,
+		_ddlRecordLocalService.revertRecordVersion(userId, recordId, version,
 			serviceContext);
 	}
 

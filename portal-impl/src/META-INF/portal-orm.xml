@@ -1681,8 +1681,7 @@
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>
-			<basic name="classNameId" />
-			<basic name="classPK" />
+			<basic name="DDMStorageId" />
 			<basic name="DDMStructureId" />
 			<basic name="fileEntryTypeId" />
 			<basic name="fileEntryId" />

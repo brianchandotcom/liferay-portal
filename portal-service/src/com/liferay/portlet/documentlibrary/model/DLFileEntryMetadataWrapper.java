@@ -91,48 +91,21 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 	}
 
 	/**
-	* Returns the fully qualified class name of this document library file entry metadata.
+	* Returns the d d m storage ID of this d l file entry metadata.
 	*
-	* @return the fully qualified class name of this document library file entry metadata
+	* @return the d d m storage ID of this d l file entry metadata
 	*/
-	public java.lang.String getClassName() {
-		return _dlFileEntryMetadata.getClassName();
+	public long getDDMStorageId() {
+		return _dlFileEntryMetadata.getDDMStorageId();
 	}
 
 	/**
-	* Returns the class name ID of this document library file entry metadata.
+	* Sets the d d m storage ID of this d l file entry metadata.
 	*
-	* @return the class name ID of this document library file entry metadata
+	* @param DDMStorageId the d d m storage ID of this d l file entry metadata
 	*/
-	public long getClassNameId() {
-		return _dlFileEntryMetadata.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this document library file entry metadata.
-	*
-	* @param classNameId the class name ID of this document library file entry metadata
-	*/
-	public void setClassNameId(long classNameId) {
-		_dlFileEntryMetadata.setClassNameId(classNameId);
-	}
-
-	/**
-	* Returns the class p k of this document library file entry metadata.
-	*
-	* @return the class p k of this document library file entry metadata
-	*/
-	public long getClassPK() {
-		return _dlFileEntryMetadata.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this document library file entry metadata.
-	*
-	* @param classPK the class p k of this document library file entry metadata
-	*/
-	public void setClassPK(long classPK) {
-		_dlFileEntryMetadata.setClassPK(classPK);
+	public void setDDMStorageId(long DDMStorageId) {
+		_dlFileEntryMetadata.setDDMStorageId(DDMStorageId);
 	}
 
 	/**

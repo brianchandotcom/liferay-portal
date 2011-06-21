@@ -412,8 +412,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 		dlFileEntryMetadataImpl.setUuid(dlFileEntryMetadata.getUuid());
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(dlFileEntryMetadata.getFileEntryMetadataId());
-		dlFileEntryMetadataImpl.setClassNameId(dlFileEntryMetadata.getClassNameId());
-		dlFileEntryMetadataImpl.setClassPK(dlFileEntryMetadata.getClassPK());
+		dlFileEntryMetadataImpl.setDDMStorageId(dlFileEntryMetadata.getDDMStorageId());
 		dlFileEntryMetadataImpl.setDDMStructureId(dlFileEntryMetadata.getDDMStructureId());
 		dlFileEntryMetadataImpl.setFileEntryTypeId(dlFileEntryMetadata.getFileEntryTypeId());
 		dlFileEntryMetadataImpl.setFileEntryId(dlFileEntryMetadata.getFileEntryId());

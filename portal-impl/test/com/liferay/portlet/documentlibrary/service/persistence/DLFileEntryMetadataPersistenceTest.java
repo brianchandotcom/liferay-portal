@@ -70,9 +70,7 @@ public class DLFileEntryMetadataPersistenceTest extends BasePersistenceTestCase 
 
 		newDLFileEntryMetadata.setUuid(randomString());
 
-		newDLFileEntryMetadata.setClassNameId(nextLong());
-
-		newDLFileEntryMetadata.setClassPK(nextLong());
+		newDLFileEntryMetadata.setDDMStorageId(nextLong());
 
 		newDLFileEntryMetadata.setDDMStructureId(nextLong());
 
@@ -90,10 +88,8 @@ public class DLFileEntryMetadataPersistenceTest extends BasePersistenceTestCase 
 			newDLFileEntryMetadata.getUuid());
 		assertEquals(existingDLFileEntryMetadata.getFileEntryMetadataId(),
 			newDLFileEntryMetadata.getFileEntryMetadataId());
-		assertEquals(existingDLFileEntryMetadata.getClassNameId(),
-			newDLFileEntryMetadata.getClassNameId());
-		assertEquals(existingDLFileEntryMetadata.getClassPK(),
-			newDLFileEntryMetadata.getClassPK());
+		assertEquals(existingDLFileEntryMetadata.getDDMStorageId(),
+			newDLFileEntryMetadata.getDDMStorageId());
 		assertEquals(existingDLFileEntryMetadata.getDDMStructureId(),
 			newDLFileEntryMetadata.getDDMStructureId());
 		assertEquals(existingDLFileEntryMetadata.getFileEntryTypeId(),
@@ -236,9 +232,7 @@ public class DLFileEntryMetadataPersistenceTest extends BasePersistenceTestCase 
 
 		dlFileEntryMetadata.setUuid(randomString());
 
-		dlFileEntryMetadata.setClassNameId(nextLong());
-
-		dlFileEntryMetadata.setClassPK(nextLong());
+		dlFileEntryMetadata.setDDMStorageId(nextLong());
 
 		dlFileEntryMetadata.setDDMStructureId(nextLong());
 

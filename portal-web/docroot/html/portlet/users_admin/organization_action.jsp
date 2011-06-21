@@ -77,20 +77,6 @@ if (row == null) {
 		/>
 	</c:if>--%>
 
-	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_LAYOUTS) %>">
-		<portlet:renderURL var="managePagesURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_layouts" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="pages"
-			message="manage-pages"
-			url="<%= managePagesURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_STAGING) || OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editSettingsURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_settings" />
@@ -102,20 +88,6 @@ if (row == null) {
 			image="configuration"
 			message="site-settings"
 			url="<%= editSettingsURL %>"
-		/>
-	</c:if>
-
-	<c:if test='<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_TEAMS) %>'>
-		<portlet:renderURL var="manageTeamsURL">
-			<portlet:param name="struts_action" value="/users_admin/view_teams" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="group"
-			message="manage-teams"
-			url="<%= manageTeamsURL %>"
 		/>
 	</c:if>
 

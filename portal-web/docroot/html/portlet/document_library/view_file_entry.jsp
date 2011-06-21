@@ -473,7 +473,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									fields = StorageEngineUtil.getFields(fileEntryMetadata.getClassPK());
+									fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
 								}
 								catch (Exception e) {
 								}

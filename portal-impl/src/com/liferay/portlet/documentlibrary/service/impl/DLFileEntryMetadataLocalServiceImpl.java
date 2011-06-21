@@ -105,7 +105,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 		// Dynamic data mapping storage
 
-		StorageEngineUtil.deleteByClass(fileEntryMetadata.getClassPK());
+		StorageEngineUtil.deleteByClass(fileEntryMetadata.getDDMStorageId());
 
 		// Dynamic data mapping structure link
 
@@ -125,7 +125,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 					ddmStructure.getStructureId(), fileVersionId);
 
 			StorageEngineUtil.update(
-				fileEntryMetadata.getClassPK(), fields, serviceContext);
+				fileEntryMetadata.getDDMStorageId(), fields, serviceContext);
 		}
 		catch (NoSuchFileEntryMetadataException nsdmse) {
 
@@ -137,14 +137,11 @@ public class DLFileEntryMetadataLocalServiceImpl
 				dlFileEntryMetadataPersistence.create(
 					fileEntryMetadataId);
 
-			fileEntryMetadata.setClassNameId(
-				ddmStructure.getClassNameId());
-
-			long classPK = StorageEngineUtil.create(
+			long ddmStorageId = StorageEngineUtil.create(
 				companyId, ddmStructure.getStructureId(), fields,
 				serviceContext);
 
-			fileEntryMetadata.setClassPK(classPK);
+			fileEntryMetadata.setDDMStorageId(ddmStorageId);
 
 			fileEntryMetadata.setDDMStructureId(
 				ddmStructure.getStructureId());

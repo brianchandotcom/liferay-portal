@@ -17,6 +17,7 @@ package com.liferay.portal.repository.util;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 
 /**
  * @author Mika Koivisto
@@ -37,8 +38,11 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			return (BaseRepository)InstanceFactory.newInstance(_className);
 		}
 		else {
-			return (BaseRepository)ProxyFactory.newInstance(
-				_classLoader, BaseRepository.class, _className);
+			BaseRepository baseRepository =
+				(BaseRepository)ProxyFactory.newInstance(
+					_classLoader, BaseRepository.class, _className);
+
+			return new BaseRepositoryProxyBean(baseRepository, _classLoader);
 		}
 	}
 

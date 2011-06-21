@@ -35,7 +35,7 @@ _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "label", label);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/legend/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:legend:";

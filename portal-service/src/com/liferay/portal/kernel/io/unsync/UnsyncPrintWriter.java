@@ -302,6 +302,12 @@ public class UnsyncPrintWriter extends PrintWriter {
 		println();
 	}
 
+	public void reset(Writer writer) {
+		_formatter = null;
+		_hasError = false;
+		_writer = writer;
+	}
+
 	@Override
 	public void write(char[] chars) {
 		write(chars, 0, chars.length);

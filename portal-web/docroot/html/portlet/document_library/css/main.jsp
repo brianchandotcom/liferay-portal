@@ -691,3 +691,18 @@
 		}
 	}
 }
+
+.portlet-document-library {
+	.lfr-asset-column-details .lfr-panel  {
+		margin-bottom: 0.5em;
+		padding-bottom: 0;
+
+		&.lfr-collapsed {
+			margin-bottom: 0;
+
+			.lfr-panel-titlebar {
+				border-bottom-width: 0;
+			}
+		}
+	}
+}

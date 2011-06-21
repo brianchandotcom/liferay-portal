@@ -470,83 +470,79 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</liferay-ui:custom-attributes-available>
 				</div>
 
-				<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
-
-					<%
-					if (fileEntryTypeId > 0) {
-						try {
-							DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
-
-							List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-							for (DDMStructure ddmStructure : ddmStructures) {
-								Fields fields = null;
-
-								try {
-									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-									fields = StorageEngineUtil.getFields(fileEntryMetadata.getClassPK());
-								}
-								catch (Exception e) {
-								}
-					%>
-						        <liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
-
-									<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
-
-								</liferay-ui:panel>
-
-					<%
-							}
-						}
-						catch (Exception e) {
-						}
-					}
-					%>
-
-					<%
-
-					try {
-						List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class));
-
-						for (DDMStructure ddmStructure : ddmStructures) {
-							Fields fields = null;
-
-							try {
-								DLFileEntryMetadata documentMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-								fields = StorageEngineUtil.getFields(documentMetadata.getClassPK());
-							}
-							catch (Exception e) {
-							}
-
-							if (fields != null) {
-								String name = "metadata." + ddmStructure.getName(LocaleUtil.getDefault(), true);
-					%>
-
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= name %>">
-
-									<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
-
-								</liferay-ui:panel>
-
-					<%
-							}
-						}
-					}
-					catch (Exception e) {
-					}
-					%>
-
-				</liferay-ui:panel-container>
-
 				<%
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
 				<div class="lfr-asset-panels">
-					<liferay-ui:panel-container extended="<%= false %>" persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" extended="<%= true %>" persistState="<%= true %>" title="version-history">
+					<liferay-ui:panel-container extended="<%= false %>"  id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+						<%
+						if (fileEntryTypeId > 0) {
+							try {
+								DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+
+								List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+
+								for (DDMStructure ddmStructure : ddmStructures) {
+									Fields fields = null;
+
+									try {
+										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+										fields = StorageEngineUtil.getFields(fileEntryMetadata.getClassPK());
+									}
+									catch (Exception e) {
+									}
+						%>
+							        <liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
+
+										<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+
+									</liferay-ui:panel>
+
+						<%
+								}
+							}
+							catch (Exception e) {
+							}
+						}
+						%>
+
+						<%
+
+						try {
+							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class));
+
+							for (DDMStructure ddmStructure : ddmStructures) {
+								Fields fields = null;
+
+								try {
+									DLFileEntryMetadata documentMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+									fields = StorageEngineUtil.getFields(documentMetadata.getClassPK());
+								}
+								catch (Exception e) {
+								}
+
+								if (fields != null) {
+									String name = "metadata." + ddmStructure.getName(LocaleUtil.getDefault(), true);
+						%>
+
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" persistState="<%= true %>" title="<%= name %>">
+
+										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+
+									</liferay-ui:panel>
+
+						<%
+								}
+							}
+						}
+						catch (Exception e) {
+						}
+						%>
+
+						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" persistState="<%= true %>" title="version-history">
 
 							<%
 							boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(extension);

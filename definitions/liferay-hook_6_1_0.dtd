@@ -62,6 +62,7 @@ login.events.post
 login.events.pre
 logout.events.post
 logout.events.pre
+locales.beta
 mail.hook.impl
 my.places.show.community.private.sites.with.no.layouts
 my.places.show.community.public.sites.with.no.layouts

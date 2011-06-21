@@ -105,6 +105,10 @@ public class ReleaseInfo {
 
 	public static int RELEASE_6_1_0_BUILD_NUMBER = 6100;
 
+	public static final String getName() {
+		return name;
+	}
+
 	public static final String getVersion() {
 		return version;
 	}

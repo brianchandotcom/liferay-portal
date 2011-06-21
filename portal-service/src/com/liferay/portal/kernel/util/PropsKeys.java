@@ -717,6 +717,8 @@ public interface PropsKeys {
 
 	public static final String HOT_UNDEPLOY_ON_REDEPLOY = "hot.undeploy.on.redeploy";
 
+	public static final String HTTP_HEADER_RESPONSE_VERSION_VERBOSITY = "http.header.response.verbosity.version";
+
 	public static final String ICON_MENU_MAX_DISPLAY_ITEMS = "icon.menu.max.display.items";
 
 	public static final String ICQ_JAR = "icq.jar";

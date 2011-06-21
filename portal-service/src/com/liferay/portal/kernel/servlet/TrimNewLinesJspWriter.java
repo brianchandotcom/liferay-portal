@@ -14,12 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 
 import javax.servlet.jsp.JspWriter;
@@ -29,16 +27,10 @@ import javax.servlet.jsp.JspWriter;
  */
 public class TrimNewLinesJspWriter extends JspWriter {
 
-	public TrimNewLinesJspWriter(PrintWriter printWriter) {
-		super(NO_BUFFER, false);
-
-		_printWriter = printWriter;
-	}
-
 	public TrimNewLinesJspWriter(Writer writer) {
 		super(NO_BUFFER, false);
 
-		_printWriter = new UnsyncPrintWriter(writer);
+		_writer = writer;
 	}
 
 	@Override
@@ -51,13 +43,13 @@ public class TrimNewLinesJspWriter extends JspWriter {
 	}
 
 	@Override
-	public void close() {
-		_printWriter.close();
+	public void close() throws IOException {
+		_writer.close();
 	}
 
 	@Override
-	public void flush() {
-		_printWriter.flush();
+	public void flush() throws IOException {
+		_writer.flush();
 	}
 
 	@Override
@@ -66,23 +58,28 @@ public class TrimNewLinesJspWriter extends JspWriter {
 	}
 
 	@Override
-	public void newLine() {
+	public void newLine() throws IOException {
 		if (!_lastNewLine) {
-			_printWriter.println();
+			_writer.write(_LINE_SEPARATOR);
 
 			_lastNewLine = true;
 		}
 	}
 
 	@Override
-	public void print(boolean b) {
-		_printWriter.print(b);
+	public void print(boolean b) throws IOException {
+		if (b) {
+			_writer.write(StringPool.TRUE);
+		}
+		else {
+			_writer.write(StringPool.FALSE);
+		}
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(char c) {
+	public void print(char c) throws IOException {
 		boolean newLine = false;
 
 		if ((c == CharPool.NEW_LINE) || (c == CharPool.RETURN)) {
@@ -90,7 +87,7 @@ public class TrimNewLinesJspWriter extends JspWriter {
 		}
 
 		if (!_lastNewLine || !newLine) {
-			_printWriter.print(c);
+			_writer.write(c);
 		}
 
 		if (newLine) {
@@ -99,150 +96,178 @@ public class TrimNewLinesJspWriter extends JspWriter {
 	}
 
 	@Override
-	public void print(char[] chars) {
-		_printWriter.print(chars);
+	public void print(char[] chars) throws IOException {
+		_writer.write(chars);
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(double d) {
-		_printWriter.print(d);
+	public void print(double d) throws IOException {
+		_writer.write(String.valueOf(d));
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(float f) {
-		_printWriter.print(f);
+	public void print(float f) throws IOException {
+		_writer.write(String.valueOf(f));
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(int i) {
-		_printWriter.print(i);
+	public void print(int i) throws IOException {
+		_writer.write(String.valueOf(i));
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(long l) {
-		_printWriter.print(l);
+	public void print(long l) throws IOException {
+		_writer.write(String.valueOf(l));
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(Object object) {
-		_printWriter.print(object);
+	public void print(Object object) throws IOException {
+		_writer.write(String.valueOf(object));
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void print(String string) {
-		String trim = trim(string);
+	public void print(String string) throws IOException {
+		String trim = null;
+
+		if (string == null) {
+			trim = StringPool.NULL;
+		}
+		else {
+			trim = trim(string);
+		}
 
 		if (trim.length() > 0) {
-			_printWriter.print(trim);
+			_writer.write(trim);
 
 			_lastNewLine = false;
 		}
 	}
 
 	@Override
-	public void println() {
+	public void println() throws IOException {
 		if (!_lastNewLine) {
-			_printWriter.println();
+			_writer.write(_LINE_SEPARATOR);
 
 			_lastNewLine = true;
 		}
 	}
 
 	@Override
-	public void println(boolean b) {
-		_printWriter.println(b);
+	public void println(boolean b) throws IOException {
+		if (b) {
+			_writer.write(StringPool.TRUE);
+		}
+		else {
+			_writer.write(StringPool.FALSE);
+		}
+
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(char c) {
-		_printWriter.println(c);
+	public void println(char c) throws IOException {
+		_writer.write(c);
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(char[] chars) {
-		_printWriter.println(chars);
+	public void println(char[] chars) throws IOException {
+		_writer.write(chars);
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(double d) {
-		_printWriter.println(d);
+	public void println(double d) throws IOException {
+		_writer.write(String.valueOf(d));
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(float f) {
-		_printWriter.println(f);
+	public void println(float f) throws IOException {
+		_writer.write(String.valueOf(f));
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(int i) {
-		_printWriter.println(i);
+	public void println(int i) throws IOException {
+		_writer.write(String.valueOf(i));
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(long l) {
-		_printWriter.println(l);
+	public void println(long l) throws IOException {
+		_writer.write(String.valueOf(l));
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(Object object) {
-		_printWriter.println(object);
+	public void println(Object object) throws IOException {
+		_writer.write(String.valueOf(object));
+		_writer.write(_LINE_SEPARATOR);
 
 		_lastNewLine = true;
 	}
 
 	@Override
-	public void println(String string) {
-		String trim = trim(string);
+	public void println(String string) throws IOException {
+		String trim = null;
+
+		if (string == null) {
+			trim = StringPool.NULL;
+		}
+		else {
+			trim = trim(string);
+		}
 
 		if (trim.length() > 0) {
-			_printWriter.println(trim);
+			_writer.write(trim);
 
 			_lastNewLine = true;
 		}
 	}
 
 	@Override
-	public void write(char[] chars) {
-		_printWriter.write(chars);
+	public void write(char[] chars) throws IOException {
+		_writer.write(chars);
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void write(char[] chars, int offset, int length) {
-		_printWriter.write(chars, offset, length);
+	public void write(char[] chars, int offset, int length) throws IOException {
+		_writer.write(chars, offset, length);
 
 		_lastNewLine = false;
 	}
 
 	@Override
-	public void write(int c) {
+	public void write(int c) throws IOException {
 		boolean newLine = false;
 
 		if ((c == CharPool.NEW_LINE) || (c == CharPool.RETURN)) {
@@ -250,7 +275,7 @@ public class TrimNewLinesJspWriter extends JspWriter {
 		}
 
 		if (!_lastNewLine || !newLine) {
-			_printWriter.write(c);
+			_writer.write(c);
 		}
 
 		if (newLine) {
@@ -259,22 +284,23 @@ public class TrimNewLinesJspWriter extends JspWriter {
 	}
 
 	@Override
-	public void write(String string) {
+	public void write(String string) throws IOException {
 		String trim = trim(string);
 
 		if (trim.length() > 0) {
-			_printWriter.write(trim);
+			_writer.write(trim);
 
 			_lastNewLine = false;
 		}
 	}
 
 	@Override
-	public void write(String string, int offset, int length) {
+	public void write(String string, int offset, int length)
+		throws IOException {
 		String trim = trim(string.substring(offset, offset + length));
 
 		if (trim.length() > 0) {
-			_printWriter.write(trim);
+			_writer.write(trim);
 
 			_lastNewLine = false;
 		}
@@ -315,7 +341,10 @@ public class TrimNewLinesJspWriter extends JspWriter {
 		}
 	}
 
+	private static String _LINE_SEPARATOR = System.getProperty(
+		"line.separator");
+
 	private boolean _lastNewLine;
-	private PrintWriter _printWriter;
+	private Writer _writer;
 
 }

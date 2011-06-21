@@ -93,6 +93,10 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			}
 		},
 
+		focus: function() {
+			FCKeditorAPI.GetInstance('<%= name %>').Focus();
+		},
+
 		getHTML: function() {
 			return FCKeditorAPI.GetInstance('<%= name %>').GetXHTML();
 		},

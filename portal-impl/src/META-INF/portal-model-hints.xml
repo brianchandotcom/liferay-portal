@@ -1288,8 +1288,7 @@
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
 		<field name="uuid" type="String" />
 		<field name="fileEntryMetadataId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="DDMStorageId" type="long" />
 		<field name="DDMStructureId" type="long" />
 		<field name="fileEntryTypeId" type="long" />
 		<field name="fileEntryId" type="long" />

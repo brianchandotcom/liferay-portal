@@ -147,9 +147,9 @@ MBThread thread = messageDisplay.getThread();
 				var editorInput = addQuickReplyDiv.one('textarea');
 
 				if (editorInput) {
-					var editorInstanceName = editorInput.get('id');
+					var editorId = editorInput.get('id');
 
-					var editorInstance = window[editorInstanceName];
+					var editorInstance = window[editorId];
 
 					if (editorInstance) {
 						A.setTimeout(editorInstance.focus, 50, editorInstance);

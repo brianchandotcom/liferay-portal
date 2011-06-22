@@ -43,11 +43,20 @@ public class TestPropsValues {
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		TestPropsUtil.get("save.source"));
 
+	public static final String SELENIUM_DOWNLOAD_FILE =
+		TestPropsUtil.get("selenium_download_file.executable");
+
+	public static final String SELENIUM_EXECUTABLE_DIR =
+		TestPropsUtil.get("selenium.executable.dir");
+
 	public static final String SELENIUM_HOST =
 		TestPropsUtil.get("selenium.host");
 
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));
+
+	public static final String SELENIUM_SET_BROWSER_OPTION =
+		TestPropsUtil.get("selenium_set_browser_option.executable");
 
 	public static final String[] THEME_IDS = StringUtil.split(
 		TestPropsUtil.get("theme.ids"));

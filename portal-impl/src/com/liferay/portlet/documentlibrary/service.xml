@@ -35,7 +35,7 @@
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 	</entity>
-	<entity name="DLContent" local-service="true" remote-service="false">
+	<entity name="DLContent" human-name="document library content" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -74,7 +74,7 @@
 			<finder-column name="version" />
 		</finder>
 	</entity>
-	<entity name="DLFileEntry" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFileEntry" human-name="document library file entry" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -168,7 +168,7 @@
 
 		<tx-required>getFileAsStream</tx-required>
 	</entity>
-	<entity name="DLFileEntryMetadata" uuid="true" local-service="true" remote-service="false">
+	<entity name="DLFileEntryMetadata" human-name="document library file entry metadata" uuid="true" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -203,7 +203,7 @@
 
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
-	<entity name="DLFileEntryType" local-service="true" remote-service="true">
+	<entity name="DLFileEntryType" human-name="document library file entry type" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -245,7 +245,7 @@
 
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
-	<entity name="DLFileRank" local-service="true" remote-service="false">
+	<entity name="DLFileRank" human-name="document library file rank" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -293,7 +293,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Layout" />
 	</entity>
-	<entity name="DLFileShortcut" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFileShortcut" human-name="document library file shortcut" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -341,7 +341,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 	</entity>
-	<entity name="DLFileVersion" local-service="false" remote-service="false">
+	<entity name="DLFileVersion" human-name="document library file version" local-service="false" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -397,7 +397,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity name="DLFolder" uuid="true" local-service="true" remote-service="true">
+	<entity name="DLFolder" human-name="document library folder" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

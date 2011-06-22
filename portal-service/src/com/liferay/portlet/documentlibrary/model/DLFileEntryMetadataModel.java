@@ -41,140 +41,140 @@ public interface DLFileEntryMetadataModel extends AttachedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l file entry metadata model instance should use the {@link DLFileEntryMetadata} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library file entry metadata model instance should use the {@link DLFileEntryMetadata} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l file entry metadata.
+	 * Returns the primary key of this document library file entry metadata.
 	 *
-	 * @return the primary key of this d l file entry metadata
+	 * @return the primary key of this document library file entry metadata
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l file entry metadata.
+	 * Sets the primary key of this document library file entry metadata.
 	 *
-	 * @param primaryKey the primary key of this d l file entry metadata
+	 * @param primaryKey the primary key of this document library file entry metadata
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d l file entry metadata.
+	 * Returns the uuid of this document library file entry metadata.
 	 *
-	 * @return the uuid of this d l file entry metadata
+	 * @return the uuid of this document library file entry metadata
 	 */
 	@AutoEscape
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d l file entry metadata.
+	 * Sets the uuid of this document library file entry metadata.
 	 *
-	 * @param uuid the uuid of this d l file entry metadata
+	 * @param uuid the uuid of this document library file entry metadata
 	 */
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the file entry metadata ID of this d l file entry metadata.
+	 * Returns the file entry metadata ID of this document library file entry metadata.
 	 *
-	 * @return the file entry metadata ID of this d l file entry metadata
+	 * @return the file entry metadata ID of this document library file entry metadata
 	 */
 	public long getFileEntryMetadataId();
 
 	/**
-	 * Sets the file entry metadata ID of this d l file entry metadata.
+	 * Sets the file entry metadata ID of this document library file entry metadata.
 	 *
-	 * @param fileEntryMetadataId the file entry metadata ID of this d l file entry metadata
+	 * @param fileEntryMetadataId the file entry metadata ID of this document library file entry metadata
 	 */
 	public void setFileEntryMetadataId(long fileEntryMetadataId);
 
 	/**
-	 * Returns the fully qualified class name of this d l file entry metadata.
+	 * Returns the fully qualified class name of this document library file entry metadata.
 	 *
-	 * @return the fully qualified class name of this d l file entry metadata
+	 * @return the fully qualified class name of this document library file entry metadata
 	 */
 	public String getClassName();
 
 	/**
-	 * Returns the class name ID of this d l file entry metadata.
+	 * Returns the class name ID of this document library file entry metadata.
 	 *
-	 * @return the class name ID of this d l file entry metadata
+	 * @return the class name ID of this document library file entry metadata
 	 */
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this d l file entry metadata.
+	 * Sets the class name ID of this document library file entry metadata.
 	 *
-	 * @param classNameId the class name ID of this d l file entry metadata
+	 * @param classNameId the class name ID of this document library file entry metadata
 	 */
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this d l file entry metadata.
+	 * Returns the class p k of this document library file entry metadata.
 	 *
-	 * @return the class p k of this d l file entry metadata
+	 * @return the class p k of this document library file entry metadata
 	 */
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this d l file entry metadata.
+	 * Sets the class p k of this document library file entry metadata.
 	 *
-	 * @param classPK the class p k of this d l file entry metadata
+	 * @param classPK the class p k of this document library file entry metadata
 	 */
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the d d m structure ID of this d l file entry metadata.
+	 * Returns the d d m structure ID of this document library file entry metadata.
 	 *
-	 * @return the d d m structure ID of this d l file entry metadata
+	 * @return the d d m structure ID of this document library file entry metadata
 	 */
 	public long getDDMStructureId();
 
 	/**
-	 * Sets the d d m structure ID of this d l file entry metadata.
+	 * Sets the d d m structure ID of this document library file entry metadata.
 	 *
-	 * @param DDMStructureId the d d m structure ID of this d l file entry metadata
+	 * @param DDMStructureId the d d m structure ID of this document library file entry metadata
 	 */
 	public void setDDMStructureId(long DDMStructureId);
 
 	/**
-	 * Returns the file entry type ID of this d l file entry metadata.
+	 * Returns the file entry type ID of this document library file entry metadata.
 	 *
-	 * @return the file entry type ID of this d l file entry metadata
+	 * @return the file entry type ID of this document library file entry metadata
 	 */
 	public long getFileEntryTypeId();
 
 	/**
-	 * Sets the file entry type ID of this d l file entry metadata.
+	 * Sets the file entry type ID of this document library file entry metadata.
 	 *
-	 * @param fileEntryTypeId the file entry type ID of this d l file entry metadata
+	 * @param fileEntryTypeId the file entry type ID of this document library file entry metadata
 	 */
 	public void setFileEntryTypeId(long fileEntryTypeId);
 
 	/**
-	 * Returns the file entry ID of this d l file entry metadata.
+	 * Returns the file entry ID of this document library file entry metadata.
 	 *
-	 * @return the file entry ID of this d l file entry metadata
+	 * @return the file entry ID of this document library file entry metadata
 	 */
 	public long getFileEntryId();
 
 	/**
-	 * Sets the file entry ID of this d l file entry metadata.
+	 * Sets the file entry ID of this document library file entry metadata.
 	 *
-	 * @param fileEntryId the file entry ID of this d l file entry metadata
+	 * @param fileEntryId the file entry ID of this document library file entry metadata
 	 */
 	public void setFileEntryId(long fileEntryId);
 
 	/**
-	 * Returns the file version ID of this d l file entry metadata.
+	 * Returns the file version ID of this document library file entry metadata.
 	 *
-	 * @return the file version ID of this d l file entry metadata
+	 * @return the file version ID of this document library file entry metadata
 	 */
 	public long getFileVersionId();
 
 	/**
-	 * Sets the file version ID of this d l file entry metadata.
+	 * Sets the file version ID of this document library file entry metadata.
 	 *
-	 * @param fileVersionId the file version ID of this d l file entry metadata
+	 * @param fileVersionId the file version ID of this document library file entry metadata
 	 */
 	public void setFileVersionId(long fileVersionId);
 

@@ -26,7 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import java.util.List;
 
 /**
- * The persistence utility for the d l file shortcut service. This utility wraps {@link DLFileShortcutPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the document library file shortcut service. This utility wraps {@link DLFileShortcutPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -119,9 +119,9 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Caches the d l file shortcut in the entity cache if it is enabled.
+	* Caches the document library file shortcut in the entity cache if it is enabled.
 	*
-	* @param dlFileShortcut the d l file shortcut
+	* @param dlFileShortcut the document library file shortcut
 	*/
 	public static void cacheResult(
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut) {
@@ -129,9 +129,9 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Caches the d l file shortcuts in the entity cache if it is enabled.
+	* Caches the document library file shortcuts in the entity cache if it is enabled.
 	*
-	* @param dlFileShortcuts the d l file shortcuts
+	* @param dlFileShortcuts the document library file shortcuts
 	*/
 	public static void cacheResult(
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> dlFileShortcuts) {
@@ -139,10 +139,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Creates a new d l file shortcut with the primary key. Does not add the d l file shortcut to the database.
+	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	*
-	* @param fileShortcutId the primary key for the new d l file shortcut
-	* @return the new d l file shortcut
+	* @param fileShortcutId the primary key for the new document library file shortcut
+	* @return the new document library file shortcut
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut create(
 		long fileShortcutId) {
@@ -150,11 +150,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes the d l file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileShortcutId the primary key of the d l file shortcut
-	* @return the d l file shortcut that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut remove(
@@ -172,11 +172,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcut with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
+	* Returns the document library file shortcut with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
 	*
-	* @param fileShortcutId the primary key of the d l file shortcut
-	* @return the d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByPrimaryKey(
@@ -187,10 +187,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcut with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param fileShortcutId the primary key of the d l file shortcut
-	* @return the d l file shortcut, or <code>null</code> if a d l file shortcut with the primary key could not be found
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByPrimaryKey(
@@ -200,10 +200,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts where uuid = &#63;.
+	* Returns all the document library file shortcuts where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the matching d l file shortcuts
+	* @return the matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
@@ -213,16 +213,16 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts where uuid = &#63;.
+	* Returns a range of all the document library file shortcuts where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
@@ -232,17 +232,17 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts where uuid = &#63;.
+	* Returns an ordered range of all the document library file shortcuts where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts
+	* @return the ordered range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
@@ -253,7 +253,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the first d l file shortcut in the ordered set where uuid = &#63;.
+	* Returns the first document library file shortcut in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -261,8 +261,8 @@ public class DLFileShortcutUtil {
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the first matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_First(
@@ -274,7 +274,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the last d l file shortcut in the ordered set where uuid = &#63;.
+	* Returns the last document library file shortcut in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -282,8 +282,8 @@ public class DLFileShortcutUtil {
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the last matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_Last(
@@ -295,17 +295,17 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set where uuid = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByUuid_PrevAndNext(
@@ -319,12 +319,12 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcut where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
+	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileShortcutException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUUID_G(
@@ -335,11 +335,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching d l file shortcut, or <code>null</code> if a matching d l file shortcut could not be found
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUUID_G(
@@ -349,11 +349,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching d l file shortcut, or <code>null</code> if a matching d l file shortcut could not be found
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUUID_G(
@@ -363,10 +363,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts where toFileEntryId = &#63;.
+	* Returns all the document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* @param toFileEntryId the to file entry ID
-	* @return the matching d l file shortcuts
+	* @return the matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
@@ -376,16 +376,16 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts where toFileEntryId = &#63;.
+	* Returns a range of all the document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param toFileEntryId the to file entry ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
@@ -395,17 +395,17 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts where toFileEntryId = &#63;.
+	* Returns an ordered range of all the document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param toFileEntryId the to file entry ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts
+	* @return the ordered range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
@@ -418,7 +418,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the first d l file shortcut in the ordered set where toFileEntryId = &#63;.
+	* Returns the first document library file shortcut in the ordered set where toFileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -426,8 +426,8 @@ public class DLFileShortcutUtil {
 	*
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the first matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_First(
@@ -440,7 +440,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the last d l file shortcut in the ordered set where toFileEntryId = &#63;.
+	* Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -448,8 +448,8 @@ public class DLFileShortcutUtil {
 	*
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the last matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_Last(
@@ -462,17 +462,17 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set where toFileEntryId = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where toFileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param toFileEntryId the to file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByToFileEntryId_PrevAndNext(
@@ -486,11 +486,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts where groupId = &#63; and folderId = &#63;.
+	* Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @return the matching d l file shortcuts
+	* @return the matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
@@ -500,7 +500,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts where groupId = &#63; and folderId = &#63;.
+	* Returns a range of all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -508,9 +508,9 @@ public class DLFileShortcutUtil {
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
@@ -520,7 +520,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts where groupId = &#63; and folderId = &#63;.
+	* Returns an ordered range of all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -528,10 +528,10 @@ public class DLFileShortcutUtil {
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts
+	* @return the ordered range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
@@ -543,7 +543,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the first d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
+	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -552,8 +552,8 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the first matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_First(
@@ -566,7 +566,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the last d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
+	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -575,8 +575,8 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the last matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_Last(
@@ -589,18 +589,18 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_PrevAndNext(
@@ -614,11 +614,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	* Returns all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @return the matching d l file shortcuts that the user has permission to view
+	* @return the matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
@@ -628,7 +628,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	* Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -636,9 +636,9 @@ public class DLFileShortcutUtil {
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts that the user has permission to view
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
@@ -648,7 +648,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63;.
+	* Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -656,10 +656,10 @@ public class DLFileShortcutUtil {
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts that the user has permission to view
+	* @return the ordered range of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
@@ -672,14 +672,14 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set of d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_PrevAndNext(
@@ -693,12 +693,12 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @return the matching d l file shortcuts
+	* @return the matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_S(
@@ -708,7 +708,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns a range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -717,9 +717,9 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_S(
@@ -730,7 +730,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns an ordered range of all the document library file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -739,10 +739,10 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts
+	* @return the ordered range of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_S(
@@ -755,7 +755,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the first d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -765,8 +765,8 @@ public class DLFileShortcutUtil {
 	* @param folderId the folder ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the first matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_S_First(
@@ -780,7 +780,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the last d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -790,8 +790,8 @@ public class DLFileShortcutUtil {
 	* @param folderId the folder ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching d l file shortcut could not be found
+	* @return the last matching document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_S_Last(
@@ -805,19 +805,19 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_S_PrevAndNext(
@@ -831,12 +831,12 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @return the matching d l file shortcuts that the user has permission to view
+	* @return the matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_S(
@@ -846,7 +846,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -855,9 +855,9 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of matching d l file shortcuts that the user has permission to view
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_S(
@@ -868,7 +868,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -877,10 +877,10 @@ public class DLFileShortcutUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file shortcuts that the user has permission to view
+	* @return the ordered range of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_S(
@@ -893,15 +893,15 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the d l file shortcuts before and after the current d l file shortcut in the ordered set of d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
-	* @param fileShortcutId the primary key of the current d l file shortcut
+	* @param fileShortcutId the primary key of the current document library file shortcut
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file shortcut
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a d l file shortcut with the primary key could not be found
+	* @return the previous, current, and next document library file shortcut
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_S_PrevAndNext(
@@ -915,9 +915,9 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns all the d l file shortcuts.
+	* Returns all the document library file shortcuts.
 	*
-	* @return the d l file shortcuts
+	* @return the document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll()
@@ -926,15 +926,15 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file shortcuts.
+	* Returns a range of all the document library file shortcuts.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll(
@@ -944,16 +944,16 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file shortcuts.
+	* Returns an ordered range of all the document library file shortcuts.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d l file shortcuts
+	* @return the ordered range of document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll(
@@ -964,7 +964,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes all the d l file shortcuts where uuid = &#63; from the database.
+	* Removes all the document library file shortcuts where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @throws SystemException if a system exception occurred
@@ -975,7 +975,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes the d l file shortcut where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the document library file shortcut where uuid = &#63; and groupId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
@@ -988,7 +988,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes all the d l file shortcuts where toFileEntryId = &#63; from the database.
+	* Removes all the document library file shortcuts where toFileEntryId = &#63; from the database.
 	*
 	* @param toFileEntryId the to file entry ID
 	* @throws SystemException if a system exception occurred
@@ -999,7 +999,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes all the d l file shortcuts where groupId = &#63; and folderId = &#63; from the database.
+	* Removes all the document library file shortcuts where groupId = &#63; and folderId = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
@@ -1011,7 +1011,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes all the d l file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63; from the database.
+	* Removes all the document library file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
@@ -1024,7 +1024,7 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Removes all the d l file shortcuts from the database.
+	* Removes all the document library file shortcuts from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1034,10 +1034,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts where uuid = &#63;.
+	* Returns the number of document library file shortcuts where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the number of matching d l file shortcuts
+	* @return the number of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByUuid(java.lang.String uuid)
@@ -1046,11 +1046,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts where uuid = &#63; and groupId = &#63;.
+	* Returns the number of document library file shortcuts where uuid = &#63; and groupId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the number of matching d l file shortcuts
+	* @return the number of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByUUID_G(java.lang.String uuid, long groupId)
@@ -1059,10 +1059,10 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts where toFileEntryId = &#63;.
+	* Returns the number of document library file shortcuts where toFileEntryId = &#63;.
 	*
 	* @param toFileEntryId the to file entry ID
-	* @return the number of matching d l file shortcuts
+	* @return the number of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByToFileEntryId(long toFileEntryId)
@@ -1071,11 +1071,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts where groupId = &#63; and folderId = &#63;.
+	* Returns the number of document library file shortcuts where groupId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @return the number of matching d l file shortcuts
+	* @return the number of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_F(long groupId, long folderId)
@@ -1084,11 +1084,11 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	* Returns the number of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
-	* @return the number of matching d l file shortcuts that the user has permission to view
+	* @return the number of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_F(long groupId, long folderId)
@@ -1097,12 +1097,12 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the number of document library file shortcuts where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @return the number of matching d l file shortcuts
+	* @return the number of matching document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_F_S(long groupId, long folderId, int status)
@@ -1111,12 +1111,12 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
+	* Returns the number of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param status the status
-	* @return the number of matching d l file shortcuts that the user has permission to view
+	* @return the number of matching document library file shortcuts that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_F_S(long groupId, long folderId, int status)
@@ -1125,9 +1125,9 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	* Returns the number of d l file shortcuts.
+	* Returns the number of document library file shortcuts.
 	*
-	* @return the number of d l file shortcuts
+	* @return the number of document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countAll()

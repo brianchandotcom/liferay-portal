@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * The utility for the d l folder local service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
+ * The utility for the document library folder local service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
@@ -39,10 +39,10 @@ public class DLFolderLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the d l folder to the database. Also notifies the appropriate model listeners.
+	* Adds the document library folder to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFolder the d l folder
-	* @return the d l folder that was added
+	* @param dlFolder the document library folder
+	* @return the document library folder that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder addDLFolder(
@@ -52,10 +52,10 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new d l folder with the primary key. Does not add the d l folder to the database.
+	* Creates a new document library folder with the primary key. Does not add the document library folder to the database.
 	*
-	* @param folderId the primary key for the new d l folder
-	* @return the new d l folder
+	* @param folderId the primary key for the new document library folder
+	* @return the new document library folder
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder createDLFolder(
 		long folderId) {
@@ -63,10 +63,10 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d l folder with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param folderId the primary key of the d l folder
-	* @throws PortalException if a d l folder with the primary key could not be found
+	* @param folderId the primary key of the document library folder
+	* @throws PortalException if a document library folder with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteDLFolder(long folderId)
@@ -76,9 +76,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d l folder from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library folder from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFolder the d l folder
+	* @param dlFolder the document library folder
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteDLFolder(
@@ -159,11 +159,11 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d l folder with the primary key.
+	* Returns the document library folder with the primary key.
 	*
-	* @param folderId the primary key of the d l folder
-	* @return the d l folder
-	* @throws PortalException if a d l folder with the primary key could not be found
+	* @param folderId the primary key of the document library folder
+	* @return the document library folder
+	* @throws PortalException if a document library folder with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getDLFolder(
@@ -174,12 +174,12 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d l folder with the UUID in the group.
+	* Returns the document library folder with the UUID in the group.
 	*
-	* @param uuid the UUID of d l folder
-	* @param groupId the group id of the d l folder
-	* @return the d l folder
-	* @throws PortalException if a d l folder with the UUID in the group could not be found
+	* @param uuid the UUID of document library folder
+	* @param groupId the group id of the document library folder
+	* @return the document library folder
+	* @throws PortalException if a document library folder with the UUID in the group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getDLFolderByUuidAndGroupId(
@@ -190,15 +190,15 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the d l folders.
+	* Returns a range of all the document library folders.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l folders
-	* @param end the upper bound of the range of d l folders (not inclusive)
-	* @return the range of d l folders
+	* @param start the lower bound of the range of document library folders
+	* @param end the upper bound of the range of document library folders (not inclusive)
+	* @return the range of document library folders
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
@@ -208,9 +208,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of d l folders.
+	* Returns the number of document library folders.
 	*
-	* @return the number of d l folders
+	* @return the number of document library folders
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getDLFoldersCount()
@@ -219,10 +219,10 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d l folder in the database. Also notifies the appropriate model listeners.
+	* Updates the document library folder in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFolder the d l folder
-	* @return the d l folder that was updated
+	* @param dlFolder the document library folder
+	* @return the document library folder that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(
@@ -232,11 +232,11 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d l folder in the database. Also notifies the appropriate model listeners.
+	* Updates the document library folder in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFolder the d l folder
-	* @param merge whether to merge the d l folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l folder that was updated
+	* @param dlFolder the document library folder
+	* @param merge whether to merge the document library folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library folder that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(

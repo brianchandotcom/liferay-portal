@@ -60,7 +60,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the d l folder service.
+ * The persistence implementation for the document library folder service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -76,7 +76,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DLFolderUtil} to access the d l folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DLFolderUtil} to access the document library folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DLFolderImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
@@ -179,9 +179,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			"countAll", new String[0]);
 
 	/**
-	 * Caches the d l folder in the entity cache if it is enabled.
+	 * Caches the document library folder in the entity cache if it is enabled.
 	 *
-	 * @param dlFolder the d l folder
+	 * @param dlFolder the document library folder
 	 */
 	public void cacheResult(DLFolder dlFolder) {
 		EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
@@ -206,9 +206,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Caches the d l folders in the entity cache if it is enabled.
+	 * Caches the document library folders in the entity cache if it is enabled.
 	 *
-	 * @param dlFolders the d l folders
+	 * @param dlFolders the document library folders
 	 */
 	public void cacheResult(List<DLFolder> dlFolders) {
 		for (DLFolder dlFolder : dlFolders) {
@@ -221,7 +221,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Clears the cache for all d l folders.
+	 * Clears the cache for all document library folders.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -239,7 +239,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Clears the cache for the d l folder.
+	 * Clears the cache for the document library folder.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -267,10 +267,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Creates a new d l folder with the primary key. Does not add the d l folder to the database.
+	 * Creates a new document library folder with the primary key. Does not add the document library folder to the database.
 	 *
-	 * @param folderId the primary key for the new d l folder
-	 * @return the new d l folder
+	 * @param folderId the primary key for the new document library folder
+	 * @return the new document library folder
 	 */
 	public DLFolder create(long folderId) {
 		DLFolder dlFolder = new DLFolderImpl();
@@ -286,11 +286,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d l folder
-	 * @return the d l folder that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d l folder with the primary key could not be found
+	 * @param primaryKey the primary key of the document library folder
+	 * @return the document library folder that was removed
+	 * @throws com.liferay.portal.NoSuchModelException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -300,11 +300,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param folderId the primary key of the d l folder
-	 * @return the d l folder that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder remove(long folderId)
@@ -340,10 +340,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library folder from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFolder the d l folder
-	 * @return the d l folder that was removed
+	 * @param dlFolder the document library folder
+	 * @return the document library folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -529,11 +529,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the document library folder with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l folder
-	 * @return the d l folder
-	 * @throws com.liferay.portal.NoSuchModelException if a d l folder with the primary key could not be found
+	 * @param primaryKey the primary key of the document library folder
+	 * @return the document library folder
+	 * @throws com.liferay.portal.NoSuchModelException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -543,11 +543,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
+	 * Returns the document library folder with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
 	 *
-	 * @param folderId the primary key of the d l folder
-	 * @return the d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByPrimaryKey(long folderId)
@@ -567,10 +567,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l folder
-	 * @return the d l folder, or <code>null</code> if a d l folder with the primary key could not be found
+	 * @param primaryKey the primary key of the document library folder
+	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -580,10 +580,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param folderId the primary key of the d l folder
-	 * @return the d l folder, or <code>null</code> if a d l folder with the primary key could not be found
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
@@ -615,10 +615,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders where uuid = &#63;.
+	 * Returns all the document library folders where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching d l folders
+	 * @return the matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByUuid(String uuid) throws SystemException {
@@ -626,16 +626,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders where uuid = &#63;.
+	 * Returns a range of all the document library folders where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByUuid(String uuid, int start, int end)
@@ -644,17 +644,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders where uuid = &#63;.
+	 * Returns an ordered range of all the document library folders where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders
+	 * @return the ordered range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByUuid(String uuid, int start, int end,
@@ -744,7 +744,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the first d l folder in the ordered set where uuid = &#63;.
+	 * Returns the first document library folder in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -752,8 +752,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the first matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByUuid_First(String uuid,
@@ -779,7 +779,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the last d l folder in the ordered set where uuid = &#63;.
+	 * Returns the last document library folder in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -787,8 +787,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the last matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByUuid_Last(String uuid,
@@ -817,17 +817,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set where uuid = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] findByUuid_PrevAndNext(long folderId, String uuid,
@@ -977,12 +977,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
+	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByUUID_G(String uuid, long groupId)
@@ -1013,11 +1013,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByUUID_G(String uuid, long groupId)
@@ -1026,11 +1026,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByUUID_G(String uuid, long groupId,
@@ -1130,10 +1130,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders where groupId = &#63;.
+	 * Returns all the document library folders where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d l folders
+	 * @return the matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByGroupId(long groupId) throws SystemException {
@@ -1141,16 +1141,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders where groupId = &#63;.
+	 * Returns a range of all the document library folders where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByGroupId(long groupId, int start, int end)
@@ -1159,17 +1159,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders where groupId = &#63;.
+	 * Returns an ordered range of all the document library folders where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders
+	 * @return the ordered range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByGroupId(long groupId, int start, int end,
@@ -1247,7 +1247,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the first d l folder in the ordered set where groupId = &#63;.
+	 * Returns the first document library folder in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1255,8 +1255,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the first matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByGroupId_First(long groupId,
@@ -1282,7 +1282,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the last d l folder in the ordered set where groupId = &#63;.
+	 * Returns the last document library folder in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1290,8 +1290,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the last matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByGroupId_Last(long groupId,
@@ -1320,17 +1320,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set where groupId = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] findByGroupId_PrevAndNext(long folderId, long groupId,
@@ -1468,10 +1468,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders that the user has permission to view where groupId = &#63;.
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d l folders that the user has permission to view
+	 * @return the matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByGroupId(long groupId)
@@ -1481,16 +1481,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders that the user has permission to view where groupId = &#63;.
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders that the user has permission to view
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByGroupId(long groupId, int start, int end)
@@ -1499,17 +1499,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders that the user has permissions to view where groupId = &#63;.
+	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders that the user has permission to view
+	 * @return the ordered range of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByGroupId(long groupId, int start, int end,
@@ -1586,13 +1586,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set of d l folders that the user has permission to view where groupId = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63;.
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] filterFindByGroupId_PrevAndNext(long folderId,
@@ -1762,10 +1762,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders where companyId = &#63;.
+	 * Returns all the document library folders where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching d l folders
+	 * @return the matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByCompanyId(long companyId)
@@ -1775,16 +1775,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders where companyId = &#63;.
+	 * Returns a range of all the document library folders where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByCompanyId(long companyId, int start, int end)
@@ -1793,17 +1793,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders where companyId = &#63;.
+	 * Returns an ordered range of all the document library folders where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders
+	 * @return the ordered range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByCompanyId(long companyId, int start, int end,
@@ -1881,7 +1881,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the first d l folder in the ordered set where companyId = &#63;.
+	 * Returns the first document library folder in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1889,8 +1889,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the first matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByCompanyId_First(long companyId,
@@ -1916,7 +1916,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the last d l folder in the ordered set where companyId = &#63;.
+	 * Returns the last document library folder in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1924,8 +1924,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the last matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByCompanyId_Last(long companyId,
@@ -1954,17 +1954,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set where companyId = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] findByCompanyId_PrevAndNext(long folderId,
@@ -2102,11 +2102,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where repositoryId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
+	 * Returns the document library folder where repositoryId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
 	 *
 	 * @param repositoryId the repository ID
-	 * @return the matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByRepositoryId(long repositoryId)
@@ -2134,10 +2134,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where repositoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where repositoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param repositoryId the repository ID
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByRepositoryId(long repositoryId)
@@ -2146,10 +2146,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where repositoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library folder where repositoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param repositoryId the repository ID
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByRepositoryId(long repositoryId,
@@ -2231,11 +2231,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @return the matching d l folders
+	 * @return the matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByG_P(long groupId, long parentFolderId)
@@ -2245,7 +2245,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns a range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2253,9 +2253,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByG_P(long groupId, long parentFolderId,
@@ -2264,7 +2264,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2272,10 +2272,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders
+	 * @return the ordered range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByG_P(long groupId, long parentFolderId,
@@ -2358,7 +2358,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the first d l folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the first document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2367,8 +2367,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the first matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByG_P_First(long groupId, long parentFolderId,
@@ -2398,7 +2398,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the last d l folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the last document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2407,8 +2407,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the last matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByG_P_Last(long groupId, long parentFolderId,
@@ -2440,18 +2440,18 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] findByG_P_PrevAndNext(long folderId, long groupId,
@@ -2593,11 +2593,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @return the matching d l folders that the user has permission to view
+	 * @return the matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByG_P(long groupId, long parentFolderId)
@@ -2607,7 +2607,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2615,9 +2615,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders that the user has permission to view
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByG_P(long groupId, long parentFolderId,
@@ -2626,7 +2626,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2634,10 +2634,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders that the user has permission to view
+	 * @return the ordered range of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> filterFindByG_P(long groupId, long parentFolderId,
@@ -2720,14 +2720,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set of d l folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] filterFindByG_P_PrevAndNext(long folderId, long groupId,
@@ -2901,11 +2901,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders where parentFolderId = &#63; and name = &#63;.
+	 * Returns all the document library folders where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the matching d l folders
+	 * @return the matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByP_N(long parentFolderId, String name)
@@ -2915,7 +2915,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders where parentFolderId = &#63; and name = &#63;.
+	 * Returns a range of all the document library folders where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2923,9 +2923,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of matching d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByP_N(long parentFolderId, String name,
@@ -2934,7 +2934,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders where parentFolderId = &#63; and name = &#63;.
+	 * Returns an ordered range of all the document library folders where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2942,10 +2942,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l folders
+	 * @return the ordered range of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findByP_N(long parentFolderId, String name,
@@ -3040,7 +3040,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the first d l folder in the ordered set where parentFolderId = &#63; and name = &#63;.
+	 * Returns the first document library folder in the ordered set where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3049,8 +3049,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the first matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByP_N_First(long parentFolderId, String name,
@@ -3080,7 +3080,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the last d l folder in the ordered set where parentFolderId = &#63; and name = &#63;.
+	 * Returns the last document library folder in the ordered set where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3089,8 +3089,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the last matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByP_N_Last(long parentFolderId, String name,
@@ -3122,18 +3122,18 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folders before and after the current d l folder in the ordered set where parentFolderId = &#63; and name = &#63;.
+	 * Returns the document library folders before and after the current document library folder in the ordered set where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param folderId the primary key of the current d l folder
+	 * @param folderId the primary key of the current document library folder
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a d l folder with the primary key could not be found
+	 * @return the previous, current, and next document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder[] findByP_N_PrevAndNext(long folderId, long parentFolderId,
@@ -3287,13 +3287,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
+	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the matching d l folder
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching d l folder could not be found
+	 * @return the matching document library folder
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder findByG_P_N(long groupId, long parentFolderId, String name)
@@ -3327,12 +3327,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByG_P_N(long groupId, long parentFolderId, String name)
@@ -3341,12 +3341,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the d l folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the matching d l folder, or <code>null</code> if a matching d l folder could not be found
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFolder fetchByG_P_N(long groupId, long parentFolderId,
@@ -3451,9 +3451,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns all the d l folders.
+	 * Returns all the document library folders.
 	 *
-	 * @return the d l folders
+	 * @return the document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findAll() throws SystemException {
@@ -3461,15 +3461,15 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns a range of all the d l folders.
+	 * Returns a range of all the document library folders.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
-	 * @return the range of d l folders
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findAll(int start, int end) throws SystemException {
@@ -3477,16 +3477,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l folders.
+	 * Returns an ordered range of all the document library folders.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l folders
-	 * @param end the upper bound of the range of d l folders (not inclusive)
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d l folders
+	 * @return the ordered range of document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFolder> findAll(int start, int end,
@@ -3559,7 +3559,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders where uuid = &#63; from the database.
+	 * Removes all the document library folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @throws SystemException if a system exception occurred
@@ -3571,7 +3571,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the document library folder where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -3585,7 +3585,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders where groupId = &#63; from the database.
+	 * Removes all the document library folders where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @throws SystemException if a system exception occurred
@@ -3597,7 +3597,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders where companyId = &#63; from the database.
+	 * Removes all the document library folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
@@ -3609,7 +3609,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder where repositoryId = &#63; from the database.
+	 * Removes the document library folder where repositoryId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
 	 * @throws SystemException if a system exception occurred
@@ -3622,7 +3622,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders where groupId = &#63; and parentFolderId = &#63; from the database.
+	 * Removes all the document library folders where groupId = &#63; and parentFolderId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
@@ -3636,7 +3636,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders where parentFolderId = &#63; and name = &#63; from the database.
+	 * Removes all the document library folders where parentFolderId = &#63; and name = &#63; from the database.
 	 *
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
@@ -3650,7 +3650,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the d l folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; from the database.
+	 * Removes the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
@@ -3665,7 +3665,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes all the d l folders from the database.
+	 * Removes all the document library folders from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3676,10 +3676,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where uuid = &#63;.
+	 * Returns the number of document library folders where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByUuid(String uuid) throws SystemException {
@@ -3741,11 +3741,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of document library folders where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByUUID_G(String uuid, long groupId)
@@ -3812,10 +3812,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where groupId = &#63;.
+	 * Returns the number of document library folders where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByGroupId(long groupId) throws SystemException {
@@ -3865,10 +3865,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders that the user has permission to view where groupId = &#63;.
+	 * Returns the number of document library folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d l folders that the user has permission to view
+	 * @return the number of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByGroupId(long groupId) throws SystemException {
@@ -3912,10 +3912,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where companyId = &#63;.
+	 * Returns the number of document library folders where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByCompanyId(long companyId) throws SystemException {
@@ -3965,10 +3965,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where repositoryId = &#63;.
+	 * Returns the number of document library folders where repositoryId = &#63;.
 	 *
 	 * @param repositoryId the repository ID
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByRepositoryId(long repositoryId) throws SystemException {
@@ -4018,11 +4018,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the number of document library folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_P(long groupId, long parentFolderId)
@@ -4077,11 +4077,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 * Returns the number of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
-	 * @return the number of matching d l folders that the user has permission to view
+	 * @return the number of matching document library folders that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_P(long groupId, long parentFolderId)
@@ -4130,11 +4130,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where parentFolderId = &#63; and name = &#63;.
+	 * Returns the number of document library folders where parentFolderId = &#63; and name = &#63;.
 	 *
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByP_N(long parentFolderId, String name)
@@ -4201,12 +4201,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders where groupId = &#63; and parentFolderId = &#63; and name = &#63;.
+	 * Returns the number of document library folders where groupId = &#63; and parentFolderId = &#63; and name = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
-	 * @return the number of matching d l folders
+	 * @return the number of matching document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_P_N(long groupId, long parentFolderId, String name)
@@ -4277,9 +4277,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Returns the number of d l folders.
+	 * Returns the number of document library folders.
 	 *
-	 * @return the number of d l folders
+	 * @return the number of document library folders
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -4317,7 +4317,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Initializes the d l folder persistence.
+	 * Initializes the document library folder persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(

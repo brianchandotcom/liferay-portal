@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the d l file entry type local service.
+ * The interface for the document library file entry type local service.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
@@ -39,14 +39,14 @@ public interface DLFileEntryTypeLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the d l file entry type local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d l file entry type to the database. Also notifies the appropriate model listeners.
+	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryType the d l file entry type
-	* @return the d l file entry type that was added
+	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addDLFileEntryType(
@@ -54,19 +54,19 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new d l file entry type with the primary key. Does not add the d l file entry type to the database.
+	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	*
-	* @param fileEntryTypeId the primary key for the new d l file entry type
-	* @return the new d l file entry type
+	* @param fileEntryTypeId the primary key for the new document library file entry type
+	* @return the new document library file entry type
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType createDLFileEntryType(
 		long fileEntryTypeId);
 
 	/**
-	* Deletes the d l file entry type with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileEntryTypeId the primary key of the d l file entry type
-	* @throws PortalException if a d l file entry type with the primary key could not be found
+	* @param fileEntryTypeId the primary key of the document library file entry type
+	* @throws PortalException if a document library file entry type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntryType(long fileEntryTypeId)
@@ -74,9 +74,9 @@ public interface DLFileEntryTypeLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the d l file entry type from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryType the d l file entry type
+	* @param dlFileEntryType the document library file entry type
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntryType(
@@ -146,11 +146,11 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l file entry type with the primary key.
+	* Returns the document library file entry type with the primary key.
 	*
-	* @param fileEntryTypeId the primary key of the d l file entry type
-	* @return the d l file entry type
-	* @throws PortalException if a d l file entry type with the primary key could not be found
+	* @param fileEntryTypeId the primary key of the document library file entry type
+	* @return the document library file entry type
+	* @throws PortalException if a document library file entry type with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -160,15 +160,15 @@ public interface DLFileEntryTypeLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l file entry types.
+	* Returns a range of all the document library file entry types.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file entry types
-	* @param end the upper bound of the range of d l file entry types (not inclusive)
-	* @return the range of d l file entry types
+	* @param start the lower bound of the range of document library file entry types
+	* @param end the upper bound of the range of document library file entry types (not inclusive)
+	* @return the range of document library file entry types
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -177,9 +177,9 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l file entry types.
+	* Returns the number of document library file entry types.
 	*
-	* @return the number of d l file entry types
+	* @return the number of document library file entry types
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -187,10 +187,10 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file entry type in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry type in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryType the d l file entry type
-	* @return the d l file entry type that was updated
+	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(
@@ -198,11 +198,11 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file entry type in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry type in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryType the d l file entry type
-	* @param merge whether to merge the d l file entry type with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l file entry type that was updated
+	* @param dlFileEntryType the document library file entry type
+	* @param merge whether to merge the document library file entry type with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library file entry type that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(

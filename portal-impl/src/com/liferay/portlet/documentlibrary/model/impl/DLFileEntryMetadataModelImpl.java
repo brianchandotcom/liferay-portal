@@ -51,7 +51,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l file entry metadata model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library file entry metadata model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileEntryMetadata";
 	public static final Object[][] TABLE_COLUMNS = {

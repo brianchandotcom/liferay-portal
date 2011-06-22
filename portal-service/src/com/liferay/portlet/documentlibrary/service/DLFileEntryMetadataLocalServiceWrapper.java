@@ -31,10 +31,10 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Adds the d l file entry metadata to the database. Also notifies the appropriate model listeners.
+	* Adds the document library file entry metadata to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryMetadata the d l file entry metadata
-	* @return the d l file entry metadata that was added
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata addDLFileEntryMetadata(
@@ -44,10 +44,10 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Creates a new d l file entry metadata with the primary key. Does not add the d l file entry metadata to the database.
+	* Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
 	*
-	* @param fileEntryMetadataId the primary key for the new d l file entry metadata
-	* @return the new d l file entry metadata
+	* @param fileEntryMetadataId the primary key for the new document library file entry metadata
+	* @return the new document library file entry metadata
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata createDLFileEntryMetadata(
 		long fileEntryMetadataId) {
@@ -55,10 +55,10 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d l file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileEntryMetadataId the primary key of the d l file entry metadata
-	* @throws PortalException if a d l file entry metadata with the primary key could not be found
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @throws PortalException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntryMetadata(long fileEntryMetadataId)
@@ -68,9 +68,9 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d l file entry metadata from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry metadata from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryMetadata the d l file entry metadata
+	* @param dlFileEntryMetadata the document library file entry metadata
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntryMetadata(
@@ -152,11 +152,11 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Returns the d l file entry metadata with the primary key.
+	* Returns the document library file entry metadata with the primary key.
 	*
-	* @param fileEntryMetadataId the primary key of the d l file entry metadata
-	* @return the d l file entry metadata
-	* @throws PortalException if a d l file entry metadata with the primary key could not be found
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata
+	* @throws PortalException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getDLFileEntryMetadata(
@@ -167,15 +167,15 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas.
+	* Returns a range of all the document library file entry metadatas.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getDLFileEntryMetadatas(
@@ -186,9 +186,9 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas.
+	* Returns the number of document library file entry metadatas.
 	*
-	* @return the number of d l file entry metadatas
+	* @return the number of document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public int getDLFileEntryMetadatasCount()
@@ -197,10 +197,10 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Updates the d l file entry metadata in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry metadata in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryMetadata the d l file entry metadata
-	* @return the d l file entry metadata that was updated
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateDLFileEntryMetadata(
@@ -210,11 +210,11 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Updates the d l file entry metadata in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry metadata in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntryMetadata the d l file entry metadata
-	* @param merge whether to merge the d l file entry metadata with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l file entry metadata that was updated
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @param merge whether to merge the document library file entry metadata with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library file entry metadata that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateDLFileEntryMetadata(

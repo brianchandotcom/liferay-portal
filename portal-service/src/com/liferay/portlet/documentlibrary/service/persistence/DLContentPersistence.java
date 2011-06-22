@@ -20,7 +20,7 @@ import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 
 /**
- * The persistence interface for the d l content service.
+ * The persistence interface for the document library content service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -35,40 +35,40 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLContentUtil} to access the d l content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLContentUtil} to access the document library content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
 
 	/**
-	* Caches the d l content in the entity cache if it is enabled.
+	* Caches the document library content in the entity cache if it is enabled.
 	*
-	* @param dlContent the d l content
+	* @param dlContent the document library content
 	*/
 	public void cacheResult(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
 
 	/**
-	* Caches the d l contents in the entity cache if it is enabled.
+	* Caches the document library contents in the entity cache if it is enabled.
 	*
-	* @param dlContents the d l contents
+	* @param dlContents the document library contents
 	*/
 	public void cacheResult(
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> dlContents);
 
 	/**
-	* Creates a new d l content with the primary key. Does not add the d l content to the database.
+	* Creates a new document library content with the primary key. Does not add the document library content to the database.
 	*
-	* @param contentId the primary key for the new d l content
-	* @return the new d l content
+	* @param contentId the primary key for the new document library content
+	* @return the new document library content
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent create(
 		long contentId);
 
 	/**
-	* Removes the d l content with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param contentId the primary key of the d l content
-	* @return the d l content that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a d l content with the primary key could not be found
+	* @param contentId the primary key of the document library content
+	* @return the document library content that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent remove(
@@ -82,11 +82,11 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l content with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
+	* Returns the document library content with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
 	*
-	* @param contentId the primary key of the d l content
-	* @return the d l content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a d l content with the primary key could not be found
+	* @param contentId the primary key of the document library content
+	* @return the document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByPrimaryKey(
@@ -95,10 +95,10 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns the d l content with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param contentId the primary key of the d l content
-	* @return the d l content, or <code>null</code> if a d l content with the primary key could not be found
+	* @param contentId the primary key of the document library content
+	* @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByPrimaryKey(
@@ -106,13 +106,13 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns all the document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
-	* @return the matching d l contents
+	* @return the matching document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_P_R_P(
@@ -121,7 +121,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns a range of all the document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -131,9 +131,9 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
-	* @param start the lower bound of the range of d l contents
-	* @param end the upper bound of the range of d l contents (not inclusive)
-	* @return the range of matching d l contents
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of matching document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_P_R_P(
@@ -142,7 +142,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns an ordered range of all the document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -152,10 +152,10 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
-	* @param start the lower bound of the range of d l contents
-	* @param end the upper bound of the range of d l contents (not inclusive)
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l contents
+	* @return the ordered range of matching document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_P_R_P(
@@ -165,7 +165,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first d l content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns the first document library content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -176,8 +176,8 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @return the first matching document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_P_R_P_First(
@@ -188,7 +188,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns the last d l content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns the last document library content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -199,8 +199,8 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @return the last matching document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_P_R_P_Last(
@@ -211,20 +211,20 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns the d l contents before and after the current d l content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param contentId the primary key of the current d l content
+	* @param contentId the primary key of the current document library content
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a d l content with the primary key could not be found
+	* @return the previous, current, and next document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent[] findByC_P_R_P_PrevAndNext(
@@ -235,15 +235,15 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns the d l content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
+	* Returns the document library content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
-	* @return the matching d l content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching d l content could not be found
+	* @return the matching document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_P_R_P_V(
@@ -253,14 +253,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns the d l content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the document library content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
-	* @return the matching d l content, or <code>null</code> if a matching d l content could not be found
+	* @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_P_R_P_V(
@@ -269,14 +269,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the document library content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
-	* @return the matching d l content, or <code>null</code> if a matching d l content could not be found
+	* @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_P_R_P_V(
@@ -286,24 +286,24 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the d l contents.
+	* Returns all the document library contents.
 	*
-	* @return the d l contents
+	* @return the document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l contents.
+	* Returns a range of all the document library contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l contents
-	* @param end the upper bound of the range of d l contents (not inclusive)
-	* @return the range of d l contents
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
@@ -311,16 +311,16 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the d l contents.
+	* Returns an ordered range of all the document library contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l contents
-	* @param end the upper bound of the range of d l contents (not inclusive)
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d l contents
+	* @return the ordered range of document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
@@ -329,7 +329,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; from the database.
+	* Removes all the document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
@@ -342,7 +342,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the d l content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
+	* Removes the document library content where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
@@ -357,7 +357,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Removes all the d l contents from the database.
+	* Removes all the document library contents from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
@@ -365,13 +365,13 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
+	* Returns the number of document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
-	* @return the number of matching d l contents
+	* @return the number of matching document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByC_P_R_P(long companyId, java.lang.String portletId,
@@ -379,14 +379,14 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
+	* Returns the number of document library contents where companyId = &#63; and portletId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
 	*
 	* @param companyId the company ID
 	* @param portletId the portlet ID
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
-	* @return the number of matching d l contents
+	* @return the number of matching document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByC_P_R_P_V(long companyId, java.lang.String portletId,
@@ -394,9 +394,9 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l contents.
+	* Returns the number of document library contents.
 	*
-	* @return the number of d l contents
+	* @return the number of document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countAll()

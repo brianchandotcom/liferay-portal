@@ -37,117 +37,117 @@ public class DLFolderWrapper implements DLFolder {
 	}
 
 	/**
-	* Returns the primary key of this d l folder.
+	* Returns the primary key of this document library folder.
 	*
-	* @return the primary key of this d l folder
+	* @return the primary key of this document library folder
 	*/
 	public long getPrimaryKey() {
 		return _dlFolder.getPrimaryKey();
 	}
 
 	/**
-	* Sets the primary key of this d l folder.
+	* Sets the primary key of this document library folder.
 	*
-	* @param primaryKey the primary key of this d l folder
+	* @param primaryKey the primary key of this document library folder
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_dlFolder.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Returns the uuid of this d l folder.
+	* Returns the uuid of this document library folder.
 	*
-	* @return the uuid of this d l folder
+	* @return the uuid of this document library folder
 	*/
 	public java.lang.String getUuid() {
 		return _dlFolder.getUuid();
 	}
 
 	/**
-	* Sets the uuid of this d l folder.
+	* Sets the uuid of this document library folder.
 	*
-	* @param uuid the uuid of this d l folder
+	* @param uuid the uuid of this document library folder
 	*/
 	public void setUuid(java.lang.String uuid) {
 		_dlFolder.setUuid(uuid);
 	}
 
 	/**
-	* Returns the folder ID of this d l folder.
+	* Returns the folder ID of this document library folder.
 	*
-	* @return the folder ID of this d l folder
+	* @return the folder ID of this document library folder
 	*/
 	public long getFolderId() {
 		return _dlFolder.getFolderId();
 	}
 
 	/**
-	* Sets the folder ID of this d l folder.
+	* Sets the folder ID of this document library folder.
 	*
-	* @param folderId the folder ID of this d l folder
+	* @param folderId the folder ID of this document library folder
 	*/
 	public void setFolderId(long folderId) {
 		_dlFolder.setFolderId(folderId);
 	}
 
 	/**
-	* Returns the group ID of this d l folder.
+	* Returns the group ID of this document library folder.
 	*
-	* @return the group ID of this d l folder
+	* @return the group ID of this document library folder
 	*/
 	public long getGroupId() {
 		return _dlFolder.getGroupId();
 	}
 
 	/**
-	* Sets the group ID of this d l folder.
+	* Sets the group ID of this document library folder.
 	*
-	* @param groupId the group ID of this d l folder
+	* @param groupId the group ID of this document library folder
 	*/
 	public void setGroupId(long groupId) {
 		_dlFolder.setGroupId(groupId);
 	}
 
 	/**
-	* Returns the company ID of this d l folder.
+	* Returns the company ID of this document library folder.
 	*
-	* @return the company ID of this d l folder
+	* @return the company ID of this document library folder
 	*/
 	public long getCompanyId() {
 		return _dlFolder.getCompanyId();
 	}
 
 	/**
-	* Sets the company ID of this d l folder.
+	* Sets the company ID of this document library folder.
 	*
-	* @param companyId the company ID of this d l folder
+	* @param companyId the company ID of this document library folder
 	*/
 	public void setCompanyId(long companyId) {
 		_dlFolder.setCompanyId(companyId);
 	}
 
 	/**
-	* Returns the user ID of this d l folder.
+	* Returns the user ID of this document library folder.
 	*
-	* @return the user ID of this d l folder
+	* @return the user ID of this document library folder
 	*/
 	public long getUserId() {
 		return _dlFolder.getUserId();
 	}
 
 	/**
-	* Sets the user ID of this d l folder.
+	* Sets the user ID of this document library folder.
 	*
-	* @param userId the user ID of this d l folder
+	* @param userId the user ID of this document library folder
 	*/
 	public void setUserId(long userId) {
 		_dlFolder.setUserId(userId);
 	}
 
 	/**
-	* Returns the user uuid of this d l folder.
+	* Returns the user uuid of this document library folder.
 	*
-	* @return the user uuid of this d l folder
+	* @return the user uuid of this document library folder
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.lang.String getUserUuid()
@@ -156,180 +156,180 @@ public class DLFolderWrapper implements DLFolder {
 	}
 
 	/**
-	* Sets the user uuid of this d l folder.
+	* Sets the user uuid of this document library folder.
 	*
-	* @param userUuid the user uuid of this d l folder
+	* @param userUuid the user uuid of this document library folder
 	*/
 	public void setUserUuid(java.lang.String userUuid) {
 		_dlFolder.setUserUuid(userUuid);
 	}
 
 	/**
-	* Returns the user name of this d l folder.
+	* Returns the user name of this document library folder.
 	*
-	* @return the user name of this d l folder
+	* @return the user name of this document library folder
 	*/
 	public java.lang.String getUserName() {
 		return _dlFolder.getUserName();
 	}
 
 	/**
-	* Sets the user name of this d l folder.
+	* Sets the user name of this document library folder.
 	*
-	* @param userName the user name of this d l folder
+	* @param userName the user name of this document library folder
 	*/
 	public void setUserName(java.lang.String userName) {
 		_dlFolder.setUserName(userName);
 	}
 
 	/**
-	* Returns the create date of this d l folder.
+	* Returns the create date of this document library folder.
 	*
-	* @return the create date of this d l folder
+	* @return the create date of this document library folder
 	*/
 	public java.util.Date getCreateDate() {
 		return _dlFolder.getCreateDate();
 	}
 
 	/**
-	* Sets the create date of this d l folder.
+	* Sets the create date of this document library folder.
 	*
-	* @param createDate the create date of this d l folder
+	* @param createDate the create date of this document library folder
 	*/
 	public void setCreateDate(java.util.Date createDate) {
 		_dlFolder.setCreateDate(createDate);
 	}
 
 	/**
-	* Returns the modified date of this d l folder.
+	* Returns the modified date of this document library folder.
 	*
-	* @return the modified date of this d l folder
+	* @return the modified date of this document library folder
 	*/
 	public java.util.Date getModifiedDate() {
 		return _dlFolder.getModifiedDate();
 	}
 
 	/**
-	* Sets the modified date of this d l folder.
+	* Sets the modified date of this document library folder.
 	*
-	* @param modifiedDate the modified date of this d l folder
+	* @param modifiedDate the modified date of this document library folder
 	*/
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_dlFolder.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Returns the repository ID of this d l folder.
+	* Returns the repository ID of this document library folder.
 	*
-	* @return the repository ID of this d l folder
+	* @return the repository ID of this document library folder
 	*/
 	public long getRepositoryId() {
 		return _dlFolder.getRepositoryId();
 	}
 
 	/**
-	* Sets the repository ID of this d l folder.
+	* Sets the repository ID of this document library folder.
 	*
-	* @param repositoryId the repository ID of this d l folder
+	* @param repositoryId the repository ID of this document library folder
 	*/
 	public void setRepositoryId(long repositoryId) {
 		_dlFolder.setRepositoryId(repositoryId);
 	}
 
 	/**
-	* Returns the mount point of this d l folder.
+	* Returns the mount point of this document library folder.
 	*
-	* @return the mount point of this d l folder
+	* @return the mount point of this document library folder
 	*/
 	public boolean getMountPoint() {
 		return _dlFolder.getMountPoint();
 	}
 
 	/**
-	* Determines if this d l folder is mount point.
+	* Determines if this document library folder is mount point.
 	*
-	* @return <code>true</code> if this d l folder is mount point; <code>false</code> otherwise
+	* @return <code>true</code> if this document library folder is mount point; <code>false</code> otherwise
 	*/
 	public boolean isMountPoint() {
 		return _dlFolder.isMountPoint();
 	}
 
 	/**
-	* Sets whether this d l folder is mount point.
+	* Sets whether this document library folder is mount point.
 	*
-	* @param mountPoint the mount point of this d l folder
+	* @param mountPoint the mount point of this document library folder
 	*/
 	public void setMountPoint(boolean mountPoint) {
 		_dlFolder.setMountPoint(mountPoint);
 	}
 
 	/**
-	* Returns the parent folder ID of this d l folder.
+	* Returns the parent folder ID of this document library folder.
 	*
-	* @return the parent folder ID of this d l folder
+	* @return the parent folder ID of this document library folder
 	*/
 	public long getParentFolderId() {
 		return _dlFolder.getParentFolderId();
 	}
 
 	/**
-	* Sets the parent folder ID of this d l folder.
+	* Sets the parent folder ID of this document library folder.
 	*
-	* @param parentFolderId the parent folder ID of this d l folder
+	* @param parentFolderId the parent folder ID of this document library folder
 	*/
 	public void setParentFolderId(long parentFolderId) {
 		_dlFolder.setParentFolderId(parentFolderId);
 	}
 
 	/**
-	* Returns the name of this d l folder.
+	* Returns the name of this document library folder.
 	*
-	* @return the name of this d l folder
+	* @return the name of this document library folder
 	*/
 	public java.lang.String getName() {
 		return _dlFolder.getName();
 	}
 
 	/**
-	* Sets the name of this d l folder.
+	* Sets the name of this document library folder.
 	*
-	* @param name the name of this d l folder
+	* @param name the name of this document library folder
 	*/
 	public void setName(java.lang.String name) {
 		_dlFolder.setName(name);
 	}
 
 	/**
-	* Returns the description of this d l folder.
+	* Returns the description of this document library folder.
 	*
-	* @return the description of this d l folder
+	* @return the description of this document library folder
 	*/
 	public java.lang.String getDescription() {
 		return _dlFolder.getDescription();
 	}
 
 	/**
-	* Sets the description of this d l folder.
+	* Sets the description of this document library folder.
 	*
-	* @param description the description of this d l folder
+	* @param description the description of this document library folder
 	*/
 	public void setDescription(java.lang.String description) {
 		_dlFolder.setDescription(description);
 	}
 
 	/**
-	* Returns the last post date of this d l folder.
+	* Returns the last post date of this document library folder.
 	*
-	* @return the last post date of this d l folder
+	* @return the last post date of this document library folder
 	*/
 	public java.util.Date getLastPostDate() {
 		return _dlFolder.getLastPostDate();
 	}
 
 	/**
-	* Sets the last post date of this d l folder.
+	* Sets the last post date of this document library folder.
 	*
-	* @param lastPostDate the last post date of this d l folder
+	* @param lastPostDate the last post date of this document library folder
 	*/
 	public void setLastPostDate(java.util.Date lastPostDate) {
 		_dlFolder.setLastPostDate(lastPostDate);

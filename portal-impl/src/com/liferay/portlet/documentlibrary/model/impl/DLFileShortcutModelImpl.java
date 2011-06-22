@@ -60,7 +60,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l file shortcut model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileShortcut} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library file shortcut model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileShortcut} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileShortcut";
 	public static final Object[][] TABLE_COLUMNS = {

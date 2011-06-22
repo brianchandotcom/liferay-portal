@@ -26,7 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import java.util.List;
 
 /**
- * The persistence utility for the d l file version service. This utility wraps {@link DLFileVersionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the document library file version service. This utility wraps {@link DLFileVersionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -119,9 +119,9 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Caches the d l file version in the entity cache if it is enabled.
+	* Caches the document library file version in the entity cache if it is enabled.
 	*
-	* @param dlFileVersion the d l file version
+	* @param dlFileVersion the document library file version
 	*/
 	public static void cacheResult(
 		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
@@ -129,9 +129,9 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Caches the d l file versions in the entity cache if it is enabled.
+	* Caches the document library file versions in the entity cache if it is enabled.
 	*
-	* @param dlFileVersions the d l file versions
+	* @param dlFileVersions the document library file versions
 	*/
 	public static void cacheResult(
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> dlFileVersions) {
@@ -139,10 +139,10 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Creates a new d l file version with the primary key. Does not add the d l file version to the database.
+	* Creates a new document library file version with the primary key. Does not add the document library file version to the database.
 	*
-	* @param fileVersionId the primary key for the new d l file version
-	* @return the new d l file version
+	* @param fileVersionId the primary key for the new document library file version
+	* @return the new document library file version
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion create(
 		long fileVersionId) {
@@ -150,11 +150,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Removes the d l file version with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileVersionId the primary key of the d l file version
-	* @return the d l file version that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	* @param fileVersionId the primary key of the document library file version
+	* @return the document library file version that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion remove(
@@ -172,11 +172,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file version with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
+	* Returns the document library file version with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	*
-	* @param fileVersionId the primary key of the d l file version
-	* @return the d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	* @param fileVersionId the primary key of the document library file version
+	* @return the document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByPrimaryKey(
@@ -187,10 +187,10 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file version with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param fileVersionId the primary key of the d l file version
-	* @return the d l file version, or <code>null</code> if a d l file version with the primary key could not be found
+	* @param fileVersionId the primary key of the document library file version
+	* @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByPrimaryKey(
@@ -200,10 +200,10 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns all the d l file versions where fileEntryId = &#63;.
+	* Returns all the document library file versions where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the matching d l file versions
+	* @return the matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
@@ -213,16 +213,16 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file versions where fileEntryId = &#63;.
+	* Returns a range of all the document library file versions where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
-	* @return the range of matching d l file versions
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @return the range of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
@@ -232,17 +232,17 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file versions where fileEntryId = &#63;.
+	* Returns an ordered range of all the document library file versions where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file versions
+	* @return the ordered range of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
@@ -254,7 +254,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the first d l file version in the ordered set where fileEntryId = &#63;.
+	* Returns the first document library file version in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -262,8 +262,8 @@ public class DLFileVersionUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	* @return the first matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_First(
@@ -276,7 +276,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the last d l file version in the ordered set where fileEntryId = &#63;.
+	* Returns the last document library file version in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -284,8 +284,8 @@ public class DLFileVersionUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	* @return the last matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_Last(
@@ -298,17 +298,17 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file versions before and after the current d l file version in the ordered set where fileEntryId = &#63;.
+	* Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileVersionId the primary key of the current d l file version
+	* @param fileVersionId the primary key of the current document library file version
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	* @return the previous, current, and next document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByFileEntryId_PrevAndNext(
@@ -322,12 +322,12 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file version where fileEntryId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
+	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
-	* @return the matching d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	* @return the matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_V(
@@ -338,11 +338,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
-	* @return the matching d l file version, or <code>null</code> if a matching d l file version could not be found
+	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_V(
@@ -352,11 +352,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
-	* @return the matching d l file version, or <code>null</code> if a matching d l file version could not be found
+	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_V(
@@ -367,11 +367,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	* Returns all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param status the status
-	* @return the matching d l file versions
+	* @return the matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
@@ -381,7 +381,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	* Returns a range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -389,9 +389,9 @@ public class DLFileVersionUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
-	* @return the range of matching d l file versions
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @return the range of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
@@ -401,7 +401,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	* Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -409,10 +409,10 @@ public class DLFileVersionUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param status the status
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file versions
+	* @return the ordered range of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
@@ -424,7 +424,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the first d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	* Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -433,8 +433,8 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	* @return the first matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_First(
@@ -447,7 +447,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the last d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	* Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -456,8 +456,8 @@ public class DLFileVersionUtil {
 	* @param fileEntryId the file entry ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	* @return the last matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_Last(
@@ -470,18 +470,18 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the d l file versions before and after the current d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	* Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileVersionId the primary key of the current d l file version
+	* @param fileVersionId the primary key of the current document library file version
 	* @param fileEntryId the file entry ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file version
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	* @return the previous, current, and next document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByF_S_PrevAndNext(
@@ -495,9 +495,9 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns all the d l file versions.
+	* Returns all the document library file versions.
 	*
-	* @return the d l file versions
+	* @return the document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll()
@@ -506,15 +506,15 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file versions.
+	* Returns a range of all the document library file versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
-	* @return the range of d l file versions
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @return the range of document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll(
@@ -524,16 +524,16 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file versions.
+	* Returns an ordered range of all the document library file versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file versions
-	* @param end the upper bound of the range of d l file versions (not inclusive)
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d l file versions
+	* @return the ordered range of document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll(
@@ -544,7 +544,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Removes all the d l file versions where fileEntryId = &#63; from the database.
+	* Removes all the document library file versions where fileEntryId = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	* @throws SystemException if a system exception occurred
@@ -555,7 +555,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Removes the d l file version where fileEntryId = &#63; and version = &#63; from the database.
+	* Removes the document library file version where fileEntryId = &#63; and version = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
@@ -568,7 +568,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Removes all the d l file versions where fileEntryId = &#63; and status = &#63; from the database.
+	* Removes all the document library file versions where fileEntryId = &#63; and status = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	* @param status the status
@@ -580,7 +580,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Removes all the d l file versions from the database.
+	* Removes all the document library file versions from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
@@ -590,10 +590,10 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the number of d l file versions where fileEntryId = &#63;.
+	* Returns the number of document library file versions where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the number of matching d l file versions
+	* @return the number of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByFileEntryId(long fileEntryId)
@@ -602,11 +602,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the number of d l file versions where fileEntryId = &#63; and version = &#63;.
+	* Returns the number of document library file versions where fileEntryId = &#63; and version = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param version the version
-	* @return the number of matching d l file versions
+	* @return the number of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByF_V(long fileEntryId, java.lang.String version)
@@ -615,11 +615,11 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the number of d l file versions where fileEntryId = &#63; and status = &#63;.
+	* Returns the number of document library file versions where fileEntryId = &#63; and status = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param status the status
-	* @return the number of matching d l file versions
+	* @return the number of matching document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByF_S(long fileEntryId, int status)
@@ -628,9 +628,9 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	* Returns the number of d l file versions.
+	* Returns the number of document library file versions.
 	*
-	* @return the number of d l file versions
+	* @return the number of document library file versions
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countAll()

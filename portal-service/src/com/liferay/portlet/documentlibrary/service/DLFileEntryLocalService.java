@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the d l file entry local service.
+ * The interface for the document library file entry local service.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
@@ -39,14 +39,14 @@ public interface DLFileEntryLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFileEntryLocalServiceUtil} to access the d l file entry local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLFileEntryLocalServiceUtil} to access the document library file entry local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d l file entry to the database. Also notifies the appropriate model listeners.
+	* Adds the document library file entry to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntry the d l file entry
-	* @return the d l file entry that was added
+	* @param dlFileEntry the document library file entry
+	* @return the document library file entry that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry addDLFileEntry(
@@ -54,19 +54,19 @@ public interface DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new d l file entry with the primary key. Does not add the d l file entry to the database.
+	* Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
 	*
-	* @param fileEntryId the primary key for the new d l file entry
-	* @return the new d l file entry
+	* @param fileEntryId the primary key for the new document library file entry
+	* @return the new document library file entry
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry createDLFileEntry(
 		long fileEntryId);
 
 	/**
-	* Deletes the d l file entry with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileEntryId the primary key of the d l file entry
-	* @throws PortalException if a d l file entry with the primary key could not be found
+	* @param fileEntryId the primary key of the document library file entry
+	* @throws PortalException if a document library file entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntry(long fileEntryId)
@@ -74,9 +74,9 @@ public interface DLFileEntryLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the d l file entry from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file entry from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntry the d l file entry
+	* @param dlFileEntry the document library file entry
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileEntry(
@@ -146,11 +146,11 @@ public interface DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l file entry with the primary key.
+	* Returns the document library file entry with the primary key.
 	*
-	* @param fileEntryId the primary key of the d l file entry
-	* @return the d l file entry
-	* @throws PortalException if a d l file entry with the primary key could not be found
+	* @param fileEntryId the primary key of the document library file entry
+	* @return the document library file entry
+	* @throws PortalException if a document library file entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -160,12 +160,12 @@ public interface DLFileEntryLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l file entry with the UUID in the group.
+	* Returns the document library file entry with the UUID in the group.
 	*
-	* @param uuid the UUID of d l file entry
-	* @param groupId the group id of the d l file entry
-	* @return the d l file entry
-	* @throws PortalException if a d l file entry with the UUID in the group could not be found
+	* @param uuid the UUID of document library file entry
+	* @param groupId the group id of the document library file entry
+	* @return the document library file entry
+	* @throws PortalException if a document library file entry with the UUID in the group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -175,15 +175,15 @@ public interface DLFileEntryLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l file entries.
+	* Returns a range of all the document library file entries.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file entries
-	* @param end the upper bound of the range of d l file entries (not inclusive)
-	* @return the range of d l file entries
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @return the range of document library file entries
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -192,9 +192,9 @@ public interface DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l file entries.
+	* Returns the number of document library file entries.
 	*
-	* @return the number of d l file entries
+	* @return the number of document library file entries
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -202,10 +202,10 @@ public interface DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file entry in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntry the d l file entry
-	* @return the d l file entry that was updated
+	* @param dlFileEntry the document library file entry
+	* @return the document library file entry that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateDLFileEntry(
@@ -213,11 +213,11 @@ public interface DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file entry in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileEntry the d l file entry
-	* @param merge whether to merge the d l file entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l file entry that was updated
+	* @param dlFileEntry the document library file entry
+	* @param merge whether to merge the document library file entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library file entry that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateDLFileEntry(

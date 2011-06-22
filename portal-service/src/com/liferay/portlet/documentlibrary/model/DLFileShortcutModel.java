@@ -45,263 +45,263 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l file shortcut model instance should use the {@link DLFileShortcut} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library file shortcut model instance should use the {@link DLFileShortcut} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l file shortcut.
+	 * Returns the primary key of this document library file shortcut.
 	 *
-	 * @return the primary key of this d l file shortcut
+	 * @return the primary key of this document library file shortcut
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l file shortcut.
+	 * Sets the primary key of this document library file shortcut.
 	 *
-	 * @param primaryKey the primary key of this d l file shortcut
+	 * @param primaryKey the primary key of this document library file shortcut
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d l file shortcut.
+	 * Returns the uuid of this document library file shortcut.
 	 *
-	 * @return the uuid of this d l file shortcut
+	 * @return the uuid of this document library file shortcut
 	 */
 	@AutoEscape
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d l file shortcut.
+	 * Sets the uuid of this document library file shortcut.
 	 *
-	 * @param uuid the uuid of this d l file shortcut
+	 * @param uuid the uuid of this document library file shortcut
 	 */
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the file shortcut ID of this d l file shortcut.
+	 * Returns the file shortcut ID of this document library file shortcut.
 	 *
-	 * @return the file shortcut ID of this d l file shortcut
+	 * @return the file shortcut ID of this document library file shortcut
 	 */
 	public long getFileShortcutId();
 
 	/**
-	 * Sets the file shortcut ID of this d l file shortcut.
+	 * Sets the file shortcut ID of this document library file shortcut.
 	 *
-	 * @param fileShortcutId the file shortcut ID of this d l file shortcut
+	 * @param fileShortcutId the file shortcut ID of this document library file shortcut
 	 */
 	public void setFileShortcutId(long fileShortcutId);
 
 	/**
-	 * Returns the group ID of this d l file shortcut.
+	 * Returns the group ID of this document library file shortcut.
 	 *
-	 * @return the group ID of this d l file shortcut
+	 * @return the group ID of this document library file shortcut
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l file shortcut.
+	 * Sets the group ID of this document library file shortcut.
 	 *
-	 * @param groupId the group ID of this d l file shortcut
+	 * @param groupId the group ID of this document library file shortcut
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l file shortcut.
+	 * Returns the company ID of this document library file shortcut.
 	 *
-	 * @return the company ID of this d l file shortcut
+	 * @return the company ID of this document library file shortcut
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l file shortcut.
+	 * Sets the company ID of this document library file shortcut.
 	 *
-	 * @param companyId the company ID of this d l file shortcut
+	 * @param companyId the company ID of this document library file shortcut
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d l file shortcut.
+	 * Returns the user ID of this document library file shortcut.
 	 *
-	 * @return the user ID of this d l file shortcut
+	 * @return the user ID of this document library file shortcut
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d l file shortcut.
+	 * Sets the user ID of this document library file shortcut.
 	 *
-	 * @param userId the user ID of this d l file shortcut
+	 * @param userId the user ID of this document library file shortcut
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d l file shortcut.
+	 * Returns the user uuid of this document library file shortcut.
 	 *
-	 * @return the user uuid of this d l file shortcut
+	 * @return the user uuid of this document library file shortcut
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getUserUuid() throws SystemException;
 
 	/**
-	 * Sets the user uuid of this d l file shortcut.
+	 * Sets the user uuid of this document library file shortcut.
 	 *
-	 * @param userUuid the user uuid of this d l file shortcut
+	 * @param userUuid the user uuid of this document library file shortcut
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d l file shortcut.
+	 * Returns the user name of this document library file shortcut.
 	 *
-	 * @return the user name of this d l file shortcut
+	 * @return the user name of this document library file shortcut
 	 */
 	@AutoEscape
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d l file shortcut.
+	 * Sets the user name of this document library file shortcut.
 	 *
-	 * @param userName the user name of this d l file shortcut
+	 * @param userName the user name of this document library file shortcut
 	 */
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this d l file shortcut.
+	 * Returns the create date of this document library file shortcut.
 	 *
-	 * @return the create date of this d l file shortcut
+	 * @return the create date of this document library file shortcut
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d l file shortcut.
+	 * Sets the create date of this document library file shortcut.
 	 *
-	 * @param createDate the create date of this d l file shortcut
+	 * @param createDate the create date of this document library file shortcut
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this d l file shortcut.
+	 * Returns the modified date of this document library file shortcut.
 	 *
-	 * @return the modified date of this d l file shortcut
+	 * @return the modified date of this document library file shortcut
 	 */
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this d l file shortcut.
+	 * Sets the modified date of this document library file shortcut.
 	 *
-	 * @param modifiedDate the modified date of this d l file shortcut
+	 * @param modifiedDate the modified date of this document library file shortcut
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the repository ID of this d l file shortcut.
+	 * Returns the repository ID of this document library file shortcut.
 	 *
-	 * @return the repository ID of this d l file shortcut
+	 * @return the repository ID of this document library file shortcut
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this d l file shortcut.
+	 * Sets the repository ID of this document library file shortcut.
 	 *
-	 * @param repositoryId the repository ID of this d l file shortcut
+	 * @param repositoryId the repository ID of this document library file shortcut
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the folder ID of this d l file shortcut.
+	 * Returns the folder ID of this document library file shortcut.
 	 *
-	 * @return the folder ID of this d l file shortcut
+	 * @return the folder ID of this document library file shortcut
 	 */
 	public long getFolderId();
 
 	/**
-	 * Sets the folder ID of this d l file shortcut.
+	 * Sets the folder ID of this document library file shortcut.
 	 *
-	 * @param folderId the folder ID of this d l file shortcut
+	 * @param folderId the folder ID of this document library file shortcut
 	 */
 	public void setFolderId(long folderId);
 
 	/**
-	 * Returns the to file entry ID of this d l file shortcut.
+	 * Returns the to file entry ID of this document library file shortcut.
 	 *
-	 * @return the to file entry ID of this d l file shortcut
+	 * @return the to file entry ID of this document library file shortcut
 	 */
 	public long getToFileEntryId();
 
 	/**
-	 * Sets the to file entry ID of this d l file shortcut.
+	 * Sets the to file entry ID of this document library file shortcut.
 	 *
-	 * @param toFileEntryId the to file entry ID of this d l file shortcut
+	 * @param toFileEntryId the to file entry ID of this document library file shortcut
 	 */
 	public void setToFileEntryId(long toFileEntryId);
 
 	/**
-	 * Returns the status of this d l file shortcut.
+	 * Returns the status of this document library file shortcut.
 	 *
-	 * @return the status of this d l file shortcut
+	 * @return the status of this document library file shortcut
 	 */
 	public int getStatus();
 
 	/**
-	 * Sets the status of this d l file shortcut.
+	 * Sets the status of this document library file shortcut.
 	 *
-	 * @param status the status of this d l file shortcut
+	 * @param status the status of this document library file shortcut
 	 */
 	public void setStatus(int status);
 
 	/**
-	 * Returns the status by user ID of this d l file shortcut.
+	 * Returns the status by user ID of this document library file shortcut.
 	 *
-	 * @return the status by user ID of this d l file shortcut
+	 * @return the status by user ID of this document library file shortcut
 	 */
 	public long getStatusByUserId();
 
 	/**
-	 * Sets the status by user ID of this d l file shortcut.
+	 * Sets the status by user ID of this document library file shortcut.
 	 *
-	 * @param statusByUserId the status by user ID of this d l file shortcut
+	 * @param statusByUserId the status by user ID of this document library file shortcut
 	 */
 	public void setStatusByUserId(long statusByUserId);
 
 	/**
-	 * Returns the status by user uuid of this d l file shortcut.
+	 * Returns the status by user uuid of this document library file shortcut.
 	 *
-	 * @return the status by user uuid of this d l file shortcut
+	 * @return the status by user uuid of this document library file shortcut
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getStatusByUserUuid() throws SystemException;
 
 	/**
-	 * Sets the status by user uuid of this d l file shortcut.
+	 * Sets the status by user uuid of this document library file shortcut.
 	 *
-	 * @param statusByUserUuid the status by user uuid of this d l file shortcut
+	 * @param statusByUserUuid the status by user uuid of this document library file shortcut
 	 */
 	public void setStatusByUserUuid(String statusByUserUuid);
 
 	/**
-	 * Returns the status by user name of this d l file shortcut.
+	 * Returns the status by user name of this document library file shortcut.
 	 *
-	 * @return the status by user name of this d l file shortcut
+	 * @return the status by user name of this document library file shortcut
 	 */
 	@AutoEscape
 	public String getStatusByUserName();
 
 	/**
-	 * Sets the status by user name of this d l file shortcut.
+	 * Sets the status by user name of this document library file shortcut.
 	 *
-	 * @param statusByUserName the status by user name of this d l file shortcut
+	 * @param statusByUserName the status by user name of this document library file shortcut
 	 */
 	public void setStatusByUserName(String statusByUserName);
 
 	/**
-	 * Returns the status date of this d l file shortcut.
+	 * Returns the status date of this document library file shortcut.
 	 *
-	 * @return the status date of this d l file shortcut
+	 * @return the status date of this document library file shortcut
 	 */
 	public Date getStatusDate();
 
 	/**
-	 * Sets the status date of this d l file shortcut.
+	 * Sets the status date of this document library file shortcut.
 	 *
-	 * @param statusDate the status date of this d l file shortcut
+	 * @param statusDate the status date of this document library file shortcut
 	 */
 	public void setStatusDate(Date statusDate);
 
@@ -311,30 +311,30 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public boolean getApproved();
 
 	/**
-	 * Determines if this d l file shortcut is approved.
+	 * Determines if this document library file shortcut is approved.
 	 *
-	 * @return <code>true</code> if this d l file shortcut is approved; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file shortcut is approved; <code>false</code> otherwise
 	 */
 	public boolean isApproved();
 
 	/**
-	 * Determines if this d l file shortcut is a draft.
+	 * Determines if this document library file shortcut is a draft.
 	 *
-	 * @return <code>true</code> if this d l file shortcut is a draft; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file shortcut is a draft; <code>false</code> otherwise
 	 */
 	public boolean isDraft();
 
 	/**
-	 * Determines if this d l file shortcut is expired.
+	 * Determines if this document library file shortcut is expired.
 	 *
-	 * @return <code>true</code> if this d l file shortcut is expired; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file shortcut is expired; <code>false</code> otherwise
 	 */
 	public boolean isExpired();
 
 	/**
-	 * Determines if this d l file shortcut is pending.
+	 * Determines if this document library file shortcut is pending.
 	 *
-	 * @return <code>true</code> if this d l file shortcut is pending; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file shortcut is pending; <code>false</code> otherwise
 	 */
 	public boolean isPending();
 

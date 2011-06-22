@@ -26,7 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import java.util.List;
 
 /**
- * The persistence utility for the d l file entry metadata service. This utility wraps {@link DLFileEntryMetadataPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the document library file entry metadata service. This utility wraps {@link DLFileEntryMetadataPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -122,9 +122,9 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Caches the d l file entry metadata in the entity cache if it is enabled.
+	* Caches the document library file entry metadata in the entity cache if it is enabled.
 	*
-	* @param dlFileEntryMetadata the d l file entry metadata
+	* @param dlFileEntryMetadata the document library file entry metadata
 	*/
 	public static void cacheResult(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
@@ -132,9 +132,9 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Caches the d l file entry metadatas in the entity cache if it is enabled.
+	* Caches the document library file entry metadatas in the entity cache if it is enabled.
 	*
-	* @param dlFileEntryMetadatas the d l file entry metadatas
+	* @param dlFileEntryMetadatas the document library file entry metadatas
 	*/
 	public static void cacheResult(
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> dlFileEntryMetadatas) {
@@ -142,10 +142,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Creates a new d l file entry metadata with the primary key. Does not add the d l file entry metadata to the database.
+	* Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
 	*
-	* @param fileEntryMetadataId the primary key for the new d l file entry metadata
-	* @return the new d l file entry metadata
+	* @param fileEntryMetadataId the primary key for the new document library file entry metadata
+	* @return the new document library file entry metadata
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata create(
 		long fileEntryMetadataId) {
@@ -153,11 +153,11 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes the d l file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileEntryMetadataId the primary key of the d l file entry metadata
-	* @return the d l file entry metadata that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata remove(
@@ -175,11 +175,11 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadata with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
+	* Returns the document library file entry metadata with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
 	*
-	* @param fileEntryMetadataId the primary key of the d l file entry metadata
-	* @return the d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByPrimaryKey(
@@ -190,10 +190,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadata with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param fileEntryMetadataId the primary key of the d l file entry metadata
-	* @return the d l file entry metadata, or <code>null</code> if a d l file entry metadata with the primary key could not be found
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata, or <code>null</code> if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchByPrimaryKey(
@@ -203,10 +203,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns all the d l file entry metadatas where uuid = &#63;.
+	* Returns all the document library file entry metadatas where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the matching d l file entry metadatas
+	* @return the matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByUuid(
@@ -216,16 +216,16 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas where uuid = &#63;.
+	* Returns a range of all the document library file entry metadatas where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of matching d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByUuid(
@@ -235,17 +235,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file entry metadatas where uuid = &#63;.
+	* Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file entry metadatas
+	* @return the ordered range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByUuid(
@@ -256,7 +256,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the first d l file entry metadata in the ordered set where uuid = &#63;.
+	* Returns the first document library file entry metadata in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -264,8 +264,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the first matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByUuid_First(
@@ -277,7 +277,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the last d l file entry metadata in the ordered set where uuid = &#63;.
+	* Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -285,8 +285,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the last matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByUuid_Last(
@@ -298,17 +298,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadatas before and after the current d l file entry metadata in the ordered set where uuid = &#63;.
+	* Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileEntryMetadataId the primary key of the current d l file entry metadata
+	* @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @return the previous, current, and next document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata[] findByUuid_PrevAndNext(
@@ -322,10 +322,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns all the d l file entry metadatas where fileEntryTypeId = &#63;.
+	* Returns all the document library file entry metadatas where fileEntryTypeId = &#63;.
 	*
 	* @param fileEntryTypeId the file entry type ID
-	* @return the matching d l file entry metadatas
+	* @return the matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryTypeId(
@@ -335,16 +335,16 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas where fileEntryTypeId = &#63;.
+	* Returns a range of all the document library file entry metadatas where fileEntryTypeId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryTypeId the file entry type ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of matching d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryTypeId(
@@ -355,17 +355,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file entry metadatas where fileEntryTypeId = &#63;.
+	* Returns an ordered range of all the document library file entry metadatas where fileEntryTypeId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryTypeId the file entry type ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file entry metadatas
+	* @return the ordered range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryTypeId(
@@ -378,7 +378,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the first d l file entry metadata in the ordered set where fileEntryTypeId = &#63;.
+	* Returns the first document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -386,8 +386,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileEntryTypeId the file entry type ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the first matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileEntryTypeId_First(
@@ -401,7 +401,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the last d l file entry metadata in the ordered set where fileEntryTypeId = &#63;.
+	* Returns the last document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -409,8 +409,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileEntryTypeId the file entry type ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the last matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileEntryTypeId_Last(
@@ -424,17 +424,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadatas before and after the current d l file entry metadata in the ordered set where fileEntryTypeId = &#63;.
+	* Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryTypeId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileEntryMetadataId the primary key of the current d l file entry metadata
+	* @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	* @param fileEntryTypeId the file entry type ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @return the previous, current, and next document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata[] findByFileEntryTypeId_PrevAndNext(
@@ -448,10 +448,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns all the d l file entry metadatas where fileEntryId = &#63;.
+	* Returns all the document library file entry metadatas where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the matching d l file entry metadatas
+	* @return the matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryId(
@@ -461,16 +461,16 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas where fileEntryId = &#63;.
+	* Returns a range of all the document library file entry metadatas where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of matching d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryId(
@@ -480,17 +480,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file entry metadatas where fileEntryId = &#63;.
+	* Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file entry metadatas
+	* @return the ordered range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileEntryId(
@@ -502,7 +502,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the first d l file entry metadata in the ordered set where fileEntryId = &#63;.
+	* Returns the first document library file entry metadata in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -510,8 +510,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the first matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileEntryId_First(
@@ -524,7 +524,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the last d l file entry metadata in the ordered set where fileEntryId = &#63;.
+	* Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -532,8 +532,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the last matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileEntryId_Last(
@@ -546,17 +546,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadatas before and after the current d l file entry metadata in the ordered set where fileEntryId = &#63;.
+	* Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileEntryMetadataId the primary key of the current d l file entry metadata
+	* @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @return the previous, current, and next document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata[] findByFileEntryId_PrevAndNext(
@@ -570,10 +570,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns all the d l file entry metadatas where fileVersionId = &#63;.
+	* Returns all the document library file entry metadatas where fileVersionId = &#63;.
 	*
 	* @param fileVersionId the file version ID
-	* @return the matching d l file entry metadatas
+	* @return the matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileVersionId(
@@ -583,16 +583,16 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas where fileVersionId = &#63;.
+	* Returns a range of all the document library file entry metadatas where fileVersionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileVersionId the file version ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of matching d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileVersionId(
@@ -602,17 +602,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file entry metadatas where fileVersionId = &#63;.
+	* Returns an ordered range of all the document library file entry metadatas where fileVersionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param fileVersionId the file version ID
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l file entry metadatas
+	* @return the ordered range of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findByFileVersionId(
@@ -625,7 +625,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the first d l file entry metadata in the ordered set where fileVersionId = &#63;.
+	* Returns the first document library file entry metadata in the ordered set where fileVersionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -633,8 +633,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileVersionId the file version ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the first matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileVersionId_First(
@@ -647,7 +647,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the last d l file entry metadata in the ordered set where fileVersionId = &#63;.
+	* Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -655,8 +655,8 @@ public class DLFileEntryMetadataUtil {
 	*
 	* @param fileVersionId the file version ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the last matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByFileVersionId_Last(
@@ -669,17 +669,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadatas before and after the current d l file entry metadata in the ordered set where fileVersionId = &#63;.
+	* Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileVersionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param fileEntryMetadataId the primary key of the current d l file entry metadata
+	* @param fileEntryMetadataId the primary key of the current document library file entry metadata
 	* @param fileVersionId the file version ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a d l file entry metadata with the primary key could not be found
+	* @return the previous, current, and next document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata[] findByFileVersionId_PrevAndNext(
@@ -693,12 +693,12 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
+	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
-	* @return the matching d l file entry metadata
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching d l file entry metadata could not be found
+	* @return the matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByD_F(
@@ -709,11 +709,11 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
-	* @return the matching d l file entry metadata, or <code>null</code> if a matching d l file entry metadata could not be found
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchByD_F(
@@ -723,11 +723,11 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the d l file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
-	* @return the matching d l file entry metadata, or <code>null</code> if a matching d l file entry metadata could not be found
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchByD_F(
@@ -738,9 +738,9 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns all the d l file entry metadatas.
+	* Returns all the document library file entry metadatas.
 	*
-	* @return the d l file entry metadatas
+	* @return the document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findAll()
@@ -749,15 +749,15 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns a range of all the d l file entry metadatas.
+	* Returns a range of all the document library file entry metadatas.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
-	* @return the range of d l file entry metadatas
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findAll(
@@ -767,16 +767,16 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l file entry metadatas.
+	* Returns an ordered range of all the document library file entry metadatas.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file entry metadatas
-	* @param end the upper bound of the range of d l file entry metadatas (not inclusive)
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d l file entry metadatas
+	* @return the ordered range of document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> findAll(
@@ -787,7 +787,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes all the d l file entry metadatas where uuid = &#63; from the database.
+	* Removes all the document library file entry metadatas where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @throws SystemException if a system exception occurred
@@ -798,7 +798,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes all the d l file entry metadatas where fileEntryTypeId = &#63; from the database.
+	* Removes all the document library file entry metadatas where fileEntryTypeId = &#63; from the database.
 	*
 	* @param fileEntryTypeId the file entry type ID
 	* @throws SystemException if a system exception occurred
@@ -809,7 +809,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes all the d l file entry metadatas where fileEntryId = &#63; from the database.
+	* Removes all the document library file entry metadatas where fileEntryId = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	* @throws SystemException if a system exception occurred
@@ -820,7 +820,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes all the d l file entry metadatas where fileVersionId = &#63; from the database.
+	* Removes all the document library file entry metadatas where fileVersionId = &#63; from the database.
 	*
 	* @param fileVersionId the file version ID
 	* @throws SystemException if a system exception occurred
@@ -831,7 +831,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes the d l file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; from the database.
+	* Removes the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; from the database.
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
@@ -844,7 +844,7 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Removes all the d l file entry metadatas from the database.
+	* Removes all the document library file entry metadatas from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
@@ -854,10 +854,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas where uuid = &#63;.
+	* Returns the number of document library file entry metadatas where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the number of matching d l file entry metadatas
+	* @return the number of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByUuid(java.lang.String uuid)
@@ -866,10 +866,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas where fileEntryTypeId = &#63;.
+	* Returns the number of document library file entry metadatas where fileEntryTypeId = &#63;.
 	*
 	* @param fileEntryTypeId the file entry type ID
-	* @return the number of matching d l file entry metadatas
+	* @return the number of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByFileEntryTypeId(long fileEntryTypeId)
@@ -878,10 +878,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas where fileEntryId = &#63;.
+	* Returns the number of document library file entry metadatas where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the number of matching d l file entry metadatas
+	* @return the number of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByFileEntryId(long fileEntryId)
@@ -890,10 +890,10 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas where fileVersionId = &#63;.
+	* Returns the number of document library file entry metadatas where fileVersionId = &#63;.
 	*
 	* @param fileVersionId the file version ID
-	* @return the number of matching d l file entry metadatas
+	* @return the number of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByFileVersionId(long fileVersionId)
@@ -902,11 +902,11 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas where DDMStructureId = &#63; and fileVersionId = &#63;.
+	* Returns the number of document library file entry metadatas where DDMStructureId = &#63; and fileVersionId = &#63;.
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
-	* @return the number of matching d l file entry metadatas
+	* @return the number of matching document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByD_F(long DDMStructureId, long fileVersionId)
@@ -915,9 +915,9 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	* Returns the number of d l file entry metadatas.
+	* Returns the number of document library file entry metadatas.
 	*
-	* @return the number of d l file entry metadatas
+	* @return the number of document library file entry metadatas
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int countAll()

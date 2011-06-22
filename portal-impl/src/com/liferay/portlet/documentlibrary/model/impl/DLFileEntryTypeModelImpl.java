@@ -59,7 +59,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l file entry type model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileEntryType} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library file entry type model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileEntryType} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileEntryType";
 	public static final Object[][] TABLE_COLUMNS = {

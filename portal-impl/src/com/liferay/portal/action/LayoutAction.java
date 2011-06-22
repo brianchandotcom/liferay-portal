@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -927,6 +928,9 @@ public class LayoutAction extends Action {
 	protected void processPublicRenderParameters(
 		HttpServletRequest request, Layout layout, Portlet portlet) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Map<String, String[]> publicRenderParameters =
 			PublicRenderParametersPool.get(request, layout.getPlid());
 
@@ -956,6 +960,15 @@ public class LayoutAction extends Action {
 
 			if (name.startsWith(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
+
+				if (themeDisplay.isLifecycleAction()) {
+					String[] oldValues = publicRenderParameters.get(
+						publicRenderParameterName);
+
+					if ((oldValues != null) && (oldValues.length != 0)) {
+						values = ArrayUtil.append(values, oldValues);
+					}
+				}
 
 				publicRenderParameters.put(publicRenderParameterName, values);
 			}

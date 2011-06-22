@@ -72,6 +72,8 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		_include = include;
 
 		_lifecycle = _portletRequestImpl.getLifecycle();
+
+		_portletRequestImpl.setPortletRequestDispatcherRequest(request);
 	}
 
 	@Override

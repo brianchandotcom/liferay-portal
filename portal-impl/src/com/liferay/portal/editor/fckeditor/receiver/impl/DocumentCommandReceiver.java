@@ -16,6 +16,8 @@ package com.liferay.portal.editor.fckeditor.receiver.impl;
 
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -125,6 +128,11 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 		try {
 			_getFolders(commandArgument, document, rootNode);
 			_getFiles(commandArgument, document, rootNode);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Permission error: " + pe.getMessage());
+			}
 		}
 		catch (Exception e) {
 			throw new FCKException(e);
@@ -242,5 +250,8 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+			DocumentCommandReceiver.class);
 
 }

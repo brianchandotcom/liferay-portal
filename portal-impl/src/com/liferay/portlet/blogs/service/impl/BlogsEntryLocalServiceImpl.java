@@ -49,6 +49,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
@@ -64,6 +65,7 @@ import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -601,6 +603,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		saveImages(
 			smallImage, entry.getSmallImageId(), smallFile, smallBytes);
 
+		// Tags
+
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+			BlogsEntry.class.getName(), entry.getEntryId());
+
+		ArrayList<AssetTag> tags =
+			(ArrayList<AssetTag>)assetEntryPersistence.getAssetTags(
+				assetEntry.getEntryId());
+
+		serviceContext.setAttribute("oldTags", tags);
+
 		// Asset
 
 		updateAsset(
@@ -681,7 +694,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				// Asset
 
 				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, true);
+					BlogsEntry.class.getName(), entryId, true, serviceContext);
 
 				// Social
 

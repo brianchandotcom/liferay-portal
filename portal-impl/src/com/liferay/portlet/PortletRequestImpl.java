@@ -242,6 +242,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			throw new IllegalArgumentException();
 		}
 
+		if (_portletRequestDispatcherRequest != null) {
+			return _portletRequestDispatcherRequest.getParameterValues(name);
+		}
+
 		return _request.getParameterValues(name);
 	}
 
@@ -520,6 +524,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletMode = portletMode;
 	}
 
+	public void setPortletRequestDispatcherRequest(HttpServletRequest request) {
+		_portletRequestDispatcherRequest = request;
+	}
+
 	public void setWindowState(WindowState windowState) {
 		_windowState = windowState;
 	}
@@ -779,6 +787,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	private HttpServletRequest _request;
 	private HttpServletRequest _originalRequest;
+	private HttpServletRequest _portletRequestDispatcherRequest;
 	private boolean _wapTheme;
 	private Portlet _portlet;
 	private String _portletName;

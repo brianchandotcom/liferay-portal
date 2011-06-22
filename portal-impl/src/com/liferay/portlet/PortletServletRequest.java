@@ -64,6 +64,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		_portletRequest = portletRequest;
 		_portletRequestImpl = PortletRequestImpl.getPortletRequestImpl(
 			_portletRequest);
+		_portletRequestImpl.setPortletRequestDispatcherRequest(request);
 		_pathInfo = pathInfo;
 		_queryString = queryString;
 		_requestURI = GetterUtil.getString(requestURI);

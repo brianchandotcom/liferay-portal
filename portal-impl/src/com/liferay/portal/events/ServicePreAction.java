@@ -1283,8 +1283,8 @@ public class ServicePreAction extends Action {
 
 		LayoutSet layoutSet = null;
 
-		boolean personalizedView = SessionParamUtil.getBoolean(
-			request, "personalized_view", true);
+		boolean customizedView = SessionParamUtil.getBoolean(
+			request, "customized_view", true);
 
 		if (layout != null) {
 			layoutSet = layout.getLayoutSet();
@@ -1334,20 +1334,20 @@ public class ServicePreAction extends Action {
 
 			layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
-			boolean personalizable = layoutTypePortlet.isPersonalizable();
+			boolean customizable = layoutTypePortlet.isCustomizable();
 
-			if (!personalizable ||
+			if (!customizable ||
 				(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
 
-				personalizedView = false;
+				customizedView = false;
 			}
 
-			layoutTypePortlet.setPersonalizedView(personalizedView);
+			layoutTypePortlet.setCustomizedView(customizedView);
 			layoutTypePortlet.setUpdatePermission(
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.UPDATE));
 
-			if (signedIn && personalizable && personalizedView &&
+			if (signedIn && customizable && customizedView &&
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
 
@@ -1716,7 +1716,7 @@ public class ServicePreAction extends Action {
 					}
 
 					themeDisplay.setShowLayoutTemplatesIcon(true);
-					themeDisplay.setShowPagePersonalizationIcon(true);
+					themeDisplay.setShowPageCustomizationIcon(true);
 
 					themeDisplay.setURLAddContent(
 						"Liferay.LayoutConfiguration.toggle('".concat(
@@ -1726,11 +1726,11 @@ public class ServicePreAction extends Action {
 						"Liferay.LayoutConfiguration.showTemplates();");
 				}
 
-				boolean hasPersonalizePermission =
+				boolean hasCustomizePermission =
 					LayoutPermissionUtil.contains(
 						permissionChecker, layout, ActionKeys.CUSTOMIZE);
 
-				if (hasPersonalizePermission && personalizedView) {
+				if (hasCustomizePermission && customizedView) {
 					themeDisplay.setShowAddContentIconPermission(true);
 
 					if (!LiferayWindowState.isMaximized(request)) {

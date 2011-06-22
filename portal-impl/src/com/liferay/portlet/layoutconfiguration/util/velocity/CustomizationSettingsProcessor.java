@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PersonalizedPages;
+import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 
 import java.io.Writer;
@@ -33,9 +33,9 @@ import javax.servlet.jsp.tagext.Tag;
 /**
  * @author Raymond Augé
  */
-public class PersonalizationSettingsProcessor implements ColumnProcessor {
+public class CustomizationSettingsProcessor implements ColumnProcessor {
 
-	public PersonalizationSettingsProcessor(
+	public CustomizationSettingsProcessor(
 		HttpServletRequest request, PageContext pageContext, Writer writer) {
 
 		_pageContext = pageContext;
@@ -57,23 +57,23 @@ public class PersonalizationSettingsProcessor implements ColumnProcessor {
 	public String processColumn(String columnId, String classNames)
 		throws Exception {
 
-		String personalizableKey = PersonalizedPages.namespaceColumnId(
+		String customizableKey = CustomizedPages.namespaceColumnId(
 			columnId);
 
-		boolean templatePersonalizable = true;
+		boolean templateCustomizable = true;
 
 		if (_templateLayout != null) {
-			templatePersonalizable = GetterUtil.getBoolean(
+			templateCustomizable = GetterUtil.getBoolean(
 				_templateLayout.getTypeSettingsProperties().getProperty(
-					personalizableKey, String.valueOf(false)));
+					customizableKey, String.valueOf(false)));
 		}
 
-		boolean personalizable = false;
+		boolean customizable = false;
 
-		if (templatePersonalizable) {
-			personalizable = GetterUtil.getBoolean(
+		if (templateCustomizable) {
+			customizable = GetterUtil.getBoolean(
 				_layoutTypeSettings.getProperty(
-					personalizableKey, String.valueOf(false)));
+					customizableKey, String.valueOf(false)));
 		}
 
 		_writer.append("<div class=\"");
@@ -87,14 +87,14 @@ public class PersonalizationSettingsProcessor implements ColumnProcessor {
 		Object inputTag = _inputTagClass.newInstance();
 
 		BeanPropertiesUtil.setProperty(
-			inputTag, "disabled", !templatePersonalizable);
-		BeanPropertiesUtil.setProperty(inputTag, "label", "personalizable");
+			inputTag, "disabled", !templateCustomizable);
+		BeanPropertiesUtil.setProperty(inputTag, "label", "customizable");
 		BeanPropertiesUtil.setProperty(
 			inputTag, "name",
-			"TypeSettingsProperties--".concat(personalizableKey).concat("--"));
+			"TypeSettingsProperties--".concat(customizableKey).concat("--"));
 		BeanPropertiesUtil.setProperty(inputTag, "pageContext", _pageContext);
 		BeanPropertiesUtil.setProperty(inputTag, "type", "checkbox");
-		BeanPropertiesUtil.setProperty(inputTag, "value", personalizable);
+		BeanPropertiesUtil.setProperty(inputTag, "value", customizable);
 
 		MethodHandler doEndMethodHandler = new MethodHandler(
 			_doEndTagMethodKey);

@@ -295,9 +295,9 @@
 .aui-tree-node-selected .aui-tree-label {
 }
 
-/* ---------- Page Personalization ---------- */
+/* ---------- Page Customization ---------- */
 
-.aui-dragging .portlet-column.personalizable {
+.aui-dragging .portlet-column.customizable {
 }
 
 .customizable-layout-column-content.yui3-widget-content-expanded {
@@ -306,11 +306,11 @@
 .customizable-layout-column-content {
 }
 
-.personalizable .customizable-layout-column-content {
+.customizable .customizable-layout-column-content {
 }
 
-.layout-personalizable-controls {
+.layout-customizable-controls {
 }
 
-.ie .layout-personalizable-controls {
+.ie .layout-customizable-controls {
 }

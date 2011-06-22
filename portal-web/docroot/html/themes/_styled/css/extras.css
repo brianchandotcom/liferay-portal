@@ -91,7 +91,7 @@
 	border-top-right-radius: 0;
 }
 
-.portlet-journal .journal-article-default-translation, .portlet-journal .journal-article-translation, .layout-personalizable-controls {
+.portlet-journal .journal-article-default-translation, .portlet-journal .journal-article-translation, .layout-customizable-controls {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;

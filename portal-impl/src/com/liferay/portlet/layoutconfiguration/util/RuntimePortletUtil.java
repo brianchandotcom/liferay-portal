@@ -36,7 +36,7 @@ import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.layoutconfiguration.util.velocity.PersonalizationSettingsProcessor;
+import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
@@ -60,10 +60,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class RuntimePortletUtil {
 
-	public static String processPersonalizationSettings(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			String velocityTemplateId, String velocityTemplateContent)
+	public static String processCustomizationSettings(
+		ServletContext servletContext, HttpServletRequest request,
+		HttpServletResponse response, PageContext pageContext,
+		String velocityTemplateId, String velocityTemplateContent)
 		throws Exception {
 
 		if (Validator.isNull(velocityTemplateContent)) {
@@ -72,8 +72,8 @@ public class RuntimePortletUtil {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		PersonalizationSettingsProcessor processor =
-			new PersonalizationSettingsProcessor(
+		CustomizationSettingsProcessor processor =
+			new CustomizationSettingsProcessor(
 				request, new PipingPageContext(pageContext, unsyncStringWriter),
 				unsyncStringWriter);
 

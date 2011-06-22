@@ -194,16 +194,16 @@ html > .lfr-dockbar-pinned {
 .dockbar .staging-options .menu-button span {
 }
 
-.dockbar .toggle-personalized-view .menu-button {
+.dockbar .toggle-customized-view .menu-button {
 }
 
-.dockbar .toggle-personalized-view .menu-button span {
+.dockbar .toggle-customized-view .menu-button span {
 }
 
-.dockbar .toggle-personalized-view.false span {
+.dockbar .toggle-customized-view.false span {
 }
 
-.dockbar .toggle-personalized-view.update .menu-button span {
+.dockbar .toggle-customized-view.update .menu-button span {
 }
 
 .dockbar-messages-container {
@@ -248,5 +248,5 @@ html > .lfr-dockbar-pinned {
 .manage-content-menu .settings a {
 }
 
-.toggle-personalized-view-menu .reset-personalized-view a {
+.toggle-customized-view-menu .reset-customized-view a {
 }

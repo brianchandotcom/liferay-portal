@@ -21,16 +21,16 @@ package com.liferay.portal.model;
  *
  * @author Raymond Augé
  */
-public class PersonalizedPages {
+public class CustomizedPages {
 
 	public static String namespaceColumnId(String columnId) {
-		return columnId.concat(_PERSONALIZABLE_SUFFIX);
+		return columnId.concat(_CUSTOMIZABLE_SUFFIX);
 	}
 
 	public static String namespacePlid(long plid) {
-		return PersonalizedPages.class.getName().concat(String.valueOf(plid));
+		return CustomizedPages.class.getName().concat(String.valueOf(plid));
 	}
 
-	private static final String _PERSONALIZABLE_SUFFIX = "-personalizable";
+	private static final String _CUSTOMIZABLE_SUFFIX = "-customizable";
 
 }

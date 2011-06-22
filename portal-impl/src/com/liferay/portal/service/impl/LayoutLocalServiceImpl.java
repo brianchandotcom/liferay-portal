@@ -44,6 +44,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Resource;
@@ -1142,48 +1143,60 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String languageId)
 		throws PortalException, SystemException {
 
-		Layout layout = getLayout(groupId, privateLayout, layoutId);
+		List <Layout> allGroupLayouts = getLayouts(groupId, privateLayout);
 
-		List<PortletPreferences> portletPreferencesList =
-			portletPreferencesLocalService.getPortletPreferencesByPlid(
-				layout.getPlid());
+		Layout updatedLayout = getLayout(groupId, privateLayout, layoutId);
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			String portletId = portletPreferences.getPortletId();
+		for (Layout layout : allGroupLayouts) {
+			List<PortletPreferences> portletPreferencesList =
+				portletPreferencesLocalService.getPortletPreferencesByPlid(
+					layout.getPlid());
 
-			javax.portlet.PortletPreferences preferences =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletId);
+			for (PortletPreferences
+					portletPreferences : portletPreferencesList) {
+				String portletId = portletPreferences.getPortletId();
 
-			String scopeLayoutUuid = GetterUtil.getString(
-				preferences.getValue("lfrScopeLayoutUuid", null));
+				Portlet portlet = portletLocalService.getPortletById(portletId);
 
-			if (!scopeLayoutUuid.equals(layout.getUuid())) {
-				continue;
-			}
-
-			String portletTitle = PortalUtil.getPortletTitle(
-				portletId, languageId);
-
-			String newPortletTitle = PortalUtil.getNewPortletTitle(
-				portletTitle, layout.getName(languageId), name);
-
-			try {
-				if (!newPortletTitle.equals(portletTitle)) {
-					preferences.setValue(
-						"portlet-setup-title-" + languageId, newPortletTitle);
-					preferences.setValue(
-						"portlet-setup-use-custom-title",
-						Boolean.TRUE.toString());
+				if (((portlet == null) || !portlet.isScopeable())) {
+					continue;
 				}
 
-				preferences.store();
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-			catch (PortletException pe) {
-				throw new SystemException(pe);
+				javax.portlet.PortletPreferences preferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+							layout, portletId);
+
+				String scopeLayoutUuid = GetterUtil.getString(
+						preferences.getValue("lfrScopeLayoutUuid", null));
+
+				if (!scopeLayoutUuid.equals(updatedLayout.getUuid())) {
+					continue;
+				}
+
+				String portletTitle = PortalUtil.getPortletTitle(
+						portletId, languageId);
+
+				String newPortletTitle = PortalUtil.getNewPortletTitle(
+						portletTitle, layout.getName(languageId), name);
+
+				try {
+					if (!newPortletTitle.equals(portletTitle)) {
+						preferences.setValue(
+								"portlet-setup-title-" + languageId,
+								newPortletTitle);
+						preferences.setValue(
+								"portlet-setup-use-custom-title",
+								Boolean.TRUE.toString());
+					}
+
+					preferences.store();
+				}
+				catch (IOException ioe) {
+					throw new SystemException(ioe);
+				}
+				catch (PortletException pe) {
+					throw new SystemException(pe);
+				}
 			}
 		}
 	}

@@ -99,7 +99,7 @@ portletURL.setParameter("nodeName", node.getName());
 					image="../aui/home"
 					label="<%= true %>"
 					message="<%= WikiPageConstants.FRONT_PAGE %>"
-					url='<%= Validator.isNull(strutsAction) || strutsAction.equals(strutsPath + "/view") ? StringPool.BLANK : frontPageURL.toString() %>'
+					url='<%= Validator.isNull(strutsAction) || (wikiPage != null && wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) ? StringPool.BLANK : frontPageURL.toString() %>'
 				/>
 
 				<%

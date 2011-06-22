@@ -135,7 +135,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowPagePersonalizationIcon() %>">
-								<li class="manage-page-personalization">
+								<li class="manage-page-customization">
 									<aui:a cssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' id="managePersonalization" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
 								</li>
 							</c:if>
@@ -169,9 +169,9 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			</li>
 
 			<c:if test="<%= themeDisplay.isShowPagePersonalizationIcon() %>">
-				<div class="aui-helper-hidden layout-personalizable-controls" id="<portlet:namespace />layout-personalizable-controls">
+				<div class="aui-helper-hidden layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 					<span title='<liferay-ui:message key="customizable-help" />'>
-						<aui:input helpMessage='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-personalizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-personalizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-personalizable--" type="checkbox" useNamespace="<%= false %>" />
+						<aui:input helpMessage='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-customizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
 					</span>
 				</div>
 			</c:if>
@@ -360,8 +360,8 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 </div>
 
 <c:if test="<%= !(group.isLayoutPrototype() || group.isLayoutSetPrototype()) && layoutTypePortlet.isPersonalizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>">
-	<div class="page-personalization-bar">
-		<img alt="" class="personalized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/guest_icon.png" />
+	<div class="page-customization-bar">
+		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/guest_icon.png" />
 
 		<c:choose>
 			<c:when test="<%= layoutTypePortlet.isPersonalizedView() %>">
@@ -378,14 +378,14 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			</c:otherwise>
 		</c:choose>
 
-		<span class="page-personalization-actions">
+		<span class="page-customization-actions">
 
 			<%
 			String taglibImage = "search";
 			String taglibMessage = "view-default-page";
 
 			if (!layoutTypePortlet.isPersonalizedView()) {
-				taglibMessage = "view-my-customized-pagee";
+				taglibMessage = "view-my-customized-page";
 			}
 			else if (layoutTypePortlet.isDefaultUpdated()) {
 				taglibImage = "activate";
@@ -395,10 +395,10 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 
 			<liferay-ui:icon cssClass='<%= layoutTypePortlet.isPersonalizedView() ? StringPool.BLANK : "false" %>' id="togglePersonalizedView" image='<%= taglibImage %>' label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
 
-			<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPersonalizationViewURL">
+			<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
 				<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
-				<portlet:param name="<%= Constants.CMD %>" value="reset_personalized_view" />
+				<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
 			</liferay-portlet:actionURL>
 
 			<%
@@ -410,18 +410,18 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</div>
 
 	<aui:script use="aui-base">
-		var togglePersonalizedView = A.one('#<portlet:namespace />togglePersonalizedView');
+		var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
 
-		if (togglePersonalizedView) {
-			togglePersonalizedView.on(
+		if (toggleCustomizedView) {
+			toggleCustomizedView.on(
 				'click',
 				function(event) {
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
 							data: {
-								cmd: 'toggle_personalized_view',
-								personalized_view: '<%= String.valueOf(!layoutTypePortlet.isPersonalizedView()) %>'
+								cmd: 'toggle_customized_view',
+								customized_view: '<%= String.valueOf(!layoutTypePortlet.isPersonalizedView()) %>'
 							},
 							on: {
 								success: function(event, id, obj) {
@@ -439,9 +439,9 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 <aui:script position="inline" use="liferay-dockbar">
 	Liferay.Dockbar.init();
 
-	var personalizableColumns = A.all('.portlet-column-content.personalizable');
+	var customizableColumns = A.all('.portlet-column-content.customizable');
 
-	if (personalizableColumns.size() > 0) {
-		personalizableColumns.get('parentNode').addClass('personalizable');
+	if (customizableColumns.size() > 0) {
+		customizableColumns.get('parentNode').addClass('customizable');
 	}
 </aui:script>

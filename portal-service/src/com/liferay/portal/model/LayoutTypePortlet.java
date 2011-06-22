@@ -157,13 +157,13 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public boolean isDefaultUpdated();
 
-	public boolean isPersonalizable();
+	public boolean isCustomizable();
 
-	public boolean isPersonalizable(String columnId);
+	public boolean isCustomizable(String columnId);
 
-	public boolean isPersonalizedView();
+	public boolean isCustomizedView();
 
-	public boolean isTemplatePersonalizable(String columnId);
+	public boolean isTemplateCustomizable(String columnId);
 
 	public void movePortletId(
 			long userId, String portletId, String columnId, int columnPos)
@@ -230,7 +230,7 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public void setModePrint(String modePrint);
 
-	public void setPersonalizedView(boolean personalizedView);
+	public void setCustomizedView(boolean customizedView);
 
 	public void setPortalPreferences(PortalPreferences portalPreferences);
 

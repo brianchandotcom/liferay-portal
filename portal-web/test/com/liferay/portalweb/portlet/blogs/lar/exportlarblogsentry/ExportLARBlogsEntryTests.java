@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.lar;
+package com.liferay.portalweb.portlet.blogs.lar.exportlarblogsentry;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portlet.blogs.lar.exportlarblogsentry.ExportLARBlogsEntryTests;
-import com.liferay.portalweb.portlet.blogs.lar.importlar.ImportLARTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +22,20 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LARTests extends BaseTests {
+public class ExportLARBlogsEntryTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ExportLARBlogsEntryTests.suite());
-		testSuite.addTest(ImportLARTests.suite());
+		testSuite.addTestSuite(AddPageBlogsTest.class);
+		testSuite.addTestSuite(AddPortletBlogsTest.class);
+		testSuite.addTestSuite(AddBlogsEntryTest.class);
+		testSuite.addTestSuite(ExportLARBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(ImportExportLARBlogsEntryTest.class);
+		testSuite.addTestSuite(ViewImportExportLARBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

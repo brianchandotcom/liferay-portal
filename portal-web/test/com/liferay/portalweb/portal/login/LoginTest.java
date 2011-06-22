@@ -168,5 +168,6 @@ public class LoginTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.setBrowserOption();
 	}
 }

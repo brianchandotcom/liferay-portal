@@ -67,17 +67,7 @@ if (record != null) {
 		<%
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		if (detailDDMTemplateId > 0) {
-			try {
-				DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(detailDDMTemplateId);
-
-				ddmStructure.setXsd(ddmTemplate.getScript());
-			}
-			catch (NoSuchTemplateException nste) {
-			}
-		}
+		DDMStructure ddmStructure = recordSet.getDDMStructure(detailDDMTemplateId);
 
 		Fields fields = null;
 

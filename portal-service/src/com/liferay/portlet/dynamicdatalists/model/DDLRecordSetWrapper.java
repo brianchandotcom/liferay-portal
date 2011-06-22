@@ -577,6 +577,13 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.getDDMStructure();
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
+		long detailDDMTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSet.getDDMStructure(detailDDMTemplateId);
+	}
+
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getRecords()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSet.getRecords();

@@ -28,6 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -164,7 +165,8 @@ public class DDMStructureImpl
 		if (_fieldsMap == null) {
 			synchronized (this) {
 				if (_fieldsMap == null) {
-					_fieldsMap = new HashMap<String, Map<String, String>>();
+					_fieldsMap =
+						new LinkedHashMap<String, Map<String, String>>();
 
 					XPath xPathSelector = SAXReaderUtil.createXPath(
 						"//dynamic-element[@dataType]");

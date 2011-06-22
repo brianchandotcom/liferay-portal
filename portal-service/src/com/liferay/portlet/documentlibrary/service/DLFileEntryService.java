@@ -74,8 +74,8 @@ public interface DLFileEntryService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void copyFileEntry(long groupId, long repositoryId,
-		long fileEntryId, long destFolderId,
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long groupId, long repositoryId, long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

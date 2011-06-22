@@ -86,14 +86,14 @@ public class DLFileEntryServiceUtil {
 		return getService().checkOutFileEntry(fileEntryId, owner, expirationTime);
 	}
 
-	public static void copyFileEntry(long groupId, long repositoryId,
-		long fileEntryId, long destFolderId,
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long groupId, long repositoryId, long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.copyFileEntry(groupId, repositoryId, fileEntryId, destFolderId,
-			serviceContext);
+		return getService()
+				   .copyFileEntry(groupId, repositoryId, fileEntryId,
+			destFolderId, serviceContext);
 	}
 
 	public static void deleteFileEntry(long fileEntryId)

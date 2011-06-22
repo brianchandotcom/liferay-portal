@@ -99,11 +99,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 		return _dlAppHelperLocalService.getNoAssetFileEntries();
 	}
 
-	public void triggerProcesses(
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
-		_dlAppHelperLocalService.triggerProcesses(fileEntry);
-	}
-
 	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,

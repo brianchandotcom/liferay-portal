@@ -77,13 +77,13 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService {
 			expirationTime);
 	}
 
-	public void copyFileEntry(long groupId, long repositoryId,
-		long fileEntryId, long destFolderId,
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long groupId, long repositoryId, long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryService.copyFileEntry(groupId, repositoryId, fileEntryId,
-			destFolderId, serviceContext);
+		return _dlFileEntryService.copyFileEntry(groupId, repositoryId,
+			fileEntryId, destFolderId, serviceContext);
 	}
 
 	public void deleteFileEntry(long fileEntryId)

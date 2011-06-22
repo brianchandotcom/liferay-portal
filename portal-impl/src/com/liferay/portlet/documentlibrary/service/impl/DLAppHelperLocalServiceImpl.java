@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,7 +34,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.documentlibrary.util.DLProcessor;
 
 import java.util.List;
 
@@ -152,11 +149,6 @@ public class DLAppHelperLocalServiceImpl
 
 	public List<FileEntry> getNoAssetFileEntries() {
 		return null;
-	}
-
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void triggerProcesses(FileEntry fileEntry) {
-		DLProcessor.triggerAll(fileEntry);
 	}
 
 	public AssetEntry updateAsset(

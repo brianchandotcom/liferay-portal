@@ -95,12 +95,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 			fileEntryId, owner, expirationTime);
 	}
 
-	public void copyFileEntry(
+	public FileEntry copyFileEntry(
 			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_baseCmisRepository.copyFileEntry(
+		return _baseCmisRepository.copyFileEntry(
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 

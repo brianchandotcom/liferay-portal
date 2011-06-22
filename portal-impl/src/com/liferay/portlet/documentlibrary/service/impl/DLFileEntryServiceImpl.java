@@ -123,7 +123,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getUserId(), fileEntryId, owner, expirationTime);
 	}
 
-	public void copyFileEntry(
+	public DLFileEntry copyFileEntry(
 			long groupId, long repositoryId, long fileEntryId,
 			long destFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -137,7 +137,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		serviceContext.setAttribute(
 			"sourceFileName", "A." + dlFileEntry.getExtension());
 
-		addFileEntry(
+		return addFileEntry(
 			groupId, repositoryId, destFolderId, dlFileEntry.getMimeType(),
 			dlFileEntry.getTitle(), dlFileEntry.getDescription(), null,
 			inputStream, dlFileEntry.getSize(), serviceContext);

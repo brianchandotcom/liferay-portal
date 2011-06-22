@@ -51,7 +51,9 @@ if (selLayout != null) {
 
 		ServletContext layoutTemplateServletContext = ServletContextPool.get(layoutTemplate.getServletContextName());
 
-		content = RuntimePortletUtil.processPersonalizationSettings(layoutTemplateServletContext, request, response, pageContext, velocityTemplateId, velocityTemplateContent);
+		content = RuntimePortletUtil.processCustomizationSettings(
+			layoutTemplateServletContext, request, response, pageContext,
+			velocityTemplateId, velocityTemplateContent);
 	}
 }
 %>

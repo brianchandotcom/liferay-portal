@@ -306,7 +306,7 @@ AUI().add(
 
 				var columnId = column.attr('id');
 
-				var personalizable = !!column.one('.portlet-column-content.personalizable');
+				var customizable = !!column.one('.portlet-column-content.customizable');
 
 				var cssClass = 'customizable-layout-column';
 
@@ -319,13 +319,13 @@ AUI().add(
 					}
 				).render();
 
-				if (personalizable) {
-					overlayMask.get('boundingBox').addClass('personalizable');
+				if (customizable) {
+					overlayMask.get('boundingBox').addClass('customizable');
 				}
 
 				var columnControls = instance._controls.clone();
 
-				var input = columnControls.one('.layout-personalizable-checkbox');
+				var input = columnControls.one('.layout-customizable-checkbox');
 				var label = columnControls.one('label');
 
 				var oldName = input.attr('name');
@@ -333,7 +333,7 @@ AUI().add(
 
 				input.attr(
 					{
-						checked: personalizable,
+						checked: customizable,
 						id: newName,
 						name: newName
 					}
@@ -345,8 +345,8 @@ AUI().add(
 
 				columnControls.show();
 
-				input.setData('personalizatonControls', overlayMask);
-				column.setData('personalizatonControls', overlayMask);
+				input.setData('customizationControls', overlayMask);
+				column.setData('customizationControls', overlayMask);
 
 				return overlayMask;
 			},
@@ -629,11 +629,11 @@ AUI().add(
 
 				if (managePersonalizationLink) {
 					if (!managePersonalizationLink.hasClass('disabled')) {
-						instance._controls = dockBar.one('.layout-personalizable-controls');
+						instance._controls = dockBar.one('.layout-customizable-controls');
 
 						var columns = A.all('.portlet-column');
 
-						BODY.delegate('click', instance._onChangePersonalization, '.layout-personalizable-checkbox', instance);
+						BODY.delegate('click', instance._onChangePersonalization, '.layout-customizable-checkbox', instance);
 
 						managePersonalizationLink.on(
 							'click',
@@ -642,7 +642,7 @@ AUI().add(
 
 								columns.each(
 									function(item, index, collection) {
-										var overlayMask = item.getData('personalizatonControls');
+										var overlayMask = item.getData('customizatonControls');
 
 										if (!overlayMask) {
 											overlayMask = instance._createPersonalizationMask(item);
@@ -694,13 +694,13 @@ AUI().add(
 
 				var checkbox = event.currentTarget;
 
-				var overlayMask = checkbox.getData('personalizatonControls');
+				var overlayMask = checkbox.getData('customizationControls');
 
 				var boundingBox = overlayMask.get('boundingBox');
 				var column = overlayMask.get('target');
 
-				boundingBox.toggleClass('personalizable');
-				column.toggleClass('personalizable');
+				boundingBox.toggleClass('customizable');
+				column.toggleClass('customizable');
 
 				var data = {
 					cmd: 'update_type_settings',

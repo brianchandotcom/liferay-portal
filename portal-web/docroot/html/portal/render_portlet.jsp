@@ -272,7 +272,7 @@ if ((!themeDisplay.isSignedIn()) ||
 	}
 }
 
-// Portlets cannot be moved if the column is not personalizable
+// Portlets cannot be moved if the column is not customizable
 
 if (layoutTypePortlet.isPersonalizable() && layoutTypePortlet.isColumnDisabled(columnId)) {
 	showCloseIcon = false;

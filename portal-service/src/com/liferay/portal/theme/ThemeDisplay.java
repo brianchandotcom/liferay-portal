@@ -598,8 +598,8 @@ public class ThemeDisplay implements Serializable {
 		return _showMyAccountIcon;
 	}
 
-	public boolean isShowPagePersonalizationIcon() {
-		return _showPagePersonalizationIcon;
+	public boolean isShowPageCustomizationIcon() {
+		return _showPageCustomizationIcon;
 	}
 
 	public boolean isShowPageSettingsIcon() {
@@ -1049,10 +1049,10 @@ public class ThemeDisplay implements Serializable {
 		_showMyAccountIcon = showMyAccountIcon;
 	}
 
-	public void setShowPagePersonalizationIcon(
-		boolean showPagePersonalizationIcon) {
+	public void setShowPageCustomizationIcon(
+		boolean showPageCustomizationIcon) {
 
-		_showPagePersonalizationIcon = showPagePersonalizationIcon;
+		_showPageCustomizationIcon = showPageCustomizationIcon;
 	}
 
 	public void setShowPageSettingsIcon(boolean showPageSettingsIcon) {
@@ -1311,7 +1311,7 @@ public class ThemeDisplay implements Serializable {
 	private boolean _showLayoutTemplatesIcon;
 	private boolean _showManageSiteMembershipsIcon;
 	private boolean _showMyAccountIcon;
-	private boolean _showPagePersonalizationIcon;
+	private boolean _showPageCustomizationIcon;
 	private boolean _showPageSettingsIcon;
 	private boolean _showPortalIcon;
 	private boolean _showSignInIcon;

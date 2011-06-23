@@ -225,7 +225,7 @@
 		margin-bottom: 30px;
 	}
 
-	#addresses .aui-field {
+	.addresses .aui-field {
 		float: none;
 		width: auto;
 	}

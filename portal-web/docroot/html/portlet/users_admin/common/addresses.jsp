@@ -85,9 +85,9 @@ else {
 
 		<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
-		<div class="lfr-form-row">
+		<div class="addresses lfr-form-row">
 			<div class="row-fields">
-				<aui:column>
+				<aui:column columnWidth="50">
 					<aui:input name='<%= "addressId" + addressesIndex %>' type="hidden" value="<%= address.getAddressId() %>" />
 
 					<aui:input fieldParam='<%= "addressStreet1_" + addressesIndex %>' name="street1" />
@@ -101,7 +101,7 @@ else {
 					<aui:select label="region" name='<%= "addressRegionId" + addressesIndex %>' />
 				</aui:column>
 
-				<aui:column>
+				<aui:column columnWidth="50">
 					<aui:select label="type" name='<%= "addressTypeId" + addressesIndex %>' listType="<%= className + ListTypeConstants.ADDRESS %>" />
 
 					<aui:input name="zip" fieldParam='<%= "addressZip" + addressesIndex %>' />

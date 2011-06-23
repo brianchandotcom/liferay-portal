@@ -25,6 +25,7 @@ public class ClearEhcacheThreadUtil {
 
 	public static void clearEhcacheReplicationThread()
 		throws InterruptedException {
+
 		Thread[] threads = ThreadUtil.getThreads();
 
 		for (Thread thread : threads) {
@@ -36,21 +37,23 @@ public class ClearEhcacheThreadUtil {
 
 			if (name.equals(_THREAD_NAME)) {
 				thread.interrupt();
+
 				thread.join(_WAIT_TIME);
 
 				if (thread.isAlive() && _log.isWarnEnabled()) {
-					_log.warn("Give up waiting thread : " + thread +
-						" to finish after waited " + _WAIT_TIME + "ms");
+					_log.warn(
+						"Give up waiting on thread " + thread +
+							" after waiting for " + _WAIT_TIME + "ms");
 				}
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClearEhcacheThreadUtil.class);
-
 	private static final String _THREAD_NAME = "Replication Thread";
 
 	private static final long _WAIT_TIME = 1000;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ClearEhcacheThreadUtil.class);
 
 }

@@ -38,6 +38,10 @@ if (Validator.isNotNull(onChangeMethod)) {
 			}
 		},
 
+		focus: function() {
+			return document.getElementById('<%= name %>').focus();
+		},
+
 		getHTML: function() {
 			return document.getElementById('<%= name %>').value;
 		},

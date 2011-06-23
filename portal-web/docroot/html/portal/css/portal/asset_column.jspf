@@ -143,5 +143,5 @@
 }
 
 .lfr-asset-column-details .lfr-panel-container, .lfr-asset-panels .lfr-panel-container {
-	border-width:0;
+	border-width: 0;
 }

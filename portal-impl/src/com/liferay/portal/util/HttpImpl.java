@@ -62,7 +62,6 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NTCredentials;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthPolicy;
@@ -76,6 +75,9 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.params.HostParams;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -806,7 +808,7 @@ public class HttpImpl implements Http {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getParts(), options.getResponse(),
+			options.getFileParts(), options.getParts(), options.getResponse(),
 			options.isFollowRedirects());
 	}
 
@@ -889,6 +891,20 @@ public class HttpImpl implements Http {
 		}
 
 		return xml;
+	}
+
+	protected List<Part> addFilePart(
+		List<Part> partsList, String name, String fileName, byte[] value,
+		String contentType, String charSet) {
+
+		Part part =
+			new org.apache.commons.httpclient.methods.multipart.FilePart(
+				name, new ByteArrayPartSource(fileName, value), contentType,
+				charSet);
+
+		partsList.add(part);
+
+		return partsList;
 	}
 
 	protected boolean hasRequestHeader(HttpMethod httpMethod, String name) {
@@ -987,8 +1003,9 @@ public class HttpImpl implements Http {
 
 	protected byte[] URLtoByteArray(
 			String location, Http.Method method, Map<String, String> headers,
-			Cookie[] cookies, Http.Auth auth, Http.Body body, Map<String,
-			String> parts, Http.Response response, boolean followRedirects)
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects)
 		throws IOException {
 
 		byte[] bytes = null;
@@ -1033,31 +1050,38 @@ public class HttpImpl implements Http {
 
 					entityEnclosingMethod.setRequestEntity(requestEntity);
 				}
-				else if ((parts != null) && (parts.size() > 0) &&
-						 method.equals(Http.Method.POST)) {
-
-					List<NameValuePair> nvpList =
-						new ArrayList<NameValuePair>();
-
-					for (Map.Entry<String, String> entry : parts.entrySet()) {
-						String key = entry.getKey();
-						String value = entry.getValue();
-
-						if (value != null) {
-							nvpList.add(new NameValuePair(key, value));
-						}
-					}
-
-					NameValuePair[] nvpArray = nvpList.toArray(
-						new NameValuePair[nvpList.size()]);
+				else if (((parts != null && parts.size() > 0) ||
+						 (fileParts != null && fileParts.size() > 0)) &&
+						method.equals(Http.Method.POST)) {
 
 					PostMethod postMethod = (PostMethod)httpMethod;
 
-					postMethod.setRequestBody(nvpArray);
+					List<Part> partsList = new ArrayList<Part>();
 
-					postMethod.addRequestHeader(
-						HttpHeaders.CONTENT_TYPE,
-						ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED_UTF8);
+					if (parts != null) {
+						for (Map.Entry<String, String> entry :
+								parts.entrySet()) {
+
+							String key = entry.getKey();
+							String value = entry.getValue();
+
+							if (value != null) {
+								postMethod.addParameter(key, value);
+							}
+						}
+					}
+
+					for (Http.FilePart filePart : fileParts) {
+						partsList = addFilePart(
+							partsList, filePart.getName(),
+							filePart.getFileName(), filePart.getValue(),
+							filePart.getContentType(), filePart.getCharSet());
+					}
+
+					postMethod.setRequestEntity(
+						new MultipartRequestEntity(
+							partsList.toArray(new Part[] {}),
+							postMethod.getParams()));
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {
@@ -1079,7 +1103,8 @@ public class HttpImpl implements Http {
 
 			if ((method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
-				(body != null)) {
+				((body != null) || ((parts != null) && (parts.size() > 0)) ||
+				 ((fileParts != null) && (fileParts.size() > 0)))) {
 			}
 			else if (!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {
 				httpMethod.addRequestHeader(
@@ -1127,8 +1152,8 @@ public class HttpImpl implements Http {
 
 				if (followRedirects) {
 					return URLtoByteArray(
-						redirect, Http.Method.GET, headers,
-						cookies, auth, body, parts, response, followRedirects);
+						redirect, Http.Method.GET, headers, cookies, auth, body,
+						fileParts, parts, response, followRedirects);
 				}
 				else {
 					response.setRedirect(redirect);

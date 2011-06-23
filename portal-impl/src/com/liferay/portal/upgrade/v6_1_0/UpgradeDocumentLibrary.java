@@ -295,8 +295,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				if (fileEntryId > 0) {
 					runSQL(
-						"update Lock_ set key_ = " + fileEntryId +
-							" where lockId = " + lockId);
+						"update Lock_ set key_ = '" + fileEntryId +
+							"' where lockId = " + lockId);
 				}
 			}
 		}

@@ -14,7 +14,7 @@
  */
 --%>
 
-<ul class="lfr-tree lfr-component">
+<ul class="aui-field-inline lfr-tree lfr-component">
 	<li class="tree-item">
 		<aui:input disabled="<%= true %>" inlineLabel="right" name="pages" type="checkbox" value="<%= true %>" />
 	</li>

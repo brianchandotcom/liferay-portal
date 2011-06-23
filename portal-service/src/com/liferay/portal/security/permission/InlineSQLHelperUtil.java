@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission;
 
 /**
  * @author Raymond Augé
+ * @see    InlineSQLHelper
  */
 public class InlineSQLHelperUtil {
 

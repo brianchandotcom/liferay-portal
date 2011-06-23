@@ -23,26 +23,12 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
- * <p>
- * This class is used to localize values stored in XML and is often used to add
- * localization behavior to value objects.
- * </p>
- *
- * <p>
- * Caching of the localized values is done in this class rather than in the
- * value object since value objects get flushed from cache fairly quickly.
- * Though lookups performed on a key based on an XML file is slower than lookups
- * done at the value object level in general, the value object will get flushed
- * at a rate which works against the performance gain. The cache is a soft hash
- * map which prevents memory leaks within the system while enabling the cache to
- * live longer than in a weak hash map.
- * </p>
- *
  * @author Alexander Chow
  * @author Jorge Ferrer
  * @author Mauro Mariuzzo
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @see    Localization
  */
 public class LocalizationUtil {
 

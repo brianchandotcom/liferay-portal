@@ -28,13 +28,13 @@ import javax.portlet.PortletRequest;
  * adding localization to strings, most often for model properties.
  *
  * <p>
- * Caching of the localized values is done in this class rather than in the
- * value object since value objects get flushed from cache fairly quickly.
- * Though lookups performed on a key based on an XML file is slower than lookups
- * done at the value object level in general, the value object will get flushed
- * at a rate which works against the performance gain. The cache is a soft hash
- * map which prevents memory leaks within the system while enabling the cache to
- * live longer than in a weak hash map.
+ * Localized values are cached in this class rather than in the value object
+ * since value objects get flushed from cache fairly quickly. Though lookups
+ * performed on a key based on an XML file are slower than lookups done at the
+ * value object level in general, the value object will get flushed at a rate
+ * which works against the performance gain. The cache is a soft hash map which
+ * prevents memory leaks within the system while enabling the cache to live
+ * longer than in a weak hash map.
  * </p>
  *
  * @author Alexander Chow

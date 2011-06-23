@@ -1034,14 +1034,13 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
-		if (PropsValues.HTTP_HEADER_RESPONSE_VERSION_VERBOSITY
-			.equalsIgnoreCase("full")) {
-
-			response.addHeader(
-				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
-		} else {
+		if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
 			response.addHeader(
 				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getName());
+		}
+		else {
+			response.addHeader(
+				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
 		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
@@ -1207,6 +1206,9 @@ public class MainServlet extends ActionServlet {
 
 		PrincipalThreadLocal.setPassword(password);
 	}
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");
 
 	private static final String _LIFERAY_PORTAL_REQUEST_HEADER =
 		"Liferay-Portal";

@@ -240,8 +240,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		DLStoreUtil.addFile(
 			companyId, portletId, groupId, repositoryId,
-			dirName + "/" + fileName, false, 0, StringPool.BLANK,
-			modifiedDate, new ServiceContext(), inputStream);
+			dirName + "/" + fileName, false, new ServiceContext(), inputStream);
 	}
 
 	public void addPageAttachments(
@@ -287,8 +286,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			DLStoreUtil.addFile(
 				companyId, portletId, groupId, repositoryId,
-				dirName + "/" + fileName, 0, StringPool.BLANK,
-				page.getModifiedDate(), new ServiceContext(), bytes);
+				dirName + "/" + fileName, new ServiceContext(), bytes);
 		}
 	}
 

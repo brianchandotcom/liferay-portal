@@ -77,7 +77,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				if (!newName.equals(name)) {
 					DLStoreUtil.updateFile(
 						companyId, portletId, groupId, repositoryId, name,
-						newName, false);
+						newName);
 				}
 			}
 		}

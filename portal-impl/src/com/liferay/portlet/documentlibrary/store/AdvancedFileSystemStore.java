@@ -15,25 +15,19 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -47,34 +41,33 @@ import java.util.Collection;
 public class AdvancedFileSystemStore extends FileSystemStore {
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		long companyId = GetterUtil.getLong(ids[0]);
-		String portletId = ids[1];
-		long groupId = GetterUtil.getLong(ids[2]);
-		long repositoryId = GetterUtil.getLong(ids[3]);
+	public String[] getFileNames(long companyId, long repositoryId)
+		throws SystemException {
 
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		String[] fileNames = FileUtil.listDirs(repositoryDir);
+		String[] directories = FileUtil.listDirs(repositoryDir);
 
-		for (String fileName : fileNames) {
-			Collection<Document> documents = getDocuments(
-				companyId, portletId, groupId, repositoryId,
-				repositoryDir.getPath() + StringPool.SLASH + fileName);
+		List<String> fileNames = new ArrayList<String>();
 
-			SearchEngineUtil.updateDocuments(companyId, documents);
+		for (String directory : directories) {
+			fileNames.addAll(
+				getAdvancedFileNames(
+					companyId, repositoryId,
+					repositoryDir.getPath() + StringPool.SLASH + directory));
 		}
+
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName, boolean reindex)
+			String fileName, String newFileName)
 		throws PortalException {
 
 		super.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName, newFileName,
-			reindex);
+			companyId, portletId, groupId, repositoryId, fileName, newFileName);
 
 		File newFileNameDir = getFileNameDir(
 			companyId, repositoryId, newFileName);
@@ -135,12 +128,10 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		return new File(repositoryDir + StringPool.SLASH + dirName);
 	}
 
-	protected Collection<Document> getDocuments(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName)
-		throws SearchException {
+	protected List<String> getAdvancedFileNames(
+		long companyId, long repositoryId, String fileName)  {
 
-		Collection<Document> documents = new ArrayList<Document>();
+		List<String> fileNames = new ArrayList<String>();
 
 		String shortFileName = FileUtil.getShortFileName(fileName);
 
@@ -150,35 +141,21 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			String[] curFileNames = FileUtil.listDirs(fileName);
 
 			for (String curFileName : curFileNames) {
-				documents.addAll(
-					getDocuments(
-						companyId, portletId, groupId, repositoryId,
+				fileNames.addAll(
+					getAdvancedFileNames(
+						companyId, repositoryId,
 						fileName + StringPool.SLASH + curFileName));
 			}
 		}
 		else {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
 			if (shortFileName.endsWith(_HOOK_EXTENSION)) {
 				shortFileName = FileUtil.stripExtension(shortFileName);
 			}
 
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(shortFileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			Document document = indexer.getDocument(fileModel);
-
-			if (document != null) {
-				documents.add(document);
-			}
+			fileNames.add(shortFileName);
 		}
 
-		return documents;
+		return fileNames;
 	}
 
 	@Override

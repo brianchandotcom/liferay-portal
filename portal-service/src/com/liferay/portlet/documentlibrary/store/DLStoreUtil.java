@@ -17,15 +17,12 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
-
-import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,37 +38,33 @@ public class DLStoreUtil {
 
 	public static void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, boolean validateFileExtension, long fileEntryId,
-			String properties, Date modifiedDate, ServiceContext serviceContext,
-			InputStream is)
+			String fileName, boolean validateFileExtension,
+			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
 		getStore().addFile(
 			companyId, portletId, groupId, repositoryId, fileName,
-			validateFileExtension, fileEntryId, properties, modifiedDate,
-			serviceContext, is);
+			validateFileExtension, serviceContext, is);
 	}
 
 	public static void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, byte[] bytes)
+			String fileName, ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
 
 		getStore().addFile(
-			companyId, portletId, groupId, repositoryId, fileName, fileEntryId,
-			properties, modifiedDate, serviceContext, bytes);
+			companyId, portletId, groupId, repositoryId, fileName,
+			serviceContext, bytes);
 	}
 
 	public static void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, File file)
+			String fileName, ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
 
 		getStore().addFile(
-			companyId, portletId, groupId, repositoryId, fileName, fileEntryId,
-			properties, modifiedDate, serviceContext, file);
+			companyId, portletId, groupId, repositoryId, fileName,
+			serviceContext, file);
 	}
 
 	public static void checkRoot(long companyId) throws SystemException {
@@ -178,75 +171,59 @@ public class DLStoreUtil {
 		getStore().move(srcDir, destDir);
 	}
 
-	public static Hits search(
-			long companyId, String portletId, long groupId,
-			long userId, long[] repositoryIds, String keywords, int start,
-			int end)
-		throws SystemException {
-
-		return getStore().search(
-			companyId, portletId, groupId, userId, repositoryIds, keywords,
-			start, end);
-	}
-
 	public static void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName, long fileEntryId)
+			long newRepositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, portletId, groupId, repositoryId, newRepositoryId,
-			fileName, fileEntryId);
+			fileName);
 	}
 
 	public static void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName, boolean reindex)
+			String fileName, String newFileName)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
-			companyId, portletId, groupId, repositoryId, fileName, newFileName,
-			reindex);
+			companyId, portletId, groupId, repositoryId, fileName, newFileName);
 	}
 
 	public static void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fileExtension,
 			boolean validateFileExtension, String versionNumber,
-			String sourceFileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, InputStream is)
+			String sourceFileName, ServiceContext serviceContext,
+			InputStream is)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
 			fileExtension, validateFileExtension, versionNumber, sourceFileName,
-			fileEntryId, properties, modifiedDate, serviceContext, is);
+			serviceContext, is);
 	}
 
 	public static void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
-			versionNumber, sourceFileName, fileEntryId, properties,
-			modifiedDate, serviceContext, bytes);
+			versionNumber, sourceFileName, serviceContext, bytes);
 	}
 
 	public static void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
-			versionNumber, sourceFileName, fileEntryId, properties,
-			modifiedDate, serviceContext, file);
+			versionNumber, sourceFileName, serviceContext, file);
 	}
 
 	public static void validate(String fileName, boolean validateFileExtension)

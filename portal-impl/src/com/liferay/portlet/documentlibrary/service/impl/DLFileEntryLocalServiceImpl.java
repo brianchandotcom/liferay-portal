@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -59,6 +60,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -209,8 +211,11 @@ public class DLFileEntryLocalServiceImpl
 		DLStoreUtil.addFile(
 			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 			dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(), name,
-			false, fileEntryId, dlFileEntry.getLuceneProperties(),
-			dlFileEntry.getModifiedDate(), serviceContext, is);
+			false, serviceContext, is);
+
+		// Index
+
+		index(dlFileEntry, serviceContext);
 
 		// Workflow
 
@@ -327,9 +332,11 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
-				version, dlFileEntry.getTitle(), dlFileEntry.getFileEntryId(),
-				dlFileEntry.getLuceneProperties(),
-				dlFileEntry.getModifiedDate(), serviceContext, is);
+				version, dlFileEntry.getTitle(), serviceContext, is);
+
+			// Index
+
+			index(dlFileEntry, serviceContext);
 		}
 
 		// Workflow
@@ -459,9 +466,11 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				dlFileVersion.getTitle(), dlFileEntry.getFileEntryId(),
-				dlFileEntry.getLuceneProperties(),
-				dlFileEntry.getModifiedDate(), new ServiceContext(), is);
+				dlFileVersion.getTitle(), new ServiceContext(), is);
+
+			// Index
+
+			index(dlFileEntry, serviceContext);
 
 			// Asset
 
@@ -1229,6 +1238,19 @@ public class DLFileEntryLocalServiceImpl
 				_log.warn(e, e);
 			}
 		}
+
+		// Index
+
+		FileModel fileModel = new FileModel();
+
+		fileModel.setCompanyId(dlFileEntry.getCompanyId());
+		fileModel.setFileName(dlFileEntry.getName());
+		fileModel.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
+
+		indexer.delete(fileModel);
 	}
 
 	protected HashMap<Long, Fields> getDocumentMetadataFieldsMap(
@@ -1400,6 +1422,29 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	protected void index(
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
+		throws SearchException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			FileModel.class);
+
+		FileModel fileModel = new FileModel();
+
+		fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
+		fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
+		fileModel.setCompanyId(serviceContext.getCompanyId());
+		fileModel.setFileEntryId(dlFileEntry.getFileEntryId());
+		fileModel.setFileName(dlFileEntry.getName());
+		fileModel.setGroupId(dlFileEntry.getGroupId());
+		fileModel.setModifiedDate(dlFileEntry.getModifiedDate());
+		fileModel.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		fileModel.setProperties(dlFileEntry.getLuceneProperties());
+		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
+
+		indexer.reindex(fileModel);
+	}
+
 	protected Lock lockFileEntry(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -1451,8 +1496,26 @@ public class DLFileEntryLocalServiceImpl
 		DLStoreUtil.updateFile(
 			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 			dlFileEntry.getGroupId(), oldDataRepositoryId,
-			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-			dlFileEntry.getFileEntryId());
+			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			FileModel.class);
+
+		FileModel fileModel = new FileModel();
+
+		fileModel.setCompanyId(user.getCompanyId());
+		fileModel.setFileName(dlFileEntry.getName());
+		fileModel.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		fileModel.setRepositoryId(oldDataRepositoryId);
+
+		indexer.delete(fileModel);
+
+		fileModel.setGroupId(dlFileEntry.getGroupId());
+		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
+
+		indexer.reindex(fileModel);
 
 		return dlFileEntry;
 	}
@@ -1562,9 +1625,11 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
-				version, sourceFileName, dlFileEntry.getFileEntryId(),
-				dlFileEntry.getLuceneProperties(),
-				dlFileEntry.getModifiedDate(), serviceContext, is);
+				version, sourceFileName, serviceContext, is);
+
+			// Index
+
+			index(dlFileEntry, serviceContext);
 		}
 
 		// Asset

@@ -18,14 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,7 +28,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.util.SystemProperties;
 
 import java.io.File;
@@ -44,12 +37,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.jets3t.service.S3Service;
 import org.jets3t.service.S3ServiceException;
@@ -82,8 +70,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, InputStream is)
+			String fileName, ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
 		try {
@@ -94,24 +81,6 @@ public class S3Store extends BaseStore {
 			s3Object.setDataInputStream(is);
 
 			_s3Service.putObject(_s3Bucket, s3Object);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-			fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileEntryId(fileEntryId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setModifiedDate(modifiedDate);
-			fileModel.setPortletId(portletId);
-			fileModel.setProperties(properties);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
@@ -157,17 +126,6 @@ public class S3Store extends BaseStore {
 
 				_s3Service.deleteObject(_s3Bucket, s3Object.getKey());
 			}
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(fileName);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			indexer.delete(fileModel);
 		}
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
@@ -211,6 +169,31 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
 		}
+	}
+
+	@Override
+	public String[] getFileNames(long companyId, long repositoryId)
+		throws SystemException {
+
+		List<String> fileNames = new ArrayList<String>();
+
+		try {
+			S3Object[] searchObjects = _s3Service.listObjects(
+				_s3Bucket, getKey(companyId, repositoryId), null);
+
+			for (int i = 0; i < searchObjects.length; i++) {
+				S3Object currentObject = searchObjects[i];
+
+				String fileName = getFileName(currentObject.getKey());
+
+				fileNames.add(fileName);
+			}
+		}
+		catch (S3ServiceException s3se) {
+			throw new SystemException(s3se);
+		}
+
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -296,64 +279,9 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		long companyId = GetterUtil.getLong(ids[0]);
-		String portletId = ids[1];
-		long groupId = GetterUtil.getLong(ids[2]);
-		long repositoryId = GetterUtil.getLong(ids[3]);
-
-		Collection<Document> documents = new ArrayList<Document>();
-
-		try {
-			S3Object[] searchObjects = _s3Service.listObjects(
-				_s3Bucket, getKey(companyId, repositoryId), null);
-
-			Set<String> fileNameSet = new HashSet<String>();
-
-			for (int i = 0; i < searchObjects.length; i++) {
-				S3Object currentObject = searchObjects[i];
-
-				String fileName = getFileName(currentObject.getKey());
-
-				fileNameSet.add(fileName);
-			}
-
-			Iterator<String> itr = fileNameSet.iterator();
-
-			while (itr.hasNext()) {
-				String fileName = itr.next();
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					FileModel.class);
-
-				FileModel fileModel = new FileModel();
-
-				fileModel.setCompanyId(companyId);
-				fileModel.setFileName(fileName);
-				fileModel.setGroupId(groupId);
-				fileModel.setPortletId(portletId);
-				fileModel.setRepositoryId(repositoryId);
-
-				Document document = indexer.getDocument(fileModel);
-
-				if (document == null) {
-					continue;
-				}
-
-				documents.add(document);
-			}
-		}
-		catch (S3ServiceException s3se) {
-			throw new SearchException(s3se);
-		}
-
-		SearchEngineUtil.updateDocuments(companyId, documents);
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName, long fileEntryId)
+			long newRepositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		try {
@@ -394,23 +322,6 @@ public class S3Store extends BaseStore {
 
 				FileUtil.delete(tempFile);
 			}
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(fileName);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.delete(fileModel);
-
-			fileModel.setGroupId(groupId);
-			fileModel.setRepositoryId(newRepositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -422,7 +333,7 @@ public class S3Store extends BaseStore {
 
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName, boolean reindex)
+			String fileName, String newFileName)
 		throws PortalException, SystemException {
 
 		try {
@@ -465,25 +376,6 @@ public class S3Store extends BaseStore {
 
 				FileUtil.delete(tempFile);
 			}
-
-			if (reindex) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					FileModel.class);
-
-				FileModel fileModel = new FileModel();
-
-				fileModel.setCompanyId(companyId);
-				fileModel.setFileName(fileName);
-				fileModel.setPortletId(portletId);
-				fileModel.setRepositoryId(repositoryId);
-
-				indexer.delete(fileModel);
-
-				fileModel.setFileName(newFileName);
-				fileModel.setGroupId(groupId);
-
-				indexer.reindex(fileModel);
-			}
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -497,7 +389,6 @@ public class S3Store extends BaseStore {
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
@@ -509,24 +400,6 @@ public class S3Store extends BaseStore {
 			s3Object.setDataInputStream(is);
 
 			_s3Service.putObject(_s3Bucket, s3Object);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-			fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileEntryId(fileEntryId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setModifiedDate(modifiedDate);
-			fileModel.setPortletId(portletId);
-			fileModel.setProperties(properties);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);

@@ -16,13 +16,7 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,7 +26,6 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -40,10 +33,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -75,8 +65,7 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, InputStream is)
+			String fileName, ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
 		try {
@@ -88,24 +77,6 @@ public class FileSystemStore extends BaseStore {
 			}
 
 			FileUtil.write(fileNameVersionFile, is);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-			fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileEntryId(fileEntryId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setModifiedDate(modifiedDate);
-			fileModel.setPortletId(portletId);
-			fileModel.setProperties(properties);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -144,17 +115,6 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		FileUtil.deltree(fileNameDir);
-
-		FileModel fileModel = new FileModel();
-
-		fileModel.setCompanyId(companyId);
-		fileModel.setFileName(fileName);
-		fileModel.setPortletId(portletId);
-		fileModel.setRepositoryId(repositoryId);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-		indexer.delete(fileModel);
 	}
 
 	@Override
@@ -197,6 +157,15 @@ public class FileSystemStore extends BaseStore {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
+	}
+
+	@Override
+	public String[] getFileNames(long companyId, long repositoryId)
+		throws SystemException {
+
+		File repositoryDir = getRepositoryDir(companyId, repositoryId);
+
+		return FileUtil.listDirs(repositoryDir);
 	}
 
 	@Override
@@ -263,47 +232,9 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		long companyId = GetterUtil.getLong(ids[0]);
-		String portletId = ids[1];
-		long groupId = GetterUtil.getLong(ids[2]);
-		long repositoryId = GetterUtil.getLong(ids[3]);
-
-		Collection<Document> documents = new ArrayList<Document>();
-
-		File repistoryDir = getRepositoryDir(companyId, repositoryId);
-
-		String[] fileNames = FileUtil.listDirs(repistoryDir);
-
-		for (int i = 0; i < fileNames.length; i++) {
-			String fileName = fileNames[i];
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			Document document = indexer.getDocument(fileModel);
-
-			if (document == null) {
-				continue;
-			}
-
-			documents.add(document);
-		}
-
-		SearchEngineUtil.updateDocuments(companyId, documents);
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName, long fileEntryId)
+			long newRepositoryId, String fileName)
 		throws PortalException {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
@@ -313,28 +244,11 @@ public class FileSystemStore extends BaseStore {
 		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
 		FileUtil.deltree(fileNameDir);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
-			FileModel.class);
-
-		FileModel fileModel = new FileModel();
-
-		fileModel.setCompanyId(companyId);
-		fileModel.setFileName(fileName);
-		fileModel.setPortletId(portletId);
-		fileModel.setRepositoryId(repositoryId);
-
-		indexer.delete(fileModel);
-
-		fileModel.setGroupId(groupId);
-		fileModel.setRepositoryId(newRepositoryId);
-
-		indexer.reindex(fileModel);
 	}
 
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName, boolean reindex)
+			String fileName, String newFileName)
 		throws PortalException {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
@@ -344,31 +258,12 @@ public class FileSystemStore extends BaseStore {
 		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
 		FileUtil.deltree(fileNameDir);
-
-		if (reindex) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(fileName);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.delete(fileModel);
-
-			fileModel.setFileName(newFileName);
-			fileModel.setGroupId(groupId);
-
-			indexer.reindex(fileModel);
-		}
 	}
 
 	@Override
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
@@ -381,24 +276,6 @@ public class FileSystemStore extends BaseStore {
 			}
 
 			FileUtil.write(fileNameVersionFile, is);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-			fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileEntryId(fileEntryId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setModifiedDate(modifiedDate);
-			fileModel.setPortletId(portletId);
-			fileModel.setProperties(properties);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

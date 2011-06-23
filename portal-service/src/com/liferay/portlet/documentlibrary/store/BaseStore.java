@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -30,8 +29,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,8 +41,7 @@ public abstract class BaseStore implements Store {
 
 	public void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, byte[] bytes)
+			String fileName, ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
 
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
@@ -53,7 +49,7 @@ public abstract class BaseStore implements Store {
 		try {
 			addFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				fileEntryId, properties, modifiedDate, serviceContext, is);
+				serviceContext, is);
 		}
 		finally {
 			try {
@@ -67,8 +63,7 @@ public abstract class BaseStore implements Store {
 
 	public void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, File file)
+			String fileName, ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -78,7 +73,7 @@ public abstract class BaseStore implements Store {
 
 			addFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				fileEntryId, properties, modifiedDate, serviceContext, is);
+				serviceContext, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -97,8 +92,7 @@ public abstract class BaseStore implements Store {
 
 	public abstract void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, InputStream is)
+			String fileName, ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException;
 
 	public abstract void checkRoot(long companyId) throws SystemException;
@@ -183,17 +177,14 @@ public abstract class BaseStore implements Store {
 	public abstract void move(String srcDir, String destDir)
 		throws SystemException;
 
-	public abstract void reindex(String[] ids) throws SearchException;
-
 	public abstract void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName, long fileEntryId)
+			long newRepositoryId, String fileName)
 		throws PortalException, SystemException;
 
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
 
@@ -202,8 +193,7 @@ public abstract class BaseStore implements Store {
 		try {
 			updateFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				versionNumber, sourceFileName, fileEntryId, properties,
-				modifiedDate, serviceContext, is);
+				versionNumber, sourceFileName, serviceContext, is);
 		}
 		finally {
 			try {
@@ -218,7 +208,6 @@ public abstract class BaseStore implements Store {
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
 
@@ -229,8 +218,7 @@ public abstract class BaseStore implements Store {
 
 			updateFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				versionNumber, sourceFileName, fileEntryId, properties,
-				modifiedDate, serviceContext, is);
+				versionNumber, sourceFileName, serviceContext, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -250,7 +238,6 @@ public abstract class BaseStore implements Store {
 	public abstract void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException;
 

@@ -132,7 +132,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					try {
 						DLStoreUtil.updateFile(
 							companyId, portletId, groupId, repositoryId, name,
-							newName, false);
+							newName);
 					}
 					catch (NoSuchFileException nsfe) {
 						_log.error(nsfe);

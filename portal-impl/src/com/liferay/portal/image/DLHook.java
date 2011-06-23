@@ -29,8 +29,6 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Date;
-
 /**
  * @author Jorge Ferrer
  */
@@ -83,7 +81,6 @@ public class DLHook extends BaseHook {
 		throws PortalException, SystemException {
 
 		String fileName = getFileName(image.getImageId(), image.getType());
-		Date now = new Date();
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
 		if (DLStoreUtil.hasFile(
@@ -95,7 +92,7 @@ public class DLHook extends BaseHook {
 
 		DLStoreUtil.addFile(
 			_COMPANY_ID, _PORTLET_ID, _GROUP_ID, _REPOSITORY_ID, fileName, true,
-			_FILE_ENTRY_ID, _PROPERTIES, now, new ServiceContext(), is);
+			new ServiceContext(), is);
 	}
 
 	protected String getFileName(long imageId, String type) {
@@ -103,10 +100,8 @@ public class DLHook extends BaseHook {
 	}
 
 	private static final long _COMPANY_ID = 0;
-	private static final long _FILE_ENTRY_ID = 0;
 	private static final long _GROUP_ID = 0;
 	private static final String _PORTLET_ID = PortletKeys.PORTAL;
-	private static final String _PROPERTIES = StringPool.BLANK;
 	private static final long _REPOSITORY_ID = 0;
 	private static final String _VERSION_NUMBER = "1.0";
 

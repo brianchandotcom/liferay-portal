@@ -21,11 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,14 +31,11 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.model.FileModel;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.jcr.Binary;
@@ -118,8 +110,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, long fileEntryId, String properties,
-			Date modifiedDate, ServiceContext serviceContext, InputStream is)
+			String fileName, ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -166,25 +157,6 @@ public class JCRStore extends BaseStore {
 
 				versionHistory.addVersionLabel(
 					version.getName(), DEFAULT_VERSION, false);
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					FileModel.class);
-
-				FileModel fileModel = new FileModel();
-
-				fileModel.setAssetCategoryIds(
-					serviceContext.getAssetCategoryIds());
-				fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-				fileModel.setCompanyId(companyId);
-				fileModel.setFileEntryId(fileEntryId);
-				fileModel.setFileName(fileName);
-				fileModel.setGroupId(groupId);
-				fileModel.setModifiedDate(modifiedDate);
-				fileModel.setPortletId(portletId);
-				fileModel.setProperties(properties);
-				fileModel.setRepositoryId(repositoryId);
-
-				indexer.reindex(fileModel);
 			}
 		}
 		catch (RepositoryException re) {
@@ -231,8 +203,6 @@ public class JCRStore extends BaseStore {
 			Node rootNode = getRootNode(session, companyId);
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 			Node dirNode = repositoryNode.getNode(dirName);
-
-			deleteDirectory(companyId, portletId, repositoryId, dirNode);
 
 			dirNode.remove();
 
@@ -368,18 +338,6 @@ public class JCRStore extends BaseStore {
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 			Node fileNode = repositoryNode.getNode(fileName);
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileName(fileName);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.delete(fileModel);
-
 			fileNode.remove();
 
 			session.save();
@@ -481,6 +439,51 @@ public class JCRStore extends BaseStore {
 				session.logout();
 			}
 		}
+	}
+
+	@Override
+	public String[] getFileNames(long companyId, long repositoryId)
+		throws SystemException {
+
+		List<String> fileNames = new ArrayList<String>();
+
+		Session session = null;
+
+		try {
+			session = JCRFactoryUtil.createSession();
+
+			Node rootNode = getRootNode(session, companyId);
+			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			NodeIterator itr = repositoryNode.getNodes();
+
+			while (itr.hasNext()) {
+				Node node = (Node)itr.next();
+
+				NodeType primaryNodeType = node.getPrimaryNodeType();
+
+				String primaryNodeTypeName = primaryNodeType.getName();
+
+				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
+					fileNames.add(node.getName());
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			try {
+				if (session != null) {
+					session.logout();
+				}
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -596,74 +599,9 @@ public class JCRStore extends BaseStore {
 	}
 
 	@Override
-	public void reindex(String[] ids) throws SearchException {
-		long companyId = GetterUtil.getLong(ids[0]);
-		String portletId = ids[1];
-		long groupId = GetterUtil.getLong(ids[2]);
-		long repositoryId = GetterUtil.getLong(ids[3]);
-
-		Collection<Document> documents = new ArrayList<Document>();
-
-		Session session = null;
-
-		try {
-			session = JCRFactoryUtil.createSession();
-
-			Node rootNode = getRootNode(session, companyId);
-			Node repositoryNode = getFolderNode(rootNode, repositoryId);
-
-			NodeIterator itr = repositoryNode.getNodes();
-
-			while (itr.hasNext()) {
-				Node node = (Node)itr.next();
-
-				NodeType primaryNodeType = node.getPrimaryNodeType();
-
-				String primaryNodeTypeName = primaryNodeType.getName();
-
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
-					Indexer indexer = IndexerRegistryUtil.getIndexer(
-						FileModel.class);
-
-					FileModel fileModel = new FileModel();
-
-					fileModel.setCompanyId(companyId);
-					fileModel.setFileName(node.getName());
-					fileModel.setGroupId(groupId);
-					fileModel.setPortletId(portletId);
-					fileModel.setRepositoryId(repositoryId);
-
-					Document document = indexer.getDocument(fileModel);
-
-					if (document == null) {
-						continue;
-					}
-
-					documents.add(document);
-				}
-			}
-		}
-		catch (Exception e1) {
-			throw new SearchException(e1);
-		}
-		finally {
-			try {
-				if (session != null) {
-					session.logout();
-				}
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		SearchEngineUtil.updateDocuments(companyId, documents);
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName, long fileEntryId)
+			long newRepositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -738,23 +676,6 @@ public class JCRStore extends BaseStore {
 				fileNode.remove();
 
 				session.save();
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					FileModel.class);
-
-				FileModel fileModel = new FileModel();
-
-				fileModel.setCompanyId(companyId);
-				fileModel.setFileName(fileName);
-				fileModel.setPortletId(portletId);
-				fileModel.setRepositoryId(repositoryId);
-
-				indexer.delete(fileModel);
-
-				fileModel.setGroupId(groupId);
-				fileModel.setRepositoryId(newRepositoryId);
-
-				indexer.reindex(fileModel);
 			}
 		}
 		catch (PathNotFoundException pnfe) {
@@ -772,7 +693,7 @@ public class JCRStore extends BaseStore {
 
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName, boolean reindex)
+			String fileName, String newFileName)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -840,25 +761,6 @@ public class JCRStore extends BaseStore {
 			fileNode.remove();
 
 			session.save();
-
-			if (reindex) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					FileModel.class);
-
-				FileModel fileModel = new FileModel();
-
-				fileModel.setCompanyId(companyId);
-				fileModel.setFileName(fileName);
-				fileModel.setPortletId(portletId);
-				fileModel.setRepositoryId(repositoryId);
-
-				indexer.delete(fileModel);
-
-				fileModel.setFileName(newFileName);
-				fileModel.setGroupId(groupId);
-
-				indexer.reindex(fileModel);
-			}
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(fileName);
@@ -877,7 +779,6 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
-			long fileEntryId, String properties, Date modifiedDate,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
@@ -920,24 +821,6 @@ public class JCRStore extends BaseStore {
 			versionHistory.addVersionLabel(
 				version.getName(), versionLabel,
 				PropsValues.DL_STORE_JCR_MOVE_VERSION_LABELS);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				FileModel.class);
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-			fileModel.setAssetTagNames(serviceContext.getAssetTagNames());
-			fileModel.setCompanyId(companyId);
-			fileModel.setFileEntryId(fileEntryId);
-			fileModel.setFileName(fileName);
-			fileModel.setGroupId(groupId);
-			fileModel.setModifiedDate(modifiedDate);
-			fileModel.setPortletId(portletId);
-			fileModel.setProperties(properties);
-			fileModel.setRepositoryId(repositoryId);
-
-			indexer.reindex(fileModel);
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
@@ -962,47 +845,6 @@ public class JCRStore extends BaseStore {
 		Binary binary = property.getBinary();
 
 		toNode.setProperty(name, binary);
-	}
-
-	protected void deleteDirectory(
-			long companyId, String portletId, long repositoryId, Node dirNode)
-		throws SearchException {
-
-		try {
-			NodeIterator itr = dirNode.getNodes();
-
-			FileModel fileModel = new FileModel();
-
-			fileModel.setCompanyId(companyId);
-			fileModel.setPortletId(portletId);
-			fileModel.setRepositoryId(repositoryId);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			while (itr.hasNext()) {
-				Node node = (Node)itr.next();
-
-				NodeType primaryNodeType = node.getPrimaryNodeType();
-
-				String primaryNodeTypeName = primaryNodeType.getName();
-
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
-					deleteDirectory(companyId, portletId, repositoryId, node);
-				}
-				else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
-					fileModel.setFileName(node.getName());
-
-					indexer.delete(fileModel);
-				}
-			}
-
-			fileModel.setFileName(dirNode.getName());
-
-			indexer.delete(fileModel);
-		}
-		catch (RepositoryException e) {
-			_log.error(e);
-		}
 	}
 
 	protected Node getFileContentNode(

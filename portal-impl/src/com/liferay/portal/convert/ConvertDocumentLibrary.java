@@ -46,7 +46,6 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.InputStream;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -145,37 +144,32 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		throws Exception {
 
 		String fileName = fileEntry.getName();
-		long fileEntryId = fileEntry.getFileEntryId();
-		String properties = fileEntry.getLuceneProperties();
 
 		List<DLFileVersion> dlFileVersions = fileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
 
 		if (dlFileVersions.isEmpty()) {
 			String versionNumber = Store.DEFAULT_VERSION;
-			Date modifiedDate = fileEntry.getModifiedDate();
 
 			migrateFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				versionNumber, fileEntryId, properties, modifiedDate);
+				versionNumber);
 
 			return;
 		}
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			String versionNumber = dlFileVersion.getVersion();
-			Date modifiedDate = dlFileVersion.getCreateDate();
 
 			migrateFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				versionNumber, fileEntryId, properties, modifiedDate);
+				versionNumber);
 		}
 	}
 
 	protected void migrateFile(
 		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String versionNumber, long fileEntryId,
-		String properties, Date modifiedDate) {
+		String fileName, String versionNumber) {
 
 		try {
 			InputStream is = _sourceStore.getFileAsStream(
@@ -184,14 +178,12 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			if (versionNumber.equals(Store.DEFAULT_VERSION)) {
 				_targetStore.addFile(
 					companyId, portletId, groupId, repositoryId, fileName,
-					fileEntryId, properties, modifiedDate, _serviceContext,
-					is);
+					_serviceContext, is);
 			}
 			else {
 				_targetStore.updateFile(
 					companyId, portletId, groupId, repositoryId, fileName,
-					versionNumber, fileName, fileEntryId, properties,
-					modifiedDate, _serviceContext, is);
+					versionNumber, fileName, _serviceContext, is);
 			}
 		}
 		catch (Exception e) {
@@ -207,9 +199,6 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		long groupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String versionNumber = Store.DEFAULT_VERSION;
-		long fileEntryId = 0;
-		String properties = StringPool.BLANK;
-		Date modifiedDate = new Date();
 
 		try {
 			_targetStore.addDirectory(companyId, repositoryId, dirName);
@@ -224,7 +213,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 			migrateFile(
 				companyId, portletId, groupId, repositoryId, fileName,
-				versionNumber, fileEntryId, properties, modifiedDate);
+				versionNumber);
 		}
 	}
 

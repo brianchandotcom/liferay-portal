@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -46,6 +49,8 @@ import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -298,9 +303,40 @@ public class DLStoreIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
+		long companyId = GetterUtil.getLong(ids[0]);
+		String portletId = ids[1];
+		long groupId = GetterUtil.getLong(ids[2]);
+		long repositoryId = GetterUtil.getLong(ids[3]);
+
+		Collection<Document> documents = new ArrayList<Document>();
+
 		Store hook = StoreFactory.getInstance();
 
-		hook.reindex(ids);
+		String[] fileNames = hook.getFileNames(companyId, repositoryId);
+
+		for (int i = 0; i < fileNames.length; i++) {
+			String fileName = fileNames[i];
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
+
+			FileModel fileModel = new FileModel();
+
+			fileModel.setCompanyId(companyId);
+			fileModel.setFileName(fileName);
+			fileModel.setGroupId(groupId);
+			fileModel.setPortletId(portletId);
+			fileModel.setRepositoryId(repositoryId);
+
+			Document document = indexer.getDocument(fileModel);
+
+			if (document == null) {
+				continue;
+			}
+
+			documents.add(document);
+		}
+
+		SearchEngineUtil.updateDocuments(companyId, documents);
 	}
 
 	@Override

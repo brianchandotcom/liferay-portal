@@ -287,19 +287,14 @@ public class UpdateLayoutAction extends JSONAction {
 		if (dataType.equals("json")) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			if (portlet.isAjaxable()) {
-				StringServletResponse stringResponse =
-					new StringServletResponse(response);
+			StringServletResponse stringResponse =
+				new StringServletResponse(response);
 
-				renderPortletAction.execute(
-					mapping, form, dynamicRequest, stringResponse);
+			renderPortletAction.execute(
+				mapping, form, dynamicRequest, stringResponse);
 
-				populatePortletJSONObject(
-					request, stringResponse, portlet, jsonObject);
-			}
-			else {
-				jsonObject.put("refresh", true);
-			}
+			populatePortletJSONObject(
+				request, stringResponse, portlet, jsonObject);
 
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 

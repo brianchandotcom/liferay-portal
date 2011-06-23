@@ -601,7 +601,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getGroup(long companyId, String name)
 		throws PortalException, SystemException {
 
-		Group group = _systemGroupsMap.get(companyId + name);
+		Group group = _systemGroupsMap.get(
+			String.valueOf(companyId).concat(name));
 
 		if (group != null) {
 			return group;

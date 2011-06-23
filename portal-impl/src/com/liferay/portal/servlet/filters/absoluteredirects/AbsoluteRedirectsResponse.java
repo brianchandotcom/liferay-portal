@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
-	public AbsoluteRedirectsResponse(g
+	public AbsoluteRedirectsResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
 		super(response);

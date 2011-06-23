@@ -830,7 +830,8 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\", selenium.getTitle());");
 			}
-			else if (param1.equals("waitForElementNotPresent") ||
+			else if (param1.equals("waitForConfirmation") ||
+					 param1.equals("waitForElementNotPresent") ||
 					 param1.equals("waitForElementPresent") ||
 					 param1.equals("waitForNotPartialText") ||
 					 param1.equals("waitForNotSelectedLabel") ||
@@ -867,7 +868,12 @@ public class SeleneseToJavaBuilder {
 					sb.append("!");
 				}
 
-				if (param1.equals("waitForElementNotPresent") ||
+				if (param1.equals("waitForConfirmation")) {
+					sb.append("\"");
+					sb.append(param2);
+					sb.append("\".equals(selenium.getConfirmation())");
+				}
+				else if (param1.equals("waitForElementNotPresent") ||
 					param1.equals("waitForElementPresent")) {
 
 					sb.append("selenium.isElementPresent");

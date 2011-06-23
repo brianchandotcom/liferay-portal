@@ -37,99 +37,99 @@ public class DLFileRankWrapper implements DLFileRank {
 	}
 
 	/**
-	* Returns the primary key of this d l file rank.
+	* Returns the primary key of this document library file rank.
 	*
-	* @return the primary key of this d l file rank
+	* @return the primary key of this document library file rank
 	*/
 	public long getPrimaryKey() {
 		return _dlFileRank.getPrimaryKey();
 	}
 
 	/**
-	* Sets the primary key of this d l file rank.
+	* Sets the primary key of this document library file rank.
 	*
-	* @param primaryKey the primary key of this d l file rank
+	* @param primaryKey the primary key of this document library file rank
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_dlFileRank.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Returns the file rank ID of this d l file rank.
+	* Returns the file rank ID of this document library file rank.
 	*
-	* @return the file rank ID of this d l file rank
+	* @return the file rank ID of this document library file rank
 	*/
 	public long getFileRankId() {
 		return _dlFileRank.getFileRankId();
 	}
 
 	/**
-	* Sets the file rank ID of this d l file rank.
+	* Sets the file rank ID of this document library file rank.
 	*
-	* @param fileRankId the file rank ID of this d l file rank
+	* @param fileRankId the file rank ID of this document library file rank
 	*/
 	public void setFileRankId(long fileRankId) {
 		_dlFileRank.setFileRankId(fileRankId);
 	}
 
 	/**
-	* Returns the group ID of this d l file rank.
+	* Returns the group ID of this document library file rank.
 	*
-	* @return the group ID of this d l file rank
+	* @return the group ID of this document library file rank
 	*/
 	public long getGroupId() {
 		return _dlFileRank.getGroupId();
 	}
 
 	/**
-	* Sets the group ID of this d l file rank.
+	* Sets the group ID of this document library file rank.
 	*
-	* @param groupId the group ID of this d l file rank
+	* @param groupId the group ID of this document library file rank
 	*/
 	public void setGroupId(long groupId) {
 		_dlFileRank.setGroupId(groupId);
 	}
 
 	/**
-	* Returns the company ID of this d l file rank.
+	* Returns the company ID of this document library file rank.
 	*
-	* @return the company ID of this d l file rank
+	* @return the company ID of this document library file rank
 	*/
 	public long getCompanyId() {
 		return _dlFileRank.getCompanyId();
 	}
 
 	/**
-	* Sets the company ID of this d l file rank.
+	* Sets the company ID of this document library file rank.
 	*
-	* @param companyId the company ID of this d l file rank
+	* @param companyId the company ID of this document library file rank
 	*/
 	public void setCompanyId(long companyId) {
 		_dlFileRank.setCompanyId(companyId);
 	}
 
 	/**
-	* Returns the user ID of this d l file rank.
+	* Returns the user ID of this document library file rank.
 	*
-	* @return the user ID of this d l file rank
+	* @return the user ID of this document library file rank
 	*/
 	public long getUserId() {
 		return _dlFileRank.getUserId();
 	}
 
 	/**
-	* Sets the user ID of this d l file rank.
+	* Sets the user ID of this document library file rank.
 	*
-	* @param userId the user ID of this d l file rank
+	* @param userId the user ID of this document library file rank
 	*/
 	public void setUserId(long userId) {
 		_dlFileRank.setUserId(userId);
 	}
 
 	/**
-	* Returns the user uuid of this d l file rank.
+	* Returns the user uuid of this document library file rank.
 	*
-	* @return the user uuid of this d l file rank
+	* @return the user uuid of this document library file rank
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.lang.String getUserUuid()
@@ -138,45 +138,45 @@ public class DLFileRankWrapper implements DLFileRank {
 	}
 
 	/**
-	* Sets the user uuid of this d l file rank.
+	* Sets the user uuid of this document library file rank.
 	*
-	* @param userUuid the user uuid of this d l file rank
+	* @param userUuid the user uuid of this document library file rank
 	*/
 	public void setUserUuid(java.lang.String userUuid) {
 		_dlFileRank.setUserUuid(userUuid);
 	}
 
 	/**
-	* Returns the create date of this d l file rank.
+	* Returns the create date of this document library file rank.
 	*
-	* @return the create date of this d l file rank
+	* @return the create date of this document library file rank
 	*/
 	public java.util.Date getCreateDate() {
 		return _dlFileRank.getCreateDate();
 	}
 
 	/**
-	* Sets the create date of this d l file rank.
+	* Sets the create date of this document library file rank.
 	*
-	* @param createDate the create date of this d l file rank
+	* @param createDate the create date of this document library file rank
 	*/
 	public void setCreateDate(java.util.Date createDate) {
 		_dlFileRank.setCreateDate(createDate);
 	}
 
 	/**
-	* Returns the file entry ID of this d l file rank.
+	* Returns the file entry ID of this document library file rank.
 	*
-	* @return the file entry ID of this d l file rank
+	* @return the file entry ID of this document library file rank
 	*/
 	public long getFileEntryId() {
 		return _dlFileRank.getFileEntryId();
 	}
 
 	/**
-	* Sets the file entry ID of this d l file rank.
+	* Sets the file entry ID of this document library file rank.
 	*
-	* @param fileEntryId the file entry ID of this d l file rank
+	* @param fileEntryId the file entry ID of this document library file rank
 	*/
 	public void setFileEntryId(long fileEntryId) {
 		_dlFileRank.setFileEntryId(fileEntryId);

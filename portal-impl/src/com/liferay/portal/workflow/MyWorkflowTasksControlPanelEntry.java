@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class MyWorkflowTasksControlPanelEntry
 	extends WorkflowControlPanelEntry {
 
+	@Override
 	public boolean isVisible(
 			PermissionChecker permissionChecker, Portlet portlet)
 		throws Exception {

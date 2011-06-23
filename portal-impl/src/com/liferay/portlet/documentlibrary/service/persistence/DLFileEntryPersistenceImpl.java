@@ -63,7 +63,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the d l file entry service.
+ * The persistence implementation for the document library file entry service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -79,7 +79,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DLFileEntryUtil} to access the d l file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DLFileEntryUtil} to access the document library file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DLFileEntryImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
@@ -220,9 +220,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			"countAll", new String[0]);
 
 	/**
-	 * Caches the d l file entry in the entity cache if it is enabled.
+	 * Caches the document library file entry in the entity cache if it is enabled.
 	 *
-	 * @param dlFileEntry the d l file entry
+	 * @param dlFileEntry the document library file entry
 	 */
 	public void cacheResult(DLFileEntry dlFileEntry) {
 		EntityCacheUtil.putResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -253,9 +253,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Caches the d l file entries in the entity cache if it is enabled.
+	 * Caches the document library file entries in the entity cache if it is enabled.
 	 *
-	 * @param dlFileEntries the d l file entries
+	 * @param dlFileEntries the document library file entries
 	 */
 	public void cacheResult(List<DLFileEntry> dlFileEntries) {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
@@ -268,7 +268,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Clears the cache for all d l file entries.
+	 * Clears the cache for all document library file entries.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -286,7 +286,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Clears the cache for the d l file entry.
+	 * Clears the cache for the document library file entry.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -320,10 +320,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Creates a new d l file entry with the primary key. Does not add the d l file entry to the database.
+	 * Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
 	 *
-	 * @param fileEntryId the primary key for the new d l file entry
-	 * @return the new d l file entry
+	 * @param fileEntryId the primary key for the new document library file entry
+	 * @return the new document library file entry
 	 */
 	public DLFileEntry create(long fileEntryId) {
 		DLFileEntry dlFileEntry = new DLFileEntryImpl();
@@ -339,11 +339,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d l file entry
-	 * @return the d l file entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d l file entry with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file entry
+	 * @return the document library file entry that was removed
+	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -353,11 +353,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param fileEntryId the primary key of the d l file entry
-	 * @return the d l file entry that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry remove(long fileEntryId)
@@ -393,10 +393,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileEntry the d l file entry
-	 * @return the d l file entry that was removed
+	 * @param dlFileEntry the document library file entry
+	 * @return the document library file entry that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -611,11 +611,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the document library file entry with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l file entry
-	 * @return the d l file entry
-	 * @throws com.liferay.portal.NoSuchModelException if a d l file entry with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file entry
+	 * @return the document library file entry
+	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -625,11 +625,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
+	 * Returns the document library file entry with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
 	 *
-	 * @param fileEntryId the primary key of the d l file entry
-	 * @return the d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByPrimaryKey(long fileEntryId)
@@ -649,10 +649,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l file entry
-	 * @return the d l file entry, or <code>null</code> if a d l file entry with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file entry
+	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -662,10 +662,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param fileEntryId the primary key of the d l file entry
-	 * @return the d l file entry, or <code>null</code> if a d l file entry with the primary key could not be found
+	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByPrimaryKey(long fileEntryId)
@@ -698,10 +698,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where uuid = &#63;.
+	 * Returns all the document library file entries where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByUuid(String uuid) throws SystemException {
@@ -709,16 +709,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where uuid = &#63;.
+	 * Returns a range of all the document library file entries where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByUuid(String uuid, int start, int end)
@@ -727,17 +727,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where uuid = &#63;.
+	 * Returns an ordered range of all the document library file entries where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByUuid(String uuid, int start, int end,
@@ -827,7 +827,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where uuid = &#63;.
+	 * Returns the first document library file entry in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -835,8 +835,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByUuid_First(String uuid,
@@ -862,7 +862,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where uuid = &#63;.
+	 * Returns the last document library file entry in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -870,8 +870,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByUuid_Last(String uuid,
@@ -900,17 +900,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where uuid = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByUuid_PrevAndNext(long fileEntryId, String uuid,
@@ -1060,12 +1060,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
+	 * Returns the document library file entry where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByUUID_G(String uuid, long groupId)
@@ -1096,11 +1096,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByUUID_G(String uuid, long groupId)
@@ -1109,11 +1109,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByUUID_G(String uuid, long groupId,
@@ -1213,10 +1213,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByGroupId(long groupId)
@@ -1225,16 +1225,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByGroupId(long groupId, int start, int end)
@@ -1243,17 +1243,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByGroupId(long groupId, int start, int end,
@@ -1331,7 +1331,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where groupId = &#63;.
+	 * Returns the first document library file entry in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1339,8 +1339,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByGroupId_First(long groupId,
@@ -1366,7 +1366,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where groupId = &#63;.
+	 * Returns the last document library file entry in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1374,8 +1374,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByGroupId_Last(long groupId,
@@ -1404,17 +1404,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where groupId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByGroupId_PrevAndNext(long fileEntryId,
@@ -1552,10 +1552,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByGroupId(long groupId)
@@ -1565,16 +1565,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByGroupId(long groupId, int start,
@@ -1583,17 +1583,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permissions to view where groupId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByGroupId(long groupId, int start,
@@ -1670,13 +1670,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set of d l file entries that the user has permission to view where groupId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63;.
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] filterFindByGroupId_PrevAndNext(long fileEntryId,
@@ -1846,10 +1846,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where companyId = &#63;.
+	 * Returns all the document library file entries where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByCompanyId(long companyId)
@@ -1859,16 +1859,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where companyId = &#63;.
+	 * Returns a range of all the document library file entries where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByCompanyId(long companyId, int start, int end)
@@ -1877,17 +1877,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where companyId = &#63;.
+	 * Returns an ordered range of all the document library file entries where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByCompanyId(long companyId, int start,
@@ -1965,7 +1965,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where companyId = &#63;.
+	 * Returns the first document library file entry in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1973,8 +1973,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByCompanyId_First(long companyId,
@@ -2001,7 +2001,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where companyId = &#63;.
+	 * Returns the last document library file entry in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2009,8 +2009,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByCompanyId_Last(long companyId,
@@ -2039,17 +2039,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where companyId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByCompanyId_PrevAndNext(long fileEntryId,
@@ -2187,11 +2187,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and userId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U(long groupId, long userId)
@@ -2201,7 +2201,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and userId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2209,9 +2209,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U(long groupId, long userId, int start,
@@ -2220,7 +2220,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and userId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2228,10 +2228,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U(long groupId, long userId, int start,
@@ -2313,7 +2313,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where groupId = &#63; and userId = &#63;.
+	 * Returns the first document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2322,8 +2322,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_U_First(long groupId, long userId,
@@ -2353,7 +2353,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where groupId = &#63; and userId = &#63;.
+	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2362,8 +2362,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_U_Last(long groupId, long userId,
@@ -2395,18 +2395,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where groupId = &#63; and userId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByG_U_PrevAndNext(long fileEntryId, long groupId,
@@ -2548,11 +2548,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U(long groupId, long userId)
@@ -2562,7 +2562,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2570,9 +2570,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U(long groupId, long userId,
@@ -2581,7 +2581,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2589,10 +2589,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U(long groupId, long userId,
@@ -2674,14 +2674,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set of d l file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] filterFindByG_U_PrevAndNext(long fileEntryId,
@@ -2855,11 +2855,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and folderId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long folderId)
@@ -2869,7 +2869,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and folderId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2877,9 +2877,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long folderId, int start,
@@ -2888,7 +2888,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and folderId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2896,10 +2896,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long folderId, int start,
@@ -2981,7 +2981,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where groupId = &#63; and folderId = &#63;.
+	 * Returns the first document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2990,8 +2990,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_First(long groupId, long folderId,
@@ -3021,7 +3021,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where groupId = &#63; and folderId = &#63;.
+	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3030,8 +3030,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_Last(long groupId, long folderId,
@@ -3063,18 +3063,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where groupId = &#63; and folderId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByG_F_PrevAndNext(long fileEntryId, long groupId,
@@ -3216,7 +3216,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and folderId = any &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3224,7 +3224,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds)
@@ -3234,7 +3234,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and folderId = any &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3242,9 +3242,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds,
@@ -3253,7 +3253,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and folderId = any &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3261,10 +3261,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds,
@@ -3367,11 +3367,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long folderId)
@@ -3381,7 +3381,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3389,9 +3389,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long folderId,
@@ -3400,7 +3400,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permissions to view where groupId = &#63; and folderId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permissions to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3408,10 +3408,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long folderId,
@@ -3493,14 +3493,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set of d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] filterFindByG_F_PrevAndNext(long fileEntryId,
@@ -3674,11 +3674,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long[] folderIds)
@@ -3688,7 +3688,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3696,9 +3696,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long[] folderIds,
@@ -3707,7 +3707,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3715,10 +3715,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F(long groupId, long[] folderIds,
@@ -3820,12 +3820,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -3835,7 +3835,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3844,9 +3844,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -3855,7 +3855,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3864,10 +3864,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -3954,7 +3954,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the first document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3964,8 +3964,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param userId the user ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_U_F_First(long groupId, long userId,
@@ -3998,7 +3998,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the last document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4008,8 +4008,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param userId the user ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_U_F_Last(long groupId, long userId,
@@ -4044,19 +4044,19 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByG_U_F_PrevAndNext(long fileEntryId,
@@ -4203,7 +4203,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4212,7 +4212,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -4222,7 +4222,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4231,9 +4231,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -4242,7 +4242,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4251,10 +4251,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
@@ -4367,12 +4367,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4382,7 +4382,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4391,9 +4391,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4402,7 +4402,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permissions to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permissions to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4411,10 +4411,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4501,15 +4501,15 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set of d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] filterFindByG_U_F_PrevAndNext(long fileEntryId,
@@ -4688,12 +4688,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4703,7 +4703,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4712,9 +4712,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4723,7 +4723,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -4732,10 +4732,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
@@ -4848,13 +4848,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @return the matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_N(long groupId, long folderId, String name)
@@ -4888,12 +4888,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByG_F_N(long groupId, long folderId, String name)
@@ -4902,12 +4902,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByG_F_N(long groupId, long folderId, String name,
@@ -5012,13 +5012,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and title = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @return the matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_T(long groupId, long folderId, String title)
@@ -5052,12 +5052,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByG_F_T(long groupId, long folderId, String title)
@@ -5066,12 +5066,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entry where groupId = &#63; and folderId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @return the matching d l file entry, or <code>null</code> if a matching d l file entry could not be found
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry fetchByG_F_T(long groupId, long folderId, String title,
@@ -5176,12 +5176,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long folderId,
@@ -5191,7 +5191,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5200,9 +5200,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long folderId,
@@ -5211,7 +5211,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5220,10 +5220,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long folderId,
@@ -5310,7 +5310,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the first d l file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the first document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5320,8 +5320,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the first matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_F_First(long groupId, long folderId,
@@ -5354,7 +5354,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the last d l file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the last document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5364,8 +5364,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching d l file entry could not be found
+	 * @return the last matching document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry findByG_F_F_Last(long groupId, long folderId,
@@ -5400,19 +5400,19 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] findByG_F_F_PrevAndNext(long fileEntryId,
@@ -5560,7 +5560,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns all the document library file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5569,7 +5569,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the matching d l file entries
+	 * @return the matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
@@ -5579,7 +5579,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns a range of all the document library file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5588,9 +5588,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
@@ -5599,7 +5599,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns an ordered range of all the document library file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5608,10 +5608,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries
+	 * @return the ordered range of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
@@ -5724,12 +5724,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long folderId,
@@ -5739,7 +5739,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5748,9 +5748,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long folderId,
@@ -5760,7 +5760,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permissions to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permissions to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -5769,10 +5769,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long folderId,
@@ -5859,15 +5859,15 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the d l file entries before and after the current d l file entry in the ordered set of d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
-	 * @param fileEntryId the primary key of the current d l file entry
+	 * @param fileEntryId the primary key of the current document library file entry
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file entry
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a d l file entry with the primary key could not be found
+	 * @return the previous, current, and next document library file entry
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileEntry[] filterFindByG_F_F_PrevAndNext(long fileEntryId,
@@ -6047,12 +6047,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the matching d l file entries that the user has permission to view
+	 * @return the matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long[] folderIds,
@@ -6062,7 +6062,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns a range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -6071,9 +6071,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of matching d l file entries that the user has permission to view
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long[] folderIds,
@@ -6083,7 +6083,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns an ordered range of all the document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -6092,10 +6092,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file entries that the user has permission to view
+	 * @return the ordered range of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long[] folderIds,
@@ -6208,9 +6208,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns all the d l file entries.
+	 * Returns all the document library file entries.
 	 *
-	 * @return the d l file entries
+	 * @return the document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findAll() throws SystemException {
@@ -6218,15 +6218,15 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns a range of all the d l file entries.
+	 * Returns a range of all the document library file entries.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
-	 * @return the range of d l file entries
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findAll(int start, int end)
@@ -6235,16 +6235,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file entries.
+	 * Returns an ordered range of all the document library file entries.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l file entries
-	 * @param end the upper bound of the range of d l file entries (not inclusive)
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d l file entries
+	 * @return the ordered range of document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileEntry> findAll(int start, int end,
@@ -6317,7 +6317,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where uuid = &#63; from the database.
+	 * Removes all the document library file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @throws SystemException if a system exception occurred
@@ -6329,7 +6329,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the document library file entry where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -6343,7 +6343,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where groupId = &#63; from the database.
+	 * Removes all the document library file entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @throws SystemException if a system exception occurred
@@ -6355,7 +6355,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where companyId = &#63; from the database.
+	 * Removes all the document library file entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @throws SystemException if a system exception occurred
@@ -6367,7 +6367,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where groupId = &#63; and userId = &#63; from the database.
+	 * Removes all the document library file entries where groupId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -6381,7 +6381,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where groupId = &#63; and folderId = &#63; from the database.
+	 * Removes all the document library file entries where groupId = &#63; and folderId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -6395,7 +6395,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where groupId = &#63; and userId = &#63; and folderId = &#63; from the database.
+	 * Removes all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
@@ -6410,7 +6410,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry where groupId = &#63; and folderId = &#63; and name = &#63; from the database.
+	 * Removes the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -6425,7 +6425,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the d l file entry where groupId = &#63; and folderId = &#63; and title = &#63; from the database.
+	 * Removes the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -6440,7 +6440,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63; from the database.
+	 * Removes all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
@@ -6456,7 +6456,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes all the d l file entries from the database.
+	 * Removes all the document library file entries from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -6467,10 +6467,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where uuid = &#63;.
+	 * Returns the number of document library file entries where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByUuid(String uuid) throws SystemException {
@@ -6532,11 +6532,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of document library file entries where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByUUID_G(String uuid, long groupId)
@@ -6603,10 +6603,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByGroupId(long groupId) throws SystemException {
@@ -6656,10 +6656,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByGroupId(long groupId) throws SystemException {
@@ -6703,10 +6703,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where companyId = &#63;.
+	 * Returns the number of document library file entries where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByCompanyId(long companyId) throws SystemException {
@@ -6756,11 +6756,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and userId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_U(long groupId, long userId) throws SystemException {
@@ -6814,11 +6814,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_U(long groupId, long userId)
@@ -6867,11 +6867,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F(long groupId, long folderId)
@@ -6926,11 +6926,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = any &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F(long groupId, long[] folderIds)
@@ -7013,11 +7013,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_F(long groupId, long folderId)
@@ -7066,11 +7066,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_F(long groupId, long[] folderIds)
@@ -7147,12 +7147,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_U_F(long groupId, long userId, long folderId)
@@ -7211,12 +7211,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_U_F(long groupId, long userId, long[] folderIds)
@@ -7311,12 +7311,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderId the folder ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_U_F(long groupId, long userId, long folderId)
@@ -7369,12 +7369,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param folderIds the folder IDs
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_U_F(long groupId, long userId, long[] folderIds)
@@ -7461,12 +7461,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = &#63; and name = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = &#63; and name = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param name the name
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F_N(long groupId, long folderId, String name)
@@ -7537,12 +7537,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = &#63; and title = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = &#63; and title = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F_T(long groupId, long folderId, String title)
@@ -7613,12 +7613,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F_F(long groupId, long folderId, long fileEntryTypeId)
@@ -7677,12 +7677,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns the number of document library file entries where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the number of matching d l file entries
+	 * @return the number of matching document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByG_F_F(long groupId, long[] folderIds, long fileEntryTypeId)
@@ -7777,12 +7777,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_F_F(long groupId, long folderId,
@@ -7835,12 +7835,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
+	 * Returns the number of document library file entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param folderIds the folder IDs
 	 * @param fileEntryTypeId the file entry type ID
-	 * @return the number of matching d l file entries that the user has permission to view
+	 * @return the number of matching document library file entries that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int filterCountByG_F_F(long groupId, long[] folderIds,
@@ -7927,9 +7927,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Returns the number of d l file entries.
+	 * Returns the number of document library file entries.
 	 *
-	 * @return the number of d l file entries
+	 * @return the number of document library file entries
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -7967,7 +7967,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Initializes the d l file entry persistence.
+	 * Initializes the document library file entry persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(

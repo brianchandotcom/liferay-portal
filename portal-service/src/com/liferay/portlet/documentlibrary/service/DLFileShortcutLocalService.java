@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the d l file shortcut local service.
+ * The interface for the document library file shortcut local service.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
@@ -39,14 +39,14 @@ public interface DLFileShortcutLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutLocalServiceUtil} to access the d l file shortcut local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutLocalServiceUtil} to access the document library file shortcut local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d l file shortcut to the database. Also notifies the appropriate model listeners.
+	* Adds the document library file shortcut to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileShortcut the d l file shortcut
-	* @return the d l file shortcut that was added
+	* @param dlFileShortcut the document library file shortcut
+	* @return the document library file shortcut that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addDLFileShortcut(
@@ -54,19 +54,19 @@ public interface DLFileShortcutLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new d l file shortcut with the primary key. Does not add the d l file shortcut to the database.
+	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	*
-	* @param fileShortcutId the primary key for the new d l file shortcut
-	* @return the new d l file shortcut
+	* @param fileShortcutId the primary key for the new document library file shortcut
+	* @return the new document library file shortcut
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut createDLFileShortcut(
 		long fileShortcutId);
 
 	/**
-	* Deletes the d l file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param fileShortcutId the primary key of the d l file shortcut
-	* @throws PortalException if a d l file shortcut with the primary key could not be found
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @throws PortalException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileShortcut(long fileShortcutId)
@@ -74,9 +74,9 @@ public interface DLFileShortcutLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the d l file shortcut from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library file shortcut from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileShortcut the d l file shortcut
+	* @param dlFileShortcut the document library file shortcut
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLFileShortcut(
@@ -146,11 +146,11 @@ public interface DLFileShortcutLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l file shortcut with the primary key.
+	* Returns the document library file shortcut with the primary key.
 	*
-	* @param fileShortcutId the primary key of the d l file shortcut
-	* @return the d l file shortcut
-	* @throws PortalException if a d l file shortcut with the primary key could not be found
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut
+	* @throws PortalException if a document library file shortcut with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -160,12 +160,12 @@ public interface DLFileShortcutLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l file shortcut with the UUID in the group.
+	* Returns the document library file shortcut with the UUID in the group.
 	*
-	* @param uuid the UUID of d l file shortcut
-	* @param groupId the group id of the d l file shortcut
-	* @return the d l file shortcut
-	* @throws PortalException if a d l file shortcut with the UUID in the group could not be found
+	* @param uuid the UUID of document library file shortcut
+	* @param groupId the group id of the document library file shortcut
+	* @return the document library file shortcut
+	* @throws PortalException if a document library file shortcut with the UUID in the group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -175,15 +175,15 @@ public interface DLFileShortcutLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l file shortcuts.
+	* Returns a range of all the document library file shortcuts.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l file shortcuts
-	* @param end the upper bound of the range of d l file shortcuts (not inclusive)
-	* @return the range of d l file shortcuts
+	* @param start the lower bound of the range of document library file shortcuts
+	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	* @return the range of document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -192,9 +192,9 @@ public interface DLFileShortcutLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l file shortcuts.
+	* Returns the number of document library file shortcuts.
 	*
-	* @return the number of d l file shortcuts
+	* @return the number of document library file shortcuts
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -202,10 +202,10 @@ public interface DLFileShortcutLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file shortcut in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file shortcut in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileShortcut the d l file shortcut
-	* @return the d l file shortcut that was updated
+	* @param dlFileShortcut the document library file shortcut
+	* @return the document library file shortcut that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateDLFileShortcut(
@@ -213,11 +213,11 @@ public interface DLFileShortcutLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l file shortcut in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file shortcut in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlFileShortcut the d l file shortcut
-	* @param merge whether to merge the d l file shortcut with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l file shortcut that was updated
+	* @param dlFileShortcut the document library file shortcut
+	* @param merge whether to merge the document library file shortcut with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library file shortcut that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateDLFileShortcut(

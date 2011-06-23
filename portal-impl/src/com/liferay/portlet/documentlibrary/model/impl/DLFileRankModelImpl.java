@@ -54,7 +54,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l file rank model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileRank} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library file rank model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFileRank} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileRank";
 	public static final Object[][] TABLE_COLUMNS = {

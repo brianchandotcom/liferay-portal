@@ -45,17 +45,29 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * The document library remote service. All portlets should interact with the
+ * document library through this class or through {@link DLAppLocalServiceImpl},
+ * rather than through the individual document library service classes.
+ *
  * <p>
- * The DLAppService and {@link DLAppLocalServiceImpl} are used to handle all
- * service calls for the Document Library portlet, for all Liferay and
- * third-party repositories. While the method signatures are universal for all
- * repositories, additional parameters may be specified in the serviceContext to
- * enable added flexibility, especially within Liferay's repository during
- * creation and update. In particular, noteworthy parameters include: <ul> <li>
- * fileEntryTypeId - ID for custom file entry type </li> <li> fieldsMap -
- * mapping for fields associated with custom document type </li> <li>
- * sourceFileName - original filename of file being uploaded </li> </ul>
+ * This class provides a unified interface to all Liferay and third party
+ * repositories. While the method signatures are universal for all repositories,
+ * additional parameters may be specified in the serviceContext for added
+ * flexibility, especially within Liferay's repository during creation and
+ * update. In particular, noteworthy parameters include:
  * </p>
+ *
+ * <ul>
+ * <li>
+ * fileEntryTypeId - ID for a custom file entry type
+ * </li>
+ * <li>
+ * fieldsMap - mapping for fields associated with a custom document type
+ * </li>
+ * <li>
+ * sourceFileName - original filename of the file being uploaded
+ * </li>
+ * </ul>
  *
  * @author Alexander Chow
  */

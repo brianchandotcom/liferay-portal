@@ -43,368 +43,368 @@ public interface DLFileEntryModel extends BaseModel<DLFileEntry>, GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l file entry model instance should use the {@link DLFileEntry} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library file entry model instance should use the {@link DLFileEntry} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l file entry.
+	 * Returns the primary key of this document library file entry.
 	 *
-	 * @return the primary key of this d l file entry
+	 * @return the primary key of this document library file entry
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l file entry.
+	 * Sets the primary key of this document library file entry.
 	 *
-	 * @param primaryKey the primary key of this d l file entry
+	 * @param primaryKey the primary key of this document library file entry
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d l file entry.
+	 * Returns the uuid of this document library file entry.
 	 *
-	 * @return the uuid of this d l file entry
+	 * @return the uuid of this document library file entry
 	 */
 	@AutoEscape
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d l file entry.
+	 * Sets the uuid of this document library file entry.
 	 *
-	 * @param uuid the uuid of this d l file entry
+	 * @param uuid the uuid of this document library file entry
 	 */
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the file entry ID of this d l file entry.
+	 * Returns the file entry ID of this document library file entry.
 	 *
-	 * @return the file entry ID of this d l file entry
+	 * @return the file entry ID of this document library file entry
 	 */
 	public long getFileEntryId();
 
 	/**
-	 * Sets the file entry ID of this d l file entry.
+	 * Sets the file entry ID of this document library file entry.
 	 *
-	 * @param fileEntryId the file entry ID of this d l file entry
+	 * @param fileEntryId the file entry ID of this document library file entry
 	 */
 	public void setFileEntryId(long fileEntryId);
 
 	/**
-	 * Returns the group ID of this d l file entry.
+	 * Returns the group ID of this document library file entry.
 	 *
-	 * @return the group ID of this d l file entry
+	 * @return the group ID of this document library file entry
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l file entry.
+	 * Sets the group ID of this document library file entry.
 	 *
-	 * @param groupId the group ID of this d l file entry
+	 * @param groupId the group ID of this document library file entry
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l file entry.
+	 * Returns the company ID of this document library file entry.
 	 *
-	 * @return the company ID of this d l file entry
+	 * @return the company ID of this document library file entry
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l file entry.
+	 * Sets the company ID of this document library file entry.
 	 *
-	 * @param companyId the company ID of this d l file entry
+	 * @param companyId the company ID of this document library file entry
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d l file entry.
+	 * Returns the user ID of this document library file entry.
 	 *
-	 * @return the user ID of this d l file entry
+	 * @return the user ID of this document library file entry
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d l file entry.
+	 * Sets the user ID of this document library file entry.
 	 *
-	 * @param userId the user ID of this d l file entry
+	 * @param userId the user ID of this document library file entry
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d l file entry.
+	 * Returns the user uuid of this document library file entry.
 	 *
-	 * @return the user uuid of this d l file entry
+	 * @return the user uuid of this document library file entry
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getUserUuid() throws SystemException;
 
 	/**
-	 * Sets the user uuid of this d l file entry.
+	 * Sets the user uuid of this document library file entry.
 	 *
-	 * @param userUuid the user uuid of this d l file entry
+	 * @param userUuid the user uuid of this document library file entry
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d l file entry.
+	 * Returns the user name of this document library file entry.
 	 *
-	 * @return the user name of this d l file entry
+	 * @return the user name of this document library file entry
 	 */
 	@AutoEscape
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d l file entry.
+	 * Sets the user name of this document library file entry.
 	 *
-	 * @param userName the user name of this d l file entry
+	 * @param userName the user name of this document library file entry
 	 */
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the version user ID of this d l file entry.
+	 * Returns the version user ID of this document library file entry.
 	 *
-	 * @return the version user ID of this d l file entry
+	 * @return the version user ID of this document library file entry
 	 */
 	public long getVersionUserId();
 
 	/**
-	 * Sets the version user ID of this d l file entry.
+	 * Sets the version user ID of this document library file entry.
 	 *
-	 * @param versionUserId the version user ID of this d l file entry
+	 * @param versionUserId the version user ID of this document library file entry
 	 */
 	public void setVersionUserId(long versionUserId);
 
 	/**
-	 * Returns the version user uuid of this d l file entry.
+	 * Returns the version user uuid of this document library file entry.
 	 *
-	 * @return the version user uuid of this d l file entry
+	 * @return the version user uuid of this document library file entry
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getVersionUserUuid() throws SystemException;
 
 	/**
-	 * Sets the version user uuid of this d l file entry.
+	 * Sets the version user uuid of this document library file entry.
 	 *
-	 * @param versionUserUuid the version user uuid of this d l file entry
+	 * @param versionUserUuid the version user uuid of this document library file entry
 	 */
 	public void setVersionUserUuid(String versionUserUuid);
 
 	/**
-	 * Returns the version user name of this d l file entry.
+	 * Returns the version user name of this document library file entry.
 	 *
-	 * @return the version user name of this d l file entry
+	 * @return the version user name of this document library file entry
 	 */
 	@AutoEscape
 	public String getVersionUserName();
 
 	/**
-	 * Sets the version user name of this d l file entry.
+	 * Sets the version user name of this document library file entry.
 	 *
-	 * @param versionUserName the version user name of this d l file entry
+	 * @param versionUserName the version user name of this document library file entry
 	 */
 	public void setVersionUserName(String versionUserName);
 
 	/**
-	 * Returns the create date of this d l file entry.
+	 * Returns the create date of this document library file entry.
 	 *
-	 * @return the create date of this d l file entry
+	 * @return the create date of this document library file entry
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d l file entry.
+	 * Sets the create date of this document library file entry.
 	 *
-	 * @param createDate the create date of this d l file entry
+	 * @param createDate the create date of this document library file entry
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this d l file entry.
+	 * Returns the modified date of this document library file entry.
 	 *
-	 * @return the modified date of this d l file entry
+	 * @return the modified date of this document library file entry
 	 */
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this d l file entry.
+	 * Sets the modified date of this document library file entry.
 	 *
-	 * @param modifiedDate the modified date of this d l file entry
+	 * @param modifiedDate the modified date of this document library file entry
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the repository ID of this d l file entry.
+	 * Returns the repository ID of this document library file entry.
 	 *
-	 * @return the repository ID of this d l file entry
+	 * @return the repository ID of this document library file entry
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this d l file entry.
+	 * Sets the repository ID of this document library file entry.
 	 *
-	 * @param repositoryId the repository ID of this d l file entry
+	 * @param repositoryId the repository ID of this document library file entry
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the folder ID of this d l file entry.
+	 * Returns the folder ID of this document library file entry.
 	 *
-	 * @return the folder ID of this d l file entry
+	 * @return the folder ID of this document library file entry
 	 */
 	public long getFolderId();
 
 	/**
-	 * Sets the folder ID of this d l file entry.
+	 * Sets the folder ID of this document library file entry.
 	 *
-	 * @param folderId the folder ID of this d l file entry
+	 * @param folderId the folder ID of this document library file entry
 	 */
 	public void setFolderId(long folderId);
 
 	/**
-	 * Returns the name of this d l file entry.
+	 * Returns the name of this document library file entry.
 	 *
-	 * @return the name of this d l file entry
+	 * @return the name of this document library file entry
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this d l file entry.
+	 * Sets the name of this document library file entry.
 	 *
-	 * @param name the name of this d l file entry
+	 * @param name the name of this document library file entry
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the extension of this d l file entry.
+	 * Returns the extension of this document library file entry.
 	 *
-	 * @return the extension of this d l file entry
+	 * @return the extension of this document library file entry
 	 */
 	@AutoEscape
 	public String getExtension();
 
 	/**
-	 * Sets the extension of this d l file entry.
+	 * Sets the extension of this document library file entry.
 	 *
-	 * @param extension the extension of this d l file entry
+	 * @param extension the extension of this document library file entry
 	 */
 	public void setExtension(String extension);
 
 	/**
-	 * Returns the mime type of this d l file entry.
+	 * Returns the mime type of this document library file entry.
 	 *
-	 * @return the mime type of this d l file entry
+	 * @return the mime type of this document library file entry
 	 */
 	@AutoEscape
 	public String getMimeType();
 
 	/**
-	 * Sets the mime type of this d l file entry.
+	 * Sets the mime type of this document library file entry.
 	 *
-	 * @param mimeType the mime type of this d l file entry
+	 * @param mimeType the mime type of this document library file entry
 	 */
 	public void setMimeType(String mimeType);
 
 	/**
-	 * Returns the title of this d l file entry.
+	 * Returns the title of this document library file entry.
 	 *
-	 * @return the title of this d l file entry
+	 * @return the title of this document library file entry
 	 */
 	@AutoEscape
 	public String getTitle();
 
 	/**
-	 * Sets the title of this d l file entry.
+	 * Sets the title of this document library file entry.
 	 *
-	 * @param title the title of this d l file entry
+	 * @param title the title of this document library file entry
 	 */
 	public void setTitle(String title);
 
 	/**
-	 * Returns the description of this d l file entry.
+	 * Returns the description of this document library file entry.
 	 *
-	 * @return the description of this d l file entry
+	 * @return the description of this document library file entry
 	 */
 	@AutoEscape
 	public String getDescription();
 
 	/**
-	 * Sets the description of this d l file entry.
+	 * Sets the description of this document library file entry.
 	 *
-	 * @param description the description of this d l file entry
+	 * @param description the description of this document library file entry
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Returns the extra settings of this d l file entry.
+	 * Returns the extra settings of this document library file entry.
 	 *
-	 * @return the extra settings of this d l file entry
+	 * @return the extra settings of this document library file entry
 	 */
 	@AutoEscape
 	public String getExtraSettings();
 
 	/**
-	 * Sets the extra settings of this d l file entry.
+	 * Sets the extra settings of this document library file entry.
 	 *
-	 * @param extraSettings the extra settings of this d l file entry
+	 * @param extraSettings the extra settings of this document library file entry
 	 */
 	public void setExtraSettings(String extraSettings);
 
 	/**
-	 * Returns the file entry type ID of this d l file entry.
+	 * Returns the file entry type ID of this document library file entry.
 	 *
-	 * @return the file entry type ID of this d l file entry
+	 * @return the file entry type ID of this document library file entry
 	 */
 	public long getFileEntryTypeId();
 
 	/**
-	 * Sets the file entry type ID of this d l file entry.
+	 * Sets the file entry type ID of this document library file entry.
 	 *
-	 * @param fileEntryTypeId the file entry type ID of this d l file entry
+	 * @param fileEntryTypeId the file entry type ID of this document library file entry
 	 */
 	public void setFileEntryTypeId(long fileEntryTypeId);
 
 	/**
-	 * Returns the version of this d l file entry.
+	 * Returns the version of this document library file entry.
 	 *
-	 * @return the version of this d l file entry
+	 * @return the version of this document library file entry
 	 */
 	@AutoEscape
 	public String getVersion();
 
 	/**
-	 * Sets the version of this d l file entry.
+	 * Sets the version of this document library file entry.
 	 *
-	 * @param version the version of this d l file entry
+	 * @param version the version of this document library file entry
 	 */
 	public void setVersion(String version);
 
 	/**
-	 * Returns the size of this d l file entry.
+	 * Returns the size of this document library file entry.
 	 *
-	 * @return the size of this d l file entry
+	 * @return the size of this document library file entry
 	 */
 	public long getSize();
 
 	/**
-	 * Sets the size of this d l file entry.
+	 * Sets the size of this document library file entry.
 	 *
-	 * @param size the size of this d l file entry
+	 * @param size the size of this document library file entry
 	 */
 	public void setSize(long size);
 
 	/**
-	 * Returns the read count of this d l file entry.
+	 * Returns the read count of this document library file entry.
 	 *
-	 * @return the read count of this d l file entry
+	 * @return the read count of this document library file entry
 	 */
 	public int getReadCount();
 
 	/**
-	 * Sets the read count of this d l file entry.
+	 * Sets the read count of this document library file entry.
 	 *
-	 * @param readCount the read count of this d l file entry
+	 * @param readCount the read count of this document library file entry
 	 */
 	public void setReadCount(int readCount);
 

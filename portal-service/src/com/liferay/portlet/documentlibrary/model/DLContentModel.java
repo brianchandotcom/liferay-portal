@@ -41,149 +41,149 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l content model instance should use the {@link DLContent} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library content model instance should use the {@link DLContent} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l content.
+	 * Returns the primary key of this document library content.
 	 *
-	 * @return the primary key of this d l content
+	 * @return the primary key of this document library content
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l content.
+	 * Sets the primary key of this document library content.
 	 *
-	 * @param primaryKey the primary key of this d l content
+	 * @param primaryKey the primary key of this document library content
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the content ID of this d l content.
+	 * Returns the content ID of this document library content.
 	 *
-	 * @return the content ID of this d l content
+	 * @return the content ID of this document library content
 	 */
 	public long getContentId();
 
 	/**
-	 * Sets the content ID of this d l content.
+	 * Sets the content ID of this document library content.
 	 *
-	 * @param contentId the content ID of this d l content
+	 * @param contentId the content ID of this document library content
 	 */
 	public void setContentId(long contentId);
 
 	/**
-	 * Returns the group ID of this d l content.
+	 * Returns the group ID of this document library content.
 	 *
-	 * @return the group ID of this d l content
+	 * @return the group ID of this document library content
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l content.
+	 * Sets the group ID of this document library content.
 	 *
-	 * @param groupId the group ID of this d l content
+	 * @param groupId the group ID of this document library content
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l content.
+	 * Returns the company ID of this document library content.
 	 *
-	 * @return the company ID of this d l content
+	 * @return the company ID of this document library content
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l content.
+	 * Sets the company ID of this document library content.
 	 *
-	 * @param companyId the company ID of this d l content
+	 * @param companyId the company ID of this document library content
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the portlet ID of this d l content.
+	 * Returns the portlet ID of this document library content.
 	 *
-	 * @return the portlet ID of this d l content
+	 * @return the portlet ID of this document library content
 	 */
 	@AutoEscape
 	public String getPortletId();
 
 	/**
-	 * Sets the portlet ID of this d l content.
+	 * Sets the portlet ID of this document library content.
 	 *
-	 * @param portletId the portlet ID of this d l content
+	 * @param portletId the portlet ID of this document library content
 	 */
 	public void setPortletId(String portletId);
 
 	/**
-	 * Returns the repository ID of this d l content.
+	 * Returns the repository ID of this document library content.
 	 *
-	 * @return the repository ID of this d l content
+	 * @return the repository ID of this document library content
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this d l content.
+	 * Sets the repository ID of this document library content.
 	 *
-	 * @param repositoryId the repository ID of this d l content
+	 * @param repositoryId the repository ID of this document library content
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the path of this d l content.
+	 * Returns the path of this document library content.
 	 *
-	 * @return the path of this d l content
+	 * @return the path of this document library content
 	 */
 	@AutoEscape
 	public String getPath();
 
 	/**
-	 * Sets the path of this d l content.
+	 * Sets the path of this document library content.
 	 *
-	 * @param path the path of this d l content
+	 * @param path the path of this document library content
 	 */
 	public void setPath(String path);
 
 	/**
-	 * Returns the version of this d l content.
+	 * Returns the version of this document library content.
 	 *
-	 * @return the version of this d l content
+	 * @return the version of this document library content
 	 */
 	@AutoEscape
 	public String getVersion();
 
 	/**
-	 * Sets the version of this d l content.
+	 * Sets the version of this document library content.
 	 *
-	 * @param version the version of this d l content
+	 * @param version the version of this document library content
 	 */
 	public void setVersion(String version);
 
 	/**
-	 * Returns the data of this d l content.
+	 * Returns the data of this document library content.
 	 *
-	 * @return the data of this d l content
+	 * @return the data of this document library content
 	 */
 	public Blob getData();
 
 	/**
-	 * Sets the data of this d l content.
+	 * Sets the data of this document library content.
 	 *
-	 * @param data the data of this d l content
+	 * @param data the data of this document library content
 	 */
 	public void setData(Blob data);
 
 	/**
-	 * Returns the size of this d l content.
+	 * Returns the size of this document library content.
 	 *
-	 * @return the size of this d l content
+	 * @return the size of this document library content
 	 */
 	public long getSize();
 
 	/**
-	 * Sets the size of this d l content.
+	 * Sets the size of this document library content.
 	 *
-	 * @param size the size of this d l content
+	 * @param size the size of this document library content
 	 */
 	public void setSize(long size);
 

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * The utility for the d l file shortcut remote service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl} and is the primary access point for service operations in application layer code running on a remote server.
+ * The utility for the document library file shortcut remote service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl} and is the primary access point for service operations in application layer code running on a remote server.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.

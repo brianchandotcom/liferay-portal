@@ -37,180 +37,180 @@ public class DLContentWrapper implements DLContent {
 	}
 
 	/**
-	* Returns the primary key of this d l content.
+	* Returns the primary key of this document library content.
 	*
-	* @return the primary key of this d l content
+	* @return the primary key of this document library content
 	*/
 	public long getPrimaryKey() {
 		return _dlContent.getPrimaryKey();
 	}
 
 	/**
-	* Sets the primary key of this d l content.
+	* Sets the primary key of this document library content.
 	*
-	* @param primaryKey the primary key of this d l content
+	* @param primaryKey the primary key of this document library content
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_dlContent.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Returns the content ID of this d l content.
+	* Returns the content ID of this document library content.
 	*
-	* @return the content ID of this d l content
+	* @return the content ID of this document library content
 	*/
 	public long getContentId() {
 		return _dlContent.getContentId();
 	}
 
 	/**
-	* Sets the content ID of this d l content.
+	* Sets the content ID of this document library content.
 	*
-	* @param contentId the content ID of this d l content
+	* @param contentId the content ID of this document library content
 	*/
 	public void setContentId(long contentId) {
 		_dlContent.setContentId(contentId);
 	}
 
 	/**
-	* Returns the group ID of this d l content.
+	* Returns the group ID of this document library content.
 	*
-	* @return the group ID of this d l content
+	* @return the group ID of this document library content
 	*/
 	public long getGroupId() {
 		return _dlContent.getGroupId();
 	}
 
 	/**
-	* Sets the group ID of this d l content.
+	* Sets the group ID of this document library content.
 	*
-	* @param groupId the group ID of this d l content
+	* @param groupId the group ID of this document library content
 	*/
 	public void setGroupId(long groupId) {
 		_dlContent.setGroupId(groupId);
 	}
 
 	/**
-	* Returns the company ID of this d l content.
+	* Returns the company ID of this document library content.
 	*
-	* @return the company ID of this d l content
+	* @return the company ID of this document library content
 	*/
 	public long getCompanyId() {
 		return _dlContent.getCompanyId();
 	}
 
 	/**
-	* Sets the company ID of this d l content.
+	* Sets the company ID of this document library content.
 	*
-	* @param companyId the company ID of this d l content
+	* @param companyId the company ID of this document library content
 	*/
 	public void setCompanyId(long companyId) {
 		_dlContent.setCompanyId(companyId);
 	}
 
 	/**
-	* Returns the portlet ID of this d l content.
+	* Returns the portlet ID of this document library content.
 	*
-	* @return the portlet ID of this d l content
+	* @return the portlet ID of this document library content
 	*/
 	public java.lang.String getPortletId() {
 		return _dlContent.getPortletId();
 	}
 
 	/**
-	* Sets the portlet ID of this d l content.
+	* Sets the portlet ID of this document library content.
 	*
-	* @param portletId the portlet ID of this d l content
+	* @param portletId the portlet ID of this document library content
 	*/
 	public void setPortletId(java.lang.String portletId) {
 		_dlContent.setPortletId(portletId);
 	}
 
 	/**
-	* Returns the repository ID of this d l content.
+	* Returns the repository ID of this document library content.
 	*
-	* @return the repository ID of this d l content
+	* @return the repository ID of this document library content
 	*/
 	public long getRepositoryId() {
 		return _dlContent.getRepositoryId();
 	}
 
 	/**
-	* Sets the repository ID of this d l content.
+	* Sets the repository ID of this document library content.
 	*
-	* @param repositoryId the repository ID of this d l content
+	* @param repositoryId the repository ID of this document library content
 	*/
 	public void setRepositoryId(long repositoryId) {
 		_dlContent.setRepositoryId(repositoryId);
 	}
 
 	/**
-	* Returns the path of this d l content.
+	* Returns the path of this document library content.
 	*
-	* @return the path of this d l content
+	* @return the path of this document library content
 	*/
 	public java.lang.String getPath() {
 		return _dlContent.getPath();
 	}
 
 	/**
-	* Sets the path of this d l content.
+	* Sets the path of this document library content.
 	*
-	* @param path the path of this d l content
+	* @param path the path of this document library content
 	*/
 	public void setPath(java.lang.String path) {
 		_dlContent.setPath(path);
 	}
 
 	/**
-	* Returns the version of this d l content.
+	* Returns the version of this document library content.
 	*
-	* @return the version of this d l content
+	* @return the version of this document library content
 	*/
 	public java.lang.String getVersion() {
 		return _dlContent.getVersion();
 	}
 
 	/**
-	* Sets the version of this d l content.
+	* Sets the version of this document library content.
 	*
-	* @param version the version of this d l content
+	* @param version the version of this document library content
 	*/
 	public void setVersion(java.lang.String version) {
 		_dlContent.setVersion(version);
 	}
 
 	/**
-	* Returns the data of this d l content.
+	* Returns the data of this document library content.
 	*
-	* @return the data of this d l content
+	* @return the data of this document library content
 	*/
 	public java.sql.Blob getData() {
 		return _dlContent.getData();
 	}
 
 	/**
-	* Sets the data of this d l content.
+	* Sets the data of this document library content.
 	*
-	* @param data the data of this d l content
+	* @param data the data of this document library content
 	*/
 	public void setData(java.sql.Blob data) {
 		_dlContent.setData(data);
 	}
 
 	/**
-	* Returns the size of this d l content.
+	* Returns the size of this document library content.
 	*
-	* @return the size of this d l content
+	* @return the size of this document library content
 	*/
 	public long getSize() {
 		return _dlContent.getSize();
 	}
 
 	/**
-	* Sets the size of this d l content.
+	* Sets the size of this document library content.
 	*
-	* @param size the size of this d l content
+	* @param size the size of this document library content
 	*/
 	public void setSize(long size) {
 		_dlContent.setSize(size);

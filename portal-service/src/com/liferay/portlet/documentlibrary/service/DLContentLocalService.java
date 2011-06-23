@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the d l content local service.
+ * The interface for the document library content local service.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
@@ -39,14 +39,14 @@ public interface DLContentLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the d l content local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d l content to the database. Also notifies the appropriate model listeners.
+	* Adds the document library content to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlContent the d l content
-	* @return the d l content that was added
+	* @param dlContent the document library content
+	* @return the document library content that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent addDLContent(
@@ -54,19 +54,19 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new d l content with the primary key. Does not add the d l content to the database.
+	* Creates a new document library content with the primary key. Does not add the document library content to the database.
 	*
-	* @param contentId the primary key for the new d l content
-	* @return the new d l content
+	* @param contentId the primary key for the new document library content
+	* @return the new document library content
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent createDLContent(
 		long contentId);
 
 	/**
-	* Deletes the d l content with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param contentId the primary key of the d l content
-	* @throws PortalException if a d l content with the primary key could not be found
+	* @param contentId the primary key of the document library content
+	* @throws PortalException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLContent(long contentId)
@@ -74,9 +74,9 @@ public interface DLContentLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the d l content from the database. Also notifies the appropriate model listeners.
+	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlContent the d l content
+	* @param dlContent the document library content
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteDLContent(
@@ -146,11 +146,11 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d l content with the primary key.
+	* Returns the document library content with the primary key.
 	*
-	* @param contentId the primary key of the d l content
-	* @return the d l content
-	* @throws PortalException if a d l content with the primary key could not be found
+	* @param contentId the primary key of the document library content
+	* @return the document library content
+	* @throws PortalException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -160,15 +160,15 @@ public interface DLContentLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d l contents.
+	* Returns a range of all the document library contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l contents
-	* @param end the upper bound of the range of d l contents (not inclusive)
-	* @return the range of d l contents
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -177,9 +177,9 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d l contents.
+	* Returns the number of document library contents.
 	*
-	* @return the number of d l contents
+	* @return the number of document library contents
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -187,10 +187,10 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l content in the database. Also notifies the appropriate model listeners.
+	* Updates the document library content in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlContent the d l content
-	* @return the d l content that was updated
+	* @param dlContent the document library content
+	* @return the document library content that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent updateDLContent(
@@ -198,11 +198,11 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d l content in the database. Also notifies the appropriate model listeners.
+	* Updates the document library content in the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlContent the d l content
-	* @param merge whether to merge the d l content with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d l content that was updated
+	* @param dlContent the document library content
+	* @param merge whether to merge the document library content with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the document library content that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent updateDLContent(

@@ -52,7 +52,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the d l file version service.
+ * The persistence implementation for the document library file version service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -68,7 +68,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DLFileVersionUtil} to access the d l file version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DLFileVersionUtil} to access the document library file version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DLFileVersionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
@@ -115,9 +115,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
-	 * Caches the d l file version in the entity cache if it is enabled.
+	 * Caches the document library file version in the entity cache if it is enabled.
 	 *
-	 * @param dlFileVersion the d l file version
+	 * @param dlFileVersion the document library file version
 	 */
 	public void cacheResult(DLFileVersion dlFileVersion) {
 		EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -135,9 +135,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Caches the d l file versions in the entity cache if it is enabled.
+	 * Caches the document library file versions in the entity cache if it is enabled.
 	 *
-	 * @param dlFileVersions the d l file versions
+	 * @param dlFileVersions the document library file versions
 	 */
 	public void cacheResult(List<DLFileVersion> dlFileVersions) {
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
@@ -151,7 +151,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Clears the cache for all d l file versions.
+	 * Clears the cache for all document library file versions.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -169,7 +169,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Clears the cache for the d l file version.
+	 * Clears the cache for the document library file version.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -189,10 +189,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Creates a new d l file version with the primary key. Does not add the d l file version to the database.
+	 * Creates a new document library file version with the primary key. Does not add the document library file version to the database.
 	 *
-	 * @param fileVersionId the primary key for the new d l file version
-	 * @return the new d l file version
+	 * @param fileVersionId the primary key for the new document library file version
+	 * @return the new document library file version
 	 */
 	public DLFileVersion create(long fileVersionId) {
 		DLFileVersion dlFileVersion = new DLFileVersionImpl();
@@ -204,11 +204,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes the d l file version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d l file version
-	 * @return the d l file version that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d l file version with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file version
+	 * @return the document library file version that was removed
+	 * @throws com.liferay.portal.NoSuchModelException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -218,11 +218,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes the d l file version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param fileVersionId the primary key of the d l file version
-	 * @return the d l file version that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	 * @param fileVersionId the primary key of the document library file version
+	 * @return the document library file version that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion remove(long fileVersionId)
@@ -258,10 +258,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes the d l file version from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file version from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileVersion the d l file version
-	 * @return the d l file version that was removed
+	 * @param dlFileVersion the document library file version
+	 * @return the document library file version that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -402,11 +402,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the document library file version with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l file version
-	 * @return the d l file version
-	 * @throws com.liferay.portal.NoSuchModelException if a d l file version with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file version
+	 * @return the document library file version
+	 * @throws com.liferay.portal.NoSuchModelException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -416,11 +416,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
+	 * Returns the document library file version with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	 *
-	 * @param fileVersionId the primary key of the d l file version
-	 * @return the d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	 * @param fileVersionId the primary key of the document library file version
+	 * @return the document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByPrimaryKey(long fileVersionId)
@@ -440,10 +440,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d l file version
-	 * @return the d l file version, or <code>null</code> if a d l file version with the primary key could not be found
+	 * @param primaryKey the primary key of the document library file version
+	 * @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -453,10 +453,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param fileVersionId the primary key of the d l file version
-	 * @return the d l file version, or <code>null</code> if a d l file version with the primary key could not be found
+	 * @param fileVersionId the primary key of the document library file version
+	 * @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion fetchByPrimaryKey(long fileVersionId)
@@ -489,10 +489,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns all the d l file versions where fileEntryId = &#63;.
+	 * Returns all the document library file versions where fileEntryId = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID
-	 * @return the matching d l file versions
+	 * @return the matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByFileEntryId(long fileEntryId)
@@ -502,16 +502,16 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns a range of all the d l file versions where fileEntryId = &#63;.
+	 * Returns a range of all the document library file versions where fileEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
-	 * @return the range of matching d l file versions
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByFileEntryId(long fileEntryId, int start,
@@ -520,17 +520,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file versions where fileEntryId = &#63;.
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
 	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file versions
+	 * @return the ordered range of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByFileEntryId(long fileEntryId, int start,
@@ -608,7 +608,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the first d l file version in the ordered set where fileEntryId = &#63;.
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -616,8 +616,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	 * @return the first matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByFileEntryId_First(long fileEntryId,
@@ -644,7 +644,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the last d l file version in the ordered set where fileEntryId = &#63;.
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -652,8 +652,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	 * @return the last matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByFileEntryId_Last(long fileEntryId,
@@ -682,17 +682,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file versions before and after the current d l file version in the ordered set where fileEntryId = &#63;.
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileVersionId the primary key of the current d l file version
+	 * @param fileVersionId the primary key of the current document library file version
 	 * @param fileEntryId the file entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	 * @return the previous, current, and next document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion[] findByFileEntryId_PrevAndNext(long fileVersionId,
@@ -830,12 +830,12 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version where fileEntryId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
+	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileVersionException} if it could not be found.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @return the matching d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	 * @return the matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByF_V(long fileEntryId, String version)
@@ -866,11 +866,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @return the matching d l file version, or <code>null</code> if a matching d l file version could not be found
+	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion fetchByF_V(long fileEntryId, String version)
@@ -879,11 +879,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @return the matching d l file version, or <code>null</code> if a matching d l file version could not be found
+	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion fetchByF_V(long fileEntryId, String version,
@@ -983,11 +983,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	 * Returns all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
-	 * @return the matching d l file versions
+	 * @return the matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByF_S(long fileEntryId, int status)
@@ -997,7 +997,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns a range of all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	 * Returns a range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1005,9 +1005,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
-	 * @return the range of matching d l file versions
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByF_S(long fileEntryId, int status,
@@ -1016,7 +1016,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file versions where fileEntryId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1024,10 +1024,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d l file versions
+	 * @return the ordered range of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findByF_S(long fileEntryId, int status,
@@ -1110,7 +1110,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the first d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1119,8 +1119,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	 * @return the first matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByF_S_First(long fileEntryId, int status,
@@ -1150,7 +1150,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the last d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -1159,8 +1159,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching d l file version could not be found
+	 * @return the last matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion findByF_S_Last(long fileEntryId, int status,
@@ -1192,18 +1192,18 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the d l file versions before and after the current d l file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param fileVersionId the primary key of the current d l file version
+	 * @param fileVersionId the primary key of the current document library file version
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d l file version
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a d l file version with the primary key could not be found
+	 * @return the previous, current, and next document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileVersion[] findByF_S_PrevAndNext(long fileVersionId,
@@ -1345,9 +1345,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns all the d l file versions.
+	 * Returns all the document library file versions.
 	 *
-	 * @return the d l file versions
+	 * @return the document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findAll() throws SystemException {
@@ -1355,15 +1355,15 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns a range of all the d l file versions.
+	 * Returns a range of all the document library file versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
-	 * @return the range of d l file versions
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findAll(int start, int end)
@@ -1372,16 +1372,16 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns an ordered range of all the d l file versions.
+	 * Returns an ordered range of all the document library file versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d l file versions
-	 * @param end the upper bound of the range of d l file versions (not inclusive)
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d l file versions
+	 * @return the ordered range of document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DLFileVersion> findAll(int start, int end,
@@ -1454,7 +1454,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes all the d l file versions where fileEntryId = &#63; from the database.
+	 * Removes all the document library file versions where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @throws SystemException if a system exception occurred
@@ -1466,7 +1466,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes the d l file version where fileEntryId = &#63; and version = &#63; from the database.
+	 * Removes the document library file version where fileEntryId = &#63; and version = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
@@ -1480,7 +1480,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes all the d l file versions where fileEntryId = &#63; and status = &#63; from the database.
+	 * Removes all the document library file versions where fileEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
@@ -1494,7 +1494,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes all the d l file versions from the database.
+	 * Removes all the document library file versions from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1505,10 +1505,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the number of d l file versions where fileEntryId = &#63;.
+	 * Returns the number of document library file versions where fileEntryId = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID
-	 * @return the number of matching d l file versions
+	 * @return the number of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByFileEntryId(long fileEntryId) throws SystemException {
@@ -1558,11 +1558,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the number of d l file versions where fileEntryId = &#63; and version = &#63;.
+	 * Returns the number of document library file versions where fileEntryId = &#63; and version = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
-	 * @return the number of matching d l file versions
+	 * @return the number of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByF_V(long fileEntryId, String version)
@@ -1629,11 +1629,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the number of d l file versions where fileEntryId = &#63; and status = &#63;.
+	 * Returns the number of document library file versions where fileEntryId = &#63; and status = &#63;.
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
-	 * @return the number of matching d l file versions
+	 * @return the number of matching document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByF_S(long fileEntryId, int status)
@@ -1688,9 +1688,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Returns the number of d l file versions.
+	 * Returns the number of document library file versions.
 	 *
-	 * @return the number of d l file versions
+	 * @return the number of document library file versions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -1728,7 +1728,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Initializes the d l file version persistence.
+	 * Initializes the document library file version persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(

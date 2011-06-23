@@ -41,119 +41,119 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l file rank model instance should use the {@link DLFileRank} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library file rank model instance should use the {@link DLFileRank} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l file rank.
+	 * Returns the primary key of this document library file rank.
 	 *
-	 * @return the primary key of this d l file rank
+	 * @return the primary key of this document library file rank
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l file rank.
+	 * Sets the primary key of this document library file rank.
 	 *
-	 * @param primaryKey the primary key of this d l file rank
+	 * @param primaryKey the primary key of this document library file rank
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the file rank ID of this d l file rank.
+	 * Returns the file rank ID of this document library file rank.
 	 *
-	 * @return the file rank ID of this d l file rank
+	 * @return the file rank ID of this document library file rank
 	 */
 	public long getFileRankId();
 
 	/**
-	 * Sets the file rank ID of this d l file rank.
+	 * Sets the file rank ID of this document library file rank.
 	 *
-	 * @param fileRankId the file rank ID of this d l file rank
+	 * @param fileRankId the file rank ID of this document library file rank
 	 */
 	public void setFileRankId(long fileRankId);
 
 	/**
-	 * Returns the group ID of this d l file rank.
+	 * Returns the group ID of this document library file rank.
 	 *
-	 * @return the group ID of this d l file rank
+	 * @return the group ID of this document library file rank
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l file rank.
+	 * Sets the group ID of this document library file rank.
 	 *
-	 * @param groupId the group ID of this d l file rank
+	 * @param groupId the group ID of this document library file rank
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l file rank.
+	 * Returns the company ID of this document library file rank.
 	 *
-	 * @return the company ID of this d l file rank
+	 * @return the company ID of this document library file rank
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l file rank.
+	 * Sets the company ID of this document library file rank.
 	 *
-	 * @param companyId the company ID of this d l file rank
+	 * @param companyId the company ID of this document library file rank
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d l file rank.
+	 * Returns the user ID of this document library file rank.
 	 *
-	 * @return the user ID of this d l file rank
+	 * @return the user ID of this document library file rank
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d l file rank.
+	 * Sets the user ID of this document library file rank.
 	 *
-	 * @param userId the user ID of this d l file rank
+	 * @param userId the user ID of this document library file rank
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d l file rank.
+	 * Returns the user uuid of this document library file rank.
 	 *
-	 * @return the user uuid of this d l file rank
+	 * @return the user uuid of this document library file rank
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getUserUuid() throws SystemException;
 
 	/**
-	 * Sets the user uuid of this d l file rank.
+	 * Sets the user uuid of this document library file rank.
 	 *
-	 * @param userUuid the user uuid of this d l file rank
+	 * @param userUuid the user uuid of this document library file rank
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the create date of this d l file rank.
+	 * Returns the create date of this document library file rank.
 	 *
-	 * @return the create date of this d l file rank
+	 * @return the create date of this document library file rank
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d l file rank.
+	 * Sets the create date of this document library file rank.
 	 *
-	 * @param createDate the create date of this d l file rank
+	 * @param createDate the create date of this document library file rank
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the file entry ID of this d l file rank.
+	 * Returns the file entry ID of this document library file rank.
 	 *
-	 * @return the file entry ID of this d l file rank
+	 * @return the file entry ID of this document library file rank
 	 */
 	public long getFileEntryId();
 
 	/**
-	 * Sets the file entry ID of this d l file rank.
+	 * Sets the file entry ID of this document library file rank.
 	 *
-	 * @param fileEntryId the file entry ID of this d l file rank
+	 * @param fileEntryId the file entry ID of this document library file rank
 	 */
 	public void setFileEntryId(long fileEntryId);
 

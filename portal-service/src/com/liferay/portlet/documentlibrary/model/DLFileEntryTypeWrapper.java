@@ -37,99 +37,99 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 	}
 
 	/**
-	* Returns the primary key of this d l file entry type.
+	* Returns the primary key of this document library file entry type.
 	*
-	* @return the primary key of this d l file entry type
+	* @return the primary key of this document library file entry type
 	*/
 	public long getPrimaryKey() {
 		return _dlFileEntryType.getPrimaryKey();
 	}
 
 	/**
-	* Sets the primary key of this d l file entry type.
+	* Sets the primary key of this document library file entry type.
 	*
-	* @param primaryKey the primary key of this d l file entry type
+	* @param primaryKey the primary key of this document library file entry type
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_dlFileEntryType.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Returns the file entry type ID of this d l file entry type.
+	* Returns the file entry type ID of this document library file entry type.
 	*
-	* @return the file entry type ID of this d l file entry type
+	* @return the file entry type ID of this document library file entry type
 	*/
 	public long getFileEntryTypeId() {
 		return _dlFileEntryType.getFileEntryTypeId();
 	}
 
 	/**
-	* Sets the file entry type ID of this d l file entry type.
+	* Sets the file entry type ID of this document library file entry type.
 	*
-	* @param fileEntryTypeId the file entry type ID of this d l file entry type
+	* @param fileEntryTypeId the file entry type ID of this document library file entry type
 	*/
 	public void setFileEntryTypeId(long fileEntryTypeId) {
 		_dlFileEntryType.setFileEntryTypeId(fileEntryTypeId);
 	}
 
 	/**
-	* Returns the group ID of this d l file entry type.
+	* Returns the group ID of this document library file entry type.
 	*
-	* @return the group ID of this d l file entry type
+	* @return the group ID of this document library file entry type
 	*/
 	public long getGroupId() {
 		return _dlFileEntryType.getGroupId();
 	}
 
 	/**
-	* Sets the group ID of this d l file entry type.
+	* Sets the group ID of this document library file entry type.
 	*
-	* @param groupId the group ID of this d l file entry type
+	* @param groupId the group ID of this document library file entry type
 	*/
 	public void setGroupId(long groupId) {
 		_dlFileEntryType.setGroupId(groupId);
 	}
 
 	/**
-	* Returns the company ID of this d l file entry type.
+	* Returns the company ID of this document library file entry type.
 	*
-	* @return the company ID of this d l file entry type
+	* @return the company ID of this document library file entry type
 	*/
 	public long getCompanyId() {
 		return _dlFileEntryType.getCompanyId();
 	}
 
 	/**
-	* Sets the company ID of this d l file entry type.
+	* Sets the company ID of this document library file entry type.
 	*
-	* @param companyId the company ID of this d l file entry type
+	* @param companyId the company ID of this document library file entry type
 	*/
 	public void setCompanyId(long companyId) {
 		_dlFileEntryType.setCompanyId(companyId);
 	}
 
 	/**
-	* Returns the user ID of this d l file entry type.
+	* Returns the user ID of this document library file entry type.
 	*
-	* @return the user ID of this d l file entry type
+	* @return the user ID of this document library file entry type
 	*/
 	public long getUserId() {
 		return _dlFileEntryType.getUserId();
 	}
 
 	/**
-	* Sets the user ID of this d l file entry type.
+	* Sets the user ID of this document library file entry type.
 	*
-	* @param userId the user ID of this d l file entry type
+	* @param userId the user ID of this document library file entry type
 	*/
 	public void setUserId(long userId) {
 		_dlFileEntryType.setUserId(userId);
 	}
 
 	/**
-	* Returns the user uuid of this d l file entry type.
+	* Returns the user uuid of this document library file entry type.
 	*
-	* @return the user uuid of this d l file entry type
+	* @return the user uuid of this document library file entry type
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.lang.String getUserUuid()
@@ -138,99 +138,99 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 	}
 
 	/**
-	* Sets the user uuid of this d l file entry type.
+	* Sets the user uuid of this document library file entry type.
 	*
-	* @param userUuid the user uuid of this d l file entry type
+	* @param userUuid the user uuid of this document library file entry type
 	*/
 	public void setUserUuid(java.lang.String userUuid) {
 		_dlFileEntryType.setUserUuid(userUuid);
 	}
 
 	/**
-	* Returns the user name of this d l file entry type.
+	* Returns the user name of this document library file entry type.
 	*
-	* @return the user name of this d l file entry type
+	* @return the user name of this document library file entry type
 	*/
 	public java.lang.String getUserName() {
 		return _dlFileEntryType.getUserName();
 	}
 
 	/**
-	* Sets the user name of this d l file entry type.
+	* Sets the user name of this document library file entry type.
 	*
-	* @param userName the user name of this d l file entry type
+	* @param userName the user name of this document library file entry type
 	*/
 	public void setUserName(java.lang.String userName) {
 		_dlFileEntryType.setUserName(userName);
 	}
 
 	/**
-	* Returns the create date of this d l file entry type.
+	* Returns the create date of this document library file entry type.
 	*
-	* @return the create date of this d l file entry type
+	* @return the create date of this document library file entry type
 	*/
 	public java.util.Date getCreateDate() {
 		return _dlFileEntryType.getCreateDate();
 	}
 
 	/**
-	* Sets the create date of this d l file entry type.
+	* Sets the create date of this document library file entry type.
 	*
-	* @param createDate the create date of this d l file entry type
+	* @param createDate the create date of this document library file entry type
 	*/
 	public void setCreateDate(java.util.Date createDate) {
 		_dlFileEntryType.setCreateDate(createDate);
 	}
 
 	/**
-	* Returns the modified date of this d l file entry type.
+	* Returns the modified date of this document library file entry type.
 	*
-	* @return the modified date of this d l file entry type
+	* @return the modified date of this document library file entry type
 	*/
 	public java.util.Date getModifiedDate() {
 		return _dlFileEntryType.getModifiedDate();
 	}
 
 	/**
-	* Sets the modified date of this d l file entry type.
+	* Sets the modified date of this document library file entry type.
 	*
-	* @param modifiedDate the modified date of this d l file entry type
+	* @param modifiedDate the modified date of this document library file entry type
 	*/
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_dlFileEntryType.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Returns the name of this d l file entry type.
+	* Returns the name of this document library file entry type.
 	*
-	* @return the name of this d l file entry type
+	* @return the name of this document library file entry type
 	*/
 	public java.lang.String getName() {
 		return _dlFileEntryType.getName();
 	}
 
 	/**
-	* Sets the name of this d l file entry type.
+	* Sets the name of this document library file entry type.
 	*
-	* @param name the name of this d l file entry type
+	* @param name the name of this document library file entry type
 	*/
 	public void setName(java.lang.String name) {
 		_dlFileEntryType.setName(name);
 	}
 
 	/**
-	* Returns the description of this d l file entry type.
+	* Returns the description of this document library file entry type.
 	*
-	* @return the description of this d l file entry type
+	* @return the description of this document library file entry type
 	*/
 	public java.lang.String getDescription() {
 		return _dlFileEntryType.getDescription();
 	}
 
 	/**
-	* Sets the description of this d l file entry type.
+	* Sets the description of this document library file entry type.
 	*
-	* @param description the description of this d l file entry type
+	* @param description the description of this document library file entry type
 	*/
 	public void setDescription(java.lang.String description) {
 		_dlFileEntryType.setDescription(description);

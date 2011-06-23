@@ -44,353 +44,353 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l file version model instance should use the {@link DLFileVersion} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library file version model instance should use the {@link DLFileVersion} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l file version.
+	 * Returns the primary key of this document library file version.
 	 *
-	 * @return the primary key of this d l file version
+	 * @return the primary key of this document library file version
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l file version.
+	 * Sets the primary key of this document library file version.
 	 *
-	 * @param primaryKey the primary key of this d l file version
+	 * @param primaryKey the primary key of this document library file version
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the file version ID of this d l file version.
+	 * Returns the file version ID of this document library file version.
 	 *
-	 * @return the file version ID of this d l file version
+	 * @return the file version ID of this document library file version
 	 */
 	public long getFileVersionId();
 
 	/**
-	 * Sets the file version ID of this d l file version.
+	 * Sets the file version ID of this document library file version.
 	 *
-	 * @param fileVersionId the file version ID of this d l file version
+	 * @param fileVersionId the file version ID of this document library file version
 	 */
 	public void setFileVersionId(long fileVersionId);
 
 	/**
-	 * Returns the group ID of this d l file version.
+	 * Returns the group ID of this document library file version.
 	 *
-	 * @return the group ID of this d l file version
+	 * @return the group ID of this document library file version
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l file version.
+	 * Sets the group ID of this document library file version.
 	 *
-	 * @param groupId the group ID of this d l file version
+	 * @param groupId the group ID of this document library file version
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l file version.
+	 * Returns the company ID of this document library file version.
 	 *
-	 * @return the company ID of this d l file version
+	 * @return the company ID of this document library file version
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l file version.
+	 * Sets the company ID of this document library file version.
 	 *
-	 * @param companyId the company ID of this d l file version
+	 * @param companyId the company ID of this document library file version
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d l file version.
+	 * Returns the user ID of this document library file version.
 	 *
-	 * @return the user ID of this d l file version
+	 * @return the user ID of this document library file version
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d l file version.
+	 * Sets the user ID of this document library file version.
 	 *
-	 * @param userId the user ID of this d l file version
+	 * @param userId the user ID of this document library file version
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d l file version.
+	 * Returns the user uuid of this document library file version.
 	 *
-	 * @return the user uuid of this d l file version
+	 * @return the user uuid of this document library file version
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getUserUuid() throws SystemException;
 
 	/**
-	 * Sets the user uuid of this d l file version.
+	 * Sets the user uuid of this document library file version.
 	 *
-	 * @param userUuid the user uuid of this d l file version
+	 * @param userUuid the user uuid of this document library file version
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d l file version.
+	 * Returns the user name of this document library file version.
 	 *
-	 * @return the user name of this d l file version
+	 * @return the user name of this document library file version
 	 */
 	@AutoEscape
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d l file version.
+	 * Sets the user name of this document library file version.
 	 *
-	 * @param userName the user name of this d l file version
+	 * @param userName the user name of this document library file version
 	 */
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this d l file version.
+	 * Returns the create date of this document library file version.
 	 *
-	 * @return the create date of this d l file version
+	 * @return the create date of this document library file version
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d l file version.
+	 * Sets the create date of this document library file version.
 	 *
-	 * @param createDate the create date of this d l file version
+	 * @param createDate the create date of this document library file version
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the repository ID of this d l file version.
+	 * Returns the repository ID of this document library file version.
 	 *
-	 * @return the repository ID of this d l file version
+	 * @return the repository ID of this document library file version
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this d l file version.
+	 * Sets the repository ID of this document library file version.
 	 *
-	 * @param repositoryId the repository ID of this d l file version
+	 * @param repositoryId the repository ID of this document library file version
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the file entry ID of this d l file version.
+	 * Returns the file entry ID of this document library file version.
 	 *
-	 * @return the file entry ID of this d l file version
+	 * @return the file entry ID of this document library file version
 	 */
 	public long getFileEntryId();
 
 	/**
-	 * Sets the file entry ID of this d l file version.
+	 * Sets the file entry ID of this document library file version.
 	 *
-	 * @param fileEntryId the file entry ID of this d l file version
+	 * @param fileEntryId the file entry ID of this document library file version
 	 */
 	public void setFileEntryId(long fileEntryId);
 
 	/**
-	 * Returns the extension of this d l file version.
+	 * Returns the extension of this document library file version.
 	 *
-	 * @return the extension of this d l file version
+	 * @return the extension of this document library file version
 	 */
 	@AutoEscape
 	public String getExtension();
 
 	/**
-	 * Sets the extension of this d l file version.
+	 * Sets the extension of this document library file version.
 	 *
-	 * @param extension the extension of this d l file version
+	 * @param extension the extension of this document library file version
 	 */
 	public void setExtension(String extension);
 
 	/**
-	 * Returns the mime type of this d l file version.
+	 * Returns the mime type of this document library file version.
 	 *
-	 * @return the mime type of this d l file version
+	 * @return the mime type of this document library file version
 	 */
 	@AutoEscape
 	public String getMimeType();
 
 	/**
-	 * Sets the mime type of this d l file version.
+	 * Sets the mime type of this document library file version.
 	 *
-	 * @param mimeType the mime type of this d l file version
+	 * @param mimeType the mime type of this document library file version
 	 */
 	public void setMimeType(String mimeType);
 
 	/**
-	 * Returns the title of this d l file version.
+	 * Returns the title of this document library file version.
 	 *
-	 * @return the title of this d l file version
+	 * @return the title of this document library file version
 	 */
 	@AutoEscape
 	public String getTitle();
 
 	/**
-	 * Sets the title of this d l file version.
+	 * Sets the title of this document library file version.
 	 *
-	 * @param title the title of this d l file version
+	 * @param title the title of this document library file version
 	 */
 	public void setTitle(String title);
 
 	/**
-	 * Returns the description of this d l file version.
+	 * Returns the description of this document library file version.
 	 *
-	 * @return the description of this d l file version
+	 * @return the description of this document library file version
 	 */
 	@AutoEscape
 	public String getDescription();
 
 	/**
-	 * Sets the description of this d l file version.
+	 * Sets the description of this document library file version.
 	 *
-	 * @param description the description of this d l file version
+	 * @param description the description of this document library file version
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Returns the change log of this d l file version.
+	 * Returns the change log of this document library file version.
 	 *
-	 * @return the change log of this d l file version
+	 * @return the change log of this document library file version
 	 */
 	@AutoEscape
 	public String getChangeLog();
 
 	/**
-	 * Sets the change log of this d l file version.
+	 * Sets the change log of this document library file version.
 	 *
-	 * @param changeLog the change log of this d l file version
+	 * @param changeLog the change log of this document library file version
 	 */
 	public void setChangeLog(String changeLog);
 
 	/**
-	 * Returns the extra settings of this d l file version.
+	 * Returns the extra settings of this document library file version.
 	 *
-	 * @return the extra settings of this d l file version
+	 * @return the extra settings of this document library file version
 	 */
 	@AutoEscape
 	public String getExtraSettings();
 
 	/**
-	 * Sets the extra settings of this d l file version.
+	 * Sets the extra settings of this document library file version.
 	 *
-	 * @param extraSettings the extra settings of this d l file version
+	 * @param extraSettings the extra settings of this document library file version
 	 */
 	public void setExtraSettings(String extraSettings);
 
 	/**
-	 * Returns the file entry type ID of this d l file version.
+	 * Returns the file entry type ID of this document library file version.
 	 *
-	 * @return the file entry type ID of this d l file version
+	 * @return the file entry type ID of this document library file version
 	 */
 	public long getFileEntryTypeId();
 
 	/**
-	 * Sets the file entry type ID of this d l file version.
+	 * Sets the file entry type ID of this document library file version.
 	 *
-	 * @param fileEntryTypeId the file entry type ID of this d l file version
+	 * @param fileEntryTypeId the file entry type ID of this document library file version
 	 */
 	public void setFileEntryTypeId(long fileEntryTypeId);
 
 	/**
-	 * Returns the version of this d l file version.
+	 * Returns the version of this document library file version.
 	 *
-	 * @return the version of this d l file version
+	 * @return the version of this document library file version
 	 */
 	@AutoEscape
 	public String getVersion();
 
 	/**
-	 * Sets the version of this d l file version.
+	 * Sets the version of this document library file version.
 	 *
-	 * @param version the version of this d l file version
+	 * @param version the version of this document library file version
 	 */
 	public void setVersion(String version);
 
 	/**
-	 * Returns the size of this d l file version.
+	 * Returns the size of this document library file version.
 	 *
-	 * @return the size of this d l file version
+	 * @return the size of this document library file version
 	 */
 	public long getSize();
 
 	/**
-	 * Sets the size of this d l file version.
+	 * Sets the size of this document library file version.
 	 *
-	 * @param size the size of this d l file version
+	 * @param size the size of this document library file version
 	 */
 	public void setSize(long size);
 
 	/**
-	 * Returns the status of this d l file version.
+	 * Returns the status of this document library file version.
 	 *
-	 * @return the status of this d l file version
+	 * @return the status of this document library file version
 	 */
 	public int getStatus();
 
 	/**
-	 * Sets the status of this d l file version.
+	 * Sets the status of this document library file version.
 	 *
-	 * @param status the status of this d l file version
+	 * @param status the status of this document library file version
 	 */
 	public void setStatus(int status);
 
 	/**
-	 * Returns the status by user ID of this d l file version.
+	 * Returns the status by user ID of this document library file version.
 	 *
-	 * @return the status by user ID of this d l file version
+	 * @return the status by user ID of this document library file version
 	 */
 	public long getStatusByUserId();
 
 	/**
-	 * Sets the status by user ID of this d l file version.
+	 * Sets the status by user ID of this document library file version.
 	 *
-	 * @param statusByUserId the status by user ID of this d l file version
+	 * @param statusByUserId the status by user ID of this document library file version
 	 */
 	public void setStatusByUserId(long statusByUserId);
 
 	/**
-	 * Returns the status by user uuid of this d l file version.
+	 * Returns the status by user uuid of this document library file version.
 	 *
-	 * @return the status by user uuid of this d l file version
+	 * @return the status by user uuid of this document library file version
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getStatusByUserUuid() throws SystemException;
 
 	/**
-	 * Sets the status by user uuid of this d l file version.
+	 * Sets the status by user uuid of this document library file version.
 	 *
-	 * @param statusByUserUuid the status by user uuid of this d l file version
+	 * @param statusByUserUuid the status by user uuid of this document library file version
 	 */
 	public void setStatusByUserUuid(String statusByUserUuid);
 
 	/**
-	 * Returns the status by user name of this d l file version.
+	 * Returns the status by user name of this document library file version.
 	 *
-	 * @return the status by user name of this d l file version
+	 * @return the status by user name of this document library file version
 	 */
 	@AutoEscape
 	public String getStatusByUserName();
 
 	/**
-	 * Sets the status by user name of this d l file version.
+	 * Sets the status by user name of this document library file version.
 	 *
-	 * @param statusByUserName the status by user name of this d l file version
+	 * @param statusByUserName the status by user name of this document library file version
 	 */
 	public void setStatusByUserName(String statusByUserName);
 
 	/**
-	 * Returns the status date of this d l file version.
+	 * Returns the status date of this document library file version.
 	 *
-	 * @return the status date of this d l file version
+	 * @return the status date of this document library file version
 	 */
 	public Date getStatusDate();
 
 	/**
-	 * Sets the status date of this d l file version.
+	 * Sets the status date of this document library file version.
 	 *
-	 * @param statusDate the status date of this d l file version
+	 * @param statusDate the status date of this document library file version
 	 */
 	public void setStatusDate(Date statusDate);
 
@@ -400,30 +400,30 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public boolean getApproved();
 
 	/**
-	 * Determines if this d l file version is approved.
+	 * Determines if this document library file version is approved.
 	 *
-	 * @return <code>true</code> if this d l file version is approved; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file version is approved; <code>false</code> otherwise
 	 */
 	public boolean isApproved();
 
 	/**
-	 * Determines if this d l file version is a draft.
+	 * Determines if this document library file version is a draft.
 	 *
-	 * @return <code>true</code> if this d l file version is a draft; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file version is a draft; <code>false</code> otherwise
 	 */
 	public boolean isDraft();
 
 	/**
-	 * Determines if this d l file version is expired.
+	 * Determines if this document library file version is expired.
 	 *
-	 * @return <code>true</code> if this d l file version is expired; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file version is expired; <code>false</code> otherwise
 	 */
 	public boolean isExpired();
 
 	/**
-	 * Determines if this d l file version is pending.
+	 * Determines if this document library file version is pending.
 	 *
-	 * @return <code>true</code> if this d l file version is pending; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library file version is pending; <code>false</code> otherwise
 	 */
 	public boolean isPending();
 

@@ -51,7 +51,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l content model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLContent} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library content model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLContent} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLContent";
 	public static final Object[][] TABLE_COLUMNS = {

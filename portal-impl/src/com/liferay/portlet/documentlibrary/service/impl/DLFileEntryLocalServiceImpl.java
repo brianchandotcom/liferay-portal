@@ -86,12 +86,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The document library file entry local service.
+ *
  * <p>
- * For DLFileEntries, the naming convention for some of the variables is not
- * very informative, due to legacy code. Each DLFileEntry has a corresponding
- * name and title. The "name" is a unique identifier for a given file and
- * usually follows the format "1234" whereas the "title" is the actual name
- * specified by the user (e.g., "Budget.xls").
+ * Due to legacy code, the names of some file entry properties are not
+ * intuitive. Each file entry has both a name and title. The <code>name</code>
+ * is a unique identifier for a given file and is generally numeric, whereas the
+ * <code>title</code> is the actual name specified by the user (such as
+ * &quot;Budget.xls&quot;).
  * </p>
  *
  * @author Brian Wing Shun Chan

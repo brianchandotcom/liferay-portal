@@ -59,7 +59,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l folder model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFolder} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a document library folder model instance should use the {@link com.liferay.portlet.documentlibrary.model.DLFolder} interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFolder";
 	public static final Object[][] TABLE_COLUMNS = {

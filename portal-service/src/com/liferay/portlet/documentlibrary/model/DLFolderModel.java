@@ -43,242 +43,242 @@ public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l folder model instance should use the {@link DLFolder} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a document library folder model instance should use the {@link DLFolder} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l folder.
+	 * Returns the primary key of this document library folder.
 	 *
-	 * @return the primary key of this d l folder
+	 * @return the primary key of this document library folder
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l folder.
+	 * Sets the primary key of this document library folder.
 	 *
-	 * @param primaryKey the primary key of this d l folder
+	 * @param primaryKey the primary key of this document library folder
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d l folder.
+	 * Returns the uuid of this document library folder.
 	 *
-	 * @return the uuid of this d l folder
+	 * @return the uuid of this document library folder
 	 */
 	@AutoEscape
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d l folder.
+	 * Sets the uuid of this document library folder.
 	 *
-	 * @param uuid the uuid of this d l folder
+	 * @param uuid the uuid of this document library folder
 	 */
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the folder ID of this d l folder.
+	 * Returns the folder ID of this document library folder.
 	 *
-	 * @return the folder ID of this d l folder
+	 * @return the folder ID of this document library folder
 	 */
 	public long getFolderId();
 
 	/**
-	 * Sets the folder ID of this d l folder.
+	 * Sets the folder ID of this document library folder.
 	 *
-	 * @param folderId the folder ID of this d l folder
+	 * @param folderId the folder ID of this document library folder
 	 */
 	public void setFolderId(long folderId);
 
 	/**
-	 * Returns the group ID of this d l folder.
+	 * Returns the group ID of this document library folder.
 	 *
-	 * @return the group ID of this d l folder
+	 * @return the group ID of this document library folder
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d l folder.
+	 * Sets the group ID of this document library folder.
 	 *
-	 * @param groupId the group ID of this d l folder
+	 * @param groupId the group ID of this document library folder
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d l folder.
+	 * Returns the company ID of this document library folder.
 	 *
-	 * @return the company ID of this d l folder
+	 * @return the company ID of this document library folder
 	 */
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l folder.
+	 * Sets the company ID of this document library folder.
 	 *
-	 * @param companyId the company ID of this d l folder
+	 * @param companyId the company ID of this document library folder
 	 */
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d l folder.
+	 * Returns the user ID of this document library folder.
 	 *
-	 * @return the user ID of this d l folder
+	 * @return the user ID of this document library folder
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d l folder.
+	 * Sets the user ID of this document library folder.
 	 *
-	 * @param userId the user ID of this d l folder
+	 * @param userId the user ID of this document library folder
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d l folder.
+	 * Returns the user uuid of this document library folder.
 	 *
-	 * @return the user uuid of this d l folder
+	 * @return the user uuid of this document library folder
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getUserUuid() throws SystemException;
 
 	/**
-	 * Sets the user uuid of this d l folder.
+	 * Sets the user uuid of this document library folder.
 	 *
-	 * @param userUuid the user uuid of this d l folder
+	 * @param userUuid the user uuid of this document library folder
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d l folder.
+	 * Returns the user name of this document library folder.
 	 *
-	 * @return the user name of this d l folder
+	 * @return the user name of this document library folder
 	 */
 	@AutoEscape
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d l folder.
+	 * Sets the user name of this document library folder.
 	 *
-	 * @param userName the user name of this d l folder
+	 * @param userName the user name of this document library folder
 	 */
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this d l folder.
+	 * Returns the create date of this document library folder.
 	 *
-	 * @return the create date of this d l folder
+	 * @return the create date of this document library folder
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d l folder.
+	 * Sets the create date of this document library folder.
 	 *
-	 * @param createDate the create date of this d l folder
+	 * @param createDate the create date of this document library folder
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this d l folder.
+	 * Returns the modified date of this document library folder.
 	 *
-	 * @return the modified date of this d l folder
+	 * @return the modified date of this document library folder
 	 */
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this d l folder.
+	 * Sets the modified date of this document library folder.
 	 *
-	 * @param modifiedDate the modified date of this d l folder
+	 * @param modifiedDate the modified date of this document library folder
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the repository ID of this d l folder.
+	 * Returns the repository ID of this document library folder.
 	 *
-	 * @return the repository ID of this d l folder
+	 * @return the repository ID of this document library folder
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this d l folder.
+	 * Sets the repository ID of this document library folder.
 	 *
-	 * @param repositoryId the repository ID of this d l folder
+	 * @param repositoryId the repository ID of this document library folder
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the mount point of this d l folder.
+	 * Returns the mount point of this document library folder.
 	 *
-	 * @return the mount point of this d l folder
+	 * @return the mount point of this document library folder
 	 */
 	public boolean getMountPoint();
 
 	/**
-	 * Determines if this d l folder is mount point.
+	 * Determines if this document library folder is mount point.
 	 *
-	 * @return <code>true</code> if this d l folder is mount point; <code>false</code> otherwise
+	 * @return <code>true</code> if this document library folder is mount point; <code>false</code> otherwise
 	 */
 	public boolean isMountPoint();
 
 	/**
-	 * Sets whether this d l folder is mount point.
+	 * Sets whether this document library folder is mount point.
 	 *
-	 * @param mountPoint the mount point of this d l folder
+	 * @param mountPoint the mount point of this document library folder
 	 */
 	public void setMountPoint(boolean mountPoint);
 
 	/**
-	 * Returns the parent folder ID of this d l folder.
+	 * Returns the parent folder ID of this document library folder.
 	 *
-	 * @return the parent folder ID of this d l folder
+	 * @return the parent folder ID of this document library folder
 	 */
 	public long getParentFolderId();
 
 	/**
-	 * Sets the parent folder ID of this d l folder.
+	 * Sets the parent folder ID of this document library folder.
 	 *
-	 * @param parentFolderId the parent folder ID of this d l folder
+	 * @param parentFolderId the parent folder ID of this document library folder
 	 */
 	public void setParentFolderId(long parentFolderId);
 
 	/**
-	 * Returns the name of this d l folder.
+	 * Returns the name of this document library folder.
 	 *
-	 * @return the name of this d l folder
+	 * @return the name of this document library folder
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this d l folder.
+	 * Sets the name of this document library folder.
 	 *
-	 * @param name the name of this d l folder
+	 * @param name the name of this document library folder
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the description of this d l folder.
+	 * Returns the description of this document library folder.
 	 *
-	 * @return the description of this d l folder
+	 * @return the description of this document library folder
 	 */
 	@AutoEscape
 	public String getDescription();
 
 	/**
-	 * Sets the description of this d l folder.
+	 * Sets the description of this document library folder.
 	 *
-	 * @param description the description of this d l folder
+	 * @param description the description of this document library folder
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Returns the last post date of this d l folder.
+	 * Returns the last post date of this document library folder.
 	 *
-	 * @return the last post date of this d l folder
+	 * @return the last post date of this document library folder
 	 */
 	public Date getLastPostDate();
 
 	/**
-	 * Sets the last post date of this d l folder.
+	 * Sets the last post date of this document library folder.
 	 *
-	 * @param lastPostDate the last post date of this d l folder
+	 * @param lastPostDate the last post date of this document library folder
 	 */
 	public void setLastPostDate(Date lastPostDate);
 

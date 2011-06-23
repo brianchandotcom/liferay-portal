@@ -159,6 +159,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  start the lower bound of the range of matching rows
 	 * @param  end the upper bound of the range of matching rows (not inclusive)
 	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 * @throws SystemException if a system exception occurred
 	 */

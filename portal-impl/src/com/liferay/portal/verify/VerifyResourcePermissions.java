@@ -103,12 +103,18 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					String.valueOf(primKey), role.getRoleId());
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					"No resource found for {" + companyId + ", " + name + ", " +
 						ResourceConstants.SCOPE_INDIVIDUAL + ", " + primKey +
 							", " + role.getRoleId() + "}");
+
+				_log.debug("Adding missing resource");
 			}
+
+			ResourceLocalServiceUtil.addResources(
+				companyId, 0, primKey, name, String.valueOf(primKey),
+				false, false, false);
 
 			return;
 		}

@@ -16,6 +16,8 @@
 	<propertycopy name="db.username" from="db.${db.type}.username" silent="true" />
 	<propertycopy name="db.password" from="db.${db.type}.password" silent="true" />
 
+	<property name="selenium_nanny.executable" location="${project.dir}/portal-web/selenium/selenium_nanny.exe" />
+
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -2565,6 +2567,62 @@ file.
 
 	<target name="run-simple-server">
 		<if>
+			<not>
+				<isset property="selenium.executable.zip" />
+			</not>
+			<then>
+				<fail>
+.
+
+Please set "selenium.executable.zip" in test.properties to point to the selenium EXECUTABLE ZIP
+file.
+				</fail>
+			</then>
+			<else>
+				<if>
+					<or>
+						<not>
+							<available file="portal-web/selenium" />
+						</not>
+						<not>
+							<uptodate
+								srcfile="${selenium.executable.zip}"
+								targetfile="portal-web/selenium"
+							/>
+						</not>
+					</or>
+					<then>
+						<delete dir="portal-web/selenium" failonerror="false" />
+
+						<unzip src="${selenium.executable.zip}" dest="portal-web/selenium" />
+
+						<touch>
+							<fileset dir="portal-web/selenium" />
+						</touch>
+					</then>
+				</if>
+			</else>
+		</if>
+
+		<if>
+			<isset property="selenium.output.dir" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="output.dir=H:\\selenium-output\\"
+					value="output.dir=${selenium.output.dir}"
+				/>
+			</then>
+			<else>
+				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
+			</else>
+		</if>
+
+		<delete dir="${selenium.output.dir}" />
+
+		<mkdir dir="${selenium.output.dir}" />
+
+		<if>
 			<isset property="test.browser" />
 			<then>
 				<replace
@@ -2573,6 +2631,51 @@ file.
 					value="browser.type=*${test.browser}"
 				/>
 			</then>
+			<else>
+				<property name="test.browser" value="chrome" />
+			</else>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${test.browser}" arg2="chrome" />
+				<equals arg1="${test.browser}" arg2="firefox" />
+			</or>
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium.executable.dir="
+					value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+				/>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium_download_file.executable="
+					value="selenium_download_file.executable=selenium_download_file_ff.exe"
+				/>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium_set_browser_option.executable="
+					value="selenium_set_browser_option.executable=selenium_set_browser_option_ff.exe"
+				/>
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="${test.browser}" arg2="iehta" />
+					<equals arg1="${test.browser}" arg2="iexplorer" />
+				</or>
+				<then>
+					<replace
+						file="portal-web/test/test-portal-web.properties"
+						token="#selenium.executable.dir="
+						value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+					/>
+					<replace
+						file="portal-web/test/test-portal-web.properties"
+						token="#selenium_download_file.executable="
+						value="selenium_download_file.executable=selenium_download_file_ie.exe"
+					/>
+				</then>
+			</elseif>
 		</if>
 
 		<antcall target="rebuild-database" inheritAll="false" />
@@ -2721,19 +2824,9 @@ file.
 	</target>
 
 	<target name="start-selenium-nanny">
-		<copy file="${selenium.nanny.executable}" tofile="selenium_nanny.exe" />
-
-		<sequential>
-			<waitfor>
-				<available file="selenium_nanny.exe" />
-			</waitfor>
-
-			<sleep seconds="10" />
-
-			<forget>
-				<exec executable="selenium_nanny.exe" />
-			</forget>
-		</sequential>
+		<forget>
+			<exec executable="${selenium_nanny.executable}" />
+		</forget>
 	</target>
 
 	<target name="stop-selenium">
@@ -2744,8 +2837,6 @@ file.
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM selenium_nanny.exe" />
 		</exec>
-
-		<delete file="selenium_nanny.exe" />
 	</target>
 
 	<target name="stop-vm">

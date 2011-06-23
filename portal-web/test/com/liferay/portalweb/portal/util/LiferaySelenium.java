@@ -21,6 +21,8 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
+	public void downloadFile(String value);
+
 	public String getCurrentDay();
 
 	public String getCurrentMonth();
@@ -34,5 +36,9 @@ public interface LiferaySelenium extends Selenium {
 	public boolean isPartialText(String locator, String value);
 
 	public void saveScreenShotAndSource() throws Exception;
+
+	public void setBrowserOption();
+
+	public void uploadFile(String locator, String value);
 
 }

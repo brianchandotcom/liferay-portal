@@ -288,7 +288,8 @@ public class SeleneseToJavaBuilder {
 			if (param1.equals("addSelection") || param1.equals("clickAt") ||
 				param1.equals("keyPress") || param1.equals("openWindow") ||
 				param1.equals("select") || param1.equals("type") ||
-				param1.equals("typeKeys") || param1.equals("waitForPopUp")) {
+				param1.equals("typeKeys") || param1.equals("uploadFile") ||
+				param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -561,6 +562,7 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
+					 param1.equals("downloadFile") ||
 					 param1.equals("mouseDown") || param1.equals("mouseOver") ||
 					 param1.equals("mouseUp") || param1.equals("open") ||
 					 param1.equals("selectFrame") ||
@@ -611,6 +613,7 @@ public class SeleneseToJavaBuilder {
 				sb.append("selenium.waitForPageToLoad(\"30000\");");
 			}
 			else if (param1.equals("close") || param1.equals("refresh") ||
+					 param1.equals("setBrowserOption") ||
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
 

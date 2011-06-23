@@ -37,6 +37,34 @@ public class LiferayDefaultSelenium
 		super(serverHost, serverPort, browserStartCommand, browserURL);
 	}
 
+	public void downloadFile(String value) {
+		String[] command = null;
+
+		String commandDownloadFile = TestPropsValues.SELENIUM_DOWNLOAD_FILE;
+		String downloadFile = TestPropsValues.OUTPUT_DIR + value;
+
+		if (_BROWSER_TYPE.equals("*chrome") ||
+			_BROWSER_TYPE.equals("*firefox") ||
+			_BROWSER_TYPE.equals("*iehta") ||
+			_BROWSER_TYPE.equals("*iexplore")) {
+
+			try {
+				command = new String[] {
+					_SELENIUM_EXECUTABLE_DIR + commandDownloadFile, downloadFile
+				};
+
+				command[0] = RuntimeVariables.replace(command[0]);
+
+				Runtime.getRuntime().exec(command);
+
+				Thread.sleep(10000);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public String getCurrentDay() {
 		return commandProcessor.getString(
 			"getCurrentDay", new String[0]);
@@ -87,11 +115,39 @@ public class LiferayDefaultSelenium
 		}
 	}
 
+	public void setBrowserOption() {
+		String command = null;
+		String commandSetBrowserOption =
+			TestPropsValues.SELENIUM_SET_BROWSER_OPTION;
+
+		if (_BROWSER_TYPE.equals("*chrome") ||
+			_BROWSER_TYPE.equals("*firefox")) {
+
+			try {
+				command = RuntimeVariables.replace(
+					_SELENIUM_EXECUTABLE_DIR + commandSetBrowserOption);
+
+				Runtime.getRuntime().exec(command);
+
+				Thread.sleep(10000);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public void setTimeout(String timeout) {
 		super.setTimeout(timeout);
 
 		_timeout = timeout;
+	}
+
+	public void uploadFile(String location, String value) {
+		String text = TestPropsValues.OUTPUT_DIR + value;
+
+		super.type(location, text);
 	}
 
 	@Override
@@ -132,8 +188,11 @@ public class LiferayDefaultSelenium
 		throw new RuntimeException("Unable to find screenshot file name");
 	}
 
+	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
 	private static final String _OUTPUT_SCREENSHOTS_DIR =
 		TestPropsValues.OUTPUT_DIR + "screenshots/";
+	private static final String _SELENIUM_EXECUTABLE_DIR =
+		TestPropsValues.SELENIUM_EXECUTABLE_DIR;
 
 	private String _timeout = "30000";
 

@@ -162,7 +162,7 @@ public interface OrganizationModel extends BaseModel<Organization> {
 	public boolean getRecursable();
 
 	/**
-	 * Determines if this organization is recursable.
+	 * Returns <code>true</code> if this organization is recursable.
 	 *
 	 * @return <code>true</code> if this organization is recursable; <code>false</code> otherwise
 	 */

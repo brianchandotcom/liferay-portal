@@ -105,7 +105,7 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	public boolean getPrivateLayout();
 
 	/**
-	 * Determines if this layout set is private layout.
+	 * Returns <code>true</code> if this layout set is private layout.
 	 *
 	 * @return <code>true</code> if this layout set is private layout; <code>false</code> otherwise
 	 */
@@ -126,7 +126,7 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	public boolean getLogo();
 
 	/**
-	 * Determines if this layout set is logo.
+	 * Returns <code>true</code> if this layout set is logo.
 	 *
 	 * @return <code>true</code> if this layout set is logo; <code>false</code> otherwise
 	 */

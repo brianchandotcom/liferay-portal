@@ -336,7 +336,7 @@ public class JournalTemplateWrapper implements JournalTemplate {
 	}
 
 	/**
-	* Determines if this journal template is cacheable.
+	* Returns <code>true</code> if this journal template is cacheable.
 	*
 	* @return <code>true</code> if this journal template is cacheable; <code>false</code> otherwise
 	*/
@@ -363,7 +363,7 @@ public class JournalTemplateWrapper implements JournalTemplate {
 	}
 
 	/**
-	* Determines if this journal template is small image.
+	* Returns <code>true</code> if this journal template is small image.
 	*
 	* @return <code>true</code> if this journal template is small image; <code>false</code> otherwise
 	*/

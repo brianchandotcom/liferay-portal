@@ -164,7 +164,7 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 	}
 
 	/**
-	* Determines if this social equity group setting is enabled.
+	* Returns <code>true</code> if this social equity group setting is enabled.
 	*
 	* @return <code>true</code> if this social equity group setting is enabled; <code>false</code> otherwise
 	*/

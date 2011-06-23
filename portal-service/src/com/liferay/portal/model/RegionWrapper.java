@@ -136,7 +136,7 @@ public class RegionWrapper implements Region {
 	}
 
 	/**
-	* Determines if this region is active.
+	* Returns <code>true</code> if this region is active.
 	*
 	* @return <code>true</code> if this region is active; <code>false</code> otherwise
 	*/

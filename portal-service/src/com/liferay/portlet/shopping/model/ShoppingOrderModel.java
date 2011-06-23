@@ -241,7 +241,7 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public boolean getRequiresShipping();
 
 	/**
-	 * Determines if this shopping order is requires shipping.
+	 * Returns <code>true</code> if this shopping order is requires shipping.
 	 *
 	 * @return <code>true</code> if this shopping order is requires shipping; <code>false</code> otherwise
 	 */
@@ -262,7 +262,7 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public boolean getInsure();
 
 	/**
-	 * Determines if this shopping order is insure.
+	 * Returns <code>true</code> if this shopping order is insure.
 	 *
 	 * @return <code>true</code> if this shopping order is insure; <code>false</code> otherwise
 	 */
@@ -476,7 +476,7 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public boolean getShipToBilling();
 
 	/**
-	 * Determines if this shopping order is ship to billing.
+	 * Returns <code>true</code> if this shopping order is ship to billing.
 	 *
 	 * @return <code>true</code> if this shopping order is ship to billing; <code>false</code> otherwise
 	 */
@@ -824,7 +824,7 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public boolean getSendOrderEmail();
 
 	/**
-	 * Determines if this shopping order is send order email.
+	 * Returns <code>true</code> if this shopping order is send order email.
 	 *
 	 * @return <code>true</code> if this shopping order is send order email; <code>false</code> otherwise
 	 */
@@ -845,7 +845,7 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public boolean getSendShippingEmail();
 
 	/**
-	 * Determines if this shopping order is send shipping email.
+	 * Returns <code>true</code> if this shopping order is send shipping email.
 	 *
 	 * @return <code>true</code> if this shopping order is send shipping email; <code>false</code> otherwise
 	 */

@@ -179,7 +179,7 @@ public interface SocialEquityLogModel extends BaseModel<SocialEquityLog> {
 	public boolean getActive();
 
 	/**
-	 * Determines if this social equity log is active.
+	 * Returns <code>true</code> if this social equity log is active.
 	 *
 	 * @return <code>true</code> if this social equity log is active; <code>false</code> otherwise
 	 */

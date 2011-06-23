@@ -309,7 +309,7 @@ public class GroupWrapper implements Group {
 	}
 
 	/**
-	* Determines if this group is site.
+	* Returns <code>true</code> if this group is site.
 	*
 	* @return <code>true</code> if this group is site; <code>false</code> otherwise
 	*/
@@ -336,7 +336,7 @@ public class GroupWrapper implements Group {
 	}
 
 	/**
-	* Determines if this group is active.
+	* Returns <code>true</code> if this group is active.
 	*
 	* @return <code>true</code> if this group is active; <code>false</code> otherwise
 	*/

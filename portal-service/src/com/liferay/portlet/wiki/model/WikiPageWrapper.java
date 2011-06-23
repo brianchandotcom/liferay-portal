@@ -304,7 +304,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is minor edit.
+	* Returns <code>true</code> if this wiki page is minor edit.
 	*
 	* @return <code>true</code> if this wiki page is minor edit; <code>false</code> otherwise
 	*/
@@ -385,7 +385,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is head.
+	* Returns <code>true</code> if this wiki page is head.
 	*
 	* @return <code>true</code> if this wiki page is head; <code>false</code> otherwise
 	*/
@@ -538,7 +538,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is approved.
+	* Returns <code>true</code> if this wiki page is approved.
 	*
 	* @return <code>true</code> if this wiki page is approved; <code>false</code> otherwise
 	*/
@@ -547,7 +547,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is a draft.
+	* Returns <code>true</code> if this wiki page is a draft.
 	*
 	* @return <code>true</code> if this wiki page is a draft; <code>false</code> otherwise
 	*/
@@ -556,7 +556,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is expired.
+	* Returns <code>true</code> if this wiki page is expired.
 	*
 	* @return <code>true</code> if this wiki page is expired; <code>false</code> otherwise
 	*/
@@ -565,7 +565,7 @@ public class WikiPageWrapper implements WikiPage {
 	}
 
 	/**
-	* Determines if this wiki page is pending.
+	* Returns <code>true</code> if this wiki page is pending.
 	*
 	* @return <code>true</code> if this wiki page is pending; <code>false</code> otherwise
 	*/

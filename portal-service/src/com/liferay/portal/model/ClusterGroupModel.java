@@ -107,7 +107,7 @@ public interface ClusterGroupModel extends BaseModel<ClusterGroup> {
 	public boolean getWholeCluster();
 
 	/**
-	 * Determines if this cluster group is whole cluster.
+	 * Returns <code>true</code> if this cluster group is whole cluster.
 	 *
 	 * @return <code>true</code> if this cluster group is whole cluster; <code>false</code> otherwise
 	 */

@@ -3413,7 +3413,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the organization is associated with the group.
+	 * Returns <code>true</code> if the organization is associated with the group.
 	 *
 	 * @param pk the primary key of the group
 	 * @param organizationPK the primary key of the organization
@@ -3449,7 +3449,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Determines if the group has any organizations associated with it.
+	 * Returns <code>true</code> if the group has any organizations associated with it.
 	 *
 	 * @param pk the primary key of the group to check for associations with organizations
 	 * @return <code>true</code> if the group has any organizations associated with it; <code>false</code> otherwise
@@ -3889,7 +3889,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the permission is associated with the group.
+	 * Returns <code>true</code> if the permission is associated with the group.
 	 *
 	 * @param pk the primary key of the group
 	 * @param permissionPK the primary key of the permission
@@ -3925,7 +3925,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Determines if the group has any permissions associated with it.
+	 * Returns <code>true</code> if the group has any permissions associated with it.
 	 *
 	 * @param pk the primary key of the group to check for associations with permissions
 	 * @return <code>true</code> if the group has any permissions associated with it; <code>false</code> otherwise
@@ -4362,7 +4362,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the role is associated with the group.
+	 * Returns <code>true</code> if the role is associated with the group.
 	 *
 	 * @param pk the primary key of the group
 	 * @param rolePK the primary key of the role
@@ -4396,7 +4396,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Determines if the group has any roles associated with it.
+	 * Returns <code>true</code> if the group has any roles associated with it.
 	 *
 	 * @param pk the primary key of the group to check for associations with roles
 	 * @return <code>true</code> if the group has any roles associated with it; <code>false</code> otherwise
@@ -4826,7 +4826,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the user group is associated with the group.
+	 * Returns <code>true</code> if the user group is associated with the group.
 	 *
 	 * @param pk the primary key of the group
 	 * @param userGroupPK the primary key of the user group
@@ -4862,7 +4862,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Determines if the group has any user groups associated with it.
+	 * Returns <code>true</code> if the group has any user groups associated with it.
 	 *
 	 * @param pk the primary key of the group to check for associations with user groups
 	 * @return <code>true</code> if the group has any user groups associated with it; <code>false</code> otherwise
@@ -5297,7 +5297,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the user is associated with the group.
+	 * Returns <code>true</code> if the user is associated with the group.
 	 *
 	 * @param pk the primary key of the group
 	 * @param userPK the primary key of the user
@@ -5331,7 +5331,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Determines if the group has any users associated with it.
+	 * Returns <code>true</code> if the group has any users associated with it.
 	 *
 	 * @param pk the primary key of the group to check for associations with users
 	 * @return <code>true</code> if the group has any users associated with it; <code>false</code> otherwise

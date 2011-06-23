@@ -1402,7 +1402,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the group is associated with the role.
+	* Returns <code>true</code> if the group is associated with the role.
 	*
 	* @param pk the primary key of the role
 	* @param groupPK the primary key of the group
@@ -1415,7 +1415,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the role has any groups associated with it.
+	* Returns <code>true</code> if the role has any groups associated with it.
 	*
 	* @param pk the primary key of the role to check for associations with groups
 	* @return <code>true</code> if the role has any groups associated with it; <code>false</code> otherwise
@@ -1625,7 +1625,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the permission is associated with the role.
+	* Returns <code>true</code> if the permission is associated with the role.
 	*
 	* @param pk the primary key of the role
 	* @param permissionPK the primary key of the permission
@@ -1638,7 +1638,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the role has any permissions associated with it.
+	* Returns <code>true</code> if the role has any permissions associated with it.
 	*
 	* @param pk the primary key of the role to check for associations with permissions
 	* @return <code>true</code> if the role has any permissions associated with it; <code>false</code> otherwise
@@ -1850,7 +1850,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the user is associated with the role.
+	* Returns <code>true</code> if the user is associated with the role.
 	*
 	* @param pk the primary key of the role
 	* @param userPK the primary key of the user
@@ -1863,7 +1863,7 @@ public class RoleUtil {
 	}
 
 	/**
-	* Determines if the role has any users associated with it.
+	* Returns <code>true</code> if the role has any users associated with it.
 	*
 	* @param pk the primary key of the role to check for associations with users
 	* @return <code>true</code> if the role has any users associated with it; <code>false</code> otherwise

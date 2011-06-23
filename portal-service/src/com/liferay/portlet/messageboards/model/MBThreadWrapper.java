@@ -392,7 +392,7 @@ public class MBThreadWrapper implements MBThread {
 	}
 
 	/**
-	* Determines if this message boards thread is approved.
+	* Returns <code>true</code> if this message boards thread is approved.
 	*
 	* @return <code>true</code> if this message boards thread is approved; <code>false</code> otherwise
 	*/
@@ -401,7 +401,7 @@ public class MBThreadWrapper implements MBThread {
 	}
 
 	/**
-	* Determines if this message boards thread is a draft.
+	* Returns <code>true</code> if this message boards thread is a draft.
 	*
 	* @return <code>true</code> if this message boards thread is a draft; <code>false</code> otherwise
 	*/
@@ -410,7 +410,7 @@ public class MBThreadWrapper implements MBThread {
 	}
 
 	/**
-	* Determines if this message boards thread is expired.
+	* Returns <code>true</code> if this message boards thread is expired.
 	*
 	* @return <code>true</code> if this message boards thread is expired; <code>false</code> otherwise
 	*/
@@ -419,7 +419,7 @@ public class MBThreadWrapper implements MBThread {
 	}
 
 	/**
-	* Determines if this message boards thread is pending.
+	* Returns <code>true</code> if this message boards thread is pending.
 	*
 	* @return <code>true</code> if this message boards thread is pending; <code>false</code> otherwise
 	*/

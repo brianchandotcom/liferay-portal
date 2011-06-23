@@ -80,8 +80,8 @@ public interface FriendlyURLMapper {
 	public Router getRouter();
 
 	/**
-	 * Determines if the friendly URLs for this mapper should include the
-	 * friendly URL separator.
+	 * Returns <code>true</code> if the friendly URLs for this mapper should
+	 * include the friendly URL separator.
 	 *
 	 * <p>
 	 * Typically, friendly URLs will include the separator &quot;/-/&quot;
@@ -106,7 +106,7 @@ public interface FriendlyURLMapper {
 	public boolean isCheckMappingWithPrefix();
 
 	/**
-	 * Determines if this portlet is instanceable.
+	 * Returns <code>true</code> if this portlet is instanceable.
 	 *
 	 * <p>
 	 * The value returned from this method has no effect on whether a portlet is

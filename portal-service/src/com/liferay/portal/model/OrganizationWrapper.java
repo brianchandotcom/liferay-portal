@@ -190,7 +190,7 @@ public class OrganizationWrapper implements Organization {
 	}
 
 	/**
-	* Determines if this organization is recursable.
+	* Returns <code>true</code> if this organization is recursable.
 	*
 	* @return <code>true</code> if this organization is recursable; <code>false</code> otherwise
 	*/

@@ -137,7 +137,7 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	public boolean getEmail();
 
 	/**
-	 * Determines if this announcements delivery is email.
+	 * Returns <code>true</code> if this announcements delivery is email.
 	 *
 	 * @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
 	 */
@@ -158,7 +158,7 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	public boolean getSms();
 
 	/**
-	 * Determines if this announcements delivery is sms.
+	 * Returns <code>true</code> if this announcements delivery is sms.
 	 *
 	 * @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
 	 */
@@ -179,7 +179,7 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	public boolean getWebsite();
 
 	/**
-	 * Determines if this announcements delivery is website.
+	 * Returns <code>true</code> if this announcements delivery is website.
 	 *
 	 * @return <code>true</code> if this announcements delivery is website; <code>false</code> otherwise
 	 */

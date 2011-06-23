@@ -318,7 +318,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is allow pingbacks.
+	* Returns <code>true</code> if this blogs entry is allow pingbacks.
 	*
 	* @return <code>true</code> if this blogs entry is allow pingbacks; <code>false</code> otherwise
 	*/
@@ -345,7 +345,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is allow trackbacks.
+	* Returns <code>true</code> if this blogs entry is allow trackbacks.
 	*
 	* @return <code>true</code> if this blogs entry is allow trackbacks; <code>false</code> otherwise
 	*/
@@ -390,7 +390,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is small image.
+	* Returns <code>true</code> if this blogs entry is small image.
 	*
 	* @return <code>true</code> if this blogs entry is small image; <code>false</code> otherwise
 	*/
@@ -543,7 +543,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is approved.
+	* Returns <code>true</code> if this blogs entry is approved.
 	*
 	* @return <code>true</code> if this blogs entry is approved; <code>false</code> otherwise
 	*/
@@ -552,7 +552,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is a draft.
+	* Returns <code>true</code> if this blogs entry is a draft.
 	*
 	* @return <code>true</code> if this blogs entry is a draft; <code>false</code> otherwise
 	*/
@@ -561,7 +561,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is expired.
+	* Returns <code>true</code> if this blogs entry is expired.
 	*
 	* @return <code>true</code> if this blogs entry is expired; <code>false</code> otherwise
 	*/
@@ -570,7 +570,7 @@ public class BlogsEntryWrapper implements BlogsEntry {
 	}
 
 	/**
-	* Determines if this blogs entry is pending.
+	* Returns <code>true</code> if this blogs entry is pending.
 	*
 	* @return <code>true</code> if this blogs entry is pending; <code>false</code> otherwise
 	*/

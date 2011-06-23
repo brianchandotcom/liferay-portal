@@ -2544,7 +2544,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the shopping item price is associated with the shopping item.
+	 * Returns <code>true</code> if the shopping item price is associated with the shopping item.
 	 *
 	 * @param pk the primary key of the shopping item
 	 * @param shoppingItemPricePK the primary key of the shopping item price
@@ -2580,7 +2580,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	}
 
 	/**
-	 * Determines if the shopping item has any shopping item prices associated with it.
+	 * Returns <code>true</code> if the shopping item has any shopping item prices associated with it.
 	 *
 	 * @param pk the primary key of the shopping item to check for associations with shopping item prices
 	 * @return <code>true</code> if the shopping item has any shopping item prices associated with it; <code>false</code> otherwise

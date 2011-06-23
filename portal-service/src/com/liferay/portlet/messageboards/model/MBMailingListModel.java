@@ -271,7 +271,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public boolean getInUseSSL();
 
 	/**
-	 * Determines if this message boards mailing list is in use s s l.
+	 * Returns <code>true</code> if this message boards mailing list is in use s s l.
 	 *
 	 * @return <code>true</code> if this message boards mailing list is in use s s l; <code>false</code> otherwise
 	 */
@@ -351,7 +351,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public boolean getOutCustom();
 
 	/**
-	 * Determines if this message boards mailing list is out custom.
+	 * Returns <code>true</code> if this message boards mailing list is out custom.
 	 *
 	 * @return <code>true</code> if this message boards mailing list is out custom; <code>false</code> otherwise
 	 */
@@ -401,7 +401,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public boolean getOutUseSSL();
 
 	/**
-	 * Determines if this message boards mailing list is out use s s l.
+	 * Returns <code>true</code> if this message boards mailing list is out use s s l.
 	 *
 	 * @return <code>true</code> if this message boards mailing list is out use s s l; <code>false</code> otherwise
 	 */
@@ -452,7 +452,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public boolean getAllowAnonymous();
 
 	/**
-	 * Determines if this message boards mailing list is allow anonymous.
+	 * Returns <code>true</code> if this message boards mailing list is allow anonymous.
 	 *
 	 * @return <code>true</code> if this message boards mailing list is allow anonymous; <code>false</code> otherwise
 	 */
@@ -473,7 +473,7 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	public boolean getActive();
 
 	/**
-	 * Determines if this message boards mailing list is active.
+	 * Returns <code>true</code> if this message boards mailing list is active.
 	 *
 	 * @return <code>true</code> if this message boards mailing list is active; <code>false</code> otherwise
 	 */

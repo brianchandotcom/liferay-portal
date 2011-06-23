@@ -210,7 +210,7 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 	}
 
 	/**
-	* Determines if this social equity log is active.
+	* Returns <code>true</code> if this social equity log is active.
 	*
 	* @return <code>true</code> if this social equity log is active; <code>false</code> otherwise
 	*/

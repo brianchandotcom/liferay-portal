@@ -836,7 +836,7 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	* Determines if the d d m structure is associated with the document library file entry type.
+	* Returns <code>true</code> if the d d m structure is associated with the document library file entry type.
 	*
 	* @param pk the primary key of the document library file entry type
 	* @param ddmStructurePK the primary key of the d d m structure
@@ -849,7 +849,7 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	* Determines if the document library file entry type has any d d m structures associated with it.
+	* Returns <code>true</code> if the document library file entry type has any d d m structures associated with it.
 	*
 	* @param pk the primary key of the document library file entry type to check for associations with d d m structures
 	* @return <code>true</code> if the document library file entry type has any d d m structures associated with it; <code>false</code> otherwise

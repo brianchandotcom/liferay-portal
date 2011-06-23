@@ -154,7 +154,7 @@ public class PluginSettingWrapper implements PluginSetting {
 	}
 
 	/**
-	* Determines if this plugin setting is active.
+	* Returns <code>true</code> if this plugin setting is active.
 	*
 	* @return <code>true</code> if this plugin setting is active; <code>false</code> otherwise
 	*/

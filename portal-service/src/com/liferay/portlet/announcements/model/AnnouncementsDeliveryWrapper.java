@@ -157,7 +157,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 	}
 
 	/**
-	* Determines if this announcements delivery is email.
+	* Returns <code>true</code> if this announcements delivery is email.
 	*
 	* @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
 	*/
@@ -184,7 +184,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 	}
 
 	/**
-	* Determines if this announcements delivery is sms.
+	* Returns <code>true</code> if this announcements delivery is sms.
 	*
 	* @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
 	*/
@@ -211,7 +211,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 	}
 
 	/**
-	* Determines if this announcements delivery is website.
+	* Returns <code>true</code> if this announcements delivery is website.
 	*
 	* @return <code>true</code> if this announcements delivery is website; <code>false</code> otherwise
 	*/

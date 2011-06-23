@@ -1313,7 +1313,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the asset entry is associated with the asset category.
+	* Returns <code>true</code> if the asset entry is associated with the asset category.
 	*
 	* @param pk the primary key of the asset category
 	* @param assetEntryPK the primary key of the asset entry
@@ -1324,7 +1324,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the asset category has any asset entries associated with it.
+	* Returns <code>true</code> if the asset category has any asset entries associated with it.
 	*
 	* @param pk the primary key of the asset category to check for associations with asset entries
 	* @return <code>true</code> if the asset category has any asset entries associated with it; <code>false</code> otherwise

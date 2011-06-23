@@ -623,7 +623,7 @@ public class TeamUtil {
 	}
 
 	/**
-	* Determines if the user is associated with the team.
+	* Returns <code>true</code> if the user is associated with the team.
 	*
 	* @param pk the primary key of the team
 	* @param userPK the primary key of the user
@@ -636,7 +636,7 @@ public class TeamUtil {
 	}
 
 	/**
-	* Determines if the team has any users associated with it.
+	* Returns <code>true</code> if the team has any users associated with it.
 	*
 	* @param pk the primary key of the team to check for associations with users
 	* @return <code>true</code> if the team has any users associated with it; <code>false</code> otherwise
@@ -846,7 +846,7 @@ public class TeamUtil {
 	}
 
 	/**
-	* Determines if the user group is associated with the team.
+	* Returns <code>true</code> if the user group is associated with the team.
 	*
 	* @param pk the primary key of the team
 	* @param userGroupPK the primary key of the user group
@@ -859,7 +859,7 @@ public class TeamUtil {
 	}
 
 	/**
-	* Determines if the team has any user groups associated with it.
+	* Returns <code>true</code> if the team has any user groups associated with it.
 	*
 	* @param pk the primary key of the team to check for associations with user groups
 	* @return <code>true</code> if the team has any user groups associated with it; <code>false</code> otherwise

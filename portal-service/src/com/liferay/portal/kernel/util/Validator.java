@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class Validator {
 
 	/**
-	 * Determines if the booleans are equal.
+	 * Returns <code>true</code> if the booleans are equal.
 	 *
 	 * @param  boolean1 the first boolean
 	 * @param  boolean2 the second boolean
@@ -46,7 +46,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the bytes are equal.
+	 * Returns <code>true</code> if the bytes are equal.
 	 *
 	 * @param  byte1 the first byte
 	 * @param  byte2 the second byte
@@ -63,7 +63,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the characters are equal.
+	 * Returns <code>true</code> if the characters are equal.
 	 *
 	 * @param  char1 the first character
 	 * @param  char2 the second character
@@ -80,7 +80,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the doubles are equal.
+	 * Returns <code>true</code> if the doubles are equal.
 	 *
 	 * @param  double1 the first double
 	 * @param  double2 the second double
@@ -97,7 +97,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the floats are equal.
+	 * Returns <code>true</code> if the floats are equal.
 	 *
 	 * @param  float1 the first float
 	 * @param  float2 the second float
@@ -114,7 +114,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the integers are equal.
+	 * Returns <code>true</code> if the integers are equal.
 	 *
 	 * @param  int1 the first integer
 	 * @param  int2 the second integer
@@ -131,7 +131,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the long integers are equal.
+	 * Returns <code>true</code> if the long integers are equal.
 	 *
 	 * @param  long1 the first long integer
 	 * @param  long2 the second long integer
@@ -148,8 +148,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the objects are either equal, the same instance, or both
-	 * <code>null</code>.
+	 * Returns <code>true</code> if the objects are either equal, the same
+	 * instance, or both <code>null</code>.
 	 *
 	 * @param  obj1 the first object
 	 * @param  obj2 the second object
@@ -169,7 +169,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the short integers are equal.
+	 * Returns <code>true</code> if the short integers are equal.
 	 *
 	 * @param  short1 the first short integer
 	 * @param  short2 the second short integer
@@ -186,9 +186,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is an email address. The only requirements are
-	 * that the string consist of two parts separated by an @ symbol, and that
-	 * it contain no whitespace.
+	 * Returns <code>true</code> if the string is an email address. The only
+	 * requirements are that the string consist of two parts separated by an @
+	 * symbol, and that it contain no whitespace.
 	 *
 	 * @param  address the string to check
 	 * @return <code>true</code> if the string is an email address;
@@ -217,8 +217,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is an alphanumeric name, meaning it contains
-	 * nothing but English letters, numbers, and spaces.
+	 * Returns <code>true</code> if the string is an alphanumeric name, meaning
+	 * it contains nothing but English letters, numbers, and spaces.
 	 *
 	 * @param  name the string to check
 	 * @return <code>true</code> if the string is an Alphanumeric name;
@@ -239,8 +239,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the character is in the ASCII character set. This includes
-	 * characters with integer values between 32 and 126 (inclusive).
+	 * Returns <code>true</code> if the character is in the ASCII character set.
+	 * This includes characters with integer values between 32 and 126
+	 * (inclusive).
 	 *
 	 * @param  c the character to check
 	 * @return <code>true</code> if the character is in the ASCII character set;
@@ -258,7 +259,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the character is an upper or lower case English letter.
+	 * Returns <code>true</code> if the character is an upper or lower case
+	 * English letter.
 	 *
 	 * @param  c the character to check
 	 * @return <code>true</code> if the character is an upper or lower case
@@ -275,8 +277,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if string consists only of upper and lower case English
-	 * letters.
+	 * Returns <code>true</code> if string consists only of upper and lower case
+	 * English letters.
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string consists only of upper and lower
@@ -297,7 +299,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the date is valid in the Gregorian calendar.
+	 * Returns <code>true</code> if the date is valid in the Gregorian calendar.
 	 *
 	 * @param  month the month to check
 	 * @param  day the day to check
@@ -309,7 +311,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the character is a digit between 0 and 9 (inclusive).
+	 * Returns <code>true</code> if the character is a digit between 0 and 9
+	 * (inclusive).
 	 *
 	 * @param  c the character to check
 	 * @return <code>true</code> if the character is a digit between 0 and 9
@@ -326,8 +329,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string consists of only digits between 0 and 9
-	 * (inclusive).
+	 * Returns <code>true</code> if the string consists of only digits between 0
+	 * and 9 (inclusive).
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string consists of only digits between 0
@@ -348,8 +351,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid domain name. See RFC-1034 (section
-	 * 3), RFC-1123 (section 2.1), and RFC-952 (section B. Lexical grammar).
+	 * Returns <code>true</code> if the string is a valid domain name. See
+	 * RFC-1034 (section 3), RFC-1123 (section 2.1), and RFC-952 (section B.
+	 * Lexical grammar).
 	 *
 	 * @param  domainName the string to check
 	 * @return <code>true</code> if the string is a valid domain name;
@@ -397,7 +401,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid email address.
+	 * Returns <code>true</code> if the string is a valid email address.
 	 *
 	 * @param  emailAddress the string to check
 	 * @return <code>true</code> if the string is a valid email address;
@@ -410,7 +414,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the character is a special character in an email address.
+	 * Returns <code>true</code> if the character is a special character in an
+	 * email address.
 	 *
 	 * @param  c the character to check
 	 * @return <code>true</code> if the character is a special character in an
@@ -430,7 +435,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the date is valid in the Gregorian calendar.
+	 * Returns <code>true</code> if the date is valid in the Gregorian calendar.
 	 *
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
@@ -466,9 +471,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a hexidecimal number. At present the only
-	 * requirement is that the string is not <code>null</code>; it does not
-	 * actually check the format of the string.
+	 * Returns <code>true</code> if the string is a hexidecimal number. At
+	 * present the only requirement is that the string is not <code>null</code>;
+	 * it does not actually check the format of the string.
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is a hexidecimal number;
@@ -484,8 +489,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is an HTML document. The only requirement is
-	 * that it contain the opening and closing html tags.
+	 * Returns <code>true</code> if the string is an HTML document. The only
+	 * requirement is that it contain the opening and closing html tags.
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is an HTML document;
@@ -506,7 +511,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid IPv4 IP address.
+	 * Returns <code>true</code> if the string is a valid IPv4 IP address.
 	 *
 	 * @param  ipAddress the string to check
 	 * @return <code>true</code> if the string is an IPv4 IP address;
@@ -519,7 +524,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the date is valid in the Julian calendar.
+	 * Returns <code>true</code> if the date is valid in the Julian calendar.
 	 *
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
@@ -553,8 +558,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string contains a valid number according to the Luhn
-	 * algorithm, commonly used to validate credit card numbers.
+	 * Returns <code>true</code> if the string contains a valid number according
+	 * to the Luhn algorithm, commonly used to validate credit card numbers.
 	 *
 	 * @param  number the string to check
 	 * @return <code>true</code> if the string contains a valid number according
@@ -598,8 +603,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a name, meaning it contains nothing but
-	 * English letters and spaces.
+	 * Returns <code>true</code> if the string is a name, meaning it contains
+	 * nothing but English letters and spaces.
 	 *
 	 * @param  name the string to check
 	 * @return <code>true</code> if the string is a name; <code>false</code>
@@ -620,8 +625,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the long number object is not <code>null</code>, meaning it
-	 * is neither a <code>null</code> reference or zero.
+	 * Returns <code>true</code> if the long number object is not
+	 * <code>null</code>, meaning it is neither a <code>null</code> reference or
+	 * zero.
 	 *
 	 * @param  l the long number object to check
 	 * @return <code>true</code> if the long number object is not
@@ -632,9 +638,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the object is not <code>null</code>, using the rules from
-	 * {@link #isNotNull(Long)} or {@link #isNotNull(String)} if the object is
-	 * one of these types.
+	 * Returns <code>true</code> if the object is not <code>null</code>, using
+	 * the rules from {@link #isNotNull(Long)} or {@link #isNotNull(String)} if
+	 * the object is one of these types.
 	 *
 	 * @param  obj the object to check
 	 * @return <code>true</code> if the object is not <code>null</code>;
@@ -645,8 +651,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the array is not <code>null</code>, meaning it is neither a
-	 * <code>null</code> reference or empty.
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
 	 *
 	 * @param  array the array to check
 	 * @return <code>true</code> if the array is not <code>null</code>;
@@ -657,9 +663,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is not <code>null</code>, meaning it is not a
-	 * <code>null</code> reference, nothing but spaces, or the string
-	 * "<code>null</code>".
+	 * Returns <code>true</code> if the string is not <code>null</code>, meaning
+	 * it is not a <code>null</code> reference, nothing but spaces, or the
+	 * string "<code>null</code>".
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is not <code>null</code>;
@@ -670,8 +676,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the long number object is <code>null</code>, meaning it is
-	 * either a <code>null</code> reference or zero.
+	 * Returns <code>true</code> if the long number object is <code>null</code>,
+	 * meaning it is either a <code>null</code> reference or zero.
 	 *
 	 * @param  l the long number object to check
 	 * @return <code>true</code> if the long number object is <code>null</code>;
@@ -687,9 +693,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the object is <code>null</code>, using the rules from
-	 * {@link #isNull(Long)} or {@link #isNull(String)} if the object is one of
-	 * these types.
+	 * Returns <code>true</code> if the object is <code>null</code>, using the
+	 * rules from {@link #isNull(Long)} or {@link #isNull(String)} if the object
+	 * is one of these types.
 	 *
 	 * @param  obj the object to check
 	 * @return <code>true</code> if the object is <code>null</code>;
@@ -711,8 +717,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the array is <code>null</code>, meaning it is either a
-	 * <code>null</code> reference or empty.
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
 	 *
 	 * @param  array the array to check
 	 * @return <code>true</code> if the array is <code>null</code>;
@@ -728,8 +734,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is <code>null</code>, meaning it is a
-	 * <code>null</code> reference, nothing but spaces, or the string
+	 * Returns <code>true</code> if the string is <code>null</code>, meaning it
+	 * is a <code>null</code> reference, nothing but spaces, or the string
 	 * "<code>null</code>".
 	 *
 	 * @param  s the string to check
@@ -780,8 +786,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a decimal integer number, meaning it contains
-	 * nothing but decimal digits.
+	 * Returns <code>true</code> if the string is a decimal integer number,
+	 * meaning it contains nothing but decimal digits.
 	 *
 	 * @param  number the string to check
 	 * @return <code>true</code> if the string is a decimal integer number;
@@ -802,8 +808,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid password, meaning it is at least four
-	 * characters long and contains only letters and decimal digits.
+	 * Returns <code>true</code> if the string is a valid password, meaning it
+	 * is at least four characters long and contains only letters and decimal
+	 * digits.
 	 *
 	 * @return <code>true</code> if the string is a valid password;
 	 *         <code>false</code> otherwise
@@ -827,9 +834,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid phone number. The only requirement is
-	 * that there are decimal digits in the string; length and format are not
-	 * checked.
+	 * Returns <code>true</code> if the string is a valid phone number. The only
+	 * requirement is that there are decimal digits in the string; length and
+	 * format are not checked.
 	 *
 	 * @param  phoneNumber the string to check
 	 * @return <code>true</code> if the string is a valid phone number;
@@ -840,8 +847,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid URL based on the rules in {@link
-	 * java.net.URL}.
+	 * Returns <code>true</code> if the string is a valid URL based on the rules
+	 * in {@link java.net.URL}.
 	 *
 	 * @param  url the string to check
 	 * @return <code>true</code> if the string is a valid URL;
@@ -866,7 +873,7 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid variable name in Java.
+	 * Returns <code>true</code> if the string is a valid variable name in Java.
 	 *
 	 * @param  variableName the string to check
 	 * @return <code>true</code> if the string is a valid variable name in Java;
@@ -888,8 +895,8 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is a valid variable term, meaning it begins with
-	 * "[$" and ends with "$]".
+	 * Returns <code>true</code> if the string is a valid variable term, meaning
+	 * it begins with "[$" and ends with "$]".
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is a valid variable term;
@@ -907,9 +914,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the character is whitespace, meaning it is either the
-	 * <code>null</code> character '0' or whitespace according to {@link
-	 * java.lang.Character#isWhitespace(char)}.
+	 * Returns <code>true</code> if the character is whitespace, meaning it is
+	 * either the <code>null</code> character '0' or whitespace according to
+	 * {@link java.lang.Character#isWhitespace(char)}.
 	 *
 	 * @param  c the character to check
 	 * @return <code>true</code> if the character is whitespace;
@@ -927,9 +934,9 @@ public class Validator {
 	}
 
 	/**
-	 * Determines if the string is an XML document. The only requirement is that
-	 * it contain either the xml start tag "<?xml" or the empty document tag
-	 * "<root />".
+	 * Returns <code>true</code> if the string is an XML document. The only
+	 * requirement is that it contain either the xml start tag "<?xml" or the
+	 * empty document tag "<root />".
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is an XML document;

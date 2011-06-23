@@ -1373,18 +1373,18 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry local service.
+	 * Returns the document library file entry local service.
 	 *
-	 * @return the d l file entry local service
+	 * @return the document library file entry local service
 	 */
 	public DLFileEntryLocalService getDLFileEntryLocalService() {
 		return dlFileEntryLocalService;
 	}
 
 	/**
-	 * Sets the d l file entry local service.
+	 * Sets the document library file entry local service.
 	 *
-	 * @param dlFileEntryLocalService the d l file entry local service
+	 * @param dlFileEntryLocalService the document library file entry local service
 	 */
 	public void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
@@ -1392,36 +1392,36 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry remote service.
+	 * Returns the document library file entry remote service.
 	 *
-	 * @return the d l file entry remote service
+	 * @return the document library file entry remote service
 	 */
 	public DLFileEntryService getDLFileEntryService() {
 		return dlFileEntryService;
 	}
 
 	/**
-	 * Sets the d l file entry remote service.
+	 * Sets the document library file entry remote service.
 	 *
-	 * @param dlFileEntryService the d l file entry remote service
+	 * @param dlFileEntryService the document library file entry remote service
 	 */
 	public void setDLFileEntryService(DLFileEntryService dlFileEntryService) {
 		this.dlFileEntryService = dlFileEntryService;
 	}
 
 	/**
-	 * Returns the d l file entry persistence.
+	 * Returns the document library file entry persistence.
 	 *
-	 * @return the d l file entry persistence
+	 * @return the document library file entry persistence
 	 */
 	public DLFileEntryPersistence getDLFileEntryPersistence() {
 		return dlFileEntryPersistence;
 	}
 
 	/**
-	 * Sets the d l file entry persistence.
+	 * Sets the document library file entry persistence.
 	 *
-	 * @param dlFileEntryPersistence the d l file entry persistence
+	 * @param dlFileEntryPersistence the document library file entry persistence
 	 */
 	public void setDLFileEntryPersistence(
 		DLFileEntryPersistence dlFileEntryPersistence) {
@@ -1429,36 +1429,36 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry finder.
+	 * Returns the document library file entry finder.
 	 *
-	 * @return the d l file entry finder
+	 * @return the document library file entry finder
 	 */
 	public DLFileEntryFinder getDLFileEntryFinder() {
 		return dlFileEntryFinder;
 	}
 
 	/**
-	 * Sets the d l file entry finder.
+	 * Sets the document library file entry finder.
 	 *
-	 * @param dlFileEntryFinder the d l file entry finder
+	 * @param dlFileEntryFinder the document library file entry finder
 	 */
 	public void setDLFileEntryFinder(DLFileEntryFinder dlFileEntryFinder) {
 		this.dlFileEntryFinder = dlFileEntryFinder;
 	}
 
 	/**
-	 * Returns the d l folder local service.
+	 * Returns the document library folder local service.
 	 *
-	 * @return the d l folder local service
+	 * @return the document library folder local service
 	 */
 	public DLFolderLocalService getDLFolderLocalService() {
 		return dlFolderLocalService;
 	}
 
 	/**
-	 * Sets the d l folder local service.
+	 * Sets the document library folder local service.
 	 *
-	 * @param dlFolderLocalService the d l folder local service
+	 * @param dlFolderLocalService the document library folder local service
 	 */
 	public void setDLFolderLocalService(
 		DLFolderLocalService dlFolderLocalService) {
@@ -1466,54 +1466,54 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l folder remote service.
+	 * Returns the document library folder remote service.
 	 *
-	 * @return the d l folder remote service
+	 * @return the document library folder remote service
 	 */
 	public DLFolderService getDLFolderService() {
 		return dlFolderService;
 	}
 
 	/**
-	 * Sets the d l folder remote service.
+	 * Sets the document library folder remote service.
 	 *
-	 * @param dlFolderService the d l folder remote service
+	 * @param dlFolderService the document library folder remote service
 	 */
 	public void setDLFolderService(DLFolderService dlFolderService) {
 		this.dlFolderService = dlFolderService;
 	}
 
 	/**
-	 * Returns the d l folder persistence.
+	 * Returns the document library folder persistence.
 	 *
-	 * @return the d l folder persistence
+	 * @return the document library folder persistence
 	 */
 	public DLFolderPersistence getDLFolderPersistence() {
 		return dlFolderPersistence;
 	}
 
 	/**
-	 * Sets the d l folder persistence.
+	 * Sets the document library folder persistence.
 	 *
-	 * @param dlFolderPersistence the d l folder persistence
+	 * @param dlFolderPersistence the document library folder persistence
 	 */
 	public void setDLFolderPersistence(DLFolderPersistence dlFolderPersistence) {
 		this.dlFolderPersistence = dlFolderPersistence;
 	}
 
 	/**
-	 * Returns the d l folder finder.
+	 * Returns the document library folder finder.
 	 *
-	 * @return the d l folder finder
+	 * @return the document library folder finder
 	 */
 	public DLFolderFinder getDLFolderFinder() {
 		return dlFolderFinder;
 	}
 
 	/**
-	 * Sets the d l folder finder.
+	 * Sets the document library folder finder.
 	 *
-	 * @param dlFolderFinder the d l folder finder
+	 * @param dlFolderFinder the document library folder finder
 	 */
 	public void setDLFolderFinder(DLFolderFinder dlFolderFinder) {
 		this.dlFolderFinder = dlFolderFinder;

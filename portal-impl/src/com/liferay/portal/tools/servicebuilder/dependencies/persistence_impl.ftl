@@ -2944,7 +2944,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				});
 
 			/**
-			 * Determines if the ${tempEntity.humanName} is associated with the ${entity.humanName}.
+			 * Returns <code>true</code> if the ${tempEntity.humanName} is associated with the ${entity.humanName}.
 			 *
 			 * @param pk the primary key of the ${entity.humanName}
 			 * @param ${tempEntity.varName}PK the primary key of the ${tempEntity.humanName}
@@ -2976,7 +2976,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 			/**
-			 * Determines if the ${entity.humanName} has any ${tempEntity.humanNames} associated with it.
+			 * Returns <code>true</code> if the ${entity.humanName} has any ${tempEntity.humanNames} associated with it.
 			 *
 			 * @param pk the primary key of the ${entity.humanName} to check for associations with ${tempEntity.humanNames}
 			 * @return <code>true</code> if the ${entity.humanName} has any ${tempEntity.humanNames} associated with it; <code>false</code> otherwise

@@ -69,7 +69,7 @@ public interface BatchSession {
 	public void delete(Session session, BaseModel<?> model) throws ORMException;
 
 	/**
-	 * Determines if update batching is enabled
+	 * Returns <code>true</code> if update batching is enabled
 	 *
 	 * @return <code>true</code> if update batching is enabled;
 	 *         <code>false</code> otherwise

@@ -318,7 +318,7 @@ public class ContactWrapper implements Contact {
 	}
 
 	/**
-	* Determines if this contact is male.
+	* Returns <code>true</code> if this contact is male.
 	*
 	* @return <code>true</code> if this contact is male; <code>false</code> otherwise
 	*/

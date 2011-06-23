@@ -298,7 +298,7 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	public boolean getAllDay();
 
 	/**
-	 * Determines if this cal event is all day.
+	 * Returns <code>true</code> if this cal event is all day.
 	 *
 	 * @return <code>true</code> if this cal event is all day; <code>false</code> otherwise
 	 */
@@ -319,7 +319,7 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	public boolean getTimeZoneSensitive();
 
 	/**
-	 * Determines if this cal event is time zone sensitive.
+	 * Returns <code>true</code> if this cal event is time zone sensitive.
 	 *
 	 * @return <code>true</code> if this cal event is time zone sensitive; <code>false</code> otherwise
 	 */
@@ -355,7 +355,7 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	public boolean getRepeating();
 
 	/**
-	 * Determines if this cal event is repeating.
+	 * Returns <code>true</code> if this cal event is repeating.
 	 *
 	 * @return <code>true</code> if this cal event is repeating; <code>false</code> otherwise
 	 */

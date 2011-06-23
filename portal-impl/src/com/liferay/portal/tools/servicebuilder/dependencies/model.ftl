@@ -164,7 +164,7 @@ public interface ${entity.name}Model extends
 
 		<#if column.type == "boolean">
 			/**
-			 * Determines if this ${entity.humanName} is ${column.humanName}.
+			 * Returns <code>true</code> if this ${entity.humanName} is ${column.humanName}.
 			 *
 			 * @return <code>true</code> if this ${entity.humanName} is ${column.humanName}; <code>false</code> otherwise
 			 */
@@ -245,28 +245,28 @@ public interface ${entity.name}Model extends
 		public boolean getApproved();
 
 		/**
-		 * Determines if this ${entity.humanName} is approved.
+		 * Returns <code>true</code> if this ${entity.humanName} is approved.
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is approved; <code>false</code> otherwise
 		 */
 		public boolean isApproved();
 
 		/**
-		 * Determines if this ${entity.humanName} is a draft.
+		 * Returns <code>true</code> if this ${entity.humanName} is a draft.
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is a draft; <code>false</code> otherwise
 		 */
 		public boolean isDraft();
 
 		/**
-		 * Determines if this ${entity.humanName} is expired.
+		 * Returns <code>true</code> if this ${entity.humanName} is expired.
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is expired; <code>false</code> otherwise
 		 */
 		public boolean isExpired();
 
 		/**
-		 * Determines if this ${entity.humanName} is pending.
+		 * Returns <code>true</code> if this ${entity.humanName} is pending.
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is pending; <code>false</code> otherwise
 		 */

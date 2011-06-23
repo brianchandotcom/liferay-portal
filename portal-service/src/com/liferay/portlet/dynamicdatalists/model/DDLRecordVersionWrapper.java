@@ -372,7 +372,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 	}
 
 	/**
-	* Determines if this d d l record version is approved.
+	* Returns <code>true</code> if this d d l record version is approved.
 	*
 	* @return <code>true</code> if this d d l record version is approved; <code>false</code> otherwise
 	*/
@@ -381,7 +381,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 	}
 
 	/**
-	* Determines if this d d l record version is a draft.
+	* Returns <code>true</code> if this d d l record version is a draft.
 	*
 	* @return <code>true</code> if this d d l record version is a draft; <code>false</code> otherwise
 	*/
@@ -390,7 +390,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 	}
 
 	/**
-	* Determines if this d d l record version is expired.
+	* Returns <code>true</code> if this d d l record version is expired.
 	*
 	* @return <code>true</code> if this d d l record version is expired; <code>false</code> otherwise
 	*/
@@ -399,7 +399,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 	}
 
 	/**
-	* Determines if this d d l record version is pending.
+	* Returns <code>true</code> if this d d l record version is pending.
 	*
 	* @return <code>true</code> if this d d l record version is pending; <code>false</code> otherwise
 	*/

@@ -282,7 +282,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 	}
 
 	/**
-	* Determines if this shopping order is requires shipping.
+	* Returns <code>true</code> if this shopping order is requires shipping.
 	*
 	* @return <code>true</code> if this shopping order is requires shipping; <code>false</code> otherwise
 	*/
@@ -309,7 +309,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 	}
 
 	/**
-	* Determines if this shopping order is insure.
+	* Returns <code>true</code> if this shopping order is insure.
 	*
 	* @return <code>true</code> if this shopping order is insure; <code>false</code> otherwise
 	*/
@@ -570,7 +570,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 	}
 
 	/**
-	* Determines if this shopping order is ship to billing.
+	* Returns <code>true</code> if this shopping order is ship to billing.
 	*
 	* @return <code>true</code> if this shopping order is ship to billing; <code>false</code> otherwise
 	*/
@@ -993,7 +993,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 	}
 
 	/**
-	* Determines if this shopping order is send order email.
+	* Returns <code>true</code> if this shopping order is send order email.
 	*
 	* @return <code>true</code> if this shopping order is send order email; <code>false</code> otherwise
 	*/
@@ -1020,7 +1020,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 	}
 
 	/**
-	* Determines if this shopping order is send shipping email.
+	* Returns <code>true</code> if this shopping order is send shipping email.
 	*
 	* @return <code>true</code> if this shopping order is send shipping email; <code>false</code> otherwise
 	*/

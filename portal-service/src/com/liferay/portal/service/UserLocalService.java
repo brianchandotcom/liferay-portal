@@ -1460,7 +1460,7 @@ public interface UserLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user is a member of the group.
+	* Returns <code>true</code> if the user is a member of the group.
 	*
 	* @param groupId the primary key of the group
 	* @param userId the primary key of the user
@@ -1473,7 +1473,7 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user is a member of the organization.
+	* Returns <code>true</code> if the user is a member of the organization.
 	*
 	* @param organizationId the primary key of the organization
 	* @return <code>true</code> if the user is a member of the organization;
@@ -1485,7 +1485,8 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the password policy has been assigned to the user.
+	* Returns <code>true</code> if the password policy has been assigned to the
+	* user.
 	*
 	* @param passwordPolicyId the primary key of the password policy
 	* @param userId the primary key of the user
@@ -1498,7 +1499,7 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user is a member of the role.
+	* Returns <code>true</code> if the user is a member of the role.
 	*
 	* @param roleId the primary key of the role
 	* @param userId the primary key of the user
@@ -1511,8 +1512,8 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has the role with the name, optionally through
-	* inheritance.
+	* Returns <code>true</code> if the user has the role with the name,
+	* optionally through inheritance.
 	*
 	* @param companyId the primary key of the role's company
 	* @param name the name of the role (must be a regular role, not an
@@ -1532,7 +1533,7 @@ public interface UserLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user is a member of the team.
+	* Returns <code>true</code> if the user is a member of the team.
 	*
 	* @param teamId the primary key of the team
 	* @param userId the primary key of the user
@@ -1545,7 +1546,7 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user is a member of the user group.
+	* Returns <code>true</code> if the user is a member of the user group.
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
@@ -1558,7 +1559,7 @@ public interface UserLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user's password is expired.
+	* Returns <code>true</code> if the user's password is expired.
 	*
 	* @param user the user
 	* @return <code>true</code> if the user's password is expired;
@@ -1573,7 +1574,7 @@ public interface UserLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user's password is expiring soon.
+	* Returns <code>true</code> if the user's password is expiring soon.
 	*
 	* @param user the user
 	* @return <code>true</code> if the user's password is expiring soon;

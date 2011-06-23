@@ -140,7 +140,7 @@ public interface SocialEquityGroupSettingModel extends BaseModel<SocialEquityGro
 	public boolean getEnabled();
 
 	/**
-	 * Determines if this social equity group setting is enabled.
+	 * Returns <code>true</code> if this social equity group setting is enabled.
 	 *
 	 * @return <code>true</code> if this social equity group setting is enabled; <code>false</code> otherwise
 	 */

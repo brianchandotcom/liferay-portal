@@ -381,7 +381,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
 	}
 
 	/**
-	* Determines if this announcements entry is alert.
+	* Returns <code>true</code> if this announcements entry is alert.
 	*
 	* @return <code>true</code> if this announcements entry is alert; <code>false</code> otherwise
 	*/

@@ -245,7 +245,7 @@ public interface PhoneModel extends AttachedModel, AuditedModel, BaseModel<Phone
 	public boolean getPrimary();
 
 	/**
-	 * Determines if this phone is primary.
+	 * Returns <code>true</code> if this phone is primary.
 	 *
 	 * @return <code>true</code> if this phone is primary; <code>false</code> otherwise
 	 */

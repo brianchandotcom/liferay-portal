@@ -174,7 +174,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is default user.
+	* Returns <code>true</code> if this user is default user.
 	*
 	* @return <code>true</code> if this user is default user; <code>false</code> otherwise
 	*/
@@ -237,7 +237,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is password encrypted.
+	* Returns <code>true</code> if this user is password encrypted.
 	*
 	* @return <code>true</code> if this user is password encrypted; <code>false</code> otherwise
 	*/
@@ -264,7 +264,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is password reset.
+	* Returns <code>true</code> if this user is password reset.
 	*
 	* @return <code>true</code> if this user is password reset; <code>false</code> otherwise
 	*/
@@ -723,7 +723,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is lockout.
+	* Returns <code>true</code> if this user is lockout.
 	*
 	* @return <code>true</code> if this user is lockout; <code>false</code> otherwise
 	*/
@@ -768,7 +768,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is agreed to terms of use.
+	* Returns <code>true</code> if this user is agreed to terms of use.
 	*
 	* @return <code>true</code> if this user is agreed to terms of use; <code>false</code> otherwise
 	*/
@@ -795,7 +795,7 @@ public class UserWrapper implements User {
 	}
 
 	/**
-	* Determines if this user is email address verified.
+	* Returns <code>true</code> if this user is email address verified.
 	*
 	* @return <code>true</code> if this user is email address verified; <code>false</code> otherwise
 	*/

@@ -300,7 +300,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 	}
 
 	/**
-	* Determines if this shopping coupon is active.
+	* Returns <code>true</code> if this shopping coupon is active.
 	*
 	* @return <code>true</code> if this shopping coupon is active; <code>false</code> otherwise
 	*/

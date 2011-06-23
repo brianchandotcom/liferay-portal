@@ -83,8 +83,8 @@ public interface LiferayPortletURL
 	public String getResourceID();
 
 	/**
-	 * Determines if this URL is an anchor pointing to the specified portlet on
-	 * the page.
+	 * Returns <code>true</code> if this URL is an anchor pointing to the
+	 * specified portlet on the page.
 	 *
 	 * @return whether this URL is an anchor pointing to the specified portlet
 	 *         on the page
@@ -93,8 +93,8 @@ public interface LiferayPortletURL
 	public boolean isAnchor();
 
 	/**
-	 * Determines if the render parameters in the current request should be
-	 * copied to this URL.
+	 * Returns <code>true</code> if the render parameters in the current request
+	 * should be copied to this URL.
 	 *
 	 * @return whether the render parameters in the current request should be
 	 *         copied to this URL
@@ -103,7 +103,7 @@ public interface LiferayPortletURL
 	public boolean isCopyCurrentRenderParameters();
 
 	/**
-	 * Determines if this URL should be encrypted.
+	 * Returns <code>true</code> if this URL should be encrypted.
 	 *
 	 * @return <code>true</code> if this URL should be encrypted;
 	 *         <code>false</code> otherwise
@@ -112,7 +112,7 @@ public interface LiferayPortletURL
 	public boolean isEncrypt();
 
 	/**
-	 * Determines if this URL should be XML escaped.
+	 * Returns <code>true</code> if this URL should be XML escaped.
 	 *
 	 * @return <code>true</code> if this URL should be XML escaped;
 	 *         <code>false</code> otherwise
@@ -121,7 +121,8 @@ public interface LiferayPortletURL
 	public boolean isEscapeXml();
 
 	/**
-	 * Determines if the parameter is included in the friendly URL path.
+	 * Returns <code>true</code> if the parameter is included in the friendly
+	 * URL path.
 	 *
 	 * @param  name the name of the parameter to check for inclusion in the path
 	 * @return whether the parameter is included in the friendly URL path
@@ -130,7 +131,7 @@ public interface LiferayPortletURL
 	public boolean isParameterIncludedInPath(String name);
 
 	/**
-	 * Determines if this URL is secure (https).
+	 * Returns <code>true</code> if this URL is secure (https).
 	 *
 	 * @return <code>true</code> if this URL is secure; <code>false</code>
 	 *         otherwise

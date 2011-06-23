@@ -319,7 +319,7 @@ public interface AddressModel extends AttachedModel, AuditedModel,
 	public boolean getMailing();
 
 	/**
-	 * Determines if this address is mailing.
+	 * Returns <code>true</code> if this address is mailing.
 	 *
 	 * @return <code>true</code> if this address is mailing; <code>false</code> otherwise
 	 */
@@ -340,7 +340,7 @@ public interface AddressModel extends AttachedModel, AuditedModel,
 	public boolean getPrimary();
 
 	/**
-	 * Determines if this address is primary.
+	 * Returns <code>true</code> if this address is primary.
 	 *
 	 * @return <code>true</code> if this address is primary; <code>false</code> otherwise
 	 */

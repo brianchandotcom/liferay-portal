@@ -256,7 +256,7 @@ public interface ShoppingCouponModel extends BaseModel<ShoppingCoupon>,
 	public boolean getActive();
 
 	/**
-	 * Determines if this shopping coupon is active.
+	 * Returns <code>true</code> if this shopping coupon is active.
 	 *
 	 * @return <code>true</code> if this shopping coupon is active; <code>false</code> otherwise
 	 */

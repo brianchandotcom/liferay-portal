@@ -172,7 +172,7 @@ public class CountryWrapper implements Country {
 	}
 
 	/**
-	* Determines if this country is active.
+	* Returns <code>true</code> if this country is active.
 	*
 	* @return <code>true</code> if this country is active; <code>false</code> otherwise
 	*/

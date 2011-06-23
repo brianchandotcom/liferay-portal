@@ -274,6 +274,10 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>UnsyncPrintWriter Pool Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.unsyncprintwriterpool.UnsyncPrintWriterPoolFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>Virtual Host Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter</filter-class>
 		<init-param>
@@ -359,6 +363,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Absolute Redirects Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UnsyncPrintWriter Pool Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

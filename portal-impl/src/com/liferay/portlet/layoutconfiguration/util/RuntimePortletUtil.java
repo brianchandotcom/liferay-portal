@@ -61,9 +61,9 @@ import javax.servlet.jsp.PageContext;
 public class RuntimePortletUtil {
 
 	public static String processCustomizationSettings(
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, PageContext pageContext,
-		String velocityTemplateId, String velocityTemplateContent)
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			String velocityTemplateId, String velocityTemplateContent)
 		throws Exception {
 
 		if (Validator.isNull(velocityTemplateContent)) {

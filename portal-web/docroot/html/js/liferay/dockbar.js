@@ -289,18 +289,6 @@ AUI().add(
 				return messageId;
 			},
 
-			_createMessage: function(message, messageId) {
-				var instance = this;
-
-				var cssClass = '';
-
-				if (instance.messageList.length == 1) {
-					cssClass = 'first';
-				}
-
-				return '<div class="dockbar-message ' + cssClass + '" id="' + messageId + '">' + message + '</div>';
-			},
-
 			_createCustomizationMask: function(column) {
 				var instance = this;
 
@@ -349,6 +337,18 @@ AUI().add(
 				column.setData('customizationControls', overlayMask);
 
 				return overlayMask;
+			},
+
+			_createMessage: function(message, messageId) {
+				var instance = this;
+
+				var cssClass = '';
+
+				if (instance.messageList.length == 1) {
+					cssClass = 'first';
+				}
+
+				return '<div class="dockbar-message ' + cssClass + '" id="' + messageId + '">' + message + '</div>';
 			},
 
 			_init: function() {

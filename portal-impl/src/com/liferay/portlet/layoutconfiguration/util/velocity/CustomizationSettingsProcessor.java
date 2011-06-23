@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.CustomizedPages;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 
 import java.io.Writer;
@@ -57,8 +57,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	public String processColumn(String columnId, String classNames)
 		throws Exception {
 
-		String customizableKey = CustomizedPages.namespaceColumnId(
-			columnId);
+		String customizableKey = CustomizedPages.namespaceColumnId(columnId);
 
 		boolean templateCustomizable = true;
 

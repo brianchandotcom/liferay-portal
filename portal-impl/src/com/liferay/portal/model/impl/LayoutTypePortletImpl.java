@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -38,7 +39,6 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -826,8 +826,7 @@ public class LayoutTypePortletImpl
 				getTypeSettingsProperties().getProperty(
 					CustomizedPages.namespaceColumnId(columnId));
 
-			boolean customizable = GetterUtil.getBoolean(
-				customizableString);
+			boolean customizable = GetterUtil.getBoolean(customizableString);
 
 			if (!customizable && hasUserPreferenes()) {
 				String columnValue = _portalPreferences.getValue(
@@ -1429,8 +1428,7 @@ public class LayoutTypePortletImpl
 
 		if (hasUserPreferenes()) {
 			value = _portalPreferences.getValue(
-				CustomizedPages.namespacePlid(getPlid()), key,
-				StringPool.NULL);
+				CustomizedPages.namespacePlid(getPlid()), key, StringPool.NULL);
 
 			if (value.equals(StringPool.NULL)) {
 				if (hasTemplate()) {
@@ -1599,10 +1597,10 @@ public class LayoutTypePortletImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutTypePortletImpl.class);
 
+	private boolean _customizedView;
 	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 		PropsValues.INDEX_DATE_FORMAT_PATTERN);
 	private boolean _enablePortletLayoutListener = true;
-	private boolean _customizedView;
 	private PortalPreferences _portalPreferences;
 	private Layout _templateLayout;
 	private boolean _updatePermission;

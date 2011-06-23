@@ -1726,9 +1726,8 @@ public class ServicePreAction extends Action {
 						"Liferay.LayoutConfiguration.showTemplates();");
 				}
 
-				boolean hasCustomizePermission =
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.CUSTOMIZE);
+				boolean hasCustomizePermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.CUSTOMIZE);
 
 				if (hasCustomizePermission && customizedView) {
 					themeDisplay.setShowAddContentIconPermission(true);

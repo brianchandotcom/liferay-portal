@@ -85,6 +85,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				0, spritePropertiesRootPath.length() - 1);
 		}
 
+		Collections.sort(images);
+
 		File dir = images.get(0).getParentFile();
 
 		File spritePropertiesFile = new File(

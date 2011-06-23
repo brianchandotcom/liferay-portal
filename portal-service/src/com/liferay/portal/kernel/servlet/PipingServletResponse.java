@@ -14,11 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.WriterOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -77,7 +76,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			throw new NullPointerException("Writer is null");
 		}
 
-		_printWriter = new UnsyncPrintWriter(writer);
+		_printWriter = UnsyncPrintWriterPool.borrow(writer);
 	}
 
 	public PipingServletResponse(PageContext pageContext) {
@@ -98,11 +97,11 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			PageContext wrappedPageContext =
 				pageContextWrapper.getWrappedPageContext();
 
-			_printWriter = new UnsyncPrintWriter(
+			_printWriter = UnsyncPrintWriterPool.borrow(
 				new TrimNewLinesJspWriter(wrappedPageContext.getOut()));
 		}
 		else {
-			_printWriter = new UnsyncPrintWriter(pageContext.getOut());
+			_printWriter = UnsyncPrintWriterPool.borrow(pageContext.getOut());
 		}
 	}
 
@@ -132,8 +131,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 						"not recommended because it is slow");
 			}
 
-			_printWriter = new UnsyncPrintWriter(
-				new OutputStreamWriter(_servletOutputStream));
+			_printWriter = UnsyncPrintWriterPool.borrow(_servletOutputStream);
 		}
 
 		return _printWriter;

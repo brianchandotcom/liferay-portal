@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -102,7 +102,7 @@ public class StringServletResponse extends HeaderCacheServletResponse {
 
 		if (_printWriter == null) {
 			_unsyncStringWriter = new UnsyncStringWriter();
-			_printWriter = new UnsyncPrintWriter(_unsyncStringWriter);
+			_printWriter = UnsyncPrintWriterPool.borrow(_unsyncStringWriter);
 		}
 
 		_calledGetWriter = true;

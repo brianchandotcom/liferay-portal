@@ -460,10 +460,6 @@ public class StagingImpl implements Staging {
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
 				serviceContext);
 
-			checkDefaultLayoutSetBranches(
-				userId, liveGroup, branchingPublic, branchingPrivate, false,
-				serviceContext);
-
 			GroupLocalServiceUtil.updateGroup(
 				liveGroup.getGroupId(), typeSettingsProperties.toString());
 
@@ -482,6 +478,10 @@ public class StagingImpl implements Staging {
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
 					false, parameterMap, null, null);
 			}
+
+			checkDefaultLayoutSetBranches(
+				userId, liveGroup, branchingPublic, branchingPrivate, false,
+				serviceContext);
 		}
 		else {
 			GroupLocalServiceUtil.updateGroup(
@@ -1258,7 +1258,8 @@ public class StagingImpl implements Staging {
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
 					userId, targetGroupId, false,
 					LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-					description, serviceContext);
+					description, LayoutSetBranchConstants.ALL_BRANCHES,
+					serviceContext);
 			}
 			catch (LayoutSetBranchNameException lsbne) {
 			}
@@ -1275,7 +1276,8 @@ public class StagingImpl implements Staging {
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
 					userId, targetGroupId, true,
 					LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-					description, serviceContext);
+					description, LayoutSetBranchConstants.ALL_BRANCHES,
+					serviceContext);
 			}
 			catch (LayoutSetBranchNameException lsbne) {
 			}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutSetBranchServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -164,13 +165,17 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			actionRequest, "privateLayout");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		long copyLayoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "copyLayoutSetBranchId",
+			LayoutSetBranchConstants.ALL_BRANCHES);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		if (layoutSetBranchId <= 0) {
 			LayoutSetBranchServiceUtil.addLayoutSetBranch(
-				groupId, privateLayout, name, description, serviceContext);
+				groupId, privateLayout, name, description,
+				copyLayoutSetBranchId, serviceContext);
 		}
 		else {
 			LayoutSetBranchServiceUtil.updateLayoutSetBranch(

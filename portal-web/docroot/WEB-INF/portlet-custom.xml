@@ -1730,7 +1730,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>125</portlet-name>
-		<display-name>Enterprise Admin Users</display-name>
+		<display-name>Users Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1747,7 +1747,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>128</portlet-name>
-		<display-name>Enterprise Admin Roles</display-name>
+		<display-name>Roles Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1764,7 +1764,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>129</portlet-name>
-		<display-name>Enterprise Admin Password Policies</display-name>
+		<display-name>Password Policies Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1781,7 +1781,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>130</portlet-name>
-		<display-name>Enterprise Admin Settings</display-name>
+		<display-name>Portal Settings</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1798,7 +1798,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>131</portlet-name>
-		<display-name>Enterprise Admin Monitoring</display-name>
+		<display-name>Monitoring</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1815,7 +1815,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>132</portlet-name>
-		<display-name>Enterprise Admin Plugins</display-name>
+		<display-name>Plugins Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>

@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.portlet-enterprise-admin {
+.portlet-users-admin {
 	.aui-form {
 		fieldset {
 			border-width: 0;
@@ -296,7 +296,7 @@
 }
 
 .ie {
-	.portlet-enterprise-admin {
+	.portlet-users-admin {
 		.permission-scopes {
 			height: 1%;
 		}
@@ -304,7 +304,7 @@
 }
 
 .ie6 {
-	.portlet-enterprise-admin {
+	.portlet-users-admin {
 		.organization-information {
 			height: 1%;
 		}

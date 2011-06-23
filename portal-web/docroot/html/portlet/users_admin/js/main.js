@@ -1,5 +1,5 @@
 AUI().add(
-	'liferay-enterprise-admin',
+	'liferay-users-admin',
 	function(A) {
 		var Addresses = {
 			getCountries: function(callback) {
@@ -22,7 +22,7 @@ AUI().add(
 			}
 		};
 
-		Liferay.EnterpriseAdmin = {
+		Liferay.UsersAdmin = {
 			Addresses: Addresses
 		};
 	}

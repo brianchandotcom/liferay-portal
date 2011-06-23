@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.portlet-communities, .portlet-enterprise-admin {
+.portlet-communities, .portlet-users-admin {
 	.lfr-theme-list {
 		h3 {
 			background: #D3DADD;

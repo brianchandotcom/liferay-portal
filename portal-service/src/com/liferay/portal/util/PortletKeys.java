@@ -71,8 +71,6 @@ public class PortletKeys {
 
 	public static final String DYNAMIC_DATA_MAPPING = "166";
 
-	public static final String ENTERPRISE_ADMIN = "79";
-
 	public static final String EXPANDO = "139";
 
 	public static final String FAST_LOGIN = "164";

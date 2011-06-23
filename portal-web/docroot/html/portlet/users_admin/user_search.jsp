@@ -23,7 +23,7 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_enterprise_admin_user_search"
+	id="toggle_id_users_admin_user_search"
 	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
 >

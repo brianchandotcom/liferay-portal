@@ -37,7 +37,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_enterprise_admin_organization_search"
+	id="toggle_id_users_admin_organization_search"
 	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
 >

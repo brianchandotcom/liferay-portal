@@ -723,7 +723,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is indexable.
+	* Returns <code>true</code> if this journal article is indexable.
 	*
 	* @return <code>true</code> if this journal article is indexable; <code>false</code> otherwise
 	*/
@@ -750,7 +750,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is small image.
+	* Returns <code>true</code> if this journal article is small image.
 	*
 	* @return <code>true</code> if this journal article is small image; <code>false</code> otherwise
 	*/
@@ -903,7 +903,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is approved.
+	* Returns <code>true</code> if this journal article is approved.
 	*
 	* @return <code>true</code> if this journal article is approved; <code>false</code> otherwise
 	*/
@@ -912,7 +912,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is a draft.
+	* Returns <code>true</code> if this journal article is a draft.
 	*
 	* @return <code>true</code> if this journal article is a draft; <code>false</code> otherwise
 	*/
@@ -921,7 +921,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is expired.
+	* Returns <code>true</code> if this journal article is expired.
 	*
 	* @return <code>true</code> if this journal article is expired; <code>false</code> otherwise
 	*/
@@ -930,7 +930,7 @@ public class JournalArticleWrapper implements JournalArticle {
 	}
 
 	/**
-	* Determines if this journal article is pending.
+	* Returns <code>true</code> if this journal article is pending.
 	*
 	* @return <code>true</code> if this journal article is pending; <code>false</code> otherwise
 	*/

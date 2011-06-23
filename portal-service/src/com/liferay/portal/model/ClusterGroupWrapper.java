@@ -118,7 +118,7 @@ public class ClusterGroupWrapper implements ClusterGroup {
 	}
 
 	/**
-	* Determines if this cluster group is whole cluster.
+	* Returns <code>true</code> if this cluster group is whole cluster.
 	*
 	* @return <code>true</code> if this cluster group is whole cluster; <code>false</code> otherwise
 	*/

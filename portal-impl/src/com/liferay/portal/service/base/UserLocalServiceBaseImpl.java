@@ -3908,18 +3908,18 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	}
 
 	/**
-	 * Returns the d l file rank local service.
+	 * Returns the document library file rank local service.
 	 *
-	 * @return the d l file rank local service
+	 * @return the document library file rank local service
 	 */
 	public DLFileRankLocalService getDLFileRankLocalService() {
 		return dlFileRankLocalService;
 	}
 
 	/**
-	 * Sets the d l file rank local service.
+	 * Sets the document library file rank local service.
 	 *
-	 * @param dlFileRankLocalService the d l file rank local service
+	 * @param dlFileRankLocalService the document library file rank local service
 	 */
 	public void setDLFileRankLocalService(
 		DLFileRankLocalService dlFileRankLocalService) {
@@ -3927,18 +3927,18 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	}
 
 	/**
-	 * Returns the d l file rank persistence.
+	 * Returns the document library file rank persistence.
 	 *
-	 * @return the d l file rank persistence
+	 * @return the document library file rank persistence
 	 */
 	public DLFileRankPersistence getDLFileRankPersistence() {
 		return dlFileRankPersistence;
 	}
 
 	/**
-	 * Sets the d l file rank persistence.
+	 * Sets the document library file rank persistence.
 	 *
-	 * @param dlFileRankPersistence the d l file rank persistence
+	 * @param dlFileRankPersistence the document library file rank persistence
 	 */
 	public void setDLFileRankPersistence(
 		DLFileRankPersistence dlFileRankPersistence) {
@@ -3946,18 +3946,18 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	}
 
 	/**
-	 * Returns the d l file rank finder.
+	 * Returns the document library file rank finder.
 	 *
-	 * @return the d l file rank finder
+	 * @return the document library file rank finder
 	 */
 	public DLFileRankFinder getDLFileRankFinder() {
 		return dlFileRankFinder;
 	}
 
 	/**
-	 * Sets the d l file rank finder.
+	 * Sets the document library file rank finder.
 	 *
-	 * @param dlFileRankFinder the d l file rank finder
+	 * @param dlFileRankFinder the document library file rank finder
 	 */
 	public void setDLFileRankFinder(DLFileRankFinder dlFileRankFinder) {
 		this.dlFileRankFinder = dlFileRankFinder;

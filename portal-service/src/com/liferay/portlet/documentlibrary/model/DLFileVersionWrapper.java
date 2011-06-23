@@ -480,7 +480,7 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	}
 
 	/**
-	* Determines if this document library file version is approved.
+	* Returns <code>true</code> if this document library file version is approved.
 	*
 	* @return <code>true</code> if this document library file version is approved; <code>false</code> otherwise
 	*/
@@ -489,7 +489,7 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	}
 
 	/**
-	* Determines if this document library file version is a draft.
+	* Returns <code>true</code> if this document library file version is a draft.
 	*
 	* @return <code>true</code> if this document library file version is a draft; <code>false</code> otherwise
 	*/
@@ -498,7 +498,7 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	}
 
 	/**
-	* Determines if this document library file version is expired.
+	* Returns <code>true</code> if this document library file version is expired.
 	*
 	* @return <code>true</code> if this document library file version is expired; <code>false</code> otherwise
 	*/
@@ -507,7 +507,7 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	}
 
 	/**
-	* Determines if this document library file version is pending.
+	* Returns <code>true</code> if this document library file version is pending.
 	*
 	* @return <code>true</code> if this document library file version is pending; <code>false</code> otherwise
 	*/

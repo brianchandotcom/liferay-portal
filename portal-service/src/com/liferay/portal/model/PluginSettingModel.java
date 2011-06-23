@@ -136,7 +136,7 @@ public interface PluginSettingModel extends BaseModel<PluginSetting> {
 	public boolean getActive();
 
 	/**
-	 * Determines if this plugin setting is active.
+	 * Returns <code>true</code> if this plugin setting is active.
 	 *
 	 * @return <code>true</code> if this plugin setting is active; <code>false</code> otherwise
 	 */

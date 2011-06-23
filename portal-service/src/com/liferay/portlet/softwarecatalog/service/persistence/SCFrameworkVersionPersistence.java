@@ -753,7 +753,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the s c product version is associated with the s c framework version.
+	* Returns <code>true</code> if the s c product version is associated with the s c framework version.
 	*
 	* @param pk the primary key of the s c framework version
 	* @param scProductVersionPK the primary key of the s c product version
@@ -764,7 +764,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the s c framework version has any s c product versions associated with it.
+	* Returns <code>true</code> if the s c framework version has any s c product versions associated with it.
 	*
 	* @param pk the primary key of the s c framework version to check for associations with s c product versions
 	* @return <code>true</code> if the s c framework version has any s c product versions associated with it; <code>false</code> otherwise

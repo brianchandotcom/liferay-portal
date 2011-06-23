@@ -250,7 +250,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 	}
 
 	/**
-	* Determines if this layout prototype is active.
+	* Returns <code>true</code> if this layout prototype is active.
 	*
 	* @return <code>true</code> if this layout prototype is active; <code>false</code> otherwise
 	*/

@@ -558,7 +558,7 @@ public class AssetTagUtil {
 	}
 
 	/**
-	* Determines if the asset entry is associated with the asset tag.
+	* Returns <code>true</code> if the asset entry is associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPK the primary key of the asset entry
@@ -571,7 +571,7 @@ public class AssetTagUtil {
 	}
 
 	/**
-	* Determines if the asset tag has any asset entries associated with it.
+	* Returns <code>true</code> if the asset tag has any asset entries associated with it.
 	*
 	* @param pk the primary key of the asset tag to check for associations with asset entries
 	* @return <code>true</code> if the asset tag has any asset entries associated with it; <code>false</code> otherwise

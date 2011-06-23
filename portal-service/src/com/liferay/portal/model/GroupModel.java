@@ -258,7 +258,7 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	public boolean getSite();
 
 	/**
-	 * Determines if this group is site.
+	 * Returns <code>true</code> if this group is site.
 	 *
 	 * @return <code>true</code> if this group is site; <code>false</code> otherwise
 	 */
@@ -279,7 +279,7 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	public boolean getActive();
 
 	/**
-	 * Determines if this group is active.
+	 * Returns <code>true</code> if this group is active.
 	 *
 	 * @return <code>true</code> if this group is active; <code>false</code> otherwise
 	 */

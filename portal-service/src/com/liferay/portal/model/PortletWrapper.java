@@ -136,7 +136,7 @@ public class PortletWrapper implements Portlet {
 	}
 
 	/**
-	* Determines if this portlet is active.
+	* Returns <code>true</code> if this portlet is active.
 	*
 	* @return <code>true</code> if this portlet is active; <code>false</code> otherwise
 	*/

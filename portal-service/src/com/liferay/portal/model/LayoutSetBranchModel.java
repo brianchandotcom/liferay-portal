@@ -181,7 +181,7 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	public boolean getPrivateLayout();
 
 	/**
-	 * Determines if this layout set branch is private layout.
+	 * Returns <code>true</code> if this layout set branch is private layout.
 	 *
 	 * @return <code>true</code> if this layout set branch is private layout; <code>false</code> otherwise
 	 */

@@ -167,7 +167,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getDefaultPolicy();
 
 	/**
-	 * Determines if this password policy is default policy.
+	 * Returns <code>true</code> if this password policy is default policy.
 	 *
 	 * @return <code>true</code> if this password policy is default policy; <code>false</code> otherwise
 	 */
@@ -218,7 +218,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getChangeable();
 
 	/**
-	 * Determines if this password policy is changeable.
+	 * Returns <code>true</code> if this password policy is changeable.
 	 *
 	 * @return <code>true</code> if this password policy is changeable; <code>false</code> otherwise
 	 */
@@ -239,7 +239,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getChangeRequired();
 
 	/**
-	 * Determines if this password policy is change required.
+	 * Returns <code>true</code> if this password policy is change required.
 	 *
 	 * @return <code>true</code> if this password policy is change required; <code>false</code> otherwise
 	 */
@@ -274,7 +274,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getCheckSyntax();
 
 	/**
-	 * Determines if this password policy is check syntax.
+	 * Returns <code>true</code> if this password policy is check syntax.
 	 *
 	 * @return <code>true</code> if this password policy is check syntax; <code>false</code> otherwise
 	 */
@@ -295,7 +295,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getAllowDictionaryWords();
 
 	/**
-	 * Determines if this password policy is allow dictionary words.
+	 * Returns <code>true</code> if this password policy is allow dictionary words.
 	 *
 	 * @return <code>true</code> if this password policy is allow dictionary words; <code>false</code> otherwise
 	 */
@@ -400,7 +400,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getHistory();
 
 	/**
-	 * Determines if this password policy is history.
+	 * Returns <code>true</code> if this password policy is history.
 	 *
 	 * @return <code>true</code> if this password policy is history; <code>false</code> otherwise
 	 */
@@ -435,7 +435,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getExpireable();
 
 	/**
-	 * Determines if this password policy is expireable.
+	 * Returns <code>true</code> if this password policy is expireable.
 	 *
 	 * @return <code>true</code> if this password policy is expireable; <code>false</code> otherwise
 	 */
@@ -498,7 +498,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getLockout();
 
 	/**
-	 * Determines if this password policy is lockout.
+	 * Returns <code>true</code> if this password policy is lockout.
 	 *
 	 * @return <code>true</code> if this password policy is lockout; <code>false</code> otherwise
 	 */
@@ -547,7 +547,7 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public boolean getRequireUnlock();
 
 	/**
-	 * Determines if this password policy is require unlock.
+	 * Returns <code>true</code> if this password policy is require unlock.
 	 *
 	 * @return <code>true</code> if this password policy is require unlock; <code>false</code> otherwise
 	 */

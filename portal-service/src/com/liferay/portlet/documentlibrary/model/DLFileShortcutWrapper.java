@@ -372,7 +372,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 	}
 
 	/**
-	* Determines if this document library file shortcut is approved.
+	* Returns <code>true</code> if this document library file shortcut is approved.
 	*
 	* @return <code>true</code> if this document library file shortcut is approved; <code>false</code> otherwise
 	*/
@@ -381,7 +381,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 	}
 
 	/**
-	* Determines if this document library file shortcut is a draft.
+	* Returns <code>true</code> if this document library file shortcut is a draft.
 	*
 	* @return <code>true</code> if this document library file shortcut is a draft; <code>false</code> otherwise
 	*/
@@ -390,7 +390,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 	}
 
 	/**
-	* Determines if this document library file shortcut is expired.
+	* Returns <code>true</code> if this document library file shortcut is expired.
 	*
 	* @return <code>true</code> if this document library file shortcut is expired; <code>false</code> otherwise
 	*/
@@ -399,7 +399,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 	}
 
 	/**
-	* Determines if this document library file shortcut is pending.
+	* Returns <code>true</code> if this document library file shortcut is pending.
 	*
 	* @return <code>true</code> if this document library file shortcut is pending; <code>false</code> otherwise
 	*/

@@ -184,7 +184,7 @@ public interface SocialEquitySettingModel extends BaseModel<SocialEquitySetting>
 	public boolean getUniqueEntry();
 
 	/**
-	 * Determines if this social equity setting is unique entry.
+	 * Returns <code>true</code> if this social equity setting is unique entry.
 	 *
 	 * @return <code>true</code> if this social equity setting is unique entry; <code>false</code> otherwise
 	 */

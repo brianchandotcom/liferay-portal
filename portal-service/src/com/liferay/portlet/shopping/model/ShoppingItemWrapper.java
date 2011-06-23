@@ -300,7 +300,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is fields.
+	* Returns <code>true</code> if this shopping item is fields.
 	*
 	* @return <code>true</code> if this shopping item is fields; <code>false</code> otherwise
 	*/
@@ -417,7 +417,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is taxable.
+	* Returns <code>true</code> if this shopping item is taxable.
 	*
 	* @return <code>true</code> if this shopping item is taxable; <code>false</code> otherwise
 	*/
@@ -462,7 +462,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is use shipping formula.
+	* Returns <code>true</code> if this shopping item is use shipping formula.
 	*
 	* @return <code>true</code> if this shopping item is use shipping formula; <code>false</code> otherwise
 	*/
@@ -489,7 +489,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is requires shipping.
+	* Returns <code>true</code> if this shopping item is requires shipping.
 	*
 	* @return <code>true</code> if this shopping item is requires shipping; <code>false</code> otherwise
 	*/
@@ -534,7 +534,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is featured.
+	* Returns <code>true</code> if this shopping item is featured.
 	*
 	* @return <code>true</code> if this shopping item is featured; <code>false</code> otherwise
 	*/
@@ -561,7 +561,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is sale.
+	* Returns <code>true</code> if this shopping item is sale.
 	*
 	* @return <code>true</code> if this shopping item is sale; <code>false</code> otherwise
 	*/
@@ -588,7 +588,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is small image.
+	* Returns <code>true</code> if this shopping item is small image.
 	*
 	* @return <code>true</code> if this shopping item is small image; <code>false</code> otherwise
 	*/
@@ -651,7 +651,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is medium image.
+	* Returns <code>true</code> if this shopping item is medium image.
 	*
 	* @return <code>true</code> if this shopping item is medium image; <code>false</code> otherwise
 	*/
@@ -714,7 +714,7 @@ public class ShoppingItemWrapper implements ShoppingItem {
 	}
 
 	/**
-	* Determines if this shopping item is large image.
+	* Returns <code>true</code> if this shopping item is large image.
 	*
 	* @return <code>true</code> if this shopping item is large image; <code>false</code> otherwise
 	*/

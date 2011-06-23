@@ -246,7 +246,7 @@ public class DLFolderWrapper implements DLFolder {
 	}
 
 	/**
-	* Determines if this document library folder is mount point.
+	* Returns <code>true</code> if this document library folder is mount point.
 	*
 	* @return <code>true</code> if this document library folder is mount point; <code>false</code> otherwise
 	*/

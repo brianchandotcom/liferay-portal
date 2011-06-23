@@ -246,7 +246,7 @@ public class LockWrapper implements Lock {
 	}
 
 	/**
-	* Determines if this lock is inheritable.
+	* Returns <code>true</code> if this lock is inheritable.
 	*
 	* @return <code>true</code> if this lock is inheritable; <code>false</code> otherwise
 	*/

@@ -190,7 +190,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage {
 	}
 
 	/**
-	* Determines if this journal article image is temp image.
+	* Returns <code>true</code> if this journal article image is temp image.
 	*
 	* @return <code>true</code> if this journal article image is temp image; <code>false</code> otherwise
 	*/

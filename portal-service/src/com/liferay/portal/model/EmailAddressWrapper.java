@@ -273,7 +273,7 @@ public class EmailAddressWrapper implements EmailAddress {
 	}
 
 	/**
-	* Determines if this email address is primary.
+	* Returns <code>true</code> if this email address is primary.
 	*
 	* @return <code>true</code> if this email address is primary; <code>false</code> otherwise
 	*/

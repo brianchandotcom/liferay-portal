@@ -264,7 +264,7 @@ public class ShoppingCartWrapper implements ShoppingCart {
 	}
 
 	/**
-	* Determines if this shopping cart is insure.
+	* Returns <code>true</code> if this shopping cart is insure.
 	*
 	* @return <code>true</code> if this shopping cart is insure; <code>false</code> otherwise
 	*/

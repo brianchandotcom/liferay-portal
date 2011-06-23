@@ -1178,7 +1178,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the group is associated with the user.
+	* Returns <code>true</code> if the group is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param groupPK the primary key of the group
@@ -1189,7 +1189,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any groups associated with it.
+	* Returns <code>true</code> if the user has any groups associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with groups
 	* @return <code>true</code> if the user has any groups associated with it; <code>false</code> otherwise
@@ -1367,7 +1367,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the organization is associated with the user.
+	* Returns <code>true</code> if the organization is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param organizationPK the primary key of the organization
@@ -1378,7 +1378,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any organizations associated with it.
+	* Returns <code>true</code> if the user has any organizations associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with organizations
 	* @return <code>true</code> if the user has any organizations associated with it; <code>false</code> otherwise
@@ -1558,7 +1558,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the permission is associated with the user.
+	* Returns <code>true</code> if the permission is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param permissionPK the primary key of the permission
@@ -1569,7 +1569,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any permissions associated with it.
+	* Returns <code>true</code> if the user has any permissions associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with permissions
 	* @return <code>true</code> if the user has any permissions associated with it; <code>false</code> otherwise
@@ -1749,7 +1749,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the role is associated with the user.
+	* Returns <code>true</code> if the role is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param rolePK the primary key of the role
@@ -1760,7 +1760,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any roles associated with it.
+	* Returns <code>true</code> if the user has any roles associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with roles
 	* @return <code>true</code> if the user has any roles associated with it; <code>false</code> otherwise
@@ -1938,7 +1938,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the team is associated with the user.
+	* Returns <code>true</code> if the team is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param teamPK the primary key of the team
@@ -1949,7 +1949,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any teams associated with it.
+	* Returns <code>true</code> if the user has any teams associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with teams
 	* @return <code>true</code> if the user has any teams associated with it; <code>false</code> otherwise
@@ -2127,7 +2127,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user group is associated with the user.
+	* Returns <code>true</code> if the user group is associated with the user.
 	*
 	* @param pk the primary key of the user
 	* @param userGroupPK the primary key of the user group
@@ -2138,7 +2138,7 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Determines if the user has any user groups associated with it.
+	* Returns <code>true</code> if the user has any user groups associated with it.
 	*
 	* @param pk the primary key of the user to check for associations with user groups
 	* @return <code>true</code> if the user has any user groups associated with it; <code>false</code> otherwise

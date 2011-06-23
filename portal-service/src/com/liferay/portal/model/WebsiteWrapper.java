@@ -273,7 +273,7 @@ public class WebsiteWrapper implements Website {
 	}
 
 	/**
-	* Determines if this website is primary.
+	* Returns <code>true</code> if this website is primary.
 	*
 	* @return <code>true</code> if this website is primary; <code>false</code> otherwise
 	*/

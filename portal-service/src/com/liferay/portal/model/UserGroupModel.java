@@ -135,7 +135,7 @@ public interface UserGroupModel extends BaseModel<UserGroup> {
 	public boolean getAddedByLDAPImport();
 
 	/**
-	 * Determines if this user group is added by l d a p import.
+	 * Returns <code>true</code> if this user group is added by l d a p import.
 	 *
 	 * @return <code>true</code> if this user group is added by l d a p import; <code>false</code> otherwise
 	 */

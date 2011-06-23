@@ -30,7 +30,8 @@ public interface BaseModel<T>
 	extends ClassedModel, Cloneable, Comparable<T>, Serializable {
 
 	/**
-	 * Determines if this model instance does not yet exist in the database.
+	 * Returns <code>true</code> if this model instance does not yet exist in
+	 * the database.
 	 *
 	 * @return <code>true</code> if this model instance does not yet exist in
 	 *         the database; <code>false</code> otherwise
@@ -45,7 +46,8 @@ public interface BaseModel<T>
 	public void setNew(boolean n);
 
 	/**
-	 * Determines if this model instance was retrieved from the entity cache.
+	 * Returns <code>true</code> if this model instance was retrieved from the
+	 * entity cache.
 	 *
 	 * @return <code>true</code> if this model instance was retrieved from the
 	 *         entity cache; <code>false</code> otherwise
@@ -63,7 +65,7 @@ public interface BaseModel<T>
 	public void setCachedModel(boolean cachedModel);
 
 	/**
-	 * Determines if this model instance is escaped.
+	 * Returns <code>true</code> if this model instance is escaped.
 	 *
 	 * @return <code>true</code> if this model instance is escaped;
 	 *         <code>false</code> otherwise

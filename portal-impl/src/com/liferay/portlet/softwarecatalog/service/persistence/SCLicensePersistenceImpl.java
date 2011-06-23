@@ -2299,7 +2299,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the s c product entry is associated with the s c license.
+	 * Returns <code>true</code> if the s c product entry is associated with the s c license.
 	 *
 	 * @param pk the primary key of the s c license
 	 * @param scProductEntryPK the primary key of the s c product entry
@@ -2335,7 +2335,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	}
 
 	/**
-	 * Determines if the s c license has any s c product entries associated with it.
+	 * Returns <code>true</code> if the s c license has any s c product entries associated with it.
 	 *
 	 * @param pk the primary key of the s c license to check for associations with s c product entries
 	 * @return <code>true</code> if the s c license has any s c product entries associated with it; <code>false</code> otherwise

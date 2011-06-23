@@ -778,18 +778,18 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry type local service.
+	 * Returns the document library file entry type local service.
 	 *
-	 * @return the d l file entry type local service
+	 * @return the document library file entry type local service
 	 */
 	public DLFileEntryTypeLocalService getDLFileEntryTypeLocalService() {
 		return dlFileEntryTypeLocalService;
 	}
 
 	/**
-	 * Sets the d l file entry type local service.
+	 * Sets the document library file entry type local service.
 	 *
-	 * @param dlFileEntryTypeLocalService the d l file entry type local service
+	 * @param dlFileEntryTypeLocalService the document library file entry type local service
 	 */
 	public void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
@@ -797,18 +797,18 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry type remote service.
+	 * Returns the document library file entry type remote service.
 	 *
-	 * @return the d l file entry type remote service
+	 * @return the document library file entry type remote service
 	 */
 	public DLFileEntryTypeService getDLFileEntryTypeService() {
 		return dlFileEntryTypeService;
 	}
 
 	/**
-	 * Sets the d l file entry type remote service.
+	 * Sets the document library file entry type remote service.
 	 *
-	 * @param dlFileEntryTypeService the d l file entry type remote service
+	 * @param dlFileEntryTypeService the document library file entry type remote service
 	 */
 	public void setDLFileEntryTypeService(
 		DLFileEntryTypeService dlFileEntryTypeService) {
@@ -816,18 +816,18 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry type persistence.
+	 * Returns the document library file entry type persistence.
 	 *
-	 * @return the d l file entry type persistence
+	 * @return the document library file entry type persistence
 	 */
 	public DLFileEntryTypePersistence getDLFileEntryTypePersistence() {
 		return dlFileEntryTypePersistence;
 	}
 
 	/**
-	 * Sets the d l file entry type persistence.
+	 * Sets the document library file entry type persistence.
 	 *
-	 * @param dlFileEntryTypePersistence the d l file entry type persistence
+	 * @param dlFileEntryTypePersistence the document library file entry type persistence
 	 */
 	public void setDLFileEntryTypePersistence(
 		DLFileEntryTypePersistence dlFileEntryTypePersistence) {
@@ -835,18 +835,18 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l file entry type finder.
+	 * Returns the document library file entry type finder.
 	 *
-	 * @return the d l file entry type finder
+	 * @return the document library file entry type finder
 	 */
 	public DLFileEntryTypeFinder getDLFileEntryTypeFinder() {
 		return dlFileEntryTypeFinder;
 	}
 
 	/**
-	 * Sets the d l file entry type finder.
+	 * Sets the document library file entry type finder.
 	 *
-	 * @param dlFileEntryTypeFinder the d l file entry type finder
+	 * @param dlFileEntryTypeFinder the document library file entry type finder
 	 */
 	public void setDLFileEntryTypeFinder(
 		DLFileEntryTypeFinder dlFileEntryTypeFinder) {

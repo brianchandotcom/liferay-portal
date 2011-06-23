@@ -231,7 +231,7 @@ public interface EmailAddressModel extends AttachedModel, AuditedModel,
 	public boolean getPrimary();
 
 	/**
-	 * Determines if this email address is primary.
+	 * Returns <code>true</code> if this email address is primary.
 	 *
 	 * @return <code>true</code> if this email address is primary; <code>false</code> otherwise
 	 */

@@ -550,7 +550,7 @@ public class SCProductVersionUtil {
 	}
 
 	/**
-	* Determines if the s c framework version is associated with the s c product version.
+	* Returns <code>true</code> if the s c framework version is associated with the s c product version.
 	*
 	* @param pk the primary key of the s c product version
 	* @param scFrameworkVersionPK the primary key of the s c framework version
@@ -565,7 +565,7 @@ public class SCProductVersionUtil {
 	}
 
 	/**
-	* Determines if the s c product version has any s c framework versions associated with it.
+	* Returns <code>true</code> if the s c product version has any s c framework versions associated with it.
 	*
 	* @param pk the primary key of the s c product version to check for associations with s c framework versions
 	* @return <code>true</code> if the s c product version has any s c framework versions associated with it; <code>false</code> otherwise

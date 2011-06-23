@@ -4622,7 +4622,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the group is associated with the user.
+	 * Returns <code>true</code> if the group is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param groupPK the primary key of the group
@@ -4657,7 +4657,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any groups associated with it.
+	 * Returns <code>true</code> if the user has any groups associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with groups
 	 * @return <code>true</code> if the user has any groups associated with it; <code>false</code> otherwise
@@ -5087,7 +5087,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the organization is associated with the user.
+	 * Returns <code>true</code> if the organization is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param organizationPK the primary key of the organization
@@ -5123,7 +5123,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any organizations associated with it.
+	 * Returns <code>true</code> if the user has any organizations associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with organizations
 	 * @return <code>true</code> if the user has any organizations associated with it; <code>false</code> otherwise
@@ -5563,7 +5563,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the permission is associated with the user.
+	 * Returns <code>true</code> if the permission is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param permissionPK the primary key of the permission
@@ -5599,7 +5599,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any permissions associated with it.
+	 * Returns <code>true</code> if the user has any permissions associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with permissions
 	 * @return <code>true</code> if the user has any permissions associated with it; <code>false</code> otherwise
@@ -6036,7 +6036,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the role is associated with the user.
+	 * Returns <code>true</code> if the role is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param rolePK the primary key of the role
@@ -6070,7 +6070,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any roles associated with it.
+	 * Returns <code>true</code> if the user has any roles associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with roles
 	 * @return <code>true</code> if the user has any roles associated with it; <code>false</code> otherwise
@@ -6496,7 +6496,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the team is associated with the user.
+	 * Returns <code>true</code> if the team is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param teamPK the primary key of the team
@@ -6530,7 +6530,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any teams associated with it.
+	 * Returns <code>true</code> if the user has any teams associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with teams
 	 * @return <code>true</code> if the user has any teams associated with it; <code>false</code> otherwise
@@ -6959,7 +6959,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the user group is associated with the user.
+	 * Returns <code>true</code> if the user group is associated with the user.
 	 *
 	 * @param pk the primary key of the user
 	 * @param userGroupPK the primary key of the user group
@@ -6995,7 +6995,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Determines if the user has any user groups associated with it.
+	 * Returns <code>true</code> if the user has any user groups associated with it.
 	 *
 	 * @param pk the primary key of the user to check for associations with user groups
 	 * @return <code>true</code> if the user has any user groups associated with it; <code>false</code> otherwise

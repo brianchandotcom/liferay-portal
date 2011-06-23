@@ -211,7 +211,7 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public boolean getHead();
 
 	/**
-	 * Determines if this layout revision is head.
+	 * Returns <code>true</code> if this layout revision is head.
 	 *
 	 * @return <code>true</code> if this layout revision is head; <code>false</code> otherwise
 	 */
@@ -232,7 +232,7 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public boolean getMajor();
 
 	/**
-	 * Determines if this layout revision is major.
+	 * Returns <code>true</code> if this layout revision is major.
 	 *
 	 * @return <code>true</code> if this layout revision is major; <code>false</code> otherwise
 	 */
@@ -282,7 +282,7 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public boolean getPrivateLayout();
 
 	/**
-	 * Determines if this layout revision is private layout.
+	 * Returns <code>true</code> if this layout revision is private layout.
 	 *
 	 * @return <code>true</code> if this layout revision is private layout; <code>false</code> otherwise
 	 */
@@ -756,7 +756,7 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public boolean getIconImage();
 
 	/**
-	 * Determines if this layout revision is icon image.
+	 * Returns <code>true</code> if this layout revision is icon image.
 	 *
 	 * @return <code>true</code> if this layout revision is icon image; <code>false</code> otherwise
 	 */
@@ -936,28 +936,28 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public boolean getApproved();
 
 	/**
-	 * Determines if this layout revision is approved.
+	 * Returns <code>true</code> if this layout revision is approved.
 	 *
 	 * @return <code>true</code> if this layout revision is approved; <code>false</code> otherwise
 	 */
 	public boolean isApproved();
 
 	/**
-	 * Determines if this layout revision is a draft.
+	 * Returns <code>true</code> if this layout revision is a draft.
 	 *
 	 * @return <code>true</code> if this layout revision is a draft; <code>false</code> otherwise
 	 */
 	public boolean isDraft();
 
 	/**
-	 * Determines if this layout revision is expired.
+	 * Returns <code>true</code> if this layout revision is expired.
 	 *
 	 * @return <code>true</code> if this layout revision is expired; <code>false</code> otherwise
 	 */
 	public boolean isExpired();
 
 	/**
-	 * Determines if this layout revision is pending.
+	 * Returns <code>true</code> if this layout revision is pending.
 	 *
 	 * @return <code>true</code> if this layout revision is pending; <code>false</code> otherwise
 	 */

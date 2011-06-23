@@ -150,7 +150,7 @@ public interface ReleaseModel extends BaseModel<Release> {
 	public boolean getVerified();
 
 	/**
-	 * Determines if this release is verified.
+	 * Returns <code>true</code> if this release is verified.
 	 *
 	 * @return <code>true</code> if this release is verified; <code>false</code> otherwise
 	 */

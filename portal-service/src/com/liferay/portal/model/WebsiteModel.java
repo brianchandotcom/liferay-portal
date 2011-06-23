@@ -231,7 +231,7 @@ public interface WebsiteModel extends AttachedModel, AuditedModel,
 	public boolean getPrimary();
 
 	/**
-	 * Determines if this website is primary.
+	 * Returns <code>true</code> if this website is primary.
 	 *
 	 * @return <code>true</code> if this website is primary; <code>false</code> otherwise
 	 */

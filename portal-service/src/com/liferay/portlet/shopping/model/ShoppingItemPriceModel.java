@@ -147,7 +147,7 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 	public boolean getTaxable();
 
 	/**
-	 * Determines if this shopping item price is taxable.
+	 * Returns <code>true</code> if this shopping item price is taxable.
 	 *
 	 * @return <code>true</code> if this shopping item price is taxable; <code>false</code> otherwise
 	 */
@@ -182,7 +182,7 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 	public boolean getUseShippingFormula();
 
 	/**
-	 * Determines if this shopping item price is use shipping formula.
+	 * Returns <code>true</code> if this shopping item price is use shipping formula.
 	 *
 	 * @return <code>true</code> if this shopping item price is use shipping formula; <code>false</code> otherwise
 	 */

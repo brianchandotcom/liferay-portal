@@ -2616,7 +2616,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the group is associated with the user group.
+	 * Returns <code>true</code> if the group is associated with the user group.
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPK the primary key of the group
@@ -2651,7 +2651,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
-	 * Determines if the user group has any groups associated with it.
+	 * Returns <code>true</code> if the user group has any groups associated with it.
 	 *
 	 * @param pk the primary key of the user group to check for associations with groups
 	 * @return <code>true</code> if the user group has any groups associated with it; <code>false</code> otherwise
@@ -3079,7 +3079,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the team is associated with the user group.
+	 * Returns <code>true</code> if the team is associated with the user group.
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPK the primary key of the team
@@ -3113,7 +3113,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
-	 * Determines if the user group has any teams associated with it.
+	 * Returns <code>true</code> if the user group has any teams associated with it.
 	 *
 	 * @param pk the primary key of the user group to check for associations with teams
 	 * @return <code>true</code> if the user group has any teams associated with it; <code>false</code> otherwise
@@ -3541,7 +3541,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Determines if the user is associated with the user group.
+	 * Returns <code>true</code> if the user is associated with the user group.
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPK the primary key of the user
@@ -3575,7 +3575,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
-	 * Determines if the user group has any users associated with it.
+	 * Returns <code>true</code> if the user group has any users associated with it.
 	 *
 	 * @param pk the primary key of the user group to check for associations with users
 	 * @return <code>true</code> if the user group has any users associated with it; <code>false</code> otherwise

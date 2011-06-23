@@ -118,7 +118,7 @@ public class LayoutSetWrapper implements LayoutSet {
 	}
 
 	/**
-	* Determines if this layout set is private layout.
+	* Returns <code>true</code> if this layout set is private layout.
 	*
 	* @return <code>true</code> if this layout set is private layout; <code>false</code> otherwise
 	*/
@@ -145,7 +145,7 @@ public class LayoutSetWrapper implements LayoutSet {
 	}
 
 	/**
-	* Determines if this layout set is logo.
+	* Returns <code>true</code> if this layout set is logo.
 	*
 	* @return <code>true</code> if this layout set is logo; <code>false</code> otherwise
 	*/

@@ -336,7 +336,7 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public boolean getAttachments();
 
 	/**
-	 * Determines if this message-boards message is attachments.
+	 * Returns <code>true</code> if this message-boards message is attachments.
 	 *
 	 * @return <code>true</code> if this message-boards message is attachments; <code>false</code> otherwise
 	 */
@@ -357,7 +357,7 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public boolean getAnonymous();
 
 	/**
-	 * Determines if this message-boards message is anonymous.
+	 * Returns <code>true</code> if this message-boards message is anonymous.
 	 *
 	 * @return <code>true</code> if this message-boards message is anonymous; <code>false</code> otherwise
 	 */
@@ -392,7 +392,7 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public boolean getAllowPingbacks();
 
 	/**
-	 * Determines if this message-boards message is allow pingbacks.
+	 * Returns <code>true</code> if this message-boards message is allow pingbacks.
 	 *
 	 * @return <code>true</code> if this message-boards message is allow pingbacks; <code>false</code> otherwise
 	 */
@@ -483,28 +483,28 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public boolean getApproved();
 
 	/**
-	 * Determines if this message-boards message is approved.
+	 * Returns <code>true</code> if this message-boards message is approved.
 	 *
 	 * @return <code>true</code> if this message-boards message is approved; <code>false</code> otherwise
 	 */
 	public boolean isApproved();
 
 	/**
-	 * Determines if this message-boards message is a draft.
+	 * Returns <code>true</code> if this message-boards message is a draft.
 	 *
 	 * @return <code>true</code> if this message-boards message is a draft; <code>false</code> otherwise
 	 */
 	public boolean isDraft();
 
 	/**
-	 * Determines if this message-boards message is expired.
+	 * Returns <code>true</code> if this message-boards message is expired.
 	 *
 	 * @return <code>true</code> if this message-boards message is expired; <code>false</code> otherwise
 	 */
 	public boolean isExpired();
 
 	/**
-	 * Determines if this message-boards message is pending.
+	 * Returns <code>true</code> if this message-boards message is pending.
 	 *
 	 * @return <code>true</code> if this message-boards message is pending; <code>false</code> otherwise
 	 */

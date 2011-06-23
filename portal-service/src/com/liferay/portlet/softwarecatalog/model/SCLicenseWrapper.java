@@ -118,7 +118,7 @@ public class SCLicenseWrapper implements SCLicense {
 	}
 
 	/**
-	* Determines if this s c license is open source.
+	* Returns <code>true</code> if this s c license is open source.
 	*
 	* @return <code>true</code> if this s c license is open source; <code>false</code> otherwise
 	*/
@@ -145,7 +145,7 @@ public class SCLicenseWrapper implements SCLicense {
 	}
 
 	/**
-	* Determines if this s c license is active.
+	* Returns <code>true</code> if this s c license is active.
 	*
 	* @return <code>true</code> if this s c license is active; <code>false</code> otherwise
 	*/
@@ -172,7 +172,7 @@ public class SCLicenseWrapper implements SCLicense {
 	}
 
 	/**
-	* Determines if this s c license is recommended.
+	* Returns <code>true</code> if this s c license is recommended.
 	*
 	* @return <code>true</code> if this s c license is recommended; <code>false</code> otherwise
 	*/

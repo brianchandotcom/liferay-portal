@@ -1095,7 +1095,7 @@ public class PropsValues {
 	public static final boolean RESOURCE_ACTIONS_READ_PORTLET_RESOURCES = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES));
 
 	public static final String RESOURCE_REPOSITORIES_ROOT = PropsUtil.get(PropsKeys.RESOURCE_REPOSITORIES_ROOT);
-	
+
 	public static final String ROBOTS_TXT_WITH_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITH_SITEMAP);
 
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITHOUT_SITEMAP);

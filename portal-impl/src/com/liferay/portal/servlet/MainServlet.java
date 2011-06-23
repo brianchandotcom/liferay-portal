@@ -1034,8 +1034,15 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
-		response.addHeader(
-			_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
+		if (PropsValues.HTTP_HEADER_RESPONSE_VERSION_VERBOSITY
+			.equalsIgnoreCase("full")) {
+
+			response.addHeader(
+				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
+		} else {
+			response.addHeader(
+				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getName());
+		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}

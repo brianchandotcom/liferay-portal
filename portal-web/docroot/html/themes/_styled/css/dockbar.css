@@ -361,8 +361,8 @@ html > .lfr-dockbar-pinned {
 	background-image: url(../images/common/assign.png);
 }
 
-.manage-content-menu .manage-page-personalization a, .manage-content-menu .manage-page-personalization .disabled {
-	background-image: url(../images/dock/personalizations.png);
+.manage-content-menu .manage-page-customization a, .manage-content-menu .manage-page-customization .disabled {
+	background-image: url(../images/dock/customizations.png);
 }
 
 .manage-content-menu .page-layout a {
@@ -377,9 +377,9 @@ html > .lfr-dockbar-pinned {
 	background-image: url(../images/common/configuration.png);
 }
 
-/* ---------- Personalization Bar ---------- */
+/* ---------- Customization Bar ---------- */
 
-.page-personalization-bar {
+.page-customization-bar {
 	background-color: #999;
 	color: #FFF;
 	font-size: 1.2em;
@@ -387,20 +387,20 @@ html > .lfr-dockbar-pinned {
 	min-height: 30px;
 }
 
-.controls-hidden .page-personalization-bar {
+.controls-hidden .page-customization-bar {
 	display: none;
 }
 
-.page-personalization-bar .personalized-icon {
+.page-customization-bar .customized-icon {
 	margin: 5px;
 	vertical-align: middle;
 }
 
-.page-personalization-bar .page-personalization-actions {
+.page-customization-bar .page-customization-actions {
 	padding-left: 5em;
 }
 
-.page-personalization-bar .page-personalization-actions a {
+.page-customization-bar .page-customization-actions a {
 	color: #EEE;
 	font-size: 0.8em;
 	padding: 0 1em;

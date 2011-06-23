@@ -533,9 +533,9 @@
 	font-weight: bold;
 }
 
-/* ---------- Page Personalization ---------- */
+/* ---------- Page Customization ---------- */
 
-.aui-dragging .portlet-column.personalizable {
+.aui-dragging .portlet-column.customizable {
 	background-color: #CFFCCF;
 	outline: 3px solid #9CC97B;
 }
@@ -549,11 +549,11 @@
 	background-color: #C92C3C;
 }
 
-.personalizable .customizable-layout-column-content {
+.customizable .customizable-layout-column-content {
 	background-color: #9CC97B;
 }
 
-.layout-personalizable-controls {
+.layout-customizable-controls {
 	background-color: #FFF;
 	font-size: 1.5em;
 	margin: 1em;
@@ -563,7 +563,7 @@
 	z-index: 15;
 }
 
-.ie .layout-personalizable-controls {
+.ie .layout-customizable-controls {
 	-ms-filter: alpha(opacity=90);
 	filter: alpha(opacity=90);
 }

@@ -161,13 +161,13 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("publish_to_remote")) {
 				StagingUtil.publishToRemote(actionRequest);
 			}
-			else if (cmd.equals("reset_personalized_view")) {
+			else if (cmd.equals("reset_customized_view")) {
 				LayoutTypePortlet layoutTypePortlet =
 					themeDisplay.getLayoutTypePortlet();
 
 				if ((layoutTypePortlet != null) &&
-					layoutTypePortlet.isPersonalizable() &&
-					layoutTypePortlet.isPersonalizedView()) {
+					layoutTypePortlet.isCustomizable() &&
+					layoutTypePortlet.isCustomizedView()) {
 
 					layoutTypePortlet.resetUserPreferences();
 				}
@@ -373,7 +373,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
 
-		if (cmd.equals("reset_personalized_view")) {
+		if (cmd.equals("reset_customized_view")) {
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
 

@@ -92,16 +92,16 @@ public class PortletColumnLogic extends RuntimeLogic {
 
 		String columnCssClass = "portlet-dropzone";
 
-		if (layoutTypePortlet.isPersonalizable() &&
+		if (layoutTypePortlet.isCustomizable() &&
 			layoutTypePortlet.isColumnDisabled(columnId)) {
 
 			columnCssClass += " portlet-dropzone-disabled";
 		}
 
-		if (layoutTypePortlet.isTemplatePersonalizable(columnId) &&
-			layoutTypePortlet.isPersonalizable(columnId)) {
+		if (layoutTypePortlet.isTemplateCustomizable(columnId) &&
+			layoutTypePortlet.isCustomizable(columnId)) {
 
-			columnCssClass += " personalizable";
+			columnCssClass += " customizable";
 		}
 
 		if (portlets.size() == 0) {

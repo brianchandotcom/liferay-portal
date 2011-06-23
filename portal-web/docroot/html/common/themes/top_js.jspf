@@ -90,8 +90,8 @@
 			},
 
 			Data: {
-				isPersonalizationView: function() {
-					return <%= (layoutTypePortlet.isPersonalizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
+				isCustomizationView: function() {
+					return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
 				}
 			},
 

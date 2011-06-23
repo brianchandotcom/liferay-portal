@@ -100,8 +100,8 @@ public class UpdateLayoutAction extends JSONAction {
 			portletId = layoutTypePortlet.addPortletId(
 				userId, portletId, columnId, columnPos);
 
-			if (layoutTypePortlet.isPersonalizable() &&
-				layoutTypePortlet.isPersonalizedView() &&
+			if (layoutTypePortlet.isCustomizable() &&
+				layoutTypePortlet.isCustomizedView() &&
 				!layoutTypePortlet.isColumnDisabled(columnId)) {
 
 				updateLayout = false;
@@ -111,8 +111,8 @@ public class UpdateLayoutAction extends JSONAction {
 			if (layoutTypePortlet.hasPortletId(portletId)) {
 				layoutTypePortlet.removePortletId(userId, portletId);
 
-				if (layoutTypePortlet.isPersonalizable() &&
-					layoutTypePortlet.isPersonalizedView()) {
+				if (layoutTypePortlet.isCustomizable() &&
+					layoutTypePortlet.isCustomizedView()) {
 
 					updateLayout = false;
 					deletePortlet = false;
@@ -176,8 +176,8 @@ public class UpdateLayoutAction extends JSONAction {
 			layoutTypePortlet.movePortletId(
 				userId, portletId, columnId, columnPos);
 
-			if (layoutTypePortlet.isPersonalizable() &&
-				layoutTypePortlet.isPersonalizedView() &&
+			if (layoutTypePortlet.isCustomizable() &&
+				layoutTypePortlet.isCustomizedView() &&
 				!layoutTypePortlet.isColumnDisabled(columnId)) {
 
 				updateLayout = false;
@@ -194,7 +194,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 			updateLayout = false;
 		}
-		else if (cmd.equals("toggle_personalized_view")) {
+		else if (cmd.equals("toggle_customized_view")) {
 			updateLayout = false;
 		}
 		else if (cmd.equals("update_type_settings")) {

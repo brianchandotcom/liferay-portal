@@ -14,7 +14,7 @@
 
 package com.liferay.util.servlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.PrintWriter;
 
@@ -31,7 +31,7 @@ public class NullServletResponse extends HttpServletResponseWrapper {
 		super(response);
 
 		_servletOutputStream = new NullServletOutputStream();
-		_printWriter = new UnsyncPrintWriter(_servletOutputStream);
+		_printWriter = UnsyncPrintWriterPool.borrow(_servletOutputStream);
 	}
 
 	@Override

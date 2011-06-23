@@ -16,10 +16,10 @@
 	<propertycopy name="db.username" from="db.${db.type}.username" silent="true" />
 	<propertycopy name="db.password" from="db.${db.type}.password" silent="true" />
 
-	<property name="selenium_nanny.executable" location="${project.dir}/portal-web/selenium/selenium_nanny.exe" />
-
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
+
+	<property name="selenium.nanny.executable" location="${project.dir}/tools/selenium/selenium_nanny.exe" />
 
 	<target name="append-ant-script">
 		<loadfile property="template.content" srcfile="portal-web/test-ant-templates/${ant.script.template}">
@@ -2574,8 +2574,8 @@ file.
 				<fail>
 .
 
-Please set "selenium.executable.zip" in test.properties to point to the selenium EXECUTABLE ZIP
-file.
+Please set "selenium.executable.zip" in test.properties to point to the Selenium
+executable ZIP file.
 				</fail>
 			</then>
 			<else>
@@ -2825,7 +2825,7 @@ file.
 
 	<target name="start-selenium-nanny">
 		<forget>
-			<exec executable="${selenium_nanny.executable}" />
+			<exec executable="${selenium.nanny.executable}" />
 		</forget>
 	</target>
 

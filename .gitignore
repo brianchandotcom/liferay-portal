@@ -168,6 +168,9 @@
 /tools/maven/*.asc
 
 /tools/liferay-doclet
+
+/tools/selenium/*.exe
+
 /tools/tck
 
 /tools/zip_tmpl/license

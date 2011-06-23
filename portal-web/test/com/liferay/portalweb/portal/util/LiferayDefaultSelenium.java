@@ -38,30 +38,30 @@ public class LiferayDefaultSelenium
 	}
 
 	public void downloadFile(String value) {
-		String[] command = null;
+		if (!_BROWSER_TYPE.equals("*chrome") &&
+			!_BROWSER_TYPE.equals("*firefox") &&
+			!_BROWSER_TYPE.equals("*iehta") &&
+			!_BROWSER_TYPE.equals("*iexplore")) {
 
-		String commandDownloadFile = TestPropsValues.SELENIUM_DOWNLOAD_FILE;
-		String downloadFile = TestPropsValues.OUTPUT_DIR + value;
+			return;
+		}
 
-		if (_BROWSER_TYPE.equals("*chrome") ||
-			_BROWSER_TYPE.equals("*firefox") ||
-			_BROWSER_TYPE.equals("*iehta") ||
-			_BROWSER_TYPE.equals("*iexplore")) {
+		try {
+			String[] commands = {
+				RuntimeVariables.replace(
+					_SELENIUM_EXECUTABLE_DIR +
+						TestPropsValues.SELENIUM_DOWNLOAD_FILE),
+				TestPropsValues.OUTPUT_DIR + value
+			};
 
-			try {
-				command = new String[] {
-					_SELENIUM_EXECUTABLE_DIR + commandDownloadFile, downloadFile
-				};
+			Runtime runtime = Runtime.getRuntime();
 
-				command[0] = RuntimeVariables.replace(command[0]);
+			runtime.exec(commands);
 
-				Runtime.getRuntime().exec(command);
-
-				Thread.sleep(10000);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			Thread.sleep(10000);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -116,24 +116,25 @@ public class LiferayDefaultSelenium
 	}
 
 	public void setBrowserOption() {
-		String command = null;
-		String commandSetBrowserOption =
-			TestPropsValues.SELENIUM_SET_BROWSER_OPTION;
+		if (!_BROWSER_TYPE.equals("*chrome") &&
+			!_BROWSER_TYPE.equals("*firefox")) {
 
-		if (_BROWSER_TYPE.equals("*chrome") ||
-			_BROWSER_TYPE.equals("*firefox")) {
+			return;
+		}
 
-			try {
-				command = RuntimeVariables.replace(
-					_SELENIUM_EXECUTABLE_DIR + commandSetBrowserOption);
+		try {
+			String command = RuntimeVariables.replace(
+				_SELENIUM_EXECUTABLE_DIR +
+					TestPropsValues.SELENIUM_SET_BROWSER_OPTION);
 
-				Runtime.getRuntime().exec(command);
+			Runtime runtime = Runtime.getRuntime();
+			
+			runtime.exec(command);
 
-				Thread.sleep(10000);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			Thread.sleep(10000);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -189,8 +190,10 @@ public class LiferayDefaultSelenium
 	}
 
 	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
+
 	private static final String _OUTPUT_SCREENSHOTS_DIR =
 		TestPropsValues.OUTPUT_DIR + "screenshots/";
+
 	private static final String _SELENIUM_EXECUTABLE_DIR =
 		TestPropsValues.SELENIUM_EXECUTABLE_DIR;
 

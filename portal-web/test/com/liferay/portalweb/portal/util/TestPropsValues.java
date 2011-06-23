@@ -44,7 +44,7 @@ public class TestPropsValues {
 		TestPropsUtil.get("save.source"));
 
 	public static final String SELENIUM_DOWNLOAD_FILE =
-		TestPropsUtil.get("selenium_download_file.executable");
+		TestPropsUtil.get("selenium.download.file.executable");
 
 	public static final String SELENIUM_EXECUTABLE_DIR =
 		TestPropsUtil.get("selenium.executable.dir");
@@ -56,7 +56,7 @@ public class TestPropsValues {
 		TestPropsUtil.get("selenium.port"));
 
 	public static final String SELENIUM_SET_BROWSER_OPTION =
-		TestPropsUtil.get("selenium_set_browser_option.executable");
+		TestPropsUtil.get("selenium.set.browser.option.executable");
 
 	public static final String[] THEME_IDS = StringUtil.split(
 		TestPropsUtil.get("theme.ids"));

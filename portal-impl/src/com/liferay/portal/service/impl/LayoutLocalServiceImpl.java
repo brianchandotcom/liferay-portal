@@ -1143,7 +1143,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String languageId)
 		throws PortalException, SystemException {
 
-		List <Layout> allGroupLayouts = getLayouts(groupId, privateLayout);
+		List<Layout> allGroupLayouts = getLayouts(groupId, privateLayout);
 
 		Layout updatedLayout = getLayout(groupId, privateLayout, layoutId);
 
@@ -1152,41 +1152,42 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				portletPreferencesLocalService.getPortletPreferencesByPlid(
 					layout.getPlid());
 
-			for (PortletPreferences
-					portletPreferences : portletPreferencesList) {
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
+
 				String portletId = portletPreferences.getPortletId();
 
 				Portlet portlet = portletLocalService.getPortletById(portletId);
 
-				if (((portlet == null) || !portlet.isScopeable())) {
+				if (portlet == null || !portlet.isScopeable()) {
 					continue;
 				}
 
 				javax.portlet.PortletPreferences preferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-							layout, portletId);
+						layout, portletId);
 
 				String scopeLayoutUuid = GetterUtil.getString(
-						preferences.getValue("lfrScopeLayoutUuid", null));
+					preferences.getValue("lfrScopeLayoutUuid", null));
 
 				if (!scopeLayoutUuid.equals(updatedLayout.getUuid())) {
 					continue;
 				}
 
 				String portletTitle = PortalUtil.getPortletTitle(
-						portletId, languageId);
+					portletId, languageId);
 
 				String newPortletTitle = PortalUtil.getNewPortletTitle(
-						portletTitle, layout.getName(languageId), name);
+					portletTitle, layout.getName(languageId), name);
 
 				try {
 					if (!newPortletTitle.equals(portletTitle)) {
 						preferences.setValue(
-								"portlet-setup-title-" + languageId,
-								newPortletTitle);
+							"portlet-setup-title-" + languageId,
+							newPortletTitle);
 						preferences.setValue(
-								"portlet-setup-use-custom-title",
-								Boolean.TRUE.toString());
+							"portlet-setup-use-custom-title",
+							Boolean.TRUE.toString());
 					}
 
 					preferences.store();

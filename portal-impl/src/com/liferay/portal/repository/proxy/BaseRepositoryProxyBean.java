@@ -290,6 +290,10 @@ public class BaseRepositoryProxyBean
 		return newLocalRepositoryProxyBean(localRepository);
 	}
 
+	public BaseRepository getProxyBean() {
+		return _baseRepository;
+	}
+
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
 			OrderByComparator obc)

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.cmis.CMISRepository;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.base.CMISRepositoryLocalServiceBaseImpl;
 
 import java.lang.reflect.Proxy;
@@ -85,10 +86,13 @@ public class CMISRepositoryLocalServiceImpl
 		if (repositoryImpl instanceof CMISRepositoryHandler) {
 			cmisRepositoryHandler = (CMISRepositoryHandler)repositoryImpl;
 		}
-		else if (Proxy.isProxyClass(repositoryImpl.getClass())) {
+		else if (repositoryImpl instanceof BaseRepositoryProxyBean) {
+			BaseRepositoryProxyBean baseRepositoryProxyBean =
+				(BaseRepositoryProxyBean) repositoryImpl;
+
 			ClassLoaderBeanHandler classLoaderBeanHandler =
 				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
-					repositoryImpl);
+					baseRepositoryProxyBean.getProxyBean());
 
 			Object bean = classLoaderBeanHandler.getBean();
 

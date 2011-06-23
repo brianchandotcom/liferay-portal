@@ -34,6 +34,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.util.RepositoryFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
@@ -406,10 +407,13 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		if (baseRepository instanceof CMISRepositoryHandler) {
 			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
 		}
-		else if (Proxy.isProxyClass(baseRepository.getClass())) {
+		else if (baseRepository instanceof BaseRepositoryProxyBean) {
+			BaseRepositoryProxyBean baseRepositoryProxyBean =
+				(BaseRepositoryProxyBean) baseRepository;
+
 			ClassLoaderBeanHandler classLoaderBeanHandler =
 				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
-					baseRepository);
+					baseRepositoryProxyBean.getProxyBean());
 
 			Object bean = classLoaderBeanHandler.getBean();
 

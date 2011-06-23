@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 
 import java.io.File;
@@ -134,7 +135,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			folderId, mimeType, title, description, changeLog, is, size,
 			serviceContext);
 
-		dlAppHelperLocalService.triggerProcesses(fileEntry);
+		DLProcessor.triggerAll(fileEntry);
 
 		return fileEntry;
 	}
@@ -723,7 +724,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		dlAppHelperLocalService.triggerProcesses(fileEntry);
+		DLProcessor.triggerAll(fileEntry);
 
 		return fileEntry;
 	}
@@ -778,9 +779,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		for (FileEntry srcFileEntry : srcFileEntries) {
 			try {
-				repository.copyFileEntry(
+				FileEntry fileEntry = repository.copyFileEntry(
 					destFolder.getGroupId(), srcFileEntry.getFileEntryId(),
 					destFolder.getFolderId(), serviceContext);
+
+				DLProcessor.triggerAll(fileEntry);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

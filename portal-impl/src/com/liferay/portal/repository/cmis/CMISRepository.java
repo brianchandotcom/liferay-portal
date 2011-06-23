@@ -262,7 +262,7 @@ public class CMISRepository extends BaseCmisRepository {
 		throw new UnsupportedOperationException();
 	}
 
-	public void copyFileEntry(
+	public FileEntry copyFileEntry(
 			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -277,7 +277,10 @@ public class CMISRepository extends BaseCmisRepository {
 
 			validateTitle(session, destFolderId, document.getName());
 
-			document.copy(new ObjectIdImpl(destFolderObjectId));
+			Document documentCopy = document.copy(
+				new ObjectIdImpl(destFolderObjectId));
+
+			return toFileEntry(documentCopy);
 		}
 		catch (PortalException pe) {
 			throw pe;

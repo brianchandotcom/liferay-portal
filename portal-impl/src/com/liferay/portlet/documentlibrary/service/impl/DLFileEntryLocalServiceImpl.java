@@ -1498,86 +1498,105 @@ public class DLFileEntryLocalServiceImpl
 
 		boolean autoCheckIn = !dlFileEntry.isCheckedOut();
 
-		dlFileEntry = checkOutFileEntry(userId, fileEntryId);
-
-		if (Validator.isNull(extension)) {
-			extension = dlFileEntry.getExtension();
+		if (autoCheckIn) {
+			dlFileEntry = checkOutFileEntry(userId, fileEntryId);
 		}
 
-		if (Validator.isNull(mimeType)) {
-			mimeType = dlFileEntry.getMimeType();
-		}
+		try {
+			if (Validator.isNull(extension)) {
+				extension = dlFileEntry.getExtension();
+			}
 
-		if (Validator.isNull(title)) {
-			title = sourceFileName;
+			if (Validator.isNull(mimeType)) {
+				mimeType = dlFileEntry.getMimeType();
+			}
 
 			if (Validator.isNull(title)) {
-				title = dlFileEntry.getTitle();
+				title = sourceFileName;
+
+				if (Validator.isNull(title)) {
+					title = dlFileEntry.getTitle();
+				}
 			}
-		}
 
-		Long fileEntryTypeId = (Long)serviceContext.getAttribute(
-			"fileEntryTypeId");
+			Long fileEntryTypeId = (Long)serviceContext.getAttribute(
+				"fileEntryTypeId");
 
-		if (fileEntryTypeId == null) {
-			fileEntryTypeId = 0L;
-		}
+			if (fileEntryTypeId == null) {
+				fileEntryTypeId = 0L;
+			}
 
-		Date now = new Date();
+			Date now = new Date();
 
-		validateFile(
-			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-			dlFileEntry.getFileEntryId(), dlFileEntry.getExtension(), title,
-			sourceFileName, is);
+			validateFile(
+				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+				dlFileEntry.getFileEntryId(), extension, title, sourceFileName,
+				is);
 
-		// File version
+			// File version
 
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion();
+			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion();
 
-		String version = dlFileVersion.getVersion();
+			String version = dlFileVersion.getVersion();
 
-		if (size == 0) {
-			size = dlFileVersion.getSize();
-		}
+			if (size == 0) {
+				size = dlFileVersion.getSize();
+			}
 
-		updateFileVersion(
-			user, dlFileVersion, sourceFileName, extension,mimeType, title,
-			description, changeLog, extraSettings, fileEntryTypeId, version,
-			size, dlFileVersion.getStatus(),
-			serviceContext.getModifiedDate(now), serviceContext);
+			updateFileVersion(
+				user, dlFileVersion, sourceFileName, extension, mimeType, title,
+				description, changeLog, extraSettings, fileEntryTypeId, version,
+				size, dlFileVersion.getStatus(),
+				serviceContext.getModifiedDate(now), serviceContext);
 
-		// File
+			// File
 
-		if (is != null) {
-			try {
-				DLStoreUtil.deleteFile(
+			if (is != null) {
+				try {
+					DLStoreUtil.deleteFile(
+						user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
+						dlFileEntry.getDataRepositoryId(),
+						dlFileEntry.getName(), version);
+				}
+				catch (NoSuchFileException nsfe) {
+				}
+
+				DLStoreUtil.updateFile(
 					user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					version);
-			}
-			catch (NoSuchFileException nsfe) {
+					dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), dlFileEntry.getExtension(), false,
+					version, sourceFileName, dlFileEntry.getFileEntryId(),
+					dlFileEntry.getLuceneProperties(),
+					dlFileEntry.getModifiedDate(), serviceContext, is);
 			}
 
-			DLStoreUtil.updateFile(
-				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
-				version, sourceFileName, dlFileEntry.getFileEntryId(),
-				dlFileEntry.getLuceneProperties(),
-				dlFileEntry.getModifiedDate(), serviceContext, is);
+			// Asset
+
+			updateAsset(
+				userId, dlFileEntry, dlFileVersion,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
+
+			if (autoCheckIn) {
+				checkInFileEntry(
+					userId, fileEntryId, majorVersion, changeLog,
+					serviceContext);
+			}
 		}
+		catch (PortalException pe) {
+			if (autoCheckIn) {
+				cancelCheckOut(userId, fileEntryId);
+			}
 
-		// Asset
+			throw pe;
+		}
+		catch (SystemException se) {
+			if (autoCheckIn) {
+				cancelCheckOut(userId, fileEntryId);
+			}
 
-		updateAsset(
-			userId, dlFileEntry, dlFileVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		if (autoCheckIn) {
-			checkInFileEntry(
-				userId, fileEntryId, majorVersion, changeLog, serviceContext);
+			throw se;
 		}
 
 		return dlFileEntry;

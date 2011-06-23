@@ -61,7 +61,7 @@ public interface Repository {
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException, SystemException;
 
-	public void copyFileEntry(
+	public FileEntry copyFileEntry(
 			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;

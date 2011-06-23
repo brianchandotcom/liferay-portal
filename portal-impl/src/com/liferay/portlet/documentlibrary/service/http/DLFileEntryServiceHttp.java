@@ -271,8 +271,9 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static void copyFileEntry(HttpPrincipal httpPrincipal, long groupId,
-		long repositoryId, long fileEntryId, long destFolderId,
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
+		long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -283,8 +284,10 @@ public class DLFileEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					repositoryId, fileEntryId, destFolderId, serviceContext);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -297,6 +300,8 @@ public class DLFileEntryServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

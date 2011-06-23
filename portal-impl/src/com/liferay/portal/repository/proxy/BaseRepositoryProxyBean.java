@@ -111,12 +111,12 @@ public class BaseRepositoryProxyBean
 		return newFileEntryProxyBean(fileEntry);
 	}
 
-	public void copyFileEntry(
+	public FileEntry copyFileEntry(
 			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_baseRepository.copyFileEntry(
+		return _baseRepository.copyFileEntry(
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 

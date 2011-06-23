@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,6 +51,7 @@ import java.util.List;
  */
 public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, long parentFolderId,
 			String name, String description, ServiceContext serviceContext)

@@ -135,13 +135,15 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	public static void copyFileEntry(long groupId, long repositoryId,
-		long fileEntryId, long destFolderId,
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap copyFileEntry(
+		long groupId, long repositoryId, long fileEntryId, long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			DLFileEntryServiceUtil.copyFileEntry(groupId, repositoryId,
-				fileEntryId, destFolderId, serviceContext);
+			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.copyFileEntry(groupId,
+					repositoryId, fileEntryId, destFolderId, serviceContext);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

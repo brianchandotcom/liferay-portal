@@ -133,6 +133,14 @@ public class VerifyGroup extends VerifyProcess {
 
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), typeSettingsProperties.toString());
+
+			Group stagingGroup = group.getStagingGroup();
+
+			if (group.getClassNameId() != stagingGroup.getClassNameId()) {
+				stagingGroup.setClassNameId(group.getClassNameId());
+
+				GroupLocalServiceUtil.updateGroup(stagingGroup);
+			}
 		}
 	}
 

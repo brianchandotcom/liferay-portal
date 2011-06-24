@@ -185,6 +185,7 @@ String[][] categorySections = {mainSections};
 									{
 										centered: true,
 										constrain: true,
+										cssClass: 'lfr-export-dialog',
 										modal: true,
 										title: '<liferay-ui:message key="export" />',
 										width: 600
@@ -228,6 +229,7 @@ String[][] categorySections = {mainSections};
 									{
 										centered: true,
 										constrain: true,
+										cssClass: 'lfr-import-dialog',
 										modal: true,
 										title: '<liferay-ui:message key="import" />',
 										width: 600

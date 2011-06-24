@@ -82,43 +82,41 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 <aui:form method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-				<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
+	<c:choose>
+		<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
+			<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
 
-				<aui:field-wrapper label="what-would-you-like-to-export">
-					<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="what-would-you-like-to-export">
+				<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
+			</aui:field-wrapper>
 
-				<aui:button-row>
-					<aui:button type="submit" value="export" />
-				</aui:button-row>
-			</c:when>
-			<c:when test="<%= cmd.equals(Constants.IMPORT) %>">
-				<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
-				<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
-				<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
+			<aui:button-row>
+				<aui:button type="submit" value="export" />
+			</aui:button-row>
+		</c:when>
+		<c:when test="<%= cmd.equals(Constants.IMPORT) %>">
+			<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
+			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
+			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
-				<c:choose>
-					<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
-						<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
+			<c:choose>
+				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
+					<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
 
-						<aui:field-wrapper label="what-would-you-like-to-import">
-							<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
-						</aui:field-wrapper>
+					<aui:field-wrapper label="what-would-you-like-to-import">
+						<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
+					</aui:field-wrapper>
 
-						<aui:button-row>
-							<aui:button type="submit" value="import" />
-						</aui:button-row>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="import-from-within-the-target-site-can-cause-conflicts" />
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-		</c:choose>
-	</aui:fieldset>
+					<aui:button-row>
+						<aui:button type="submit" value="import" />
+					</aui:button-row>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="import-from-within-the-target-site-can-cause-conflicts" />
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+	</c:choose>
 </aui:form>
 
 <aui:script use="aui-base,aui-loading-mask,selector-css3">

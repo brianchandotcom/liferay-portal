@@ -14,7 +14,7 @@
  */
 --%>
 
-<ul class="aui-field-inline lfr-tree lfr-component">
+<ul class="lfr-tree lfr-component">
 	<li class="tree-item">
 		<aui:input disabled="<%= true %>" inlineLabel="right" name="pages" type="checkbox" value="<%= true %>" />
 	</li>
@@ -114,9 +114,7 @@
 											yesterday.add(Calendar.DATE, -1);
 											%>
 
-											<br />
-
-											<ul class="aui-helper-hidden" id="<portlet:namespace />startEndDate">
+											<ul class="aui-helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
 												<li>
 													<aui:field-wrapper label="start-date">
 														<liferay-ui:input-date
@@ -179,7 +177,7 @@
 										<li>
 											<aui:input inlineField="<%= true %>" inlineLabel="right" label="last" name="range" onClick='<%= renderResponse.getNamespace() + "hideDateRange()" %>' type="radio" value="last" />
 
-											<aui:select label="" name="last">
+											<aui:select inlineField="<%= true %>" label="" name="last">
 												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12") %>' value="12" />
 												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24") %>' value="24" />
 												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48") %>' value="48" />

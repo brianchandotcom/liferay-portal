@@ -340,6 +340,12 @@
 	background-image: url(<%= themeImagesPath %>/trees/page.png);
 }
 
+.lfr-export-dialog {
+    .date-range-options {
+        margin-bottom: 1em;
+    }
+}
+
 .lfr-root-node {
 	.aui-tree-icon {
 		background-image: url(<%= themeImagesPath %>/trees/root.png);

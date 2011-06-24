@@ -1,4 +1,4 @@
-Modify portal-ext.properties with your custom settings so that the upgrade tool
+777 Modify portal-ext.properties with your custom settings so that the upgrade tool
 can connect your database. All Liferay servers must be turned off when
 performing an upgrade.
 

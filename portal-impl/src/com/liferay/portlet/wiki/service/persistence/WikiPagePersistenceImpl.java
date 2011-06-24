@@ -838,8 +838,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageImpl.class, pageId, this);
 
+		if (wikiPage == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (wikiPage == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -848,10 +854,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						Long.valueOf(pageId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (wikiPage != null) {
+				if ((!hasError) && (wikiPage == null)) {
+					EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+						WikiPageImpl.class, pageId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(wikiPage);
 				}
 
@@ -9274,5 +9286,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WikiPage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiPage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final WikiPage _NULL_PLACE_HOLDER = new WikiPageImpl();
 	private static Log _log = LogFactoryUtil.getLog(WikiPagePersistenceImpl.class);
 }

@@ -444,8 +444,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 				MBBanImpl.class, banId, this);
 
+		if (mbBan == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (mbBan == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -453,10 +459,16 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				mbBan = (MBBan)session.get(MBBanImpl.class, Long.valueOf(banId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (mbBan != null) {
+				if ((!hasError) && (mbBan == null)) {
+					EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+						MBBanImpl.class, banId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(mbBan);
 				}
 
@@ -2082,5 +2094,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBBan exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBBan exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final MBBan _NULL_PLACE_HOLDER = new MBBanImpl();
 	private static Log _log = LogFactoryUtil.getLog(MBBanPersistenceImpl.class);
 }

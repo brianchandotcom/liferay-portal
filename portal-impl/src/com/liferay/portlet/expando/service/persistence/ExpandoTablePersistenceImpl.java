@@ -444,8 +444,14 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		ExpandoTable expandoTable = (ExpandoTable)EntityCacheUtil.getResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoTableImpl.class, tableId, this);
 
+		if (expandoTable == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (expandoTable == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -454,10 +460,16 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 						Long.valueOf(tableId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (expandoTable != null) {
+				if ((!hasError) && (expandoTable == null)) {
+					EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+						ExpandoTableImpl.class, tableId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(expandoTable);
 				}
 
@@ -1366,5 +1378,6 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExpandoTable exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoTable exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final ExpandoTable _NULL_PLACE_HOLDER = new ExpandoTableImpl();
 	private static Log _log = LogFactoryUtil.getLog(ExpandoTablePersistenceImpl.class);
 }

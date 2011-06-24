@@ -476,8 +476,14 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		PortletItem portletItem = (PortletItem)EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 				PortletItemImpl.class, portletItemId, this);
 
+		if (portletItem == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (portletItem == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -486,10 +492,16 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 						Long.valueOf(portletItemId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (portletItem != null) {
+				if ((!hasError) && (portletItem == null)) {
+					EntityCacheUtil.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
+						PortletItemImpl.class, portletItemId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(portletItem);
 				}
 
@@ -2053,5 +2065,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletItem exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletItem exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final PortletItem _NULL_PLACE_HOLDER = new PortletItemImpl();
 	private static Log _log = LogFactoryUtil.getLog(PortletItemPersistenceImpl.class);
 }

@@ -439,8 +439,14 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		AssetTagStats assetTagStats = (AssetTagStats)EntityCacheUtil.getResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
 				AssetTagStatsImpl.class, tagStatsId, this);
 
+		if (assetTagStats == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (assetTagStats == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -449,10 +455,16 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 						Long.valueOf(tagStatsId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (assetTagStats != null) {
+				if ((!hasError) && (assetTagStats == null)) {
+					EntityCacheUtil.putResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
+						AssetTagStatsImpl.class, tagStatsId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(assetTagStats);
 				}
 
@@ -1709,5 +1721,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetTagStats exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetTagStats exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final AssetTagStats _NULL_PLACE_HOLDER = new AssetTagStatsImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetTagStatsPersistenceImpl.class);
 }

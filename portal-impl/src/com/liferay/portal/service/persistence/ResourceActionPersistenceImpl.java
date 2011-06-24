@@ -425,8 +425,14 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, resourceActionId, this);
 
+		if (resourceAction == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (resourceAction == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -435,10 +441,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 						Long.valueOf(resourceActionId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (resourceAction != null) {
+				if ((!hasError) && (resourceAction == null)) {
+					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceActionImpl.class, resourceActionId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(resourceAction);
 				}
 
@@ -1482,5 +1495,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceAction exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceAction exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final ResourceAction _NULL_PLACE_HOLDER = new ResourceActionImpl();
 	private static Log _log = LogFactoryUtil.getLog(ResourceActionPersistenceImpl.class);
 }

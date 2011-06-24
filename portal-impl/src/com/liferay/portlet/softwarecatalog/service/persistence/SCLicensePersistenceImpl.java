@@ -402,8 +402,14 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		SCLicense scLicense = (SCLicense)EntityCacheUtil.getResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 				SCLicenseImpl.class, licenseId, this);
 
+		if (scLicense == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (scLicense == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -412,10 +418,16 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 						Long.valueOf(licenseId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (scLicense != null) {
+				if ((!hasError) && (scLicense == null)) {
+					EntityCacheUtil.putResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+						SCLicenseImpl.class, licenseId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(scLicense);
 				}
 
@@ -2857,5 +2869,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCLicense exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCLicense exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final SCLicense _NULL_PLACE_HOLDER = new SCLicenseImpl();
 	private static Log _log = LogFactoryUtil.getLog(SCLicensePersistenceImpl.class);
 }

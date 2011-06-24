@@ -927,8 +927,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		JournalArticle journalArticle = (JournalArticle)EntityCacheUtil.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleImpl.class, id, this);
 
+		if (journalArticle == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (journalArticle == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -937,10 +943,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(id));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (journalArticle != null) {
+				if ((!hasError) && (journalArticle == null)) {
+					EntityCacheUtil.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+						JournalArticleImpl.class, id, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(journalArticle);
 				}
 
@@ -15233,5 +15245,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalArticle exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticle exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final JournalArticle _NULL_PLACE_HOLDER = new JournalArticleImpl();
 	private static Log _log = LogFactoryUtil.getLog(JournalArticlePersistenceImpl.class);
 }

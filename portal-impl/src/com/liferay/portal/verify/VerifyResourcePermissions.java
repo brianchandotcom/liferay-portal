@@ -28,6 +28,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ContactLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -96,21 +97,39 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		ResourcePermission resourcePermission = null;
 
+		long roleId = role.getRoleId();
+
 		try {
 			resourcePermission =
 				ResourcePermissionLocalServiceUtil.getResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), role.getRoleId());
+					String.valueOf(primKey), roleId);
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					"No resource found for {" + companyId + ", " + name + ", " +
 						ResourceConstants.SCOPE_INDIVIDUAL + ", " + primKey +
 							", " + role.getRoleId() + "}");
+
+				_log.debug("Adding missing resource");
 			}
 
-			return;
+			ResourceLocalServiceUtil.addResources(
+				companyId, 0, ownerId, name, String.valueOf(primKey), false,
+				false, false);
+		}
+
+		if (resourcePermission == null) {
+			try {
+				resourcePermission =
+					ResourcePermissionLocalServiceUtil.getResourcePermission(
+						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(primKey), roleId);
+			}
+			catch (NoSuchResourcePermissionException nsrpe) {
+				return;
+			}
 		}
 
 		if (name.equals(User.class.getName())) {

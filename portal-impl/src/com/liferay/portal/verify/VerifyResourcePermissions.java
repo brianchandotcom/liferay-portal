@@ -97,13 +97,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		ResourcePermission resourcePermission = null;
 
-		long roleId = role.getRoleId();
-
 		try {
 			resourcePermission =
 				ResourcePermissionLocalServiceUtil.getResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), roleId);
+					String.valueOf(primKey), role.getRoleId());
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			if (_log.isDebugEnabled()) {
@@ -111,8 +109,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					"No resource found for {" + companyId + ", " + name + ", " +
 						ResourceConstants.SCOPE_INDIVIDUAL + ", " + primKey +
 							", " + role.getRoleId() + "}");
-
-				_log.debug("Adding missing resource");
 			}
 
 			ResourceLocalServiceUtil.addResources(
@@ -125,7 +121,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				resourcePermission =
 					ResourcePermissionLocalServiceUtil.getResourcePermission(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(primKey), roleId);
+						String.valueOf(primKey), role.getRoleId());
 			}
 			catch (NoSuchResourcePermissionException nsrpe) {
 				return;

@@ -152,8 +152,13 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 			return (ClusterGroup)this;
 		}
 		else {
-			return (ClusterGroup)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ClusterGroup)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -289,4 +294,5 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	private String _clusterNodeIds;
 	private boolean _wholeCluster;
 	private transient ExpandoBridge _expandoBridge;
+	private ClusterGroup _escapedModelProxy;
 }

@@ -325,8 +325,13 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 			return (OrgLabor)this;
 		}
 		else {
-			return (OrgLabor)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (OrgLabor)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -586,4 +591,5 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	private int _satOpen;
 	private int _satClose;
 	private transient ExpandoBridge _expandoBridge;
+	private OrgLabor _escapedModelProxy;
 }

@@ -253,8 +253,13 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			return (Subscription)this;
 		}
 		else {
-			return (Subscription)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Subscription)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -456,4 +461,5 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private boolean _setOriginalClassPK;
 	private String _frequency;
 	private transient ExpandoBridge _expandoBridge;
+	private Subscription _escapedModelProxy;
 }

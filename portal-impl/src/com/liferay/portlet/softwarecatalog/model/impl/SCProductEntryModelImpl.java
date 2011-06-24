@@ -397,8 +397,13 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 			return (SCProductEntry)this;
 		}
 		else {
-			return (SCProductEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SCProductEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -647,4 +652,5 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	private String _repoArtifactId;
 	private String _originalRepoArtifactId;
 	private transient ExpandoBridge _expandoBridge;
+	private SCProductEntry _escapedModelProxy;
 }

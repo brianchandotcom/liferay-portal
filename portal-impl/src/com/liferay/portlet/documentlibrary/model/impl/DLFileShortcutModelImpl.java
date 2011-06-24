@@ -400,8 +400,13 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			return (DLFileShortcut)this;
 		}
 		else {
-			return (DLFileShortcut)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DLFileShortcut)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -637,4 +642,5 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private String _statusByUserName;
 	private Date _statusDate;
 	private transient ExpandoBridge _expandoBridge;
+	private DLFileShortcut _escapedModelProxy;
 }

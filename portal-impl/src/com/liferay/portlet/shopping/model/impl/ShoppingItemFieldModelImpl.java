@@ -165,8 +165,13 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 			return (ShoppingItemField)this;
 		}
 		else {
-			return (ShoppingItemField)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingItemField)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -323,4 +328,5 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	private String _values;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingItemField _escapedModelProxy;
 }

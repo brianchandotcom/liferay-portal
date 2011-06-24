@@ -193,8 +193,13 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 			return (Resource)this;
 		}
 		else {
-			return (Resource)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Resource)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -332,4 +337,5 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 	private String _primKey;
 	private String _originalPrimKey;
 	private transient ExpandoBridge _expandoBridge;
+	private Resource _escapedModelProxy;
 }

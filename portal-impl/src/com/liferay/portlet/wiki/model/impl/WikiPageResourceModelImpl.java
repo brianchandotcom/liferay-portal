@@ -167,8 +167,13 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			return (WikiPageResource)this;
 		}
 		else {
-			return (WikiPageResource)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (WikiPageResource)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -314,4 +319,5 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private String _title;
 	private String _originalTitle;
 	private transient ExpandoBridge _expandoBridge;
+	private WikiPageResource _escapedModelProxy;
 }

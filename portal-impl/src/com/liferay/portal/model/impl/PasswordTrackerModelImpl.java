@@ -158,8 +158,13 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 			return (PasswordTracker)this;
 		}
 		else {
-			return (PasswordTracker)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PasswordTracker)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -313,4 +318,5 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private Date _createDate;
 	private String _password;
 	private transient ExpandoBridge _expandoBridge;
+	private PasswordTracker _escapedModelProxy;
 }

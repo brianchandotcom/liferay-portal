@@ -226,8 +226,13 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 			return (JournalContentSearch)this;
 		}
 		else {
-			return (JournalContentSearch)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (JournalContentSearch)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -412,4 +417,5 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private String _articleId;
 	private String _originalArticleId;
 	private transient ExpandoBridge _expandoBridge;
+	private JournalContentSearch _escapedModelProxy;
 }

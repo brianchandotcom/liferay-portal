@@ -208,8 +208,13 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 			return (Region)this;
 		}
 		else {
-			return (Region)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Region)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -351,4 +356,5 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private String _name;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private Region _escapedModelProxy;
 }

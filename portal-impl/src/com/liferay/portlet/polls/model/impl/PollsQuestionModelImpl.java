@@ -483,8 +483,13 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 			return (PollsQuestion)this;
 		}
 		else {
-			return (PollsQuestion)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PollsQuestion)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -696,4 +701,5 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	private Date _expirationDate;
 	private Date _lastVoteDate;
 	private transient ExpandoBridge _expandoBridge;
+	private PollsQuestion _escapedModelProxy;
 }

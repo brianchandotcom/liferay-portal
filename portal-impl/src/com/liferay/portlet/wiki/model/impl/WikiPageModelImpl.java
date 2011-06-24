@@ -570,8 +570,13 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 			return (WikiPage)this;
 		}
 		else {
-			return (WikiPage)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (WikiPage)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -921,4 +926,5 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private String _statusByUserName;
 	private Date _statusDate;
 	private transient ExpandoBridge _expandoBridge;
+	private WikiPage _escapedModelProxy;
 }

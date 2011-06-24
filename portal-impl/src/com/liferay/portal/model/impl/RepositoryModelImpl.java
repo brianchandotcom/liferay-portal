@@ -288,8 +288,13 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			return (Repository)this;
 		}
 		else {
-			return (Repository)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Repository)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -481,4 +486,5 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private String _typeSettings;
 	private long _dlFolderId;
 	private transient ExpandoBridge _expandoBridge;
+	private Repository _escapedModelProxy;
 }

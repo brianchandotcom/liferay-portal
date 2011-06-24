@@ -394,8 +394,13 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 			return (IGImage)this;
 		}
 		else {
-			return (IGImage)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (IGImage)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -660,4 +665,5 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 	private long _originalCustom2ImageId;
 	private boolean _setOriginalCustom2ImageId;
 	private transient ExpandoBridge _expandoBridge;
+	private IGImage _escapedModelProxy;
 }

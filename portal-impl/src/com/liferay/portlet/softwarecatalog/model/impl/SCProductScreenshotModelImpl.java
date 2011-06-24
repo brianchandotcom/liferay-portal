@@ -207,8 +207,13 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 			return (SCProductScreenshot)this;
 		}
 		else {
-			return (SCProductScreenshot)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SCProductScreenshot)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -414,4 +419,5 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	private int _originalPriority;
 	private boolean _setOriginalPriority;
 	private transient ExpandoBridge _expandoBridge;
+	private SCProductScreenshot _escapedModelProxy;
 }

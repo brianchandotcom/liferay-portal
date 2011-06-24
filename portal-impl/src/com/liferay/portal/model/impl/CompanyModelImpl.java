@@ -286,8 +286,13 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 			return (Company)this;
 		}
 		else {
-			return (Company)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Company)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -476,4 +481,5 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private boolean _system;
 	private int _maxUsers;
 	private transient ExpandoBridge _expandoBridge;
+	private Company _escapedModelProxy;
 }

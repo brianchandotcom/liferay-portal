@@ -305,8 +305,13 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 			return (SCFrameworkVersion)this;
 		}
 		else {
-			return (SCFrameworkVersion)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SCFrameworkVersion)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -500,4 +505,5 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private boolean _active;
 	private int _priority;
 	private transient ExpandoBridge _expandoBridge;
+	private SCFrameworkVersion _escapedModelProxy;
 }

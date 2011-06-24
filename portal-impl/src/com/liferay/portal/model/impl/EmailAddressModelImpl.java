@@ -294,8 +294,13 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			return (EmailAddress)this;
 		}
 		else {
-			return (EmailAddress)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (EmailAddress)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -486,4 +491,5 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private int _typeId;
 	private boolean _primary;
 	private transient ExpandoBridge _expandoBridge;
+	private EmailAddress _escapedModelProxy;
 }

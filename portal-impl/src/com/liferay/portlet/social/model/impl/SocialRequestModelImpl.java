@@ -327,8 +327,13 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 			return (SocialRequest)this;
 		}
 		else {
-			return (SocialRequest)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialRequest)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -586,4 +591,5 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private boolean _setOriginalReceiverUserId;
 	private int _status;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialRequest _escapedModelProxy;
 }

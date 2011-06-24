@@ -222,8 +222,13 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 			return (ShoppingOrderItem)this;
 		}
 		else {
-			return (ShoppingOrderItem)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingOrderItem)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -411,4 +416,5 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	private int _quantity;
 	private Date _shippedDate;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingOrderItem _escapedModelProxy;
 }

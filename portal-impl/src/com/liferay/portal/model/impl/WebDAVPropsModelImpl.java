@@ -201,8 +201,13 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 			return (WebDAVProps)this;
 		}
 		else {
-			return (WebDAVProps)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (WebDAVProps)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -375,4 +380,5 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private boolean _setOriginalClassPK;
 	private String _props;
 	private transient ExpandoBridge _expandoBridge;
+	private WebDAVProps _escapedModelProxy;
 }

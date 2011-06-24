@@ -220,8 +220,13 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 			return (WorkflowInstanceLink)this;
 		}
 		else {
-			return (WorkflowInstanceLink)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (WorkflowInstanceLink)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -407,4 +412,5 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	private long _classPK;
 	private long _workflowInstanceId;
 	private transient ExpandoBridge _expandoBridge;
+	private WorkflowInstanceLink _escapedModelProxy;
 }

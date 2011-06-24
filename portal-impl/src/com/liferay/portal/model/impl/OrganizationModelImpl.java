@@ -322,8 +322,13 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			return (Organization)this;
 		}
 		else {
-			return (Organization)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Organization)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -537,4 +542,5 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private int _statusId;
 	private String _comments;
 	private transient ExpandoBridge _expandoBridge;
+	private Organization _escapedModelProxy;
 }

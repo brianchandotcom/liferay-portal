@@ -179,8 +179,13 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 			return (Shard)this;
 		}
 		else {
-			return (Shard)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Shard)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -332,4 +337,5 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	private String _name;
 	private String _originalName;
 	private transient ExpandoBridge _expandoBridge;
+	private Shard _escapedModelProxy;
 }

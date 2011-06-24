@@ -395,8 +395,13 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			return (Address)this;
 		}
 		else {
-			return (Address)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Address)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -643,4 +648,5 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private boolean _mailing;
 	private boolean _primary;
 	private transient ExpandoBridge _expandoBridge;
+	private Address _escapedModelProxy;
 }

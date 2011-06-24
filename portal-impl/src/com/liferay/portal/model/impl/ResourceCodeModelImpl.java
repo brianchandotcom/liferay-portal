@@ -171,8 +171,13 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 			return (ResourceCode)this;
 		}
 		else {
-			return (ResourceCode)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ResourceCode)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -324,4 +329,5 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	private int _originalScope;
 	private boolean _setOriginalScope;
 	private transient ExpandoBridge _expandoBridge;
+	private ResourceCode _escapedModelProxy;
 }

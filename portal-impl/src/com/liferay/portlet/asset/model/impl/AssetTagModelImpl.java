@@ -262,8 +262,13 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			return (AssetTag)this;
 		}
 		else {
-			return (AssetTag)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetTag)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -438,4 +443,5 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _name;
 	private int _assetCount;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetTag _escapedModelProxy;
 }

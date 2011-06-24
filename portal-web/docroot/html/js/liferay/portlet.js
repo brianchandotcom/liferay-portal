@@ -3,7 +3,7 @@
 
 	var arrayIndexOf = A.Array.indexOf;
 
-	var TPL_NOT_AJAXABLE = '<div class="portlet-msg-info">' + Liferay.Language.get("this-change-will-only-be-shown-after-you-refresh-the-page"); + '</div>';
+	var TPL_NOT_AJAXABLE = '<div class="portlet-msg-info">{0}</div>';
 
 	var Portlet = {
 		list: [],
@@ -672,7 +672,7 @@
 
 					portlet.setData('pendingRefresh', true);
 
-					portletBody.placeBefore(TPL_NOT_AJAXABLE);
+					portletBody.placeBefore(A.Lang.sub(TPL_NOT_AJAXABLE, [Liferay.Language.get('this-change-will-only-be-shown-after-you-refresh-the-page')]));
 					portletBody.hide();
 				}
 			}

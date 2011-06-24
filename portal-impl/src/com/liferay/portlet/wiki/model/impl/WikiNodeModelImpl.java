@@ -318,8 +318,13 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			return (WikiNode)this;
 		}
 		else {
-			return (WikiNode)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (WikiNode)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -524,4 +529,5 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private String _description;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private WikiNode _escapedModelProxy;
 }

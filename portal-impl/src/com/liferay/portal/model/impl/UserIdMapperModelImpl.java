@@ -198,8 +198,13 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 			return (UserIdMapper)this;
 		}
 		else {
-			return (UserIdMapper)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (UserIdMapper)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -357,4 +362,5 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	private String _externalUserId;
 	private String _originalExternalUserId;
 	private transient ExpandoBridge _expandoBridge;
+	private UserIdMapper _escapedModelProxy;
 }

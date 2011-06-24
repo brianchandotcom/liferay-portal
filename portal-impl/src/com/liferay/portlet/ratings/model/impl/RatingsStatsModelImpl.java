@@ -186,8 +186,13 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 			return (RatingsStats)this;
 		}
 		else {
-			return (RatingsStats)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (RatingsStats)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -352,4 +357,5 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	private double _totalScore;
 	private double _averageScore;
 	private transient ExpandoBridge _expandoBridge;
+	private RatingsStats _escapedModelProxy;
 }

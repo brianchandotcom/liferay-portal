@@ -249,8 +249,13 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			return (UserGroup)this;
 		}
 		else {
-			return (UserGroup)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (UserGroup)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -410,4 +415,5 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _description;
 	private boolean _addedByLDAPImport;
 	private transient ExpandoBridge _expandoBridge;
+	private UserGroup _escapedModelProxy;
 }

@@ -382,8 +382,13 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 			return (AnnouncementsEntry)this;
 		}
 		else {
-			return (AnnouncementsEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AnnouncementsEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -637,4 +642,5 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private int _priority;
 	private boolean _alert;
 	private transient ExpandoBridge _expandoBridge;
+	private AnnouncementsEntry _escapedModelProxy;
 }

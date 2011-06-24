@@ -168,8 +168,13 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 			return (SocialEquityHistory)this;
 		}
 		else {
-			return (SocialEquityHistory)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquityHistory)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -322,4 +327,5 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 	private Date _createDate;
 	private int _personalEquity;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquityHistory _escapedModelProxy;
 }

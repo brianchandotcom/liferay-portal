@@ -269,8 +269,13 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			return (MBBan)this;
 		}
 		else {
-			return (MBBan)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (MBBan)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -453,4 +458,5 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;
 	private transient ExpandoBridge _expandoBridge;
+	private MBBan _escapedModelProxy;
 }

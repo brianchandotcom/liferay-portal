@@ -285,8 +285,13 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			return (Team)this;
 		}
 		else {
-			return (Team)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Team)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -471,4 +476,5 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private String _originalName;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private Team _escapedModelProxy;
 }

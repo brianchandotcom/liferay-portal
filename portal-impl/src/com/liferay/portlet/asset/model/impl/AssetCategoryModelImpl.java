@@ -551,8 +551,13 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 			return (AssetCategory)this;
 		}
 		else {
-			return (AssetCategory)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetCategory)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -800,4 +805,5 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private long _originalVocabularyId;
 	private boolean _setOriginalVocabularyId;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetCategory _escapedModelProxy;
 }

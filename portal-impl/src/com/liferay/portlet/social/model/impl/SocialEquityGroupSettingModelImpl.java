@@ -200,8 +200,13 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 			return (SocialEquityGroupSetting)this;
 		}
 		else {
-			return (SocialEquityGroupSetting)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquityGroupSetting)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -372,4 +377,5 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	private boolean _setOriginalType;
 	private boolean _enabled;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquityGroupSetting _escapedModelProxy;
 }

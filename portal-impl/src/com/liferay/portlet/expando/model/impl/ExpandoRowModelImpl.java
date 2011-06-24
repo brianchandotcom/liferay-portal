@@ -155,8 +155,13 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 			return (ExpandoRow)this;
 		}
 		else {
-			return (ExpandoRow)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ExpandoRow)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -289,4 +294,5 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private ExpandoRow _escapedModelProxy;
 }

@@ -535,8 +535,13 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			return (AssetEntry)this;
 		}
 		else {
-			return (AssetEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -863,4 +868,5 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private double _priority;
 	private int _viewCount;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetEntry _escapedModelProxy;
 }

@@ -397,8 +397,13 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 			return (ShoppingCoupon)this;
 		}
 		else {
-			return (ShoppingCoupon)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingCoupon)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -650,4 +655,5 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	private double _discount;
 	private String _discountType;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingCoupon _escapedModelProxy;
 }

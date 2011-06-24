@@ -277,8 +277,13 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 			return (ShoppingCategory)this;
 		}
 		else {
-			return (ShoppingCategory)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingCategory)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -476,4 +481,5 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private String _name;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingCategory _escapedModelProxy;
 }

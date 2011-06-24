@@ -163,8 +163,13 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 			return (PortalPreferences)this;
 		}
 		else {
-			return (PortalPreferences)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PortalPreferences)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -313,4 +318,5 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	private boolean _setOriginalOwnerType;
 	private String _preferences;
 	private transient ExpandoBridge _expandoBridge;
+	private PortalPreferences _escapedModelProxy;
 }

@@ -214,8 +214,13 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			return (Ticket)this;
 		}
 		else {
-			return (Ticket)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Ticket)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -401,4 +406,5 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private String _extraInfo;
 	private Date _expirationDate;
 	private transient ExpandoBridge _expandoBridge;
+	private Ticket _escapedModelProxy;
 }

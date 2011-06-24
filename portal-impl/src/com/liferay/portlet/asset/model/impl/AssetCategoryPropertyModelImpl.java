@@ -285,8 +285,13 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 			return (AssetCategoryProperty)this;
 		}
 		else {
-			return (AssetCategoryProperty)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetCategoryProperty)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -471,4 +476,5 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	private String _originalKey;
 	private String _value;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetCategoryProperty _escapedModelProxy;
 }

@@ -201,8 +201,13 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			return (UserNotificationEvent)this;
 		}
 		else {
-			return (UserNotificationEvent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (UserNotificationEvent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -377,4 +382,5 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private long _deliverBy;
 	private String _payload;
 	private transient ExpandoBridge _expandoBridge;
+	private UserNotificationEvent _escapedModelProxy;
 }

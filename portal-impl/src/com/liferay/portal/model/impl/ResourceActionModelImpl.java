@@ -166,8 +166,13 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 			return (ResourceAction)this;
 		}
 		else {
-			return (ResourceAction)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ResourceAction)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -322,4 +327,5 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	private String _originalActionId;
 	private long _bitwiseValue;
 	private transient ExpandoBridge _expandoBridge;
+	private ResourceAction _escapedModelProxy;
 }

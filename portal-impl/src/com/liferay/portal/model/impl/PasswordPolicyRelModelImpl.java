@@ -177,8 +177,13 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 			return (PasswordPolicyRel)this;
 		}
 		else {
-			return (PasswordPolicyRel)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PasswordPolicyRel)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -333,4 +338,5 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private transient ExpandoBridge _expandoBridge;
+	private PasswordPolicyRel _escapedModelProxy;
 }

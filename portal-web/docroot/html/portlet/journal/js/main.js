@@ -3079,7 +3079,7 @@ AUI().add(
 							content = output.join(',');
 						}
 						else if (type == 'image') {
-							var imageContent = componentContainer.one('.journal-image-content');
+							var imageContent = componentContainer.one('.journal-image-field input');
 							var imageDelete = instance.getByName(componentContainer, 'journalImageDelete');
 
 							if (imageDelete && imageDelete.val() == 'delete') {

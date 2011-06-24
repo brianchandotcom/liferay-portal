@@ -172,7 +172,7 @@ public class UnsyncBufferedWriter extends Writer {
 
 	private static int _DEFAULT_BUFFER_SIZE = 8192;
 
-	private static String _LINE_SEPARATOR = System.getProperty(
+	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
 }

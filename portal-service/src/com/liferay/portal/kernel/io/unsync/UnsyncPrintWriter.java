@@ -387,7 +387,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 		}
 	}
 
-	private static String _LINE_SEPARATOR = System.getProperty(
+	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
 	private Formatter _formatter;

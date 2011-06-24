@@ -211,7 +211,7 @@ public class PipingJspWriter extends JspWriter {
 		_writer.write(string, offset, length);
 	}
 
-	private static String _LINE_SEPARATOR = System.getProperty(
+	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
 	private Writer _writer;

@@ -139,17 +139,15 @@ public class TrimNewLinesJspWriter extends JspWriter {
 
 	@Override
 	public void print(String string) throws IOException {
-		String trim = null;
-
 		if (string == null) {
-			trim = StringPool.NULL;
+			string = StringPool.NULL;
 		}
 		else {
-			trim = trim(string);
+			string = trim(string);
 		}
 
-		if (trim.length() > 0) {
-			_writer.write(trim);
+		if (string.length() > 0) {
+			_writer.write(string);
 
 			_lastNewLine = false;
 		}
@@ -236,17 +234,15 @@ public class TrimNewLinesJspWriter extends JspWriter {
 
 	@Override
 	public void println(String string) throws IOException {
-		String trim = null;
-
 		if (string == null) {
-			trim = StringPool.NULL;
+			string = StringPool.NULL;
 		}
 		else {
-			trim = trim(string);
+			string = trim(string);
 		}
 
-		if (trim.length() > 0) {
-			_writer.write(trim);
+		if (string.length() > 0) {
+			_writer.write(string);
 
 			_lastNewLine = true;
 		}
@@ -285,10 +281,8 @@ public class TrimNewLinesJspWriter extends JspWriter {
 
 	@Override
 	public void write(String string) throws IOException {
-		String trim = trim(string);
-
-		if (trim.length() > 0) {
-			_writer.write(trim);
+		if (string.length() > 0) {
+			_writer.write(string);
 
 			_lastNewLine = false;
 		}
@@ -297,10 +291,11 @@ public class TrimNewLinesJspWriter extends JspWriter {
 	@Override
 	public void write(String string, int offset, int length)
 		throws IOException {
-		String trim = trim(string.substring(offset, offset + length));
 
-		if (trim.length() > 0) {
-			_writer.write(trim);
+		string = trim(string.substring(offset, offset + length));
+
+		if (string.length() > 0) {
+			_writer.write(string);
 
 			_lastNewLine = false;
 		}
@@ -341,7 +336,7 @@ public class TrimNewLinesJspWriter extends JspWriter {
 		}
 	}
 
-	private static String _LINE_SEPARATOR = System.getProperty(
+	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
 	private boolean _lastNewLine;

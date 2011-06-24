@@ -751,8 +751,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageImpl.class, messageId, this);
 
+		if (mbMessage == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (mbMessage == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -761,10 +767,16 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						Long.valueOf(messageId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (mbMessage != null) {
+				if ((!hasError) && (mbMessage == null)) {
+					EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+						MBMessageImpl.class, messageId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(mbMessage);
 				}
 
@@ -12533,5 +12545,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBMessage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMessage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final MBMessage _NULL_PLACE_HOLDER = new MBMessageImpl();
 	private static Log _log = LogFactoryUtil.getLog(MBMessagePersistenceImpl.class);
 }

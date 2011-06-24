@@ -430,8 +430,14 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
 				ShardImpl.class, shardId, this);
 
+		if (shard == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (shard == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -440,10 +446,16 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 						Long.valueOf(shardId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (shard != null) {
+				if ((!hasError) && (shard == null)) {
+					EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
+						ShardImpl.class, shardId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(shard);
 				}
 
@@ -1207,5 +1219,6 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Shard exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Shard exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Shard _NULL_PLACE_HOLDER = new ShardImpl();
 	private static Log _log = LogFactoryUtil.getLog(ShardPersistenceImpl.class);
 }

@@ -442,8 +442,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsFlagImpl.class, flagId, this);
 
+		if (announcementsFlag == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (announcementsFlag == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -452,10 +458,16 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 						Long.valueOf(flagId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (announcementsFlag != null) {
+				if ((!hasError) && (announcementsFlag == null)) {
+					EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+						AnnouncementsFlagImpl.class, flagId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(announcementsFlag);
 				}
 
@@ -1315,5 +1327,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsFlag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final AnnouncementsFlag _NULL_PLACE_HOLDER = new AnnouncementsFlagImpl();
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
 }

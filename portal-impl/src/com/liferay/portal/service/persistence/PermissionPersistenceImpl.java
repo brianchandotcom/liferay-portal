@@ -457,8 +457,14 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		Permission permission = (Permission)EntityCacheUtil.getResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
 				PermissionImpl.class, permissionId, this);
 
+		if (permission == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (permission == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -467,10 +473,16 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 						Long.valueOf(permissionId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (permission != null) {
+				if ((!hasError) && (permission == null)) {
+					EntityCacheUtil.putResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
+						PermissionImpl.class, permissionId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(permission);
 				}
 
@@ -3367,5 +3379,6 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Permission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Permission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Permission _NULL_PLACE_HOLDER = new PermissionImpl();
 	private static Log _log = LogFactoryUtil.getLog(PermissionPersistenceImpl.class);
 }

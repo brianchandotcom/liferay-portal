@@ -544,8 +544,14 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		SocialRelation socialRelation = (SocialRelation)EntityCacheUtil.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRelationImpl.class, relationId, this);
 
+		if (socialRelation == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (socialRelation == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -554,10 +560,16 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 						Long.valueOf(relationId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (socialRelation != null) {
+				if ((!hasError) && (socialRelation == null)) {
+					EntityCacheUtil.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+						SocialRelationImpl.class, relationId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(socialRelation);
 				}
 
@@ -4324,5 +4336,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialRelation exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialRelation exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final SocialRelation _NULL_PLACE_HOLDER = new SocialRelationImpl();
 	private static Log _log = LogFactoryUtil.getLog(SocialRelationPersistenceImpl.class);
 }

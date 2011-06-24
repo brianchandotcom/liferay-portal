@@ -426,8 +426,14 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		LayoutSet layoutSet = (LayoutSet)EntityCacheUtil.getResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutSetImpl.class, layoutSetId, this);
 
+		if (layoutSet == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (layoutSet == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -436,10 +442,16 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 						Long.valueOf(layoutSetId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (layoutSet != null) {
+				if ((!hasError) && (layoutSet == null)) {
+					EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutSetImpl.class, layoutSetId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(layoutSet);
 				}
 
@@ -1381,5 +1393,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutSet exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSet exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final LayoutSet _NULL_PLACE_HOLDER = new LayoutSetImpl();
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetPersistenceImpl.class);
 }

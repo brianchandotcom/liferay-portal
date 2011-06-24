@@ -546,8 +546,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 				RoleImpl.class, roleId, this);
 
+		if (role == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (role == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -555,10 +561,16 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				role = (Role)session.get(RoleImpl.class, Long.valueOf(roleId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (role != null) {
+				if ((!hasError) && (role == null)) {
+					EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+						RoleImpl.class, roleId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(role);
 				}
 
@@ -6545,5 +6557,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Role exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Role exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Role _NULL_PLACE_HOLDER = new RoleImpl();
 	private static Log _log = LogFactoryUtil.getLog(RolePersistenceImpl.class);
 }

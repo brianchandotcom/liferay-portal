@@ -378,8 +378,14 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		OrgGroupRole orgGroupRole = (OrgGroupRole)EntityCacheUtil.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 				OrgGroupRoleImpl.class, orgGroupRolePK, this);
 
+		if (orgGroupRole == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (orgGroupRole == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -388,10 +394,17 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 						orgGroupRolePK);
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (orgGroupRole != null) {
+				if ((!hasError) && (orgGroupRole == null)) {
+					EntityCacheUtil.putResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+						OrgGroupRoleImpl.class, orgGroupRolePK,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(orgGroupRole);
 				}
 
@@ -1519,5 +1532,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OrgGroupRole exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupRole exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final OrgGroupRole _NULL_PLACE_HOLDER = new OrgGroupRoleImpl();
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceImpl.class);
 }

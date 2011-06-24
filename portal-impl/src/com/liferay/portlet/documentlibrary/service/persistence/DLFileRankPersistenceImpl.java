@@ -459,8 +459,14 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileRankImpl.class, fileRankId, this);
 
+		if (dlFileRank == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (dlFileRank == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -469,10 +475,16 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 						Long.valueOf(fileRankId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (dlFileRank != null) {
+				if ((!hasError) && (dlFileRank == null)) {
+					EntityCacheUtil.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+						DLFileRankImpl.class, fileRankId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(dlFileRank);
 				}
 
@@ -2183,5 +2195,6 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileRank exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileRank exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final DLFileRank _NULL_PLACE_HOLDER = new DLFileRankImpl();
 	private static Log _log = LogFactoryUtil.getLog(DLFileRankPersistenceImpl.class);
 }

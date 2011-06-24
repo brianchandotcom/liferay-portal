@@ -488,8 +488,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 				AssetLinkImpl.class, linkId, this);
 
+		if (assetLink == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (assetLink == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -498,10 +504,16 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 						Long.valueOf(linkId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (assetLink != null) {
+				if ((!hasError) && (assetLink == null)) {
+					EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+						AssetLinkImpl.class, linkId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(assetLink);
 				}
 
@@ -3076,5 +3088,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final AssetLink _NULL_PLACE_HOLDER = new AssetLinkImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetLinkPersistenceImpl.class);
 }

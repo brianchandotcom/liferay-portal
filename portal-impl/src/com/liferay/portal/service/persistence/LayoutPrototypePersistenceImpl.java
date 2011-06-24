@@ -387,8 +387,14 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		LayoutPrototype layoutPrototype = (LayoutPrototype)EntityCacheUtil.getResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutPrototypeImpl.class, layoutPrototypeId, this);
 
+		if (layoutPrototype == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (layoutPrototype == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -397,10 +403,17 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 						Long.valueOf(layoutPrototypeId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (layoutPrototype != null) {
+				if ((!hasError) && (layoutPrototype == null)) {
+					EntityCacheUtil.putResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutPrototypeImpl.class, layoutPrototypeId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(layoutPrototype);
 				}
 
@@ -2237,5 +2250,6 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutPrototype exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutPrototype exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final LayoutPrototype _NULL_PLACE_HOLDER = new LayoutPrototypeImpl();
 	private static Log _log = LogFactoryUtil.getLog(LayoutPrototypePersistenceImpl.class);
 }

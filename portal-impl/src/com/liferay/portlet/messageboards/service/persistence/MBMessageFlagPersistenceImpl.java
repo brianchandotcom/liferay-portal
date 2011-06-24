@@ -509,8 +509,14 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 		MBMessageFlag mbMessageFlag = (MBMessageFlag)EntityCacheUtil.getResult(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageFlagImpl.class, messageFlagId, this);
 
+		if (mbMessageFlag == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (mbMessageFlag == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -519,10 +525,17 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 						Long.valueOf(messageFlagId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (mbMessageFlag != null) {
+				if ((!hasError) && (mbMessageFlag == null)) {
+					EntityCacheUtil.putResult(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
+						MBMessageFlagImpl.class, messageFlagId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(mbMessageFlag);
 				}
 
@@ -3487,5 +3500,6 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBMessageFlag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMessageFlag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final MBMessageFlag _NULL_PLACE_HOLDER = new MBMessageFlagImpl();
 	private static Log _log = LogFactoryUtil.getLog(MBMessageFlagPersistenceImpl.class);
 }

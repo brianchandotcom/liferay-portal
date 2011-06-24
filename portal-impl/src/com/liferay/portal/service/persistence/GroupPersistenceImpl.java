@@ -790,8 +790,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		Group group = (Group)EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 				GroupImpl.class, groupId, this);
 
+		if (group == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (group == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -800,10 +806,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 						Long.valueOf(groupId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (group != null) {
+				if ((!hasError) && (group == null)) {
+					EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
+						GroupImpl.class, groupId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(group);
 				}
 
@@ -6729,5 +6741,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Group exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Group exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Group _NULL_PLACE_HOLDER = new GroupImpl();
 	private static Log _log = LogFactoryUtil.getLog(GroupPersistenceImpl.class);
 }

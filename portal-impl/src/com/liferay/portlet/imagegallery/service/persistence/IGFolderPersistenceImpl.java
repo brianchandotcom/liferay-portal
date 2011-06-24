@@ -543,8 +543,14 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		IGFolder igFolder = (IGFolder)EntityCacheUtil.getResult(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
 				IGFolderImpl.class, folderId, this);
 
+		if (igFolder == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (igFolder == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -553,10 +559,16 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 						Long.valueOf(folderId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (igFolder != null) {
+				if ((!hasError) && (igFolder == null)) {
+					EntityCacheUtil.putResult(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
+						IGFolderImpl.class, folderId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(igFolder);
 				}
 
@@ -3680,5 +3692,6 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGFolder exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No IGFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final IGFolder _NULL_PLACE_HOLDER = new IGFolderImpl();
 	private static Log _log = LogFactoryUtil.getLog(IGFolderPersistenceImpl.class);
 }

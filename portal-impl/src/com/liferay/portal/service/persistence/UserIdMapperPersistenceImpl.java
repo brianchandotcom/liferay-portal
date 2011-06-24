@@ -483,8 +483,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 				UserIdMapperImpl.class, userIdMapperId, this);
 
+		if (userIdMapper == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (userIdMapper == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -493,10 +499,17 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 						Long.valueOf(userIdMapperId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (userIdMapper != null) {
+				if ((!hasError) && (userIdMapper == null)) {
+					EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
+						UserIdMapperImpl.class, userIdMapperId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(userIdMapper);
 				}
 
@@ -1732,5 +1745,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserIdMapper exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserIdMapper exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final UserIdMapper _NULL_PLACE_HOLDER = new UserIdMapperImpl();
 	private static Log _log = LogFactoryUtil.getLog(UserIdMapperPersistenceImpl.class);
 }

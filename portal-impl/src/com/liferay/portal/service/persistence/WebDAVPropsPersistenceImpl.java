@@ -408,8 +408,14 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		WebDAVProps webDAVProps = (WebDAVProps)EntityCacheUtil.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
 				WebDAVPropsImpl.class, webDavPropsId, this);
 
+		if (webDAVProps == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (webDAVProps == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -418,10 +424,16 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 						Long.valueOf(webDavPropsId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (webDAVProps != null) {
+				if ((!hasError) && (webDAVProps == null)) {
+					EntityCacheUtil.putResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
+						WebDAVPropsImpl.class, webDavPropsId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(webDAVProps);
 				}
 
@@ -966,5 +978,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WebDAVProps exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WebDAVProps exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final WebDAVProps _NULL_PLACE_HOLDER = new WebDAVPropsImpl();
 	private static Log _log = LogFactoryUtil.getLog(WebDAVPropsPersistenceImpl.class);
 }

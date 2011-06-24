@@ -71,7 +71,7 @@ else {
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-<aui:fieldset>
+<aui:fieldset cssClass="addresses">
 
 	<%
 	for (int i = 0; i < addressesIndexes.length; i++) {
@@ -85,7 +85,7 @@ else {
 
 		<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
-		<div class="addresses lfr-form-row">
+		<div class="lfr-form-row">
 			<div class="row-fields">
 				<aui:column columnWidth="50">
 					<aui:input name='<%= "addressId" + addressesIndex %>' type="hidden" value="<%= address.getAddressId() %>" />

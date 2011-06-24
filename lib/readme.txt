@@ -1,4 +1,4 @@
-444 JARs in the development directory are only visible during compile time. Most
+JARs in the development directory are only visible during compile time. Most
 of these JARs are already included by the application server or are only useful
 for a specific database (i.e. JDBC drivers).
 

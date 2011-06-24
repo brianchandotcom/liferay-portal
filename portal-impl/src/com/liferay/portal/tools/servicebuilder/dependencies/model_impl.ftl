@@ -537,7 +537,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			return (${entity.name})this;
 		}
 		else {
-			return (${entity.name})Proxy.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (${entity.name})Proxy.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -774,5 +778,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#if (entity.PKClassName == "long") && !stringUtil.startsWith(entity.name, "Expando")>
 		private transient ExpandoBridge _expandoBridge;
 	</#if>
+
+	private ${entity.name} _escapedModelProxy;
 
 }

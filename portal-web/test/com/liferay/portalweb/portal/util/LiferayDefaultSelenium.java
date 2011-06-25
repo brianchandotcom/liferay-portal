@@ -128,7 +128,7 @@ public class LiferayDefaultSelenium
 					TestPropsValues.SELENIUM_SET_BROWSER_OPTION);
 
 			Runtime runtime = Runtime.getRuntime();
-			
+
 			runtime.exec(command);
 
 			Thread.sleep(10000);

@@ -320,7 +320,8 @@ public interface DDLRecordLocalService {
 	public int getRecordVersionsCount(long recordId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void revertRecordVersion(long recordId, java.lang.String version,
+	public void revertRecordVersion(long userId, long recordId,
+		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

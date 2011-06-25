@@ -372,12 +372,13 @@ public class DDLRecordLocalServiceUtil {
 		return getService().getRecordVersionsCount(recordId);
 	}
 
-	public static void revertRecordVersion(long recordId,
+	public static void revertRecordVersion(long userId, long recordId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().revertRecordVersion(recordId, version, serviceContext);
+		getService()
+			.revertRecordVersion(userId, recordId, version, serviceContext);
 	}
 
 	public static void updateAsset(long userId,

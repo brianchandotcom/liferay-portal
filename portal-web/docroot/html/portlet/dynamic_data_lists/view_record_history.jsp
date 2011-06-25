@@ -21,13 +21,13 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
+long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_history");
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-
-long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 %>
 
 <liferay-ui:header

@@ -86,16 +86,16 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	public void setFileEntryMetadataId(long fileEntryMetadataId);
 
 	/**
-	 * Returns the fully qualified class name of this document library file entry metadata.
+	 * Returns the d d m storage ID of this document library file entry metadata.
 	 *
-	 * @return the fully qualified class name of this document library file entry metadata
+	 * @return the d d m storage ID of this document library file entry metadata
 	 */
 	public long getDDMStorageId();
 
 	/**
-	 * Sets the d d m storage ID of this d l file entry metadata.
+	 * Sets the d d m storage ID of this document library file entry metadata.
 	 *
-	 * @param DDMStorageId the d d m storage ID of this d l file entry metadata
+	 * @param DDMStorageId the d d m storage ID of this document library file entry metadata
 	 */
 	public void setDDMStorageId(long DDMStorageId);
 

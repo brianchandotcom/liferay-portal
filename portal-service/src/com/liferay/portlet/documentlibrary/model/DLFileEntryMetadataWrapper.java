@@ -91,18 +91,18 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 	}
 
 	/**
-	* Returns the d d m storage ID of this d l file entry metadata.
+	* Returns the d d m storage ID of this document library file entry metadata.
 	*
-	* @return the d d m storage ID of this d l file entry metadata
+	* @return the d d m storage ID of this document library file entry metadata
 	*/
 	public long getDDMStorageId() {
 		return _dlFileEntryMetadata.getDDMStorageId();
 	}
 
 	/**
-	* Sets the d d m storage ID of this d l file entry metadata.
+	* Sets the d d m storage ID of this document library file entry metadata.
 	*
-	* @param DDMStorageId the d d m storage ID of this d l file entry metadata
+	* @param DDMStorageId the d d m storage ID of this document library file entry metadata
 	*/
 	public void setDDMStorageId(long DDMStorageId) {
 		_dlFileEntryMetadata.setDDMStorageId(DDMStorageId);

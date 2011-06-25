@@ -327,7 +327,9 @@ public class UpdateLayoutAction extends JSONAction {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		jsonObject.put("refresh", false);
+		boolean portletAjaxable = portlet.isAjaxable();
+
+		jsonObject.put("refresh", !portletAjaxable);
 		jsonObject.put("portletHTML", stringResponse.getString().trim());
 
 		Set<String> footerCssSet = new LinkedHashSet<String>();
@@ -358,7 +360,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (!portletOnLayout) {
+		if (!portletOnLayout && portletAjaxable) {
 			Portlet rootPortlet = portlet.getRootPortlet();
 
 			for (String footerPortalCss : portlet.getFooterPortalCss()) {

@@ -64,11 +64,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 			<c:if test="<%= !selPortlet.isAjaxable() %>">
 				data = {
-					ajaxable: false
+					portletAjaxable: false
 				};
 			</c:if>
 
-			window.parent.Liferay.Portlet.refresh(curPortletBoundaryId, data);
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}
 	</aui:script>
 </c:if>

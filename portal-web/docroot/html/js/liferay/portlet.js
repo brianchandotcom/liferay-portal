@@ -276,13 +276,11 @@
 							if (dataType == 'html') {
 								addPortletReturn(response);
 							}
+							else if (response.refresh) {
+								addPortletReturn(response.portletHTML);
+							}
 							else {
-								if (response.refresh) {
-									location.reload();
-								}
-								else {
-									Portlet._loadPortletFiles(response, addPortletReturn);
-								}
+								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
 						}
 					}
@@ -668,11 +666,16 @@
 					);
 				}
 				else if (!portlet.getData('pendingRefresh')) {
-					var portletBody = portlet.one('.portlet-body');
-
 					portlet.setData('pendingRefresh', true);
 
-					portletBody.placeBefore(A.Lang.sub(TPL_NOT_AJAXABLE, [Liferay.Language.get('this-change-will-only-be-shown-after-you-refresh-the-page')]));
+					var nonAjaxableContentMessage = A.Lang.sub(
+						TPL_NOT_AJAXABLE,
+						[Liferay.Language.get('this-change-will-only-be-shown-after-you-refresh-the-page')]
+					);
+
+					var portletBody = portlet.one('.portlet-body');
+
+					portletBody.placeBefore(nonAjaxableContentMessage);
 					portletBody.hide();
 				}
 			}

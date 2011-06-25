@@ -571,7 +571,6 @@ AUI().add(
 												success: Dockbar._loadAddApplications
 											},
 											data: {
-												cmd: 'add',
 												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 												p_l_id: themeDisplay.getPlid(),
 												p_p_id: 87,

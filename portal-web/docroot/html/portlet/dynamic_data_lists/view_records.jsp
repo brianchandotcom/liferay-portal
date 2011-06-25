@@ -36,7 +36,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
-DDMStructure ddmStructure = recordSet.getDDMStructure();
+DDMStructure ddmStructure = recordSet.getDDMStructure(detailDDMTemplateId);
 
 Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap();
 

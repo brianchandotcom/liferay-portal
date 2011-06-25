@@ -52,7 +52,7 @@ public class AddPageHWTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ public class AddPageHWTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//span/input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Hello World Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",

@@ -14,29 +14,24 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
-	<td>link=Control Panel</td>
-	<td>Control Panel</td>
+	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>storeText</td>
-	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
-	<td>guestCommunity</td>
+	<td>clickAt</td>
+	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Control Panel</td>
-	<td>Control Panel</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Pages</td>
-	<td>Pages</td>
-</tr>
-<tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>${guestCommunity}</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -50,7 +45,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/ul/li/div/div[1]</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
@@ -79,7 +74,12 @@
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//button[3]</td>
 	<td>Delete</td>
 </tr>
@@ -102,6 +102,11 @@
 	<td>label</td>
 	<td>Page1NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -144,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//li[2]/div/div[3]/a'))</td>
 	<td>page3Present</td>
@@ -184,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//li[2]/div/div[3]/a'))</td>
 	<td>page4Present</td>
@@ -222,6 +237,11 @@
 	<td>label</td>
 	<td>Page4NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>store</td>

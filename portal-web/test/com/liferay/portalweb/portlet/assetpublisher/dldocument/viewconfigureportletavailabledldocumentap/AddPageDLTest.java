@@ -52,7 +52,7 @@ public class AddPageDLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ public class AddPageDLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",

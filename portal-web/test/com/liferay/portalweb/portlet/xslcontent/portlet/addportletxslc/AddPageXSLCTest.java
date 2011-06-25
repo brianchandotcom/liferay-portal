@@ -52,7 +52,7 @@ public class AddPageXSLCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ public class AddPageXSLCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//span/input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("XSL Content Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",

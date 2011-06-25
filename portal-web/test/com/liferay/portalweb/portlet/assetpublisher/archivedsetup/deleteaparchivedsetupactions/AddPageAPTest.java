@@ -52,7 +52,7 @@ public class AddPageAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/span[1]/span/input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ public class AddPageAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div/span[1]/span/input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",

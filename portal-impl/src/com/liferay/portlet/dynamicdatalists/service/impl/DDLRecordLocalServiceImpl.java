@@ -267,15 +267,12 @@ public class DDLRecordLocalServiceImpl
 			return;
 		}
 
-		boolean majorVersion = true;
-		int displayIndex = recordVersion.getDisplayIndex();
-
 		Fields fields = StorageEngineUtil.getFields(
 			recordVersion.getDDMStorageId());
 
 		updateRecord(
-			userId, recordId, majorVersion, displayIndex, fields, false,
-			serviceContext);
+			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
+			false, serviceContext);
 	}
 
 	public void updateAsset(

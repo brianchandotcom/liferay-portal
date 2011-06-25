@@ -52,7 +52,7 @@ public class AddPageBMTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,8 @@ public class AddPageBMTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input", RuntimeVariables.replace("Bookmarks Test Page"));
+		selenium.type("//input[@type='text']",
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));

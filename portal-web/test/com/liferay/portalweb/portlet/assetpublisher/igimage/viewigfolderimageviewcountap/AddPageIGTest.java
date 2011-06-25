@@ -52,7 +52,7 @@ public class AddPageIGTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ public class AddPageIGTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",

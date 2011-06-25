@@ -52,7 +52,7 @@ public class AddPageWikiTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,7 +63,8 @@ public class AddPageWikiTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//span/input", RuntimeVariables.replace("Wiki Test Page"));
+		selenium.type("//input[@type='text']",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));

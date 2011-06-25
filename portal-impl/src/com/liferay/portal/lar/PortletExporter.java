@@ -958,8 +958,13 @@ public class PortletExporter {
 			String portletId, long plid, Element parentElement)
 		throws Exception {
 
-		Document document = SAXReaderUtil.read(
-			portletPreferences.getPreferences());
+		String preferencesXML = portletPreferences.getPreferences();
+
+		if (Validator.isNull(preferencesXML)) {
+			preferencesXML = PortletConstants.DEFAULT_PREFERENCES;
+		}
+
+		Document document = SAXReaderUtil.read(preferencesXML);
 
 		Element rootElement = document.getRootElement();
 

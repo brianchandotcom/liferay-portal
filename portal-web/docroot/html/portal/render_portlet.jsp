@@ -26,6 +26,7 @@ String instanceId = portlet.getInstanceId();
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
 String cmd = ParamUtil.getString(request, "cmd");
+
 String queryString = (String)request.getAttribute(WebKeys.RENDER_PORTLET_QUERY_STRING);
 String columnId = (String)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID);
 Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS);
@@ -912,13 +913,15 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			if (!portlet.isAjaxable() && cmd.equals("add")) {
 		%>
-				<liferay-util:buffer var="ajaxableContent">
+
+				<liferay-util:buffer var="nonAjaxableContentMessage">
 					<div class="portlet-msg-info">
 						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 					</div>
 				</liferay-util:buffer>
+
 		<%
-				renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, ajaxableContent);
+				renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, nonAjaxableContentMessage);
 			}
 		%>
 

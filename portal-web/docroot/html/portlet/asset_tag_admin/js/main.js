@@ -1301,6 +1301,7 @@ AUI().add(
 							}
 							else if ((exception.indexOf('TagNameException') > -1) ||
 									 (exception.indexOf('AssetTagException') > -1)) {
+
 								errorText = Liferay.Language.get('one-of-your-fields-contains-invalid-characters');
 							}
 							else if (exception.indexOf('auth.PrincipalException') > -1) {

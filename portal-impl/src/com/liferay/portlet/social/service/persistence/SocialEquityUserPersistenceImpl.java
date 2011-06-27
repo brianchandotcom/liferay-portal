@@ -483,14 +483,14 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 		SocialEquityUser socialEquityUser = (SocialEquityUser)EntityCacheUtil.getResult(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquityUserImpl.class, equityUserId, this);
 
-		if (socialEquityUser == _NULL_PLACE_HOLDER) {
+		if (socialEquityUser == _nullSocialEquityUser) {
 			return null;
 		}
 
 		if (socialEquityUser == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -499,15 +499,15 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 						Long.valueOf(equityUserId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (socialEquityUser == null)) {
+				if (!hasException && (socialEquityUser == null)) {
 					EntityCacheUtil.putResult(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityUserImpl.class, equityUserId,
-						_NULL_PLACE_HOLDER);
+						_nullSocialEquityUser);
 				}
 				else {
 					cacheResult(socialEquityUser);
@@ -2971,6 +2971,6 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialEquityUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquityUser exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final SocialEquityUser _NULL_PLACE_HOLDER = new SocialEquityUserImpl();
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityUserPersistenceImpl.class);
+	private static SocialEquityUser _nullSocialEquityUser = new SocialEquityUserImpl();
 }

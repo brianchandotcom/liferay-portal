@@ -173,6 +173,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setFileEntryTypeId(long fileEntryTypeId) {
 		_fileEntryTypeId = fileEntryTypeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -182,6 +184,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -191,6 +195,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -200,6 +206,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -222,6 +230,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -231,6 +241,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -240,6 +252,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -254,6 +268,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -268,6 +284,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

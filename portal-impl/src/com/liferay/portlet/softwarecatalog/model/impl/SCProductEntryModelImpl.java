@@ -180,6 +180,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setProductEntryId(long productEntryId) {
 		_productEntryId = productEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -189,6 +191,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -198,6 +202,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -207,6 +213,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -229,6 +237,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -238,6 +248,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -247,6 +259,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -261,6 +275,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -275,6 +291,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setType(String type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -289,6 +307,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setTags(String tags) {
 		_tags = tags;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -303,6 +323,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setShortDescription(String shortDescription) {
 		_shortDescription = shortDescription;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -317,6 +339,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setLongDescription(String longDescription) {
 		_longDescription = longDescription;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -331,6 +355,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setPageURL(String pageURL) {
 		_pageURL = pageURL;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -345,6 +371,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setAuthor(String author) {
 		_author = author;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -363,6 +391,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		}
 
 		_repoGroupId = repoGroupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalRepoGroupId() {
@@ -385,6 +415,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		}
 
 		_repoArtifactId = repoArtifactId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalRepoArtifactId() {

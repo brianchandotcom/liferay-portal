@@ -143,6 +143,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	public void setUserGroupId(long userGroupId) {
 		_userGroupId = userGroupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -152,6 +154,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -161,6 +165,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	public void setRoleId(long roleId) {
 		_roleId = roleId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

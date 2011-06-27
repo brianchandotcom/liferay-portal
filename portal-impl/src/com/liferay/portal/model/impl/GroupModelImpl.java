@@ -203,6 +203,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -218,6 +220,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -231,6 +235,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setCreatorUserId(long creatorUserId) {
 		_creatorUserId = creatorUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getCreatorUserUuid() throws SystemException {
@@ -263,6 +269,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -282,6 +290,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -295,6 +305,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setParentGroupId(long parentGroupId) {
 		_parentGroupId = parentGroupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,6 +322,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_liveGroupId = liveGroupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLiveGroupId() {
@@ -332,6 +346,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -350,6 +366,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -359,6 +377,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setType(int type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -373,6 +393,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -391,6 +413,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_friendlyURL = friendlyURL;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalFriendlyURL() {
@@ -408,6 +432,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setSite(boolean site) {
 		_site = site;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -421,6 +447,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

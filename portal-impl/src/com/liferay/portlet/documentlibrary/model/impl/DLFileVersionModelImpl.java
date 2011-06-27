@@ -132,6 +132,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setFileVersionId(long fileVersionId) {
 		_fileVersionId = fileVersionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -140,6 +142,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -148,6 +152,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -156,6 +162,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -177,6 +185,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -185,6 +195,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getRepositoryId() {
@@ -193,6 +205,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getFileEntryId() {
@@ -207,6 +221,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		}
 
 		_fileEntryId = fileEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFileEntryId() {
@@ -224,6 +240,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setExtension(String extension) {
 		_extension = extension;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getMimeType() {
@@ -237,6 +255,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setMimeType(String mimeType) {
 		_mimeType = mimeType;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getTitle() {
@@ -250,6 +270,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setTitle(String title) {
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getDescription() {
@@ -263,6 +285,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getChangeLog() {
@@ -276,6 +300,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setChangeLog(String changeLog) {
 		_changeLog = changeLog;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getExtraSettings() {
@@ -289,6 +315,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setExtraSettings(String extraSettings) {
 		_extraSettings = extraSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getFileEntryTypeId() {
@@ -297,6 +325,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setFileEntryTypeId(long fileEntryTypeId) {
 		_fileEntryTypeId = fileEntryTypeId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getVersion() {
@@ -314,6 +344,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		}
 
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalVersion() {
@@ -326,6 +358,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setSize(long size) {
 		_size = size;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getStatus() {
@@ -334,6 +368,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getStatusByUserId() {
@@ -342,6 +378,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -364,6 +402,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getStatusDate() {
@@ -372,6 +412,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+
+		_escapedModelProxy = null;
 	}
 
 	/**

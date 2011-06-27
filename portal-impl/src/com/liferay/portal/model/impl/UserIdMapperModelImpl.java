@@ -109,6 +109,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	public void setUserIdMapperId(long userIdMapperId) {
 		_userIdMapperId = userIdMapperId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -123,6 +125,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -152,6 +156,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalType() {
@@ -169,6 +175,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getExternalUserId() {
@@ -186,6 +194,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		}
 
 		_externalUserId = externalUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalExternalUserId() {

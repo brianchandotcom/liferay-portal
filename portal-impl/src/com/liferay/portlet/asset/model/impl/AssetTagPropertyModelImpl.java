@@ -163,6 +163,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setTagPropertyId(long tagPropertyId) {
 		_tagPropertyId = tagPropertyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -172,6 +174,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,6 +185,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -203,6 +209,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -212,6 +220,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -221,6 +231,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -236,6 +248,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		}
 
 		_tagId = tagId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalTagId() {
@@ -258,6 +272,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		}
 
 		_key = key;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalKey() {
@@ -276,6 +292,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 
 	public void setValue(String value) {
 		_value = value;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

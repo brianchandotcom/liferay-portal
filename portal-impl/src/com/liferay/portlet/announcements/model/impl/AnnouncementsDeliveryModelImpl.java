@@ -157,6 +157,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	public void setDeliveryId(long deliveryId) {
 		_deliveryId = deliveryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -166,6 +168,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,6 +185,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -211,6 +217,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalType() {
@@ -228,6 +236,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	public void setEmail(boolean email) {
 		_email = email;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -241,6 +251,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	public void setSms(boolean sms) {
 		_sms = sms;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -254,6 +266,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	public void setWebsite(boolean website) {
 		_website = website;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

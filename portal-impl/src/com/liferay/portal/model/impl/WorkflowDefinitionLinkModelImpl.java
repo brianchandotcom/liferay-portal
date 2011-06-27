@@ -119,6 +119,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setWorkflowDefinitionLinkId(long workflowDefinitionLinkId) {
 		_workflowDefinitionLinkId = workflowDefinitionLinkId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -133,6 +135,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -151,6 +155,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -163,6 +169,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -184,6 +192,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -192,6 +202,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -200,6 +212,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -222,6 +236,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -240,6 +256,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -257,6 +275,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setWorkflowDefinitionName(String workflowDefinitionName) {
 		_workflowDefinitionName = workflowDefinitionName;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getWorkflowDefinitionVersion() {
@@ -265,6 +285,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
 		_workflowDefinitionVersion = workflowDefinitionVersion;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

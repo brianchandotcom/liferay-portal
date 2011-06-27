@@ -443,14 +443,14 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		SCProductVersion scProductVersion = (SCProductVersion)EntityCacheUtil.getResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
 				SCProductVersionImpl.class, productVersionId, this);
 
-		if (scProductVersion == _NULL_PLACE_HOLDER) {
+		if (scProductVersion == _nullSCProductVersion) {
 			return null;
 		}
 
 		if (scProductVersion == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -459,15 +459,15 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 						Long.valueOf(productVersionId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (scProductVersion == null)) {
+				if (!hasException && (scProductVersion == null)) {
 					EntityCacheUtil.putResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductVersionImpl.class, productVersionId,
-						_NULL_PLACE_HOLDER);
+						_nullSCProductVersion);
 				}
 				else {
 					cacheResult(scProductVersion);
@@ -2013,6 +2013,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductVersion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final SCProductVersion _NULL_PLACE_HOLDER = new SCProductVersionImpl();
 	private static Log _log = LogFactoryUtil.getLog(SCProductVersionPersistenceImpl.class);
+	private static SCProductVersion _nullSCProductVersion = new SCProductVersionImpl();
 }

@@ -180,6 +180,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -193,6 +195,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setId(long id) {
 		_id = id;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -208,6 +212,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -221,6 +227,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -230,6 +238,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -252,6 +262,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -261,6 +273,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -270,6 +284,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -288,6 +304,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		}
 
 		_structureId = structureId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalStructureId() {
@@ -306,6 +324,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setParentStructureId(String parentStructureId) {
 		_parentStructureId = parentStructureId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -320,6 +340,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -334,6 +356,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -348,6 +372,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setXsd(String xsd) {
 		_xsd = xsd;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

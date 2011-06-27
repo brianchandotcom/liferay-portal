@@ -380,14 +380,14 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		ShoppingItemPrice shoppingItemPrice = (ShoppingItemPrice)EntityCacheUtil.getResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingItemPriceImpl.class, itemPriceId, this);
 
-		if (shoppingItemPrice == _NULL_PLACE_HOLDER) {
+		if (shoppingItemPrice == _nullShoppingItemPrice) {
 			return null;
 		}
 
 		if (shoppingItemPrice == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -396,15 +396,15 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 						Long.valueOf(itemPriceId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (shoppingItemPrice == null)) {
+				if (!hasException && (shoppingItemPrice == null)) {
 					EntityCacheUtil.putResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingItemPriceImpl.class, itemPriceId,
-						_NULL_PLACE_HOLDER);
+						_nullShoppingItemPrice);
 				}
 				else {
 					cacheResult(shoppingItemPrice);
@@ -1042,6 +1042,6 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingItemPrice exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingItemPrice exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final ShoppingItemPrice _NULL_PLACE_HOLDER = new ShoppingItemPriceImpl();
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPricePersistenceImpl.class);
+	private static ShoppingItemPrice _nullShoppingItemPrice = new ShoppingItemPriceImpl();
 }

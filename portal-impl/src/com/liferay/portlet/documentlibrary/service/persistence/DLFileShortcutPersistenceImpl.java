@@ -498,14 +498,14 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileShortcutImpl.class, fileShortcutId, this);
 
-		if (dlFileShortcut == _NULL_PLACE_HOLDER) {
+		if (dlFileShortcut == _nullDLFileShortcut) {
 			return null;
 		}
 
 		if (dlFileShortcut == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -514,15 +514,15 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 						Long.valueOf(fileShortcutId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (dlFileShortcut == null)) {
+				if (!hasException && (dlFileShortcut == null)) {
 					EntityCacheUtil.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 						DLFileShortcutImpl.class, fileShortcutId,
-						_NULL_PLACE_HOLDER);
+						_nullDLFileShortcut);
 				}
 				else {
 					cacheResult(dlFileShortcut);
@@ -3434,6 +3434,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileShortcut exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileShortcut exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final DLFileShortcut _NULL_PLACE_HOLDER = new DLFileShortcutImpl();
 	private static Log _log = LogFactoryUtil.getLog(DLFileShortcutPersistenceImpl.class);
+	private static DLFileShortcut _nullDLFileShortcut = new DLFileShortcutImpl();
 }

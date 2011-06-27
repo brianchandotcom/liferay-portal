@@ -117,6 +117,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setOrderItemId(long orderItemId) {
 		_orderItemId = orderItemId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOrderId() {
@@ -125,6 +127,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setOrderId(long orderId) {
 		_orderId = orderId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getItemId() {
@@ -138,6 +142,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setItemId(String itemId) {
 		_itemId = itemId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getSku() {
@@ -151,6 +157,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setSku(String sku) {
 		_sku = sku;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getName() {
@@ -164,6 +172,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getDescription() {
@@ -177,6 +187,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getProperties() {
@@ -190,6 +202,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setProperties(String properties) {
 		_properties = properties;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getPrice() {
@@ -198,6 +212,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setPrice(double price) {
 		_price = price;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getQuantity() {
@@ -206,6 +222,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getShippedDate() {
@@ -214,6 +232,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setShippedDate(Date shippedDate) {
 		_shippedDate = shippedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

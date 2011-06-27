@@ -150,6 +150,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public void setRegionId(long regionId) {
 		_regionId = regionId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -159,6 +161,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public void setCountryId(long countryId) {
 		_countryId = countryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -173,6 +177,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public void setRegionCode(String regionCode) {
 		_regionCode = regionCode;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -187,6 +193,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -200,6 +208,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

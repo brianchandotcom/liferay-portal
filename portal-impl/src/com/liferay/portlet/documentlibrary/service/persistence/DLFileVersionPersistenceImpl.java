@@ -464,14 +464,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		DLFileVersion dlFileVersion = (DLFileVersion)EntityCacheUtil.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileVersionImpl.class, fileVersionId, this);
 
-		if (dlFileVersion == _NULL_PLACE_HOLDER) {
+		if (dlFileVersion == _nullDLFileVersion) {
 			return null;
 		}
 
 		if (dlFileVersion == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -480,15 +480,15 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 						Long.valueOf(fileVersionId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (dlFileVersion == null)) {
+				if (!hasException && (dlFileVersion == null)) {
 					EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DLFileVersionImpl.class, fileVersionId,
-						_NULL_PLACE_HOLDER);
+						_nullDLFileVersion);
 				}
 				else {
 					cacheResult(dlFileVersion);
@@ -1806,6 +1806,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileVersion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final DLFileVersion _NULL_PLACE_HOLDER = new DLFileVersionImpl();
 	private static Log _log = LogFactoryUtil.getLog(DLFileVersionPersistenceImpl.class);
+	private static DLFileVersion _nullDLFileVersion = new DLFileVersionImpl();
 }

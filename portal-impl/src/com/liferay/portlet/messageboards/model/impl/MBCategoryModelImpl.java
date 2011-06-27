@@ -183,6 +183,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -196,6 +198,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -211,6 +215,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -224,6 +230,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -233,6 +241,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -255,6 +265,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -264,6 +276,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -273,6 +287,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -282,6 +298,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setParentCategoryId(long parentCategoryId) {
 		_parentCategoryId = parentCategoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -296,6 +314,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,6 +330,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -324,6 +346,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -333,6 +357,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setThreadCount(int threadCount) {
 		_threadCount = threadCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -342,6 +368,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setMessageCount(int messageCount) {
 		_messageCount = messageCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -351,6 +379,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

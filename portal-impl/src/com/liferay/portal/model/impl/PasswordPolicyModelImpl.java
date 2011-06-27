@@ -205,6 +205,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setPasswordPolicyId(long passwordPolicyId) {
 		_passwordPolicyId = passwordPolicyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -220,6 +222,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -233,6 +237,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -255,6 +261,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -264,6 +272,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -273,6 +283,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -292,6 +304,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		}
 
 		_defaultPolicy = defaultPolicy;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalDefaultPolicy() {
@@ -314,6 +328,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -332,6 +348,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -345,6 +363,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setChangeable(boolean changeable) {
 		_changeable = changeable;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -358,6 +378,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setChangeRequired(boolean changeRequired) {
 		_changeRequired = changeRequired;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -367,6 +389,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinAge(long minAge) {
 		_minAge = minAge;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -380,6 +404,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setCheckSyntax(boolean checkSyntax) {
 		_checkSyntax = checkSyntax;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -393,6 +419,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setAllowDictionaryWords(boolean allowDictionaryWords) {
 		_allowDictionaryWords = allowDictionaryWords;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -402,6 +430,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinAlphanumeric(int minAlphanumeric) {
 		_minAlphanumeric = minAlphanumeric;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -411,6 +441,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinLength(int minLength) {
 		_minLength = minLength;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -420,6 +452,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinLowerCase(int minLowerCase) {
 		_minLowerCase = minLowerCase;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -429,6 +463,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinNumbers(int minNumbers) {
 		_minNumbers = minNumbers;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -438,6 +474,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinSymbols(int minSymbols) {
 		_minSymbols = minSymbols;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -447,6 +485,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMinUpperCase(int minUpperCase) {
 		_minUpperCase = minUpperCase;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -460,6 +500,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setHistory(boolean history) {
 		_history = history;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -469,6 +511,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setHistoryCount(int historyCount) {
 		_historyCount = historyCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -482,6 +526,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setExpireable(boolean expireable) {
 		_expireable = expireable;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -491,6 +537,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMaxAge(long maxAge) {
 		_maxAge = maxAge;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -500,6 +548,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setWarningTime(long warningTime) {
 		_warningTime = warningTime;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -509,6 +559,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setGraceLimit(int graceLimit) {
 		_graceLimit = graceLimit;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -522,6 +574,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setLockout(boolean lockout) {
 		_lockout = lockout;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -531,6 +585,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setMaxFailure(int maxFailure) {
 		_maxFailure = maxFailure;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -540,6 +596,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setLockoutDuration(long lockoutDuration) {
 		_lockoutDuration = lockoutDuration;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -553,6 +611,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setRequireUnlock(boolean requireUnlock) {
 		_requireUnlock = requireUnlock;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -562,6 +622,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setResetFailureCount(long resetFailureCount) {
 		_resetFailureCount = resetFailureCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -571,6 +633,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	public void setResetTicketMaxAge(long resetTicketMaxAge) {
 		_resetTicketMaxAge = resetTicketMaxAge;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

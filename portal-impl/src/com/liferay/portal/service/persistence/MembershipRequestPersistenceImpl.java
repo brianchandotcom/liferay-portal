@@ -421,14 +421,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		MembershipRequest membershipRequest = (MembershipRequest)EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 				MembershipRequestImpl.class, membershipRequestId, this);
 
-		if (membershipRequest == _NULL_PLACE_HOLDER) {
+		if (membershipRequest == _nullMembershipRequest) {
 			return null;
 		}
 
 		if (membershipRequest == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -437,15 +437,15 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						Long.valueOf(membershipRequestId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (membershipRequest == null)) {
+				if (!hasException && (membershipRequest == null)) {
 					EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 						MembershipRequestImpl.class, membershipRequestId,
-						_NULL_PLACE_HOLDER);
+						_nullMembershipRequest);
 				}
 				else {
 					cacheResult(membershipRequest);
@@ -2495,6 +2495,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MembershipRequest exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MembershipRequest exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final MembershipRequest _NULL_PLACE_HOLDER = new MembershipRequestImpl();
 	private static Log _log = LogFactoryUtil.getLog(MembershipRequestPersistenceImpl.class);
+	private static MembershipRequest _nullMembershipRequest = new MembershipRequestImpl();
 }

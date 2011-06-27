@@ -477,14 +477,14 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 				UserGroupImpl.class, userGroupId, this);
 
-		if (userGroup == _NULL_PLACE_HOLDER) {
+		if (userGroup == _nullUserGroup) {
 			return null;
 		}
 
 		if (userGroup == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -493,14 +493,14 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 						Long.valueOf(userGroupId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (userGroup == null)) {
+				if (!hasException && (userGroup == null)) {
 					EntityCacheUtil.putResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupImpl.class, userGroupId, _NULL_PLACE_HOLDER);
+						UserGroupImpl.class, userGroupId, _nullUserGroup);
 				}
 				else {
 					cacheResult(userGroup);
@@ -4552,6 +4552,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserGroup exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserGroup exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final UserGroup _NULL_PLACE_HOLDER = new UserGroupImpl();
 	private static Log _log = LogFactoryUtil.getLog(UserGroupPersistenceImpl.class);
+	private static UserGroup _nullUserGroup = new UserGroupImpl();
 }

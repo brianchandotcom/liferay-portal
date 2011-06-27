@@ -108,6 +108,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 
 	public void setResourceActionId(long resourceActionId) {
 		_resourceActionId = resourceActionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getName() {
@@ -125,6 +127,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -146,6 +150,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 		}
 
 		_actionId = actionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalActionId() {
@@ -158,6 +164,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 
 	public void setBitwiseValue(long bitwiseValue) {
 		_bitwiseValue = bitwiseValue;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

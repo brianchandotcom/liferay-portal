@@ -117,6 +117,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setEquityLogId(long equityLogId) {
 		_equityLogId = equityLogId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -125,6 +127,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -133,6 +137,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -147,6 +153,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -173,6 +181,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_assetEntryId = assetEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalAssetEntryId() {
@@ -194,6 +204,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_actionId = actionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalActionId() {
@@ -212,6 +224,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_actionDate = actionDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalActionDate() {
@@ -234,6 +248,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalActive() {
@@ -246,6 +262,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setExpiration(int expiration) {
 		_expiration = expiration;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getType() {
@@ -260,6 +278,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -272,6 +292,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setValue(int value) {
 		_value = value;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getExtraData() {
@@ -289,6 +311,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		}
 
 		_extraData = extraData;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalExtraData() {

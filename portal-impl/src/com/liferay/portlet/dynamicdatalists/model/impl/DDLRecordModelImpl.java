@@ -179,6 +179,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -192,6 +194,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setRecordId(long recordId) {
 		_recordId = recordId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -207,6 +211,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -220,6 +226,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -229,6 +237,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -251,6 +261,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -260,6 +272,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setVersionUserId(long versionUserId) {
 		_versionUserId = versionUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getVersionUserUuid() throws SystemException {
@@ -283,6 +297,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setVersionUserName(String versionUserName) {
 		_versionUserName = versionUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -292,6 +308,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -301,6 +319,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,6 +330,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setDDMStorageId(long DDMStorageId) {
 		_DDMStorageId = DDMStorageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -319,6 +341,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setRecordSetId(long recordSetId) {
 		_recordSetId = recordSetId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -333,6 +357,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setVersion(String version) {
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -342,6 +368,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setDisplayIndex(int displayIndex) {
 		_displayIndex = displayIndex;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

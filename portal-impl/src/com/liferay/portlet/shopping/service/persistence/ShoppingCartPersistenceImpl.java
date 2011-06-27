@@ -441,14 +441,14 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		ShoppingCart shoppingCart = (ShoppingCart)EntityCacheUtil.getResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCartImpl.class, cartId, this);
 
-		if (shoppingCart == _NULL_PLACE_HOLDER) {
+		if (shoppingCart == _nullShoppingCart) {
 			return null;
 		}
 
 		if (shoppingCart == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -457,14 +457,14 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 						Long.valueOf(cartId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (shoppingCart == null)) {
+				if (!hasException && (shoppingCart == null)) {
 					EntityCacheUtil.putResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingCartImpl.class, cartId, _NULL_PLACE_HOLDER);
+						ShoppingCartImpl.class, cartId, _nullShoppingCart);
 				}
 				else {
 					cacheResult(shoppingCart);
@@ -1702,6 +1702,6 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCart exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCart exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final ShoppingCart _NULL_PLACE_HOLDER = new ShoppingCartImpl();
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCartPersistenceImpl.class);
+	private static ShoppingCart _nullShoppingCart = new ShoppingCartImpl();
 }

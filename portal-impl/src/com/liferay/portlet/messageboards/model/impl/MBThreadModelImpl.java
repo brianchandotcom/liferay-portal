@@ -176,6 +176,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setThreadId(long threadId) {
 		_threadId = threadId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -185,6 +187,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -194,6 +198,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -203,6 +209,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -218,6 +226,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		}
 
 		_rootMessageId = rootMessageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRootMessageId() {
@@ -231,6 +241,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setRootMessageUserId(long rootMessageUserId) {
 		_rootMessageUserId = rootMessageUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getRootMessageUserUuid() throws SystemException {
@@ -249,6 +261,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setMessageCount(int messageCount) {
 		_messageCount = messageCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -258,6 +272,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setViewCount(int viewCount) {
 		_viewCount = viewCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -267,6 +283,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setLastPostByUserId(long lastPostByUserId) {
 		_lastPostByUserId = lastPostByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getLastPostByUserUuid() throws SystemException {
@@ -285,6 +303,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -294,6 +314,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setPriority(double priority) {
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -303,6 +325,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -312,6 +336,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -335,6 +361,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -344,6 +372,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+
+		_escapedModelProxy = null;
 	}
 
 	/**

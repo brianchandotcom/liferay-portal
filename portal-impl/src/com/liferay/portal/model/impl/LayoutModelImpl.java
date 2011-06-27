@@ -211,6 +211,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -224,6 +226,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setPlid(long plid) {
 		_plid = plid;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -239,6 +243,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -252,6 +258,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -261,6 +269,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -270,6 +280,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -289,6 +301,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_privateLayout = privateLayout;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalPrivateLayout() {
@@ -308,6 +322,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_layoutId = layoutId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLayoutId() {
@@ -321,6 +337,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setParentLayoutId(long parentLayoutId) {
 		_parentLayoutId = parentLayoutId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -374,6 +392,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setName(String name, Locale locale) {
@@ -463,6 +483,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setTitle(String title) {
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -553,6 +575,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -646,6 +670,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setKeywords(String keywords) {
 		_keywords = keywords;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setKeywords(String keywords, Locale locale) {
@@ -736,6 +762,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setRobots(String robots) {
 		_robots = robots;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setRobots(String robots, Locale locale) {
@@ -786,6 +814,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setType(String type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -800,6 +830,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -813,6 +845,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setHidden(boolean hidden) {
 		_hidden = hidden;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -831,6 +865,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_friendlyURL = friendlyURL;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalFriendlyURL() {
@@ -848,6 +884,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setIconImage(boolean iconImage) {
 		_iconImage = iconImage;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -863,6 +901,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		_iconImageId = iconImageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalIconImageId() {
@@ -881,6 +921,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setThemeId(String themeId) {
 		_themeId = themeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -895,6 +937,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setColorSchemeId(String colorSchemeId) {
 		_colorSchemeId = colorSchemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -909,6 +953,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setWapThemeId(String wapThemeId) {
 		_wapThemeId = wapThemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -923,6 +969,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setWapColorSchemeId(String wapColorSchemeId) {
 		_wapColorSchemeId = wapColorSchemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -937,6 +985,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setCss(String css) {
 		_css = css;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -946,6 +996,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setPriority(int priority) {
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -955,6 +1007,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public void setLayoutPrototypeId(long layoutPrototypeId) {
 		_layoutPrototypeId = layoutPrototypeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

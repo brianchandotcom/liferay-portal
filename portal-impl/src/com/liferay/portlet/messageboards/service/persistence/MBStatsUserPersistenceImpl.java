@@ -447,14 +447,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		MBStatsUser mbStatsUser = (MBStatsUser)EntityCacheUtil.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 				MBStatsUserImpl.class, statsUserId, this);
 
-		if (mbStatsUser == _NULL_PLACE_HOLDER) {
+		if (mbStatsUser == _nullMBStatsUser) {
 			return null;
 		}
 
 		if (mbStatsUser == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -463,14 +463,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 						Long.valueOf(statsUserId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (mbStatsUser == null)) {
+				if (!hasException && (mbStatsUser == null)) {
 					EntityCacheUtil.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						MBStatsUserImpl.class, statsUserId, _NULL_PLACE_HOLDER);
+						MBStatsUserImpl.class, statsUserId, _nullMBStatsUser);
 				}
 				else {
 					cacheResult(mbStatsUser);
@@ -2163,6 +2163,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBStatsUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBStatsUser exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final MBStatsUser _NULL_PLACE_HOLDER = new MBStatsUserImpl();
 	private static Log _log = LogFactoryUtil.getLog(MBStatsUserPersistenceImpl.class);
+	private static MBStatsUser _nullMBStatsUser = new MBStatsUserImpl();
 }

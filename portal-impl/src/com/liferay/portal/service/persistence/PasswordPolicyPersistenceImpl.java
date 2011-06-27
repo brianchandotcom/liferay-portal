@@ -492,14 +492,14 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		PasswordPolicy passwordPolicy = (PasswordPolicy)EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 				PasswordPolicyImpl.class, passwordPolicyId, this);
 
-		if (passwordPolicy == _NULL_PLACE_HOLDER) {
+		if (passwordPolicy == _nullPasswordPolicy) {
 			return null;
 		}
 
 		if (passwordPolicy == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -508,15 +508,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						Long.valueOf(passwordPolicyId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (passwordPolicy == null)) {
+				if (!hasException && (passwordPolicy == null)) {
 					EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordPolicyImpl.class, passwordPolicyId,
-						_NULL_PLACE_HOLDER);
+						_nullPasswordPolicy);
 				}
 				else {
 					cacheResult(passwordPolicy);
@@ -1303,6 +1303,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PasswordPolicy exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PasswordPolicy exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final PasswordPolicy _NULL_PLACE_HOLDER = new PasswordPolicyImpl();
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyPersistenceImpl.class);
+	private static PasswordPolicy _nullPasswordPolicy = new PasswordPolicyImpl();
 }

@@ -448,14 +448,14 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		ResourceCode resourceCode = (ResourceCode)EntityCacheUtil.getResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceCodeImpl.class, codeId, this);
 
-		if (resourceCode == _NULL_PLACE_HOLDER) {
+		if (resourceCode == _nullResourceCode) {
 			return null;
 		}
 
 		if (resourceCode == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -464,14 +464,14 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 						Long.valueOf(codeId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (resourceCode == null)) {
+				if (!hasException && (resourceCode == null)) {
 					EntityCacheUtil.putResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceCodeImpl.class, codeId, _NULL_PLACE_HOLDER);
+						ResourceCodeImpl.class, codeId, _nullResourceCode);
 				}
 				else {
 					cacheResult(resourceCode);
@@ -1896,6 +1896,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceCode exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceCode exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final ResourceCode _NULL_PLACE_HOLDER = new ResourceCodeImpl();
 	private static Log _log = LogFactoryUtil.getLog(ResourceCodePersistenceImpl.class);
+	private static ResourceCode _nullResourceCode = new ResourceCodeImpl();
 }

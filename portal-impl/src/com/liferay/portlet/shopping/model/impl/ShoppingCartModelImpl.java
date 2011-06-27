@@ -118,6 +118,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setCartId(long cartId) {
 		_cartId = cartId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -132,6 +134,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -144,6 +148,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -158,6 +164,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -183,6 +191,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -191,6 +201,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -199,6 +211,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getItemIds() {
@@ -212,6 +226,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setItemIds(String itemIds) {
 		_itemIds = itemIds;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getCouponCodes() {
@@ -225,6 +241,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setCouponCodes(String couponCodes) {
 		_couponCodes = couponCodes;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getAltShipping() {
@@ -233,6 +251,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setAltShipping(int altShipping) {
 		_altShipping = altShipping;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getInsure() {
@@ -245,6 +265,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public void setInsure(boolean insure) {
 		_insure = insure;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

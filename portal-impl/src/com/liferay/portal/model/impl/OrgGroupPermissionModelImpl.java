@@ -103,6 +103,8 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -111,6 +113,8 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getPermissionId() {
@@ -119,6 +123,8 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	public void setPermissionId(long permissionId) {
 		_permissionId = permissionId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

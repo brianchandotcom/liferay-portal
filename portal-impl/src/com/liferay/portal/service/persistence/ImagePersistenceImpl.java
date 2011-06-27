@@ -365,14 +365,14 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		Image image = (Image)EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 				ImageImpl.class, imageId, this);
 
-		if (image == _NULL_PLACE_HOLDER) {
+		if (image == _nullImage) {
 			return null;
 		}
 
 		if (image == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -381,14 +381,14 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 						Long.valueOf(imageId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (image == null)) {
+				if (!hasException && (image == null)) {
 					EntityCacheUtil.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-						ImageImpl.class, imageId, _NULL_PLACE_HOLDER);
+						ImageImpl.class, imageId, _nullImage);
 				}
 				else {
 					cacheResult(image);
@@ -1124,6 +1124,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Image exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Image exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Image _NULL_PLACE_HOLDER = new ImageImpl();
 	private static Log _log = LogFactoryUtil.getLog(ImagePersistenceImpl.class);
+	private static Image _nullImage = new ImageImpl();
 }

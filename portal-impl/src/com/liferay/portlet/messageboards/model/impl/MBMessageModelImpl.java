@@ -205,6 +205,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -218,6 +220,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setMessageId(long messageId) {
 		_messageId = messageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -233,6 +237,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -246,6 +252,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -255,6 +263,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -277,6 +287,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -286,6 +298,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -295,6 +309,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -312,6 +328,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -321,6 +339,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -330,6 +350,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -339,6 +361,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setThreadId(long threadId) {
 		_threadId = threadId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -348,6 +372,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setRootMessageId(long rootMessageId) {
 		_rootMessageId = rootMessageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -357,6 +383,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setParentMessageId(long parentMessageId) {
 		_parentMessageId = parentMessageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -371,6 +399,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setSubject(String subject) {
 		_subject = subject;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -385,6 +415,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setBody(String body) {
 		_body = body;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -399,6 +431,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setFormat(String format) {
 		_format = format;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -412,6 +446,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setAttachments(boolean attachments) {
 		_attachments = attachments;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -425,6 +461,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setAnonymous(boolean anonymous) {
 		_anonymous = anonymous;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -434,6 +472,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setPriority(double priority) {
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -447,6 +487,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setAllowPingbacks(boolean allowPingbacks) {
 		_allowPingbacks = allowPingbacks;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -456,6 +498,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -465,6 +509,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -488,6 +534,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -497,6 +545,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+
+		_escapedModelProxy = null;
 	}
 
 	/**

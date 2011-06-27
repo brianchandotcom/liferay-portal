@@ -150,6 +150,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	public void setPluginSettingId(long pluginSettingId) {
 		_pluginSettingId = pluginSettingId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -165,6 +167,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -187,6 +191,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 
 		_pluginId = pluginId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPluginId() {
@@ -209,6 +215,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 
 		_pluginType = pluginType;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPluginType() {
@@ -227,6 +235,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	public void setRoles(String roles) {
 		_roles = roles;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -240,6 +250,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

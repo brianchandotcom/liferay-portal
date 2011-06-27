@@ -508,14 +508,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		WikiNode wikiNode = (WikiNode)EntityCacheUtil.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 				WikiNodeImpl.class, nodeId, this);
 
-		if (wikiNode == _NULL_PLACE_HOLDER) {
+		if (wikiNode == _nullWikiNode) {
 			return null;
 		}
 
 		if (wikiNode == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -524,14 +524,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 						Long.valueOf(nodeId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (wikiNode == null)) {
+				if (!hasException && (wikiNode == null)) {
 					EntityCacheUtil.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, nodeId, _NULL_PLACE_HOLDER);
+						WikiNodeImpl.class, nodeId, _nullWikiNode);
 				}
 				else {
 					cacheResult(wikiNode);
@@ -2837,6 +2837,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WikiNode exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiNode exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final WikiNode _NULL_PLACE_HOLDER = new WikiNodeImpl();
 	private static Log _log = LogFactoryUtil.getLog(WikiNodePersistenceImpl.class);
+	private static WikiNode _nullWikiNode = new WikiNodeImpl();
 }

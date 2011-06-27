@@ -497,14 +497,14 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SCProductEntryImpl.class, productEntryId, this);
 
-		if (scProductEntry == _NULL_PLACE_HOLDER) {
+		if (scProductEntry == _nullSCProductEntry) {
 			return null;
 		}
 
 		if (scProductEntry == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -513,15 +513,15 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 						Long.valueOf(productEntryId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (scProductEntry == null)) {
+				if (!hasException && (scProductEntry == null)) {
 					EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductEntryImpl.class, productEntryId,
-						_NULL_PLACE_HOLDER);
+						_nullSCProductEntry);
 				}
 				else {
 					cacheResult(scProductEntry);
@@ -3650,6 +3650,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final SCProductEntry _NULL_PLACE_HOLDER = new SCProductEntryImpl();
 	private static Log _log = LogFactoryUtil.getLog(SCProductEntryPersistenceImpl.class);
+	private static SCProductEntry _nullSCProductEntry = new SCProductEntryImpl();
 }

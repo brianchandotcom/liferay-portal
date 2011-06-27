@@ -470,14 +470,14 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetCategoryPropertyImpl.class, categoryPropertyId, this);
 
-		if (assetCategoryProperty == _NULL_PLACE_HOLDER) {
+		if (assetCategoryProperty == _nullAssetCategoryProperty) {
 			return null;
 		}
 
 		if (assetCategoryProperty == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -486,15 +486,15 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 						Long.valueOf(categoryPropertyId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (assetCategoryProperty == null)) {
+				if (!hasException && (assetCategoryProperty == null)) {
 					EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetCategoryPropertyImpl.class, categoryPropertyId,
-						_NULL_PLACE_HOLDER);
+						_nullAssetCategoryProperty);
 				}
 				else {
 					cacheResult(assetCategoryProperty);
@@ -2265,6 +2265,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetCategoryProperty exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategoryProperty exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final AssetCategoryProperty _NULL_PLACE_HOLDER = new AssetCategoryPropertyImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPropertyPersistenceImpl.class);
+	private static AssetCategoryProperty _nullAssetCategoryProperty = new AssetCategoryPropertyImpl();
 }

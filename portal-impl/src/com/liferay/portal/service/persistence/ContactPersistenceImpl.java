@@ -387,14 +387,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 				ContactImpl.class, contactId, this);
 
-		if (contact == _NULL_PLACE_HOLDER) {
+		if (contact == _nullContact) {
 			return null;
 		}
 
 		if (contact == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -403,14 +403,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						Long.valueOf(contactId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (contact == null)) {
+				if (!hasException && (contact == null)) {
 					EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-						ContactImpl.class, contactId, _NULL_PLACE_HOLDER);
+						ContactImpl.class, contactId, _nullContact);
 				}
 				else {
 					cacheResult(contact);
@@ -1140,6 +1140,6 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Contact exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Contact exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Contact _NULL_PLACE_HOLDER = new ContactImpl();
 	private static Log _log = LogFactoryUtil.getLog(ContactPersistenceImpl.class);
+	private static Contact _nullContact = new ContactImpl();
 }

@@ -103,6 +103,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -111,6 +113,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getRoleId() {
@@ -119,6 +123,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	public void setRoleId(long roleId) {
 		_roleId = roleId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

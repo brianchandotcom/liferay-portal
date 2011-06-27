@@ -576,14 +576,14 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		ExpandoValue expandoValue = (ExpandoValue)EntityCacheUtil.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoValueImpl.class, valueId, this);
 
-		if (expandoValue == _NULL_PLACE_HOLDER) {
+		if (expandoValue == _nullExpandoValue) {
 			return null;
 		}
 
 		if (expandoValue == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -592,14 +592,14 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 						Long.valueOf(valueId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (expandoValue == null)) {
+				if (!hasException && (expandoValue == null)) {
 					EntityCacheUtil.putResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoValueImpl.class, valueId, _NULL_PLACE_HOLDER);
+						ExpandoValueImpl.class, valueId, _nullExpandoValue);
 				}
 				else {
 					cacheResult(expandoValue);
@@ -4732,6 +4732,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExpandoValue exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoValue exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final ExpandoValue _NULL_PLACE_HOLDER = new ExpandoValueImpl();
 	private static Log _log = LogFactoryUtil.getLog(ExpandoValuePersistenceImpl.class);
+	private static ExpandoValue _nullExpandoValue = new ExpandoValueImpl();
 }

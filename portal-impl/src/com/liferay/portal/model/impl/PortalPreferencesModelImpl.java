@@ -106,6 +106,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	public void setPortalPreferencesId(long portalPreferencesId) {
 		_portalPreferencesId = portalPreferencesId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOwnerId() {
@@ -120,6 +122,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		}
 
 		_ownerId = ownerId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalOwnerId() {
@@ -138,6 +142,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		}
 
 		_ownerType = ownerType;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalOwnerType() {
@@ -155,6 +161,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	public void setPreferences(String preferences) {
 		_preferences = preferences;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

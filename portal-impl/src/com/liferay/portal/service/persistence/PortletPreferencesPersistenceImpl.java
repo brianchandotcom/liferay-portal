@@ -486,14 +486,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 				PortletPreferencesImpl.class, portletPreferencesId, this);
 
-		if (portletPreferences == _NULL_PLACE_HOLDER) {
+		if (portletPreferences == _nullPortletPreferences) {
 			return null;
 		}
 
 		if (portletPreferences == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -502,15 +502,15 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 						Long.valueOf(portletPreferencesId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (portletPreferences == null)) {
+				if (!hasException && (portletPreferences == null)) {
 					EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortletPreferencesImpl.class, portletPreferencesId,
-						_NULL_PLACE_HOLDER);
+						_nullPortletPreferences);
 				}
 				else {
 					cacheResult(portletPreferences);
@@ -2449,6 +2449,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletPreferences exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final PortletPreferences _NULL_PLACE_HOLDER = new PortletPreferencesImpl();
 	private static Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceImpl.class);
+	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl();
 }

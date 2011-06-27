@@ -454,14 +454,14 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		MBDiscussion mbDiscussion = (MBDiscussion)EntityCacheUtil.getResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
 				MBDiscussionImpl.class, discussionId, this);
 
-		if (mbDiscussion == _NULL_PLACE_HOLDER) {
+		if (mbDiscussion == _nullMBDiscussion) {
 			return null;
 		}
 
 		if (mbDiscussion == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -470,14 +470,14 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 						Long.valueOf(discussionId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (mbDiscussion == null)) {
+				if (!hasException && (mbDiscussion == null)) {
 					EntityCacheUtil.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-						MBDiscussionImpl.class, discussionId, _NULL_PLACE_HOLDER);
+						MBDiscussionImpl.class, discussionId, _nullMBDiscussion);
 				}
 				else {
 					cacheResult(mbDiscussion);
@@ -1515,6 +1515,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBDiscussion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBDiscussion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final MBDiscussion _NULL_PLACE_HOLDER = new MBDiscussionImpl();
 	private static Log _log = LogFactoryUtil.getLog(MBDiscussionPersistenceImpl.class);
+	private static MBDiscussion _nullMBDiscussion = new MBDiscussionImpl();
 }

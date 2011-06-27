@@ -534,14 +534,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		AssetEntry assetEntry = (AssetEntry)EntityCacheUtil.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetEntryImpl.class, entryId, this);
 
-		if (assetEntry == _NULL_PLACE_HOLDER) {
+		if (assetEntry == _nullAssetEntry) {
 			return null;
 		}
 
 		if (assetEntry == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -550,14 +550,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 						Long.valueOf(entryId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (assetEntry == null)) {
+				if (!hasException && (assetEntry == null)) {
 					EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetEntryImpl.class, entryId, _NULL_PLACE_HOLDER);
+						AssetEntryImpl.class, entryId, _nullAssetEntry);
 				}
 				else {
 					cacheResult(assetEntry);
@@ -2989,6 +2989,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final AssetEntry _NULL_PLACE_HOLDER = new AssetEntryImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
+	private static AssetEntry _nullAssetEntry = new AssetEntryImpl();
 }

@@ -375,14 +375,14 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		Repository repository = (Repository)EntityCacheUtil.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 				RepositoryImpl.class, repositoryId, this);
 
-		if (repository == _NULL_PLACE_HOLDER) {
+		if (repository == _nullRepository) {
 			return null;
 		}
 
 		if (repository == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -391,14 +391,14 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 						Long.valueOf(repositoryId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (repository == null)) {
+				if (!hasException && (repository == null)) {
 					EntityCacheUtil.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-						RepositoryImpl.class, repositoryId, _NULL_PLACE_HOLDER);
+						RepositoryImpl.class, repositoryId, _nullRepository);
 				}
 				else {
 					cacheResult(repository);
@@ -1135,6 +1135,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Repository exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Repository exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Repository _NULL_PLACE_HOLDER = new RepositoryImpl();
 	private static Log _log = LogFactoryUtil.getLog(RepositoryPersistenceImpl.class);
+	private static Repository _nullRepository = new RepositoryImpl();
 }

@@ -112,6 +112,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setEquityHistoryId(long equityHistoryId) {
 		_equityHistoryId = equityHistoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -120,6 +122,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -128,6 +132,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -136,6 +142,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -152,6 +160,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getPersonalEquity() {
@@ -160,6 +170,8 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	public void setPersonalEquity(int personalEquity) {
 		_personalEquity = personalEquity;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -865,14 +865,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 				UserImpl.class, userId, this);
 
-		if (user == _NULL_PLACE_HOLDER) {
+		if (user == _nullUser) {
 			return null;
 		}
 
 		if (user == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -880,14 +880,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				user = (User)session.get(UserImpl.class, Long.valueOf(userId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (user == null)) {
+				if (!hasException && (user == null)) {
 					EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, userId, _NULL_PLACE_HOLDER);
+						UserImpl.class, userId, _nullUser);
 				}
 				else {
 					cacheResult(user);
@@ -8576,6 +8576,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No User exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final User _NULL_PLACE_HOLDER = new UserImpl();
 	private static Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
+	private static User _nullUser = new UserImpl();
 }

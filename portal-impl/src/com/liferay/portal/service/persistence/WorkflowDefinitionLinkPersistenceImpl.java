@@ -478,14 +478,14 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)EntityCacheUtil.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkId, this);
 
-		if (workflowDefinitionLink == _NULL_PLACE_HOLDER) {
+		if (workflowDefinitionLink == _nullWorkflowDefinitionLink) {
 			return null;
 		}
 
 		if (workflowDefinitionLink == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -494,15 +494,15 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 						Long.valueOf(workflowDefinitionLinkId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (workflowDefinitionLink == null)) {
+				if (!hasException && (workflowDefinitionLink == null)) {
 					EntityCacheUtil.putResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 						WorkflowDefinitionLinkImpl.class,
-						workflowDefinitionLinkId, _NULL_PLACE_HOLDER);
+						workflowDefinitionLinkId, _nullWorkflowDefinitionLink);
 				}
 				else {
 					cacheResult(workflowDefinitionLink);
@@ -2027,6 +2027,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WorkflowDefinitionLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WorkflowDefinitionLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final WorkflowDefinitionLink _NULL_PLACE_HOLDER = new WorkflowDefinitionLinkImpl();
 	private static Log _log = LogFactoryUtil.getLog(WorkflowDefinitionLinkPersistenceImpl.class);
+	private static WorkflowDefinitionLink _nullWorkflowDefinitionLink = new WorkflowDefinitionLinkImpl();
 }

@@ -148,6 +148,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 	public void setId(long id) {
 		_id = id;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -163,6 +165,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -185,6 +189,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		}
 
 		_portletId = portletId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPortletId() {
@@ -203,6 +209,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 	public void setRoles(String roles) {
 		_roles = roles;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -216,6 +224,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

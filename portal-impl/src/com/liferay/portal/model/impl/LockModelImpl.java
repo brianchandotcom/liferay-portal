@@ -121,6 +121,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getLockId() {
@@ -129,6 +131,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setLockId(long lockId) {
 		_lockId = lockId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -137,6 +141,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -145,6 +151,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -166,6 +174,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -174,6 +184,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -191,6 +203,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		}
 
 		_className = className;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalClassName() {
@@ -212,6 +226,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		}
 
 		_key = key;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalKey() {
@@ -229,6 +245,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setOwner(String owner) {
 		_owner = owner;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getInheritable() {
@@ -241,6 +259,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setInheritable(boolean inheritable) {
 		_inheritable = inheritable;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getExpirationDate() {
@@ -249,6 +269,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

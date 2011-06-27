@@ -166,6 +166,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setLayoutSetId(long layoutSetId) {
 		_layoutSetId = layoutSetId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,6 +183,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -194,6 +198,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -213,6 +219,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		}
 
 		_privateLayout = privateLayout;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalPrivateLayout() {
@@ -230,6 +238,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setLogo(boolean logo) {
 		_logo = logo;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -239,6 +249,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setLogoId(long logoId) {
 		_logoId = logoId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -253,6 +265,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setThemeId(String themeId) {
 		_themeId = themeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -267,6 +281,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setColorSchemeId(String colorSchemeId) {
 		_colorSchemeId = colorSchemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -281,6 +297,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setWapThemeId(String wapThemeId) {
 		_wapThemeId = wapThemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -295,6 +313,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setWapColorSchemeId(String wapColorSchemeId) {
 		_wapColorSchemeId = wapColorSchemeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -309,6 +329,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setCss(String css) {
 		_css = css;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -318,6 +340,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setPageCount(int pageCount) {
 		_pageCount = pageCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -332,6 +356,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setSettings(String settings) {
 		_settings = settings;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -341,6 +367,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
 		_layoutSetPrototypeId = layoutSetPrototypeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

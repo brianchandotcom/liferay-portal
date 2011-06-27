@@ -162,6 +162,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -171,6 +173,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -180,6 +184,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -189,6 +195,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -198,6 +206,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -215,6 +225,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -229,6 +241,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -243,6 +257,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -257,6 +273,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -271,6 +289,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -280,6 +300,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public void setDlFolderId(long dlFolderId) {
 		_dlFolderId = dlFolderId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

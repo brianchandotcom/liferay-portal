@@ -129,6 +129,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -141,6 +143,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setRequestId(long requestId) {
 		_requestId = requestId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -155,6 +159,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -167,6 +173,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -181,6 +189,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -201,6 +211,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setCreateDate(long createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getModifiedDate() {
@@ -209,6 +221,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setModifiedDate(long modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -231,6 +245,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -249,6 +265,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -267,6 +285,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -284,6 +304,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setExtraData(String extraData) {
 		_extraData = extraData;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getReceiverUserId() {
@@ -298,6 +320,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 
 		_receiverUserId = receiverUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getReceiverUserUuid() throws SystemException {
@@ -319,6 +343,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -416,14 +416,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		DLFileEntryType dlFileEntryType = (DLFileEntryType)EntityCacheUtil.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileEntryTypeImpl.class, fileEntryTypeId, this);
 
-		if (dlFileEntryType == _NULL_PLACE_HOLDER) {
+		if (dlFileEntryType == _nullDLFileEntryType) {
 			return null;
 		}
 
 		if (dlFileEntryType == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -432,15 +432,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 						Long.valueOf(fileEntryTypeId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (dlFileEntryType == null)) {
+				if (!hasException && (dlFileEntryType == null)) {
 					EntityCacheUtil.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 						DLFileEntryTypeImpl.class, fileEntryTypeId,
-						_NULL_PLACE_HOLDER);
+						_nullDLFileEntryType);
 				}
 				else {
 					cacheResult(dlFileEntryType);
@@ -3043,6 +3043,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntryType exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryType exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final DLFileEntryType _NULL_PLACE_HOLDER = new DLFileEntryTypeImpl();
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryTypePersistenceImpl.class);
+	private static DLFileEntryType _nullDLFileEntryType = new DLFileEntryTypeImpl();
 }

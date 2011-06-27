@@ -152,6 +152,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setColumnId(long columnId) {
 		_columnId = columnId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -161,6 +163,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -176,6 +180,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		}
 
 		_tableId = tableId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalTableId() {
@@ -198,6 +204,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -211,6 +219,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setType(int type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -225,6 +235,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setDefaultData(String defaultData) {
 		_defaultData = defaultData;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -239,6 +251,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

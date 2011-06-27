@@ -103,6 +103,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	public void setRowId(long rowId) {
 		_rowId = rowId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -111,6 +113,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getTableId() {
@@ -125,6 +129,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		}
 
 		_tableId = tableId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalTableId() {
@@ -143,6 +149,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {

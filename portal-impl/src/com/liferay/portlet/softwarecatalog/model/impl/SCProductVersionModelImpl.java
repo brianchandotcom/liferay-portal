@@ -174,6 +174,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setProductVersionId(long productVersionId) {
 		_productVersionId = productVersionId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -183,6 +185,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -192,6 +196,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -214,6 +220,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -223,6 +231,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -232,6 +242,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -241,6 +253,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setProductEntryId(long productEntryId) {
 		_productEntryId = productEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -255,6 +269,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setVersion(String version) {
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -269,6 +285,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setChangeLog(String changeLog) {
 		_changeLog = changeLog;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -283,6 +301,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setDownloadPageURL(String downloadPageURL) {
 		_downloadPageURL = downloadPageURL;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -301,6 +321,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		}
 
 		_directDownloadURL = directDownloadURL;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalDirectDownloadURL() {
@@ -318,6 +340,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	public void setRepoStoreArtifact(boolean repoStoreArtifact) {
 		_repoStoreArtifact = repoStoreArtifact;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

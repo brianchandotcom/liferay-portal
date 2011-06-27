@@ -109,6 +109,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	public void setServiceComponentId(long serviceComponentId) {
 		_serviceComponentId = serviceComponentId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getBuildNamespace() {
@@ -126,6 +128,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		}
 
 		_buildNamespace = buildNamespace;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalBuildNamespace() {
@@ -144,6 +148,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		}
 
 		_buildNumber = buildNumber;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalBuildNumber() {
@@ -156,6 +162,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	public void setBuildDate(long buildDate) {
 		_buildDate = buildDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getData() {
@@ -169,6 +177,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	public void setData(String data) {
 		_data = data;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

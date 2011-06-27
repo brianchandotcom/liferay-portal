@@ -199,6 +199,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -212,6 +214,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setId(long id) {
 		_id = id;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -227,6 +231,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -240,6 +246,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -249,6 +257,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -271,6 +281,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -280,6 +292,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -289,6 +303,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -307,6 +323,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		}
 
 		_feedId = feedId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalFeedId() {
@@ -325,6 +343,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -339,6 +359,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -353,6 +375,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setType(String type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -367,6 +391,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setStructureId(String structureId) {
 		_structureId = structureId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -381,6 +407,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setTemplateId(String templateId) {
 		_templateId = templateId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -395,6 +423,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setRendererTemplateId(String rendererTemplateId) {
 		_rendererTemplateId = rendererTemplateId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -404,6 +434,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setDelta(int delta) {
 		_delta = delta;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -418,6 +450,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setOrderByCol(String orderByCol) {
 		_orderByCol = orderByCol;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -432,6 +466,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setOrderByType(String orderByType) {
 		_orderByType = orderByType;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -446,6 +482,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setTargetLayoutFriendlyUrl(String targetLayoutFriendlyUrl) {
 		_targetLayoutFriendlyUrl = targetLayoutFriendlyUrl;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -460,6 +498,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setTargetPortletId(String targetPortletId) {
 		_targetPortletId = targetPortletId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -474,6 +514,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setContentField(String contentField) {
 		_contentField = contentField;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -488,6 +530,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setFeedType(String feedType) {
 		_feedType = feedType;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -497,6 +541,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setFeedVersion(double feedVersion) {
 		_feedVersion = feedVersion;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

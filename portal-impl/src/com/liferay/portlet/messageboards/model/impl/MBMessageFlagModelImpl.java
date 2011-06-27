@@ -153,6 +153,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 
 	public void setMessageFlagId(long messageFlagId) {
 		_messageFlagId = messageFlagId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -168,6 +170,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -189,6 +193,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -198,6 +204,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 
 	public void setThreadId(long threadId) {
 		_threadId = threadId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -213,6 +221,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		}
 
 		_messageId = messageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalMessageId() {
@@ -232,6 +242,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		}
 
 		_flag = flag;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalFlag() {

@@ -627,14 +627,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		AssetCategory assetCategory = (AssetCategory)EntityCacheUtil.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetCategoryImpl.class, categoryId, this);
 
-		if (assetCategory == _NULL_PLACE_HOLDER) {
+		if (assetCategory == _nullAssetCategory) {
 			return null;
 		}
 
 		if (assetCategory == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -643,14 +643,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 						Long.valueOf(categoryId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (assetCategory == null)) {
+				if (!hasException && (assetCategory == null)) {
 					EntityCacheUtil.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryImpl.class, categoryId, _NULL_PLACE_HOLDER);
+						AssetCategoryImpl.class, categoryId, _nullAssetCategory);
 				}
 				else {
 					cacheResult(assetCategory);
@@ -5726,6 +5726,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetCategory exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final AssetCategory _NULL_PLACE_HOLDER = new AssetCategoryImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPersistenceImpl.class);
+	private static AssetCategory _nullAssetCategory = new AssetCategoryImpl();
 }

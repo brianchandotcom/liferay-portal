@@ -164,6 +164,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
 		_layoutSetBranchId = layoutSetBranchId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -179,6 +181,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -192,6 +196,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -201,6 +207,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -223,6 +231,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -232,6 +242,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -241,6 +253,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -260,6 +274,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		}
 
 		_privateLayout = privateLayout;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalPrivateLayout() {
@@ -282,6 +298,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -300,6 +318,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

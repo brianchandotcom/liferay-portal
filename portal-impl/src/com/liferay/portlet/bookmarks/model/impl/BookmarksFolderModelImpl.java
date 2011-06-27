@@ -176,6 +176,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -189,6 +191,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -204,6 +208,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -217,6 +223,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -226,6 +234,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -248,6 +258,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -257,6 +269,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -266,6 +280,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -275,6 +291,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setParentFolderId(long parentFolderId) {
 		_parentFolderId = parentFolderId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -289,6 +307,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -303,6 +323,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

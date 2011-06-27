@@ -432,14 +432,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 				PollsVoteImpl.class, voteId, this);
 
-		if (pollsVote == _NULL_PLACE_HOLDER) {
+		if (pollsVote == _nullPollsVote) {
 			return null;
 		}
 
 		if (pollsVote == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -448,14 +448,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						Long.valueOf(voteId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (pollsVote == null)) {
+				if (!hasException && (pollsVote == null)) {
 					EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-						PollsVoteImpl.class, voteId, _NULL_PLACE_HOLDER);
+						PollsVoteImpl.class, voteId, _nullPollsVote);
 				}
 				else {
 					cacheResult(pollsVote);
@@ -1687,6 +1687,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PollsVote exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PollsVote exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final PollsVote _NULL_PLACE_HOLDER = new PollsVoteImpl();
 	private static Log _log = LogFactoryUtil.getLog(PollsVotePersistenceImpl.class);
+	private static PollsVote _nullPollsVote = new PollsVoteImpl();
 }

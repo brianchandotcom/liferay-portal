@@ -111,6 +111,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	public void setArticleImageId(long articleImageId) {
 		_articleImageId = articleImageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -125,6 +127,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -146,6 +150,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_articleId = articleId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalArticleId() {
@@ -164,6 +170,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getOriginalVersion() {
@@ -185,6 +193,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_elInstanceId = elInstanceId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalElInstanceId() {
@@ -206,6 +216,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_elName = elName;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalElName() {
@@ -227,6 +239,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		}
 
 		_languageId = languageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalLanguageId() {
@@ -243,6 +257,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	public void setTempImage(boolean tempImage) {
 		_tempImage = tempImage;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

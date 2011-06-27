@@ -225,6 +225,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -238,6 +240,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setId(long id) {
 		_id = id;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -247,6 +251,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setResourcePrimKey(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean isResourceMain() {
@@ -266,6 +272,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -279,6 +287,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -288,6 +298,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -310,6 +322,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -319,6 +333,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -328,6 +344,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -351,6 +369,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -370,6 +390,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -392,6 +414,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_articleId = articleId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalArticleId() {
@@ -411,6 +435,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getOriginalVersion() {
@@ -468,6 +494,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setTitle(String title) {
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -518,6 +546,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setUrlTitle(String urlTitle) {
 		_urlTitle = urlTitle;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -572,6 +602,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -625,6 +657,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setContent(String content) {
 		_content = content;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -639,6 +673,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setType(String type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -657,6 +693,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		_structureId = structureId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalStructureId() {
@@ -675,6 +713,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setTemplateId(String templateId) {
 		_templateId = templateId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -689,6 +729,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setLayoutUuid(String layoutUuid) {
 		_layoutUuid = layoutUuid;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -698,6 +740,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setDisplayDate(Date displayDate) {
 		_displayDate = displayDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -707,6 +751,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -716,6 +762,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setReviewDate(Date reviewDate) {
 		_reviewDate = reviewDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -729,6 +777,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setIndexable(boolean indexable) {
 		_indexable = indexable;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -742,6 +792,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setSmallImage(boolean smallImage) {
 		_smallImage = smallImage;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -751,6 +803,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setSmallImageId(long smallImageId) {
 		_smallImageId = smallImageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -765,6 +819,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setSmallImageURL(String smallImageURL) {
 		_smallImageURL = smallImageURL;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -774,6 +830,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -783,6 +841,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -806,6 +866,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -815,6 +877,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+
+		_escapedModelProxy = null;
 	}
 
 	/**

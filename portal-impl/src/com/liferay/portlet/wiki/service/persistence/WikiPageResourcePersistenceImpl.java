@@ -446,14 +446,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageResourceImpl.class, resourcePrimKey, this);
 
-		if (wikiPageResource == _NULL_PLACE_HOLDER) {
+		if (wikiPageResource == _nullWikiPageResource) {
 			return null;
 		}
 
 		if (wikiPageResource == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -462,15 +462,15 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						Long.valueOf(resourcePrimKey));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (wikiPageResource == null)) {
+				if (!hasException && (wikiPageResource == null)) {
 					EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageResourceImpl.class, resourcePrimKey,
-						_NULL_PLACE_HOLDER);
+						_nullWikiPageResource);
 				}
 				else {
 					cacheResult(wikiPageResource);
@@ -1366,6 +1366,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WikiPageResource exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiPageResource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final WikiPageResource _NULL_PLACE_HOLDER = new WikiPageResourceImpl();
 	private static Log _log = LogFactoryUtil.getLog(WikiPageResourcePersistenceImpl.class);
+	private static WikiPageResource _nullWikiPageResource = new WikiPageResourceImpl();
 }

@@ -370,14 +370,14 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		UserTrackerPath userTrackerPath = (UserTrackerPath)EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 				UserTrackerPathImpl.class, userTrackerPathId, this);
 
-		if (userTrackerPath == _NULL_PLACE_HOLDER) {
+		if (userTrackerPath == _nullUserTrackerPath) {
 			return null;
 		}
 
 		if (userTrackerPath == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -386,15 +386,15 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 						Long.valueOf(userTrackerPathId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (userTrackerPath == null)) {
+				if (!hasException && (userTrackerPath == null)) {
 					EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 						UserTrackerPathImpl.class, userTrackerPathId,
-						_NULL_PLACE_HOLDER);
+						_nullUserTrackerPath);
 				}
 				else {
 					cacheResult(userTrackerPath);
@@ -1132,6 +1132,6 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserTrackerPath exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserTrackerPath exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final UserTrackerPath _NULL_PLACE_HOLDER = new UserTrackerPathImpl();
 	private static Log _log = LogFactoryUtil.getLog(UserTrackerPathPersistenceImpl.class);
+	private static UserTrackerPath _nullUserTrackerPath = new UserTrackerPathImpl();
 }

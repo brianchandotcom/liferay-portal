@@ -114,6 +114,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setEquitySettingId(long equitySettingId) {
 		_equitySettingId = equitySettingId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -128,6 +130,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -140,6 +144,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -162,6 +168,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -183,6 +191,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 		}
 
 		_actionId = actionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalActionId() {
@@ -195,6 +205,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setDailyLimit(int dailyLimit) {
 		_dailyLimit = dailyLimit;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getLifespan() {
@@ -203,6 +215,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setLifespan(int lifespan) {
 		_lifespan = lifespan;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getType() {
@@ -217,6 +231,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -233,6 +249,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setUniqueEntry(boolean uniqueEntry) {
 		_uniqueEntry = uniqueEntry;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getValue() {
@@ -241,6 +259,8 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	public void setValue(int value) {
 		_value = value;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

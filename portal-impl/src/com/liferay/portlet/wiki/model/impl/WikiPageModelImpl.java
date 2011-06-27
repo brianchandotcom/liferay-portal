@@ -200,6 +200,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -213,6 +215,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setPageId(long pageId) {
 		_pageId = pageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -228,6 +232,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_resourcePrimKey = resourcePrimKey;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean isResourceMain() {
@@ -251,6 +257,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -264,6 +272,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -273,6 +283,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -295,6 +307,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -304,6 +318,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -313,6 +329,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -328,6 +346,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_nodeId = nodeId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalNodeId() {
@@ -350,6 +370,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalTitle() {
@@ -369,6 +391,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getOriginalVersion() {
@@ -386,6 +410,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setMinorEdit(boolean minorEdit) {
 		_minorEdit = minorEdit;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -400,6 +426,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setContent(String content) {
 		_content = content;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -414,6 +442,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setSummary(String summary) {
 		_summary = summary;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -428,6 +458,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setFormat(String format) {
 		_format = format;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -441,6 +473,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setHead(boolean head) {
 		_head = head;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -455,6 +489,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setParentTitle(String parentTitle) {
 		_parentTitle = parentTitle;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -469,6 +505,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setRedirectTitle(String redirectTitle) {
 		_redirectTitle = redirectTitle;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -478,6 +516,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -487,6 +527,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -510,6 +552,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -519,6 +563,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+
+		_escapedModelProxy = null;
 	}
 
 	/**

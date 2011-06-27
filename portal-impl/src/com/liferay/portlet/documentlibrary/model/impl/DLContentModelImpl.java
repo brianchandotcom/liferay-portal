@@ -111,6 +111,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public void setContentId(long contentId) {
 		_contentId = contentId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -119,6 +121,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -133,6 +137,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -154,6 +160,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		}
 
 		_portletId = portletId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPortletId() {
@@ -172,6 +180,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		}
 
 		_repositoryId = repositoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRepositoryId() {
@@ -193,6 +203,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		}
 
 		_path = path;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPath() {
@@ -214,6 +226,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		}
 
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalVersion() {
@@ -243,6 +257,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		else {
 			_dataBlobModel.setDataBlob(data);
 		}
+
+		_escapedModelProxy = null;
 	}
 
 	public long getSize() {
@@ -251,6 +267,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public void setSize(long size) {
 		_size = size;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

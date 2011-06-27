@@ -529,14 +529,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetVocabularyImpl.class, vocabularyId, this);
 
-		if (assetVocabulary == _NULL_PLACE_HOLDER) {
+		if (assetVocabulary == _nullAssetVocabulary) {
 			return null;
 		}
 
 		if (assetVocabulary == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -545,15 +545,15 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						Long.valueOf(vocabularyId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (assetVocabulary == null)) {
+				if (!hasException && (assetVocabulary == null)) {
 					EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetVocabularyImpl.class, vocabularyId,
-						_NULL_PLACE_HOLDER);
+						_nullAssetVocabulary);
 				}
 				else {
 					cacheResult(assetVocabulary);
@@ -2874,6 +2874,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetVocabulary exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetVocabulary exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final AssetVocabulary _NULL_PLACE_HOLDER = new AssetVocabularyImpl();
 	private static Log _log = LogFactoryUtil.getLog(AssetVocabularyPersistenceImpl.class);
+	private static AssetVocabulary _nullAssetVocabulary = new AssetVocabularyImpl();
 }

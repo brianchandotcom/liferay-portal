@@ -115,6 +115,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getRelationId() {
@@ -123,6 +125,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public void setRelationId(long relationId) {
 		_relationId = relationId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -131,6 +135,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCreateDate() {
@@ -139,6 +145,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public void setCreateDate(long createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId1() {
@@ -153,6 +161,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		}
 
 		_userId1 = userId1;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalUserId1() {
@@ -171,6 +181,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		}
 
 		_userId2 = userId2;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalUserId2() {
@@ -189,6 +201,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		}
 
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {

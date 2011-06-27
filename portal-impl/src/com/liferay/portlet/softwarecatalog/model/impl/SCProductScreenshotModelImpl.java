@@ -111,6 +111,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 	public void setProductScreenshotId(long productScreenshotId) {
 		_productScreenshotId = productScreenshotId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -119,6 +121,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -127,6 +131,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getProductEntryId() {
@@ -141,6 +147,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		}
 
 		_productEntryId = productEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalProductEntryId() {
@@ -159,6 +167,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		}
 
 		_thumbnailId = thumbnailId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalThumbnailId() {
@@ -177,6 +187,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		}
 
 		_fullImageId = fullImageId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFullImageId() {
@@ -195,6 +207,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		}
 
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalPriority() {

@@ -425,14 +425,14 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		Website website = (Website)EntityCacheUtil.getResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 				WebsiteImpl.class, websiteId, this);
 
-		if (website == _NULL_PLACE_HOLDER) {
+		if (website == _nullWebsite) {
 			return null;
 		}
 
 		if (website == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -441,14 +441,14 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 						Long.valueOf(websiteId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (website == null)) {
+				if (!hasException && (website == null)) {
 					EntityCacheUtil.putResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
-						WebsiteImpl.class, websiteId, _NULL_PLACE_HOLDER);
+						WebsiteImpl.class, websiteId, _nullWebsite);
 				}
 				else {
 					cacheResult(website);
@@ -2982,6 +2982,6 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Website exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Website exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Website _NULL_PLACE_HOLDER = new WebsiteImpl();
 	private static Log _log = LogFactoryUtil.getLog(WebsitePersistenceImpl.class);
+	private static Website _nullWebsite = new WebsiteImpl();
 }

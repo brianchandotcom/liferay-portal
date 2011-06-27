@@ -181,6 +181,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setCouponId(long couponId) {
 		_couponId = couponId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -190,6 +192,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -199,6 +203,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -208,6 +214,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -230,6 +238,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -239,6 +249,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -248,6 +260,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -266,6 +280,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		}
 
 		_code = code;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalCode() {
@@ -284,6 +300,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -298,6 +316,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -307,6 +327,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -316,6 +338,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -329,6 +353,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -343,6 +369,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setLimitCategories(String limitCategories) {
 		_limitCategories = limitCategories;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -357,6 +385,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setLimitSkus(String limitSkus) {
 		_limitSkus = limitSkus;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -366,6 +396,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setMinOrder(double minOrder) {
 		_minOrder = minOrder;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -375,6 +407,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setDiscount(double discount) {
 		_discount = discount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -389,6 +423,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 	public void setDiscountType(String discountType) {
 		_discountType = discountType;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

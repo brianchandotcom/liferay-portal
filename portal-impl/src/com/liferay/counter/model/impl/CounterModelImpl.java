@@ -107,6 +107,8 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCurrentId() {
@@ -115,6 +117,8 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	public void setCurrentId(long currentId) {
 		_currentId = currentId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -390,14 +390,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 				TicketImpl.class, ticketId, this);
 
-		if (ticket == _NULL_PLACE_HOLDER) {
+		if (ticket == _nullTicket) {
 			return null;
 		}
 
 		if (ticket == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -406,14 +406,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 						Long.valueOf(ticketId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (ticket == null)) {
+				if (!hasException && (ticket == null)) {
 					EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-						TicketImpl.class, ticketId, _NULL_PLACE_HOLDER);
+						TicketImpl.class, ticketId, _nullTicket);
 				}
 				else {
 					cacheResult(ticket);
@@ -968,6 +968,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Ticket exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Ticket exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Ticket _NULL_PLACE_HOLDER = new TicketImpl();
 	private static Log _log = LogFactoryUtil.getLog(TicketPersistenceImpl.class);
+	private static Ticket _nullTicket = new TicketImpl();
 }

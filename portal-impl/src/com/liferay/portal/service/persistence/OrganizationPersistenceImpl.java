@@ -504,14 +504,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 				OrganizationImpl.class, organizationId, this);
 
-		if (organization == _NULL_PLACE_HOLDER) {
+		if (organization == _nullOrganization) {
 			return null;
 		}
 
 		if (organization == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -520,15 +520,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 						Long.valueOf(organizationId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (organization == null)) {
+				if (!hasException && (organization == null)) {
 					EntityCacheUtil.putResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 						OrganizationImpl.class, organizationId,
-						_NULL_PLACE_HOLDER);
+						_nullOrganization);
 				}
 				else {
 					cacheResult(organization);
@@ -4977,6 +4977,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Organization exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Organization exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Organization _NULL_PLACE_HOLDER = new OrganizationImpl();
 	private static Log _log = LogFactoryUtil.getLog(OrganizationPersistenceImpl.class);
+	private static Organization _nullOrganization = new OrganizationImpl();
 }

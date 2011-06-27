@@ -167,6 +167,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setPhoneId(long phoneId) {
 		_phoneId = phoneId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -176,6 +178,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -185,6 +189,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -207,6 +213,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -216,6 +224,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -225,6 +235,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -242,6 +254,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -251,6 +265,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -265,6 +281,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setNumber(String number) {
 		_number = number;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -279,6 +297,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setExtension(String extension) {
 		_extension = extension;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -288,6 +308,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setTypeId(int typeId) {
 		_typeId = typeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -301,6 +323,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public void setPrimary(boolean primary) {
 		_primary = primary;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

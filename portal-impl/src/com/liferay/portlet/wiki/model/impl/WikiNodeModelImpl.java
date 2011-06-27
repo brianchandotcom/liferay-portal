@@ -175,6 +175,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -188,6 +190,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setNodeId(long nodeId) {
 		_nodeId = nodeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -203,6 +207,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -216,6 +222,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -225,6 +233,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -247,6 +257,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -256,6 +268,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -265,6 +279,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -283,6 +299,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -301,6 +319,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,6 +330,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

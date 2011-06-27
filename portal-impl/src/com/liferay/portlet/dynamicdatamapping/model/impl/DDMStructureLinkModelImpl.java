@@ -149,6 +149,8 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	public void setStructureLinkId(long structureLinkId) {
 		_structureLinkId = structureLinkId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -166,6 +168,8 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,6 +185,8 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -194,6 +200,8 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	public void setStructureId(long structureId) {
 		_structureId = structureId;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

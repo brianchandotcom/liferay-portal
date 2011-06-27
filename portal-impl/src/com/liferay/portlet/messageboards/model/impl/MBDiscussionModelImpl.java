@@ -108,6 +108,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	public void setDiscussionId(long discussionId) {
 		_discussionId = discussionId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -130,6 +132,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -148,6 +152,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -166,6 +172,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		}
 
 		_threadId = threadId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalThreadId() {

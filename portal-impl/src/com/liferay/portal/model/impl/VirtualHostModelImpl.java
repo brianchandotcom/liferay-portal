@@ -106,6 +106,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 
 	public void setVirtualHostId(long virtualHostId) {
 		_virtualHostId = virtualHostId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -120,6 +122,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -138,6 +142,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		}
 
 		_layoutSetId = layoutSetId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLayoutSetId() {
@@ -159,6 +165,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		}
 
 		_hostname = hostname;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalHostname() {

@@ -247,6 +247,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setOrderId(long orderId) {
 		_orderId = orderId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -256,6 +258,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -265,6 +269,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -274,6 +280,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -296,6 +304,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -305,6 +315,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -314,6 +326,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -332,6 +346,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		}
 
 		_number = number;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalNumber() {
@@ -345,6 +361,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setTax(double tax) {
 		_tax = tax;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -354,6 +372,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShipping(double shipping) {
 		_shipping = shipping;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -368,6 +388,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setAltShipping(String altShipping) {
 		_altShipping = altShipping;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -381,6 +403,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setRequiresShipping(boolean requiresShipping) {
 		_requiresShipping = requiresShipping;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -394,6 +418,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setInsure(boolean insure) {
 		_insure = insure;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -403,6 +429,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setInsurance(double insurance) {
 		_insurance = insurance;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -417,6 +445,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCouponCodes(String couponCodes) {
 		_couponCodes = couponCodes;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -426,6 +456,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCouponDiscount(double couponDiscount) {
 		_couponDiscount = couponDiscount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -440,6 +472,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingFirstName(String billingFirstName) {
 		_billingFirstName = billingFirstName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -454,6 +488,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingLastName(String billingLastName) {
 		_billingLastName = billingLastName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -468,6 +504,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingEmailAddress(String billingEmailAddress) {
 		_billingEmailAddress = billingEmailAddress;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -482,6 +520,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingCompany(String billingCompany) {
 		_billingCompany = billingCompany;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -496,6 +536,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingStreet(String billingStreet) {
 		_billingStreet = billingStreet;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -510,6 +552,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingCity(String billingCity) {
 		_billingCity = billingCity;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -524,6 +568,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingState(String billingState) {
 		_billingState = billingState;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -538,6 +584,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingZip(String billingZip) {
 		_billingZip = billingZip;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -552,6 +600,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingCountry(String billingCountry) {
 		_billingCountry = billingCountry;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -566,6 +616,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setBillingPhone(String billingPhone) {
 		_billingPhone = billingPhone;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -579,6 +631,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShipToBilling(boolean shipToBilling) {
 		_shipToBilling = shipToBilling;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -593,6 +647,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingFirstName(String shippingFirstName) {
 		_shippingFirstName = shippingFirstName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -607,6 +663,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingLastName(String shippingLastName) {
 		_shippingLastName = shippingLastName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -621,6 +679,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingEmailAddress(String shippingEmailAddress) {
 		_shippingEmailAddress = shippingEmailAddress;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -635,6 +695,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingCompany(String shippingCompany) {
 		_shippingCompany = shippingCompany;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -649,6 +711,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingStreet(String shippingStreet) {
 		_shippingStreet = shippingStreet;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -663,6 +727,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingCity(String shippingCity) {
 		_shippingCity = shippingCity;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -677,6 +743,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingState(String shippingState) {
 		_shippingState = shippingState;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -691,6 +759,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingZip(String shippingZip) {
 		_shippingZip = shippingZip;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -705,6 +775,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingCountry(String shippingCountry) {
 		_shippingCountry = shippingCountry;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -719,6 +791,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setShippingPhone(String shippingPhone) {
 		_shippingPhone = shippingPhone;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -733,6 +807,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcName(String ccName) {
 		_ccName = ccName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -747,6 +823,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcType(String ccType) {
 		_ccType = ccType;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -761,6 +839,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcNumber(String ccNumber) {
 		_ccNumber = ccNumber;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -770,6 +850,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcExpMonth(int ccExpMonth) {
 		_ccExpMonth = ccExpMonth;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -779,6 +861,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcExpYear(int ccExpYear) {
 		_ccExpYear = ccExpYear;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -793,6 +877,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setCcVerNumber(String ccVerNumber) {
 		_ccVerNumber = ccVerNumber;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -807,6 +893,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setComments(String comments) {
 		_comments = comments;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -825,6 +913,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		}
 
 		_ppTxnId = ppTxnId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPpTxnId() {
@@ -843,6 +933,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setPpPaymentStatus(String ppPaymentStatus) {
 		_ppPaymentStatus = ppPaymentStatus;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -852,6 +944,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setPpPaymentGross(double ppPaymentGross) {
 		_ppPaymentGross = ppPaymentGross;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -866,6 +960,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setPpReceiverEmail(String ppReceiverEmail) {
 		_ppReceiverEmail = ppReceiverEmail;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -880,6 +976,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setPpPayerEmail(String ppPayerEmail) {
 		_ppPayerEmail = ppPayerEmail;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -893,6 +991,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setSendOrderEmail(boolean sendOrderEmail) {
 		_sendOrderEmail = sendOrderEmail;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -906,6 +1006,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setSendShippingEmail(boolean sendShippingEmail) {
 		_sendShippingEmail = sendShippingEmail;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

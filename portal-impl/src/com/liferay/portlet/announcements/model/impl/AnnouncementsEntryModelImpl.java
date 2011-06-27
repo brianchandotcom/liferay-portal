@@ -185,6 +185,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -194,6 +196,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -203,6 +207,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -212,6 +218,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -234,6 +242,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -243,6 +253,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -252,6 +264,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -269,6 +283,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -278,6 +294,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -292,6 +310,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setTitle(String title) {
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -306,6 +326,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setContent(String content) {
 		_content = content;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -320,6 +342,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUrl(String url) {
 		_url = url;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -334,6 +358,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setType(String type) {
 		_type = type;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -343,6 +369,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setDisplayDate(Date displayDate) {
 		_displayDate = displayDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -352,6 +380,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -361,6 +391,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setPriority(int priority) {
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -374,6 +406,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setAlert(boolean alert) {
 		_alert = alert;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

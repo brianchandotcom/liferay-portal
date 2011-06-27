@@ -112,6 +112,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	public void setWebDavPropsId(long webDavPropsId) {
 		_webDavPropsId = webDavPropsId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -120,6 +122,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -128,6 +132,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -136,6 +142,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -158,6 +166,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -176,6 +186,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -193,6 +205,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	public void setProps(String props) {
 		_props = props;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

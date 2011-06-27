@@ -465,14 +465,14 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		LayoutSetBranch layoutSetBranch = (LayoutSetBranch)EntityCacheUtil.getResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutSetBranchImpl.class, layoutSetBranchId, this);
 
-		if (layoutSetBranch == _NULL_PLACE_HOLDER) {
+		if (layoutSetBranch == _nullLayoutSetBranch) {
 			return null;
 		}
 
 		if (layoutSetBranch == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -481,15 +481,15 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 						Long.valueOf(layoutSetBranchId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (layoutSetBranch == null)) {
+				if (!hasException && (layoutSetBranch == null)) {
 					EntityCacheUtil.putResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutSetBranchImpl.class, layoutSetBranchId,
-						_NULL_PLACE_HOLDER);
+						_nullLayoutSetBranch);
 				}
 				else {
 					cacheResult(layoutSetBranch);
@@ -2640,6 +2640,6 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutSetBranch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSetBranch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final LayoutSetBranch _NULL_PLACE_HOLDER = new LayoutSetBranchImpl();
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetBranchPersistenceImpl.class);
+	private static LayoutSetBranch _nullLayoutSetBranch = new LayoutSetBranchImpl();
 }

@@ -106,6 +106,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 
 	public void setCodeId(long codeId) {
 		_codeId = codeId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -120,6 +122,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -141,6 +145,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -159,6 +165,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		}
 
 		_scope = scope;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalScope() {

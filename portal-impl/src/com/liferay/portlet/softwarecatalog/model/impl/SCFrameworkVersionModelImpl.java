@@ -180,6 +180,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setFrameworkVersionId(long frameworkVersionId) {
 		_frameworkVersionId = frameworkVersionId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -189,6 +191,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -198,6 +202,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -207,6 +213,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -229,6 +237,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -238,6 +248,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -247,6 +259,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -261,6 +275,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -275,6 +291,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setUrl(String url) {
 		_url = url;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -288,6 +306,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -297,6 +317,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public void setPriority(int priority) {
 		_priority = priority;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

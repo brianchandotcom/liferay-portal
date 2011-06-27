@@ -110,6 +110,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	public void setStatsId(long statsId) {
 		_statsId = statsId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -132,6 +134,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -150,6 +154,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -162,6 +168,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	public void setTotalEntries(int totalEntries) {
 		_totalEntries = totalEntries;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getTotalScore() {
@@ -170,6 +178,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	public void setTotalScore(double totalScore) {
 		_totalScore = totalScore;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getAverageScore() {
@@ -178,6 +188,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	public void setAverageScore(double averageScore) {
 		_averageScore = averageScore;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

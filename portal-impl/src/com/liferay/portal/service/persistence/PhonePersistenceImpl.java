@@ -425,14 +425,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		Phone phone = (Phone)EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 				PhoneImpl.class, phoneId, this);
 
-		if (phone == _NULL_PLACE_HOLDER) {
+		if (phone == _nullPhone) {
 			return null;
 		}
 
 		if (phone == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -441,14 +441,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 						Long.valueOf(phoneId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (phone == null)) {
+				if (!hasException && (phone == null)) {
 					EntityCacheUtil.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-						PhoneImpl.class, phoneId, _NULL_PLACE_HOLDER);
+						PhoneImpl.class, phoneId, _nullPhone);
 				}
 				else {
 					cacheResult(phone);
@@ -2981,6 +2981,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Phone exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Phone exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Phone _NULL_PLACE_HOLDER = new PhoneImpl();
 	private static Log _log = LogFactoryUtil.getLog(PhonePersistenceImpl.class);
+	private static Phone _nullPhone = new PhoneImpl();
 }

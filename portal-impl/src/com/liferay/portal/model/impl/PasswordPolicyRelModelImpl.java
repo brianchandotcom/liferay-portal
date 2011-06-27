@@ -107,6 +107,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	public void setPasswordPolicyRelId(long passwordPolicyRelId) {
 		_passwordPolicyRelId = passwordPolicyRelId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getPasswordPolicyId() {
@@ -121,6 +123,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		}
 
 		_passwordPolicyId = passwordPolicyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalPasswordPolicyId() {
@@ -147,6 +151,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		}
 
 		_classNameId = classNameId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -165,6 +171,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		}
 
 		_classPK = classPK;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {

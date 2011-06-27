@@ -165,6 +165,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setLicenseId(long licenseId) {
 		_licenseId = licenseId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -179,6 +181,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -193,6 +197,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setUrl(String url) {
 		_url = url;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -206,6 +212,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setOpenSource(boolean openSource) {
 		_openSource = openSource;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -219,6 +227,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -232,6 +242,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setRecommended(boolean recommended) {
 		_recommended = recommended;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

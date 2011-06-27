@@ -151,6 +151,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	public void setPortletPreferencesId(long portletPreferencesId) {
 		_portletPreferencesId = portletPreferencesId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -166,6 +168,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 
 		_ownerId = ownerId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalOwnerId() {
@@ -185,6 +189,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 
 		_ownerType = ownerType;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOriginalOwnerType() {
@@ -204,6 +210,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 
 		_plid = plid;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalPlid() {
@@ -226,6 +234,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 
 		_portletId = portletId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPortletId() {
@@ -244,6 +254,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	public void setPreferences(String preferences) {
 		_preferences = preferences;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

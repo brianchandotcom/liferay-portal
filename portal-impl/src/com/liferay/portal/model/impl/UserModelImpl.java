@@ -271,6 +271,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -286,6 +288,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -313,6 +317,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -326,6 +332,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -335,6 +343,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -354,6 +364,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_defaultUser = defaultUser;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalDefaultUser() {
@@ -373,6 +385,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_contactId = contactId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalContactId() {
@@ -391,6 +405,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setPassword(String password) {
 		_password = password;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -404,6 +420,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setPasswordEncrypted(boolean passwordEncrypted) {
 		_passwordEncrypted = passwordEncrypted;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -417,6 +435,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setPasswordReset(boolean passwordReset) {
 		_passwordReset = passwordReset;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -426,6 +446,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setPasswordModifiedDate(Date passwordModifiedDate) {
 		_passwordModifiedDate = passwordModifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -440,6 +462,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setDigest(String digest) {
 		_digest = digest;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -454,6 +478,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setReminderQueryQuestion(String reminderQueryQuestion) {
 		_reminderQueryQuestion = reminderQueryQuestion;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -468,6 +494,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setReminderQueryAnswer(String reminderQueryAnswer) {
 		_reminderQueryAnswer = reminderQueryAnswer;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -477,6 +505,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setGraceLoginCount(int graceLoginCount) {
 		_graceLoginCount = graceLoginCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -495,6 +525,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_screenName = screenName;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalScreenName() {
@@ -517,6 +549,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_emailAddress = emailAddress;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalEmailAddress() {
@@ -536,6 +570,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_facebookId = facebookId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFacebookId() {
@@ -558,6 +594,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_openId = openId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalOpenId() {
@@ -577,6 +615,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_portraitId = portraitId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalPortraitId() {
@@ -595,6 +635,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -609,6 +651,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setTimeZoneId(String timeZoneId) {
 		_timeZoneId = timeZoneId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -623,6 +667,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setGreeting(String greeting) {
 		_greeting = greeting;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -637,6 +683,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setComments(String comments) {
 		_comments = comments;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -651,6 +699,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setFirstName(String firstName) {
 		_firstName = firstName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -665,6 +715,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setMiddleName(String middleName) {
 		_middleName = middleName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -679,6 +731,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLastName(String lastName) {
 		_lastName = lastName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -693,6 +747,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -702,6 +758,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLoginDate(Date loginDate) {
 		_loginDate = loginDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -716,6 +774,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLoginIP(String loginIP) {
 		_loginIP = loginIP;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -725,6 +785,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLastLoginDate(Date lastLoginDate) {
 		_lastLoginDate = lastLoginDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -739,6 +801,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLastLoginIP(String lastLoginIP) {
 		_lastLoginIP = lastLoginIP;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -748,6 +812,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLastFailedLoginDate(Date lastFailedLoginDate) {
 		_lastFailedLoginDate = lastFailedLoginDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -757,6 +823,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setFailedLoginAttempts(int failedLoginAttempts) {
 		_failedLoginAttempts = failedLoginAttempts;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -770,6 +838,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLockout(boolean lockout) {
 		_lockout = lockout;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -779,6 +849,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setLockoutDate(Date lockoutDate) {
 		_lockoutDate = lockoutDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -792,6 +864,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setAgreedToTermsOfUse(boolean agreedToTermsOfUse) {
 		_agreedToTermsOfUse = agreedToTermsOfUse;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -805,6 +879,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setEmailAddressVerified(boolean emailAddressVerified) {
 		_emailAddressVerified = emailAddressVerified;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -814,6 +890,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -111,6 +111,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setEquityAssetEntryId(long equityAssetEntryId) {
 		_equityAssetEntryId = equityAssetEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -119,6 +121,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -127,6 +131,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -135,6 +141,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -157,6 +165,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 		}
 
 		_assetEntryId = assetEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalAssetEntryId() {
@@ -169,6 +179,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setInformationK(double informationK) {
 		_informationK = informationK;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getInformationB() {
@@ -177,6 +189,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setInformationB(double informationB) {
 		_informationB = informationB;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

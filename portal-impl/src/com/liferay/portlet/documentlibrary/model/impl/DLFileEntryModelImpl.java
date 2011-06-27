@@ -197,6 +197,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -210,6 +212,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setFileEntryId(long fileEntryId) {
 		_fileEntryId = fileEntryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -225,6 +229,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -238,6 +244,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -247,6 +255,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -269,6 +279,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -278,6 +290,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setVersionUserId(long versionUserId) {
 		_versionUserId = versionUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getVersionUserUuid() throws SystemException {
@@ -301,6 +315,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setVersionUserName(String versionUserName) {
 		_versionUserName = versionUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,6 +326,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -319,6 +337,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -328,6 +348,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -343,6 +365,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		_folderId = folderId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFolderId() {
@@ -365,6 +389,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -383,6 +409,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setExtension(String extension) {
 		_extension = extension;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -397,6 +425,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setMimeType(String mimeType) {
 		_mimeType = mimeType;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -415,6 +445,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		_title = title;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalTitle() {
@@ -433,6 +465,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -447,6 +481,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setExtraSettings(String extraSettings) {
 		_extraSettings = extraSettings;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -456,6 +492,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setFileEntryTypeId(long fileEntryTypeId) {
 		_fileEntryTypeId = fileEntryTypeId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -470,6 +508,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setVersion(String version) {
 		_version = version;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -479,6 +519,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setSize(long size) {
 		_size = size;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -488,6 +530,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setReadCount(int readCount) {
 		_readCount = readCount;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -142,6 +142,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -154,6 +156,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setMailingListId(long mailingListId) {
 		_mailingListId = mailingListId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -168,6 +172,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -180,6 +186,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -188,6 +196,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -209,6 +219,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -217,6 +229,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -225,6 +239,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getCategoryId() {
@@ -239,6 +255,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		}
 
 		_categoryId = categoryId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCategoryId() {
@@ -256,6 +274,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setEmailAddress(String emailAddress) {
 		_emailAddress = emailAddress;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getInProtocol() {
@@ -269,6 +289,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInProtocol(String inProtocol) {
 		_inProtocol = inProtocol;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getInServerName() {
@@ -282,6 +304,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInServerName(String inServerName) {
 		_inServerName = inServerName;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getInServerPort() {
@@ -290,6 +314,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInServerPort(int inServerPort) {
 		_inServerPort = inServerPort;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getInUseSSL() {
@@ -302,6 +328,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInUseSSL(boolean inUseSSL) {
 		_inUseSSL = inUseSSL;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getInUserName() {
@@ -315,6 +343,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInUserName(String inUserName) {
 		_inUserName = inUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getInPassword() {
@@ -328,6 +358,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInPassword(String inPassword) {
 		_inPassword = inPassword;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getInReadInterval() {
@@ -336,6 +368,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setInReadInterval(int inReadInterval) {
 		_inReadInterval = inReadInterval;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOutEmailAddress() {
@@ -349,6 +383,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutEmailAddress(String outEmailAddress) {
 		_outEmailAddress = outEmailAddress;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOutCustom() {
@@ -361,6 +397,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutCustom(boolean outCustom) {
 		_outCustom = outCustom;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOutServerName() {
@@ -374,6 +412,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutServerName(String outServerName) {
 		_outServerName = outServerName;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getOutServerPort() {
@@ -382,6 +422,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutServerPort(int outServerPort) {
 		_outServerPort = outServerPort;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getOutUseSSL() {
@@ -394,6 +436,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutUseSSL(boolean outUseSSL) {
 		_outUseSSL = outUseSSL;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOutUserName() {
@@ -407,6 +451,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutUserName(String outUserName) {
 		_outUserName = outUserName;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOutPassword() {
@@ -420,6 +466,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setOutPassword(String outPassword) {
 		_outPassword = outPassword;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getAllowAnonymous() {
@@ -432,6 +480,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setAllowAnonymous(boolean allowAnonymous) {
 		_allowAnonymous = allowAnonymous;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getActive() {
@@ -444,6 +494,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

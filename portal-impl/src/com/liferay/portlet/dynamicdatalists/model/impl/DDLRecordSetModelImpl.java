@@ -184,6 +184,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 
 		_uuid = uuid;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -197,6 +199,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setRecordSetId(long recordSetId) {
 		_recordSetId = recordSetId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -212,6 +216,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -225,6 +231,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -234,6 +242,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -256,6 +266,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -265,6 +277,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -274,6 +288,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -283,6 +299,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setDDMStructureId(long DDMStructureId) {
 		_DDMStructureId = DDMStructureId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -301,6 +319,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 
 		_recordSetKey = recordSetKey;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalRecordSetKey() {
@@ -358,6 +378,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setName(String name) {
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setName(String name, Locale locale) {
@@ -448,6 +470,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -496,6 +520,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setMinDisplayRows(int minDisplayRows) {
 		_minDisplayRows = minDisplayRows;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -113,6 +113,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setEquityUserId(long equityUserId) {
 		_equityUserId = equityUserId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getEquityUserUuid() throws SystemException {
@@ -136,6 +138,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -148,6 +152,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -162,6 +168,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 		}
 
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -182,6 +190,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setContributionK(double contributionK) {
 		_contributionK = contributionK;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getContributionB() {
@@ -190,6 +200,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setContributionB(double contributionB) {
 		_contributionB = contributionB;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getParticipationK() {
@@ -198,6 +210,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setParticipationK(double participationK) {
 		_participationK = participationK;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getParticipationB() {
@@ -206,6 +220,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setParticipationB(double participationB) {
 		_participationB = participationB;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getRank() {
@@ -214,6 +230,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setRank(int rank) {
 		_rank = rank;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -421,14 +421,14 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 		Resource resource = (Resource)EntityCacheUtil.getResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceImpl.class, resourceId, this);
 
-		if (resource == _NULL_PLACE_HOLDER) {
+		if (resource == _nullResource) {
 			return null;
 		}
 
 		if (resource == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -437,14 +437,14 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 						Long.valueOf(resourceId));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (resource == null)) {
+				if (!hasException && (resource == null)) {
 					EntityCacheUtil.putResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceImpl.class, resourceId, _NULL_PLACE_HOLDER);
+						ResourceImpl.class, resourceId, _nullResource);
 				}
 				else {
 					cacheResult(resource);
@@ -1413,6 +1413,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Resource exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Resource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Resource _NULL_PLACE_HOLDER = new ResourceImpl();
 	private static Log _log = LogFactoryUtil.getLog(ResourcePersistenceImpl.class);
+	private static Resource _nullResource = new ResourceImpl();
 }

@@ -114,6 +114,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setItemPriceId(long itemPriceId) {
 		_itemPriceId = itemPriceId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getItemId() {
@@ -122,6 +124,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setItemId(long itemId) {
 		_itemId = itemId;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getMinQuantity() {
@@ -130,6 +134,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setMinQuantity(int minQuantity) {
 		_minQuantity = minQuantity;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getMaxQuantity() {
@@ -138,6 +144,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setMaxQuantity(int maxQuantity) {
 		_maxQuantity = maxQuantity;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getPrice() {
@@ -146,6 +154,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setPrice(double price) {
 		_price = price;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getDiscount() {
@@ -154,6 +164,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setDiscount(double discount) {
 		_discount = discount;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getTaxable() {
@@ -166,6 +178,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setTaxable(boolean taxable) {
 		_taxable = taxable;
+
+		_escapedModelProxy = null;
 	}
 
 	public double getShipping() {
@@ -174,6 +188,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setShipping(double shipping) {
 		_shipping = shipping;
+
+		_escapedModelProxy = null;
 	}
 
 	public boolean getUseShippingFormula() {
@@ -186,6 +202,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setUseShippingFormula(boolean useShippingFormula) {
 		_useShippingFormula = useShippingFormula;
+
+		_escapedModelProxy = null;
 	}
 
 	public int getStatus() {
@@ -194,6 +212,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setStatus(int status) {
 		_status = status;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

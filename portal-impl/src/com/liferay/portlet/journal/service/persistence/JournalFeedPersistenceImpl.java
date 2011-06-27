@@ -519,14 +519,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, id, this);
 
-		if (journalFeed == _NULL_PLACE_HOLDER) {
+		if (journalFeed == _nullJournalFeed) {
 			return null;
 		}
 
 		if (journalFeed == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -535,14 +535,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						Long.valueOf(id));
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (journalFeed == null)) {
+				if (!hasException && (journalFeed == null)) {
 					EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-						JournalFeedImpl.class, id, _NULL_PLACE_HOLDER);
+						JournalFeedImpl.class, id, _nullJournalFeed);
 				}
 				else {
 					cacheResult(journalFeed);
@@ -2451,6 +2451,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalFeed exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalFeed exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final JournalFeed _NULL_PLACE_HOLDER = new JournalFeedImpl();
 	private static Log _log = LogFactoryUtil.getLog(JournalFeedPersistenceImpl.class);
+	private static JournalFeed _nullJournalFeed = new JournalFeedImpl();
 }

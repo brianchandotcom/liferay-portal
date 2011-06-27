@@ -164,6 +164,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setTeamId(long teamId) {
 		_teamId = teamId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -173,6 +175,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -182,6 +186,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -204,6 +210,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -213,6 +221,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -222,6 +232,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -237,6 +249,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 
 		_groupId = groupId;
+
+		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -259,6 +273,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 
 		_name = name;
+
+		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -277,6 +293,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public void setDescription(String description) {
 		_description = description;
+
+		_escapedModelProxy = null;
 	}
 
 	@Override

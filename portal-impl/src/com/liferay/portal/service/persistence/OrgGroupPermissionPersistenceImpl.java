@@ -385,14 +385,14 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 		OrgGroupPermission orgGroupPermission = (OrgGroupPermission)EntityCacheUtil.getResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 				OrgGroupPermissionImpl.class, orgGroupPermissionPK, this);
 
-		if (orgGroupPermission == _NULL_PLACE_HOLDER) {
+		if (orgGroupPermission == _nullOrgGroupPermission) {
 			return null;
 		}
 
 		if (orgGroupPermission == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -401,15 +401,15 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 						orgGroupPermissionPK);
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (orgGroupPermission == null)) {
+				if (!hasException && (orgGroupPermission == null)) {
 					EntityCacheUtil.putResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 						OrgGroupPermissionImpl.class, orgGroupPermissionPK,
-						_NULL_PLACE_HOLDER);
+						_nullOrgGroupPermission);
 				}
 				else {
 					cacheResult(orgGroupPermission);
@@ -1545,6 +1545,6 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OrgGroupPermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupPermission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final OrgGroupPermission _NULL_PLACE_HOLDER = new OrgGroupPermissionImpl();
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupPermissionPersistenceImpl.class);
+	private static OrgGroupPermission _nullOrgGroupPermission = new OrgGroupPermissionImpl();
 }

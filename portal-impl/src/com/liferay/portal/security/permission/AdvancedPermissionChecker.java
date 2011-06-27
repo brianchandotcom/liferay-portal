@@ -103,6 +103,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return PermissionChecker.DEFAULT_ROLE_IDS;
 	}
 
+	/**
+	 * Returns the permission checker bag for the guest user.
+	 *
+	 * @return the permission checker bag for the guest user
+	 * @throws Exception if an exception occurred
+	 */
 	public PermissionCheckerBag getGuestUserBag() throws Exception {
 		Group guestGroup = GroupLocalServiceUtil.getGroup(
 			getCompanyId(), GroupConstants.GUEST);
@@ -141,6 +147,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return bag;
 	}
 
+	/**
+	 * Returns the permission checker bag for the user and group. Users can have
+	 * different roles and permissions in different groups.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the gorup
+	 * @return the permission checker bag for the user and group
+	 * @throws Exception if a group or user with the primary key could not be
+	 *         found
+	 */
 	public PermissionCheckerBag getUserBag(long userId, long groupId)
 		throws Exception {
 
@@ -580,6 +596,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return resources;
 	}
 
+	/**
+	 * Returns all of the organizations that the user is a member of, including
+	 * their parent organizations.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return all of the organizations that the user is a member of, including
+	 *         their parent organizations
+	 * @throws Exception if a user with the primary key could not be found
+	 */
 	protected List<Organization> getUserOrgs(long userId) throws Exception {
 		List<Organization> userOrgs =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId, true);

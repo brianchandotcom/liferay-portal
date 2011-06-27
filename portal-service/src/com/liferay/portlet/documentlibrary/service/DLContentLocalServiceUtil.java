@@ -37,11 +37,6 @@ public class DLContentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDataBlobModel(primaryKey);
-	}
 
 	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
@@ -233,6 +228,12 @@ public class DLContentLocalServiceUtil {
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateDLContent(dlContent, merge);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDataBlobModel(primaryKey);
 	}
 
 	/**

@@ -94,23 +94,6 @@ public abstract class DLContentLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil} to access the document library content local service.
 	 */
-	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey)
-		throws SystemException {
-		Session session = null;
-
-		try {
-			session = dlContentPersistence.openSession();
-
-			return (com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
-				primaryKey);
-		}
-		catch (Exception e) {
-			throw dlContentPersistence.processException(e);
-		}
-		finally {
-			dlContentPersistence.closeSession(session);
-		}
-	}
 
 	/**
 	 * Adds the document library content to the database. Also notifies the appropriate model listeners.
@@ -345,6 +328,24 @@ public abstract class DLContentLocalServiceBaseImpl
 		}
 
 		return dlContent;
+	}
+
+	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey)
+		throws SystemException {
+		Session session = null;
+
+		try {
+			session = dlContentPersistence.openSession();
+
+			return (com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
+				primaryKey);
+		}
+		catch (Exception e) {
+			throw dlContentPersistence.processException(e);
+		}
+		finally {
+			dlContentPersistence.closeSession(session);
+		}
 	}
 
 	/**

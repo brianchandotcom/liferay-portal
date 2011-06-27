@@ -41,10 +41,6 @@ public interface DLContentLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
@@ -212,6 +208,11 @@ public interface DLContentLocalService {
 	public com.liferay.portlet.documentlibrary.model.DLContent updateDLContent(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent,
 		boolean merge)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

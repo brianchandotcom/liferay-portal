@@ -29,12 +29,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 		_dlContentLocalService = dlContentLocalService;
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getDataBlobModel(primaryKey);
-	}
-
 	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
 	*
@@ -225,6 +219,12 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlContentLocalService.updateDLContent(dlContent, merge);
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.getDataBlobModel(primaryKey);
 	}
 
 	/**

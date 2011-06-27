@@ -102,6 +102,7 @@ import org.dom4j.DocumentException;
  * @author Glenn Powell
  * @author Raymond Augé
  * @author Prashant Dighe
+ * @author Shuyang Zhou
  */
 public class ServiceBuilder {
 
@@ -644,6 +645,7 @@ public class ServiceBuilder {
 								_getTransients(entity, true));
 
 							_createModel(entity);
+							_createModelBlobs(entity);
 							_createExtendedModel(entity);
 
 							_createModelClp(entity);
@@ -1981,6 +1983,44 @@ public class ServiceBuilder {
 
 				modelFile.delete();
 			}
+		}
+	}
+
+	private void _createModelBlobs(Entity entity) throws Exception {
+		List<EntityColumn> blobList = entity.getBlobList();
+		Iterator<EntityColumn> blobIterator = blobList.iterator();
+
+		while (blobIterator.hasNext()) {
+			EntityColumn entityColumn = blobIterator.next();
+			if (!entityColumn.isLazy()) {
+				blobIterator.remove();
+			}
+		}
+
+		if (blobList.isEmpty()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		for (EntityColumn entityColumn : blobList) {
+			context.put("column", entityColumn);
+
+			String columnName = entityColumn.getName();
+
+			// Content
+
+			String content = _processTemplate(_tplBlobModel, context);
+
+			// Write file
+
+			File modelBlobFile = new File(
+				_serviceOutputPath + "/model/" + entity.getName() + 
+					entityColumn.getMethodName() + "BlobModel.java");
+
+			writeFile(modelBlobFile, content, _author);
 		}
 	}
 
@@ -4267,6 +4307,7 @@ public class ServiceBuilder {
 
 		List<EntityColumn> pkList = new ArrayList<EntityColumn>();
 		List<EntityColumn> regularColList = new ArrayList<EntityColumn>();
+		List<EntityColumn> blobList = new ArrayList<EntityColumn>();
 		List<EntityColumn> collectionList = new ArrayList<EntityColumn>();
 		List<EntityColumn> columnList = new ArrayList<EntityColumn>();
 
@@ -4319,6 +4360,8 @@ public class ServiceBuilder {
 			String idParam = columnElement.attributeValue("id-param");
 			boolean convertNull = GetterUtil.getBoolean(
 				columnElement.attributeValue("convert-null"), true);
+			boolean lazy = GetterUtil.getBoolean(
+				columnElement.attributeValue("lazy"), true);
 			boolean localized = GetterUtil.getBoolean(
 				columnElement.attributeValue("localized"));
 			boolean colJsonEnabled = GetterUtil.getBoolean(
@@ -4327,7 +4370,7 @@ public class ServiceBuilder {
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, filterPrimary,
 				collectionEntity, mappingKey, mappingTable, idType, idParam,
-				convertNull, localized, colJsonEnabled);
+				convertNull, lazy, localized, colJsonEnabled);
 
 			if (primary) {
 				pkList.add(col);
@@ -4337,6 +4380,10 @@ public class ServiceBuilder {
 				collectionList.add(col);
 			}
 			else {
+				if (columnType.equals("Blob")) {
+					blobList.add(col);
+				}
+
 				regularColList.add(col);
 			}
 
@@ -4576,8 +4623,8 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, localService, remoteService,
 				persistenceClass, finderClass, dataSource, sessionFactory,
 				txManager, cacheEnabled, jsonEnabled, pkList, regularColList,
-				collectionList, columnList, order, finderList, referenceList,
-				txRequiredList));
+				blobList, collectionList, columnList, order, finderList, 
+				referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name) throws Exception {
@@ -4671,6 +4718,7 @@ public class ServiceBuilder {
 	private String _tplFinder = _TPL_ROOT + "finder.ftl";
 	private String _tplFinderUtil = _TPL_ROOT + "finder_util.ftl";
 	private String _tplHbmXml = _TPL_ROOT + "hbm_xml.ftl";
+	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplJsonJs = _TPL_ROOT + "json_js.ftl";
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";

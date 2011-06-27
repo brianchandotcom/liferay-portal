@@ -1326,6 +1326,7 @@
 		<property name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
+		<cache usage="read-write" />
 		<id name="contentId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1335,8 +1336,16 @@
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" column="path_" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="data" type="org.hibernate.type.BlobType" column="data_" lazy="true" />
+		<one-to-one name="dataBlobModel" class="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" constrained="true" outer-join="false" cascade="save-update" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
+	</class>
+	<class name="com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel" table="DLContent" lazy="true">
+		<id name="contentId" column="contentId">
+			<generator class="foreign">
+				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>
+			</generator>
+		</id>
+		<property column="data_" name="dataBlob" type="org.hibernate.type.BlobType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
 		<cache usage="read-write" />

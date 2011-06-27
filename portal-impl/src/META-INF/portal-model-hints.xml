@@ -94,6 +94,7 @@
 		</default-hints>
 		<field name="companyId" type="long" />
 		<field name="accountId" type="long" />
+		<field name="enabled" type="boolean" />
 		<field name="webId" type="String" />
 		<field name="key" type="String">
 			<hint-collection name="CLOB" />

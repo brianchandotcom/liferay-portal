@@ -386,6 +386,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 		companyImpl.setCompanyId(company.getCompanyId());
 		companyImpl.setAccountId(company.getAccountId());
+		companyImpl.setEnabled(company.isEnabled());
 		companyImpl.setWebId(company.getWebId());
 		companyImpl.setKey(company.getKey());
 		companyImpl.setMx(company.getMx());

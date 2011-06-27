@@ -109,6 +109,7 @@
 		<attributes>
 			<id name="companyId" />
 			<basic name="accountId" />
+			<basic name="enabled" />
 			<basic name="webId" />
 			<basic name="key">
 				<column name="KEY_" />

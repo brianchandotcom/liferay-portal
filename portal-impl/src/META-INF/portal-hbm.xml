@@ -239,6 +239,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="accountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="enabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="webId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
 		<property name="mx" type="com.liferay.portal.dao.orm.hibernate.StringType" />

@@ -100,6 +100,10 @@ public class PortalInstances {
 		return _instance._isAutoLoginIgnorePath(path);
 	}
 
+	public static boolean isInstanceEnabled(long companyId) {
+		return _instance._isInstanceEnabled(companyId);
+	}
+
 	public static boolean isVirtualHostsIgnoreHost(String host) {
 		return _instance._isVirtualHostsIgnoreHost(host);
 	}
@@ -482,6 +486,20 @@ public class PortalInstances {
 
 	private boolean _isAutoLoginIgnorePath(String path) {
 		return _autoLoginIgnorePaths.contains(path);
+	}
+
+	private boolean _isInstanceEnabled(long companyId) {
+
+		Company company = null;
+
+		try {
+			company = CompanyLocalServiceUtil.getCompany(companyId);
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return company.isEnabled();
 	}
 
 	private boolean _isVirtualHostsIgnoreHost(String host) {

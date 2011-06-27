@@ -77,10 +77,16 @@ public interface PermissionChecker {
 
 	public boolean isSignedIn();
 
+	/**
+	 * @deprecated Does nothing
+	 */
 	public void resetValues();
 
 	public void setCheckGuest(boolean checkGuest);
 
+	/**
+	 * @deprecated Does nothing
+	 */
 	public void setValues(PortletRequest portletRequest);
 
 }

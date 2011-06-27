@@ -172,8 +172,13 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 			return (DDMStorageLink)this;
 		}
 		else {
-			return (DDMStorageLink)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DDMStorageLink)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -324,4 +329,5 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	private boolean _setOriginalClassPK;
 	private long _structureId;
 	private transient ExpandoBridge _expandoBridge;
+	private DDMStorageLink _escapedModelProxy;
 }

@@ -505,8 +505,13 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			return (JournalFeed)this;
 		}
 		else {
-			return (JournalFeed)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (JournalFeed)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -806,4 +811,5 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _feedType;
 	private double _feedVersion;
 	private transient ExpandoBridge _expandoBridge;
+	private JournalFeed _escapedModelProxy;
 }

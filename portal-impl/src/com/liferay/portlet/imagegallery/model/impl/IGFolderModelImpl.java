@@ -328,8 +328,13 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 			return (IGFolder)this;
 		}
 		else {
-			return (IGFolder)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (IGFolder)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -554,4 +559,5 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 	private String _originalName;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private IGFolder _escapedModelProxy;
 }

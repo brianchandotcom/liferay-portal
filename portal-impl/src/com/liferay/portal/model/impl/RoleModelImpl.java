@@ -398,8 +398,13 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			return (Role)this;
 		}
 		else {
-			return (Role)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Role)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -595,4 +600,5 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private int _type;
 	private String _subtype;
 	private transient ExpandoBridge _expandoBridge;
+	private Role _escapedModelProxy;
 }

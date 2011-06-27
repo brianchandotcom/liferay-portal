@@ -226,8 +226,13 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			return (Image)this;
 		}
 		else {
-			return (Image)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Image)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -393,4 +398,5 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _width;
 	private int _size;
 	private transient ExpandoBridge _expandoBridge;
+	private Image _escapedModelProxy;
 }

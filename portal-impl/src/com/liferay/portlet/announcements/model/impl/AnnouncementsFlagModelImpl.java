@@ -237,8 +237,13 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 			return (AnnouncementsFlag)this;
 		}
 		else {
-			return (AnnouncementsFlag)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AnnouncementsFlag)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -415,4 +420,5 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	private int _originalValue;
 	private boolean _setOriginalValue;
 	private transient ExpandoBridge _expandoBridge;
+	private AnnouncementsFlag _escapedModelProxy;
 }

@@ -244,8 +244,13 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 			return (DLContent)this;
 		}
 		else {
-			return (DLContent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DLContent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -443,4 +448,5 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private Blob _data;
 	private long _size;
 	private transient ExpandoBridge _expandoBridge;
+	private DLContent _escapedModelProxy;
 }

@@ -148,8 +148,13 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 			return (BrowserTracker)this;
 		}
 		else {
-			return (BrowserTracker)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (BrowserTracker)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -285,4 +290,5 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	private boolean _setOriginalUserId;
 	private long _browserKey;
 	private transient ExpandoBridge _expandoBridge;
+	private BrowserTracker _escapedModelProxy;
 }

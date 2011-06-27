@@ -247,8 +247,13 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 			return (ExpandoColumn)this;
 		}
 		else {
-			return (ExpandoColumn)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ExpandoColumn)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -400,4 +405,5 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	private int _type;
 	private String _defaultData;
 	private String _typeSettings;
+	private ExpandoColumn _escapedModelProxy;
 }

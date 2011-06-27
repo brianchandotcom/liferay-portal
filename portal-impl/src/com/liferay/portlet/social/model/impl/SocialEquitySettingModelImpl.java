@@ -249,8 +249,13 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 			return (SocialEquitySetting)this;
 		}
 		else {
-			return (SocialEquitySetting)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquitySetting)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -456,4 +461,5 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 	private boolean _uniqueEntry;
 	private int _value;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquitySetting _escapedModelProxy;
 }

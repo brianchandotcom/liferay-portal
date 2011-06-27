@@ -339,8 +339,13 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 			return (DDMContent)this;
 		}
 		else {
-			return (DDMContent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DDMContent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -543,4 +548,5 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private String _description;
 	private String _xml;
 	private transient ExpandoBridge _expandoBridge;
+	private DDMContent _escapedModelProxy;
 }

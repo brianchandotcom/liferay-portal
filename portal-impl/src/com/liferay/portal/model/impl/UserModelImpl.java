@@ -822,8 +822,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			return (User)this;
 		}
 		else {
-			return (User)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (User)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -1286,4 +1291,5 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private boolean _emailAddressVerified;
 	private int _status;
 	private transient ExpandoBridge _expandoBridge;
+	private User _escapedModelProxy;
 }

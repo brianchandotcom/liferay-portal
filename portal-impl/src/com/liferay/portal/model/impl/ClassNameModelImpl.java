@@ -181,8 +181,13 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 			return (ClassName)this;
 		}
 		else {
-			return (ClassName)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ClassName)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -306,4 +311,5 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	private String _value;
 	private String _originalValue;
 	private transient ExpandoBridge _expandoBridge;
+	private ClassName _escapedModelProxy;
 }

@@ -294,8 +294,13 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 			return (Website)this;
 		}
 		else {
-			return (Website)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Website)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -486,4 +491,5 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private int _typeId;
 	private boolean _primary;
 	private transient ExpandoBridge _expandoBridge;
+	private Website _escapedModelProxy;
 }

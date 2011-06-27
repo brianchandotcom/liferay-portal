@@ -429,8 +429,13 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			return (Group)this;
 		}
 		else {
-			return (Group)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Group)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -676,4 +681,5 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private boolean _site;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private Group _escapedModelProxy;
 }

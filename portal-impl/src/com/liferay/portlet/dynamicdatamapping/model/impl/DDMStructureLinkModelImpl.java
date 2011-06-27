@@ -202,8 +202,13 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 			return (DDMStructureLink)this;
 		}
 		else {
-			return (DDMStructureLink)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DDMStructureLink)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -347,4 +352,5 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	private boolean _setOriginalClassPK;
 	private long _structureId;
 	private transient ExpandoBridge _expandoBridge;
+	private DDMStructureLink _escapedModelProxy;
 }

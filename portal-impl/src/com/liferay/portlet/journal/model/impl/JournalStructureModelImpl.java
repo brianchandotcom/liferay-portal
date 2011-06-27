@@ -356,8 +356,13 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 			return (JournalStructure)this;
 		}
 		else {
-			return (JournalStructure)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (JournalStructure)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -577,4 +582,5 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	private String _description;
 	private String _xsd;
 	private transient ExpandoBridge _expandoBridge;
+	private JournalStructure _escapedModelProxy;
 }

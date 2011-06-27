@@ -359,8 +359,13 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			return (MBCategory)this;
 		}
 		else {
-			return (MBCategory)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (MBCategory)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -608,4 +613,5 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private int _messageCount;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private MBCategory _escapedModelProxy;
 }

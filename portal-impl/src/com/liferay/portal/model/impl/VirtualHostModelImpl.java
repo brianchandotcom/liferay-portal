@@ -171,8 +171,13 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 			return (VirtualHost)this;
 		}
 		else {
-			return (VirtualHost)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (VirtualHost)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -324,4 +329,5 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	private String _hostname;
 	private String _originalHostname;
 	private transient ExpandoBridge _expandoBridge;
+	private VirtualHost _escapedModelProxy;
 }

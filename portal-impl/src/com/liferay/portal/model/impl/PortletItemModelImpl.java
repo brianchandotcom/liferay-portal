@@ -263,8 +263,13 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			return (PortletItem)this;
 		}
 		else {
-			return (PortletItem)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PortletItem)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -468,4 +473,5 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private transient ExpandoBridge _expandoBridge;
+	private PortletItem _escapedModelProxy;
 }

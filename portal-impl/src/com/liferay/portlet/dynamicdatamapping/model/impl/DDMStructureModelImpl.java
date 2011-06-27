@@ -533,8 +533,13 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			return (DDMStructure)this;
 		}
 		else {
-			return (DDMStructure)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DDMStructure)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -764,4 +769,5 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private String _xsd;
 	private String _storageType;
 	private transient ExpandoBridge _expandoBridge;
+	private DDMStructure _escapedModelProxy;
 }

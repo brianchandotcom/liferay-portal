@@ -145,8 +145,13 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			return (UserTrackerPath)this;
 		}
 		else {
-			return (UserTrackerPath)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (UserTrackerPath)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -282,4 +287,5 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	private String _path;
 	private Date _pathDate;
 	private transient ExpandoBridge _expandoBridge;
+	private UserTrackerPath _escapedModelProxy;
 }

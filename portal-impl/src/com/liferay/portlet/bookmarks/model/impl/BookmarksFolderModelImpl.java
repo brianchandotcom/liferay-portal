@@ -311,8 +311,13 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 			return (BookmarksFolder)this;
 		}
 		else {
-			return (BookmarksFolder)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (BookmarksFolder)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -528,4 +533,5 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	private String _name;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private BookmarksFolder _escapedModelProxy;
 }

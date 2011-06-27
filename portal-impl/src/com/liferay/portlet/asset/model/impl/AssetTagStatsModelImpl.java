@@ -170,8 +170,13 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 			return (AssetTagStats)this;
 		}
 		else {
-			return (AssetTagStats)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetTagStats)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -328,4 +333,5 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	private boolean _setOriginalClassNameId;
 	private int _assetCount;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetTagStats _escapedModelProxy;
 }

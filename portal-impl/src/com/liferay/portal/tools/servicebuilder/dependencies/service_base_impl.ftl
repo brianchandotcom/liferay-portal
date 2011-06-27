@@ -107,26 +107,6 @@ import javax.sql.DataSource;
 		 */
 </#if>
 
-	<#list entity.blobList as column>
-		<#if column.lazy>
-			public ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel(Serializable primaryKey) throws SystemException {
-				Session session = null;
-
-				try {
-					session = ${entity.varName}Persistence.openSession();
-
-					return (${packagePath}.model.${entity.name}${column.methodName}BlobModel)session.get(${entity.name}${column.methodName}BlobModel.class, primaryKey);
-				}
-				catch (Exception e) {
-					throw ${entity.varName}Persistence.processException(e);
-				}
-				finally {
-					${entity.varName}Persistence.closeSession(session);
-				}
-			}
-		</#if>
-	</#list>
-
 	<#if sessionTypeName == "Local" && entity.hasColumns()>
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + entity.name, [packagePath + ".model." + entity.name], ["SystemException"])>
 
@@ -420,6 +400,26 @@ import javax.sql.DataSource;
 
 			return ${entity.varName};
 		}
+
+		<#list entity.blobList as column>
+			<#if column.lazy>
+				public ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel(Serializable primaryKey) throws SystemException {
+					Session session = null;
+
+					try {
+						session = ${entity.varName}Persistence.openSession();
+
+						return (${packagePath}.model.${entity.name}${column.methodName}BlobModel)session.get(${entity.name}${column.methodName}BlobModel.class, primaryKey);
+					}
+					catch (Exception e) {
+						throw ${entity.varName}Persistence.processException(e);
+					}
+					finally {
+						${entity.varName}Persistence.closeSession(session);
+					}
+				}
+			</#if>
+		</#list>
 	</#if>
 
 	<#list referenceList as tempEntity>

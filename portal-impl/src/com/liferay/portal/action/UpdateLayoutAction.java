@@ -287,8 +287,8 @@ public class UpdateLayoutAction extends JSONAction {
 		if (dataType.equals("json")) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			StringServletResponse stringResponse =
-				new StringServletResponse(response);
+			StringServletResponse stringResponse = new StringServletResponse(
+				response);
 
 			renderPortletAction.execute(
 				mapping, form, dynamicRequest, stringResponse);
@@ -327,9 +327,7 @@ public class UpdateLayoutAction extends JSONAction {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		boolean portletAjaxable = portlet.isAjaxable();
-
-		jsonObject.put("refresh", !portletAjaxable);
+		jsonObject.put("refresh", !portlet.isAjaxable());
 		jsonObject.put("portletHTML", stringResponse.getString().trim());
 
 		Set<String> footerCssSet = new LinkedHashSet<String>();
@@ -360,7 +358,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (!portletOnLayout && portletAjaxable) {
+		if (!portletOnLayout && portlet.isAjaxable()) {
 			Portlet rootPortlet = portlet.getRootPortlet();
 
 			for (String footerPortalCss : portlet.getFooterPortalCss()) {

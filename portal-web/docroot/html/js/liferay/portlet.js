@@ -626,12 +626,14 @@
 				var ajaxable = data.ajaxable;
 
 				var id = portlet.attr('portlet');
+
 				var url = portlet.refreshURL;
 
 				var placeHolder = A.Node.create('<div class="loading-animation" id="p_load' + id + '" />');
 
 				if (ajaxable && url) {
 					portlet.placeBefore(placeHolder);
+
 					portlet.remove(true);
 
 					var params = {};
@@ -676,6 +678,7 @@
 					var portletBody = portlet.one('.portlet-body');
 
 					portletBody.placeBefore(nonAjaxableContentMessage);
+
 					portletBody.hide();
 				}
 			}

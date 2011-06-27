@@ -60,6 +60,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	<aui:script use="aui-base">
 		if (window.parent) {
 			var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
+
 			var data;
 
 			<c:if test="<%= !selPortlet.isAjaxable() %>">

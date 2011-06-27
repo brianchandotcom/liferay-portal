@@ -17,6 +17,8 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 String portletId = portlet.getPortletId();
@@ -24,8 +26,6 @@ String rootPortletId = portlet.getRootPortletId();
 String instanceId = portlet.getInstanceId();
 
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
-
-String cmd = ParamUtil.getString(request, "cmd");
 
 String queryString = (String)request.getAttribute(WebKeys.RENDER_PORTLET_QUERY_STRING);
 String columnId = (String)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID);

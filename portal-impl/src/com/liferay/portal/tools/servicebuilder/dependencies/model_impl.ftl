@@ -16,6 +16,14 @@ import ${packagePath}.model.${entity.name};
 import ${packagePath}.model.${entity.name}Model;
 import ${packagePath}.model.${entity.name}Soap;
 
+<#list entity.blobList as column>
+	<#if column.lazy>
+		import ${packagePath}.model.${entity.name}${column.methodName}BlobModel;
+	</#if>
+</#list>
+
+import ${packagePath}.service.${entity.name}LocalServiceUtil;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
@@ -144,25 +152,31 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${packagePath}.model.${entity.name}"),
+	<#if !entity.hasNonLazyBlob()>
+		public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${packagePath}.model.${entity.name}"),
 
-	<#if entity.isCacheEnabled()>
-		true
+		<#if entity.isCacheEnabled()>
+			true
+		<#else>
+			false
+		</#if>
+
+		);
+
+		public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${packagePath}.model.${entity.name}"),
+
+		<#if entity.isCacheEnabled()>
+			true
+		<#else>
+			false
+		</#if>
+
+		);
 	<#else>
-		false
+		public static final boolean ENTITY_CACHE_ENABLED = false;
+
+		public static final boolean FINDER_CACHE_ENABLED = false;
 	</#if>
-
-	);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${packagePath}.model.${entity.name}"),
-
-	<#if entity.isCacheEnabled()>
-		true
-	<#else>
-		false
-	</#if>
-
-	);
 
 	<#if entity.hasRemoteService()>
 		/**
@@ -347,7 +361,21 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					return _${column.name};
 				}
 			<#else>
-				return _${column.name};
+				<#if (column.type == "Blob") && column.lazy>
+					if (_${column.name}BlobModel == null) {
+						try {
+							_${column.name}BlobModel = (${entity.name}${column.methodName}BlobModel)${entity.name}LocalServiceUtil.fetchEntity(${entity.name}${column.methodName}BlobModel.class, getPrimaryKey());
+
+							return _${column.name}BlobModel.get${column.methodName}Blob();
+						}
+						catch(SystemException se) {
+						}
+					}
+
+					return null;
+				<#else>
+					return _${column.name};
+				</#if>
 			</#if>
 		}
 
@@ -419,7 +447,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					}
 				</#if>
 
-				_${column.name} = ${column.name};
+				<#if (column.type == "Blob") && column.lazy>
+					if (_${column.name}BlobModel == null) {
+						_${column.name}BlobModel = new ${entity.name}${column.methodName}BlobModel(getPrimaryKey(), ${column.name});
+					}
+					else {
+						_${column.name}BlobModel.set${column.methodName}Blob(${column.name});
+					}
+				<#else>
+					_${column.name} = ${column.name};
+				</#if>
 			</#if>
 
 			_escapedModelProxy = null;
@@ -576,15 +613,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		${entity.name}Impl ${entity.varName}Impl = new ${entity.name}Impl();
 
 		<#list entity.regularColList as column>
-			${entity.varName}Impl.set${column.methodName}(
+			<#if column.type != "Blob">
+				${entity.varName}Impl.set${column.methodName}(
 
-			<#if column.EJBName??>
-				(${column.EJBName})get${column.methodName}().clone()
-			<#else>
-				get${column.methodName}()
+				<#if column.EJBName??>
+					(${column.EJBName})get${column.methodName}().clone()
+				<#else>
+					get${column.methodName}()
+				</#if>
+
+				);
 			</#if>
-
-			);
 		</#list>
 
 		${entity.varName}Impl.resetOriginalValues();
@@ -715,6 +754,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					${entity.varName}ModelImpl._setOriginal${column.methodName} = false;
 				</#if>
 			</#if>
+			<#if (column.type == "Blob") && column.lazy>
+				_${column.name}BlobModel = null;
+			</#if>
 		</#list>
 	}
 
@@ -757,22 +799,38 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		return sb.toString();
 	}
 
+	<#list entity.blobList as column>
+		<#if column.lazy>
+			private ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel() {
+				return _${column.name}BlobModel;
+			}
+
+			private void set${column.methodName}BlobModel(${entity.name}${column.methodName}BlobModel ${column.name}BlobModel) {
+				_${column.name}BlobModel = ${column.name}BlobModel;
+			}
+		</#if>
+	</#list>
+
 	private static ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {${entity.name}.class};
 
 	<#list entity.regularColList as column>
-		private ${column.type} _${column.name};
+		<#if (column.type == "Blob") && column.lazy>
+			private ${entity.name}${column.methodName}BlobModel _${column.name}BlobModel;
+		<#else>
+			private ${column.type} _${column.name};
 
-		<#if column.userUuid>
-			private String _${column.userUuidName};
-		</#if>
+			<#if column.userUuid>
+				private String _${column.userUuidName};
+			</#if>
 
-		<#if column.isFetchFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
-			private ${column.type} _original${column.methodName};
+			<#if column.isFetchFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
+				private ${column.type} _original${column.methodName};
 
-			<#if column.isPrimitiveType()>
-				private boolean _setOriginal${column.methodName};
+				<#if column.isPrimitiveType()>
+					private boolean _setOriginal${column.methodName};
+				</#if>
 			</#if>
 		</#if>
 	</#list>

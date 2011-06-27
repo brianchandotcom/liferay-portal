@@ -89,6 +89,20 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	public T fetchByPrimaryKey(Serializable primaryKey) throws SystemException;
 
 	/**
+	 * Returns the model instance with the primary key for the given Entity
+	 * class or returns <code>null</code> if it could not be found.
+	 *
+	 * @param  entityClass the class of the model instance
+	 * @param  primaryKey the primary key of the model instance
+	 * @return the model instance, or <code>null</code> if an instance of this
+	 *         model with the primary key could not be found
+	 * @throws SystemException if the primary key is <code>null</code>, or if a
+	 *         system exception occurred
+	 */
+	public <T> T fetchEntity(Class<T> entityClass, Serializable primaryKey)
+		throws SystemException;
+
+	/**
 	 * Returns the model instance with the primary key or throws a {@link
 	 * NoSuchModelException} if it could not be found.
 	 *

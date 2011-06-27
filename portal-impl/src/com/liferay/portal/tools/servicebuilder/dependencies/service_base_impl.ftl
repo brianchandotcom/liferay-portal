@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 
+import java.io.Serializable;
+
 import javax.sql.DataSource;
 
 <#if sessionTypeName == "">
@@ -96,6 +98,23 @@ import javax.sql.DataSource;
 		 * Never modify or reference this class directly. Always use {@link ${packagePath}.service.${entity.name}ServiceUtil} to access the ${entity.humanName} remote service.
 		 */
 </#if>
+
+	<#if entity.hasLazyBlob()>
+		/**
+		 * Returns the model instance with the primary key or returns
+		 * <code>null</code> if it could not be found.
+		 *
+		 * @param  primaryKey the primary key of the model instance
+		 * @return the model instance, or <code>null</code> if an instance of this
+		 *         model with the primary key could not be found
+		 * @throws SystemException if the primary key is <code>null</code>, or if a
+		 *         system exception occurred
+		 */
+		public Object fetchEntity(Class<?> entityClass, Serializable primaryKey)
+			throws SystemException {
+			return ${entity.varName}Persistence.fetchEntity(entityClass, primaryKey);
+		}
+	</#if>
 
 	<#if sessionTypeName == "Local" && entity.hasColumns()>
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + entity.name, [packagePath + ".model." + entity.name], ["SystemException"])>

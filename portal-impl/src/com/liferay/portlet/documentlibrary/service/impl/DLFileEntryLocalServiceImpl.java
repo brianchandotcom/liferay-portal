@@ -699,6 +699,13 @@ public class DLFileEntryLocalServiceImpl
 	public DLFileVersion getLatestFileVersion(long fileEntryId)
 		throws PortalException, SystemException {
 
+		return getLatestFileVersion(fileEntryId, false);
+	}
+
+	public DLFileVersion getLatestFileVersion(
+			long fileEntryId, boolean excludeWorkingCopy)
+		throws PortalException, SystemException {
+
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
 
@@ -711,7 +718,17 @@ public class DLFileEntryLocalServiceImpl
 
 		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
 
-		return dlFileVersions.get(0);
+		DLFileVersion dlFileVersion = dlFileVersions.get(0);
+
+		String version = dlFileVersion.getVersion();
+
+		if (excludeWorkingCopy &&
+			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+			return dlFileVersions.get(1);
+		}
+
+		return dlFileVersion;
 	}
 
 	public List<DLFileEntry> getNoAssetFileEntries() throws SystemException {
@@ -830,13 +847,7 @@ public class DLFileEntryLocalServiceImpl
 			String version = dlFileVersion.getVersion();
 
 			if (!version.equals(DLFileEntryConstants.DEFAULT_VERSION)) {
-				int approvedArticlesCount = dlFileVersionPersistence.countByF_S(
-					dlFileEntry.getFileEntryId(),
-					WorkflowConstants.STATUS_APPROVED);
-
-				if (approvedArticlesCount > 0) {
-					addDraftAssetEntry = true;
-				}
+				addDraftAssetEntry = true;
 			}
 		}
 
@@ -1386,20 +1397,13 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction)
 		throws PortalException, SystemException {
 
-		if (Validator.isNull(dlFileEntry.getVersion())) {
-			return DLFileEntryConstants.DEFAULT_VERSION;
-		}
+		String version = dlFileEntry.getVersion();
 
 		try {
-			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion();
+			DLFileVersion dlFileVersion = getLatestFileVersion(
+				dlFileEntry.getFileEntryId(), true);
 
-			String version = dlFileVersion.getVersion();
-
-			if (!dlFileVersion.isApproved() &&
-				version.equals(DLFileEntryConstants.DEFAULT_VERSION)) {
-
-				return DLFileEntryConstants.DEFAULT_VERSION;
-			}
+			version = dlFileVersion.getVersion();
 		}
 		catch (NoSuchFileVersionException nsfve) {
 		}
@@ -1409,7 +1413,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		int[] versionParts = StringUtil.split(
-			dlFileEntry.getVersion(), StringPool.PERIOD, 0);
+			version, StringPool.PERIOD, 0);
 
 		if (majorVersion) {
 			versionParts[0]++;
@@ -1559,10 +1563,18 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		boolean autoCheckIn = !dlFileEntry.isCheckedOut();
+		boolean checkedOut = dlFileEntry.isCheckedOut();
+
+		DLFileVersion dlFileVersion = getLatestFileVersion(
+			fileEntryId, !checkedOut);
+
+		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
 
 		if (autoCheckIn) {
 			dlFileEntry = checkOutFileEntry(userId, fileEntryId);
+		}
+		else if (!checkedOut) {
+			lockFileEntry(userId, fileEntryId);
 		}
 
 		try {
@@ -1597,8 +1609,6 @@ public class DLFileEntryLocalServiceImpl
 				is);
 
 			// File version
-
-			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion();
 
 			String version = dlFileVersion.getVersion();
 
@@ -1662,6 +1672,11 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			throw se;
+		}
+		finally {
+			if (!autoCheckIn && !checkedOut) {
+				unlockFileEntry(fileEntryId);
+			}
 		}
 
 		return dlFileEntry;

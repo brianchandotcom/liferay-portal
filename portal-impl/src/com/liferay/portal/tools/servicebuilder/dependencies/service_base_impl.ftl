@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +29,13 @@ import javax.sql.DataSource;
 	</#if>
 
 	import ${packagePath}.model.${entity.name};
+
+	<#list entity.blobList as column>
+		<#if column.lazy>
+			import ${packagePath}.model.${entity.name}${column.methodName}BlobModel;
+		</#if>
+	</#list>
+
 	import ${packagePath}.model.impl.${entity.name}Impl;
 
 	import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -99,22 +107,25 @@ import javax.sql.DataSource;
 		 */
 </#if>
 
-	<#if entity.hasLazyBlob()>
-		/**
-		 * Returns the model instance with the primary key or returns
-		 * <code>null</code> if it could not be found.
-		 *
-		 * @param  primaryKey the primary key of the model instance
-		 * @return the model instance, or <code>null</code> if an instance of this
-		 *         model with the primary key could not be found
-		 * @throws SystemException if the primary key is <code>null</code>, or if a
-		 *         system exception occurred
-		 */
-		public Object fetchEntity(Class<?> entityClass, Serializable primaryKey)
-			throws SystemException {
-			return ${entity.varName}Persistence.fetchEntity(entityClass, primaryKey);
-		}
-	</#if>
+	<#list entity.blobList as column>
+		<#if column.lazy>
+			public ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel(Serializable primaryKey) throws SystemException {
+				Session session = null;
+
+				try {
+					session = ${entity.varName}Persistence.openSession();
+
+					return (${packagePath}.model.${entity.name}${column.methodName}BlobModel)session.get(${entity.name}${column.methodName}BlobModel.class, primaryKey);
+				}
+				catch (Exception e) {
+					throw ${entity.varName}Persistence.processException(e);
+				}
+				finally {
+					${entity.varName}Persistence.closeSession(session);
+				}
+			}
+		</#if>
+	</#list>
 
 	<#if sessionTypeName == "Local" && entity.hasColumns()>
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + entity.name, [packagePath + ".model." + entity.name], ["SystemException"])>

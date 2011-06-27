@@ -103,10 +103,11 @@
 				</#if>
 
 				<#if (column.type == "Blob") && column.lazy>
-					<one-to-one name="${column.name}BlobModel" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" constrained="true" outer-join="false" cascade="save-update" />
+					<one-to-one name="${column.name}BlobModel" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" cascade="save-update" outer-join="false" constrained="true" />
 				</#if>
 			</#list>
 		</class>
+
 		<#list entity.blobList as blobColumn>
 			<#if blobColumn.lazy>
 				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
@@ -117,7 +118,7 @@
 							<param name="property">${packagePath}.model.impl.${entity.name}Impl</param>
 						</generator>
 					</id>
-					<property column="${blobColumn.DBName}" name="${blobColumn.name}Blob" type="org.hibernate.type.BlobType"/>
+					<property column="${blobColumn.DBName}" name="${blobColumn.name}Blob" type="org.hibernate.type.BlobType" />
 				</class>
 			</#if>
 		</#list>

@@ -178,6 +178,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.bad_json_types=" + _TPL_ROOT + "bad_json_types.txt\n"+
 				"\t-Dservice.tpl.bad_table_names=" + _TPL_ROOT + "bad_table_names.txt\n"+
 				"\t-Dservice.tpl.base_mode_impl=" + _TPL_ROOT + "base_mode_impl.ftl\n"+
+				"\t-Dservice.tpl.blob_model=" + _TPL_ROOT + "blob_model.ftl\n"+
 				"\t-Dservice.tpl.copyright.txt=copyright.txt\n"+
 				"\t-Dservice.tpl.ejb_pk=" + _TPL_ROOT + "ejb_pk.ftl\n"+
 				"\t-Dservice.tpl.exception=" + _TPL_ROOT + "exception.ftl\n"+
@@ -437,6 +438,7 @@ public class ServiceBuilder {
 		_tplBadJsonTypes = _getTplProperty("bad_json_types", _tplBadJsonTypes);
 		_tplBadTableNames = _getTplProperty(
 			"bad_table_names", _tplBadTableNames);
+		_tplBlobModel = _getTplProperty("blob_model", _tplBlobModel);
 		_tplEjbPk = _getTplProperty("ejb_pk", _tplEjbPk);
 		_tplException = _getTplProperty("exception", _tplException);
 		_tplExtendedModel = _getTplProperty(
@@ -645,13 +647,14 @@ public class ServiceBuilder {
 								_getTransients(entity, true));
 
 							_createModel(entity);
-							_createModelBlobs(entity);
 							_createExtendedModel(entity);
 
 							_createModelClp(entity);
 							_createModelWrapper(entity);
 
 							_createModelSoap(entity);
+
+							_createBlobModels(entity);
 
 							_createPool(entity);
 
@@ -1524,6 +1527,45 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _createBlobModels(Entity entity) throws Exception {
+		List<EntityColumn> blobList = new ArrayList<EntityColumn>(
+			entity.getBlobList());
+
+		Iterator<EntityColumn> itr = blobList.iterator();
+
+		while (itr.hasNext()) {
+			EntityColumn col = itr.next();
+
+			if (!col.isLazy()) {
+				itr.remove();
+			}
+		}
+
+		if (blobList.isEmpty()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		for (EntityColumn col : blobList) {
+			context.put("column", col);
+
+			// Content
+
+			String content = _processTemplate(_tplBlobModel, context);
+
+			// Write file
+
+			File blobModelFile = new File(
+				_serviceOutputPath + "/model/" + entity.getName() + 
+					col.getMethodName() + "BlobModel.java");
+
+			writeFile(blobModelFile, content, _author);
+		}
+	}
+
 	private void _createEJBPK(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -1983,44 +2025,6 @@ public class ServiceBuilder {
 
 				modelFile.delete();
 			}
-		}
-	}
-
-	private void _createModelBlobs(Entity entity) throws Exception {
-		List<EntityColumn> blobList = entity.getBlobList();
-		Iterator<EntityColumn> blobIterator = blobList.iterator();
-
-		while (blobIterator.hasNext()) {
-			EntityColumn entityColumn = blobIterator.next();
-			if (!entityColumn.isLazy()) {
-				blobIterator.remove();
-			}
-		}
-
-		if (blobList.isEmpty()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		for (EntityColumn entityColumn : blobList) {
-			context.put("column", entityColumn);
-
-			String columnName = entityColumn.getName();
-
-			// Content
-
-			String content = _processTemplate(_tplBlobModel, context);
-
-			// Write file
-
-			File modelBlobFile = new File(
-				_serviceOutputPath + "/model/" + entity.getName() + 
-					entityColumn.getMethodName() + "BlobModel.java");
-
-			writeFile(modelBlobFile, content, _author);
 		}
 	}
 
@@ -4380,11 +4384,11 @@ public class ServiceBuilder {
 				collectionList.add(col);
 			}
 			else {
+				regularColList.add(col);
+
 				if (columnType.equals("Blob")) {
 					blobList.add(col);
 				}
-
-				regularColList.add(col);
 			}
 
 			columnList.add(col);
@@ -4710,6 +4714,7 @@ public class ServiceBuilder {
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadJsonTypes = _TPL_ROOT + "bad_json_types.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
+	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
@@ -4718,7 +4723,6 @@ public class ServiceBuilder {
 	private String _tplFinder = _TPL_ROOT + "finder.ftl";
 	private String _tplFinderUtil = _TPL_ROOT + "finder_util.ftl";
 	private String _tplHbmXml = _TPL_ROOT + "hbm_xml.ftl";
-	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplJsonJs = _TPL_ROOT + "json_js.ftl";
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";

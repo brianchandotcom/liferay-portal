@@ -109,9 +109,10 @@ public class Entity {
 		_txRequiredList = txRequiredList;
 
 		if ((_blobList != null) && !_blobList.isEmpty()) {
-			for (EntityColumn entityColumn : _blobList) {
-				if (!entityColumn.isLazy()) {
+			for (EntityColumn col : _blobList) {
+				if (!col.isLazy()) {
 					_cacheEnabled = false;
+
 					break;
 				}
 			}
@@ -390,13 +391,13 @@ public class Entity {
 		return _name.hashCode();
 	}
 
-	public boolean hasLazyBlob() {
+	public boolean hasLazyBlobColumn() {
 		if ((_blobList == null) || _blobList.isEmpty()) {
 			return false;
 		}
 
-		for (EntityColumn entityColumn : _blobList) {
-			if (entityColumn.isLazy()) {
+		for (EntityColumn col : _blobList) {
+			if (col.isLazy()) {
 				return true;
 			}
 		}
@@ -416,20 +417,6 @@ public class Entity {
 
 	public boolean hasLocalService() {
 		return _localService;
-	}
-
-	public boolean hasNonLazyBlob() {
-		if ((_blobList == null) || _blobList.isEmpty()) {
-			return false;
-		}
-
-		for (EntityColumn entityColumn : _blobList) {
-			if (!entityColumn.isLazy()) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public boolean hasPrimitivePK() {

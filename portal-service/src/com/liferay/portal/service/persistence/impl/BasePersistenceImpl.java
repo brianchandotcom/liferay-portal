@@ -92,23 +92,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
-	public <T> T fetchEntity(Class<T> entityClass, Serializable primaryKey)
-		throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			return (T)session.get(entityClass, primaryKey);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	@SuppressWarnings("unused")
 	public T findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {

@@ -152,7 +152,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
-	<#if !entity.hasNonLazyBlob()>
+	<#if entity.hasLazyBlobColumn()>
+		public static final boolean ENTITY_CACHE_ENABLED = false;
+
+		public static final boolean FINDER_CACHE_ENABLED = false;
+	<#else>
 		public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${packagePath}.model.${entity.name}"),
 
 		<#if entity.isCacheEnabled()>
@@ -172,10 +176,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		);
-	<#else>
-		public static final boolean ENTITY_CACHE_ENABLED = false;
-
-		public static final boolean FINDER_CACHE_ENABLED = false;
 	</#if>
 
 	<#if entity.hasRemoteService()>
@@ -364,11 +364,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				<#if (column.type == "Blob") && column.lazy>
 					if (_${column.name}BlobModel == null) {
 						try {
-							_${column.name}BlobModel = (${entity.name}${column.methodName}BlobModel)${entity.name}LocalServiceUtil.fetchEntity(${entity.name}${column.methodName}BlobModel.class, getPrimaryKey());
+							_${column.name}BlobModel = ${entity.name}LocalServiceUtil.get${column.methodName}BlobModel(getPrimaryKey());
 
-							return _${column.name}BlobModel.get${column.methodName}Blob();
+							if (_${column.name}BlobModel != null) {
+								return _${column.name}BlobModel.get${column.methodName}Blob();
+							}
 						}
-						catch(SystemException se) {
+						catch (Exception e) {
 						}
 					}
 
@@ -754,6 +756,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					${entity.varName}ModelImpl._setOriginal${column.methodName} = false;
 				</#if>
 			</#if>
+
 			<#if (column.type == "Blob") && column.lazy>
 				_${column.name}BlobModel = null;
 			</#if>
@@ -798,18 +801,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		return sb.toString();
 	}
-
-	<#list entity.blobList as column>
-		<#if column.lazy>
-			private ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel() {
-				return _${column.name}BlobModel;
-			}
-
-			private void set${column.methodName}BlobModel(${entity.name}${column.methodName}BlobModel ${column.name}BlobModel) {
-				_${column.name}BlobModel = ${column.name}BlobModel;
-			}
-		</#if>
-	</#list>
 
 	private static ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 

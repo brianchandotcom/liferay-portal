@@ -16,6 +16,8 @@ package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
@@ -66,6 +68,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public void clearCache(T model);
 
+	public void closeSession(Session session);
+
 	/**
 	 * Returns the number of rows that match the dynamic query.
 	 *
@@ -87,20 +91,6 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         system exception occurred
 	 */
 	public T fetchByPrimaryKey(Serializable primaryKey) throws SystemException;
-
-	/**
-	 * Returns the model instance with the primary key for the given Entity
-	 * class or returns <code>null</code> if it could not be found.
-	 *
-	 * @param  entityClass the class of the model instance
-	 * @param  primaryKey the primary key of the model instance
-	 * @return the model instance, or <code>null</code> if an instance of this
-	 *         model with the primary key could not be found
-	 * @throws SystemException if the primary key is <code>null</code>, or if a
-	 *         system exception occurred
-	 */
-	public <T> T fetchEntity(Class<T> entityClass, Serializable primaryKey)
-		throws SystemException;
 
 	/**
 	 * Returns the model instance with the primary key or throws a {@link
@@ -198,6 +188,10 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @see    #registerListener(ModelListener)
 	 */
 	public ModelListener<T>[] getListeners();
+
+	public Session openSession() throws ORMException;
+
+	public SystemException processException(Exception e);
 
 	/**
 	 * Registers a new listener for this model.

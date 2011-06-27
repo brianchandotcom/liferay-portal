@@ -280,7 +280,7 @@ the type value is String. This is particularly useful if your entity is
 referencing a read only table or a database view so that Hibernate does not try
 to issue unnecessary updates. The default value is true.
 
-The lazy value is only valid when type is Blob. It specifies whether or not to 
+The lazy value is only valid when type is Blob. It specifies whether or not to
 do a lazy fetch for Blob. The default value is true.
 
 The localized value specifies whether or not the value of the column can have

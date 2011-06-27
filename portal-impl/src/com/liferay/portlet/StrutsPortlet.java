@@ -17,8 +17,6 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -185,12 +183,7 @@ public class StrutsPortlet extends LiferayPortlet {
 
 			// Call processAction of com.liferay.portal.struts.PortletAction
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			try {
-				permissionChecker.setValues(actionRequest);
-
 				PortletRequestProcessor processor =
 					_getPortletRequestProcessor(actionRequest);
 
@@ -198,9 +191,6 @@ public class StrutsPortlet extends LiferayPortlet {
 			}
 			catch (ServletException se) {
 				throw new PortletException(se);
-			}
-			finally {
-				permissionChecker.resetValues();
 			}
 		}
 
@@ -218,12 +208,7 @@ public class StrutsPortlet extends LiferayPortlet {
 
 		// Call serveResource of com.liferay.portal.struts.PortletAction
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		try {
-			permissionChecker.setValues(resourceRequest);
-
 			PortletRequestProcessor processor =
 				_getPortletRequestProcessor(resourceRequest);
 
@@ -231,9 +216,6 @@ public class StrutsPortlet extends LiferayPortlet {
 		}
 		catch (ServletException se) {
 			throw new PortletException(se);
-		}
-		finally {
-			permissionChecker.resetValues();
 		}
 	}
 
@@ -250,12 +232,7 @@ public class StrutsPortlet extends LiferayPortlet {
 				getPortletContext(), renderRequest);
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		try {
-			permissionChecker.setValues(renderRequest);
-
 			PortletRequestProcessor processor =
 				_getPortletRequestProcessor(renderRequest);
 
@@ -265,8 +242,6 @@ public class StrutsPortlet extends LiferayPortlet {
 			throw new PortletException(se);
 		}
 		finally {
-			permissionChecker.resetValues();
-
 			if (_portletConfig.isWARFile()) {
 				StrutsUtil.setStrutsAttributes(renderRequest, strutsAttributes);
 			}

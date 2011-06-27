@@ -128,13 +128,6 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	}
 
 	public void setValues(PortletRequest portletRequest) {
-
-		// This method is called in com.liferay.portlet.StrutsPortlet to allow
-		// developers to hook in additional parameters from the portlet request.
-		// Don't overwrite this method unless you're using Liferay in a 2 tier
-		// environment and don't expect to make remote calls. Remote calls to
-		// service beans will not have any values set from the portlet request.
-
 	}
 
 	protected User user;

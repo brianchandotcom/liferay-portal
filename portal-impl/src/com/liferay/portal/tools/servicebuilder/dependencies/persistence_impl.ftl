@@ -721,14 +721,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name} fetchByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) throws SystemException {
 		${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.PKVarName}, this);
 
-		if (${entity.varName} == _NULL_PLACE_HOLDER) {
+		if (${entity.varName} == _null${entity.name}) {
 			return null;
 		}
 
 		if (${entity.varName} == null) {
 			Session session = null;
 
-			boolean hasError = false;
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -748,13 +748,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				);
 			}
 			catch (Exception e) {
-				hasError = true;
+				hasException = true;
 
 				throw processException(e);
 			}
 			finally {
-				if ((!hasError) && (${entity.varName} == null)) {
-					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.PKVarName}, _NULL_PLACE_HOLDER);
+				if (!hasException && (${entity.varName} == null)) {
+					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.PKVarName}, _null${entity.name});
 				}
 				else {
 					cacheResult(${entity.varName});
@@ -3853,8 +3853,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE))<#else>com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE</#if>;
 
-	private static final ${entity.name} _NULL_PLACE_HOLDER = new ${entity.name}Impl();
-
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
+
+	private static final ${entity.name} _null${entity.name} = new ${entity.name}Impl();
 
 }

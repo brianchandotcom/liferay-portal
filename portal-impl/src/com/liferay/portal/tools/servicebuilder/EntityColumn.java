@@ -27,7 +27,7 @@ public class EntityColumn implements Cloneable {
 	public EntityColumn(String name) {
 		this(
 			name, null, null, false, false, null, null, null, true, true, null,
-			null, null, null, true, false, false);
+			null, null, null, true, true, false, false);
 	}
 
 	public EntityColumn(
@@ -35,7 +35,7 @@ public class EntityColumn implements Cloneable {
 		boolean filterPrimary, String ejbName, String mappingKey,
 		String mappingTable, boolean caseSensitive, boolean orderByAscending,
 		String comparator, String arrayableOperator, String idType,
-		String idParam, boolean convertNull, boolean localized,
+		String idParam, boolean convertNull, boolean lazy, boolean localized,
 		boolean jsonEnabled) {
 
 		_name = name;
@@ -55,6 +55,7 @@ public class EntityColumn implements Cloneable {
 		_idType = idType;
 		_idParam = idParam;
 		_convertNull = convertNull;
+		_lazy = lazy;
 		_localized = localized;
 		_jsonEnabled = jsonEnabled;
 	}
@@ -63,12 +64,12 @@ public class EntityColumn implements Cloneable {
 		String name, String dbName, String type, boolean primary,
 		boolean filterPrimary, String ejbName, String mappingKey,
 		String mappingTable, String idType, String idParam, boolean convertNull,
-		boolean localized, boolean jsonEnabled) {
+		boolean lazy, boolean localized, boolean jsonEnabled) {
 
 		this(
 			name, dbName, type, primary, filterPrimary, ejbName, mappingKey,
 			mappingTable, true, true, null, null, idType, idParam, convertNull,
-			localized, jsonEnabled);
+			lazy, localized, jsonEnabled);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class EntityColumn implements Cloneable {
 			getName(), getDBName(), getType(), isPrimary(), isFilterPrimary(),
 			getEJBName(), getMappingKey(), getMappingTable(), isCaseSensitive(),
 			isOrderByAscending(), getComparator(), getArrayableOperator(),
-			getIdType(), getIdParam(), isConvertNull(), isLocalized(),
+			getIdType(), getIdParam(), isConvertNull(), isLazy(), isLocalized(),
 			isJsonEnabled());
 	}
 
@@ -241,6 +242,10 @@ public class EntityColumn implements Cloneable {
 		return _jsonEnabled;
 	}
 
+	public boolean isLazy() {
+		return _lazy;
+	}
+
 	public boolean isLocalized() {
 		return _localized;
 	}
@@ -338,6 +343,10 @@ public class EntityColumn implements Cloneable {
 		_idType = idType;
 	}
 
+	public void setLazy(boolean lazy) {
+		_lazy = lazy;
+	}
+
 	public void setLocalized(boolean localized) {
 		_localized = localized;
 	}
@@ -382,6 +391,7 @@ public class EntityColumn implements Cloneable {
 	private String _idParam;
 	private String _idType;
 	private boolean _jsonEnabled;
+	private boolean _lazy;
 	private boolean _localized;
 	private String _mappingKey;
 	private String _mappingTable;

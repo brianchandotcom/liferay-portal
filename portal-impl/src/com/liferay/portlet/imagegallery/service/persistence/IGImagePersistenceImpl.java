@@ -621,8 +621,14 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		IGImage igImage = (IGImage)EntityCacheUtil.getResult(IGImageModelImpl.ENTITY_CACHE_ENABLED,
 				IGImageImpl.class, imageId, this);
 
+		if (igImage == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (igImage == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -631,10 +637,16 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 						Long.valueOf(imageId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (igImage != null) {
+				if ((!hasError) && (igImage == null)) {
+					EntityCacheUtil.putResult(IGImageModelImpl.ENTITY_CACHE_ENABLED,
+						IGImageImpl.class, imageId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(igImage);
 				}
 
@@ -6062,5 +6074,6 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGImage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No IGImage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final IGImage _NULL_PLACE_HOLDER = new IGImageImpl();
 	private static Log _log = LogFactoryUtil.getLog(IGImagePersistenceImpl.class);
 }

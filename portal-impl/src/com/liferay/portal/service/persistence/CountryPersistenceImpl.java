@@ -458,8 +458,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		Country country = (Country)EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 				CountryImpl.class, countryId, this);
 
+		if (country == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (country == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -468,10 +474,16 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 						Long.valueOf(countryId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (country != null) {
+				if ((!hasError) && (country == null)) {
+					EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
+						CountryImpl.class, countryId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(country);
 				}
 
@@ -1870,5 +1882,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Country exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Country exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Country _NULL_PLACE_HOLDER = new CountryImpl();
 	private static Log _log = LogFactoryUtil.getLog(CountryPersistenceImpl.class);
 }

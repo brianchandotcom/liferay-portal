@@ -508,8 +508,14 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		SCProductScreenshot scProductScreenshot = (SCProductScreenshot)EntityCacheUtil.getResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 				SCProductScreenshotImpl.class, productScreenshotId, this);
 
+		if (scProductScreenshot == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (scProductScreenshot == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -518,10 +524,17 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 						Long.valueOf(productScreenshotId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (scProductScreenshot != null) {
+				if ((!hasError) && (scProductScreenshot == null)) {
+					EntityCacheUtil.putResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+						SCProductScreenshotImpl.class, productScreenshotId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(scProductScreenshot);
 				}
 
@@ -1770,5 +1783,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductScreenshot exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductScreenshot exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final SCProductScreenshot _NULL_PLACE_HOLDER = new SCProductScreenshotImpl();
 	private static Log _log = LogFactoryUtil.getLog(SCProductScreenshotPersistenceImpl.class);
 }

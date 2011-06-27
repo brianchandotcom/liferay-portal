@@ -382,8 +382,14 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId, this);
 
+		if (workflowInstanceLink == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (workflowInstanceLink == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -392,10 +398,17 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 						Long.valueOf(workflowInstanceLinkId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (workflowInstanceLink != null) {
+				if ((!hasError) && (workflowInstanceLink == null)) {
+					EntityCacheUtil.putResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
+						WorkflowInstanceLinkImpl.class, workflowInstanceLinkId,
+						_NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(workflowInstanceLink);
 				}
 
@@ -1230,5 +1243,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WorkflowInstanceLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WorkflowInstanceLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final WorkflowInstanceLink _NULL_PLACE_HOLDER = new WorkflowInstanceLinkImpl();
 	private static Log _log = LogFactoryUtil.getLog(WorkflowInstanceLinkPersistenceImpl.class);
 }

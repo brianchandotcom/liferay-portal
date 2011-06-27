@@ -442,8 +442,14 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		Team team = (Team)EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 				TeamImpl.class, teamId, this);
 
+		if (team == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (team == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -451,10 +457,16 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				team = (Team)session.get(TeamImpl.class, Long.valueOf(teamId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (team != null) {
+				if ((!hasError) && (team == null)) {
+					EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
+						TeamImpl.class, teamId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(team);
 				}
 
@@ -3069,5 +3081,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Team exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Team exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final Team _NULL_PLACE_HOLDER = new TeamImpl();
 	private static Log _log = LogFactoryUtil.getLog(TeamPersistenceImpl.class);
 }

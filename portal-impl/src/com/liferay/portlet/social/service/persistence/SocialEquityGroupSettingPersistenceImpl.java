@@ -439,8 +439,14 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 		SocialEquityGroupSetting socialEquityGroupSetting = (SocialEquityGroupSetting)EntityCacheUtil.getResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquityGroupSettingImpl.class, equityGroupSettingId, this);
 
+		if (socialEquityGroupSetting == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (socialEquityGroupSetting == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -449,10 +455,17 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 						Long.valueOf(equityGroupSettingId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (socialEquityGroupSetting != null) {
+				if ((!hasError) && (socialEquityGroupSetting == null)) {
+					EntityCacheUtil.putResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
+						SocialEquityGroupSettingImpl.class,
+						equityGroupSettingId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(socialEquityGroupSetting);
 				}
 
@@ -920,5 +933,6 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialEquityGroupSetting exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquityGroupSetting exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final SocialEquityGroupSetting _NULL_PLACE_HOLDER = new SocialEquityGroupSettingImpl();
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityGroupSettingPersistenceImpl.class);
 }

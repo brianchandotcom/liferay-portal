@@ -442,8 +442,14 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		RatingsEntry ratingsEntry = (RatingsEntry)EntityCacheUtil.getResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				RatingsEntryImpl.class, entryId, this);
 
+		if (ratingsEntry == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (ratingsEntry == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -452,10 +458,16 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 						Long.valueOf(entryId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (ratingsEntry != null) {
+				if ((!hasError) && (ratingsEntry == null)) {
+					EntityCacheUtil.putResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
+						RatingsEntryImpl.class, entryId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(ratingsEntry);
 				}
 
@@ -1339,5 +1351,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No RatingsEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RatingsEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final RatingsEntry _NULL_PLACE_HOLDER = new RatingsEntryImpl();
 	private static Log _log = LogFactoryUtil.getLog(RatingsEntryPersistenceImpl.class);
 }

@@ -385,8 +385,14 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 				ClassNameImpl.class, classNameId, this);
 
+		if (className == _NULL_PLACE_HOLDER) {
+			return null;
+		}
+
 		if (className == null) {
 			Session session = null;
+
+			boolean hasError = false;
 
 			try {
 				session = openSession();
@@ -395,10 +401,16 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 						Long.valueOf(classNameId));
 			}
 			catch (Exception e) {
+				hasError = true;
+
 				throw processException(e);
 			}
 			finally {
-				if (className != null) {
+				if ((!hasError) && (className == null)) {
+					EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+						ClassNameImpl.class, classNameId, _NULL_PLACE_HOLDER);
+				}
+				else {
 					cacheResult(className);
 				}
 
@@ -950,5 +962,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ClassName exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ClassName exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
+	private static final ClassName _NULL_PLACE_HOLDER = new ClassNameImpl();
 	private static Log _log = LogFactoryUtil.getLog(ClassNamePersistenceImpl.class);
 }

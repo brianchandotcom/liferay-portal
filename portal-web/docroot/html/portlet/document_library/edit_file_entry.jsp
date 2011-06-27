@@ -393,7 +393,7 @@ else if (fileEntryType != null) {
 				publishButtonLabel = "submit-for-publication";
 			}
 
-			if (pending && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
+			if ((isCheckedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 				publishButtonLabel = "save";
 			}
 			%>

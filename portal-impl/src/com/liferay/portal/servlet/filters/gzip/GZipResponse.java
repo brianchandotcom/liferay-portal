@@ -15,12 +15,12 @@
 package com.liferay.portal.servlet.filters.gzip;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.util.RSSThreadLocal;
 
 import java.io.IOException;
@@ -122,7 +122,7 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		_servletOutputStream = getOutputStream();
 
-		_printWriter = new UnsyncPrintWriter(new OutputStreamWriter(
+		_printWriter = UnsyncPrintWriterPool.borrow(new OutputStreamWriter(
 			//_stream, _res.getCharacterEncoding()));
 			_servletOutputStream, StringPool.UTF8));
 

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.search.lucene.cluster.LuceneClusterUtil;
@@ -305,7 +306,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			urlConnection.setDoOutput(true);
 
-			UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
 				urlConnection.getOutputStream());
 
 			unsyncPrintWriter.write("transientToken=");

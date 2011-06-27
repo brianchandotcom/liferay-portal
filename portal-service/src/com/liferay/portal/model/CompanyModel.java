@@ -84,6 +84,27 @@ public interface CompanyModel extends BaseModel<Company> {
 	public void setAccountId(long accountId);
 
 	/**
+	 * Returns the enabled of this company.
+	 *
+	 * @return the enabled of this company
+	 */
+	public boolean getEnabled();
+
+	/**
+	 * Determines if this company is enabled.
+	 *
+	 * @return <code>true</code> if this company is enabled; <code>false</code> otherwise
+	 */
+	public boolean isEnabled();
+
+	/**
+	 * Sets whether this company is enabled.
+	 *
+	 * @param enabled the enabled of this company
+	 */
+	public void setEnabled(boolean enabled);
+
+	/**
 	 * Returns the web ID of this company.
 	 *
 	 * @return the web ID of this company

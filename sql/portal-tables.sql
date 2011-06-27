@@ -320,6 +320,7 @@ create table ClusterGroup (
 create table Company (
 	companyId LONG not null primary key,
 	accountId LONG,
+	enabled BOOLEAN,
 	webId VARCHAR(75) null,
 	key_ TEXT null,
 	mx VARCHAR(75) null,

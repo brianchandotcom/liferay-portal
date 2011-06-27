@@ -67,6 +67,8 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPers
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 
+import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -90,6 +92,21 @@ public abstract class DLContentLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil} to access the document library content local service.
 	 */
+
+	/**
+	 * Returns the model instance with the primary key or returns
+	 * <code>null</code> if it could not be found.
+	 *
+	 * @param  primaryKey the primary key of the model instance
+	 * @return the model instance, or <code>null</code> if an instance of this
+	 *         model with the primary key could not be found
+	 * @throws SystemException if the primary key is <code>null</code>, or if a
+	 *         system exception occurred
+	 */
+	public Object fetchEntity(Class<?> entityClass, Serializable primaryKey)
+		throws SystemException {
+		return dlContentPersistence.fetchEntity(entityClass, primaryKey);
+	}
 
 	/**
 	 * Adds the document library content to the database. Also notifies the appropriate model listeners.

@@ -30,6 +30,22 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 	}
 
 	/**
+	* Returns the model instance with the primary key or returns
+	* <code>null</code> if it could not be found.
+	*
+	* @param primaryKey the primary key of the model instance
+	* @return the model instance, or <code>null</code> if an instance of this
+	model with the primary key could not be found
+	* @throws SystemException if the primary key is <code>null</code>, or if a
+	system exception occurred
+	*/
+	public java.lang.Object fetchEntity(java.lang.Class<?> entityClass,
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.fetchEntity(entityClass, primaryKey);
+	}
+
+	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content

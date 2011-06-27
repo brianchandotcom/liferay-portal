@@ -25,6 +25,17 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 /**
+ * Provides utility methods for determining if a user is a universal
+ * administrator. Universal administrators have administrator permissions in
+ * every company.
+ *
+ * <p>
+ * A user can be made a universal administrator by adding their primary key to
+ * the list in <code>portal.properties</code> under the key
+ * <code>omniadmin.users</key>. If this property is left blank, administrators
+ * of the default company will automatically be universal administrators.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
 public class OmniadminUtil {

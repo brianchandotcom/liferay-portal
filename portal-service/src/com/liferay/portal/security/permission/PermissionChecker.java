@@ -25,34 +25,132 @@ public interface PermissionChecker {
 
 	public static final long[] DEFAULT_ROLE_IDS = {};
 
+	/**
+	 * Returns the primary key of the user's company.
+	 *
+	 * @return the primary key of the user's company
+	 */
 	public long getCompanyId();
 
+	/**
+	 * Returns the primary key of the owner role. This role is automatically
+	 * given to the creator of a resource.
+	 *
+	 * @return the primary key of the owner role
+	 */
 	public long getOwnerRoleId();
 
+	/**
+	 * Returns the primary keys of the roles the user has within the group.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group
+	 * @return the primary keys of the roles the user has within the group
+	 */
 	public long[] getRoleIds(long userId, long groupId);
 
+	/**
+	 * Returns the primary key of the user.
+	 *
+	 * @return the primary key of the user
+	 */
 	public long getUserId();
 
+	/**
+	 * Returns <code>true</code> if the user is the owner of the resource and
+	 * has permission to perform the action.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  name the resource's name
+	 * @param  primKey the primary key of the resource
+	 * @param  ownerId the primary key of the resource's owner
+	 * @param  actionId the action ID
+	 * @return <code>true</code> if the user is the owner of the resource and
+	 *         has permission to perform the action; <code>false</code>
+	 *         otherwise
+	 */
 	public boolean hasOwnerPermission(
 		long companyId, String name, long primKey, long ownerId,
 		String actionId);
 
+	/**
+	 * Returns <code>true</code> if the user is the owner of the resource and
+	 * has permission to perform the action.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  name the resource's name
+	 * @param  primKey the primary key of the resource
+	 * @param  ownerId the primary key of the resource's owner
+	 * @param  actionId the action ID
+	 * @return <code>true</code> if the user is the owner of the resource and
+	 *         has permission to perform the action; <code>false</code>
+	 *         otherwise
+	 */
 	public boolean hasOwnerPermission(
 		long companyId, String name, String primKey, long ownerId,
 		String actionId);
 
+	/**
+	 * Returns <code>true</code> if the user has permission to perform the
+	 * action on the resource.
+	 *
+	 * @param  groupId the primary key of the group containing the resource
+	 * @param  name the resource's name
+	 * @param  primKey the primary key of the resource
+	 * @param  actionId the action ID
+	 * @return <code>true</code> if the user has permission to perform the
+	 *         action on the resource; <code>false</code> otherwise
+	 */
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId);
 
+	/**
+	 * Returns <code>true</code> if the user has permission to perform the
+	 * action on the resource.
+	 *
+	 * @param  groupId the primary key of the group containing the resource
+	 * @param  name the resource's name
+	 * @param  primKey the primary key of the resource
+	 * @param  actionId the action ID
+	 * @return <code>true</code> if the user has permission to perform the
+	 *         action on the resource; <code>false</code> otherwise
+	 */
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId);
 
+	/**
+	 * Returns <code>true</code> if the user has permission to perform the
+	 * action on the resource without using guest permissions.
+	 *
+	 * @param  groupId the primary key of the group containing the resource
+	 * @param  name the resource's name
+	 * @param  primKey the primary key of the resource
+	 * @param  actionId the action ID
+	 * @param  checkAdmin whether to use permissions gained from administrator
+	 *         roles
+	 * @return <code>true</code> if the user has permission to perform the
+	 *         action on the resource without using guest permissions;
+	 *         <code>false</code> otherwise
+	 */
 	public boolean hasUserPermission(
 		long groupId, String name, String primKey, String actionId,
 		boolean checkAdmin);
 
+	/**
+	 * Initializes this permission checker.
+	 *
+	 * @param user the current user
+	 * @param checkGuest whether to use guest permissions in permission checks
+	 */
 	public void init(User user, boolean checkGuest);
 
+	/**
+	 * Returns <code>true</code> if guest permissions should be used in
+	 * permission checks.
+	 *
+	 * @return <code>true</code> if guest permissions should be used in
+	 *         permission checks; <code>false</code> otherwise
+	 */
 	public boolean isCheckGuest();
 
 	/**
@@ -65,16 +163,57 @@ public interface PermissionChecker {
 	 */
 	public boolean isCommunityOwner(long groupId);
 
+	/**
+	 * Returns <code>true</code> if the user is an administrator of their
+	 * company.
+	 *
+	 * @return <code>true</code> if the user is an administrator of their
+	 *         company; <code>false</code> otherwise
+	 */
 	public boolean isCompanyAdmin();
 
+	/**
+	 * Returns <code>true</code> if the user is an administrator of the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return <code>true</code> if the user is an administrator of the company;
+	 *         <code>false</code> otherwise
+	 */
 	public boolean isCompanyAdmin(long companyId);
 
+	/**
+	 * Returns <code>true</code> if the user is an administrator of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return <code>true</code> if the user is an administrator of the group;
+	 *         <code>false</code> otherwise
+	 */
 	public boolean isGroupAdmin(long groupId);
 
+	/**
+	 * Returns <code>true</code> if the user is the owner of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return <code>true</code> if the user is the owner of the group;
+	 *         <code>false</code> otherwise
+	 */
 	public boolean isGroupOwner(long groupId);
 
+	/**
+	 * Returns <code>true</code> if the user is a universal administrator.
+	 *
+	 * @return <code>true</code> if the user is a universal administrator;
+	 *         <code>false</code> otherwise
+	 * @see    com.liferay.portlet.admin.util.OmniadminUtil
+	 */
 	public boolean isOmniadmin();
 
+	/**
+	 * Returns <code>true</code> if the user is signed in.
+	 *
+	 * @return <code>true</code> if the user is signed in; <code>false</code>
+	 *         otherwise
+	 */
 	public boolean isSignedIn();
 
 	/**
@@ -82,6 +221,11 @@ public interface PermissionChecker {
 	 */
 	public void resetValues();
 
+	/**
+	 * Sets whether to user guest permissions in permission checks
+	 *
+	 * @param checkGuest whether to use guest permissions in permission checks
+	 */
 	public void setCheckGuest(boolean checkGuest);
 
 	/**

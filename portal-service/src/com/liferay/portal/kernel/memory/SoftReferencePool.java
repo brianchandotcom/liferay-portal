@@ -25,6 +25,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class SoftReferencePool<V, P> {
 
+	public static final int DEFAULT_IDLE_SIZE = 8;
+
 	public SoftReferencePool(PoolAction<V, P> poolAction) {
 		this(poolAction, DEFAULT_IDLE_SIZE);
 	}
@@ -36,13 +38,13 @@ public class SoftReferencePool<V, P> {
 
 	public V borrowObject(P parameter) {
 		while (true) {
-			SoftReference<? extends V> valueReference = _pool.poll();
+			SoftReference<? extends V> softReference = _softReferences.poll();
 
-			if (valueReference == null) {
+			if (softReference == null) {
 				return _poolAction.onCreate(parameter);
 			}
 
-			V value = valueReference.get();
+			V value = softReference.get();
 
 			if (value != null) {
 				return _poolAction.onBorrow(value, parameter);
@@ -51,34 +53,37 @@ public class SoftReferencePool<V, P> {
 	}
 
 	public void returnObject(V value) {
-		if (_pool.size() < _maxIdleSize) {
-			SoftReference<V> valueReference = new SoftReference<V>(value,
-				_referenceQueue);
+		if (_softReferences.size() < _maxIdleSize) {
+			SoftReference<V> softReference = new SoftReference<V>(
+				value, _referenceQueue);
 
 			_poolAction.onReturn(value);
 
-			_pool.offer(valueReference);
+			_softReferences.offer(softReference);
 		}
 		else {
-			while (_pool.size() > _maxIdleSize) {
-				_pool.poll();
+			while (_softReferences.size() > _maxIdleSize) {
+				_softReferences.poll();
 			}
 		}
 
-		SoftReference<? extends V> reference = null;
+		SoftReference<? extends V> softReference = null;
 
-		while ((reference = (SoftReference<? extends V>)_referenceQueue.poll())
-			!= null) {
-			_pool.remove(reference);
+		while (true) {
+			softReference = (SoftReference<? extends V>)_referenceQueue.poll();
+
+			if (softReference == null) {
+				break;
+			}
+
+			_softReferences.remove(softReference);
 		}
 	}
 
-	public static final int DEFAULT_IDLE_SIZE = 8;
-
-	private final int _maxIdleSize;
-	private final Queue<SoftReference<? extends V>> _pool =
+	private int _maxIdleSize;
+	private PoolAction<V, P> _poolAction;
+	private ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
+	private Queue<SoftReference<? extends V>> _softReferences =
 		new ConcurrentLinkedQueue<SoftReference<? extends V>>();
-	private final PoolAction<V, P> _poolAction;
-	private final ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
 
 }

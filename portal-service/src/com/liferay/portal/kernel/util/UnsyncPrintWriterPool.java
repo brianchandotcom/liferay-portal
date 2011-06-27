@@ -40,9 +40,12 @@ public class UnsyncPrintWriterPool {
 		}
 
 		UnsyncPrintWriter unsyncPrintWriter =
-			_unsyncPrintWriterPool.borrowObject(writer);
+			_unsyncPrintWriterSoftReferencePool.borrowObject(writer);
 
-		_borrowedUnsyncPrintWritersThreadLocal.get().add(unsyncPrintWriter);
+		List<UnsyncPrintWriter> unsyncPrintWriters =
+			_borrowedUnsyncPrintWritersThreadLocal.get();
+
+		unsyncPrintWriters.add(unsyncPrintWriter);
 
 		return unsyncPrintWriter;
 	}
@@ -52,7 +55,7 @@ public class UnsyncPrintWriterPool {
 			_borrowedUnsyncPrintWritersThreadLocal.get();
 
 		for (UnsyncPrintWriter unsyncPrintWriter : unsyncPrintWriters) {
-			_unsyncPrintWriterPool.returnObject(unsyncPrintWriter);
+			_unsyncPrintWriterSoftReferencePool.returnObject(unsyncPrintWriter);
 		}
 
 		unsyncPrintWriters.clear();
@@ -66,38 +69,40 @@ public class UnsyncPrintWriterPool {
 		_enabledThreadLocal.set(enabled);
 	}
 
-	private static final int POOL_SIZE = 8192;
-
 	private static ThreadLocal<List<UnsyncPrintWriter>>
 		_borrowedUnsyncPrintWritersThreadLocal =
 			new AutoResetThreadLocal<List<UnsyncPrintWriter>>(
-				CharBufferPool.class.getName()
-					+ "._borrowedUnsyncPrintWritersThreadLocal",
+				UnsyncPrintWriterPool.class.getName() +
+					"._borrowedUnsyncPrintWritersThreadLocal",
 				new ArrayList<UnsyncPrintWriter>());
-
-	private static final ThreadLocal<Boolean> _enabledThreadLocal =
+	private static ThreadLocal<Boolean> _enabledThreadLocal =
 		new AutoResetThreadLocal<Boolean>(
-			CharBufferPool.class.getName() + "._enabledThreadLocal", false);
-
-	private static final SoftReferencePool<UnsyncPrintWriter, Writer>
-		_unsyncPrintWriterPool =
+			UnsyncPrintWriterPool.class.getName() + "._enabledThreadLocal",
+			false);
+	private static SoftReferencePool<UnsyncPrintWriter, Writer>
+		_unsyncPrintWriterSoftReferencePool =
 			new SoftReferencePool<UnsyncPrintWriter, Writer>(
-				new PoolAction<UnsyncPrintWriter, Writer>() {
+				new UnsyncPrintWriterPoolAction(), 8192);
 
-					public UnsyncPrintWriter onBorrow(
-						UnsyncPrintWriter output, Writer input) {
-						output.reset(input);
+	private static class UnsyncPrintWriterPoolAction
+		implements PoolAction<UnsyncPrintWriter, Writer> {
 
-						return output;
-					}
+		public UnsyncPrintWriter onBorrow(
+			UnsyncPrintWriter unsyncPrintWriter, Writer writer) {
 
-					public UnsyncPrintWriter onCreate(Writer input) {
-						return new UnsyncPrintWriter(input);
-					}
+			unsyncPrintWriter.reset(writer);
 
-					public void onReturn(UnsyncPrintWriter output) {
-						output.reset(null);
-					}
-				}, POOL_SIZE);
+			return unsyncPrintWriter;
+		}
+
+		public UnsyncPrintWriter onCreate(Writer writer) {
+			return new UnsyncPrintWriter(writer);
+		}
+
+		public void onReturn(UnsyncPrintWriter unsyncPrintWriter) {
+			unsyncPrintWriter.reset(null);
+		}
+
+	}
 
 }

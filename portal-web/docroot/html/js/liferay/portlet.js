@@ -3,6 +3,8 @@
 
 	var arrayIndexOf = A.Array.indexOf;
 
+	var TPL_NOT_AJAXABLE = '<div class="portlet-msg-info">{0}</div>';
+
 	var Portlet = {
 		list: [],
 
@@ -274,13 +276,11 @@
 							if (dataType == 'html') {
 								addPortletReturn(response);
 							}
+							else if (response.refresh) {
+								addPortletReturn(response.portletHTML);
+							}
 							else {
-								if (response.refresh) {
-									location.reload();
-								}
-								else {
-									Portlet._loadPortletFiles(response, addPortletReturn);
-								}
+								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
 						}
 					}
@@ -622,45 +622,62 @@
 
 			portlet = A.one(portlet);
 
-			if (portlet && portlet.refreshURL) {
-				var url = portlet.refreshURL;
+			if (portlet) {
+				var ajaxable = data.ajaxable;
+
 				var id = portlet.attr('portlet');
+				var url = portlet.refreshURL;
 
 				var placeHolder = A.Node.create('<div class="loading-animation" id="p_load' + id + '" />');
 
-				portlet.placeBefore(placeHolder);
-				portlet.remove(true);
+				if (ajaxable && url) {
+					portlet.placeBefore(placeHolder);
+					portlet.remove(true);
 
-				var params = {};
+					var params = {};
 
-				var urlPieces = url.split('?');
+					var urlPieces = url.split('?');
 
-				if (urlPieces.length > 1) {
-					params = A.QueryString.parse(urlPieces[1]);
+					if (urlPieces.length > 1) {
+						params = A.QueryString.parse(urlPieces[1]);
 
-					delete params.dataType;
+						delete params.dataType;
 
-				    url = urlPieces[0];
-				}
-
-				instance.addHTML(
-					{
-						data: A.mix(params, data, true),
-						onComplete: function(portlet, portletId) {
-							portlet.refreshURL = url;
-
-							Liferay.fire(
-								portlet.portletId + ':portletRefreshed',
-								{
-									portlet: portlet,
-									portletId: portletId
-								}
-							);
-						},
-						placeHolder: placeHolder,
-						url: url
+					    url = urlPieces[0];
 					}
-				);
+
+					instance.addHTML(
+						{
+							data: A.mix(params, data, true),
+							onComplete: function(portlet, portletId) {
+								portlet.refreshURL = url;
+
+								Liferay.fire(
+									portlet.portletId + ':portletRefreshed',
+									{
+										portlet: portlet,
+										portletId: portletId
+									}
+								);
+							},
+							placeHolder: placeHolder,
+							url: url
+						}
+					);
+				}
+				else if (!portlet.getData('pendingRefresh')) {
+					portlet.setData('pendingRefresh', true);
+
+					var nonAjaxableContentMessage = A.Lang.sub(
+						TPL_NOT_AJAXABLE,
+						[Liferay.Language.get('this-change-will-only-be-shown-after-you-refresh-the-page')]
+					);
+
+					var portletBody = portlet.one('.portlet-body');
+
+					portletBody.placeBefore(nonAjaxableContentMessage);
+					portletBody.hide();
+				}
 			}
 		},
 		['aui-base', 'querystring-parse']

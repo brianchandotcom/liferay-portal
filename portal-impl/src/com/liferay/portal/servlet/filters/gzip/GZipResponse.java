@@ -122,9 +122,10 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		_servletOutputStream = getOutputStream();
 
-		_printWriter = UnsyncPrintWriterPool.borrow(new OutputStreamWriter(
-			//_stream, _res.getCharacterEncoding()));
-			_servletOutputStream, StringPool.UTF8));
+		_printWriter = UnsyncPrintWriterPool.borrow(
+			new OutputStreamWriter(
+				//_stream, _res.getCharacterEncoding()));
+				_servletOutputStream, StringPool.UTF8));
 
 		return _printWriter;
 	}

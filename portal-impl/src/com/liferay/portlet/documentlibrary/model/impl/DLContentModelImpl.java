@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -73,12 +72,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
-			true);
+	public static final boolean ENTITY_CACHE_ENABLED = false;
+	public static final boolean FINDER_CACHE_ENABLED = false;
 
 	public Class<?> getModelClass() {
 		return DLContent.class;
@@ -228,12 +223,13 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public Blob getData() {
 		if (_dataBlobModel == null) {
 			try {
-				_dataBlobModel = (DLContentDataBlobModel)DLContentLocalServiceUtil.fetchEntity(DLContentDataBlobModel.class,
-						getPrimaryKey());
+				_dataBlobModel = DLContentLocalServiceUtil.getDataBlobModel(getPrimaryKey());
 
-				return _dataBlobModel.getDataBlob();
+				if (_dataBlobModel != null) {
+					return _dataBlobModel.getDataBlob();
+				}
 			}
-			catch (SystemException se) {
+			catch (Exception e) {
 			}
 		}
 
@@ -445,14 +441,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		sb.append("</model>");
 
 		return sb.toString();
-	}
-
-	private DLContentDataBlobModel getDataBlobModel() {
-		return _dataBlobModel;
-	}
-
-	private void setDataBlobModel(DLContentDataBlobModel dataBlobModel) {
-		_dataBlobModel = dataBlobModel;
 	}
 
 	private static ClassLoader _classLoader = DLContent.class.getClassLoader();

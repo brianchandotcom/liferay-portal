@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrary.model;
 import java.sql.Blob;
 
 /**
- * The Blob model class for lazy loading the DLContent.data.
+ * The Blob model class for lazy loading the data column in DLContent.
  *
  * @author Brian Wing Shun Chan
  * @see DLContent

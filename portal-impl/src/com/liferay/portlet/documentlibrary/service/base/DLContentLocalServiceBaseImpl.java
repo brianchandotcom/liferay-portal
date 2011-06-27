@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,7 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
@@ -92,20 +94,22 @@ public abstract class DLContentLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil} to access the document library content local service.
 	 */
-
-	/**
-	 * Returns the model instance with the primary key or returns
-	 * <code>null</code> if it could not be found.
-	 *
-	 * @param  primaryKey the primary key of the model instance
-	 * @return the model instance, or <code>null</code> if an instance of this
-	 *         model with the primary key could not be found
-	 * @throws SystemException if the primary key is <code>null</code>, or if a
-	 *         system exception occurred
-	 */
-	public Object fetchEntity(Class<?> entityClass, Serializable primaryKey)
+	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey)
 		throws SystemException {
-		return dlContentPersistence.fetchEntity(entityClass, primaryKey);
+		Session session = null;
+
+		try {
+			session = dlContentPersistence.openSession();
+
+			return (com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
+				primaryKey);
+		}
+		catch (Exception e) {
+			throw dlContentPersistence.processException(e);
+		}
+		finally {
+			dlContentPersistence.closeSession(session);
+		}
 	}
 
 	/**

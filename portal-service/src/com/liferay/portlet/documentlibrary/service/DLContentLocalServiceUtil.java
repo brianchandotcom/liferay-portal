@@ -37,21 +37,10 @@ public class DLContentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the model instance with the primary key or returns
-	* <code>null</code> if it could not be found.
-	*
-	* @param primaryKey the primary key of the model instance
-	* @return the model instance, or <code>null</code> if an instance of this
-	model with the primary key could not be found
-	* @throws SystemException if the primary key is <code>null</code>, or if a
-	system exception occurred
-	*/
-	public static java.lang.Object fetchEntity(java.lang.Class<?> entityClass,
+	public static com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
 		java.io.Serializable primaryKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchEntity(entityClass, primaryKey);
+		return getService().getDataBlobModel(primaryKey);
 	}
 
 	/**

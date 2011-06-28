@@ -3856,9 +3856,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 
 	private static ${entity.name} _null${entity.name} = new ${entity.name}Impl() {
+
 		public Object clone() {
 			return this;
 		}
+
 	};
 
 }

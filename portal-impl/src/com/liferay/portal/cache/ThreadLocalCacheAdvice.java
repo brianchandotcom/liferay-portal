@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,11 +39,8 @@ public class ThreadLocalCacheAdvice
 			MethodInvocation methodInvocation, Object result)
 		throws Throwable {
 
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
 		ThreadLocalCachable threadLocalCachable = findAnnotation(
-			methodTargetClassKey);
+			methodInvocation);
 
 		if (threadLocalCachable == _nullThreadLocalCacheable) {
 			return;
@@ -52,7 +48,7 @@ public class ThreadLocalCacheAdvice
 
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodTargetClassKey.toString());
+				threadLocalCachable.scope(), methodInvocation.toString());
 
 		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
 
@@ -66,11 +62,8 @@ public class ThreadLocalCacheAdvice
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
 		ThreadLocalCachable threadLocalCachable = findAnnotation(
-			methodTargetClassKey);
+			methodInvocation);
 
 		if (threadLocalCachable == _nullThreadLocalCacheable) {
 			return null;
@@ -78,7 +71,7 @@ public class ThreadLocalCacheAdvice
 
 		ThreadLocalCache<?> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodTargetClassKey.toString());
+				threadLocalCachable.scope(), methodInvocation.toString());
 
 		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
 

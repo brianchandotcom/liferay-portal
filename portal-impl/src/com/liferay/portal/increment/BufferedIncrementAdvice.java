@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.increment.IncrementFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
@@ -40,11 +39,8 @@ public class BufferedIncrementAdvice
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
 		BufferedIncrement bufferedIncrement = findAnnotation(
-			methodTargetClassKey);
+			methodInvocation);
 
 		if (bufferedIncrement == _nullBufferedIncrement) {
 			return null;
@@ -58,7 +54,7 @@ public class BufferedIncrementAdvice
 			CacheKeyGeneratorUtil.getCacheKeyGenerator(
 				BufferedIncrementAdvice.class.getName());
 
-		cacheKeyGenerator.append(methodTargetClassKey.toString());
+		cacheKeyGenerator.append(methodInvocation.toString());
 
 		for (int i = 0; i < arguments.length - 1; i++) {
 			cacheKeyGenerator.append(StringUtil.toHexString(arguments[i]));

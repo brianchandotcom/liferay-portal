@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -109,24 +108,25 @@ public class CMISStore extends BaseStore {
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
-		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, fromVersionNumber);
-
-		String title = String.valueOf(toVersionNumber);
+		ObjectId versioningFolderObjectId = new ObjectIdImpl(
+			versioningFolder.getId());
 
 		Map<String, Object> documentProperties = new HashMap<String, Object>();
 
+		String title = String.valueOf(toVersionNumber);
+
 		documentProperties.put(PropertyIds.NAME, title);
+
 		documentProperties.put(
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
 
-		ObjectId versioningFolderObjectId = new ObjectIdImpl(
-			versioningFolder.getId());
+		Document document = getVersionedDocument(
+			companyId, repositoryId, fileName, fromVersionNumber);
 
 		document.copy(
 			versioningFolderObjectId, documentProperties, null,
@@ -378,12 +378,12 @@ public class CMISStore extends BaseStore {
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String title = String.valueOf(toVersionNumber);
+		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
+
+		String title = String.valueOf(toVersionNumber);
 
 		Document document = getDocument(versioningFolder, title);
 

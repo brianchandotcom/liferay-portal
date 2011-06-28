@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -44,6 +45,7 @@ import org.apache.chemistry.opencmis.client.api.ObjectId;
 import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
+import org.apache.chemistry.opencmis.client.runtime.ObjectIdImpl;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
@@ -101,6 +103,34 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void checkRoot(long companyId) {
+	}
+
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder versioningFolder = getVersioningFolder(
+			companyId, repositoryId, fileName, false);
+
+		Document document = getVersionedDocument(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		String title = String.valueOf(toVersionNumber);
+
+		Map<String, Object> documentProperties = new HashMap<String, Object>();
+
+		documentProperties.put(PropertyIds.NAME, title);
+		documentProperties.put(
+			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
+
+		ObjectId versioningFolderObjectId = new ObjectIdImpl(
+			versioningFolder.getId());
+
+		document.copy(
+			versioningFolderObjectId, documentProperties, null,
+			document.getPolicies(), null, null, null);
 	}
 
 	@Override
@@ -342,6 +372,33 @@ public class CMISStore extends BaseStore {
 		}
 
 		createDocument(versioningFolder, title, is, serviceContext);
+	}
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String title = String.valueOf(toVersionNumber);
+
+		Folder versioningFolder = getVersioningFolder(
+			companyId, repositoryId, fileName, false);
+
+		Document document = getDocument(versioningFolder, title);
+
+		if (document != null) {
+			throw new DuplicateFileException();
+		}
+
+		document = getVersionedDocument(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		Map<String, Object> documentProperties = new HashMap<String, Object>();
+
+		documentProperties.put(PropertyIds.NAME, title);
+
+		document.updateProperties(documentProperties);
 	}
 
 	protected Document createDocument(

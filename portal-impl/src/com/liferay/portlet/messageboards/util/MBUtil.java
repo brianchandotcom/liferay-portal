@@ -79,7 +79,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MBUtil {
 
 	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
-		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp";
+		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
+			"edit_message.bb_code.jsp";
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
@@ -435,6 +436,21 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	public static String getMessageFormat(PortletPreferences preferences) {
+		String messageFormat = preferences.getValue(
+			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+
+		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+		if (messageFormat.equals("bbcode") &&
+			!editorImpl.equals("ckeditor_bbcode")) {
+
+			messageFormat = "html";
+		}
+
+		return messageFormat;
+	}
+
 	public static long getMessageId(String mailId) {
 		int x = mailId.indexOf(CharPool.LESS_THAN) + 1;
 		int y = mailId.indexOf(CharPool.AT);
@@ -452,21 +468,6 @@ public class MBUtil {
 		}
 
 		return messageId;
-	}
-
-	public static String getMessageFormat(PortletPreferences preferences) {
-		String messageFormat = preferences.getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
-
-		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-		if (messageFormat.equals("bbcode") &&
-			!editorImpl.equals("ckeditor_bbcode")) {
-
-			messageFormat = "html";
-		}
-
-		return messageFormat;
 	}
 
 	public static long getParentMessageId(Message message) throws Exception {

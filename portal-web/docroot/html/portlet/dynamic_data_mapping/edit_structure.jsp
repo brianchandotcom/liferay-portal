@@ -37,7 +37,7 @@ String script = BeanParamUtil.getString(structure, request, "xsd");
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (structure != null) ? Constants.UPDATE : Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
-	<aui:input name="script" type="hidden" />
+	<aui:input name="xsd" type="hidden" />
 	<aui:input name="saveCallback" type="hidden" value="<%= saveCallback %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
@@ -130,7 +130,7 @@ String script = BeanParamUtil.getString(structure, request, "xsd");
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getXSD();
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

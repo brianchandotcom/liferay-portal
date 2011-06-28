@@ -218,7 +218,7 @@ public class EditStructureAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String xsd = ParamUtil.getString(actionRequest, "script");
+		String xsd = ParamUtil.getString(actionRequest, "xsd");
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

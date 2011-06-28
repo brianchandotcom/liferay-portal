@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +47,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
@@ -75,6 +77,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class MBUtil {
+
+	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
+		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp";
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
@@ -447,6 +452,21 @@ public class MBUtil {
 		}
 
 		return messageId;
+	}
+
+	public static String getMessageFormat(PortletPreferences preferences) {
+		String messageFormat = preferences.getValue(
+			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+
+		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+		if (messageFormat.equals("bbcode") &&
+			!editorImpl.equals("ckeditor_bbcode")) {
+
+			messageFormat = "html";
+		}
+
+		return messageFormat;
 	}
 
 	public static long getParentMessageId(Message message) throws Exception {

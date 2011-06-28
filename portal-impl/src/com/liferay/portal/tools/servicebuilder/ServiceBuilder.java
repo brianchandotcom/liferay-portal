@@ -3542,7 +3542,9 @@ public class ServiceBuilder {
 						".model.", "\" table=\""
 					});
 
-				if (line.indexOf(".model.impl.") == -1) {
+				if (!line.contains(".model.impl.") &&
+					!line.contains("BlobModel")) {
+
 					line = StringUtil.replace(
 						line,
 						new String[] {

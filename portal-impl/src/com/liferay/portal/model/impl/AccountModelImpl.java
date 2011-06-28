@@ -173,8 +173,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -184,8 +182,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -195,8 +191,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -219,8 +213,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -230,8 +222,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -241,8 +231,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -252,8 +240,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setParentAccountId(long parentAccountId) {
 		_parentAccountId = parentAccountId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -268,8 +254,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -284,8 +268,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setLegalName(String legalName) {
 		_legalName = legalName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -300,8 +282,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setLegalId(String legalId) {
 		_legalId = legalId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -316,8 +296,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setLegalType(String legalType) {
 		_legalType = legalType;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -332,8 +310,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setSicCode(String sicCode) {
 		_sicCode = sicCode;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -348,8 +324,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setTickerSymbol(String tickerSymbol) {
 		_tickerSymbol = tickerSymbol;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -364,8 +338,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setIndustry(String industry) {
 		_industry = industry;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -380,8 +352,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -396,8 +366,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	public void setSize(String size) {
 		_size = size;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

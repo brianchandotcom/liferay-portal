@@ -157,8 +157,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setBanId(long banId) {
 		_banId = banId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -174,8 +172,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -189,8 +185,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -200,8 +194,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -224,8 +216,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -235,8 +225,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -246,8 +234,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -263,8 +249,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		}
 
 		_banUserId = banUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getBanUserUuid() throws SystemException {

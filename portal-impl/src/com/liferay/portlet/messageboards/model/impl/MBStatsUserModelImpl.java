@@ -113,8 +113,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	public void setStatsUserId(long statsUserId) {
 		_statsUserId = statsUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatsUserUuid() throws SystemException {
@@ -137,8 +135,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -157,8 +153,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -179,8 +173,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	public void setMessageCount(int messageCount) {
 		_messageCount = messageCount;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getLastPostDate() {
@@ -189,8 +181,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

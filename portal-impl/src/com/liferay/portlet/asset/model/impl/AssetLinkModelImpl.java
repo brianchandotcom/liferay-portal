@@ -118,8 +118,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setLinkId(long linkId) {
 		_linkId = linkId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -128,8 +126,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -138,8 +134,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -161,8 +155,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -171,8 +163,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getEntryId1() {
@@ -187,8 +177,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		}
 
 		_entryId1 = entryId1;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalEntryId1() {
@@ -207,8 +195,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		}
 
 		_entryId2 = entryId2;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalEntryId2() {
@@ -227,8 +213,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		}
 
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -241,8 +225,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	public void setWeight(int weight) {
 		_weight = weight;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

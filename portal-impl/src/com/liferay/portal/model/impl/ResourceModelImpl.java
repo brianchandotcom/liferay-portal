@@ -144,8 +144,6 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 
 	public void setResourceId(long resourceId) {
 		_resourceId = resourceId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -161,8 +159,6 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 		}
 
 		_codeId = codeId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCodeId() {
@@ -185,8 +181,6 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 		}
 
 		_primKey = primKey;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPrimKey() {

@@ -105,8 +105,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 
 	public void setTableId(long tableId) {
 		_tableId = tableId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -121,8 +119,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -149,8 +145,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -172,8 +166,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {

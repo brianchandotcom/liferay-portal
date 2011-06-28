@@ -114,8 +114,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setUserTrackerId(long userTrackerId) {
 		_userTrackerId = userTrackerId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -124,8 +122,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -134,8 +130,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -152,8 +146,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getSessionId() {
@@ -167,8 +159,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setSessionId(String sessionId) {
 		_sessionId = sessionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getRemoteAddr() {
@@ -182,8 +172,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setRemoteAddr(String remoteAddr) {
 		_remoteAddr = remoteAddr;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getRemoteHost() {
@@ -197,8 +185,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setRemoteHost(String remoteHost) {
 		_remoteHost = remoteHost;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserAgent() {
@@ -212,8 +198,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setUserAgent(String userAgent) {
 		_userAgent = userAgent;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

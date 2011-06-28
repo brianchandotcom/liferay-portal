@@ -117,8 +117,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setStatsUserId(long statsUserId) {
 		_statsUserId = statsUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatsUserUuid() throws SystemException {
@@ -141,8 +139,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -155,8 +151,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -171,8 +165,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -193,8 +185,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setEntryCount(int entryCount) {
 		_entryCount = entryCount;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getLastPostDate() {
@@ -203,8 +193,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getRatingsTotalEntries() {
@@ -213,8 +201,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setRatingsTotalEntries(int ratingsTotalEntries) {
 		_ratingsTotalEntries = ratingsTotalEntries;
-
-		_escapedModelProxy = null;
 	}
 
 	public double getRatingsTotalScore() {
@@ -223,8 +209,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setRatingsTotalScore(double ratingsTotalScore) {
 		_ratingsTotalScore = ratingsTotalScore;
-
-		_escapedModelProxy = null;
 	}
 
 	public double getRatingsAverageScore() {
@@ -233,8 +217,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public void setRatingsAverageScore(double ratingsAverageScore) {
 		_ratingsAverageScore = ratingsAverageScore;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

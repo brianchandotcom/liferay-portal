@@ -119,8 +119,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserNotificationEventId() {
@@ -129,8 +127,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setUserNotificationEventId(long userNotificationEventId) {
 		_userNotificationEventId = userNotificationEventId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -139,8 +135,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -149,8 +143,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -172,8 +164,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getTimestamp() {
@@ -182,8 +172,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setTimestamp(long timestamp) {
 		_timestamp = timestamp;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getDeliverBy() {
@@ -192,8 +180,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setDeliverBy(long deliverBy) {
 		_deliverBy = deliverBy;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getPayload() {
@@ -207,8 +193,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setPayload(String payload) {
 		_payload = payload;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

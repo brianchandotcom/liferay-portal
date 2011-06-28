@@ -106,8 +106,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	public void setShardId(long shardId) {
 		_shardId = shardId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -130,8 +128,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -150,8 +146,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -173,8 +167,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {

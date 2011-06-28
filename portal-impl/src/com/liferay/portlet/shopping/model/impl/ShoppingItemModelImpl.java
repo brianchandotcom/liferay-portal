@@ -212,8 +212,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setItemId(long itemId) {
 		_itemId = itemId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -223,8 +221,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -240,8 +236,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -255,8 +249,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -279,8 +271,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -290,8 +280,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -301,8 +289,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -312,8 +298,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -332,8 +316,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		}
 
 		_sku = sku;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalSku() {
@@ -352,8 +334,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -368,8 +348,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -384,8 +362,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setProperties(String properties) {
 		_properties = properties;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -399,8 +375,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setFields(boolean fields) {
 		_fields = fields;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -415,8 +389,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setFieldsQuantities(String fieldsQuantities) {
 		_fieldsQuantities = fieldsQuantities;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -426,8 +398,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setMinQuantity(int minQuantity) {
 		_minQuantity = minQuantity;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -437,8 +407,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setMaxQuantity(int maxQuantity) {
 		_maxQuantity = maxQuantity;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -448,8 +416,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setPrice(double price) {
 		_price = price;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -459,8 +425,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setDiscount(double discount) {
 		_discount = discount;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -474,8 +438,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setTaxable(boolean taxable) {
 		_taxable = taxable;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -485,8 +447,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setShipping(double shipping) {
 		_shipping = shipping;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -500,8 +460,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setUseShippingFormula(boolean useShippingFormula) {
 		_useShippingFormula = useShippingFormula;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -515,8 +473,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setRequiresShipping(boolean requiresShipping) {
 		_requiresShipping = requiresShipping;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -526,8 +482,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setStockQuantity(int stockQuantity) {
 		_stockQuantity = stockQuantity;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -541,8 +495,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setFeatured(boolean featured) {
 		_featured = featured;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -556,8 +508,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setSale(boolean sale) {
 		_sale = sale;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -571,8 +521,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setSmallImage(boolean smallImage) {
 		_smallImage = smallImage;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -588,8 +536,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		}
 
 		_smallImageId = smallImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalSmallImageId() {
@@ -608,8 +554,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setSmallImageURL(String smallImageURL) {
 		_smallImageURL = smallImageURL;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -623,8 +567,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setMediumImage(boolean mediumImage) {
 		_mediumImage = mediumImage;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -640,8 +582,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		}
 
 		_mediumImageId = mediumImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalMediumImageId() {
@@ -660,8 +600,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setMediumImageURL(String mediumImageURL) {
 		_mediumImageURL = mediumImageURL;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -675,8 +613,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setLargeImage(boolean largeImage) {
 		_largeImage = largeImage;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -692,8 +628,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		}
 
 		_largeImageId = largeImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLargeImageId() {
@@ -712,8 +646,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public void setLargeImageURL(String largeImageURL) {
 		_largeImageURL = largeImageURL;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

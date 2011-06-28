@@ -151,8 +151,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	public void setVoteId(long voteId) {
 		_voteId = voteId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -168,8 +166,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -197,8 +193,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		}
 
 		_questionId = questionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalQuestionId() {
@@ -212,8 +206,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	public void setChoiceId(long choiceId) {
 		_choiceId = choiceId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -223,8 +215,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	public void setVoteDate(Date voteDate) {
 		_voteDate = voteDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

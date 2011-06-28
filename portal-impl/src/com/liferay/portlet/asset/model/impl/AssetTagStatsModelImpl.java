@@ -110,8 +110,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	public void setTagStatsId(long tagStatsId) {
 		_tagStatsId = tagStatsId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getTagId() {
@@ -126,8 +124,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		}
 
 		_tagId = tagId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalTagId() {
@@ -154,8 +150,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -168,8 +162,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	public void setAssetCount(int assetCount) {
 		_assetCount = assetCount;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -110,8 +110,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	public void setContentSearchId(long contentSearchId) {
 		_contentSearchId = contentSearchId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -126,8 +124,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -140,8 +136,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public boolean getPrivateLayout() {
@@ -160,8 +154,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		}
 
 		_privateLayout = privateLayout;
-
-		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalPrivateLayout() {
@@ -180,8 +172,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		}
 
 		_layoutId = layoutId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLayoutId() {
@@ -203,8 +193,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		}
 
 		_portletId = portletId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPortletId() {
@@ -226,8 +214,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		}
 
 		_articleId = articleId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalArticleId() {

@@ -180,8 +180,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setAddressId(long addressId) {
 		_addressId = addressId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -191,8 +189,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -202,8 +198,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -226,8 +220,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -237,8 +229,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -248,8 +238,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -267,8 +255,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -278,8 +264,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -294,8 +278,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setStreet1(String street1) {
 		_street1 = street1;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,8 +292,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setStreet2(String street2) {
 		_street2 = street2;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -326,8 +306,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setStreet3(String street3) {
 		_street3 = street3;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -342,8 +320,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setCity(String city) {
 		_city = city;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -358,8 +334,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setZip(String zip) {
 		_zip = zip;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -369,8 +343,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setRegionId(long regionId) {
 		_regionId = regionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -380,8 +352,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setCountryId(long countryId) {
 		_countryId = countryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -391,8 +361,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setTypeId(int typeId) {
 		_typeId = typeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -406,8 +374,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setMailing(boolean mailing) {
 		_mailing = mailing;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -421,8 +387,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setPrimary(boolean primary) {
 		_primary = primary;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

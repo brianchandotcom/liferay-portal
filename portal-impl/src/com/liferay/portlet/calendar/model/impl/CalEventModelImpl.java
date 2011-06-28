@@ -200,8 +200,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -215,8 +213,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setEventId(long eventId) {
 		_eventId = eventId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -232,8 +228,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -247,8 +241,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -258,8 +250,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -282,8 +272,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -293,8 +281,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -304,8 +290,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -320,8 +304,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -336,8 +318,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -352,8 +332,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setLocation(String location) {
 		_location = location;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -363,8 +341,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -374,8 +350,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -385,8 +359,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setDurationHour(int durationHour) {
 		_durationHour = durationHour;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -396,8 +368,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setDurationMinute(int durationMinute) {
 		_durationMinute = durationMinute;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -411,8 +381,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setAllDay(boolean allDay) {
 		_allDay = allDay;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -426,8 +394,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setTimeZoneSensitive(boolean timeZoneSensitive) {
 		_timeZoneSensitive = timeZoneSensitive;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -442,8 +408,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -457,8 +421,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setRepeating(boolean repeating) {
 		_repeating = repeating;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -473,8 +435,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setRecurrence(String recurrence) {
 		_recurrence = recurrence;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -484,8 +444,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setRemindBy(int remindBy) {
 		_remindBy = remindBy;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -495,8 +453,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setFirstReminder(int firstReminder) {
 		_firstReminder = firstReminder;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -506,8 +462,6 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	public void setSecondReminder(int secondReminder) {
 		_secondReminder = secondReminder;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

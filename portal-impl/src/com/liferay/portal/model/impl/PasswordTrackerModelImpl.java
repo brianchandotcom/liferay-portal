@@ -113,8 +113,6 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setPasswordTrackerId(long passwordTrackerId) {
 		_passwordTrackerId = passwordTrackerId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -123,8 +121,6 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -141,8 +137,6 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getPassword() {
@@ -156,8 +150,6 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setPassword(String password) {
 		_password = password;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

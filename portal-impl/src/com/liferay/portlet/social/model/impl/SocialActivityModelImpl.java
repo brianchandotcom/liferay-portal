@@ -118,8 +118,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	public void setActivityId(long activityId) {
 		_activityId = activityId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -134,8 +132,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -148,8 +144,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -164,8 +158,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -192,8 +184,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCreateDate() {
@@ -212,8 +202,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_mirrorActivityId = mirrorActivityId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalMirrorActivityId() {
@@ -240,8 +228,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -260,8 +246,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -280,8 +264,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -299,8 +281,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	public void setExtraData(String extraData) {
 		_extraData = extraData;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getReceiverUserId() {
@@ -315,8 +295,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 
 		_receiverUserId = receiverUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getReceiverUserUuid() throws SystemException {

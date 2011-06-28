@@ -155,8 +155,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public void setValueId(long valueId) {
 		_valueId = valueId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -166,8 +164,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -183,8 +179,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		_tableId = tableId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalTableId() {
@@ -204,8 +198,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		_columnId = columnId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalColumnId() {
@@ -225,8 +217,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		_rowId = rowId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRowId() {
@@ -248,8 +238,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -265,8 +253,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -285,8 +271,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public void setData(String data) {
 		_data = data;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

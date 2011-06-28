@@ -115,8 +115,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getFileEntryMetadataId() {
@@ -125,8 +123,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	public void setFileEntryMetadataId(long fileEntryMetadataId) {
 		_fileEntryMetadataId = fileEntryMetadataId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getDDMStorageId() {
@@ -135,8 +131,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	public void setDDMStorageId(long DDMStorageId) {
 		_DDMStorageId = DDMStorageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getDDMStructureId() {
@@ -151,8 +145,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		}
 
 		_DDMStructureId = DDMStructureId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalDDMStructureId() {
@@ -165,8 +157,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	public void setFileEntryTypeId(long fileEntryTypeId) {
 		_fileEntryTypeId = fileEntryTypeId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getFileEntryId() {
@@ -175,8 +165,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	public void setFileEntryId(long fileEntryId) {
 		_fileEntryId = fileEntryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getFileVersionId() {
@@ -191,8 +179,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		}
 
 		_fileVersionId = fileVersionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFileVersionId() {

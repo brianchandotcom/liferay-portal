@@ -173,8 +173,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setOrgLaborId(long orgLaborId) {
 		_orgLaborId = orgLaborId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -184,8 +182,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -195,8 +191,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setTypeId(int typeId) {
 		_typeId = typeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -206,8 +200,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setSunOpen(int sunOpen) {
 		_sunOpen = sunOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -217,8 +209,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setSunClose(int sunClose) {
 		_sunClose = sunClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -228,8 +218,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setMonOpen(int monOpen) {
 		_monOpen = monOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -239,8 +227,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setMonClose(int monClose) {
 		_monClose = monClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -250,8 +236,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setTueOpen(int tueOpen) {
 		_tueOpen = tueOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -261,8 +245,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setTueClose(int tueClose) {
 		_tueClose = tueClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -272,8 +254,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setWedOpen(int wedOpen) {
 		_wedOpen = wedOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -283,8 +263,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setWedClose(int wedClose) {
 		_wedClose = wedClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -294,8 +272,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setThuOpen(int thuOpen) {
 		_thuOpen = thuOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -305,8 +281,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setThuClose(int thuClose) {
 		_thuClose = thuClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -316,8 +290,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setFriOpen(int friOpen) {
 		_friOpen = friOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -327,8 +299,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setFriClose(int friClose) {
 		_friClose = friClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -338,8 +308,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setSatOpen(int satOpen) {
 		_satOpen = satOpen;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -349,8 +317,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	public void setSatClose(int satClose) {
 		_satClose = satClose;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

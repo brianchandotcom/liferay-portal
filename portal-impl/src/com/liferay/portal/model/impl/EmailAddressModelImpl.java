@@ -166,8 +166,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setEmailAddressId(long emailAddressId) {
 		_emailAddressId = emailAddressId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -177,8 +175,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -188,8 +184,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -212,8 +206,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -223,8 +215,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -234,8 +224,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -253,8 +241,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -264,8 +250,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -280,8 +264,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setAddress(String address) {
 		_address = address;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -291,8 +273,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setTypeId(int typeId) {
 		_typeId = typeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -306,8 +286,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	public void setPrimary(boolean primary) {
 		_primary = primary;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

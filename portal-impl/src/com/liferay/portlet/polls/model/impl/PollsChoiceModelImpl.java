@@ -123,8 +123,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getChoiceId() {
@@ -133,8 +131,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	public void setChoiceId(long choiceId) {
 		_choiceId = choiceId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getQuestionId() {
@@ -149,8 +145,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		}
 
 		_questionId = questionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalQuestionId() {
@@ -172,8 +166,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -231,8 +223,6 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {

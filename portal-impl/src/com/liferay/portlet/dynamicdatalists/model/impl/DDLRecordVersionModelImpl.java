@@ -123,8 +123,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setRecordVersionId(long recordVersionId) {
 		_recordVersionId = recordVersionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -133,8 +131,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -143,8 +139,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -153,8 +147,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -176,8 +168,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -186,8 +176,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getDDMStorageId() {
@@ -196,8 +184,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setDDMStorageId(long DDMStorageId) {
 		_DDMStorageId = DDMStorageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getRecordSetId() {
@@ -206,8 +192,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setRecordSetId(long recordSetId) {
 		_recordSetId = recordSetId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getRecordId() {
@@ -222,8 +206,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		}
 
 		_recordId = recordId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRecordId() {
@@ -245,8 +227,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		}
 
 		_version = version;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalVersion() {
@@ -259,8 +239,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setDisplayIndex(int displayIndex) {
 		_displayIndex = displayIndex;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getStatus() {
@@ -269,8 +247,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setStatus(int status) {
 		_status = status;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getStatusByUserId() {
@@ -279,8 +255,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -303,8 +277,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getStatusDate() {
@@ -313,8 +285,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
-
-		_escapedModelProxy = null;
 	}
 
 	/**

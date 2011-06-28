@@ -112,8 +112,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setReleaseId(long releaseId) {
 		_releaseId = releaseId;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -122,8 +120,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -132,8 +128,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getServletContextName() {
@@ -151,8 +145,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		}
 
 		_servletContextName = servletContextName;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalServletContextName() {
@@ -165,8 +157,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getBuildDate() {
@@ -175,8 +165,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setBuildDate(Date buildDate) {
 		_buildDate = buildDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public boolean getVerified() {
@@ -189,8 +177,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setVerified(boolean verified) {
 		_verified = verified;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getTestString() {
@@ -204,8 +190,6 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	public void setTestString(String testString) {
 		_testString = testString;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

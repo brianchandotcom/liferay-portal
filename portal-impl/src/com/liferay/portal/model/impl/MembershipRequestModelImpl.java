@@ -165,8 +165,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setMembershipRequestId(long membershipRequestId) {
 		_membershipRequestId = membershipRequestId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -176,8 +174,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -187,8 +183,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -198,8 +192,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -217,8 +209,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -233,8 +223,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setComments(String comments) {
 		_comments = comments;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -249,8 +237,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setReplyComments(String replyComments) {
 		_replyComments = replyComments;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -260,8 +246,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setReplyDate(Date replyDate) {
 		_replyDate = replyDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -271,8 +255,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setReplierUserId(long replierUserId) {
 		_replierUserId = replierUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getReplierUserUuid() throws SystemException {
@@ -291,8 +273,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public void setStatusId(int statusId) {
 		_statusId = statusId;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

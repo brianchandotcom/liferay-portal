@@ -152,8 +152,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 
 	public void setPermissionId(long permissionId) {
 		_permissionId = permissionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -163,8 +161,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -183,8 +179,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		}
 
 		_actionId = actionId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalActionId() {
@@ -204,8 +198,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		}
 
 		_resourceId = resourceId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalResourceId() {

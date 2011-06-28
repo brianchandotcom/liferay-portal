@@ -116,8 +116,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -130,8 +128,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	public void setResourcePrimKey(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -146,8 +142,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -169,8 +163,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		}
 
 		_articleId = articleId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalArticleId() {

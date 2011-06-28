@@ -134,8 +134,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -148,8 +146,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setContentId(long contentId) {
 		_contentId = contentId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -164,8 +160,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -178,8 +172,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -188,8 +180,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -211,8 +201,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -221,8 +209,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getModifiedDate() {
@@ -231,8 +217,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getName() {
@@ -285,8 +269,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setName(String name, Locale locale) {
@@ -336,8 +318,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getXml() {
@@ -351,8 +331,6 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	public void setXml(String xml) {
 		_xml = xml;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

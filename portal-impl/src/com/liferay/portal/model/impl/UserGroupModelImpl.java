@@ -164,8 +164,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public void setUserGroupId(long userGroupId) {
 		_userGroupId = userGroupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,8 +179,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -196,8 +192,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public void setParentUserGroupId(long parentUserGroupId) {
 		_parentUserGroupId = parentUserGroupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -216,8 +210,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -236,8 +228,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -251,8 +241,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public void setAddedByLDAPImport(boolean addedByLDAPImport) {
 		_addedByLDAPImport = addedByLDAPImport;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

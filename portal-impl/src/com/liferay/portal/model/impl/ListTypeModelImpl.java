@@ -142,8 +142,6 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	public void setListTypeId(int listTypeId) {
 		_listTypeId = listTypeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -158,8 +156,6 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -174,8 +170,6 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

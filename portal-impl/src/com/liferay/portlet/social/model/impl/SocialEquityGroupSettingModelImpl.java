@@ -110,8 +110,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 
 	public void setEquityGroupSettingId(long equityGroupSettingId) {
 		_equityGroupSettingId = equityGroupSettingId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -126,8 +124,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -140,8 +136,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -164,8 +158,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -184,8 +176,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		}
 
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getOriginalType() {
@@ -202,8 +192,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

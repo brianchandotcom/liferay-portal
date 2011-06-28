@@ -154,8 +154,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setImageId(long imageId) {
 		_imageId = imageId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -165,8 +163,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -181,8 +177,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setText(String text) {
 		_text = text;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -197,8 +191,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -208,8 +200,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setHeight(int height) {
 		_height = height;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -219,8 +209,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setWidth(int width) {
 		_width = width;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -230,8 +218,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setSize(int size) {
 		_size = size;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

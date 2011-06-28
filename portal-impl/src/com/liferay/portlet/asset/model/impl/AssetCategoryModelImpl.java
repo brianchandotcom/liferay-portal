@@ -193,8 +193,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -208,8 +206,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setCategoryId(long categoryId) {
 		_categoryId = categoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -225,8 +221,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -240,8 +234,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -251,8 +243,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -275,8 +265,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -286,8 +274,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -297,8 +283,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -314,8 +298,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		_parentCategoryId = parentCategoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalParentCategoryId() {
@@ -329,8 +311,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setLeftCategoryId(long leftCategoryId) {
 		_leftCategoryId = leftCategoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -340,8 +320,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setRightCategoryId(long rightCategoryId) {
 		_rightCategoryId = rightCategoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -360,8 +338,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -419,8 +395,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -511,8 +485,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -567,8 +539,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		_vocabularyId = vocabularyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalVocabularyId() {

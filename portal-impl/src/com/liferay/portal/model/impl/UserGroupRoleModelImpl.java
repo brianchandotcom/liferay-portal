@@ -144,8 +144,6 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -163,8 +161,6 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -174,8 +170,6 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 	public void setRoleId(long roleId) {
 		_roleId = roleId;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

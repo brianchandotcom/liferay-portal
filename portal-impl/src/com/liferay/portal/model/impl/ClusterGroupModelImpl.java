@@ -106,8 +106,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	public void setClusterGroupId(long clusterGroupId) {
 		_clusterGroupId = clusterGroupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getName() {
@@ -121,8 +119,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClusterNodeIds() {
@@ -136,8 +132,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	public void setClusterNodeIds(String clusterNodeIds) {
 		_clusterNodeIds = clusterNodeIds;
-
-		_escapedModelProxy = null;
 	}
 
 	public boolean getWholeCluster() {
@@ -150,8 +144,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	public void setWholeCluster(boolean wholeCluster) {
 		_wholeCluster = wholeCluster;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

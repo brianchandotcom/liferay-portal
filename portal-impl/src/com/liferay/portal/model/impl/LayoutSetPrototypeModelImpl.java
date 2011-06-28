@@ -165,8 +165,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -176,8 +174,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
 		_layoutSetPrototypeId = layoutSetPrototypeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -187,8 +183,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -242,8 +236,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setName(String name, Locale locale) {
@@ -294,8 +286,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -310,8 +300,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setSettings(String settings) {
 		_settings = settings;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -325,8 +313,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	public void setActive(boolean active) {
 		_active = active;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

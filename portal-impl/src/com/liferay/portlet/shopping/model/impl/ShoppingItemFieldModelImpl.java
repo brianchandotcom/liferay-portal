@@ -110,8 +110,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setItemFieldId(long itemFieldId) {
 		_itemFieldId = itemFieldId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getItemId() {
@@ -120,8 +118,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setItemId(long itemId) {
 		_itemId = itemId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getName() {
@@ -135,8 +131,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getValues() {
@@ -150,8 +144,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setValues(String values) {
 		_values = values;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getDescription() {
@@ -165,8 +157,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -177,8 +177,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public void setRoleId(long roleId) {
 		_roleId = roleId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -194,8 +192,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -223,8 +219,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -244,8 +238,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -268,8 +260,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -327,8 +317,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -379,8 +367,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -390,8 +376,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public void setType(int type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -406,8 +390,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public void setSubtype(String subtype) {
 		_subtype = subtype;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

@@ -168,8 +168,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -185,8 +183,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -206,8 +202,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		}
 
 		_parentOrganizationId = parentOrganizationId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalParentOrganizationId() {
@@ -221,8 +215,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setLeftOrganizationId(long leftOrganizationId) {
 		_leftOrganizationId = leftOrganizationId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -232,8 +224,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setRightOrganizationId(long rightOrganizationId) {
 		_rightOrganizationId = rightOrganizationId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -252,8 +242,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -272,8 +260,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setType(String type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -287,8 +273,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setRecursable(boolean recursable) {
 		_recursable = recursable;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -298,8 +282,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setRegionId(long regionId) {
 		_regionId = regionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -309,8 +291,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setCountryId(long countryId) {
 		_countryId = countryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -320,8 +300,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setStatusId(int statusId) {
 		_statusId = statusId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -336,8 +314,6 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	public void setComments(String comments) {
 		_comments = comments;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

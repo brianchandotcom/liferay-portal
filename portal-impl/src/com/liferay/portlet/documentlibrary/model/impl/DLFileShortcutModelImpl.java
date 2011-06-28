@@ -182,8 +182,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -197,8 +195,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setFileShortcutId(long fileShortcutId) {
 		_fileShortcutId = fileShortcutId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -214,8 +210,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -229,8 +223,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -240,8 +232,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -264,8 +254,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -275,8 +263,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -286,8 +272,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -297,8 +281,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -308,8 +290,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -319,8 +299,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setToFileEntryId(long toFileEntryId) {
 		_toFileEntryId = toFileEntryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -330,8 +308,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setStatus(int status) {
 		_status = status;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -341,8 +317,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -366,8 +340,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -377,8 +349,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
-
-		_escapedModelProxy = null;
 	}
 
 	/**

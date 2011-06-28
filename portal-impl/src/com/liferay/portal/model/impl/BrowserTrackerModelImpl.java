@@ -106,8 +106,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	public void setBrowserTrackerId(long browserTrackerId) {
 		_browserTrackerId = browserTrackerId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserId() {
@@ -122,8 +120,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -144,8 +140,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	public void setBrowserKey(long browserKey) {
 		_browserKey = browserKey;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

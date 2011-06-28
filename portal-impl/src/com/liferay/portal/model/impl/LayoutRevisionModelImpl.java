@@ -213,8 +213,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setLayoutRevisionId(long layoutRevisionId) {
 		_layoutRevisionId = layoutRevisionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -224,8 +222,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -235,8 +231,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -246,8 +240,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -270,8 +262,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -281,8 +271,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -292,8 +280,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -309,8 +295,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 
 		_layoutSetBranchId = layoutSetBranchId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLayoutSetBranchId() {
@@ -324,8 +308,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setParentLayoutRevisionId(long parentLayoutRevisionId) {
 		_parentLayoutRevisionId = parentLayoutRevisionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -345,8 +327,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 
 		_head = head;
-
-		_escapedModelProxy = null;
 	}
 
 	public boolean getOriginalHead() {
@@ -364,8 +344,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setMajor(boolean major) {
 		_major = major;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -380,8 +358,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setVariationName(String variationName) {
 		_variationName = variationName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -397,8 +373,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 
 		_plid = plid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalPlid() {
@@ -416,8 +390,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setPrivateLayout(boolean privateLayout) {
 		_privateLayout = privateLayout;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -471,8 +443,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setName(String name, Locale locale) {
@@ -562,8 +532,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -654,8 +622,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -749,8 +715,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setKeywords(String keywords) {
 		_keywords = keywords;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setKeywords(String keywords, Locale locale) {
@@ -841,8 +805,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setRobots(String robots) {
 		_robots = robots;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setRobots(String robots, Locale locale) {
@@ -893,8 +855,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -908,8 +868,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setIconImage(boolean iconImage) {
 		_iconImage = iconImage;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -919,8 +877,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setIconImageId(long iconImageId) {
 		_iconImageId = iconImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -935,8 +891,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setThemeId(String themeId) {
 		_themeId = themeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -951,8 +905,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setColorSchemeId(String colorSchemeId) {
 		_colorSchemeId = colorSchemeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -967,8 +919,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setWapThemeId(String wapThemeId) {
 		_wapThemeId = wapThemeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -983,8 +933,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setWapColorSchemeId(String wapColorSchemeId) {
 		_wapColorSchemeId = wapColorSchemeId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -999,8 +947,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setCss(String css) {
 		_css = css;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -1010,8 +956,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setStatus(int status) {
 		_status = status;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -1021,8 +965,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -1046,8 +988,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -1057,8 +997,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
-
-		_escapedModelProxy = null;
 	}
 
 	/**

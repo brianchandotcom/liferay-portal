@@ -114,8 +114,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getStorageLinkId() {
@@ -124,8 +122,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public void setStorageLinkId(long storageLinkId) {
 		_storageLinkId = storageLinkId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -142,8 +138,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getClassPK() {
@@ -158,8 +152,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -172,8 +164,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public void setStructureId(long structureId) {
 		_structureId = structureId;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

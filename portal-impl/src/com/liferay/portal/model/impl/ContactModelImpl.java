@@ -201,8 +201,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setContactId(long contactId) {
 		_contactId = contactId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -212,8 +210,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -223,8 +219,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -247,8 +241,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -258,8 +250,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -269,8 +259,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -280,8 +268,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -291,8 +277,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setParentContactId(long parentContactId) {
 		_parentContactId = parentContactId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -307,8 +291,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setFirstName(String firstName) {
 		_firstName = firstName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -323,8 +305,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setMiddleName(String middleName) {
 		_middleName = middleName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -339,8 +319,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setLastName(String lastName) {
 		_lastName = lastName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -350,8 +328,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setPrefixId(int prefixId) {
 		_prefixId = prefixId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -361,8 +337,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setSuffixId(int suffixId) {
 		_suffixId = suffixId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -376,8 +350,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setMale(boolean male) {
 		_male = male;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -387,8 +359,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setBirthday(Date birthday) {
 		_birthday = birthday;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -403,8 +373,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setSmsSn(String smsSn) {
 		_smsSn = smsSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -419,8 +387,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setAimSn(String aimSn) {
 		_aimSn = aimSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -435,8 +401,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setFacebookSn(String facebookSn) {
 		_facebookSn = facebookSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -451,8 +415,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setIcqSn(String icqSn) {
 		_icqSn = icqSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -467,8 +429,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setJabberSn(String jabberSn) {
 		_jabberSn = jabberSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -483,8 +443,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setMsnSn(String msnSn) {
 		_msnSn = msnSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -499,8 +457,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setMySpaceSn(String mySpaceSn) {
 		_mySpaceSn = mySpaceSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -515,8 +471,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setSkypeSn(String skypeSn) {
 		_skypeSn = skypeSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -531,8 +485,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setTwitterSn(String twitterSn) {
 		_twitterSn = twitterSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -547,8 +499,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setYmSn(String ymSn) {
 		_ymSn = ymSn;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -563,8 +513,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setEmployeeStatusId(String employeeStatusId) {
 		_employeeStatusId = employeeStatusId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -579,8 +527,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setEmployeeNumber(String employeeNumber) {
 		_employeeNumber = employeeNumber;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -595,8 +541,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setJobTitle(String jobTitle) {
 		_jobTitle = jobTitle;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -611,8 +555,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setJobClass(String jobClass) {
 		_jobClass = jobClass;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -627,8 +569,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	public void setHoursOfOperation(String hoursOfOperation) {
 		_hoursOfOperation = hoursOfOperation;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

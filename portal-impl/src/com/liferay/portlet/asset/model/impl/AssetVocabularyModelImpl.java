@@ -185,8 +185,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -200,8 +198,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setVocabularyId(long vocabularyId) {
 		_vocabularyId = vocabularyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -217,8 +213,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -232,8 +226,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -243,8 +235,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -267,8 +257,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -278,8 +266,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -289,8 +275,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -309,8 +293,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -368,8 +350,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setTitle(String title, Locale locale) {
@@ -460,8 +440,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	public void setDescription(String description, Locale locale) {
@@ -515,8 +493,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setSettings(String settings) {
 		_settings = settings;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

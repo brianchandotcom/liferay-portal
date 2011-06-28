@@ -154,8 +154,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public void setCountryId(long countryId) {
 		_countryId = countryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -174,8 +172,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -198,8 +194,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		}
 
 		_a2 = a2;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalA2() {
@@ -222,8 +216,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		}
 
 		_a3 = a3;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalA3() {
@@ -242,8 +234,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public void setNumber(String number) {
 		_number = number;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -258,8 +248,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public void setIdd(String idd) {
 		_idd = idd;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -273,8 +261,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public void setActive(boolean active) {
 		_active = active;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

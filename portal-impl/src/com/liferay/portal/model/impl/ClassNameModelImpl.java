@@ -151,8 +151,6 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -171,8 +169,6 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		}
 
 		_value = value;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalValue() {

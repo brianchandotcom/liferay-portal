@@ -108,8 +108,6 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	public void setUserTrackerPathId(long userTrackerPathId) {
 		_userTrackerPathId = userTrackerPathId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getUserTrackerId() {
@@ -118,8 +116,6 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	public void setUserTrackerId(long userTrackerId) {
 		_userTrackerId = userTrackerId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getPath() {
@@ -133,8 +129,6 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	public void setPath(String path) {
 		_path = path;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getPathDate() {
@@ -143,8 +137,6 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	public void setPathDate(Date pathDate) {
 		_pathDate = pathDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

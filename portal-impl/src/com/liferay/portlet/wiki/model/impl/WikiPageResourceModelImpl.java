@@ -112,8 +112,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getResourcePrimKey() {
@@ -122,8 +120,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	public void setResourcePrimKey(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getNodeId() {
@@ -138,8 +134,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		}
 
 		_nodeId = nodeId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalNodeId() {
@@ -161,8 +155,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		}
 
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalTitle() {

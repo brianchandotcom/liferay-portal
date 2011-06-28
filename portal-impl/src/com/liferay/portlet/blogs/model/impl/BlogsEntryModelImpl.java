@@ -201,8 +201,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -216,8 +214,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -233,8 +229,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -248,8 +242,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -259,8 +251,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -283,8 +273,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -294,8 +282,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -305,8 +291,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -321,8 +305,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -341,8 +323,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		_urlTitle = urlTitle;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUrlTitle() {
@@ -361,8 +341,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -377,8 +355,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setContent(String content) {
 		_content = content;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -388,8 +364,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setDisplayDate(Date displayDate) {
 		_displayDate = displayDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -403,8 +377,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setAllowPingbacks(boolean allowPingbacks) {
 		_allowPingbacks = allowPingbacks;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -418,8 +390,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setAllowTrackbacks(boolean allowTrackbacks) {
 		_allowTrackbacks = allowTrackbacks;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -434,8 +404,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setTrackbacks(String trackbacks) {
 		_trackbacks = trackbacks;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -449,8 +417,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setSmallImage(boolean smallImage) {
 		_smallImage = smallImage;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -460,8 +426,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setSmallImageId(long smallImageId) {
 		_smallImageId = smallImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -476,8 +440,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setSmallImageURL(String smallImageURL) {
 		_smallImageURL = smallImageURL;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -487,8 +449,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setStatus(int status) {
 		_status = status;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -498,8 +458,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getStatusByUserUuid() throws SystemException {
@@ -523,8 +481,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setStatusByUserName(String statusByUserName) {
 		_statusByUserName = statusByUserName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -534,8 +490,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
-
-		_escapedModelProxy = null;
 	}
 
 	/**

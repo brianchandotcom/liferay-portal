@@ -116,8 +116,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setTicketId(long ticketId) {
 		_ticketId = ticketId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -126,8 +124,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getCreateDate() {
@@ -136,8 +132,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -154,8 +148,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getClassPK() {
@@ -164,8 +156,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getKey() {
@@ -183,8 +173,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		}
 
 		_key = key;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalKey() {
@@ -197,8 +185,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setType(int type) {
 		_type = type;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getExtraInfo() {
@@ -212,8 +198,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setExtraInfo(String extraInfo) {
 		_extraInfo = extraInfo;
-
-		_escapedModelProxy = null;
 	}
 
 	public Date getExpirationDate() {
@@ -222,8 +206,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

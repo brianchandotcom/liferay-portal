@@ -156,8 +156,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -167,8 +165,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -187,8 +183,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		}
 
 		_webId = webId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalWebId() {
@@ -207,8 +201,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setKey(String key) {
 		_key = key;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -227,8 +219,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		}
 
 		_mx = mx;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalMx() {
@@ -247,8 +237,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setHomeURL(String homeURL) {
 		_homeURL = homeURL;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -264,8 +252,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		}
 
 		_logoId = logoId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLogoId() {
@@ -283,8 +269,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setSystem(boolean system) {
 		_system = system;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -294,8 +278,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setMaxUsers(int maxUsers) {
 		_maxUsers = maxUsers;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

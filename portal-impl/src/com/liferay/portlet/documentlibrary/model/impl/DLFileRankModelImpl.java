@@ -115,8 +115,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	public void setFileRankId(long fileRankId) {
 		_fileRankId = fileRankId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -125,8 +123,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getCompanyId() {
@@ -141,8 +137,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -161,8 +155,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -183,8 +175,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getFileEntryId() {
@@ -199,8 +189,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		}
 
 		_fileEntryId = fileEntryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalFileEntryId() {

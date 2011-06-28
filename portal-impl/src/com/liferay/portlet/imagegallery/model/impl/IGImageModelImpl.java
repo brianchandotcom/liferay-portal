@@ -183,8 +183,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -198,8 +196,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setImageId(long imageId) {
 		_imageId = imageId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -215,8 +211,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -230,8 +224,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -241,8 +233,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -265,8 +255,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -276,8 +264,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -287,8 +273,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -298,8 +282,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -314,8 +296,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setName(String name) {
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -330,8 +310,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -347,8 +325,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_smallImageId = smallImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalSmallImageId() {
@@ -368,8 +344,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_largeImageId = largeImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalLargeImageId() {
@@ -389,8 +363,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_custom1ImageId = custom1ImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCustom1ImageId() {
@@ -410,8 +382,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		}
 
 		_custom2ImageId = custom2ImageId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCustom2ImageId() {

@@ -155,8 +155,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	public void setFlagId(long flagId) {
 		_flagId = flagId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -172,8 +170,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		}
 
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -195,8 +191,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -212,8 +206,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		}
 
 		_entryId = entryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalEntryId() {
@@ -233,8 +225,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		}
 
 		_value = value;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getOriginalValue() {

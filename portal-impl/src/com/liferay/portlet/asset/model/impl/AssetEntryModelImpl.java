@@ -213,8 +213,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -230,8 +228,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -245,8 +241,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -256,8 +250,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setUserId(long userId) {
 		_userId = userId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -280,8 +272,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setUserName(String userName) {
 		_userName = userName;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -291,8 +281,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -302,8 +290,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getClassName() {
@@ -327,8 +313,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 
 		_classNameId = classNameId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassNameId() {
@@ -348,8 +332,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 
 		_classPK = classPK;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalClassPK() {
@@ -372,8 +354,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 
 		_classUuid = classUuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalClassUuid() {
@@ -391,8 +371,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setVisible(boolean visible) {
 		_visible = visible;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -402,8 +380,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -413,8 +389,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -424,8 +398,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setPublishDate(Date publishDate) {
 		_publishDate = publishDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -435,8 +407,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setExpirationDate(Date expirationDate) {
 		_expirationDate = expirationDate;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -451,8 +421,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setMimeType(String mimeType) {
 		_mimeType = mimeType;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -467,8 +435,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setTitle(String title) {
 		_title = title;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -483,8 +449,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setDescription(String description) {
 		_description = description;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -499,8 +463,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setSummary(String summary) {
 		_summary = summary;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -515,8 +477,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setUrl(String url) {
 		_url = url;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -531,8 +491,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setLayoutUuid(String layoutUuid) {
 		_layoutUuid = layoutUuid;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -542,8 +500,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setHeight(int height) {
 		_height = height;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -553,8 +509,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setWidth(int width) {
 		_width = width;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -564,8 +518,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setPriority(double priority) {
 		_priority = priority;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -575,8 +527,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public void setViewCount(int viewCount) {
 		_viewCount = viewCount;
-
-		_escapedModelProxy = null;
 	}
 
 	@Override

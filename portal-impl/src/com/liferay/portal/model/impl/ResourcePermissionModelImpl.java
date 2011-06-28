@@ -155,8 +155,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	public void setResourcePermissionId(long resourcePermissionId) {
 		_resourcePermissionId = resourcePermissionId;
-
-		_escapedModelProxy = null;
 	}
 
 	@JSON
@@ -172,8 +170,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_companyId = companyId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalCompanyId() {
@@ -196,8 +192,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_name = name;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalName() {
@@ -217,8 +211,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_scope = scope;
-
-		_escapedModelProxy = null;
 	}
 
 	public int getOriginalScope() {
@@ -241,8 +233,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_primKey = primKey;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalPrimKey() {
@@ -262,8 +252,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_roleId = roleId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRoleId() {
@@ -283,8 +271,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_ownerId = ownerId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalOwnerId() {
@@ -304,8 +290,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		_actionIds = actionIds;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalActionIds() {

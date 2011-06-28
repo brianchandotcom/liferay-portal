@@ -116,8 +116,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		}
 
 		_uuid = uuid;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalUuid() {
@@ -130,8 +128,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	public void setRepositoryEntryId(long repositoryEntryId) {
 		_repositoryEntryId = repositoryEntryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getGroupId() {
@@ -146,8 +142,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		}
 
 		_groupId = groupId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalGroupId() {
@@ -166,8 +160,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		}
 
 		_repositoryId = repositoryId;
-
-		_escapedModelProxy = null;
 	}
 
 	public long getOriginalRepositoryId() {
@@ -189,8 +181,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		}
 
 		_mappedId = mappedId;
-
-		_escapedModelProxy = null;
 	}
 
 	public String getOriginalMappedId() {

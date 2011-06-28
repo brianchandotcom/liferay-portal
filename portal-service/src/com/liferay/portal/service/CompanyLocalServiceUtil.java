@@ -247,12 +247,12 @@ public class CompanyLocalServiceUtil {
 	public static com.liferay.portal.model.Company addCompany(
 		java.lang.String webId, java.lang.String virtualHostname,
 		java.lang.String mx, java.lang.String shardName, boolean system,
-		int maxUsers)
+		int maxUsers, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addCompany(webId, virtualHostname, mx, shardName, system,
-			maxUsers);
+			maxUsers, enabled);
 	}
 
 	public static com.liferay.portal.model.Company checkCompany(
@@ -354,11 +354,12 @@ public class CompanyLocalServiceUtil {
 
 	public static com.liferay.portal.model.Company updateCompany(
 		long companyId, java.lang.String virtualHostname, java.lang.String mx,
-		int maxUsers)
+		int maxUsers, boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateCompany(companyId, virtualHostname, mx, maxUsers);
+				   .updateCompany(companyId, virtualHostname, mx, maxUsers,
+			enabled);
 	}
 
 	public static com.liferay.portal.model.Company updateCompany(

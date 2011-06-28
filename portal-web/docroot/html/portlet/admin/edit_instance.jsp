@@ -95,6 +95,9 @@ catch (Exception e) {
 		</c:if>
 
 		<aui:input name="maxUsers" />
+
+		<aui:input type="checkbox" label="instance-enabled" name="enabled" value="<%= company2.isEnabled() %>" />
+
 	</aui:fieldset>
 
 	<aui:button-row>

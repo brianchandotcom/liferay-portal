@@ -34,6 +34,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServlet;
+import com.liferay.util.ContentUtil;
+import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.Set;
 
@@ -148,6 +150,15 @@ public class VirtualHostFilter extends BasePortalFilter {
 		throws Exception {
 
 		long companyId = PortalInstances.getCompanyId(request);
+
+		if (!PortalInstances.isInstanceEnabled(companyId)) {
+			String html = ContentUtil.get(
+				"com/liferay/portal/dependencies/disabled-instance.html");
+
+			ServletResponseUtil.write(response, html);
+
+			return;
+		}
 
 		String contextPath = PortalUtil.getPathContext();
 

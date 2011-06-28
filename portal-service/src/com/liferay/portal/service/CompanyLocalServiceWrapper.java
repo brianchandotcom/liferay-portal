@@ -236,11 +236,12 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
 		java.lang.String virtualHostname, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers)
+		java.lang.String shardName, boolean system, int maxUsers,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _companyLocalService.addCompany(webId, virtualHostname, mx,
-			shardName, system, maxUsers);
+			shardName, system, maxUsers, enabled);
 	}
 
 	public com.liferay.portal.model.Company checkCompany(java.lang.String webId)
@@ -337,11 +338,12 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 	}
 
 	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHostname, java.lang.String mx, int maxUsers)
+		java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _companyLocalService.updateCompany(companyId, virtualHostname,
-			mx, maxUsers);
+			mx, maxUsers, enabled);
 	}
 
 	public com.liferay.portal.model.Company updateCompany(long companyId,

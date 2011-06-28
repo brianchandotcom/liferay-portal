@@ -153,6 +153,7 @@
 		<!-- Other fields -->
 
 		<column name="accountId" type="long" />
+        <column name="enabled" type="boolean" />
 		<column name="webId" type="String" />
 		<column name="key" type="String" />
 		<column name="mx" type="String" />

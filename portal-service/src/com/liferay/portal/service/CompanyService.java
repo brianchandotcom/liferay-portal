@@ -43,7 +43,8 @@ public interface CompanyService {
 	 */
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers)
+		java.lang.String shardName, boolean system, int maxUsers,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -83,7 +84,8 @@ public interface CompanyService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx, int maxUsers)
+		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

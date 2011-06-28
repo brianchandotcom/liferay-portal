@@ -91,7 +91,7 @@ public class FileSystemStore extends BaseStore {
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, fromVersionNumber);
@@ -299,7 +299,7 @@ public class FileSystemStore extends BaseStore {
 	public void updateFileVersion(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, fromVersionNumber);

@@ -2592,8 +2592,7 @@ executable ZIP file.
 						</not>
 					</or>
 					<then>
-						<delete dir="portal-web/selenium" failonerror="false" />
-
+						<delete dir="portal-web/selenium" />
 						<mkdir dir="portal-web/selenium" />
 
 						<unzip src="${selenium.executable.zip}" dest="portal-web/selenium" />

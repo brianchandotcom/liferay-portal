@@ -64,7 +64,6 @@ import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.store.JCRStore;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
@@ -74,10 +73,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -306,38 +301,16 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		File file = getFile(
-			dlFileEntry, DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+		DLStoreUtil.updateFileVersion(
+			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
+			dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(),
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version,
+			dlFileEntry.getTitle(), serviceContext);
 
-		InputStream is = null;
+		// Index
 
-		if (file != null) {
-			try {
-				DLStoreUtil.deleteFile(
-					user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-			}
-			catch (NoSuchFileException nsfe) {
-			}
-
-			try {
-				is = new FileInputStream(file);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-
-			DLStoreUtil.updateFile(
-				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
-				version, dlFileEntry.getTitle(), serviceContext, is);
-
-			// Index
-
-			index(dlFileEntry, serviceContext);
-		}
+		index(dlFileEntry, serviceContext);
 
 		// Workflow
 
@@ -441,32 +414,12 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
-			File file = getFile(dlFileEntry);
-
-			InputStream is;
-
-			try {
-				is = new FileInputStream(file);
-			}
-			catch (FileNotFoundException fnfe) {
-				throw new NoSuchFileException(fnfe);
-			}
-
-			try {
-				DLStoreUtil.deleteFile(
-					user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-			}
-			catch (NoSuchFileException nsfe) {
-			}
-
-			DLStoreUtil.updateFile(
+			DLStoreUtil.copyFileVersion(
 				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileEntry.getExtension(), false,
+				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				dlFileVersion.getTitle(), new ServiceContext(), is);
+				dlFileVersion.getTitle(), serviceContext);
 
 			// Index
 
@@ -1299,98 +1252,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return FileUtil.getExtension(sourceFileName);
-	}
-
-	protected File getFile(DLFileEntry dlFileEntry)
-		throws PortalException, SystemException {
-
-		File file = null;
-
-		InputStream is = null;
-		int fetchFailures = 0;
-
-		while (is == null) {
-			try {
-				is = DLStoreUtil.getFileAsStream(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(),
-					dlFileEntry.getName());
-
-				file = FileUtil.createTempFile(
-					FileUtil.getExtension(dlFileEntry.getTitle()));
-
-				FileUtil.write(file, is);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-			catch (NoSuchFileException nsfe) {
-				fetchFailures++;
-
-				if (PropsValues.DL_STORE_IMPL.equals(
-						JCRStore.class.getName()) &&
-					(fetchFailures <
-						PropsValues.DL_STORE_JCR_FETCH_MAX_FAILURES)) {
-
-					try {
-						Thread.sleep(PropsValues.DL_STORE_JCR_FETCH_DELAY);
-					}
-					catch (InterruptedException ie) {
-					}
-				}
-				else {
-					throw nsfe;
-				}
-			}
-		}
-
-		return file;
-	}
-
-	protected File getFile(DLFileEntry dlFileEntry, String version)
-		throws PortalException, SystemException {
-
-		File file = null;
-
-		InputStream is = null;
-		int fetchFailures = 0;
-
-		while (is == null) {
-			try {
-				is = DLStoreUtil.getFileAsStream(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(),
-					dlFileEntry.getName(), version);
-
-				file = FileUtil.createTempFile(
-					FileUtil.getExtension(dlFileEntry.getTitle()));
-
-				FileUtil.write(file, is);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-			catch (NoSuchFileException nsfe) {
-				fetchFailures++;
-
-				if (PropsValues.DL_STORE_IMPL.equals(
-						JCRStore.class.getName()) &&
-					(fetchFailures <
-						PropsValues.DL_STORE_JCR_FETCH_MAX_FAILURES)) {
-
-					try {
-						Thread.sleep(PropsValues.DL_STORE_JCR_FETCH_DELAY);
-					}
-					catch (InterruptedException ie) {
-					}
-				}
-				else {
-					throw nsfe;
-				}
-			}
-		}
-
-		return file;
 	}
 
 	protected String getNextVersion(

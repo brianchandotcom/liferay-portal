@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.annotation.Annotation;
@@ -38,16 +37,13 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 	public Object before(final MethodInvocation methodInvocation)
 		throws Throwable {
 
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
-		Async async = findAnnotation(methodTargetClassKey);
+		Async async = findAnnotation(methodInvocation);
 
 		if (async == _nullAsync) {
 			return null;
 		}
 
-		Method method = methodTargetClassKey.getMethod();
+		Method method = methodInvocation.getMethod();
 
 		if (method.getReturnType() != void.class) {
 			if (_log.isWarnEnabled()) {
@@ -63,7 +59,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
 		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
 			destinationName = _destinationNames.get(
-				methodTargetClassKey.getTargetClass());
+				methodInvocation.getThis().getClass());
 		}
 
 		if (destinationName == null) {

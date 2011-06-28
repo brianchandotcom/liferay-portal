@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,7 +72,7 @@ public class ClassNameLocalServiceImpl extends ClassNameLocalServiceBaseImpl {
 		return classNamePersistence.findByPrimaryKey(classNameId);
 	}
 
-	@Transactional(enabled = false)
+	@Skip
 	public ClassName getClassName(String value) throws SystemException {
 		if (Validator.isNull(value)) {
 			return _nullClassName;
@@ -91,12 +92,12 @@ public class ClassNameLocalServiceImpl extends ClassNameLocalServiceBaseImpl {
 		return className;
 	}
 
-	@Transactional(enabled = false)
+	@Skip
 	public long getClassNameId(Class<?> clazz) {
 		return getClassNameId(clazz.getName());
 	}
 
-	@Transactional(enabled = false)
+	@Skip
 	public long getClassNameId(String value) {
 		try {
 			ClassName className = getClassName(value);

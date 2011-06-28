@@ -33,8 +33,7 @@
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
 	<bean id="transactionAttributeSource" class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" />
-	<aop:config proxy-target-class="false">
-		<aop:pointcut id="serviceOperation" expression="bean(*Service)" />
-		<aop:advisor advice-ref="serviceAdvice" pointcut-ref="serviceOperation" />
-	</aop:config>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="methodInterceptor" ref="serviceAdvice" />
+	</bean>
 </beans>

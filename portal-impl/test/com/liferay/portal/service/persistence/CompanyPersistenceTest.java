@@ -70,8 +70,6 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		newCompany.setAccountId(nextLong());
 
-		newCompany.setEnabled(randomBoolean());
-
 		newCompany.setWebId(randomString());
 
 		newCompany.setKey(randomString());
@@ -86,13 +84,14 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		newCompany.setMaxUsers(nextInt());
 
+		newCompany.setActive(randomBoolean());
+
 		_persistence.update(newCompany, false);
 
 		Company existingCompany = _persistence.findByPrimaryKey(newCompany.getPrimaryKey());
 
 		assertEquals(existingCompany.getCompanyId(), newCompany.getCompanyId());
 		assertEquals(existingCompany.getAccountId(), newCompany.getAccountId());
-		assertEquals(existingCompany.getEnabled(), newCompany.getEnabled());
 		assertEquals(existingCompany.getWebId(), newCompany.getWebId());
 		assertEquals(existingCompany.getKey(), newCompany.getKey());
 		assertEquals(existingCompany.getMx(), newCompany.getMx());
@@ -100,6 +99,7 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingCompany.getLogoId(), newCompany.getLogoId());
 		assertEquals(existingCompany.getSystem(), newCompany.getSystem());
 		assertEquals(existingCompany.getMaxUsers(), newCompany.getMaxUsers());
+		assertEquals(existingCompany.getActive(), newCompany.getActive());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -233,8 +233,6 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		company.setAccountId(nextLong());
 
-		company.setEnabled(randomBoolean());
-
 		company.setWebId(randomString());
 
 		company.setKey(randomString());
@@ -248,6 +246,8 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 		company.setSystem(randomBoolean());
 
 		company.setMaxUsers(nextInt());
+
+		company.setActive(randomBoolean());
 
 		_persistence.update(company, false);
 

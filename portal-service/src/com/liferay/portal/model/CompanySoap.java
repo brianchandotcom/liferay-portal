@@ -32,7 +32,6 @@ public class CompanySoap implements Serializable {
 
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAccountId(model.getAccountId());
-		soapModel.setEnabled(model.getEnabled());
 		soapModel.setWebId(model.getWebId());
 		soapModel.setKey(model.getKey());
 		soapModel.setMx(model.getMx());
@@ -40,6 +39,7 @@ public class CompanySoap implements Serializable {
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setSystem(model.getSystem());
 		soapModel.setMaxUsers(model.getMaxUsers());
+		soapModel.setActive(model.getActive());
 
 		return soapModel;
 	}
@@ -108,18 +108,6 @@ public class CompanySoap implements Serializable {
 		_accountId = accountId;
 	}
 
-	public boolean getEnabled() {
-		return _enabled;
-	}
-
-	public boolean isEnabled() {
-		return _enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
-	}
-
 	public String getWebId() {
 		return _webId;
 	}
@@ -180,9 +168,20 @@ public class CompanySoap implements Serializable {
 		_maxUsers = maxUsers;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	private long _companyId;
 	private long _accountId;
-	private boolean _enabled;
 	private String _webId;
 	private String _key;
 	private String _mx;
@@ -190,4 +189,5 @@ public class CompanySoap implements Serializable {
 	private long _logoId;
 	private boolean _system;
 	private int _maxUsers;
+	private boolean _active;
 }

@@ -109,7 +109,6 @@
 		<attributes>
 			<id name="companyId" />
 			<basic name="accountId" />
-			<basic name="enabled" />
 			<basic name="webId" />
 			<basic name="key">
 				<column name="KEY_" />
@@ -119,6 +118,9 @@
 			<basic name="logoId" />
 			<basic name="system" />
 			<basic name="maxUsers" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>

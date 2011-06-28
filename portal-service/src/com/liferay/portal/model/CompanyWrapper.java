@@ -91,33 +91,6 @@ public class CompanyWrapper implements Company {
 	}
 
 	/**
-	* Returns the enabled of this company.
-	*
-	* @return the enabled of this company
-	*/
-	public boolean getEnabled() {
-		return _company.getEnabled();
-	}
-
-	/**
-	* Determines if this company is enabled.
-	*
-	* @return <code>true</code> if this company is enabled; <code>false</code> otherwise
-	*/
-	public boolean isEnabled() {
-		return _company.isEnabled();
-	}
-
-	/**
-	* Sets whether this company is enabled.
-	*
-	* @param enabled the enabled of this company
-	*/
-	public void setEnabled(boolean enabled) {
-		_company.setEnabled(enabled);
-	}
-
-	/**
 	* Returns the web ID of this company.
 	*
 	* @return the web ID of this company
@@ -250,6 +223,33 @@ public class CompanyWrapper implements Company {
 	*/
 	public void setMaxUsers(int maxUsers) {
 		_company.setMaxUsers(maxUsers);
+	}
+
+	/**
+	* Returns the active of this company.
+	*
+	* @return the active of this company
+	*/
+	public boolean getActive() {
+		return _company.getActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this company is active.
+	*
+	* @return <code>true</code> if this company is active; <code>false</code> otherwise
+	*/
+	public boolean isActive() {
+		return _company.isActive();
+	}
+
+	/**
+	* Sets whether this company is active.
+	*
+	* @param active the active of this company
+	*/
+	public void setActive(boolean active) {
+		_company.setActive(active);
 	}
 
 	public boolean isNew() {

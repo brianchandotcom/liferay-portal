@@ -61,16 +61,16 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "companyId", Types.BIGINT },
 			{ "accountId", Types.BIGINT },
-			{ "enabled", Types.BOOLEAN },
 			{ "webId", Types.VARCHAR },
 			{ "key_", Types.CLOB },
 			{ "mx", Types.VARCHAR },
 			{ "homeURL", Types.VARCHAR },
 			{ "logoId", Types.BIGINT },
 			{ "system", Types.BOOLEAN },
-			{ "maxUsers", Types.INTEGER }
+			{ "maxUsers", Types.INTEGER },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Company (companyId LONG not null primary key,accountId LONG,enabled BOOLEAN,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(75) null,homeURL STRING null,logoId LONG,system BOOLEAN,maxUsers INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Company (companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(75) null,homeURL STRING null,logoId LONG,system BOOLEAN,maxUsers INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Company";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -93,7 +93,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setAccountId(soapModel.getAccountId());
-		model.setEnabled(soapModel.getEnabled());
 		model.setWebId(soapModel.getWebId());
 		model.setKey(soapModel.getKey());
 		model.setMx(soapModel.getMx());
@@ -101,6 +100,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		model.setLogoId(soapModel.getLogoId());
 		model.setSystem(soapModel.getSystem());
 		model.setMaxUsers(soapModel.getMaxUsers());
+		model.setActive(soapModel.getActive());
 
 		return model;
 	}
@@ -167,19 +167,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	public void setAccountId(long accountId) {
 		_accountId = accountId;
-	}
-
-	@JSON
-	public boolean getEnabled() {
-		return _enabled;
-	}
-
-	public boolean isEnabled() {
-		return _enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
 	}
 
 	@JSON
@@ -295,6 +282,19 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_maxUsers = maxUsers;
 	}
 
+	@JSON
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	@Override
 	public Company toEscapedModel() {
 		if (isEscapedModel()) {
@@ -332,7 +332,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 		companyImpl.setCompanyId(getCompanyId());
 		companyImpl.setAccountId(getAccountId());
-		companyImpl.setEnabled(getEnabled());
 		companyImpl.setWebId(getWebId());
 		companyImpl.setKey(getKey());
 		companyImpl.setMx(getMx());
@@ -340,6 +339,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyImpl.setLogoId(getLogoId());
 		companyImpl.setSystem(getSystem());
 		companyImpl.setMaxUsers(getMaxUsers());
+		companyImpl.setActive(getActive());
 
 		companyImpl.resetOriginalValues();
 
@@ -411,8 +411,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		sb.append(getCompanyId());
 		sb.append(", accountId=");
 		sb.append(getAccountId());
-		sb.append(", enabled=");
-		sb.append(getEnabled());
 		sb.append(", webId=");
 		sb.append(getWebId());
 		sb.append(", key=");
@@ -427,6 +425,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		sb.append(getSystem());
 		sb.append(", maxUsers=");
 		sb.append(getMaxUsers());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -446,10 +446,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		sb.append(
 			"<column><column-name>accountId</column-name><column-value><![CDATA[");
 		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>enabled</column-name><column-value><![CDATA[");
-		sb.append(getEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>webId</column-name><column-value><![CDATA[");
@@ -479,6 +475,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 			"<column><column-name>maxUsers</column-name><column-value><![CDATA[");
 		sb.append(getMaxUsers());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -491,7 +491,6 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		};
 	private long _companyId;
 	private long _accountId;
-	private boolean _enabled;
 	private String _webId;
 	private String _originalWebId;
 	private String _key;
@@ -503,6 +502,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private boolean _setOriginalLogoId;
 	private boolean _system;
 	private int _maxUsers;
+	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
 	private Company _escapedModelProxy;
 }

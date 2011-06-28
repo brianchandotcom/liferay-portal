@@ -239,7 +239,6 @@
 			<generator class="assigned" />
 		</id>
 		<property name="accountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="enabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="webId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
 		<property name="mx" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -247,6 +246,7 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="system" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="maxUsers" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ContactImpl" table="Contact_">
 		<cache usage="read-write" />

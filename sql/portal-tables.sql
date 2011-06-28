@@ -320,14 +320,14 @@ create table ClusterGroup (
 create table Company (
 	companyId LONG not null primary key,
 	accountId LONG,
-	enabled BOOLEAN,
 	webId VARCHAR(75) null,
 	key_ TEXT null,
 	mx VARCHAR(75) null,
 	homeURL STRING null,
 	logoId LONG,
 	system BOOLEAN,
-	maxUsers INTEGER
+	maxUsers INTEGER,
+	active_ BOOLEAN
 );
 
 create table Contact_ (

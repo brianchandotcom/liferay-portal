@@ -460,8 +460,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					_${column.name} = ${column.name};
 				</#if>
 			</#if>
-
-			_escapedModelProxy = null;
 		}
 
 		<#if column.localized>

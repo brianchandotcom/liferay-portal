@@ -2582,23 +2582,24 @@ executable ZIP file.
 				<if>
 					<or>
 						<not>
-							<available file="portal-web/selenium" />
+							<available file="${selenium.nanny.executable}" />
 						</not>
 						<not>
 							<uptodate
 								srcfile="${selenium.executable.zip}"
-								targetfile="portal-web/selenium"
+								targetfile="${project.dir}/tools/selenium"
 							/>
 						</not>
 					</or>
 					<then>
-						<delete dir="portal-web/selenium" />
-						<mkdir dir="portal-web/selenium" />
-
-						<unzip src="${selenium.executable.zip}" dest="portal-web/selenium" />
+						<unzip
+							dest="${project.dir}/tools/selenium"
+							overwrite="true"
+							src="${selenium.executable.zip}"
+						/>
 
 						<touch>
-							<fileset dir="portal-web/selenium" />
+							<fileset dir="${selenium.nanny.executable}" />
 						</touch>
 					</then>
 				</if>

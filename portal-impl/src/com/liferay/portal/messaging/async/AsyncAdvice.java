@@ -58,8 +58,9 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		String destinationName = null;
 
 		if ((_destinationNames != null) && !_destinationNames.isEmpty()) {
-			destinationName = _destinationNames.get(
-				methodInvocation.getThis().getClass());
+			Object thisObject = methodInvocation.getThis();
+
+			destinationName = _destinationNames.get(thisObject.getClass());
 		}
 
 		if (destinationName == null) {

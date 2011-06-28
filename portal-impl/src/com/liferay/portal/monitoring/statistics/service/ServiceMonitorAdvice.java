@@ -94,9 +94,9 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		Object object = methodInvocation.getThis();
+		Object thisObject = methodInvocation.getThis();
 
-		Class<?> clazz = object.getClass();
+		Class<?> clazz = thisObject.getClass();
 
 		Class<?>[] interfaces = clazz.getInterfaces();
 

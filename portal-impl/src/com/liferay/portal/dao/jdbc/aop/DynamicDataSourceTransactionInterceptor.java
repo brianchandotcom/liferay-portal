@@ -49,9 +49,9 @@ public class DynamicDataSourceTransactionInterceptor
 		Class<?> targetClass = null;
 
 		if (methodInvocation.getThis() != null) {
-			Object targetBean = methodInvocation.getThis();
+			Object thisObject = methodInvocation.getThis();
 
-			targetClass = targetBean.getClass();
+			targetClass = thisObject.getClass();
 		}
 
 		Method targetMethod = methodInvocation.getMethod();

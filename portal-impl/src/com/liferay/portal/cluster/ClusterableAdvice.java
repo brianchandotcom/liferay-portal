@@ -49,11 +49,11 @@ public class ClusterableAdvice
 			return;
 		}
 
-		Object targetBean = methodInvocation.getThis();
+		Object thisObject = methodInvocation.getThis();
 
-		if (!(targetBean instanceof IdentifiableBean)) {
+		if (!(thisObject instanceof IdentifiableBean)) {
 			_log.error(
-				"Not clustering calls for " + targetBean.getClass().getName() +
+				"Not clustering calls for " + thisObject.getClass().getName() +
 					" because it does not implement " +
 						IdentifiableBean.class.getName());
 
@@ -68,7 +68,7 @@ public class ClusterableAdvice
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
-		IdentifiableBean identifiableBean = (IdentifiableBean)targetBean;
+		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
 
 		clusterRequest.setBeanIdentifier(identifiableBean.getBeanIdentifier());
 

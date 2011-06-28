@@ -29,9 +29,10 @@ public class ServiceMethodAnnotationCache {
 	public static <T> T get(
 		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
-		Annotation[] annotations = _annotationCache.get(methodInvocation);
 
-		if (annotations == _emptyAnnotations) {
+		Annotation[] annotations = _annotations.get(methodInvocation);
+
+		if (annotations == _nullAnnotations) {
 			return defaultValue;
 		}
 
@@ -50,16 +51,16 @@ public class ServiceMethodAnnotationCache {
 
 	public static void put(
 		MethodInvocation methodInvocation, Annotation[] annotations) {
+
 		if ((annotations == null) || (annotations.length == 0)) {
-			annotations = _emptyAnnotations;
+			annotations = _nullAnnotations;
 		}
 
-		_annotationCache.put(methodInvocation, annotations);
+		_annotations.put(methodInvocation, annotations);
 	}
 
-	private static final Map<MethodInvocation, Annotation[]> _annotationCache =
+	private static Map<MethodInvocation, Annotation[]> _annotations =
 		new ConcurrentHashMap<MethodInvocation, Annotation[]>();
-
-	private static Annotation[] _emptyAnnotations = new Annotation[0];
+	private static Annotation[] _nullAnnotations = new Annotation[0];
 
 }

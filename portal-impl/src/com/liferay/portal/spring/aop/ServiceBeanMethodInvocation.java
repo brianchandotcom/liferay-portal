@@ -25,20 +25,18 @@ import java.lang.reflect.Method;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
- * This class can be used as hash key, the hashCode() and equals() are only
- * applied to Method object, not involving arguments. It can be used to identify
- * service method.
  * @author Shuyang Zhou
  */
 public class ServiceBeanMethodInvocation implements MethodInvocation {
 
 	public ServiceBeanMethodInvocation(
-		Object target, Method method, Object[] arguments,
-		Class<?> targetClass) {
-		_arguments = arguments;
-		_method = method;
+		Object target, Class<?> targetClass, Method method,
+		Object[] arguments) {
+
 		_target = target;
 		_targetClass = targetClass;
+		_method = method;
+		_arguments = arguments;
 
 		_method.setAccessible(true);
 	}
@@ -55,11 +53,8 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)obj;
 
-		// Do the == comparison first, most likely we will be lucky enough to
-		// see a direct hit. Unless we are seeing a hash conflict, or the two
-		// methods are loaded by different classloader which is very rare.
-		if (_method == serviceBeanMethodInvocation._method
-			&& Validator.equals(_method, serviceBeanMethodInvocation._method)) {
+		if ((_method == serviceBeanMethodInvocation._method) &&
+			Validator.equals(_method, serviceBeanMethodInvocation._method)) {
 
 			return true;
 		}
@@ -87,6 +82,7 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		if (_hashCode == 0) {
 			_hashCode = _method.hashCode();
 		}
+
 		return _hashCode;
 	}
 
@@ -95,50 +91,54 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 			return _method.invoke(_target, _arguments);
 		}
 		catch (InvocationTargetException ite) {
-			// This is critical, the upper logic is not expecting to see the
-			// internal logic of AOP, we have to unwrap the Exception otherwise
-			// it will disturb upper Exception handling process.
 			throw ite.getTargetException();
 		}
 	}
 
 	public String toString() {
-		if (_toString == null) {
-			Class<?>[] parameterTypes = _method.getParameterTypes();
-
-			StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
-
-			sb.append(_method.getDeclaringClass().getName());
-			sb.append(StringPool.PERIOD);
-			sb.append(_method.getName());
-			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			for (int i = 0; i < parameterTypes.length; i++) {
-				sb.append(parameterTypes[i].getName());
-
-				if ((i + 1) < parameterTypes.length) {
-					sb.append(StringPool.COMMA);
-				}
-			}
-
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			if (_targetClass != null) {
-				sb.append(StringPool.AT);
-				sb.append(_targetClass.getName());
-			}
-
-			_toString = sb.toString();
+		if (_toString != null) {
+			return _toString;
 		}
+
+		Class<?>[] parameterTypes = _method.getParameterTypes();
+
+		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
+
+		Class<?> declaringClass = _method.getDeclaringClass();
+
+		sb.append(declaringClass.getName());
+
+		sb.append(StringPool.PERIOD);
+		sb.append(_method.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			Class<?> parameterType = parameterTypes[i];
+
+			sb.append(parameterType.getName());
+
+			if ((i + 1) < parameterTypes.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (_targetClass != null) {
+			sb.append(StringPool.AT);
+			sb.append(_targetClass.getName());
+		}
+
+		_toString = sb.toString();
 
 		return _toString;
 	}
 
-	protected Object[] _arguments;
-	protected final Method _method;
-	protected final Object _target;
-	protected final Class<?> _targetClass;
+	private Object[] _arguments;
 	private int _hashCode;
+	private Method _method;
+	private Object _target;
+	private Class<?> _targetClass;
 	private String _toString;
 
 }

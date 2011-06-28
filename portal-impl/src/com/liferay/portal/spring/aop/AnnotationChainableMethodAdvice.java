@@ -31,10 +31,18 @@ import org.aopalliance.intercept.MethodInvocation;
 public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	extends ChainableMethodAdvice {
 
+	public static void registerAnnotationType(
+		Class<? extends Annotation> annotationType) {
+
+		_annotationTypes.add(annotationType);
+	}
+
 	public AnnotationChainableMethodAdvice() {
 		_nullAnnotation = getNullAnnotation();
+
 		_annotationType = _nullAnnotation.annotationType();
-		_annotationTypeSet.add(_annotationType);
+
+		_annotationTypes.add(_annotationType);
 	}
 
 	public abstract T getNullAnnotation();
@@ -47,7 +55,9 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			return (T)annotation;
 		}
 
-		Class<?> targetClass = methodInvocation.getThis().getClass();
+		Object thisObject = methodInvocation.getThis();
+
+		Class<?> targetClass = thisObject.getClass();
 
 		Method method = methodInvocation.getMethod();
 
@@ -70,14 +80,15 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			annotations = method.getAnnotations();
 		}
 
-		if ((annotations != null) && annotations.length > 0) {
-			List<Annotation> filteredAnnotations =
-				new ArrayList<Annotation>(annotations.length);
+		if ((annotations != null) && (annotations.length > 0)) {
+			List<Annotation> filteredAnnotations = new ArrayList<Annotation>(
+							annotations.length);
 
-			for (Annotation tempAnnotation : annotations) {
-				if (_annotationTypeSet.contains(
-					tempAnnotation.annotationType())) {
-					filteredAnnotations.add(tempAnnotation);
+			for (Annotation curAnnotation : annotations) {
+				if (_annotationTypes.contains(
+						curAnnotation.annotationType())) {
+
+					filteredAnnotations.add(curAnnotation);
 				}
 			}
 
@@ -87,21 +98,16 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 
 		ServiceMethodAnnotationCache.put(methodInvocation, annotations);
 
-		for (Annotation tempAnnotation : annotations) {
-			if (tempAnnotation.annotationType() == _annotationType) {
-				return (T)tempAnnotation;
+		for (Annotation curAnnotation : annotations) {
+			if (curAnnotation.annotationType() == _annotationType) {
+				return (T)curAnnotation;
 			}
 		}
 
 		return _nullAnnotation;
 	}
 
-	public static void registerAnnotationType(
-		Class<? extends Annotation> annotationType) {
-		_annotationTypeSet.add(annotationType);
-	}
-
-	private static final Set<Class<? extends Annotation>> _annotationTypeSet =
+	private static Set<Class<? extends Annotation>> _annotationTypes =
 		new HashSet<Class<? extends Annotation>>();
 
 	private Class<? extends Annotation> _annotationType;

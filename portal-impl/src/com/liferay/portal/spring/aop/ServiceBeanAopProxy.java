@@ -35,8 +35,10 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 
 	public ServiceBeanAopProxy(
 		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor) {
+
 		_advisedSupport = advisedSupport;
 		_methodInterceptor = methodInterceptor;
+
 		AnnotationChainableMethodAdvice.registerAnnotationType(Skip.class);
 	}
 
@@ -45,27 +47,31 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	}
 
 	public Object getProxy(ClassLoader classLoader) {
-		Class[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(
+		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(
 			_advisedSupport);
+
 		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
 	}
 
-	public Object invoke(Object proxy, Method method, Object[] args)
+	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
+
 		TargetSource targetSource = _advisedSupport.getTargetSource();
+
 		Object target = null;
 
 		try {
-			Class targetClass = null;
+			Class<?> targetClass = null;
 
 			target = targetSource.getTarget();
+
 			if (target != null) {
 				targetClass = target.getClass();
 			}
 
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				new ServiceBeanMethodInvocation(target, method, args,
-					targetClass);
+				new ServiceBeanMethodInvocation(
+					target, targetClass, method, arguments);
 
 			Skip skip = ServiceMethodAnnotationCache.get(
 				serviceBeanMethodInvocation, Skip.class, null);
@@ -78,7 +84,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			}
 		}
 		finally {
-			if (target != null && !targetSource.isStatic()) {
+			if ((target != null) && !targetSource.isStatic()) {
 				targetSource.releaseTarget(target);
 			}
 		}

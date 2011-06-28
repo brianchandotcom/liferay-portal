@@ -35,26 +35,33 @@ public class ServiceBeanAutoProxyCreator extends AbstractAutoProxyCreator {
 	}
 
 	protected void customizeProxyFactory(ProxyFactory proxyFactory) {
-		proxyFactory.setAopProxyFactory(new AopProxyFactory() {
+		proxyFactory.setAopProxyFactory(
+			new AopProxyFactory() {
 
-			public AopProxy createAopProxy(AdvisedSupport advisedSupport)
-				throws AopConfigException {
-				return new ServiceBeanAopProxy(advisedSupport,
-					_methodInterceptor);
+				public AopProxy createAopProxy(AdvisedSupport advisedSupport)
+					throws AopConfigException {
+
+					return new ServiceBeanAopProxy(
+						advisedSupport, _methodInterceptor);
+				}
+
 			}
-		});
+		);
 	}
 
 	protected Object[] getAdvicesAndAdvisorsForBean(
 			Class<?> beanClass, String beanName, TargetSource targetSource)
 		throws BeansException {
-		if (beanName.endsWith("Service")) {
+
+		if (beanName.endsWith(_SERVICE_SUFFIX)) {
 			return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
 		}
 		else {
 			return DO_NOT_PROXY;
 		}
 	}
+
+	private static final String _SERVICE_SUFFIX = "Service";
 
 	private MethodInterceptor _methodInterceptor;
 

@@ -611,12 +611,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (dlFolder == null)) {
+				if (dlFolder != null) {
+					cacheResult(dlFolder);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 						DLFolderImpl.class, folderId, _nullDLFolder);
-				}
-				else {
-					cacheResult(dlFolder);
 				}
 
 				closeSession(session);
@@ -4425,5 +4425,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFolderPersistenceImpl.class);
-	private static DLFolder _nullDLFolder = new DLFolderImpl();
+	private static DLFolder _nullDLFolder = new DLFolderImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

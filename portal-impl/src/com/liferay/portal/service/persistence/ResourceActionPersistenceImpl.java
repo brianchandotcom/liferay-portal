@@ -446,13 +446,13 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (resourceAction == null)) {
+				if (resourceAction != null) {
+					cacheResult(resourceAction);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 						ResourceActionImpl.class, resourceActionId,
 						_nullResourceAction);
-				}
-				else {
-					cacheResult(resourceAction);
 				}
 
 				closeSession(session);
@@ -1496,5 +1496,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceAction exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ResourceActionPersistenceImpl.class);
-	private static ResourceAction _nullResourceAction = new ResourceActionImpl();
+	private static ResourceAction _nullResourceAction = new ResourceActionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

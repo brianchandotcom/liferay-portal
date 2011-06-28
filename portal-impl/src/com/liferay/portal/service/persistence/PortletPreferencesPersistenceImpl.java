@@ -507,13 +507,13 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (portletPreferences == null)) {
+				if (portletPreferences != null) {
+					cacheResult(portletPreferences);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortletPreferencesImpl.class, portletPreferencesId,
 						_nullPortletPreferences);
-				}
-				else {
-					cacheResult(portletPreferences);
 				}
 
 				closeSession(session);
@@ -2450,5 +2450,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceImpl.class);
-	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl();
+	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

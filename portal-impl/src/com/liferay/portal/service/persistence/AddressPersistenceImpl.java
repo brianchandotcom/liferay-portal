@@ -470,12 +470,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (address == null)) {
+				if (address != null) {
+					cacheResult(address);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
 						AddressImpl.class, addressId, _nullAddress);
-				}
-				else {
-					cacheResult(address);
 				}
 
 				closeSession(session);
@@ -3503,5 +3503,9 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Address exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AddressPersistenceImpl.class);
-	private static Address _nullAddress = new AddressImpl();
+	private static Address _nullAddress = new AddressImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

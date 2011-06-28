@@ -497,12 +497,12 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (portletItem == null)) {
+				if (portletItem != null) {
+					cacheResult(portletItem);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 						PortletItemImpl.class, portletItemId, _nullPortletItem);
-				}
-				else {
-					cacheResult(portletItem);
 				}
 
 				closeSession(session);
@@ -2066,5 +2066,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletItem exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PortletItemPersistenceImpl.class);
-	private static PortletItem _nullPortletItem = new PortletItemImpl();
+	private static PortletItem _nullPortletItem = new PortletItemImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

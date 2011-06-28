@@ -529,12 +529,12 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (wikiNode == null)) {
+				if (wikiNode != null) {
+					cacheResult(wikiNode);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 						WikiNodeImpl.class, nodeId, _nullWikiNode);
-				}
-				else {
-					cacheResult(wikiNode);
 				}
 
 				closeSession(session);
@@ -2838,5 +2838,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiNode exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(WikiNodePersistenceImpl.class);
-	private static WikiNode _nullWikiNode = new WikiNodeImpl();
+	private static WikiNode _nullWikiNode = new WikiNodeImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

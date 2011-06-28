@@ -442,13 +442,13 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (membershipRequest == null)) {
+				if (membershipRequest != null) {
+					cacheResult(membershipRequest);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 						MembershipRequestImpl.class, membershipRequestId,
 						_nullMembershipRequest);
-				}
-				else {
-					cacheResult(membershipRequest);
 				}
 
 				closeSession(session);
@@ -2496,5 +2496,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MembershipRequest exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MembershipRequestPersistenceImpl.class);
-	private static MembershipRequest _nullMembershipRequest = new MembershipRequestImpl();
+	private static MembershipRequest _nullMembershipRequest = new MembershipRequestImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

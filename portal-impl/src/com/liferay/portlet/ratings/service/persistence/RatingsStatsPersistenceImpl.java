@@ -433,12 +433,12 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (ratingsStats == null)) {
+				if (ratingsStats != null) {
+					cacheResult(ratingsStats);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
 						RatingsStatsImpl.class, statsId, _nullRatingsStats);
-				}
-				else {
-					cacheResult(ratingsStats);
 				}
 
 				closeSession(session);
@@ -869,5 +869,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RatingsStats exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(RatingsStatsPersistenceImpl.class);
-	private static RatingsStats _nullRatingsStats = new RatingsStatsImpl();
+	private static RatingsStats _nullRatingsStats = new RatingsStatsImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

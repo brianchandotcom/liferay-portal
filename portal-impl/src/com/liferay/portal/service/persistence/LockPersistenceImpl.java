@@ -454,12 +454,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (lock == null)) {
+				if (lock != null) {
+					cacheResult(lock);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 						LockImpl.class, lockId, _nullLock);
-				}
-				else {
-					cacheResult(lock);
 				}
 
 				closeSession(session);
@@ -1911,5 +1911,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Lock exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LockPersistenceImpl.class);
-	private static Lock _nullLock = new LockImpl();
+	private static Lock _nullLock = new LockImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

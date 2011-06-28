@@ -374,13 +374,13 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (clusterGroup == null)) {
+				if (clusterGroup != null) {
+					cacheResult(clusterGroup);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
 						ClusterGroupImpl.class, clusterGroupId,
 						_nullClusterGroup);
-				}
-				else {
-					cacheResult(clusterGroup);
 				}
 
 				closeSession(session);
@@ -709,5 +709,9 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ClusterGroup exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ClusterGroupPersistenceImpl.class);
-	private static ClusterGroup _nullClusterGroup = new ClusterGroupImpl();
+	private static ClusterGroup _nullClusterGroup = new ClusterGroupImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

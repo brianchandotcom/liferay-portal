@@ -450,13 +450,13 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (serviceComponent == null)) {
+				if (serviceComponent != null) {
+					cacheResult(serviceComponent);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 						ServiceComponentImpl.class, serviceComponentId,
 						_nullServiceComponent);
-				}
-				else {
-					cacheResult(serviceComponent);
 				}
 
 				closeSession(session);
@@ -1485,5 +1485,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ServiceComponent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ServiceComponentPersistenceImpl.class);
-	private static ServiceComponent _nullServiceComponent = new ServiceComponentImpl();
+	private static ServiceComponent _nullServiceComponent = new ServiceComponentImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

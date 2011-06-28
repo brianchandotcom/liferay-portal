@@ -478,12 +478,12 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (permission == null)) {
+				if (permission != null) {
+					cacheResult(permission);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
 						PermissionImpl.class, permissionId, _nullPermission);
-				}
-				else {
-					cacheResult(permission);
 				}
 
 				closeSession(session);
@@ -3380,5 +3380,9 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Permission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PermissionPersistenceImpl.class);
-	private static Permission _nullPermission = new PermissionImpl();
+	private static Permission _nullPermission = new PermissionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

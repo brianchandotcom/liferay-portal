@@ -579,13 +579,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (journalContentSearch == null)) {
+				if (journalContentSearch != null) {
+					cacheResult(journalContentSearch);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 						JournalContentSearchImpl.class, contentSearchId,
 						_nullJournalContentSearch);
-				}
-				else {
-					cacheResult(journalContentSearch);
 				}
 
 				closeSession(session);
@@ -3988,5 +3988,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalContentSearch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalContentSearchPersistenceImpl.class);
-	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl();
+	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

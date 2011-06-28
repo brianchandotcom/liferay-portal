@@ -592,12 +592,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (calEvent == null)) {
+				if (calEvent != null) {
+					cacheResult(calEvent);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 						CalEventImpl.class, eventId, _nullCalEvent);
-				}
-				else {
-					cacheResult(calEvent);
 				}
 
 				closeSession(session);
@@ -6759,5 +6759,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CalEvent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(CalEventPersistenceImpl.class);
-	private static CalEvent _nullCalEvent = new CalEventImpl();
+	private static CalEvent _nullCalEvent = new CalEventImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -507,13 +507,13 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (passwordPolicyRel == null)) {
+				if (passwordPolicyRel != null) {
+					cacheResult(passwordPolicyRel);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordPolicyRelImpl.class, passwordPolicyRelId,
 						_nullPasswordPolicyRel);
-				}
-				else {
-					cacheResult(passwordPolicyRel);
 				}
 
 				closeSession(session);
@@ -1704,5 +1704,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PasswordPolicyRel exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyRelPersistenceImpl.class);
-	private static PasswordPolicyRel _nullPasswordPolicyRel = new PasswordPolicyRelImpl();
+	private static PasswordPolicyRel _nullPasswordPolicyRel = new PasswordPolicyRelImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

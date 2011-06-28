@@ -475,12 +475,12 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (mbDiscussion == null)) {
+				if (mbDiscussion != null) {
+					cacheResult(mbDiscussion);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
 						MBDiscussionImpl.class, discussionId, _nullMBDiscussion);
-				}
-				else {
-					cacheResult(mbDiscussion);
 				}
 
 				closeSession(session);
@@ -1516,5 +1516,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBDiscussion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBDiscussionPersistenceImpl.class);
-	private static MBDiscussion _nullMBDiscussion = new MBDiscussionImpl();
+	private static MBDiscussion _nullMBDiscussion = new MBDiscussionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

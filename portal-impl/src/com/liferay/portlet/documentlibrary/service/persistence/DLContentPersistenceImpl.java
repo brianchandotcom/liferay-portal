@@ -500,12 +500,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (dlContent == null)) {
+				if (dlContent != null) {
+					cacheResult(dlContent);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 						DLContentImpl.class, contentId, _nullDLContent);
-				}
-				else {
-					cacheResult(dlContent);
 				}
 
 				closeSession(session);
@@ -1661,5 +1661,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLContent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLContentPersistenceImpl.class);
-	private static DLContent _nullDLContent = new DLContentImpl();
+	private static DLContent _nullDLContent = new DLContentImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

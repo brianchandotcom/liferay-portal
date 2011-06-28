@@ -386,12 +386,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (image == null)) {
+				if (image != null) {
+					cacheResult(image);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 						ImageImpl.class, imageId, _nullImage);
-				}
-				else {
-					cacheResult(image);
 				}
 
 				closeSession(session);
@@ -1125,5 +1125,9 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Image exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ImagePersistenceImpl.class);
-	private static Image _nullImage = new ImageImpl();
+	private static Image _nullImage = new ImageImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

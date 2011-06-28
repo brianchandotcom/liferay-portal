@@ -525,13 +525,13 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (organization == null)) {
+				if (organization != null) {
+					cacheResult(organization);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 						OrganizationImpl.class, organizationId,
 						_nullOrganization);
-				}
-				else {
-					cacheResult(organization);
 				}
 
 				closeSession(session);
@@ -4978,5 +4978,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Organization exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(OrganizationPersistenceImpl.class);
-	private static Organization _nullOrganization = new OrganizationImpl();
+	private static Organization _nullOrganization = new OrganizationImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

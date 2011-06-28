@@ -885,12 +885,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (user == null)) {
+				if (user != null) {
+					cacheResult(user);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 						UserImpl.class, userId, _nullUser);
-				}
-				else {
-					cacheResult(user);
 				}
 
 				closeSession(session);
@@ -8577,5 +8577,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
-	private static User _nullUser = new UserImpl();
+	private static User _nullUser = new UserImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

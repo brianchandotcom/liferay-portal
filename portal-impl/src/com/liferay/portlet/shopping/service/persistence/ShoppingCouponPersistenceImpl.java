@@ -446,12 +446,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (shoppingCoupon == null)) {
+				if (shoppingCoupon != null) {
+					cacheResult(shoppingCoupon);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingCouponImpl.class, couponId, _nullShoppingCoupon);
-				}
-				else {
-					cacheResult(shoppingCoupon);
 				}
 
 				closeSession(session);
@@ -1309,5 +1309,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
-	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl();
+	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -767,12 +767,12 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (blogsEntry == null)) {
+				if (blogsEntry != null) {
+					cacheResult(blogsEntry);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 						BlogsEntryImpl.class, entryId, _nullBlogsEntry);
-				}
-				else {
-					cacheResult(blogsEntry);
 				}
 
 				closeSession(session);
@@ -10575,5 +10575,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BlogsEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(BlogsEntryPersistenceImpl.class);
-	private static BlogsEntry _nullBlogsEntry = new BlogsEntryImpl();
+	private static BlogsEntry _nullBlogsEntry = new BlogsEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

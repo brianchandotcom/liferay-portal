@@ -2064,6 +2064,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#list finderColsList as finderCol>
 			 * @param ${finderCol.name} the ${finderCol.humanName}
 			</#list>
+			 * @param retrieveFromCache whether to use the finder cache
 			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
 			 * @throws SystemException if a system exception occurred
 			 */

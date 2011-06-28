@@ -623,7 +623,11 @@
 			portlet = A.one(portlet);
 
 			if (portlet) {
-				var ajaxable = data.ajaxable;
+				data = data || {
+					portletAjaxable: true
+				};
+
+				var ajaxable = data.portletAjaxable;
 
 				var id = portlet.attr('portlet');
 

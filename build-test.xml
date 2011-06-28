@@ -2594,6 +2594,8 @@ executable ZIP file.
 					<then>
 						<delete dir="portal-web/selenium" failonerror="false" />
 
+						<mkdir dir="portal-web/selenium" />
+
 						<unzip src="${selenium.executable.zip}" dest="portal-web/selenium" />
 
 						<touch>

@@ -131,7 +131,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 		}
 		catch (PrincipalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Permission error: " + pe.getMessage());
+				_log.warn(pe, pe);
 			}
 		}
 		catch (Exception e) {

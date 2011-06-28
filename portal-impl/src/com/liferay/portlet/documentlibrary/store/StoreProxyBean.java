@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.service.ServiceContext;
 
@@ -53,6 +55,15 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public void checkRoot(long companyId) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -164,6 +175,15 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		long companyId, String portletId, long groupId, long repositoryId,
 		String fileName, String versionNumber, String sourceFileName,
 		ServiceContext serviceContext, InputStream is) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
 
 		throw new UnsupportedOperationException();
 	}

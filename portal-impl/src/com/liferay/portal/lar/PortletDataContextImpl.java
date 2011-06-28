@@ -899,6 +899,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setScopeGroupId(groupId);
+				serviceContext.setCreateDate(message.getCreateDate());
+				serviceContext.setModifiedDate(message.getModifiedDate());
 
 				MBMessage importedMessage = null;
 

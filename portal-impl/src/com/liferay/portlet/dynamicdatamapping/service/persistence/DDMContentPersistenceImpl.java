@@ -906,6 +906,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

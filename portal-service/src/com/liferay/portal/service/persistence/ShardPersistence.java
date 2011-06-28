@@ -123,6 +123,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -161,6 +162,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
 	* @throws SystemException if a system exception occurred
 	*/

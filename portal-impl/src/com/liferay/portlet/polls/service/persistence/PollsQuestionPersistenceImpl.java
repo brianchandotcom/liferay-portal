@@ -915,6 +915,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

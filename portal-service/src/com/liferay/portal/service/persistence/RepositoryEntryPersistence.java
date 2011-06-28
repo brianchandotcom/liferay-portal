@@ -238,6 +238,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -381,6 +382,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*
 	* @param repositoryId the repository ID
 	* @param mappedId the mapped ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/

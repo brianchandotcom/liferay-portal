@@ -241,6 +241,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*
 	* @param nodeId the node ID
 	* @param title the title
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	* @throws SystemException if a system exception occurred
 	*/

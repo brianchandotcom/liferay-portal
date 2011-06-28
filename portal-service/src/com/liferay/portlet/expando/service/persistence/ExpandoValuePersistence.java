@@ -781,6 +781,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*
 	* @param columnId the column ID
 	* @param rowId the row ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -933,6 +934,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	* @throws SystemException if a system exception occurred
 	*/

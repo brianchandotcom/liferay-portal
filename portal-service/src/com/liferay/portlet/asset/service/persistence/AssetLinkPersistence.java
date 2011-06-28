@@ -677,6 +677,7 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	* @param entryId1 the entry id1
 	* @param entryId2 the entry id2
 	* @param type the type
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	* @throws SystemException if a system exception occurred
 	*/

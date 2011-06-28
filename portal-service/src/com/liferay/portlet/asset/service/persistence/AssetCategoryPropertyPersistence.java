@@ -457,6 +457,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*
 	* @param categoryId the category ID
 	* @param key the key
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	* @throws SystemException if a system exception occurred
 	*/

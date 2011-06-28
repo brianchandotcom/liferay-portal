@@ -302,6 +302,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*
 	* @param tableId the table ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	* @throws SystemException if a system exception occurred
 	*/

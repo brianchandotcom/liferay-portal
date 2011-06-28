@@ -841,6 +841,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 *
 	 * @param codeId the code ID
 	 * @param primKey the prim key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource, or <code>null</code> if a matching resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

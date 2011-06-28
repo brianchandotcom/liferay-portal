@@ -537,6 +537,7 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity group setting, or <code>null</code> if a matching social equity group setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

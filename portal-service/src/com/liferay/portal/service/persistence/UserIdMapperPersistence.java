@@ -234,6 +234,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*
 	* @param userId the user ID
 	* @param type the type
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -272,6 +273,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*
 	* @param type the type
 	* @param externalUserId the external user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	* @throws SystemException if a system exception occurred
 	*/

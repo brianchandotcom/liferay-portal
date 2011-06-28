@@ -473,6 +473,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param key the key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

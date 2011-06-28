@@ -950,6 +950,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

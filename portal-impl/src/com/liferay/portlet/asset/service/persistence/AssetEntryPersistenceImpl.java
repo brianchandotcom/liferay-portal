@@ -957,6 +957,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param classUuid the class uuid
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1108,6 +1109,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

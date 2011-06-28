@@ -1063,6 +1063,7 @@ public class JournalContentSearchUtil {
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	* @throws SystemException if a system exception occurred
 	*/

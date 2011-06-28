@@ -353,6 +353,7 @@ public class MBDiscussionUtil {
 	* Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param threadId the thread ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -397,6 +398,7 @@ public class MBDiscussionUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	* @throws SystemException if a system exception occurred
 	*/

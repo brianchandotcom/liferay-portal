@@ -896,6 +896,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -32,7 +32,7 @@ if (showShardSelector) {
 
 headerNames.add("num-of-users");
 headerNames.add("max-num-of-users");
-headerNames.add("instance-enabled");
+headerNames.add("active");
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
 
@@ -98,9 +98,9 @@ for (int i = 0; i < results.size(); i++) {
 		row.addText(LanguageUtil.get(pageContext, "unlimited"), rowURL);
 	}
 
-	// Enabled instance
+	// Active
 
-	row.addText(String.valueOf(company2.isEnabled()), rowURL);
+	row.addText(String.valueOf(company2.isActive()), rowURL);
 
 	// Add result row
 

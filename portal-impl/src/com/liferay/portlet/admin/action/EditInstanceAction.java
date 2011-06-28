@@ -115,7 +115,7 @@ public class EditInstanceAction extends PortletAction {
 			actionRequest, "shardName", PropsValues.SHARD_DEFAULT_NAME);
 		boolean system = false;
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers", 0);
-		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		if (companyId <= 0) {
 
@@ -123,7 +123,7 @@ public class EditInstanceAction extends PortletAction {
 
 			Company company = CompanyServiceUtil.addCompany(
 				webId, virtualHostname, mx, shardName, system, maxUsers,
-				enabled);
+				active);
 
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
@@ -135,7 +135,7 @@ public class EditInstanceAction extends PortletAction {
 			// Update instance
 
 			CompanyServiceUtil.updateCompany(
-				companyId, virtualHostname, mx, maxUsers, enabled);
+				companyId, virtualHostname, mx, maxUsers, active);
 		}
 	}
 

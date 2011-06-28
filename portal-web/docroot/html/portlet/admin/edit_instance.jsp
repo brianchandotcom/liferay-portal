@@ -96,8 +96,7 @@ catch (Exception e) {
 
 		<aui:input name="maxUsers" />
 
-		<aui:input type="checkbox" label="instance-enabled" name="enabled" value="<%= company2.isEnabled() %>" />
-
+		<aui:input name="active" type="checkbox" value="<%= company2.isActive() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

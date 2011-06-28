@@ -40,7 +40,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 	public Company addCompany(
 			String webId, String virtualHost, String mx, String shardName,
-			boolean system, int maxUsers, boolean enabled)
+			boolean system, int maxUsers, boolean active)
 		throws PortalException, SystemException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
@@ -48,7 +48,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, shardName, system, maxUsers, enabled);
+			webId, virtualHost, mx, shardName, system, maxUsers, active);
 	}
 
 	public void deleteLogo(long companyId)
@@ -107,7 +107,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 	public Company updateCompany(
 			long companyId, String virtualHost, String mx, int maxUsers,
-			boolean enabled)
+			boolean active)
 		throws PortalException, SystemException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
@@ -115,7 +115,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.updateCompany(
-			companyId, virtualHost, mx, maxUsers, enabled);
+			companyId, virtualHost, mx, maxUsers, active);
 	}
 
 	public Company updateCompany(

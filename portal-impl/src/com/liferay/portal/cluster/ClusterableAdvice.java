@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Swallowable;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.annotation.Annotation;
@@ -44,10 +43,7 @@ public class ClusterableAdvice
 			return;
 		}
 
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
-		Clusterable clusterable = findAnnotation(methodTargetClassKey);
+		Clusterable clusterable = findAnnotation(methodInvocation);
 
 		if (clusterable == _nullClusterable) {
 			return;
@@ -64,7 +60,7 @@ public class ClusterableAdvice
 			return;
 		}
 
-		Method method = methodTargetClassKey.getMethod();
+		Method method = methodInvocation.getMethod();
 
 		MethodHandler methodHandler = new MethodHandler(
 			method, methodInvocation.getArguments());

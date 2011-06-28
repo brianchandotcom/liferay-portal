@@ -9,10 +9,19 @@
 .aui-state-active {
 }
 
+.results-grid {
+}
+
 .results-header {
 }
 
+.results-header th {
+}
+
 .results-header th, .results-header td {
+}
+
+.results-header th.sort-column {
 }
 
 .results-header .sort-column .result-column-name {
@@ -27,7 +36,25 @@
 .results-row.alt td {
 }
 
+.results-row td.sort-column {
+}
+
 .results-row.hover td {
+}
+
+.results-header span, .results-header a {
+}
+
+.results-header a {
+}
+
+.results-header a:hover {
+}
+
+.taglib-search-iterator .results-row td.first, .taglib-search-iterator th.first {
+}
+
+.taglib-search-iterator .results-row td.last, .taglib-search-iterator th.last {
 }
 
 /* ---------- Dragging/sorting indicators ---------- */
@@ -313,4 +340,50 @@
 }
 
 .ie .layout-customizable-controls {
+}
+
+/* ---------- Pagination ---------- */
+
+.aui-paginator-link  {
+}
+
+.aui-paginator-link {
+}
+
+.ie7 .aui-paginator-link {
+}
+
+.aui-paginator-current-page {
+}
+
+.aui-paginator-page-link {
+}
+
+.ie7 .aui-paginator-page-link {
+}
+
+.aui-paginator-first-link {
+}
+
+.aui-paginator-prev-link {
+}
+
+.aui-paginator-last-link {
+}
+
+.aui-paginator-next-link {
+}
+
+.aui-paginator-current-page-report, .aui-paginator-total {
+}
+
+.aui-paginator-current-page-report {
+}
+
+/* ---------- Header row ---------- */
+
+.lfr-header-row {
+}
+
+.lfr-header-row .lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
 }

@@ -586,6 +586,12 @@
 	width: 20px;
 }
 
+.ie7 .aui-paginator-link {
+	font-size: 0;
+	overflow: hidden;
+	text-indent: 0;
+}
+
 .aui-paginator-current-page {
 	background: #0083BD url(../images/application/paginator_link_current_bg.png) 0 0 repeat-x;
 	border-color: #38B6EF #006D9E #006D9E #46B4E6;
@@ -596,6 +602,13 @@
 .aui-paginator-page-link {
 	text-indent: 0;
 	height: auto;
+}
+
+.ie7 .aui-paginator-page-link {
+	font-size: 1em;
+	height: auto;
+	overflow: visible;
+	text-indent: 0;
 }
 
 .aui-paginator-first-link {

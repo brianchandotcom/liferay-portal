@@ -252,6 +252,6 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-			DocumentCommandReceiver.class);
+		DocumentCommandReceiver.class);
 
 }

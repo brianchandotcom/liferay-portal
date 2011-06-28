@@ -460,6 +460,7 @@ public class UserUtil {
 	* Returns the user where contactId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param contactId the contact ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -624,6 +625,7 @@ public class UserUtil {
 	* Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param portraitId the portrait ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -667,6 +669,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param userId the user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -711,6 +714,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param defaultUser the default user
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -756,6 +760,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param screenName the screen name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -801,6 +806,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param emailAddress the email address
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -846,6 +852,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param facebookId the facebook ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -891,6 +898,7 @@ public class UserUtil {
 	*
 	* @param companyId the company ID
 	* @param openId the open ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	* @throws SystemException if a system exception occurred
 	*/

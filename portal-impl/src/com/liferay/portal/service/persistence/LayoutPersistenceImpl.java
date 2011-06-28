@@ -1125,6 +1125,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2239,6 +2240,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param iconImageId the icon image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3049,6 +3051,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3906,6 +3909,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

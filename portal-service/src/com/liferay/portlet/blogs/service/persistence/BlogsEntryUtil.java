@@ -351,6 +351,7 @@ public class BlogsEntryUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1096,6 +1097,7 @@ public class BlogsEntryUtil {
 	*
 	* @param groupId the group ID
 	* @param urlTitle the url title
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/

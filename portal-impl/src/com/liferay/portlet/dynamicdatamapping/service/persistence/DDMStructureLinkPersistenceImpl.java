@@ -1128,6 +1128,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * Returns the d d m structure link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

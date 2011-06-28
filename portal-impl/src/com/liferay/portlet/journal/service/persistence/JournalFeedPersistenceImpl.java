@@ -971,6 +971,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1756,6 +1757,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param groupId the group ID
 	 * @param feedId the feed ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -352,6 +352,7 @@ public class DDMStructureUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -712,6 +713,7 @@ public class DDMStructureUtil {
 	*
 	* @param groupId the group ID
 	* @param structureKey the structure key
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -352,6 +352,7 @@ public class PermissionUtil {
 	*
 	* @param actionId the action ID
 	* @param resourceId the resource ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching permission, or <code>null</code> if a matching permission could not be found
 	* @throws SystemException if a system exception occurred
 	*/

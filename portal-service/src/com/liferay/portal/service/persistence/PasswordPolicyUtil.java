@@ -232,6 +232,7 @@ public class PasswordPolicyUtil {
 	*
 	* @param companyId the company ID
 	* @param defaultPolicy the default policy
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -277,6 +278,7 @@ public class PasswordPolicyUtil {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	* @throws SystemException if a system exception occurred
 	*/

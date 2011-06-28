@@ -2684,6 +2684,7 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	 * @param userId the user ID
 	 * @param messageId the message ID
 	 * @param flag the flag
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards message flag, or <code>null</code> if a matching message boards message flag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

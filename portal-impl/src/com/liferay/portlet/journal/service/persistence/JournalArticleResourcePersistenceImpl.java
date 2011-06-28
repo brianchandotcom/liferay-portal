@@ -962,6 +962,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1446,6 +1447,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

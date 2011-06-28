@@ -1042,6 +1042,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2161,6 +2162,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Returns the document library folder where repositoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param repositoryId the repository ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3358,6 +3360,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

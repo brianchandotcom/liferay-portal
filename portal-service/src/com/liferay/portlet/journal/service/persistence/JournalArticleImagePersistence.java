@@ -481,6 +481,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param elInstanceId the el instance ID
 	* @param elName the el name
 	* @param languageId the language ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
 	* @throws SystemException if a system exception occurred
 	*/

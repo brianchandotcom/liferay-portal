@@ -938,6 +938,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param thumbnailId the thumbnail ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1067,6 +1068,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fullImageId the full image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1203,6 +1205,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 *
 	 * @param productEntryId the product entry ID
 	 * @param priority the priority
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

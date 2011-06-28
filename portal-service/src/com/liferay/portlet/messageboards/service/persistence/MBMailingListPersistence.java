@@ -241,6 +241,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -384,6 +385,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	* @throws SystemException if a system exception occurred
 	*/

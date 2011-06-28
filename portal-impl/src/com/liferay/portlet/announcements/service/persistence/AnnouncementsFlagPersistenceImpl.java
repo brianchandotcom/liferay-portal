@@ -880,6 +880,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

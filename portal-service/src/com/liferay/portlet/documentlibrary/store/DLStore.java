@@ -50,6 +50,12 @@ public interface DLStore {
 
 	public void checkRoot(long companyId) throws SystemException;
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	public void deleteDirectory(
 			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
@@ -123,6 +129,12 @@ public interface DLStore {
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, File file)
+		throws PortalException, SystemException;
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			 String sourceFileName, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void validate(

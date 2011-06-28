@@ -516,9 +516,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								Fields fields = null;
 
 								try {
-									DLFileEntryMetadata documentMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									fields = StorageEngineUtil.getFields(documentMetadata.getClassPK());
+									fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
 								}
 								catch (Exception e) {
 								}

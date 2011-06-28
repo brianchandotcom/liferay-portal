@@ -1412,8 +1412,7 @@ public class DLFileEntryLocalServiceImpl
 			majorVersion = false;
 		}
 
-		int[] versionParts = StringUtil.split(
-			version, StringPool.PERIOD, 0);
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		if (majorVersion) {
 			versionParts[0]++;

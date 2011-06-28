@@ -474,6 +474,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getLatestFileVersion(fileEntryId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLatestFileVersion(fileEntryId, excludeWorkingCopy);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getNoAssetFileEntries();

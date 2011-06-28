@@ -2578,32 +2578,33 @@ Please set "selenium.executable.zip" in test.properties to point to the Selenium
 executable ZIP file.
 				</fail>
 			</then>
-			<else>
-				<if>
-					<or>
-						<not>
-							<available file="${selenium.nanny.executable}" />
-						</not>
-						<not>
-							<uptodate
-								srcfile="${selenium.executable.zip}"
-								targetfile="${project.dir}/tools/selenium"
-							/>
-						</not>
-					</or>
-					<then>
-						<unzip
-							dest="${project.dir}/tools/selenium"
-							overwrite="true"
-							src="${selenium.executable.zip}"
-						/>
+		</if>
 
-						<touch>
-							<fileset dir="${selenium.nanny.executable}" />
-						</touch>
-					</then>
-				</if>
-			</else>
+		<if>
+			<or>
+				<not>
+					<available file="${selenium.nanny.executable}" />
+				</not>
+				<uptodate
+					srcfile="${selenium.nanny.executable}"
+					targetfile="${selenium.executable.zip}"
+				/>
+			</or>
+			<then>
+				<delete>
+					<fileset
+						dir="${project.dir}/tools/selenium"
+						includes="*.exe"
+					/>
+				</delete>
+
+				<unzip
+					dest="${project.dir}/tools/selenium"
+					src="${selenium.executable.zip}"
+				/>
+
+				<touch file="${selenium.nanny.executable}" />
+			</then>
 		</if>
 
 		<if>

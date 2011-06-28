@@ -423,12 +423,12 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (scLicense == null)) {
+				if (scLicense != null) {
+					cacheResult(scLicense);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 						SCLicenseImpl.class, licenseId, _nullSCLicense);
-				}
-				else {
-					cacheResult(scLicense);
 				}
 
 				closeSession(session);
@@ -2870,5 +2870,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCLicense exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCLicensePersistenceImpl.class);
-	private static SCLicense _nullSCLicense = new SCLicenseImpl();
+	private static SCLicense _nullSCLicense = new SCLicenseImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

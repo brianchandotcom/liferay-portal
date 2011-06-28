@@ -434,13 +434,13 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (portalPreferences == null)) {
+				if (portalPreferences != null) {
+					cacheResult(portalPreferences);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortalPreferencesImpl.class, portalPreferencesId,
 						_nullPortalPreferences);
-				}
-				else {
-					cacheResult(portalPreferences);
 				}
 
 				closeSession(session);
@@ -985,5 +985,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortalPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PortalPreferencesPersistenceImpl.class);
-	private static PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl();
+	private static PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

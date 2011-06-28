@@ -564,12 +564,12 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (igFolder == null)) {
+				if (igFolder != null) {
+					cacheResult(igFolder);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
 						IGFolderImpl.class, folderId, _nullIGFolder);
-				}
-				else {
-					cacheResult(igFolder);
 				}
 
 				closeSession(session);
@@ -3693,5 +3693,9 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No IGFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(IGFolderPersistenceImpl.class);
-	private static IGFolder _nullIGFolder = new IGFolderImpl();
+	private static IGFolder _nullIGFolder = new IGFolderImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

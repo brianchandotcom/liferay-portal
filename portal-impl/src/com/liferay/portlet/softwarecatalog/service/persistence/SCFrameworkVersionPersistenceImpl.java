@@ -449,13 +449,13 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (scFrameworkVersion == null)) {
+				if (scFrameworkVersion != null) {
+					cacheResult(scFrameworkVersion);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCFrameworkVersionImpl.class, frameworkVersionId,
 						_nullSCFrameworkVersion);
-				}
-				else {
-					cacheResult(scFrameworkVersion);
 				}
 
 				closeSession(session);
@@ -3322,5 +3322,9 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCFrameworkVersion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCFrameworkVersionPersistenceImpl.class);
-	private static SCFrameworkVersion _nullSCFrameworkVersion = new SCFrameworkVersionImpl();
+	private static SCFrameworkVersion _nullSCFrameworkVersion = new SCFrameworkVersionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

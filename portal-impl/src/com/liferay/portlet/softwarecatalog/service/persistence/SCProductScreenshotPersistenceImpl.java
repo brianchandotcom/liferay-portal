@@ -529,13 +529,13 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (scProductScreenshot == null)) {
+				if (scProductScreenshot != null) {
+					cacheResult(scProductScreenshot);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductScreenshotImpl.class, productScreenshotId,
 						_nullSCProductScreenshot);
-				}
-				else {
-					cacheResult(scProductScreenshot);
 				}
 
 				closeSession(session);
@@ -1784,5 +1784,9 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductScreenshot exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCProductScreenshotPersistenceImpl.class);
-	private static SCProductScreenshot _nullSCProductScreenshot = new SCProductScreenshotImpl();
+	private static SCProductScreenshot _nullSCProductScreenshot = new SCProductScreenshotImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

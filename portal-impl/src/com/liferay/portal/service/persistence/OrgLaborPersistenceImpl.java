@@ -396,12 +396,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (orgLabor == null)) {
+				if (orgLabor != null) {
+					cacheResult(orgLabor);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
 						OrgLaborImpl.class, orgLaborId, _nullOrgLabor);
-				}
-				else {
-					cacheResult(orgLabor);
 				}
 
 				closeSession(session);
@@ -1141,5 +1141,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgLabor exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(OrgLaborPersistenceImpl.class);
-	private static OrgLabor _nullOrgLabor = new OrgLaborImpl();
+	private static OrgLabor _nullOrgLabor = new OrgLaborImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

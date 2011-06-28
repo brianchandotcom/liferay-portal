@@ -436,13 +436,13 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (layoutSetPrototype == null)) {
+				if (layoutSetPrototype != null) {
+					cacheResult(layoutSetPrototype);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutSetPrototypeImpl.class, layoutSetPrototypeId,
 						_nullLayoutSetPrototype);
-				}
-				else {
-					cacheResult(layoutSetPrototype);
 				}
 
 				closeSession(session);
@@ -3076,5 +3076,9 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSetPrototype exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetPrototypePersistenceImpl.class);
-	private static LayoutSetPrototype _nullLayoutSetPrototype = new LayoutSetPrototypeImpl();
+	private static LayoutSetPrototype _nullLayoutSetPrototype = new LayoutSetPrototypeImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

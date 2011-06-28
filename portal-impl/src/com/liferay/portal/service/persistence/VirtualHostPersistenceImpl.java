@@ -457,12 +457,12 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (virtualHost == null)) {
+				if (virtualHost != null) {
+					cacheResult(virtualHost);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 						VirtualHostImpl.class, virtualHostId, _nullVirtualHost);
-				}
-				else {
-					cacheResult(virtualHost);
 				}
 
 				closeSession(session);
@@ -1228,5 +1228,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VirtualHost exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(VirtualHostPersistenceImpl.class);
-	private static VirtualHost _nullVirtualHost = new VirtualHostImpl();
+	private static VirtualHost _nullVirtualHost = new VirtualHostImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

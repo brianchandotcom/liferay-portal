@@ -648,12 +648,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (assetCategory == null)) {
+				if (assetCategory != null) {
+					cacheResult(assetCategory);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						AssetCategoryImpl.class, categoryId, _nullAssetCategory);
-				}
-				else {
-					cacheResult(assetCategory);
 				}
 
 				closeSession(session);
@@ -5727,5 +5727,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPersistenceImpl.class);
-	private static AssetCategory _nullAssetCategory = new AssetCategoryImpl();
+	private static AssetCategory _nullAssetCategory = new AssetCategoryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

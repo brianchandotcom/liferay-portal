@@ -555,12 +555,12 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (assetEntry == null)) {
+				if (assetEntry != null) {
+					cacheResult(assetEntry);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 						AssetEntryImpl.class, entryId, _nullAssetEntry);
-				}
-				else {
-					cacheResult(assetEntry);
 				}
 
 				closeSession(session);
@@ -2990,5 +2990,9 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
-	private static AssetEntry _nullAssetEntry = new AssetEntryImpl();
+	private static AssetEntry _nullAssetEntry = new AssetEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

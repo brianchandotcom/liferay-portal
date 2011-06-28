@@ -697,12 +697,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (layout == null)) {
+				if (layout != null) {
+					cacheResult(layout);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutImpl.class, plid, _nullLayout);
-				}
-				else {
-					cacheResult(layout);
 				}
 
 				closeSession(session);
@@ -6126,5 +6126,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Layout exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutPersistenceImpl.class);
-	private static Layout _nullLayout = new LayoutImpl();
+	private static Layout _nullLayout = new LayoutImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

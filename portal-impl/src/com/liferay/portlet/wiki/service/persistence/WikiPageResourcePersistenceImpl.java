@@ -467,13 +467,13 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (wikiPageResource == null)) {
+				if (wikiPageResource != null) {
+					cacheResult(wikiPageResource);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageResourceImpl.class, resourcePrimKey,
 						_nullWikiPageResource);
-				}
-				else {
-					cacheResult(wikiPageResource);
 				}
 
 				closeSession(session);
@@ -1367,5 +1367,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiPageResource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(WikiPageResourcePersistenceImpl.class);
-	private static WikiPageResource _nullWikiPageResource = new WikiPageResourceImpl();
+	private static WikiPageResource _nullWikiPageResource = new WikiPageResourceImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

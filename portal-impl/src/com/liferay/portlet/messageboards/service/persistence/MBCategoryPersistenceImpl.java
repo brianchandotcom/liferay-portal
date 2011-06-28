@@ -506,12 +506,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (mbCategory == null)) {
+				if (mbCategory != null) {
+					cacheResult(mbCategory);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						MBCategoryImpl.class, categoryId, _nullMBCategory);
-				}
-				else {
-					cacheResult(mbCategory);
 				}
 
 				closeSession(session);
@@ -3873,5 +3873,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBCategoryPersistenceImpl.class);
-	private static MBCategory _nullMBCategory = new MBCategoryImpl();
+	private static MBCategory _nullMBCategory = new MBCategoryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

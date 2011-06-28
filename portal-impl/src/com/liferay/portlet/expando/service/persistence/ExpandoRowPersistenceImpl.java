@@ -440,12 +440,12 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (expandoRow == null)) {
+				if (expandoRow != null) {
+					cacheResult(expandoRow);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 						ExpandoRowImpl.class, rowId, _nullExpandoRow);
-				}
-				else {
-					cacheResult(expandoRow);
 				}
 
 				closeSession(session);
@@ -1276,5 +1276,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoRow exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ExpandoRowPersistenceImpl.class);
-	private static ExpandoRow _nullExpandoRow = new ExpandoRowImpl();
+	private static ExpandoRow _nullExpandoRow = new ExpandoRowImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

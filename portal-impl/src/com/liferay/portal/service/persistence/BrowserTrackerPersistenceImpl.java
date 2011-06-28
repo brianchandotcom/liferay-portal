@@ -416,13 +416,13 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (browserTracker == null)) {
+				if (browserTracker != null) {
+					cacheResult(browserTracker);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 						BrowserTrackerImpl.class, browserTrackerId,
 						_nullBrowserTracker);
-				}
-				else {
-					cacheResult(browserTracker);
 				}
 
 				closeSession(session);
@@ -947,5 +947,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BrowserTracker exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(BrowserTrackerPersistenceImpl.class);
-	private static BrowserTracker _nullBrowserTracker = new BrowserTrackerImpl();
+	private static BrowserTracker _nullBrowserTracker = new BrowserTrackerImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

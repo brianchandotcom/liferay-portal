@@ -566,12 +566,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (role == null)) {
+				if (role != null) {
+					cacheResult(role);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 						RoleImpl.class, roleId, _nullRole);
-				}
-				else {
-					cacheResult(role);
 				}
 
 				closeSession(session);
@@ -6558,5 +6558,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Role exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(RolePersistenceImpl.class);
-	private static Role _nullRole = new RoleImpl();
+	private static Role _nullRole = new RoleImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

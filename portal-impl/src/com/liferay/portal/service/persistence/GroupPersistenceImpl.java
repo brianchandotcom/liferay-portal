@@ -811,12 +811,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (group == null)) {
+				if (group != null) {
+					cacheResult(group);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 						GroupImpl.class, groupId, _nullGroup);
-				}
-				else {
-					cacheResult(group);
 				}
 
 				closeSession(session);
@@ -6742,5 +6742,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Group exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(GroupPersistenceImpl.class);
-	private static Group _nullGroup = new GroupImpl();
+	private static Group _nullGroup = new GroupImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

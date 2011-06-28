@@ -541,13 +541,13 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (mbMailingList == null)) {
+				if (mbMailingList != null) {
+					cacheResult(mbMailingList);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 						MBMailingListImpl.class, mailingListId,
 						_nullMBMailingList);
-				}
-				else {
-					cacheResult(mbMailingList);
 				}
 
 				closeSession(session);
@@ -2062,5 +2062,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMailingList exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBMailingListPersistenceImpl.class);
-	private static MBMailingList _nullMBMailingList = new MBMailingListImpl();
+	private static MBMailingList _nullMBMailingList = new MBMailingListImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

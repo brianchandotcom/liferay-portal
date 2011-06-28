@@ -103,7 +103,7 @@
 				</#if>
 
 				<#if (column.type == "Blob") && column.lazy>
-					<one-to-one name="${column.name}BlobModel" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" constrained="true" outer-join="false" cascade="save-update" />
+					<one-to-one name="${column.name}BlobModel" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" constrained="true" outer-join="false" cascade="save-update" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
 				</#if>
 			</#list>
 		</class>

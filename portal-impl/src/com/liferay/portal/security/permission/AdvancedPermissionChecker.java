@@ -152,9 +152,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	 * different roles and permissions in different groups.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  groupId the primary key of the gorup
+	 * @param  groupId the primary key of the group
 	 * @return the permission checker bag for the user and group
-	 * @throws Exception if a group or user with the primary key could not be
+	 * @throws Exception if a user or group with the primary key could not be
 	 *         found
 	 */
 	public PermissionCheckerBag getUserBag(long userId, long groupId)
@@ -510,6 +510,28 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
+	/**
+	 * Returns representations of the resource at each scope level.
+	 *
+	 * <p>
+	 * For example, if the class name and primary key of a blog entry were
+	 * passed to this method, it would return a resource for the blog entry
+	 * itself (individual scope), a resource representing all blog entries
+	 * within its group (group scope), a resource standing for all blog entries
+	 * within a group the user has a suitable role in (group-template scope),
+	 * and a resource signifying all blog entries within the company (company
+	 * scope).
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the group containing the resource
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
+	 * @param  primKey the primary key of the resource
+	 * @param  actionId unused
+	 * @return representations of the resource at each scope level
+	 * @throws Exception if an exception occurred
+	 */
 	protected List<Resource> getResources(
 			long companyId, long groupId, String name, String primKey,
 			String actionId)

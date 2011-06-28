@@ -15,6 +15,8 @@
 package com.liferay.portal.security.permission;
 
 /**
+ * Contains constant versions of common action IDs.
+ *
  * @author Charles May
  * @author Brian Wing Shun Chan
  */

@@ -31,7 +31,8 @@ import com.liferay.portal.util.PropsValues;
 public class UserPermissionImpl implements UserPermission {
 
 	/**
-	 * @deprecated
+	 * @deprecated Replaced by {@link #check(PermissionChecker, long, long[],
+	 *             String)}
 	 */
 	public void check(
 			PermissionChecker permissionChecker, long userId,
@@ -65,7 +66,8 @@ public class UserPermissionImpl implements UserPermission {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Replaced by {@link #contains(PermissionChecker, long, long[],
+	 *             String)}
 	 */
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId, long organizationId,

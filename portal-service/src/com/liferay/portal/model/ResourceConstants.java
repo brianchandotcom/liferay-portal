@@ -15,6 +15,8 @@
 package com.liferay.portal.model;
 
 /**
+ * Contains constants used for resource permissions and permission scoping.
+ *
  * @author Brian Wing Shun Chan
  */
 public class ResourceConstants {

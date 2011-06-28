@@ -364,7 +364,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 			<div class="body-row asset-details">
 				<div class="asset-details-content">
-					<h3 class="version <%= isCheckedOut ? "document-locked" : StringPool.BLANK  %>">
+					<h3 class="version <%= isCheckedOut ? "document-locked" : StringPool.BLANK %>">
 						<liferay-ui:message key="version" /> <%= fileEntry.getVersion() %>
 					</h3>
 
@@ -463,7 +463,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 						<liferay-ui:custom-attribute-list
 							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= (fileVersion != null) ? fileVersion.getFileVersionId() : 0 %>"
+							classPK="<%= fileVersionId %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
@@ -475,7 +475,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				%>
 
 				<div class="lfr-asset-panels">
-					<liferay-ui:panel-container extended="<%= false %>"  id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+					<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+
 						<%
 						if (fileEntryTypeId > 0) {
 							try {
@@ -493,8 +494,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									}
 									catch (Exception e) {
 									}
-					%>
-						        <liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
+						%>
+
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
 
 										<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
 
@@ -506,9 +508,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							catch (Exception e) {
 							}
 						}
-						%>
-
-						<%
 
 						try {
 							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class));

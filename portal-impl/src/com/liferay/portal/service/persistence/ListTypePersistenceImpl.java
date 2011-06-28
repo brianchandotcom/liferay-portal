@@ -381,12 +381,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (listType == null)) {
+				if (listType != null) {
+					cacheResult(listType);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 						ListTypeImpl.class, listTypeId, _nullListType);
-				}
-				else {
-					cacheResult(listType);
 				}
 
 				closeSession(session);
@@ -1159,5 +1159,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ListType exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ListTypePersistenceImpl.class);
-	private static ListType _nullListType = new ListTypeImpl();
+	private static ListType _nullListType = new ListTypeImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

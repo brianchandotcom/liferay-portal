@@ -772,12 +772,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (mbMessage == null)) {
+				if (mbMessage != null) {
+					cacheResult(mbMessage);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 						MBMessageImpl.class, messageId, _nullMBMessage);
-				}
-				else {
-					cacheResult(mbMessage);
 				}
 
 				closeSession(session);
@@ -12546,5 +12546,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMessage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBMessagePersistenceImpl.class);
-	private static MBMessage _nullMBMessage = new MBMessageImpl();
+	private static MBMessage _nullMBMessage = new MBMessageImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

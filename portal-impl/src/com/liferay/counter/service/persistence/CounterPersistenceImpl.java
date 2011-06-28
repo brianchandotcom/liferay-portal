@@ -368,12 +368,12 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (counter == null)) {
+				if (counter != null) {
+					cacheResult(counter);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 						CounterImpl.class, name, _nullCounter);
-				}
-				else {
-					cacheResult(counter);
 				}
 
 				closeSession(session);
@@ -585,5 +585,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Counter exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(CounterPersistenceImpl.class);
-	private static Counter _nullCounter = new CounterImpl();
+	private static Counter _nullCounter = new CounterImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

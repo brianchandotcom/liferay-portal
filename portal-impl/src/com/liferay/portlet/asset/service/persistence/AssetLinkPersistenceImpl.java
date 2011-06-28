@@ -509,12 +509,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (assetLink == null)) {
+				if (assetLink != null) {
+					cacheResult(assetLink);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 						AssetLinkImpl.class, linkId, _nullAssetLink);
-				}
-				else {
-					cacheResult(assetLink);
 				}
 
 				closeSession(session);
@@ -3089,5 +3089,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetLinkPersistenceImpl.class);
-	private static AssetLink _nullAssetLink = new AssetLinkImpl();
+	private static AssetLink _nullAssetLink = new AssetLinkImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

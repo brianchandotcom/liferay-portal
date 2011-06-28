@@ -540,12 +540,12 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (journalFeed == null)) {
+				if (journalFeed != null) {
+					cacheResult(journalFeed);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 						JournalFeedImpl.class, id, _nullJournalFeed);
-				}
-				else {
-					cacheResult(journalFeed);
 				}
 
 				closeSession(session);
@@ -2452,5 +2452,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalFeed exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalFeedPersistenceImpl.class);
-	private static JournalFeed _nullJournalFeed = new JournalFeedImpl();
+	private static JournalFeed _nullJournalFeed = new JournalFeedImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -506,13 +506,13 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (dlFileEntryMetadata == null)) {
+				if (dlFileEntryMetadata != null) {
+					cacheResult(dlFileEntryMetadata);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 						DLFileEntryMetadataImpl.class, fileEntryMetadataId,
 						_nullDLFileEntryMetadata);
-				}
-				else {
-					cacheResult(dlFileEntryMetadata);
 				}
 
 				closeSession(session);
@@ -2612,5 +2612,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryMetadata exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryMetadataPersistenceImpl.class);
-	private static DLFileEntryMetadata _nullDLFileEntryMetadata = new DLFileEntryMetadataImpl();
+	private static DLFileEntryMetadata _nullDLFileEntryMetadata = new DLFileEntryMetadataImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

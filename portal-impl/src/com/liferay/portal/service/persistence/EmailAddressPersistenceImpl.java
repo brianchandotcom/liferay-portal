@@ -452,13 +452,13 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (emailAddress == null)) {
+				if (emailAddress != null) {
+					cacheResult(emailAddress);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
 						EmailAddressImpl.class, emailAddressId,
 						_nullEmailAddress);
-				}
-				else {
-					cacheResult(emailAddress);
 				}
 
 				closeSession(session);
@@ -3005,5 +3005,9 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No EmailAddress exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(EmailAddressPersistenceImpl.class);
-	private static EmailAddress _nullEmailAddress = new EmailAddressImpl();
+	private static EmailAddress _nullEmailAddress = new EmailAddressImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

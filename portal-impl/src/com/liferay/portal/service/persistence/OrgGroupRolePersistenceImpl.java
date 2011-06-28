@@ -399,13 +399,13 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (orgGroupRole == null)) {
+				if (orgGroupRole != null) {
+					cacheResult(orgGroupRole);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 						OrgGroupRoleImpl.class, orgGroupRolePK,
 						_nullOrgGroupRole);
-				}
-				else {
-					cacheResult(orgGroupRole);
 				}
 
 				closeSession(session);
@@ -1533,5 +1533,9 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupRole exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceImpl.class);
-	private static OrgGroupRole _nullOrgGroupRole = new OrgGroupRoleImpl();
+	private static OrgGroupRole _nullOrgGroupRole = new OrgGroupRoleImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -411,12 +411,12 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (ticket == null)) {
+				if (ticket != null) {
+					cacheResult(ticket);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 						TicketImpl.class, ticketId, _nullTicket);
-				}
-				else {
-					cacheResult(ticket);
 				}
 
 				closeSession(session);
@@ -969,5 +969,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Ticket exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(TicketPersistenceImpl.class);
-	private static Ticket _nullTicket = new TicketImpl();
+	private static Ticket _nullTicket = new TicketImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

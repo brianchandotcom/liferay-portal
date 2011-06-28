@@ -518,13 +518,13 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (scProductEntry == null)) {
+				if (scProductEntry != null) {
+					cacheResult(scProductEntry);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductEntryImpl.class, productEntryId,
 						_nullSCProductEntry);
-				}
-				else {
-					cacheResult(scProductEntry);
 				}
 
 				closeSession(session);
@@ -3651,5 +3651,9 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCProductEntryPersistenceImpl.class);
-	private static SCProductEntry _nullSCProductEntry = new SCProductEntryImpl();
+	private static SCProductEntry _nullSCProductEntry = new SCProductEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

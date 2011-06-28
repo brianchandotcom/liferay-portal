@@ -555,12 +555,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (mbThread == null)) {
+				if (mbThread != null) {
+					cacheResult(mbThread);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 						MBThreadImpl.class, threadId, _nullMBThread);
-				}
-				else {
-					cacheResult(mbThread);
 				}
 
 				closeSession(session);
@@ -5541,5 +5541,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBThread exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBThreadPersistenceImpl.class);
-	private static MBThread _nullMBThread = new MBThreadImpl();
+	private static MBThread _nullMBThread = new MBThreadImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

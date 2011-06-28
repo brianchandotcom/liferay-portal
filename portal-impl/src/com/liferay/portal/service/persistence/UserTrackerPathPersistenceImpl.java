@@ -391,13 +391,13 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (userTrackerPath == null)) {
+				if (userTrackerPath != null) {
+					cacheResult(userTrackerPath);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 						UserTrackerPathImpl.class, userTrackerPathId,
 						_nullUserTrackerPath);
-				}
-				else {
-					cacheResult(userTrackerPath);
 				}
 
 				closeSession(session);
@@ -1133,5 +1133,9 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserTrackerPath exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserTrackerPathPersistenceImpl.class);
-	private static UserTrackerPath _nullUserTrackerPath = new UserTrackerPathImpl();
+	private static UserTrackerPath _nullUserTrackerPath = new UserTrackerPathImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

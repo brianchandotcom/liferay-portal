@@ -442,13 +442,13 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (userGroupRole == null)) {
+				if (userGroupRole != null) {
+					cacheResult(userGroupRole);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 						UserGroupRoleImpl.class, userGroupRolePK,
 						_nullUserGroupRole);
-				}
-				else {
-					cacheResult(userGroupRole);
 				}
 
 				closeSession(session);
@@ -2831,5 +2831,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserGroupRole exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserGroupRolePersistenceImpl.class);
-	private static UserGroupRole _nullUserGroupRole = new UserGroupRoleImpl();
+	private static UserGroupRole _nullUserGroupRole = new UserGroupRoleImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

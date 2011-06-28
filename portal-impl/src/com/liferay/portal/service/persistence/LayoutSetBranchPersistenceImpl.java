@@ -486,13 +486,13 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (layoutSetBranch == null)) {
+				if (layoutSetBranch != null) {
+					cacheResult(layoutSetBranch);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutSetBranchImpl.class, layoutSetBranchId,
 						_nullLayoutSetBranch);
-				}
-				else {
-					cacheResult(layoutSetBranch);
 				}
 
 				closeSession(session);
@@ -2641,5 +2641,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSetBranch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetBranchPersistenceImpl.class);
-	private static LayoutSetBranch _nullLayoutSetBranch = new LayoutSetBranchImpl();
+	private static LayoutSetBranch _nullLayoutSetBranch = new LayoutSetBranchImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

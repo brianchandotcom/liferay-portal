@@ -424,13 +424,13 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (userNotificationEvent == null)) {
+				if (userNotificationEvent != null) {
+					cacheResult(userNotificationEvent);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 						UserNotificationEventImpl.class,
 						userNotificationEventId, _nullUserNotificationEvent);
-				}
-				else {
-					cacheResult(userNotificationEvent);
 				}
 
 				closeSession(session);
@@ -1614,5 +1614,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserNotificationEvent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserNotificationEventPersistenceImpl.class);
-	private static UserNotificationEvent _nullUserNotificationEvent = new UserNotificationEventImpl();
+	private static UserNotificationEvent _nullUserNotificationEvent = new UserNotificationEventImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

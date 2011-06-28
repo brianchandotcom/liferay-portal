@@ -446,12 +446,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (phone == null)) {
+				if (phone != null) {
+					cacheResult(phone);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 						PhoneImpl.class, phoneId, _nullPhone);
-				}
-				else {
-					cacheResult(phone);
 				}
 
 				closeSession(session);
@@ -2982,5 +2982,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Phone exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PhonePersistenceImpl.class);
-	private static Phone _nullPhone = new PhoneImpl();
+	private static Phone _nullPhone = new PhoneImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -406,12 +406,12 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (className == null)) {
+				if (className != null) {
+					cacheResult(className);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 						ClassNameImpl.class, classNameId, _nullClassName);
-				}
-				else {
-					cacheResult(className);
 				}
 
 				closeSession(session);
@@ -963,5 +963,9 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ClassName exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ClassNamePersistenceImpl.class);
-	private static ClassName _nullClassName = new ClassNameImpl();
+	private static ClassName _nullClassName = new ClassNameImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

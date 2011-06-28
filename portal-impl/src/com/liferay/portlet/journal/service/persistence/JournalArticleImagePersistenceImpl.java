@@ -550,13 +550,13 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (journalArticleImage == null)) {
+				if (journalArticleImage != null) {
+					cacheResult(journalArticleImage);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleImageImpl.class, articleImageId,
 						_nullJournalArticleImage);
-				}
-				else {
-					cacheResult(journalArticleImage);
 				}
 
 				closeSession(session);
@@ -2491,5 +2491,9 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleImage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleImagePersistenceImpl.class);
-	private static JournalArticleImage _nullJournalArticleImage = new JournalArticleImageImpl();
+	private static JournalArticleImage _nullJournalArticleImage = new JournalArticleImageImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

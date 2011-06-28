@@ -496,13 +496,13 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (subscription == null)) {
+				if (subscription != null) {
+					cacheResult(subscription);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
 						SubscriptionImpl.class, subscriptionId,
 						_nullSubscription);
-				}
-				else {
-					cacheResult(subscription);
 				}
 
 				closeSession(session);
@@ -2379,5 +2379,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Subscription exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionPersistenceImpl.class);
-	private static Subscription _nullSubscription = new SubscriptionImpl();
+	private static Subscription _nullSubscription = new SubscriptionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

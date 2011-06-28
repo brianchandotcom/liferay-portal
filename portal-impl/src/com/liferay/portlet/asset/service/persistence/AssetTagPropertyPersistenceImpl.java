@@ -486,13 +486,13 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (assetTagProperty == null)) {
+				if (assetTagProperty != null) {
+					cacheResult(assetTagProperty);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetTagPropertyImpl.class, tagPropertyId,
 						_nullAssetTagProperty);
-				}
-				else {
-					cacheResult(assetTagProperty);
 				}
 
 				closeSession(session);
@@ -2249,5 +2249,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetTagProperty exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetTagPropertyPersistenceImpl.class);
-	private static AssetTagProperty _nullAssetTagProperty = new AssetTagPropertyImpl();
+	private static AssetTagProperty _nullAssetTagProperty = new AssetTagPropertyImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

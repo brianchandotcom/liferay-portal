@@ -380,12 +380,12 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (account == null)) {
+				if (account != null) {
+					cacheResult(account);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
 						AccountImpl.class, accountId, _nullAccount);
-				}
-				else {
-					cacheResult(account);
 				}
 
 				closeSession(session);
@@ -713,5 +713,9 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Account exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AccountPersistenceImpl.class);
-	private static Account _nullAccount = new AccountImpl();
+	private static Account _nullAccount = new AccountImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

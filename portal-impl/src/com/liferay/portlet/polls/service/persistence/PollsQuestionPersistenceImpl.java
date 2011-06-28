@@ -483,12 +483,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (pollsQuestion == null)) {
+				if (pollsQuestion != null) {
+					cacheResult(pollsQuestion);
+				}
+				else if (!hasException) {
 					EntityCacheUtil.putResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
 						PollsQuestionImpl.class, questionId, _nullPollsQuestion);
-				}
-				else {
-					cacheResult(pollsQuestion);
 				}
 
 				closeSession(session);
@@ -2147,5 +2147,9 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PollsQuestion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PollsQuestionPersistenceImpl.class);
-	private static PollsQuestion _nullPollsQuestion = new PollsQuestionImpl();
+	private static PollsQuestion _nullPollsQuestion = new PollsQuestionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

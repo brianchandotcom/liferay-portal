@@ -1,0 +1,88 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+.lfr-translation-manager {
+	background: #EEE;
+	border: 1px solid #979798;
+	border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
+	color: #34404F;
+	display: block;
+	margin: 0 auto;
+	min-height: 1.8em;
+	padding: 0.5em;
+
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+	-moz-box-shadow: 1px 1px 8px #CCC inset;
+	-webkit-box-shadow: 1px 1px 8px #CCC inset;
+	box-shadow: 1px 1px 8px #CCC inset;
+
+	.lfr-translation-manager-icon-menu {
+		display: inline;
+		float: none;
+		margin-left: 2em;
+		padding: 0.4em 0;
+
+		li {
+			display: inline;
+
+			strong {
+				display: inline;
+			}
+		}
+	}
+
+	.lfr-translation-manager-available-translations {
+		margin-top: 1em;
+
+		.lfr-translation-manager-available-translations-links {
+			line-height: 2.2em;
+		}
+	}
+
+	.lfr-translation-manager-translation {
+		background-color: #B3DAEF;
+		border: 1px solid #5FA8FF;
+		color: #444;
+		cursor: pointer;
+		padding: 0.3em 0.5em 0.3em;
+		margin: 0 0.2em;
+		text-decoration: none;
+
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border-radius: 4px;
+
+		&:hover {
+			background-color: #D1E5EF;
+		}
+
+		&.lfr-translation-manager-translation-editing {
+			background-color: #FFFFCC;
+			border-color: #FFCC00;
+		}
+
+		img {
+			margin-right: 0.3em;
+		}
+	}
+
+	label {
+		font-weight: bold;
+	}
+}

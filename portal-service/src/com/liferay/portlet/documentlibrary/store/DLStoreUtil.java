@@ -71,6 +71,17 @@ public class DLStoreUtil {
 		getStore().checkRoot(companyId);
 	}
 
+	public static void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getStore().copyFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+	}
+
 	public static void deleteDirectory(
 			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -224,6 +235,17 @@ public class DLStoreUtil {
 		getStore().updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, file);
+	}
+
+	public static void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getStore().updateFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
 	}
 
 	public static void validate(String fileName, boolean validateFileExtension)

@@ -97,6 +97,20 @@ public abstract class BaseStore implements Store {
 
 	public abstract void checkRoot(long companyId) throws SystemException;
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		InputStream is = getFileAsStream(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		updateFile(
+			companyId, portletId, groupId, repositoryId, fileName,
+			toVersionNumber, sourceFileName, serviceContext, is);
+	}
+
 	public abstract void deleteDirectory(
 			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
@@ -240,6 +254,23 @@ public abstract class BaseStore implements Store {
 			String fileName, String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException;
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		InputStream is = getFileAsStream(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		updateFile(
+			companyId, portletId, groupId, repositoryId, fileName,
+			toVersionNumber, sourceFileName, serviceContext, is);
+
+		deleteFile(
+			companyId, portletId, repositoryId, fileName, fromVersionNumber);
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseStore.class);
 

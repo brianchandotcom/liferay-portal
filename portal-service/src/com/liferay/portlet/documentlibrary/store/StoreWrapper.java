@@ -77,6 +77,17 @@ public class StoreWrapper implements Store {
 		_store.deleteDirectory(companyId, portletId, repositoryId, dirName);
 	}
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		_store.copyFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+	}
+
 	public void deleteFile(
 			long companyId, String portletId, long repositoryId,
 			String fileName)
@@ -207,6 +218,17 @@ public class StoreWrapper implements Store {
 		_store.updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, is);
+	}
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		_store.updateFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
 	}
 
 	private Store _store;

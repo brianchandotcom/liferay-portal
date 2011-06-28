@@ -76,6 +76,19 @@ public class StoreProxyImpl implements Store {
 		store.checkRoot(companyId);
 	}
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		store.copyFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+	}
+
 	public void deleteDirectory(
 			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -247,6 +260,19 @@ public class StoreProxyImpl implements Store {
 		store.updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, is);
+	}
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		store.updateFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
 	}
 
 }

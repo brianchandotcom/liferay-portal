@@ -753,11 +753,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				throw processException(e);
 			}
 			finally {
-				if (!hasException && (${entity.varName} == null)) {
-					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.PKVarName}, _null${entity.name});
-				}
-				else {
+				if (${entity.varName} != null) {
 					cacheResult(${entity.varName});
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.PKVarName}, _null${entity.name});
 				}
 
 				closeSession(session);
@@ -3855,6 +3855,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 
-	private static ${entity.name} _null${entity.name} = new ${entity.name}Impl();
+	private static ${entity.name} _null${entity.name} = new ${entity.name}Impl() {
+		public Object clone() {
+			return this;
+		}
+	};
 
 }

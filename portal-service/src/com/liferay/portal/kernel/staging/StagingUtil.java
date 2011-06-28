@@ -190,6 +190,10 @@ public class StagingUtil {
 		return getStaging().getStagingParameters(PortletRequest);
 	}
 
+	public static boolean isIncomplete(Layout layout, long layoutSetBranchId) {
+		return getStaging().isIncomplete(layout, layoutSetBranchId);
+	}
+
 	public static void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws Exception {

@@ -425,7 +425,7 @@ public class GroupImpl extends GroupModelImpl implements Group {
 		try {
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				getGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 1);
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
 
 			if (layouts.size() > 0) {
 				Layout layout = layouts.get(0);

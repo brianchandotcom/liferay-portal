@@ -789,7 +789,8 @@ public class StagingImpl implements Staging {
 		}
 
 		if (layoutRevision == null ||
-			layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			(layoutRevision.getStatus() ==
+				WorkflowConstants.STATUS_INCOMPLETE)) {
 
 			return true;
 		}

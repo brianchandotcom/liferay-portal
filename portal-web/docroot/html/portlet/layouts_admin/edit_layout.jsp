@@ -36,15 +36,8 @@ PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redire
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
-String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
-
-if (!group.isUser() && selLayout.isTypePortlet()) {
-	mainSections = ArrayUtil.append(mainSections, "customization-settings");
-}
-
-String[][] categorySections = {mainSections};
-
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
+
 String layoutSetBranchName = StringPool.BLANK;
 
 boolean incomplete = false;
@@ -56,10 +49,20 @@ if (layoutRevision != null) {
 
 	if (incomplete) {
 		layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(recentLayoutSetBranchId, selLayout.getPlid(), false);
+
 		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(recentLayoutSetBranchId);
+
 		layoutSetBranchName = layoutSetBranch.getName();
 	}
 }
+
+String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
+
+if (!group.isUser() && selLayout.isTypePortlet()) {
+	mainSections = ArrayUtil.append(mainSections, "customization-settings");
+}
+
+String[][] categorySections = {mainSections};
 %>
 
 <div class="lfr-header-row title">
@@ -95,7 +98,7 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 
 	<c:choose>
 		<c:when test="<%= incomplete %>">
-			<liferay-ui:message arguments='<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>' key="the-page-x-is-not-enabled-in-x" /> <aui:button type="submit" value="enable" />
+			<liferay-ui:message arguments="<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x" /> <aui:button type="submit" value="enable" />
 
 			<aui:input name="incompleteLayoutRevisionId" value="<%= layoutRevision.getLayoutRevisionId() %>" type="hidden" />
 		</c:when>
@@ -213,7 +216,6 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
 			/>
-
 		</c:otherwise>
 	</c:choose>
 </aui:form>

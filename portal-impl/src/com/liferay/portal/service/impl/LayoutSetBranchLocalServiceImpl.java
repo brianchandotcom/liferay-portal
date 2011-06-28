@@ -82,7 +82,7 @@ public class LayoutSetBranchLocalServiceImpl
 		// Revisions
 
 		if (layoutSetBranch.isMaster() ||
-			copyLayoutSetBranchId == LayoutSetBranchConstants.ALL_BRANCHES) {
+			(copyLayoutSetBranchId == LayoutSetBranchConstants.ALL_BRANCHES)) {
 
 			List<Layout> layouts = layoutPersistence.findByG_P(
 				layoutSetBranch.getGroupId(),
@@ -113,12 +113,10 @@ public class LayoutSetBranchLocalServiceImpl
 					userId, layoutSetBranchId,
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 					true, layoutRevision.getVariationName(),
-					layoutRevision.getPlid(),
-					layoutRevision.getPrivateLayout(),
+					layoutRevision.getPlid(), layoutRevision.getPrivateLayout(),
 					layoutRevision.getName(), layoutRevision.getTitle(),
 					layoutRevision.getDescription(),
-					layoutRevision.getKeywords(),
-					layoutRevision.getRobots(),
+					layoutRevision.getKeywords(), layoutRevision.getRobots(),
 					layoutRevision.getTypeSettings(),
 					layoutRevision.isIconImage(),
 					layoutRevision.getIconImageId(),

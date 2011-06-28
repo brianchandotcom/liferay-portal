@@ -52,6 +52,7 @@
 					<%
 					}
 					%>
+
 				</aui:select>
 			</c:if>
 		</aui:fieldset>

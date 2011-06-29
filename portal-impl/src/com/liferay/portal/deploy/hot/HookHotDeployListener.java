@@ -1044,12 +1044,12 @@ public class HookHotDeployListener
 
 		Class<?> invocationHandlerClass = invocationHandler.getClass();
 
-		Field advisedField = invocationHandlerClass.getDeclaredField(
+		Field advisedSupportField = invocationHandlerClass.getDeclaredField(
 			"_advisedSupport");
 
-		advisedField.setAccessible(true);
+		advisedSupportField.setAccessible(true);
 
-		return (AdvisedSupport)advisedField.get(invocationHandler);
+		return (AdvisedSupport)advisedSupportField.get(invocationHandler);
 	}
 
 	protected void getCustomJsps(

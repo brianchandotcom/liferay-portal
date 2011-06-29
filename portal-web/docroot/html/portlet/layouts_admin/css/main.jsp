@@ -341,9 +341,9 @@
 }
 
 .lfr-export-dialog {
-    .date-range-options {
-        margin-bottom: 1em;
-    }
+	.date-range-options {
+		margin-bottom: 1em;
+	}
 }
 
 .lfr-root-node {

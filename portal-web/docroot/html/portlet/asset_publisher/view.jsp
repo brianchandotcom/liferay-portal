@@ -81,7 +81,7 @@ if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQ
 Group group = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= (group != null) && (!group.hasStagingGroup() || group.isStagingGroup()) %>">
+<c:if test="<%= (group != null) && (!group.hasStagingGroup() || group.isStagingGroup()) && !showLinkedAssets %>">
 	<aui:form name="fm">
 
 		<%

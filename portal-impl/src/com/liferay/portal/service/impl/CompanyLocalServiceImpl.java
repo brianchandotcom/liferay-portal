@@ -51,6 +51,7 @@ import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -160,6 +161,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company.setWebId(webId);
 			company.setMx(mx);
+			company.setActive(true);
 
 			companyPersistence.update(company, false);
 
@@ -414,6 +416,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	public Company fetchCompany(long companyId) throws SystemException {
+		return companyPersistence.fetchByPrimaryKey(companyId);
+	}
+
 	public List<Company> getCompanies() throws SystemException {
 		return companyPersistence.findAll();
 	}
@@ -549,6 +555,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Company
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
+
+		if (!active) {
+			if (companyId == PortalInstances.getDefaultCompanyId()) {
+				active = true;
+			}
+		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 

@@ -268,6 +268,11 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 		_companyLocalService.deleteLogo(companyId);
 	}
 
+	public com.liferay.portal.model.Company fetchCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _companyLocalService.fetchCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Company> getCompanies()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _companyLocalService.getCompanies();

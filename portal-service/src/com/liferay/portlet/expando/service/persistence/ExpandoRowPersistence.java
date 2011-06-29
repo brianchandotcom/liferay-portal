@@ -237,6 +237,7 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 	*
 	* @param tableId the table ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -995,6 +995,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching i g folder, or <code>null</code> if a matching i g folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2796,6 +2797,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching i g folder, or <code>null</code> if a matching i g folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

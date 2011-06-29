@@ -543,6 +543,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param webId the web ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -682,6 +683,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mx the mx
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -821,6 +823,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param logoId the logo ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

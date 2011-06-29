@@ -133,6 +133,7 @@ public interface SocialEquityAssetEntryPersistence extends BasePersistence<Socia
 	* Returns the social equity asset entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param assetEntryId the asset entry ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social equity asset entry, or <code>null</code> if a matching social equity asset entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/

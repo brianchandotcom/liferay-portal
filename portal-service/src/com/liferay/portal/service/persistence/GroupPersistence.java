@@ -227,6 +227,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param liveGroupId the live group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -265,6 +266,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -303,6 +305,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param friendlyURL the friendly u r l
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -455,6 +458,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -496,6 +500,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param companyId the company ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -540,6 +545,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param classNameId the class name ID
 	* @param liveGroupId the live group ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/

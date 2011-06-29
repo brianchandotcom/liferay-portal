@@ -354,6 +354,7 @@ public class SCProductVersionUtil {
 	* Returns the s c product version where directDownloadURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param directDownloadURL the direct download u r l
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s c product version, or <code>null</code> if a matching s c product version could not be found
 	* @throws SystemException if a system exception occurred
 	*/

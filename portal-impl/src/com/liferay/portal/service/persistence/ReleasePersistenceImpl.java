@@ -473,6 +473,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param servletContextName the servlet context name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching release, or <code>null</code> if a matching release could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -3382,6 +3382,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

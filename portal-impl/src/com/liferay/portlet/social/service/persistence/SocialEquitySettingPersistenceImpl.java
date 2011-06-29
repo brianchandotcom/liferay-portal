@@ -975,6 +975,7 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 	 * @param classNameId the class name ID
 	 * @param actionId the action ID
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity setting, or <code>null</code> if a matching social equity setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

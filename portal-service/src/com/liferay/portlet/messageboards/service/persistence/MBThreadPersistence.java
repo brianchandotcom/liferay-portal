@@ -237,6 +237,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param rootMessageId the root message ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/

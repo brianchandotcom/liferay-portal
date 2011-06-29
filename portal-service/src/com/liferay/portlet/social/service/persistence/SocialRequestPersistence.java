@@ -239,6 +239,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -824,6 +825,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 	* @param classPK the class p k
 	* @param type the type
 	* @param receiverUserId the receiver user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	* @throws SystemException if a system exception occurred
 	*/

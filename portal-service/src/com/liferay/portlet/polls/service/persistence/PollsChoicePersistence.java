@@ -343,6 +343,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*
 	* @param questionId the question ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	* @throws SystemException if a system exception occurred
 	*/

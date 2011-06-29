@@ -2386,6 +2386,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3073,6 +3074,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param roleId the role ID
 	 * @param ownerId the owner ID
 	 * @param actionIds the action IDs
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -879,6 +879,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

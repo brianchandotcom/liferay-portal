@@ -345,6 +345,7 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -482,6 +482,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	* @throws SystemException if a system exception occurred
 	*/

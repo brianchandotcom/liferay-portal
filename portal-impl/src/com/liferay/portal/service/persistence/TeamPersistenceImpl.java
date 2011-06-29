@@ -1158,6 +1158,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

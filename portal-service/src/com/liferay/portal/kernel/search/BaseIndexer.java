@@ -132,7 +132,6 @@ public abstract class BaseIndexer implements Indexer {
 		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create();
 
 		facetQuery.addExactTerm(Field.ENTRY_CLASS_NAME, className);
-		facetQuery.addExactTerm(Field.PORTLET_ID, getPortletId(searchContext));
 
 		if (searchContext.getUserId() > 0) {
 			SearchPermissionChecker searchPermissionChecker =

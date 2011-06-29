@@ -88,8 +88,23 @@ if (Validator.isNull(authType)) {
 				<aui:input name="emailAddress" type="hidden" value="<%= user2.getEmailAddress() %>" />
 
 				<c:if test="<%= Validator.isNotNull(user2.getReminderQueryQuestion()) && Validator.isNotNull(user2.getReminderQueryAnswer()) %>">
+
+					<% 
+					Object userParameter = null;
+
+					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+						userParameter = user2.getEmailAddress();
+					}
+					else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+						userParameter = user2.getScreenName();
+					}
+					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+						userParameter = user2.getUserId();
+					}
+					%>
+
 					<div class="portlet-msg-info">
-						<%= LanguageUtil.format(pageContext, "a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question", user2.getEmailAddress()) %>
+						<%= LanguageUtil.format(pageContext, "a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question", userParameter) %>
 					</div>
 
 					<aui:input label="<%= user2.getReminderQueryQuestion() %>" name="answer" type="text" />

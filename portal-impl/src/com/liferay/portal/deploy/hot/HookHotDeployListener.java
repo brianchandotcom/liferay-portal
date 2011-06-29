@@ -1044,7 +1044,8 @@ public class HookHotDeployListener
 
 		Class<?> invocationHandlerClass = invocationHandler.getClass();
 
-		Field advisedField = invocationHandlerClass.getDeclaredField("_advisedSupport");
+		Field advisedField = invocationHandlerClass.getDeclaredField(
+			"_advisedSupport");
 
 		advisedField.setAccessible(true);
 

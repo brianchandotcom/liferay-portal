@@ -4044,6 +4044,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	protected UserPersistence userPersistence;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
+	private static final String _COLUMN_PK = "socialEquityLog.equityLogId";
 	private static final String _SQL_SELECT_SOCIALEQUITYLOG = "SELECT socialEquityLog FROM SocialEquityLog socialEquityLog";
 	private static final String _SQL_SELECT_SOCIALEQUITYLOG_WHERE = "SELECT socialEquityLog FROM SocialEquityLog socialEquityLog WHERE ";
 	private static final String _SQL_COUNT_SOCIALEQUITYLOG = "SELECT COUNT(socialEquityLog) FROM SocialEquityLog socialEquityLog";

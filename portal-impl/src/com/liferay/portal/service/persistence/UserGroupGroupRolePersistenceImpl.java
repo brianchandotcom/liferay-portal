@@ -2827,6 +2827,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
+	private static final String _COLUMN_PK = "userGroupGroupRole.userGroupGroupRolePK";
 	private static final String _SQL_SELECT_USERGROUPGROUPROLE = "SELECT userGroupGroupRole FROM UserGroupGroupRole userGroupGroupRole";
 	private static final String _SQL_SELECT_USERGROUPGROUPROLE_WHERE = "SELECT userGroupGroupRole FROM UserGroupGroupRole userGroupGroupRole WHERE ";
 	private static final String _SQL_COUNT_USERGROUPGROUPROLE = "SELECT COUNT(userGroupGroupRole) FROM UserGroupGroupRole userGroupGroupRole";

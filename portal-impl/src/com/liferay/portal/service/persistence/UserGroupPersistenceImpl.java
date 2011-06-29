@@ -919,7 +919,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1034,7 +1034,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1582,7 +1582,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_C_P_PARENTUSERGROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1703,7 +1703,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_C_P_PARENTUSERGROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4523,6 +4523,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		private UserGroupPersistenceImpl _persistenceImpl;
 	}
 
+	private static final String _COLUMN_PK = "userGroup.userGroupId";
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";
 	private static final String _SQL_COUNT_USERGROUP = "SELECT COUNT(userGroup) FROM UserGroup userGroup";

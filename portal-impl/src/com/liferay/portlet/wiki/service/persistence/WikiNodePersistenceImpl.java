@@ -1463,7 +1463,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1577,7 +1577,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2812,6 +2812,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	private static final String _COLUMN_PK = "wikiNode.nodeId";
 	private static final String _SQL_SELECT_WIKINODE = "SELECT wikiNode FROM WikiNode wikiNode";
 	private static final String _SQL_SELECT_WIKINODE_WHERE = "SELECT wikiNode FROM WikiNode wikiNode WHERE ";
 	private static final String _SQL_COUNT_WIKINODE = "SELECT COUNT(wikiNode) FROM WikiNode wikiNode";

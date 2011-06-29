@@ -8529,6 +8529,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		private UserPersistenceImpl _persistenceImpl;
 	}
 
+	private static final String _COLUMN_PK = "user.userId";
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";
 	private static final String _SQL_COUNT_USER = "SELECT COUNT(user) FROM User user";

@@ -947,7 +947,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1063,7 +1063,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1583,7 +1583,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1699,7 +1699,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2250,7 +2250,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2372,7 +2372,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4950,6 +4950,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		private SqlUpdate _sqlUpdate;
 	}
 
+	private static final String _COLUMN_PK = "organization.organizationId";
 	private static final String _SQL_SELECT_ORGANIZATION = "SELECT organization FROM Organization organization";
 	private static final String _SQL_SELECT_ORGANIZATION_WHERE = "SELECT organization FROM Organization organization WHERE ";
 	private static final String _SQL_COUNT_ORGANIZATION = "SELECT COUNT(organization) FROM Organization organization";

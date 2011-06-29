@@ -1867,6 +1867,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
+	private static final String _COLUMN_PK = "country.countryId";
 	private static final String _SQL_SELECT_COUNTRY = "SELECT country FROM Country country";
 	private static final String _SQL_SELECT_COUNTRY_WHERE = "SELECT country FROM Country country WHERE ";
 	private static final String _SQL_COUNT_COUNTRY = "SELECT COUNT(country) FROM Country country";

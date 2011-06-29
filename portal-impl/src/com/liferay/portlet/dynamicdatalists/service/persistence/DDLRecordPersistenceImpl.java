@@ -2200,6 +2200,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
+	private static final String _COLUMN_PK = "ddlRecord.recordId";
 	private static final String _SQL_SELECT_DDLRECORD = "SELECT ddlRecord FROM DDLRecord ddlRecord";
 	private static final String _SQL_SELECT_DDLRECORD_WHERE = "SELECT ddlRecord FROM DDLRecord ddlRecord WHERE ";
 	private static final String _SQL_COUNT_DDLRECORD = "SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord";

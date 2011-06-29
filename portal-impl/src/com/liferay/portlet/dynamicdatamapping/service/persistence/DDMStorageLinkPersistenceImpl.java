@@ -1704,6 +1704,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	private static final String _COLUMN_PK = "ddmStorageLink.storageLinkId";
 	private static final String _SQL_SELECT_DDMSTORAGELINK = "SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink";
 	private static final String _SQL_SELECT_DDMSTORAGELINK_WHERE = "SELECT ddmStorageLink FROM DDMStorageLink ddmStorageLink WHERE ";
 	private static final String _SQL_COUNT_DDMSTORAGELINK = "SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink";

@@ -9214,6 +9214,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
+	private static final String _COLUMN_PK = "wikiPage.pageId";
 	private static final String _SQL_SELECT_WIKIPAGE = "SELECT wikiPage FROM WikiPage wikiPage";
 	private static final String _SQL_SELECT_WIKIPAGE_WHERE = "SELECT wikiPage FROM WikiPage wikiPage WHERE ";
 	private static final String _SQL_COUNT_WIKIPAGE = "SELECT COUNT(wikiPage) FROM WikiPage wikiPage";

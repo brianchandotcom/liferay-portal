@@ -1490,6 +1490,7 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	private static final String _COLUMN_PK = "socialEquitySetting.equitySettingId";
 	private static final String _SQL_SELECT_SOCIALEQUITYSETTING = "SELECT socialEquitySetting FROM SocialEquitySetting socialEquitySetting";
 	private static final String _SQL_SELECT_SOCIALEQUITYSETTING_WHERE = "SELECT socialEquitySetting FROM SocialEquitySetting socialEquitySetting WHERE ";
 	private static final String _SQL_COUNT_SOCIALEQUITYSETTING = "SELECT COUNT(socialEquitySetting) FROM SocialEquitySetting socialEquitySetting";

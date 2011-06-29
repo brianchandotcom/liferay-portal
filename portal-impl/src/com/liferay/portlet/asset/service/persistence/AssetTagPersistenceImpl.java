@@ -829,7 +829,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -943,7 +943,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2037,6 +2037,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		private AssetTagPersistenceImpl _persistenceImpl;
 	}
 
+	private static final String _COLUMN_PK = "assetTag.tagId";
 	private static final String _SQL_SELECT_ASSETTAG = "SELECT assetTag FROM AssetTag assetTag";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE = "SELECT assetTag FROM AssetTag assetTag WHERE ";
 	private static final String _SQL_COUNT_ASSETTAG = "SELECT COUNT(assetTag) FROM AssetTag assetTag";

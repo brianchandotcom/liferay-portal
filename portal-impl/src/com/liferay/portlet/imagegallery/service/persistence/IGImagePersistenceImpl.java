@@ -1573,7 +1573,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1687,7 +1687,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2750,7 +2750,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2870,7 +2870,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3566,7 +3566,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3686,7 +3686,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3891,7 +3891,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			conjunctionable = true;
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4440,7 +4440,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4577,7 +4577,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -6029,6 +6029,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 	protected ExpandoValuePersistence expandoValuePersistence;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
+	private static final String _COLUMN_PK = "igImage.imageId";
 	private static final String _SQL_SELECT_IGIMAGE = "SELECT igImage FROM IGImage igImage";
 	private static final String _SQL_SELECT_IGIMAGE_WHERE = "SELECT igImage FROM IGImage igImage WHERE ";
 	private static final String _SQL_COUNT_IGIMAGE = "SELECT COUNT(igImage) FROM IGImage igImage";

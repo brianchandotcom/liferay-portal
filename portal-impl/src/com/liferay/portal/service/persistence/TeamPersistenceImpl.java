@@ -878,7 +878,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -991,7 +991,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _COLUMN_PK);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3057,6 +3057,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		private TeamPersistenceImpl _persistenceImpl;
 	}
 
+	private static final String _COLUMN_PK = "team.teamId";
 	private static final String _SQL_SELECT_TEAM = "SELECT team FROM Team team";
 	private static final String _SQL_SELECT_TEAM_WHERE = "SELECT team FROM Team team WHERE ";
 	private static final String _SQL_COUNT_TEAM = "SELECT COUNT(team) FROM Team team";

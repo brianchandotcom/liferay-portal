@@ -1339,6 +1339,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
+	private static final String _COLUMN_PK = "ratingsEntry.entryId";
 	private static final String _SQL_SELECT_RATINGSENTRY = "SELECT ratingsEntry FROM RatingsEntry ratingsEntry";
 	private static final String _SQL_SELECT_RATINGSENTRY_WHERE = "SELECT ratingsEntry FROM RatingsEntry ratingsEntry WHERE ";
 	private static final String _SQL_COUNT_RATINGSENTRY = "SELECT COUNT(ratingsEntry) FROM RatingsEntry ratingsEntry";

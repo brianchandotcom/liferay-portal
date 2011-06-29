@@ -45,7 +45,9 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	<c:if test="<%= typeSelection.equals(StringPool.BLANK) %>">
 		<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
 			<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
-			<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
+			<c:if test="<%= !showLinkedAssets %>">
+				<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
+			</c:if>
 		</aui:select>
 
 		<liferay-util:buffer var="selectAssetTypeInput">

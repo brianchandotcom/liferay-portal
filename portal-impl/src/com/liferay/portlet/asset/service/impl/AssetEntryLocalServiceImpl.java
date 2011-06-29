@@ -602,31 +602,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		if (tagNames != null) {
 			long parentGroupId = PortalUtil.getParentGroupId(groupId);
 
-			List<AssetTag> tags = new ArrayList<AssetTag>(tagNames.length);
-
-			for (String tagName : tagNames) {
-				AssetTag tag = null;
-
-				try {
-					tag = assetTagLocalService.getTag(parentGroupId, tagName);
-				}
-				catch (NoSuchTagException nste) {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setAddGroupPermissions(true);
-					serviceContext.setAddGuestPermissions(true);
-					serviceContext.setScopeGroupId(parentGroupId);
-
-					tag = assetTagLocalService.addTag(
-						user.getUserId(), tagName,
-						PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
-						serviceContext);
-				}
-
-				if (tag != null) {
-					tags.add(tag);
-				}
-			}
+			List<AssetTag> tags = getAssetTags(
+				tagNames, parentGroupId, userId, null);
 
 			if (entry.getVisible()) {
 				List<AssetTag> oldTags = assetEntryPersistence.getAssetTags(
@@ -732,24 +709,81 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String className, long classPK, boolean visible)
 		throws PortalException, SystemException {
 
+		return updateVisible(className, classPK, visible, null);
+	}
+
+	public AssetEntry updateVisible(
+			String className, long classPK, boolean visible,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		AssetEntry entry = assetEntryPersistence.findByC_C(
 			classNameId, classPK);
 
-		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
-			entry.getEntryId());
+		if (serviceContext == null) {
+			List<AssetTag> tags = assetEntryPersistence.getAssetTags(
+				entry.getEntryId());
 
-		if (visible && !entry.getVisible()) {
-			for (AssetTag tag : tags) {
-				assetTagLocalService.incrementAssetCount(
-					tag.getTagId(), classNameId);
+			if (visible && !entry.getVisible()) {
+				for (AssetTag tag : tags) {
+					assetTagLocalService.incrementAssetCount(
+						tag.getTagId(), classNameId);
+				}
+			}
+			else if (!visible && entry.getVisible()) {
+				for (AssetTag tag : tags) {
+					assetTagLocalService.decrementAssetCount(
+						tag.getTagId(), classNameId);
+				}
 			}
 		}
-		else if (!visible && entry.getVisible()) {
-			for (AssetTag tag : tags) {
-				assetTagLocalService.decrementAssetCount(
-					tag.getTagId(), classNameId);
+		else {
+			if (visible && !entry.getVisible() &&
+				(serviceContext.getAssetTagNames() != null)) {
+
+				String[] tagNames = serviceContext.getAssetTagNames();
+
+				long parentGroupId = PortalUtil.getParentGroupId(
+					entry.getGroupId());
+
+				List<AssetTag> tags = getAssetTags(tagNames, parentGroupId,
+					serviceContext.getUserId(), serviceContext);
+
+				List<AssetTag> oldTags =
+					(List<AssetTag>) serviceContext.getAttribute("oldTags");
+
+				if (entry.isNew() || oldTags == null) {
+					for (AssetTag tag : tags) {
+						assetTagLocalService.incrementAssetCount(
+							tag.getTagId(), classNameId);
+					}
+				}
+				else if (oldTags != null) {
+					for (AssetTag oldTag : oldTags) {
+						if (!tags.contains(oldTag)) {
+							assetTagLocalService.decrementAssetCount(
+								oldTag.getTagId(), classNameId);
+						}
+					}
+
+					for (AssetTag tag : tags) {
+						if (!oldTags.contains(tag)) {
+							assetTagLocalService.incrementAssetCount(
+								tag.getTagId(), classNameId);
+						}
+					}
+				}
+			}
+			else if (!visible && entry.getVisible()) {
+				List<AssetTag> tags = assetEntryPersistence.getAssetTags(
+					entry.getEntryId());
+
+				for (AssetTag tag : tags) {
+					assetTagLocalService.decrementAssetCount(
+						tag.getTagId(), classNameId);
+				}
 			}
 		}
 
@@ -769,6 +803,42 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			PropsValues.ASSET_ENTRY_VALIDATOR);
 
 		validator.validate(groupId, className, categoryIds, tagNames);
+	}
+
+	protected List<AssetTag> getAssetTags(
+			String[] tagNames, long parentGroupId, long userId,
+			ServiceContext serviceContext)
+		throws SystemException, PortalException {
+
+		List<AssetTag> tags = new ArrayList<AssetTag>(tagNames.length);
+
+		for (String tagName : tagNames) {
+			AssetTag tag = null;
+
+			try {
+				tag = assetTagLocalService.getTag(parentGroupId, tagName);
+			}
+			catch (NoSuchTagException nste) {
+				if (serviceContext == null) {
+					serviceContext = new ServiceContext();
+				}
+
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+				serviceContext.setScopeGroupId(parentGroupId);
+
+				tag = assetTagLocalService.addTag(
+					userId, tagName,
+					PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
+					serviceContext);
+			}
+
+			if (tag != null) {
+				tags.add(tag);
+			}
+		}
+
+		return tags;
 	}
 
 	protected String[] getClassNames(String className) {

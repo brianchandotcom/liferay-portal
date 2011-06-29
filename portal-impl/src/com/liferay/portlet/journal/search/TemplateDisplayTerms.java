@@ -78,13 +78,11 @@ public class TemplateDisplayTerms extends DisplayTerms {
 
 		StringBundler sb = new StringBundler();
 
-		if ((groupId == 0) && Validator.isNull(structureId) &&
-			Validator.isNull(templateId)) {
-
-			sb.append(themeDisplay.getScopeGroupId());
+		if (groupId > 0) {
+			sb.append(groupId);
 		}
 		else {
-			sb.append(groupId);
+			sb.append(themeDisplay.getScopeGroupId());
 		}
 
 		if (strutsAction.equalsIgnoreCase("/journal/select_template")) {

@@ -1143,14 +1143,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String languageId)
 		throws PortalException, SystemException {
 
-		List<Layout> allGroupLayouts = getLayouts(groupId, privateLayout);
+		Layout layout = getLayout(groupId, privateLayout, layoutId);
 
-		Layout updatedLayout = getLayout(groupId, privateLayout, layoutId);
+		List<Layout> layouts = getLayouts(groupId, privateLayout);
 
-		for (Layout layout : allGroupLayouts) {
+		for (Layout curLayout : layouts) {
 			List<PortletPreferences> portletPreferencesList =
 				portletPreferencesLocalService.getPortletPreferencesByPlid(
-					layout.getPlid());
+					curLayout.getPlid());
 
 			for (PortletPreferences portletPreferences :
 					portletPreferencesList) {
@@ -1159,18 +1159,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 				Portlet portlet = portletLocalService.getPortletById(portletId);
 
-				if (portlet == null || !portlet.isScopeable()) {
+				if ((portlet == null) || !portlet.isScopeable()) {
 					continue;
 				}
 
 				javax.portlet.PortletPreferences preferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, portletId);
+						curLayout, portletId);
 
 				String scopeLayoutUuid = GetterUtil.getString(
 					preferences.getValue("lfrScopeLayoutUuid", null));
 
-				if (!scopeLayoutUuid.equals(updatedLayout.getUuid())) {
+				if (!scopeLayoutUuid.equals(layout.getUuid())) {
 					continue;
 				}
 
@@ -1178,17 +1178,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					portletId, languageId);
 
 				String newPortletTitle = PortalUtil.getNewPortletTitle(
-					portletTitle, layout.getName(languageId), name);
+					portletTitle, curLayout.getName(languageId), name);
+
+				if (newPortletTitle.equals(portletTitle)) {
+					continue;
+				}
 
 				try {
-					if (!newPortletTitle.equals(portletTitle)) {
-						preferences.setValue(
-							"portlet-setup-title-" + languageId,
-							newPortletTitle);
-						preferences.setValue(
-							"portlet-setup-use-custom-title",
-							Boolean.TRUE.toString());
-					}
+					preferences.setValue(
+						"portlet-setup-title-" + languageId, newPortletTitle);
+					preferences.setValue(
+						"portlet-setup-use-custom-title",
+						Boolean.TRUE.toString());
 
 					preferences.store();
 				}

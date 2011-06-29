@@ -96,7 +96,7 @@ catch (Exception e) {
 
 		<aui:input name="maxUsers" />
 
-		<aui:input name="active" type="checkbox" value="<%= company2.isActive() %>" />
+		<aui:input disabled="<%= company2.getCompanyId() == PortalInstances.getDefaultCompanyId() %>" name="active" type="checkbox" value="<%= (company2 != null) ? company2.isActive() : true %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

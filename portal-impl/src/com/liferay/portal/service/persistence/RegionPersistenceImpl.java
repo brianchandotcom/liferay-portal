@@ -1971,6 +1971,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
+	private static final String _COLUMN_PK = "region.regionId";
 	private static final String _SQL_SELECT_REGION = "SELECT region FROM Region region";
 	private static final String _SQL_SELECT_REGION_WHERE = "SELECT region FROM Region region WHERE ";
 	private static final String _SQL_COUNT_REGION = "SELECT COUNT(region) FROM Region region";

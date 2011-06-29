@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.amazonrankings;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 import com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil;
 
@@ -43,6 +45,7 @@ public class AmazonRankingsPreferencesValidator
 
 			if (amazonRankings == null) {
 				badIsbns.add(isbns[i]);
+				_log.error("badIsbn: " + isbns[i]);
 			}
 		}
 
@@ -51,5 +54,7 @@ public class AmazonRankingsPreferencesValidator
 				"Failed to retrieve ISBNs", badIsbns);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(AmazonRankingsPreferencesValidator.class);
 
 }

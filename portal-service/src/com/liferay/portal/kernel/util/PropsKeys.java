@@ -63,6 +63,8 @@ public interface PropsKeys {
 
 	public static final String AMAZON_ACCESS_KEY_ID = "amazon.access.key.id";
 
+	public static final String AMAZON_SECRET_ACCESS_KEY = "amazon.secret.access.key";
+
 	public static final String AMAZON_ASSOCIATE_TAG = "amazon.associate.tag";
 
 	public static final String ANNOUNCEMENTS_EMAIL_BODY = "announcements.email.body";

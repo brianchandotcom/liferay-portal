@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
@@ -78,13 +77,11 @@ public class TemplateDisplayTerms extends DisplayTerms {
 
 		StringBundler sb = new StringBundler();
 
-		if ((groupId == 0) && Validator.isNull(structureId) &&
-			Validator.isNull(templateId)) {
-
-			sb.append(themeDisplay.getScopeGroupId());
+		if (groupId > 0) {
+			sb.append(groupId);
 		}
 		else {
-			sb.append(groupId);
+			sb.append(themeDisplay.getScopeGroupId());
 		}
 
 		if (strutsAction.equalsIgnoreCase("/journal/select_template")) {

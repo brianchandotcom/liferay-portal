@@ -497,6 +497,7 @@ public class PortalInstances {
 			}
 		}
 		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return false;

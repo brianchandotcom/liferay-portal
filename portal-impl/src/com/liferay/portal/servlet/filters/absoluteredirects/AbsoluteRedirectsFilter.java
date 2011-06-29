@@ -26,8 +26,6 @@ import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.ContentUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,15 +60,6 @@ public class AbsoluteRedirectsFilter
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Company id " + companyId);
-		}
-
-		if (!PortalInstances.isCompanyActive(companyId)) {
-			String html = ContentUtil.get(
-				"com/liferay/portal/dependencies/company_inactive.html");
-
-			ServletResponseUtil.write(response, html);
-
-			return null;
 		}
 
 		PortalUtil.getCurrentCompleteURL(request);

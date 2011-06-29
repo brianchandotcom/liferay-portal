@@ -1535,6 +1535,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
+	private static final String _COLUMN_PK = "orgGroupPermission.orgGroupPermissionPK";
 	private static final String _SQL_SELECT_ORGGROUPPERMISSION = "SELECT orgGroupPermission FROM OrgGroupPermission orgGroupPermission";
 	private static final String _SQL_SELECT_ORGGROUPPERMISSION_WHERE = "SELECT orgGroupPermission FROM OrgGroupPermission orgGroupPermission WHERE ";
 	private static final String _SQL_COUNT_ORGGROUPPERMISSION = "SELECT COUNT(orgGroupPermission) FROM OrgGroupPermission orgGroupPermission";

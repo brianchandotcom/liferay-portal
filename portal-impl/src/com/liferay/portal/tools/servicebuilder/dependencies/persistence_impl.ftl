@@ -1507,7 +1507,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_COLUMN_PK);
+					appendGroupByComparator(query, _COLUMN_PK);
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
@@ -1651,7 +1651,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_COLUMN_PK);
+					appendGroupByComparator(query, _COLUMN_PK);
 
 					if (orderByComparator != null) {
 						String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1910,7 +1910,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-						appendGroupByComparator(query, _FILTER_COLUMN_PK);
+						appendGroupByComparator(query, _COLUMN_PK);
 
 						if (orderByComparator != null) {
 							if (getDB().isSupportsInlineDistinct()) {
@@ -3723,6 +3723,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		}
 	</#if>
+
+	private static final String _COLUMN_PK = "${entity.alias}.${entity.PKVarName}";
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
 

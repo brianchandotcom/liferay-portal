@@ -1208,6 +1208,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
+	private static final String _COLUMN_PK = "shard.shardId";
 	private static final String _SQL_SELECT_SHARD = "SELECT shard FROM Shard shard";
 	private static final String _SQL_SELECT_SHARD_WHERE = "SELECT shard FROM Shard shard WHERE ";
 	private static final String _SQL_COUNT_SHARD = "SELECT COUNT(shard) FROM Shard shard";

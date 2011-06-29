@@ -1996,6 +1996,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		private SCProductVersionPersistenceImpl _persistenceImpl;
 	}
 
+	private static final String _COLUMN_PK = "scProductVersion.productVersionId";
 	private static final String _SQL_SELECT_SCPRODUCTVERSION = "SELECT scProductVersion FROM SCProductVersion scProductVersion";
 	private static final String _SQL_SELECT_SCPRODUCTVERSION_WHERE = "SELECT scProductVersion FROM SCProductVersion scProductVersion WHERE ";
 	private static final String _SQL_COUNT_SCPRODUCTVERSION = "SELECT COUNT(scProductVersion) FROM SCProductVersion scProductVersion";

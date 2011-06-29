@@ -923,6 +923,7 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	private static final String _COLUMN_PK = "socialEquityGroupSetting.equityGroupSettingId";
 	private static final String _SQL_SELECT_SOCIALEQUITYGROUPSETTING = "SELECT socialEquityGroupSetting FROM SocialEquityGroupSetting socialEquityGroupSetting";
 	private static final String _SQL_SELECT_SOCIALEQUITYGROUPSETTING_WHERE = "SELECT socialEquityGroupSetting FROM SocialEquityGroupSetting socialEquityGroupSetting WHERE ";
 	private static final String _SQL_COUNT_SOCIALEQUITYGROUPSETTING = "SELECT COUNT(socialEquityGroupSetting) FROM SocialEquityGroupSetting socialEquityGroupSetting";

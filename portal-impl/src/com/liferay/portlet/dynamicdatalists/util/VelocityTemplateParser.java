@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 
@@ -32,6 +34,11 @@ public class VelocityTemplateParser extends
 	@Override
 	protected String getErrorTemplateId() {
 		return PropsValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY;
+	}
+
+	@Override
+	protected TemplateContext getTemplateContext() throws Exception {
+		return VelocityEngineUtil.getWrappedStandardToolsContext();
 	}
 
 }

@@ -19,8 +19,8 @@
 					WHERE
 						(AssetEntry.groupId = ?) AND
 						(AssetEntry.classNameId = ?)
-				)) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				))
+				[$nameAND (AssetCategory.name LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.countByG_N_P">
@@ -31,8 +31,8 @@
 				AssetCategory
 			[$JOIN$]
 			WHERE
-				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(AssetCategory.groupId = ?)
+				[$nameAND (AssetCategory.name LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByEntryId">
@@ -79,8 +79,8 @@
 				AssetCategory
 			[$JOIN$]
 			WHERE
-				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(AssetCategory.groupId = ?)
+				[$nameAND (AssetCategory.name LIKE ? OR ? IS NULL)$]
 			ORDER BY
 				AssetCategory.name ASC
 		]]>
@@ -166,8 +166,8 @@
 					WHERE
 						(AssetEntry.groupId = ?) AND
 						(AssetEntry.classNameId = ?)
-				)) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				))
+				[$nameAND (AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N_P">
@@ -178,8 +178,8 @@
 				AssetTag
 			[$JOIN$]
 			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				(AssetTag.groupId = ?)
+				[$nameAND (AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByEntryId">
@@ -236,8 +236,8 @@
 					WHERE
 						(AssetEntry.groupId = ?) AND
 						(AssetEntry.classNameId = ?)
-				)) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				))
+				[$nameAND (AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetTag.name ASC
 		]]>
@@ -250,8 +250,8 @@
 				AssetTag
 			[$JOIN$]
 			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				(AssetTag.groupId = ?)
+				[$nameAND (AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetTag.name ASC
 		]]>

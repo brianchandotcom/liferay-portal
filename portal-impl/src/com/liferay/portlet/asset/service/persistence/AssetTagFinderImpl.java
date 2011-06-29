@@ -232,6 +232,8 @@ public class AssetTagFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
@@ -245,8 +247,10 @@ public class AssetTagFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			Iterator<Long> itr = q.list().iterator();
 
@@ -280,6 +284,8 @@ public class AssetTagFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_N_P);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(tagProperties));
 
 			if (inlineSQLHelper) {
@@ -295,8 +301,10 @@ public class AssetTagFinderImpl
 
 			setJoin(qPos, tagProperties);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			Iterator<Long> itr = q.list().iterator();
 
@@ -386,6 +394,8 @@ public class AssetTagFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_C_N);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			if (inlineSQLHelper) {
@@ -401,8 +411,10 @@ public class AssetTagFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -426,6 +438,8 @@ public class AssetTagFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_P);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(tagProperties));
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
@@ -442,8 +456,10 @@ public class AssetTagFinderImpl
 
 			setJoin(qPos, tagProperties);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}

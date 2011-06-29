@@ -71,6 +71,8 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -79,8 +81,10 @@ public class AssetCategoryFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			Iterator<Long> itr = q.list().iterator();
 
@@ -113,6 +117,8 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_N_P);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -121,8 +127,10 @@ public class AssetCategoryFinderImpl
 
 			setJoin(qPos, categoryProperties);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			Iterator<Long> itr = q.list().iterator();
 
@@ -280,6 +288,8 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_P);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(categoryProperties));
 
@@ -291,8 +301,10 @@ public class AssetCategoryFinderImpl
 
 			setJoin(qPos, categoryProperties);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
 
 			return (List<AssetCategory>)QueryUtil.list(
 				q, getDialect(), start, end);

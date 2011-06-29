@@ -46,8 +46,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND
-				(lower(Group_.description) LIKE ? OR ? IS NULL) AND
+				[$name(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND$]
+				[$description(lower(Group_.description) LIKE ? OR ? IS NULL) AND$]
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -138,8 +138,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND
-				(lower(Group_.description) LIKE ? OR ? IS NULL) AND
+				[$name(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND$]
+				[$description(lower(Group_.description) LIKE ? OR ? IS NULL) AND$]
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -604,8 +604,8 @@
 			FROM
 				PasswordPolicy
 			WHERE
-				(PasswordPolicy.companyId = ?) AND
-				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
+				(PasswordPolicy.companyId = ?)
+				[$nameAND (lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.PasswordPolicyFinder.findByC_N">
@@ -615,8 +615,8 @@
 			FROM
 				PasswordPolicy
 			WHERE
-				(PasswordPolicy.companyId = ?) AND
-				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
+				(PasswordPolicy.companyId = ?)
+				[$nameAND (lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.PermissionFinder.countByGroupsPermissions">
@@ -1285,9 +1285,9 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(Team.groupId = ?) AND
-				(lower(Team.name) LIKE ? OR ? IS NULL) AND
-				(lower(Team.description) LIKE ? OR ? IS NULL)
+				(Team.groupId = ?)
+				[$nameAND (lower(Team.name) LIKE ? OR ? IS NULL)$]
+				[$descriptionAND (lower(Team.description) LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByG_N_D">
@@ -1299,9 +1299,9 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(Team.groupId = ?) AND
-				(lower(Team.name) LIKE ? OR ? IS NULL) AND
-				(lower(Team.description) LIKE ? OR ? IS NULL)
+				(Team.groupId = ?)
+				[$nameAND (lower(Team.name) LIKE ? OR ? IS NULL)$]
+				[$descriptionAND (lower(Team.description) LIKE ? OR ? IS NULL)$]
 			ORDER BY
 				Team.name ASC
 		]]>
@@ -1617,9 +1617,9 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(UserGroup.companyId = ?) AND
-				(lower(UserGroup.name) LIKE ? OR ? IS NULL) AND
-				(lower(UserGroup.description) LIKE ? OR ? IS NULL)
+				(UserGroup.companyId = ?)
+				[$nameAND (lower(UserGroup.name) LIKE ? OR ? IS NULL)$]
+				[$descriptionAND (lower(UserGroup.description) LIKE ? OR ? IS NULL)$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.findByC_N">
@@ -1642,9 +1642,9 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(UserGroup.companyId = ?) AND
-				(lower(UserGroup.name) LIKE ? OR ? IS NULL) AND
-				(lower(UserGroup.description) LIKE ? OR ? IS NULL)
+				(UserGroup.companyId = ?)
+				[$nameAND (lower(UserGroup.name) LIKE ? OR ? IS NULL)$]
+				[$descriptionAND (lower(UserGroup.description) LIKE ? OR ? IS NULL)$]
 			ORDER BY
 				UserGroup.name ASC
 		]]>

@@ -44,7 +44,7 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
-				(classNameId = ? OR ? IS NULL) AND
+				(classNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -61,7 +61,7 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
-				(classNameId = ? OR ? IS NULL) AND
+				(classNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

@@ -829,7 +829,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -852,7 +852,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				AssetTag.class.getName(), _FILTER_COLUMN_PK, groupId);
+				AssetTag.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -943,7 +944,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1021,7 +1022,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				AssetTag.class.getName(), _FILTER_COLUMN_PK, groupId);
+				AssetTag.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1260,7 +1262,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				AssetTag.class.getName(), _FILTER_COLUMN_PK, groupId);
+				AssetTag.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2037,7 +2040,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		private AssetTagPersistenceImpl _persistenceImpl;
 	}
 
-	private static final String _COLUMN_PK = "assetTag.tagId";
 	private static final String _SQL_SELECT_ASSETTAG = "SELECT assetTag FROM AssetTag assetTag";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE = "SELECT assetTag FROM AssetTag assetTag WHERE ";
 	private static final String _SQL_COUNT_ASSETTAG = "SELECT COUNT(assetTag) FROM AssetTag assetTag";
@@ -2048,9 +2050,10 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "assetTag.groupId = ?";
 	private static final String _FILTER_SQL_SELECT_ASSETTAG_WHERE = "SELECT {assetTag.*} FROM AssetTag assetTag WHERE ";
 	private static final String _FILTER_SQL_COUNT_ASSETTAG_WHERE = "SELECT COUNT(DISTINCT assetTag.tagId) AS COUNT_VALUE FROM AssetTag assetTag WHERE ";
-	private static final String _FILTER_COLUMN_PK = "assetTag.tagId";
 	private static final String _FILTER_ENTITY_ALIAS = "assetTag";
 	private static final String _FILTER_ENTITY_TABLE = "AssetTag";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "assetTag.tagId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "assetTag.tagId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTag.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "AssetTag.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetTag exists with the primary key ";

@@ -2956,7 +2956,6 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private static final String _COLUMN_PK = "socialEquityUser.equityUserId";
 	private static final String _SQL_SELECT_SOCIALEQUITYUSER = "SELECT socialEquityUser FROM SocialEquityUser socialEquityUser";
 	private static final String _SQL_SELECT_SOCIALEQUITYUSER_WHERE = "SELECT socialEquityUser FROM SocialEquityUser socialEquityUser WHERE ";
 	private static final String _SQL_COUNT_SOCIALEQUITYUSER = "SELECT COUNT(socialEquityUser) FROM SocialEquityUser socialEquityUser";

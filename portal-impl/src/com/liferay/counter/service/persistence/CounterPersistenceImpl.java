@@ -579,7 +579,6 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private static final String _COLUMN_PK = "counter.name";
 	private static final String _SQL_SELECT_COUNTER = "SELECT counter FROM Counter counter";
 	private static final String _SQL_COUNT_COUNTER = "SELECT COUNT(counter) FROM Counter counter";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "counter.";

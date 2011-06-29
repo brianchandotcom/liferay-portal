@@ -6698,7 +6698,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		private GroupPersistenceImpl _persistenceImpl;
 	}
 
-	private static final String _COLUMN_PK = "group_.groupId";
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";
 	private static final String _SQL_SELECT_GROUP__WHERE = "SELECT group_ FROM Group group_ WHERE ";
 	private static final String _SQL_COUNT_GROUP_ = "SELECT COUNT(group_) FROM Group group_";

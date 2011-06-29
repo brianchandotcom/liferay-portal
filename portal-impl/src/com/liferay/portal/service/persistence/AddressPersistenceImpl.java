@@ -3479,7 +3479,6 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	private static final String _COLUMN_PK = "address.addressId";
 	private static final String _SQL_SELECT_ADDRESS = "SELECT address FROM Address address";
 	private static final String _SQL_SELECT_ADDRESS_WHERE = "SELECT address FROM Address address WHERE ";
 	private static final String _SQL_COUNT_ADDRESS = "SELECT COUNT(address) FROM Address address";

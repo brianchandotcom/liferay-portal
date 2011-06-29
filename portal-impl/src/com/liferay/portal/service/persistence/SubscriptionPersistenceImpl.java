@@ -2361,7 +2361,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
-	private static final String _COLUMN_PK = "subscription.subscriptionId";
 	private static final String _SQL_SELECT_SUBSCRIPTION = "SELECT subscription FROM Subscription subscription";
 	private static final String _SQL_SELECT_SUBSCRIPTION_WHERE = "SELECT subscription FROM Subscription subscription WHERE ";
 	private static final String _SQL_COUNT_SUBSCRIPTION = "SELECT COUNT(subscription) FROM Subscription subscription";

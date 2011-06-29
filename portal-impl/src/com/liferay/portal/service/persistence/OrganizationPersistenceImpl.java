@@ -947,7 +947,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -970,7 +970,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -1063,7 +1064,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1141,7 +1142,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1583,7 +1585,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1606,7 +1608,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -1699,7 +1702,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1777,7 +1780,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2250,7 +2254,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2273,7 +2277,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2372,7 +2377,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2450,7 +2455,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2887,7 +2893,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2987,7 +2994,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -3097,7 +3105,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Organization.class.getName(), _FILTER_COLUMN_PK);
+				Organization.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -4950,7 +4959,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		private SqlUpdate _sqlUpdate;
 	}
 
-	private static final String _COLUMN_PK = "organization.organizationId";
 	private static final String _SQL_SELECT_ORGANIZATION = "SELECT organization FROM Organization organization";
 	private static final String _SQL_SELECT_ORGANIZATION_WHERE = "SELECT organization FROM Organization organization WHERE ";
 	private static final String _SQL_COUNT_ORGANIZATION = "SELECT COUNT(organization) FROM Organization organization";
@@ -4971,9 +4979,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(organization.name IS NULL OR organization.name = ?)";
 	private static final String _FILTER_SQL_SELECT_ORGANIZATION_WHERE = "SELECT {organization.*} FROM Organization_ organization WHERE ";
 	private static final String _FILTER_SQL_COUNT_ORGANIZATION_WHERE = "SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ";
-	private static final String _FILTER_COLUMN_PK = "organization.organizationId";
 	private static final String _FILTER_ENTITY_ALIAS = "organization";
 	private static final String _FILTER_ENTITY_TABLE = "Organization_";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "organization.organizationId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "organization.organizationId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "organization.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Organization_.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Organization exists with the primary key ";

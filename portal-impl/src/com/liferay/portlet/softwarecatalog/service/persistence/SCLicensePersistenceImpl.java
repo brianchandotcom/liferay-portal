@@ -842,7 +842,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -865,7 +865,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -956,7 +956,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1034,7 +1034,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1503,7 +1503,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1526,7 +1526,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -1623,7 +1623,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1701,7 +1701,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1957,7 +1957,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2067,7 +2067,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_COLUMN_PK);
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2849,7 +2849,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		private SCLicensePersistenceImpl _persistenceImpl;
 	}
 
-	private static final String _COLUMN_PK = "scLicense.licenseId";
 	private static final String _SQL_SELECT_SCLICENSE = "SELECT scLicense FROM SCLicense scLicense";
 	private static final String _SQL_SELECT_SCLICENSE_WHERE = "SELECT scLicense FROM SCLicense scLicense WHERE ";
 	private static final String _SQL_COUNT_SCLICENSE = "SELECT COUNT(scLicense) FROM SCLicense scLicense";
@@ -2862,9 +2861,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT {scLicense.*} FROM SCLicense scLicense WHERE ";
 	private static final String _FILTER_SQL_COUNT_SCLICENSE_WHERE = "SELECT COUNT(DISTINCT scLicense.licenseId) AS COUNT_VALUE FROM SCLicense scLicense WHERE ";
-	private static final String _FILTER_COLUMN_PK = "scLicense.licenseId";
 	private static final String _FILTER_ENTITY_ALIAS = "scLicense";
 	private static final String _FILTER_ENTITY_TABLE = "SCLicense";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "scLicense.licenseId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scLicense.licenseId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scLicense.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "SCLicense.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCLicense exists with the primary key ";

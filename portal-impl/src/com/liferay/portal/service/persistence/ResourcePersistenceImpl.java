@@ -1401,7 +1401,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	private static final String _COLUMN_PK = "resource.resourceId";
 	private static final String _SQL_SELECT_RESOURCE = "SELECT resource FROM Resource resource";
 	private static final String _SQL_SELECT_RESOURCE_WHERE = "SELECT resource FROM Resource resource WHERE ";
 	private static final String _SQL_COUNT_RESOURCE = "SELECT COUNT(resource) FROM Resource resource";

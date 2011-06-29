@@ -1126,7 +1126,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
-	private static final String _COLUMN_PK = "repository.repositoryId";
 	private static final String _SQL_SELECT_REPOSITORY = "SELECT repository FROM Repository repository";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE = "SELECT repository FROM Repository repository WHERE ";
 	private static final String _SQL_COUNT_REPOSITORY = "SELECT COUNT(repository) FROM Repository repository";

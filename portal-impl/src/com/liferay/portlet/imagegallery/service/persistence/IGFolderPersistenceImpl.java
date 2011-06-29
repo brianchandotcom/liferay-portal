@@ -1498,7 +1498,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1521,7 +1521,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1613,7 +1614,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1691,7 +1692,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2501,7 +2503,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2524,7 +2526,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2621,7 +2624,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2699,7 +2702,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3308,7 +3312,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3471,7 +3476,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3664,7 +3670,6 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	protected UserPersistence userPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
-	private static final String _COLUMN_PK = "igFolder.folderId";
 	private static final String _SQL_SELECT_IGFOLDER = "SELECT igFolder FROM IGFolder igFolder";
 	private static final String _SQL_SELECT_IGFOLDER_WHERE = "SELECT igFolder FROM IGFolder igFolder WHERE ";
 	private static final String _SQL_COUNT_IGFOLDER = "SELECT COUNT(igFolder) FROM IGFolder igFolder";
@@ -3687,9 +3692,10 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(igFolder.name IS NULL OR igFolder.name = ?)";
 	private static final String _FILTER_SQL_SELECT_IGFOLDER_WHERE = "SELECT {igFolder.*} FROM IGFolder igFolder WHERE ";
 	private static final String _FILTER_SQL_COUNT_IGFOLDER_WHERE = "SELECT COUNT(DISTINCT igFolder.folderId) AS COUNT_VALUE FROM IGFolder igFolder WHERE ";
-	private static final String _FILTER_COLUMN_PK = "igFolder.folderId";
 	private static final String _FILTER_ENTITY_ALIAS = "igFolder";
 	private static final String _FILTER_ENTITY_TABLE = "IGFolder";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "igFolder.folderId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "igFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "IGFolder.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGFolder exists with the primary key ";

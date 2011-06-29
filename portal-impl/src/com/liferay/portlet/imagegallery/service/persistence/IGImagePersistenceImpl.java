@@ -1573,7 +1573,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1596,7 +1596,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -1687,7 +1688,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1765,7 +1766,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2750,7 +2752,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2773,7 +2775,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -2870,7 +2873,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2948,7 +2951,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3566,7 +3570,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3589,7 +3593,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -3686,7 +3691,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3764,7 +3769,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3891,7 +3897,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			conjunctionable = true;
 		}
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3914,7 +3920,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -4440,7 +4447,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			}
 		}
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4463,7 +4470,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -4577,7 +4585,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 			}
 		}
 
-		appendGroupByComparator(query, _COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4655,7 +4663,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -5157,7 +5166,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5480,7 +5490,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5679,7 +5690,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5758,7 +5770,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5902,7 +5915,8 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				IGImage.class.getName(), _FILTER_COLUMN_PK, groupId);
+				IGImage.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -6029,7 +6043,6 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 	protected ExpandoValuePersistence expandoValuePersistence;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
-	private static final String _COLUMN_PK = "igImage.imageId";
 	private static final String _SQL_SELECT_IGIMAGE = "SELECT igImage FROM IGImage igImage";
 	private static final String _SQL_SELECT_IGIMAGE_WHERE = "SELECT igImage FROM IGImage igImage WHERE ";
 	private static final String _SQL_COUNT_IGIMAGE = "SELECT COUNT(igImage) FROM IGImage igImage";
@@ -6072,9 +6085,10 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 
 	private static final String _FILTER_SQL_SELECT_IGIMAGE_WHERE = "SELECT {igImage.*} FROM IGImage igImage WHERE ";
 	private static final String _FILTER_SQL_COUNT_IGIMAGE_WHERE = "SELECT COUNT(DISTINCT igImage.imageId) AS COUNT_VALUE FROM IGImage igImage WHERE ";
-	private static final String _FILTER_COLUMN_PK = "igImage.imageId";
 	private static final String _FILTER_ENTITY_ALIAS = "igImage";
 	private static final String _FILTER_ENTITY_TABLE = "IGImage";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "igImage.imageId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igImage.imageId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "igImage.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "IGImage.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGImage exists with the primary key ";

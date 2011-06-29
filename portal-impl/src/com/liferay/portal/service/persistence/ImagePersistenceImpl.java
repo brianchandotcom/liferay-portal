@@ -1115,7 +1115,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = IGImagePersistence.class)
 	protected IGImagePersistence igImagePersistence;
-	private static final String _COLUMN_PK = "image.imageId";
 	private static final String _SQL_SELECT_IMAGE = "SELECT image FROM Image image";
 	private static final String _SQL_SELECT_IMAGE_WHERE = "SELECT image FROM Image image WHERE ";
 	private static final String _SQL_COUNT_IMAGE = "SELECT COUNT(image) FROM Image image";

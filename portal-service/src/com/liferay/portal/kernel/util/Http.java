@@ -276,6 +276,7 @@ public interface Http {
 		private String _fileName;
 		private String _name;
 		private byte[] _value;
+
 	}
 
 	public enum Method {
@@ -300,8 +301,10 @@ public interface Http {
 				_fileParts = new ArrayList<FilePart>();
 			}
 
-			_fileParts.add(
-				new FilePart(name, fileName, value, contentType, charSet));
+			FilePart filePart = new FilePart(
+				name, fileName, value, contentType, charSet);
+
+			_fileParts.add(filePart);
 		}
 
 		public void addHeader(String name, String value) {

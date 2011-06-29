@@ -618,28 +618,30 @@ public class HttpImpl implements Http {
 	public String parameterMapToString(
 		Map<String, String[]> parameterMap, boolean addQuestion) {
 
+		if (parameterMap.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler();
 
-		if (parameterMap.size() > 0) {
-			if (addQuestion) {
-				sb.append(StringPool.QUESTION);
-			}
+		if (addQuestion) {
+			sb.append(StringPool.QUESTION);
+		}
 
-			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-				String name = entry.getKey();
-				String[] values = entry.getValue();
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
-				for (String value : values) {
-					sb.append(name);
-					sb.append(StringPool.EQUAL);
-					sb.append(encodeURL(value));
-					sb.append(StringPool.AMPERSAND);
-				}
+			for (String value : values) {
+				sb.append(name);
+				sb.append(StringPool.EQUAL);
+				sb.append(encodeURL(value));
+				sb.append(StringPool.AMPERSAND);
 			}
+		}
 
-			if (sb.index() > 1) {
-				sb.setIndex(sb.index() - 1);
-			}
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
@@ -893,20 +895,6 @@ public class HttpImpl implements Http {
 		return xml;
 	}
 
-	protected List<Part> addFilePart(
-		List<Part> partsList, String name, String fileName, byte[] value,
-		String contentType, String charSet) {
-
-		Part part =
-			new org.apache.commons.httpclient.methods.multipart.FilePart(
-				name, new ByteArrayPartSource(fileName, value), contentType,
-				charSet);
-
-		partsList.add(part);
-
-		return partsList;
-	}
-
 	protected boolean hasRequestHeader(HttpMethod httpMethod, String name) {
 		Header[] headers = httpMethod.getRequestHeaders(name);
 
@@ -946,6 +934,16 @@ public class HttpImpl implements Http {
 		}
 
 		return commonCookies;
+	}
+
+	protected org.apache.commons.httpclient.methods.multipart.FilePart
+		toCommonsFilePart(Http.FilePart filePart) {
+
+		return new org.apache.commons.httpclient.methods.multipart.FilePart(
+			filePart.getName(),
+			new ByteArrayPartSource(
+				filePart.getFileName(), filePart.getValue()),
+			filePart.getContentType(), filePart.getCharSet());
 	}
 
 	protected Cookie toServletCookie(
@@ -1050,9 +1048,9 @@ public class HttpImpl implements Http {
 
 					entityEnclosingMethod.setRequestEntity(requestEntity);
 				}
-				else if (((parts != null && parts.size() > 0) ||
-						 (fileParts != null && fileParts.size() > 0)) &&
-						method.equals(Http.Method.POST)) {
+				else if (method.equals(Http.Method.POST) &&
+						 (((fileParts != null) && !fileParts.isEmpty()) ||
+						  ((parts != null) && !parts.isEmpty()))) {
 
 					PostMethod postMethod = (PostMethod)httpMethod;
 
@@ -1071,17 +1069,18 @@ public class HttpImpl implements Http {
 						}
 					}
 
-					for (Http.FilePart filePart : fileParts) {
-						partsList = addFilePart(
-							partsList, filePart.getName(),
-							filePart.getFileName(), filePart.getValue(),
-							filePart.getContentType(), filePart.getCharSet());
+					if (fileParts != null) {
+						for (Http.FilePart filePart : fileParts) {
+							partsList.add(toCommonsFilePart(filePart));
+						}
 					}
 
-					postMethod.setRequestEntity(
+					MultipartRequestEntity multipartRequestEntity =
 						new MultipartRequestEntity(
-							partsList.toArray(new Part[] {}),
-							postMethod.getParams()));
+							partsList.toArray(new Part[0]),
+							postMethod.getParams());
+
+					postMethod.setRequestEntity(multipartRequestEntity);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {
@@ -1103,8 +1102,9 @@ public class HttpImpl implements Http {
 
 			if ((method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
-				((body != null) || ((parts != null) && (parts.size() > 0)) ||
-				 ((fileParts != null) && (fileParts.size() > 0)))) {
+				((body != null) ||
+				 ((fileParts != null) && !fileParts.isEmpty()) |
+				 ((parts != null) && !parts.isEmpty()))) {
 			}
 			else if (!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {
 				httpMethod.addRequestHeader(

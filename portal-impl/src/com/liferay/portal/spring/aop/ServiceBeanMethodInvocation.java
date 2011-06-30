@@ -47,6 +47,7 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		_method.setAccessible(true);
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -84,6 +85,7 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _target;
 	}
 
+	@Override
 	public int hashCode() {
 		if (_hashCode == 0) {
 			_hashCode = _method.hashCode();
@@ -121,6 +123,7 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		}
 	}
 
+	@Override
 	public String toString() {
 		if (_toString != null) {
 			return _toString;

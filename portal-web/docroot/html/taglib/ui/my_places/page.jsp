@@ -76,7 +76,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 				}
 			}
 			else if (regularSite) {
-				if (PortalPermissionUtil.contains(permissionChecker, ActionKeys.ACCESS_CONTROL_PANEL)) {
+				if (PortalPermissionUtil.contains(permissionChecker, ActionKeys.MANAGE_CONTROL_PANEL)) {
 					privateAddPageHREF = themeDisplay.getURLControlPanel();
 				}
 				else if (GroupPermissionUtil.contains(permissionChecker, myPlace.getGroupId(), ActionKeys.MANAGE_LAYOUTS)) {

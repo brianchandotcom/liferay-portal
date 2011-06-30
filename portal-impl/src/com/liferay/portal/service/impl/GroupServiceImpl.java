@@ -172,11 +172,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
-		User user = userLocalService.getUser(userId);
+		User user = userPersistence.fetchByPrimaryKey(userId);
 
-		if (user == null || user.isDefaultUser()) {
+		if (user.isDefaultUser()) {
 			return Collections.emptyList();
 		}
 
@@ -242,7 +242,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (PortalPermissionUtil.contains(
-			getPermissionChecker(), ActionKeys.ACCESS_CONTROL_PANEL)) {
+				getPermissionChecker(), ActionKeys.MANAGE_CONTROL_PANEL)) {
 
 			Group controlPanelGroup = groupLocalService.getGroup(
 				user.getCompanyId(), GroupConstants.CONTROL_PANEL);
@@ -255,7 +255,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return Collections.unmodifiableList(userPlaces);
-
 	}
 
 	public boolean hasUserGroup(long userId, long groupId)

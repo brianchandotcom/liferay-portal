@@ -182,8 +182,12 @@ public class DLUtil {
 			portletURL.setParameter(
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("folderId", ancestorFolder.getFolderId());
+
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorFolder.getName(), portletURL.toString());
+				request, ancestorFolder.getName(), portletURL.toString(), data);
 		}
 
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -197,8 +201,12 @@ public class DLUtil {
 		if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
 			(folderId != defaultFolderId)) {
 
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("folderId", folderId);
+
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, folder.getName(), portletURL.toString());
+				request, folder.getName(), portletURL.toString(), data);
 		}
 	}
 

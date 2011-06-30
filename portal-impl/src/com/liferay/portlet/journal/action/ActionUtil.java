@@ -17,14 +17,17 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
+import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
 import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -45,6 +48,10 @@ public class ActionUtil {
 		String articleId = ParamUtil.getString(request, "articleId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		JournalStructure structure = null;
+
 		JournalArticle article = null;
 
 		if (Validator.isNotNull(articleId)) {
@@ -58,8 +65,21 @@ public class ActionUtil {
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {
-			JournalStructure structure =
-				JournalStructureServiceUtil.getStructure(groupId, structureId);
+			try{
+				structure = JournalStructureServiceUtil.getStructure(
+					groupId, structureId);
+			}
+			catch (NoSuchStructureException nsse1) {
+				if (groupId != themeDisplay.getCompanyGroupId()) {
+					try {
+						structure =
+							JournalStructureLocalServiceUtil.getStructure(
+								themeDisplay.getCompanyGroupId(), structureId);
+					}
+					catch (NoSuchStructureException nsse2) {
+					}
+				}
+			}
 
 			article = JournalArticleServiceUtil.getArticle(
 				groupId, JournalStructure.class.getName(), structure.getId());

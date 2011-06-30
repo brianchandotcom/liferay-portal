@@ -701,7 +701,7 @@ public class ServicePreAction extends Action {
 
 		if (group.isControlPanel()) {
 			if (PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.MANAGE_CONTROL_PANEL)) {
+					permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 				return true;
 			}

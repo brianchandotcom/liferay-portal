@@ -163,9 +163,6 @@ public class ActionKeys {
 	public static final String MANAGE_ARCHIVED_SETUPS =
 		"MANAGE_ARCHIVED_SETUPS";
 
-	public static final String MANAGE_CONTROL_PANEL =
-		"MANAGE_CONTROL_PANEL";
-
 	public static final String MANAGE_COUPONS = "MANAGE_COUPONS";
 
 	public static final String MANAGE_LAYOUTS = "MANAGE_LAYOUTS";
@@ -213,6 +210,8 @@ public class ActionKeys {
 	public static final String UPDATE_USER = "UPDATE_USER";
 
 	public static final String VIEW = "VIEW";
+
+	public static final String VIEW_CONTROL_PANEL = "VIEW_CONTROL_PANEL";
 
 	public static final String VIEW_USER = "VIEW_USER";
 

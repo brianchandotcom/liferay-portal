@@ -242,7 +242,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.MANAGE_CONTROL_PANEL)) {
+				getPermissionChecker(), ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			Group controlPanelGroup = groupLocalService.getGroup(
 				user.getCompanyId(), GroupConstants.CONTROL_PANEL);

@@ -19,12 +19,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Raymond Augé
@@ -146,7 +152,29 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	public String[] getStringArray() throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		return StringUtil.split(getData());
+		String data = getData();
+
+		if (Validator.isNotNull(data)) {
+			try {
+				List<String> values = new ArrayList<String>();
+
+				Document document = SAXReaderUtil.read(data);
+
+				Element rootElement = document.getRootElement();
+
+				List<Element> elements = rootElement.elements("value");
+
+				for (Element element : elements) {
+					values.add(element.getText());
+				}
+
+				return values.toArray(new String[elements.size()]);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return new String[0];
 	}
 
 	public void setBoolean(boolean data)
@@ -260,7 +288,21 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		setData(StringUtil.merge(data));
+		Document document = SAXReaderUtil.createDocument();
+
+		document.addElement("data");
+
+		Element rootElement = document.getRootElement();
+
+		for (String value : data) {
+			Element element = SAXReaderUtil.createElement("value");
+
+			element.addText(value);
+
+			rootElement.add(element);
+		}
+
+		setData(document.asXML());
 	}
 
 	protected void validate(int type) throws PortalException, SystemException {

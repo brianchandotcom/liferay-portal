@@ -1162,6 +1162,8 @@ public class PropsValues {
 
 	public static final boolean SESSION_ENABLE_URL_WITH_SESSION_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_ENABLE_URL_WITH_SESSION_ID));
 
+	public static final String SESSION_ID_DELIMITER = PropsUtil.get(PropsKeys.SESSION_ID_DELIMITER);
+
 	public static String[] SESSION_PHISHING_PROTECTED_ATTRIBUTES = PropsUtil.getArray(PropsKeys.SESSION_PHISHING_PROTECTED_ATTRIBUTES);
 
 	public static final String[] SESSION_SHARED_ATTRIBUTES = PropsUtil.getArray(PropsKeys.SESSION_SHARED_ATTRIBUTES);

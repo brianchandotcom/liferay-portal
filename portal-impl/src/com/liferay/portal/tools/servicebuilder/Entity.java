@@ -391,6 +391,20 @@ public class Entity {
 		return _name.hashCode();
 	}
 
+	public boolean hasEagerBlobColumn() {
+		if ((_blobList == null) || _blobList.isEmpty()) {
+			return false;
+		}
+
+		for (EntityColumn col : _blobList) {
+			if (!col.isLazy()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasLazyBlobColumn() {
 		if ((_blobList == null) || _blobList.isEmpty()) {
 			return false;
@@ -408,20 +422,6 @@ public class Entity {
 	public boolean hasLocalizedColumn() {
 		for (EntityColumn col : _columnList) {
 			if (col.isLocalized()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasNonLazyBlobColumn() {
-		if ((_blobList == null) || _blobList.isEmpty()) {
-			return false;
-		}
-
-		for (EntityColumn col : _blobList) {
-			if (!col.isLazy()) {
 				return true;
 			}
 		}

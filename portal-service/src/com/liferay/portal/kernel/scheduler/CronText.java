@@ -95,6 +95,14 @@ public class CronText {
 		if (_frequency == CronText.NO_FREQUENCY) {
 			dayOfWeek = StringPool.QUESTION;
 		}
+		else if (_frequency == CronText.HOURLY_FREQUENCY) {
+			minute = StringPool.STAR;
+			hour = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;
+			dayOfMonth = StringPool.STAR;
+			month = StringPool.STAR;
+			dayOfWeek = StringPool.QUESTION;
+			year = StringPool.STAR;
+		}
 		else if (_frequency == CronText.MINUTELY_FREQUENCY) {
 			minute = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;
 			hour = StringPool.STAR;

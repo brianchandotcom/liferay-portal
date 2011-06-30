@@ -35,8 +35,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		sb.append("', '");
 		sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
 		sb.append("', Liferay.Util.getWindow());");
-
-		String rowHREF = sb.toString();
 		%>
 
 		<liferay-ui:icon

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.BreadcrumbEntry;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -122,6 +122,13 @@ public class PortalUtil {
 		HttpServletRequest request, String title, String url) {
 
 		getPortal().addPortletBreadcrumbEntry(request, title, url);
+	}
+
+	public static void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data) {
+
+		getPortal().addPortletBreadcrumbEntry(request, title, url, data);
 	}
 
 	public static void addPortletDefaultResource(
@@ -804,13 +811,13 @@ public class PortalUtil {
 	/**
 	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
-	public static List<KeyValuePair> getPortletBreadcrumbList(
+	public static List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {
 
 		return getPortal().getPortletBreadcrumbList(request);
 	}
 
-	public static List<KeyValuePair> getPortletBreadcrumbs(
+	public static List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
 		return getPortal().getPortletBreadcrumbs(request);

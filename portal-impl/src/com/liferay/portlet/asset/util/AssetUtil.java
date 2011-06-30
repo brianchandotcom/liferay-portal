@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BreadcrumbEntry;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -105,13 +105,13 @@ public class AssetUtil {
 			HttpServletRequest request, String title, String url)
 		throws Exception {
 
-		List<KeyValuePair> portletBreadcrumbs =
-			(List<KeyValuePair>)request.getAttribute(
+		List<BreadcrumbEntry> portletBreadcrumbs =
+			(List<BreadcrumbEntry>)request.getAttribute(
 				WebKeys.PORTLET_BREADCRUMBS);
 
 		if (portletBreadcrumbs != null) {
-			for (KeyValuePair portletBreadcrumb : portletBreadcrumbs) {
-				if (title.equals(portletBreadcrumb.getKey())) {
+			for (BreadcrumbEntry portletBreadcrumb : portletBreadcrumbs) {
+				if (title.equals(portletBreadcrumb.getTitle())) {
 					return;
 				}
 			}

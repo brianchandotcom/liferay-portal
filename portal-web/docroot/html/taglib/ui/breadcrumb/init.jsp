@@ -167,15 +167,17 @@ private void _buildParentGroupsBreadcrumb(LayoutSet layoutSet, PortletURL portle
 }
 
 private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCurrentGroup, boolean showCurrentPortlet, ThemeDisplay themeDisplay, StringBundler sb) throws Exception {
-	List<KeyValuePair> portletBreadcrumbs = PortalUtil.getPortletBreadcrumbs(request);
+	List<BreadcrumbEntry> portletBreadcrumbs = PortalUtil.getPortletBreadcrumbs(request);
 
 	if (portletBreadcrumbs == null) {
 		return;
 	}
 
-	for (KeyValuePair portletBreadcrumb : portletBreadcrumbs) {
-		String breadcrumbText = portletBreadcrumb.getKey();
-		String breadcrumbURL = portletBreadcrumb.getValue();
+	for (BreadcrumbEntry portletBreadcrumb : portletBreadcrumbs) {
+		Map<String, Object> breadcrumbData = portletBreadcrumb.getData();
+
+		String breadcrumbText = portletBreadcrumb.getTitle();
+		String breadcrumbURL = portletBreadcrumb.getUrl();
 
 		if (!showCurrentGroup) {
 			String parentGroupName = themeDisplay.getParentGroupName();
@@ -206,7 +208,9 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 		if (Validator.isNotNull(breadcrumbURL)) {
 			sb.append("<a href=\"");
 			sb.append(HtmlUtil.escape(breadcrumbURL));
-			sb.append("\">");
+			sb.append("\"");
+			sb.append(AUIUtil.buildData(breadcrumbData));
+			sb.append(">");
 		}
 
 		sb.append(HtmlUtil.escape(breadcrumbText));

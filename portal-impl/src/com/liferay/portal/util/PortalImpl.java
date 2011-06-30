@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -75,6 +74,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.BreadcrumbEntry;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Company;
@@ -97,6 +97,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.impl.BreadcrumbEntryImpl;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.AuthException;
@@ -554,18 +555,25 @@ public class PortalImpl implements Portal {
 	public void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url) {
 
-		List<KeyValuePair> portletBreadcrumbs =
-			(List<KeyValuePair>)request.getAttribute(
+		addPortletBreadcrumbEntry(request, title, url, null);
+	}
+
+	public void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data) {
+
+		List<BreadcrumbEntry> portletBreadcrumbs =
+			(List<BreadcrumbEntry>)request.getAttribute(
 				WebKeys.PORTLET_BREADCRUMBS);
 
 		if (portletBreadcrumbs == null) {
-			portletBreadcrumbs = new ArrayList<KeyValuePair>();
+			portletBreadcrumbs = new ArrayList<BreadcrumbEntry>();
 
 			request.setAttribute(
 				WebKeys.PORTLET_BREADCRUMBS, portletBreadcrumbs);
 		}
 
-		portletBreadcrumbs.add(new KeyValuePair(title, url));
+		portletBreadcrumbs.add(new BreadcrumbEntryImpl(title, url, data));
 	}
 
 	public void addPortletDefaultResource(
@@ -2721,16 +2729,16 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
-	public List<KeyValuePair> getPortletBreadcrumbList(
+	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {
 
 		return getPortletBreadcrumbs(request);
 	}
 
-	public List<KeyValuePair> getPortletBreadcrumbs(
+	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
-		return (List<KeyValuePair>)request.getAttribute(
+		return (List<BreadcrumbEntry>)request.getAttribute(
 			WebKeys.PORTLET_BREADCRUMBS);
 	}
 

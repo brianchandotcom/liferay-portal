@@ -179,6 +179,13 @@ public class AssetEntryFinderImpl
 			sb.append("AssetEntries_AssetCategories.categoryId) ");
 		}
 
+		if (entryQuery.getLinkedAssetEntryId() > 0) {
+			sb.append("INNER JOIN ");
+			sb.append("AssetLink ON ");
+			sb.append("(AssetEntry.entryId = AssetLink.entryId1) ");
+			sb.append("OR (AssetEntry.entryId = AssetLink.entryId2)");
+		}
+
 		if (entryQuery.getOrderByCol1().equals("ratings") ||
 			entryQuery.getOrderByCol2().equals("ratings")) {
 
@@ -187,13 +194,6 @@ public class AssetEntryFinderImpl
 			sb.append("(RatingsEntry.classNameId = ");
 			sb.append("AssetEntry.classNameId) AND ");
 			sb.append("(RatingsEntry.classPK = AssetEntry.classPK)");
-		}
-
-		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			sb.append("INNER JOIN ");
-			sb.append("AssetLink ON ");
-			sb.append("(AssetEntry.entryId = AssetLink.entryId1) ");
-			sb.append("OR (AssetEntry.entryId = AssetLink.entryId2)");
 		}
 
 		sb.append("WHERE ");

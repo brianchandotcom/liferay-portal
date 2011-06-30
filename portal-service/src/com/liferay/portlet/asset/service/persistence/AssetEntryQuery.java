@@ -277,8 +277,8 @@ public class AssetEntryQuery {
 		_layout = layout;
 	}
 
-	public void setLinkedAssetEntryId(long assetEntryId) {
-		_linkedAssetEntryId = assetEntryId;
+	public void setLinkedAssetEntryId(long linkedAssetEntryId) {
+		_linkedAssetEntryId = linkedAssetEntryId;
 	}
 
 	public void setEnd(int end) {

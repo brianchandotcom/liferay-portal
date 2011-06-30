@@ -55,6 +55,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.documentlibrary.util.PDFProcessor;
@@ -368,6 +369,7 @@ public class WebServerServlet extends HttpServlet {
 			request, "documentThumbnail");
 		int previewFileIndex = ParamUtil.getInteger(
 			request, "previewFileIndex");
+		boolean audioPreview = ParamUtil.getBoolean(request, "audioPreview");
 		boolean videoPreview = ParamUtil.getBoolean(request, "videoPreview");
 		boolean videoThumbnail = ParamUtil.getBoolean(
 			request, "videoThumbnail");
@@ -403,6 +405,16 @@ public class WebServerServlet extends HttpServlet {
 
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
+
+			converted = true;
+		}
+		else if (audioPreview) {
+			File previewFile = AudioProcessor.getPreviewFile(tempFileId);
+
+			inputStream = new FileInputStream(previewFile);
+
+			fileName = FileUtil.stripExtension(fileName).concat(
+				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
 
 			converted = true;
 		}

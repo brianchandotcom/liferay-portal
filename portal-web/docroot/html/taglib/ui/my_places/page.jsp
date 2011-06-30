@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %>
+<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
 
 <%
 int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_places:max"));
@@ -75,7 +76,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 				}
 			}
 			else if (regularSite) {
-				if (myPlace.isControlPanel()) {
+				if (PortalPermissionUtil.contains(permissionChecker, ActionKeys.ACCESS_CONTROL_PANEL)) {
 					privateAddPageHREF = themeDisplay.getURLControlPanel();
 				}
 				else if (GroupPermissionUtil.contains(permissionChecker, myPlace.getGroupId(), ActionKeys.MANAGE_LAYOUTS)) {

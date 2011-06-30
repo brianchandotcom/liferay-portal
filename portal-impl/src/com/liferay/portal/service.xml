@@ -1551,6 +1551,38 @@
 			<finder-column name="actionId" />
 		</finder>
 	</entity>
+	<entity name="ResourceBlock" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="resourceBlockId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="permissionsHash" type="String" />
+		<column name="referenceCount" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="PermissionsHash" return-type="ResourceBlock" unique="true">
+			<finder-column name="permissionsHash" />
+		</finder>
+	</entity>
+	<entity name="ResourceBlockRoleAction" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="actionId" type="long" primary="true" />
+		<column name="resourceBlockId" type="long" primary="true" />
+		<column name="roleId" type="long" primary="true" />
+
+		<!-- Finder methods -->
+
+		<finder name="R_A" return-type="Collection">
+			<finder-column name="roleId" />
+			<finder-column name="actionId" />
+		</finder>
+	</entity>
 	<entity name="ResourceCode" local-service="true" remote-service="false">
 
 		<!-- PK fields -->

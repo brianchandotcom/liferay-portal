@@ -346,6 +346,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentImpl.class, dlContent.getPrimaryKey(), dlContent);
 
+		dlContent.resetOriginalValues();
+
 		if (!isNew &&
 				((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(dlContent.getPortletId(),

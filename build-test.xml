@@ -2648,7 +2648,7 @@ executable ZIP file.
 				<replace
 					file="portal-web/test/test-portal-web.properties"
 					token="#selenium.executable.dir="
-					value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+					value="selenium.executable.dir=${project.dir}/tools/selenium"
 				/>
 				<replace
 					file="portal-web/test/test-portal-web.properties"
@@ -2670,7 +2670,7 @@ executable ZIP file.
 					<replace
 						file="portal-web/test/test-portal-web.properties"
 						token="#selenium.executable.dir="
-						value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+						value="selenium.executable.dir=${project.dir}/tools/selenium"
 					/>
 					<replace
 						file="portal-web/test/test-portal-web.properties"

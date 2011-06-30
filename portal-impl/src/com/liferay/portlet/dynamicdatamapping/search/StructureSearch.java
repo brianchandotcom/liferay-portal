@@ -42,7 +42,7 @@ public class StructureSearch extends SearchContainer<DDMStructure> {
 	}
 
 	public static final String EMPTY_RESULTS_MESSAGE =
-		"there-are-no-structures";
+		"there-are-no-results";
 
 	public StructureSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

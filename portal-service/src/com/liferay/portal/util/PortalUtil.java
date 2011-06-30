@@ -763,8 +763,15 @@ public class PortalUtil {
 		return getPortal().getPortalLibDir();
 	}
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public static int getPortalPort() {
 		return getPortal().getPortalPort();
+	}
+
+	public static int getPortalPort(boolean secure) {
+		return getPortal().getPortalPort(secure);
 	}
 
 	public static Properties getPortalProperties() {

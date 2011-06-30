@@ -20,6 +20,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import java.util.List;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.TargetSource;
@@ -69,9 +71,13 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 				targetClass = target.getClass();
 			}
 
+			List<Object> interceptors =
+				_advisedSupport.getInterceptorsAndDynamicInterceptionAdvice(
+					method, targetClass);
+
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 				new ServiceBeanMethodInvocation(
-					target, targetClass, method, arguments);
+					target, targetClass, method, arguments, interceptors);
 
 			Skip skip = ServiceMethodAnnotationCache.get(
 				serviceBeanMethodInvocation, Skip.class, null);

@@ -3079,22 +3079,25 @@ AUI().add(
 							content = output.join(',');
 						}
 						else if (type == 'image') {
-							var imageInput = componentContainer.one('.journal-image-field input');
-
-							var contentValue = imageInput.val() || false;
-
-							var imageContent = instance.getByName(componentContainer, 'journalImageContent');
 							var imageDelete = instance.getByName(componentContainer, 'journalImageDelete');
 
-							if (imageDelete && imageDelete.val() == 'delete') {
+							if (imageDelete && (imageDelete.val() == 'delete')) {
 								content = 'delete';
 							}
 							else {
-								if (contentValue) {
-									content = contentValue;
+								var imageInput = componentContainer.one('.journal-image-field input');
+
+								var imageInputValue = imageInput.val() || false;
+
+								if (imageInputValue) {
+									content = imageInputValue;
 								}
-								else if (imageContent) {
-									content = imageContent.val();
+								else {
+									var imageContent = instance.getByName(componentContainer, 'journalImageContent');
+
+									if (imageContent) {
+										content = imageContent.val();
+									}
 								}
 							}
 						}

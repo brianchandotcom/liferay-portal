@@ -89,7 +89,7 @@ if (Validator.isNull(authType)) {
 
 				<c:if test="<%= Validator.isNotNull(user2.getReminderQueryQuestion()) && Validator.isNotNull(user2.getReminderQueryAnswer()) %>">
 
-					<% 
+					<%
 					String login = null;
 
 					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {

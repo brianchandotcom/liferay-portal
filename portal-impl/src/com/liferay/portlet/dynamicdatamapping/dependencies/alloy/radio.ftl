@@ -1,13 +1,9 @@
 <#include "../init.ftl">
 
-<div class="lfr-forms-field-wrapper aui-field-radio aui-field-wrapper-content">
-	<label class="aui-field-label">
-		<@liferay_ui.message key=label />
+<#if required>
+	<#assign label = label + " (" + languageUtil.get(locale, "required") + ")">
+</#if>
 
-		<#if required>
-			<span class="aui-label-required">(<@liferay_ui.message key="required" />)</span>
-		</#if>
-	</label>
-
+<@aui["field-wrapper"] helpMessage=field.tip label=label>
 	${field.children}
-</div>
+</@>

@@ -26,6 +26,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the AssetEntry service. Represents a row in the &quot;AssetEntry&quot; database table, with each column mapped to a property of this class.
@@ -323,8 +325,48 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 *
 	 * @return the title of this asset entry
 	 */
-	@AutoEscape
 	public String getTitle();
+
+	/**
+	 * Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this asset entry
+	 */
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this asset entry
+	 */
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this asset entry
+	 */
+	public String getTitle(String languageId, boolean useDefault);
+
+	/**
+	 * Returns a map of the locales and localized titles of this asset entry.
+	 *
+	 * @return the locales and localized titles of this asset entry
+	 */
+	public Map<Locale, String> getTitleMap();
 
 	/**
 	 * Sets the title of this asset entry.
@@ -332,6 +374,38 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param title the title of this asset entry
 	 */
 	public void setTitle(String title);
+
+	/**
+	 * Sets the localized title of this asset entry in the language.
+	 *
+	 * @param title the localized title of this asset entry
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this asset entry in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this asset entry
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	/**
+	 * Sets the localized titles of this asset entry from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this asset entry
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this asset entry from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this asset entry
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
 
 	/**
 	 * Returns the description of this asset entry.

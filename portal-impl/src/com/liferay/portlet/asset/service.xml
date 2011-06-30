@@ -142,7 +142,7 @@
 		<column name="publishDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="mimeType" type="String" />
-		<column name="title" type="String" />
+		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" />
 		<column name="summary" type="String" />
 		<column name="url" type="String" />

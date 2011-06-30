@@ -390,12 +390,108 @@ public class AssetEntryWrapper implements AssetEntry {
 	}
 
 	/**
+	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this asset entry
+	*/
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _assetEntry.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _assetEntry.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this asset entry
+	*/
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _assetEntry.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset entry
+	*/
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getTitle(languageId, useDefault);
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this asset entry.
+	*
+	* @return the locales and localized titles of this asset entry
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _assetEntry.getTitleMap();
+	}
+
+	/**
 	* Sets the title of this asset entry.
 	*
 	* @param title the title of this asset entry
 	*/
 	public void setTitle(java.lang.String title) {
 		_assetEntry.setTitle(title);
+	}
+
+	/**
+	* Sets the localized title of this asset entry in the language.
+	*
+	* @param title the localized title of this asset entry
+	* @param locale the locale of the language
+	*/
+	public void setTitle(java.lang.String title, java.util.Locale locale) {
+		_assetEntry.setTitle(title, locale);
+	}
+
+	/**
+	* Sets the localized title of this asset entry in the language, and sets the default locale.
+	*
+	* @param title the localized title of this asset entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setTitle(java.lang.String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setTitle(title, locale, defaultLocale);
+	}
+
+	/**
+	* Sets the localized titles of this asset entry from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this asset entry
+	*/
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+		_assetEntry.setTitleMap(titleMap);
+	}
+
+	/**
+	* Sets the localized titles of this asset entry from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this asset entry
+	* @param defaultLocale the default locale
+	*/
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**

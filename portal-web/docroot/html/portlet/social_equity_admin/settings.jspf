@@ -17,7 +17,7 @@
 <%
 String taglibEnable = renderResponse.getNamespace() + "toggleEquitySection('#" + renderResponse.getNamespace() + "settings');";
 
-boolean enabled = SocialEquityGroupSettingLocalServiceUtil.isEnabled(themeDisplay.getScopeGroupId(), Group.class.getName());
+boolean enabled = SocialEquityGroupSettingLocalServiceUtil.isEnabled(groupId, Group.class.getName());
 %>
 
 <h4>
@@ -34,7 +34,7 @@ boolean enabled = SocialEquityGroupSettingLocalServiceUtil.isEnabled(themeDispla
 
 		taglibEnable = renderResponse.getNamespace() + "toggleEquitySection('#" + renderResponse.getNamespace() + StringUtil.replace(className, ".", "_") + "');";
 
-		enabled = SocialEquityGroupSettingLocalServiceUtil.isEnabled(themeDisplay.getScopeGroupId(), className);
+		enabled = SocialEquityGroupSettingLocalServiceUtil.isEnabled(groupId, className);
 	%>
 
 		<br />

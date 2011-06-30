@@ -551,6 +551,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
+		<#if entity.hasLazyBlobColumn()>
+			${entity.varName}.resetOriginalValues();
+		</#if>
+
 		<#list uniqueFinderList as finder>
 			<#assign finderColsList = finder.getColumns()>
 

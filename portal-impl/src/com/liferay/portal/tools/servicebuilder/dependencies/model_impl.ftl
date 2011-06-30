@@ -152,7 +152,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
-	<#if entity.hasLazyBlobColumn()>
+	<#if entity.hasNonLazyBlobColumn()>
 		public static final boolean ENTITY_CACHE_ENABLED = false;
 
 		public static final boolean FINDER_CACHE_ENABLED = false;

@@ -23,6 +23,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/social_equity_admin/view");
 portletURL.setParameter("tabs1", tabs1);
+
+Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+long groupId = group.getGroupId();
+
+if (group.getLiveGroupId() > 0) {
+	groupId = group.getLiveGroupId();
+}
 %>
 
 <liferay-ui:tabs

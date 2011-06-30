@@ -23,8 +23,8 @@
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= SocialEquityUserLocalServiceUtil.getRankedEquityUsers(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd(), new SocialEquityUserRankComparator(true)) %>"
-		total="<%= SocialEquityUserLocalServiceUtil.getRankedEquityUsersCount(scopeGroupId) %>"
+		results="<%= SocialEquityUserLocalServiceUtil.getRankedEquityUsers(groupId, searchContainer.getStart(), searchContainer.getEnd(), new SocialEquityUserRankComparator(true)) %>"
+		total="<%= SocialEquityUserLocalServiceUtil.getRankedEquityUsersCount(groupId) %>"
 	/>
 
 	<liferay-ui:search-container-row

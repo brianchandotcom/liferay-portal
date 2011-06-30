@@ -99,7 +99,7 @@ if (Validator.isNull(authType)) {
 						login = user2.getScreenName();
 					}
 					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-						login = user2.getUserId();
+						login = String.valueOf(user2.getUserId());
 					}
 					%>
 

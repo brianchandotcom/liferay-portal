@@ -57,12 +57,12 @@ layout.user.public.layouts.enabled
 layout.user.public.layouts.modifiable
 layout.user.public.layouts.power.user.required
 ldap.attrs.transformer.impl
+locales.beta
 login.create.account.allow.custom.password
 login.events.post
 login.events.pre
 logout.events.post
 logout.events.pre
-locales.beta
 mail.hook.impl
 my.places.show.community.private.sites.with.no.layouts
 my.places.show.community.public.sites.with.no.layouts

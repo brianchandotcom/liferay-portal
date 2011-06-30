@@ -1903,79 +1903,14 @@ public class HookHotDeployListener
 			}
 		}
 
-		for (String key : _PROPS_VALUES_MERGE_STRING_ARRAY) {
-			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+		resetPortalPropertiesStringArray(
+			servletContextName, portalProperties, initPhase,
+			_PROPS_VALUES_MERGE_STRING_ARRAY, _mergeStringArraysContainerMap);
 
-			if (!containsKey(portalProperties, key)) {
-				continue;
-			}
-
-			try {
-				Field field = PropsValues.class.getField(fieldName);
-
-				MergeStringArraysContainer mergeStringArraysContainer =
-					_mergeStringArraysContainerMap.get(key);
-
-				String[] value = null;
-
-				if (initPhase) {
-					value = PropsUtil.getArray(key);
-				}
-
-				mergeStringArraysContainer.setPluginStringArray(
-					servletContextName, value);
-
-				value = mergeStringArraysContainer.getMergedStringArray();
-
-				field.set(null, value);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
-			}
-		}
-
-		for (String key : _PROPS_VALUES_OVERRIDE_STRING_ARRAY) {
-			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
-
-			if (!containsKey(portalProperties, key)) {
-				continue;
-			}
-
-			try {
-				Field field = PropsValues.class.getField(fieldName);
-
-				OverrideStringArraysContainer overrideStringArraysContainer =
-					_overrideStringArraysContainerMap.get(key);
-
-				String[] value = null;
-
-				if (initPhase) {
-					if (overrideStringArraysContainer.isOverridden()) {
-						_log.error(
-							"Error setting field " + fieldName +
-								": Already overridden");
-
-						continue;
-					}
-
-					value = StringUtil.split(portalProperties.getProperty(key));
-				}
-
-				overrideStringArraysContainer.setPluginStringArray(
-					servletContextName, value);
-
-				value = overrideStringArraysContainer.getOverrideStringArray();
-
-				field.set(null, value);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
-			}
-		}
+		resetPortalPropertiesStringArray(
+			servletContextName, portalProperties, initPhase,
+			_PROPS_VALUES_OVERRIDE_STRING_ARRAY,
+			_overrideStringArraysContainerMap);
 
 		if (containsKey(portalProperties, LOCALES) ||
 			containsKey(portalProperties, LOCALES_BETA)) {
@@ -1988,6 +1923,74 @@ public class HookHotDeployListener
 		CacheUtil.clearCache();
 
 		JavaScriptBundleUtil.clearCache();
+	}
+
+	protected void resetPortalPropertiesStringArray(
+		String servletContextName, Properties portalProperties,
+		boolean initPhase, String[] propsValuesStringArray,
+		Map<String, StringArraysContainer> stringArraysContainerMap) {
+
+		for (String key : propsValuesStringArray) {
+			String fieldName = StringUtil.replace(
+				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+
+			if (!containsKey(portalProperties, key)) {
+				continue;
+			}
+
+			try {
+				resetPortalPropertiesStringArray(
+					servletContextName, portalProperties, initPhase,
+					propsValuesStringArray, stringArraysContainerMap, key,
+					fieldName);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Error setting field " + fieldName + ": " + e.getMessage());
+			}
+		}
+	}
+
+	protected void resetPortalPropertiesStringArray(
+			String servletContextName, Properties portalProperties,
+			boolean initPhase, String[] propsValuesStringArray,
+			Map<String, StringArraysContainer> stringArraysContainerMap,
+			String key, String fieldName)
+		throws Exception {
+
+		Field field = PropsValues.class.getField(fieldName);
+
+		StringArraysContainer stringArraysContainer =
+			stringArraysContainerMap.get(key);
+
+		String[] value = null;
+
+		if (initPhase) {
+			if (stringArraysContainer
+					instanceof OverrideStringArraysContainer) {
+
+				OverrideStringArraysContainer overrideStringArraysContainer =
+					(OverrideStringArraysContainer)stringArraysContainer;
+
+				if (overrideStringArraysContainer.isOverridden()) {
+					_log.error("Error setting overridden field " + fieldName);
+
+					return;
+				}
+
+				value = StringUtil.split(
+					portalProperties.getProperty(key));
+			}
+			else {
+				value = PropsUtil.getArray(key);
+			}
+		}
+
+		stringArraysContainer.setPluginStringArray(servletContextName, value);
+
+		value = stringArraysContainer.getStringArray();
+
+		field.set(null, value);
 	}
 
 	protected void updateRelease(
@@ -2105,13 +2108,6 @@ public class HookHotDeployListener
 	private static final String[] _PROPS_VALUES_LONG = new String[] {
 	};
 
-	private static final String[] _PROPS_VALUES_STRING = new String[] {
-		"default.landing.page.path",
-		"passwords.passwordpolicytoolkit.generator",
-		"passwords.passwordpolicytoolkit.static",
-		"theme.shortcut.icon"
-	};
-
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY =
 		new String[] {
 			"admin.default.group.names",
@@ -2138,6 +2134,13 @@ public class HookHotDeployListener
 		new String[] {
 			"locales.beta"
 		};
+
+	private static final String[] _PROPS_VALUES_STRING = new String[] {
+		"default.landing.page.path",
+		"passwords.passwordpolicytoolkit.generator",
+		"passwords.passwordpolicytoolkit.static",
+		"theme.shortcut.icon"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
@@ -2167,14 +2170,13 @@ public class HookHotDeployListener
 			new HashMap<String, IndexerPostProcessorContainer>();
 	private Map<String, LanguagesContainer> _languagesContainerMap =
 		new HashMap<String, LanguagesContainer>();
-	private Map<String, MergeStringArraysContainer>
-		_mergeStringArraysContainerMap =
-			new HashMap<String, MergeStringArraysContainer>();
+	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
+		new HashMap<String, StringArraysContainer>();
 	private Map<String, ModelListenersContainer> _modelListenersContainerMap =
 		new HashMap<String, ModelListenersContainer>();
-	private Map<String, OverrideStringArraysContainer>
+	private Map<String, StringArraysContainer>
 		_overrideStringArraysContainerMap =
-			new HashMap<String, OverrideStringArraysContainer>();
+			new HashMap<String, StringArraysContainer>();
 	private Map<String, Properties> _portalPropertiesMap =
 		new HashMap<String, Properties>();
 	private ServicesContainer _servicesContainer = new ServicesContainer();
@@ -2505,6 +2507,47 @@ public class HookHotDeployListener
 
 	}
 
+	private class MergeStringArraysContainer implements StringArraysContainer {
+
+		private MergeStringArraysContainer(String key) {
+			_portalStringArray = PropsUtil.getArray(key);
+		}
+
+		public String[] getStringArray() {
+			List<String> mergedStringList = new UniqueList<String>();
+
+			mergedStringList.addAll(ListUtil.fromArray(_portalStringArray));
+
+			for (Map.Entry<String, String[]> entry :
+					_pluginStringArrayMap.entrySet()) {
+
+				String[] pluginStringArray = entry.getValue();
+
+				mergedStringList.addAll(ListUtil.fromArray(pluginStringArray));
+			}
+
+			return mergedStringList.toArray(
+				new String[mergedStringList.size()]);
+		}
+
+		public void setPluginStringArray(
+			String servletContextName, String[] pluginStringArray) {
+
+			if (pluginStringArray != null) {
+				_pluginStringArrayMap.put(
+					servletContextName, pluginStringArray);
+			}
+			else {
+				_pluginStringArrayMap.remove(servletContextName);
+			}
+		}
+
+		private String[] _portalStringArray;
+		private Map<String, String[]> _pluginStringArrayMap =
+			new HashMap<String, String[]>();
+
+	}
+
 	private class ModelListenersContainer {
 
 		public void registerModelListener(
@@ -2544,6 +2587,53 @@ public class HookHotDeployListener
 		private Map<String, List<ModelListener<BaseModel<?>>>>
 			_modelListenersMap =
 				new HashMap<String, List<ModelListener<BaseModel<?>>>>();
+
+	}
+
+	private class OverrideStringArraysContainer
+		implements StringArraysContainer {
+
+		private OverrideStringArraysContainer(String key) {
+			_portalStringArray = PropsUtil.getArray(key);
+		}
+
+		public String[] getStringArray() {
+			if (_pluginStringArray != null) {
+				return _pluginStringArray;
+			}
+
+			return _portalStringArray;
+		}
+
+		public boolean isOverridden() {
+			if (Validator.isNotNull(_servletContextName)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public void setPluginStringArray(
+			String servletContextName, String[] pluginStringArray) {
+
+			if (pluginStringArray != null) {
+				if (!isOverridden()) {
+					_servletContextName = servletContextName;
+					_pluginStringArray = pluginStringArray;
+				}
+			}
+			else {
+				if (_servletContextName.equals(servletContextName)) {
+					_servletContextName = null;
+					_pluginStringArray = null;
+				}
+			}
+		}
+
+		private String[] _pluginStringArray;
+		private String[] _portalStringArray;
+		private String _servletContextName;
 
 	}
 
@@ -2736,89 +2826,12 @@ public class HookHotDeployListener
 
 	}
 
-	private class MergeStringArraysContainer {
+	private interface StringArraysContainer {
 
-		private MergeStringArraysContainer(String key) {
-			_portalStringArray = PropsUtil.getArray(key);
-		}
-
-		public String[] getMergedStringArray() {
-			List<String> mergedStringList = new UniqueList<String>();
-
-			mergedStringList.addAll(ListUtil.fromArray(_portalStringArray));
-
-			for (Map.Entry<String, String[]> entry :
-					_pluginStringArrayMap.entrySet()) {
-
-				String[] pluginStringArray = entry.getValue();
-
-				mergedStringList.addAll(ListUtil.fromArray(pluginStringArray));
-			}
-
-			return mergedStringList.toArray(
-				new String[mergedStringList.size()]);
-		}
+		public String[] getStringArray();
 
 		public void setPluginStringArray(
-			String servletContextName, String[] pluginStringArray) {
-
-			if (pluginStringArray != null) {
-				_pluginStringArrayMap.put(
-					servletContextName, pluginStringArray);
-			}
-			else {
-				_pluginStringArrayMap.remove(servletContextName);
-			}
-		}
-
-		private String[] _portalStringArray;
-		private Map<String, String[]> _pluginStringArrayMap =
-			new HashMap<String, String[]>();
-
-	}
-
-	private class OverrideStringArraysContainer {
-
-		private OverrideStringArraysContainer(String key) {
-			_portalStringArray = PropsUtil.getArray(key);
-		}
-
-		public String[] getOverrideStringArray() {
-			if (_pluginStringArray != null) {
-				return _pluginStringArray;
-			}
-
-			return _portalStringArray;
-		}
-
-		public boolean isOverridden() {
-			return Validator.isNotNull(_servletContextName);
-		}
-
-		public void setPluginStringArray(
-			String servletContextName, String[] pluginStringArray) {
-
-			if (pluginStringArray != null) {
-				if (isOverridden()) {
-					return;
-				}
-
-				_servletContextName = servletContextName;
-				_pluginStringArray = pluginStringArray;
-			}
-			else {
-				if (!_servletContextName.equals(servletContextName)) {
-					return;
-				}
-
-				_servletContextName = null;
-				_pluginStringArray = null;
-			}
-		}
-
-		private String[] _portalStringArray;
-		private String[] _pluginStringArray;
-		private String _servletContextName;
+			String servletContextName, String[] pluginStringArray);
 
 	}
 

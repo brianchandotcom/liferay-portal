@@ -113,9 +113,7 @@ AUI().add(
 						var navBlock = instance.get('navBlock');
 						var addBlock = A.Node.create(TPL_LIST_ITEM);
 
-						if (navBlock.test(':hidden')) {
-							navBlock.show();
-						}
+						navBlock.show();
 
 						navBlock.one('ul').append(addBlock);
 
@@ -309,7 +307,7 @@ AUI().add(
 
 						comboBox.destroy();
 
-						if (!navBlock.one('ul li')) {
+						if (!navBlock.one('li')) {
 							navBlock.hide();
 						}
 					},
@@ -331,9 +329,7 @@ AUI().add(
 					_makeAddable: function() {
 						var instance = this;
 
-						var navBlock = instance.get('navBlock');
-
-						if (instance.get('isModifiable') || navBlock.test(':hidden')) {
+						if (instance.get('isModifiable')) {
 							var navList = instance.get('navBlock').one('ul');
 
 							var themeImages = themeDisplay.getPathThemeImages();
@@ -357,9 +353,7 @@ AUI().add(
 					_makeDeletable: function() {
 						var instance = this;
 
-						var navBlock = instance.get('navBlock');
-
-						if (instance.get('isModifiable') || navBlock.test(':hidden')) {
+						if (instance.get('isModifiable')) {
 							var navBlock = instance.get('navBlock');
 
 							var navItems = navBlock.all('> ul > li').filter(':not(.selected)');

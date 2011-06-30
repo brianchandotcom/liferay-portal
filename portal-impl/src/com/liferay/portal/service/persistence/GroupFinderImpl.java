@@ -453,6 +453,11 @@ public class GroupFinderImpl
 
 		String findByCND_SQL = CustomSQLUtil.get(FIND_BY_C_N_D);
 
+		findByCND_SQL = StringUtil.stripBetween(
+			findByCND_SQL, "[$name", "$]", name != null);
+		findByCND_SQL = StringUtil.stripBetween(
+			findByCND_SQL, "[$description", "$]", description != null);
+
 		if (classNameIds == null) {
 			findByCND_SQL = StringUtil.replace(
 				findByCND_SQL, "AND (Group_.classNameId = ?)",
@@ -499,36 +504,52 @@ public class GroupFinderImpl
 
 			setJoin(qPos, params1);
 			qPos.add(companyId);
-			qPos.add(name);
-			qPos.add(realName);
-			qPos.add(name);
-			qPos.add(description);
-			qPos.add(description);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(realName);
+				qPos.add(name);
+			}
+			if (description != null) {
+				qPos.add(description);
+				qPos.add(description);
+			}
 
 			if (Validator.isNotNull(userId) && inherit) {
 				setJoin(qPos, params2);
 				qPos.add(companyId);
-				qPos.add(name);
-				qPos.add(realName);
-				qPos.add(name);
-				qPos.add(description);
-				qPos.add(description);
+				if (name != null) {
+					qPos.add(name);
+					qPos.add(realName);
+					qPos.add(name);
+				}
+				if (description != null) {
+					qPos.add(description);
+					qPos.add(description);
+				}
 
 				setJoin(qPos, params3);
 				qPos.add(companyId);
-				qPos.add(name);
-				qPos.add(realName);
-				qPos.add(name);
-				qPos.add(description);
-				qPos.add(description);
+				if (name != null) {
+					qPos.add(name);
+					qPos.add(realName);
+					qPos.add(name);
+				}
+				if (description != null) {
+					qPos.add(description);
+					qPos.add(description);
+				}
 
 				setJoin(qPos, params4);
 				qPos.add(companyId);
-				qPos.add(name);
-				qPos.add(realName);
-				qPos.add(name);
-				qPos.add(description);
-				qPos.add(description);
+				if (name != null) {
+					qPos.add(name);
+					qPos.add(realName);
+					qPos.add(name);
+				}
+				if (description != null) {
+					qPos.add(description);
+					qPos.add(description);
+				}
 			}
 
 			List<Long> groupIds = (List<Long>)QueryUtil.list(
@@ -589,6 +610,10 @@ public class GroupFinderImpl
 
 		String sql = CustomSQLUtil.get(COUNT_BY_C_N_D);
 
+		sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+		sql = StringUtil.stripBetween(
+			sql, "[$description", "$]", description != null);
+
 		if (classNameIds == null) {
 			sql = StringUtil.replace(
 				sql, "AND (Group_.classNameId = ?)", StringPool.BLANK);
@@ -612,11 +637,15 @@ public class GroupFinderImpl
 
 		setJoin(qPos, params);
 		qPos.add(companyId);
-		qPos.add(name);
-		qPos.add(realName);
-		qPos.add(name);
-		qPos.add(description);
-		qPos.add(description);
+		if (name != null) {
+			qPos.add(name);
+			qPos.add(realName);
+			qPos.add(name);
+		}
+		if (description != null) {
+			qPos.add(description);
+			qPos.add(description);
+		}
 
 		return q.list();
 	}

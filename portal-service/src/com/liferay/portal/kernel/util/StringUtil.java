@@ -1360,11 +1360,16 @@ public class StringUtil {
 	}
 
 	public static String stripBetween(String s, String begin, String end) {
+		return stripBetween(s, begin, end, false);
+	}
+
+	public static String stripBetween(
+		String s, String begin, String end, boolean keepContent) {
 		if ((s == null) || (begin == null) || (end == null)) {
 			return s;
 		}
 
-		StringBuilder sb = new StringBuilder(s.length());
+		StringBundler sb = new StringBundler();
 
 		int pos = 0;
 
@@ -1379,6 +1384,10 @@ public class StringUtil {
 			}
 			else {
 				sb.append(s.substring(pos, x));
+
+				if (keepContent) {
+					sb.append(s.substring(x + begin.length(), y));
+				}
 
 				pos = y + end.length();
 			}

@@ -68,6 +68,10 @@ public class TeamFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_N_D);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+			sql = StringUtil.stripBetween(
+				sql, "[$description", "$]", description != null);
+
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
@@ -79,10 +83,14 @@ public class TeamFinderImpl
 
 			setJoin(qPos, params);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
-			qPos.add(description);
-			qPos.add(description);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
+			if (description != null) {
+				qPos.add(description);
+				qPos.add(description);
+			}
 
 			Iterator<Long> itr = q.list().iterator();
 
@@ -120,6 +128,10 @@ public class TeamFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_D);
 
+			sql = StringUtil.stripBetween(sql, "[$name", "$]", name != null);
+			sql = StringUtil.stripBetween(
+				sql, "[$description", "$]", description != null);
+
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
@@ -132,10 +144,14 @@ public class TeamFinderImpl
 
 			setJoin(qPos, params);
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
-			qPos.add(description);
-			qPos.add(description);
+			if (name != null) {
+				qPos.add(name);
+				qPos.add(name);
+			}
+			if (description != null) {
+				qPos.add(description);
+				qPos.add(description);
+			}
 
 			return (List<Team>)QueryUtil.list(q, getDialect(), start, end);
 		}

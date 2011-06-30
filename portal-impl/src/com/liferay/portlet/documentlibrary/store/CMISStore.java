@@ -104,6 +104,7 @@ public class CMISStore extends BaseStore {
 	public void checkRoot(long companyId) {
 	}
 
+	@Override
 	public void copyFileVersion(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,
@@ -374,6 +375,7 @@ public class CMISStore extends BaseStore {
 		createDocument(versioningFolder, title, is, serviceContext);
 	}
 
+	@Override
 	public void updateFileVersion(
 			long companyId, String portletId, long groupId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,

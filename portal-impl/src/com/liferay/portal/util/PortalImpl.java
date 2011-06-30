@@ -4660,7 +4660,10 @@ public class PortalImpl implements Portal {
 			if(_securePortalPort.get() == -1) {
 				int securePortalPort = request.getServerPort();
 				_securePortalPort.compareAndSet(-1, securePortalPort);
-				// no notification. Has never been done for https
+				// No notification. Has never been done for https.
+				// not sure if a notification should happen here or in
+				// the non-secure part, once or once for each port.
+				// Please fix in review
 			}
 		} else if (_portalPort.get() == -1) {
 			int portalPort = request.getServerPort();

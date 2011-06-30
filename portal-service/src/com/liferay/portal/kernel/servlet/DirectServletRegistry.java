@@ -14,13 +14,19 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
+import java.lang.reflect.Method;
+
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -82,6 +88,63 @@ public class DirectServletRegistry {
 				_servletInfos.remove(path);
 
 				servlet = null;
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Reload jsp file : " + path);
+				}
+			}
+			else if (_doDependenceReload) {
+				try {
+					Method method = ReflectionUtil.getDeclaredMethod(
+						servlet.getClass(), "getDependants");
+
+					List<String> dependants = (List<String>)method.invoke(
+						servlet);
+
+					if (dependants != null) {
+						for (String dependant : dependants) {
+							lastModified = _getJspFileLastModified(
+								dependant, servlet);
+
+							if ((lastModified == 0) ||
+								(lastModified >
+									servletInfo.getLastModified())) {
+								_servletInfos.remove(path);
+
+								_touchJspFile(path, servlet);
+
+								servlet = null;
+
+								if (_log.isDebugEnabled()) {
+									_log.debug("Detected dependant file : " +
+										dependant + " updated, force reload " +
+										"parent jsp file : " + path);
+								}
+
+								break;
+							}
+						}
+					}
+				}
+				catch (NoSuchMethodException nsme) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("You are seeing this warn message " +
+							"because JSP dependence (jspf files) " +
+							"reloading is not supported on non-Jasper " +
+							"JSP engine. You have to switch to use Japser" +
+							"(this normally is not possible), or disable " +
+							PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED +
+							" while doing development. You can still " +
+							"safely turn on the jsp servlet direct " +
+							"access feature on production server for " +
+							"performance.", nsme);
+					}
+
+					_doDependenceReload = false;
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 
@@ -109,9 +172,26 @@ public class DirectServletRegistry {
 		}
 	}
 
+	private void _touchJspFile(String path, Servlet servlet) {
+		ServletConfig servletConfig = servlet.getServletConfig();
+
+		ServletContext servletContext = servletConfig.getServletContext();
+
+		String rootPath = servletContext.getRealPath(StringPool.BLANK);
+
+		File file = new File(rootPath, path);
+
+		file.setLastModified(System.currentTimeMillis());
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DirectServletRegistry.class);
+
 	private static boolean _DIRECT_SERVLET_CONTEXT_RELOAD =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD));
+
+	private static boolean _doDependenceReload = true;
 
 	private static DirectServletRegistry _instance =
 		new DirectServletRegistry();

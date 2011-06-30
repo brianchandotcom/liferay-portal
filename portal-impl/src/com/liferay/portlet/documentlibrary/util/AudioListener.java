@@ -30,17 +30,23 @@ public class AudioListener extends MediaToolAdapter {
 	public void onAudioSamples(IAudioSamplesEvent iAudioSamplesEvent) {
 		IAudioSamples iaudioSamples = iAudioSamplesEvent.getAudioSamples();
 
+		int channels = iaudioSamples.getChannels();
+
+		if (channels <= 0){
+			channels = 1;
+		}
+
 		if (_iAudioResampler == null) {
 			_iAudioResampler = IAudioResampler.make(
-				iaudioSamples.getChannels(), iaudioSamples.getChannels(),
-				44100, iaudioSamples.getSampleRate());
+				iaudioSamples.getChannels(), channels, 44100,
+				iaudioSamples.getSampleRate());
 		}
 
 		IAudioSamples iAudioSamples = iAudioSamplesEvent.getAudioSamples();
 
 		if (iAudioSamples.getNumSamples() > 0) {
 			IAudioSamples resampledIAudioSamples = IAudioSamples.make(
-				iaudioSamples.getNumSamples(), iaudioSamples.getChannels());
+				iaudioSamples.getNumSamples(), channels);
 
 			_iAudioResampler.resample(
 				resampledIAudioSamples, iaudioSamples,

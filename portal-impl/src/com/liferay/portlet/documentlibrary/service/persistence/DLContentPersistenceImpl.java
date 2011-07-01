@@ -148,6 +148,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						DLContentImpl.class, dlContent.getPrimaryKey(), this) == null) {
 				cacheResult(dlContent);
 			}
+			else {
+				dlContent.resetOriginalValues();
+			}
 		}
 	}
 

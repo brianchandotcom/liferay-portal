@@ -11,23 +11,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.store.Store;
+
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import java.sql.Blob;
 
 /**
  * @author Tina Tian
+ * @author Shuyang Zhou
  */
 public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_dlContentLocalService = 
+		_dlContentLocalService =
 			(DLContentLocalService)PortalBeanLocatorUtil.locate(
 				DLContentLocalService.class.getName());
 	}
@@ -54,12 +61,15 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 		DLContent dlContent = _dlContentLocalService.addContent(
 			companyId, randomString(), nextLong(), repositoryId, path,
-			Store.DEFAULT_VERSION, new ByteArrayInputStream(new byte[1024]), 
+			Store.DEFAULT_VERSION, new ByteArrayInputStream(new byte[1024]),
 			1024);
 
 		DLContent newDlContent = _dlContentLocalService.getContent(
 			companyId, repositoryId, path);
-		
+
+		dlContent.setData(
+			new OutputBlob(new ByteArrayInputStream(new byte[1024]), 1024));
+
 		assertEquals(dlContent, newDlContent);
 	}
 
@@ -80,15 +90,48 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 		DLContent newDlContent = _dlContentLocalService.getContent(
 			companyId, newRepositoryId, newPath);
 
-		_dlContentLocalService.deleteDLContent(newDlContent);
+		dlContent.setPath(newPath);
+		dlContent.setRepositoryId(newRepositoryId);
 
-		assertEquals(dlContent.getContentId(), newDlContent.getContentId());
-		assertEquals(dlContent.getData(), newDlContent.getData());
-		assertEquals(dlContent.getGroupId(), newDlContent.getGroupId());
-		assertEquals(dlContent.getPortletId(), newDlContent.getPortletId());
-		assertEquals(dlContent.getPrimaryKey(), newDlContent.getPrimaryKey());
-		assertEquals(dlContent.getSize(), newDlContent.getSize());
-		assertEquals(dlContent.getVersion(), newDlContent.getVersion());
+		dlContent.setData(
+			new OutputBlob(new ByteArrayInputStream(new byte[1024]), 1024));
+
+		assertEquals(dlContent, newDlContent);
+
+		_dlContentLocalService.deleteDLContent(newDlContent);
+	}
+
+	private void assertEquals(DLContent expect, DLContent actual)
+		throws Exception {
+		assertEquals(expect.getCompanyId(), actual.getCompanyId());
+		assertEquals(expect.getContentId(), actual.getContentId());
+		assertEquals(expect.getData(), actual.getData());
+		assertEquals(expect.getGroupId(), actual.getGroupId());
+		assertEquals(expect.getPath(), actual.getPath());
+		assertEquals(expect.getPortletId(), actual.getPortletId());
+		assertEquals(expect.getPrimaryKey(), actual.getPrimaryKey());
+		assertEquals(expect.getRepositoryId(), actual.getRepositoryId());
+		assertEquals(expect.getSize(), actual.getSize());
+		assertEquals(expect.getVersion(), actual.getVersion());
+	}
+
+	private void assertEquals(Blob expect, Blob actual) throws Exception {
+		InputStream expectInputStream = expect.getBinaryStream();
+		InputStream actualInputStream = actual.getBinaryStream();
+
+		while (true) {
+			int expectValue = expectInputStream.read();
+			int actualValue = actualInputStream.read();
+
+			assertEquals(expectValue, actualValue);
+
+			if (expectValue == -1) {
+				break;
+			}
+		}
+
+		expectInputStream.close();
+		actualInputStream.close();
 	}
 
 	private DLContentLocalService _dlContentLocalService;

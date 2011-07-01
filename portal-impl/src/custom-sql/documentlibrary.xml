@@ -14,20 +14,6 @@
 				(path_ = '[$OLD_PATH$]')
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findByC_R_P">
-		<![CDATA[
-			SELECT
-				contentId, groupId, companyId, portletId, repositoryId, path_, version, size_
-			FROM
-				DLContent
-			WHERE
-				(companyId = ?) AND
-				(repositoryId = ?) AND
-				(path_ = ?)
-			ORDER BY
-				contentId DESC
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT

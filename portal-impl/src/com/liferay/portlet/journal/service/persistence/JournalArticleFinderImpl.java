@@ -581,14 +581,7 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "articleId", StringPool.LIKE, false, articleIds);
 
-			if (version == null) {
-				sql = StringUtil.replace(
-					sql, "(version = ?) [$AND_OR_CONNECTOR$]", "");
-			}
-			else if (version <= 0) {
-				sql = StringUtil.replace(
-					sql, "COUNT(*", "COUNT(DISTINCT articleId");
-
+			if ((version == null) || (version <= 0)) {
 				sql = StringUtil.replace(
 					sql, "(version = ?) [$AND_OR_CONNECTOR$]", "");
 			}
@@ -609,6 +602,21 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if ((articleIds != null) &&
+					((articleIds.length > 1) ||
+					((articleIds.length == 1) && (articleIds[0] != null))) &&
+					(version == null)) {
+
+					sql = StringUtil.replace(
+						sql, "MAX(version) AS tempVersion",
+						"version AS tempVersion");
+					sql = StringUtil.replace(sql, "[$GROUP_BY_CLAUSE$]", "");
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$GROUP_BY_CLAUSE$]", "GROUP BY articleId");
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -732,8 +740,22 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = StringUtil.replace(
-				sql, "[$GROUP_BY_CLAUSE$]", "GROUP BY groupId, articleId");
+
+			if ((articleIds != null) &&
+					((articleIds.length > 1) ||
+					((articleIds.length == 1) && (articleIds[0] != null))) &&
+					(version == null)) {
+
+					sql = StringUtil.replace(
+						sql, "MAX(version) AS tempVersion",
+						"version AS tempVersion");
+					sql = StringUtil.replace(sql, "[$GROUP_BY_CLAUSE$]", "");
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$GROUP_BY_CLAUSE$]", "GROUP BY groupId, articleId");
+			}
+
 			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 
 			if (inlineSQLHelper) {

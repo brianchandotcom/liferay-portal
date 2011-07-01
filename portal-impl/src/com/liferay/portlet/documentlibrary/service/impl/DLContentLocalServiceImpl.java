@@ -112,6 +112,14 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, portletId, repositoryId, path);
 	}
 
+	public void deleteContentsByFuzzyPath(
+			long companyId, String portletId, long repositoryId, String path)
+		throws PortalException, SystemException {
+
+		dlContentPersistence.removeByC_P_R_LikeP(
+			companyId, portletId, repositoryId, path);
+	}
+
 	public DLContent getContent(
 			long companyId, String portletId, long repositoryId, String path,
 			String version)
@@ -119,6 +127,28 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		return dlContentPersistence.findByC_P_R_P_V(
 			companyId, portletId, repositoryId, path, version);
+	}
+
+	public DLContent getContent(
+			long companyId, long repositoryId, String path)
+		throws NoSuchContentException, SystemException {
+
+		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
+			companyId, repositoryId, path);
+
+		if (dlContents == null || dlContents.isEmpty()) {
+			throw new NoSuchContentException(path);
+		}
+
+		return dlContents.get(0);
+	}
+
+	public DLContent getContent(
+			long companyId, long repositoryId, String path, String version)
+		throws NoSuchContentException, SystemException {
+
+		return dlContentPersistence.findByC_R_P_V(
+			companyId, repositoryId, path, version);
 	}
 
 	public List<DLContent> getContentReferences(
@@ -136,6 +166,27 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, portletId, repositoryId, path);
 	}
 
+	public List<DLContent> getContents(long companyId, long repositoryId)
+		throws SystemException {
+
+		return dlContentPersistence.findByC_R(companyId, repositoryId);
+	}
+
+	public List<DLContent> getContents(
+			long companyId, long repositoryId, String path)
+		throws SystemException {
+
+		return dlContentPersistence.findByC_R_P(companyId, repositoryId, path);
+	}
+
+	public List<DLContent> getContentsByFuzzyPath(
+			long companyId, long repositoryId, String path)
+		throws SystemException {
+
+		return dlContentPersistence.findByC_R_LikeP(
+			companyId, repositoryId, path);
+	}
+
 	public boolean hasContent(
 			long companyId, String portletId, long repositoryId, String path,
 			String version)
@@ -143,6 +194,21 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		int count = dlContentPersistence.countByC_P_R_P_V(
 			companyId, portletId, repositoryId, path, version);
+
+		if (count > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean hasContent(
+			long companyId, long repositoryId, String path, String version)
+		throws SystemException {
+
+		int count = dlContentPersistence.countByC_R_P_V(
+			companyId, repositoryId, path, version);
 
 		if (count > 0) {
 			return true;

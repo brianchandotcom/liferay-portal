@@ -1,189 +1,158 @@
 AUI().add(
 	'liferay-history',
 	function(A) {
+		var Lang = A.Lang;
+
+		var AObject = A.Object;
+
 		var Do = A.Do;
 
 		var HistoryBase = A.HistoryBase;
 
-		var Lang = A.Lang;
-
 		var QueryString = A.QueryString;
 
-		var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
+		var isEmpty = AObject.isEmpty;
+
+		var isValue = Lang.isValue;
+
+		var owns = AObject.owns;
 
 		var WIN = A.config.win;
 
-		var History;
+		var HISTORY = WIN.history;
 
-		if (HistoryBase.html5) {
-			var HistoryHTML5 = createHistoryHTML5Module();
+		var HTML5 = HistoryBase.html5;
 
-			History = new HistoryHTML5();
-		}
-		else {
-			History = new A.HistoryHash();
-		}
+		var LOCATION = WIN.location;
 
-		Do.after(
-			function(key) {
-				var currentRetVal = Do.currentRetVal;
+		var History = A.Component.create(
+			{
+				EXTENDS: A.History,
 
-				if (!Lang.isValue(currentRetVal)) {
-					currentRetVal = Do.originalRetVal;
-				}
+				NAME: 'liferayhistory',
 
-				if (Lang.isValue(key) && !Lang.isValue(currentRetVal)) {
-					var originalQuery = WIN.location.search;
+				prototype: {
+					get: function(key) {
+						var instance = this;
 
-					var queryMap = QueryString.parse(originalQuery.substr(1));
+						var value = History.superclass.get.apply(this, arguments);
 
-					if (A.Object.owns(queryMap, key)) {
-						currentRetVal = queryMap[key];
-					}
-				}
+						if (!isValue(value) && isValue(key)) {
+							var query = LOCATION.search;
 
-				return new Do.AlterReturn('', currentRetVal);
-			},
-			History,
-			'get',
-			History
-		);
+							var queryMap = instance._parse(query.substr(1));
 
-		function createHistoryHTML5Module() {
-			var AObject = A.Object;
-
-			var HistoryHTML5 = A.Component.create(
-				{
-					EXTENDS: A.HistoryHTML5,
-
-					NAME: 'liferayhistoryhtml5',
-
-					prototype: {
-						add: function(state, options) {
-							var instance = this;
-
-							options = options || {};
-
-							if (!options.url) {
-								var currentURI = WIN.location.href;
-
-								var originalQuery = WIN.location.search;
-
-								var queryMap = QueryString.parse(originalQuery.substr(1));
-
-								A.mix(queryMap, state, true);
-
-								A.each(
-									queryMap,
-									function(value, key, collection) {
-										if (!Lang.isValue(value)) {
-											delete queryMap[key];
-										}
-									}
-								);
-
-								currentURI = updateURI(
-									{
-										match: originalQuery,
-										newValue: '?' + QueryString.stringify(queryMap)
-									},
-									currentURI
-								);
-
-								options.url = currentURI;
-							}
-
-							var value = HistoryHTML5.superclass.add.call(instance, state, options);
-
-							return value;
-						},
-
-						_init: function (config) {
-							var instance = this;
-
-							var originalHash = WIN.location.hash;
-
-							if (originalHash) {
-								var currentURI = WIN.location.href;
-
-								var hashMap = QueryString.parse(originalHash.substr(1));
-
-								if (!AObject.isEmpty(hashMap)) {
-									var originalQuery = WIN.location.search;
-
-									var queryMap = QueryString.parse(originalQuery.substr(1));
-
-									A.mix(queryMap, hashMap, true);
-
-									currentURI = updateURI(
-										[
-											{
-												match: originalQuery,
-												newValue: '?' + QueryString.stringify(queryMap)
-											},
-											{
-												match: originalHash,
-												newValue: ''
-											}
-										],
-										currentURI
-									);
-
-									WIN.history.replaceState(null, null, currentURI);
-								}
-							}
-
-							config = config || {};
-
-							if (!AObject.owns(config, 'initialState')) {
-								if (WIN.history) {
-									var bookmarkedState = WIN.history.state;
-								}
-
-								var initialState = A.merge(hashMap, bookmarkedState);
-
-								if (!AObject.isEmpty(initialState)) {
-									config.initialState = initialState;
-								}
-
-								HistoryHTML5.superclass._init.apply(instance, arguments);
+							if (owns(queryMap, key)) {
+								value = queryMap[key];
 							}
 						}
+
+						return value;
+					},
+
+					_parse: A.cached(
+						function(str) {
+							return QueryString.parse(str);
+						}
+					),
+
+					_updateURI: function(state, uri) {
+						var instance = this;
+
+						uri = uri || LOCATION.href;
+
+						var uriData = uri.split(/\?|#/g);
+
+						var currentURI = uriData.shift();
+
+						var hash = uriData[1];
+						var query = uriData[0];
+
+						var queryMap = instance._parse(query);
+
+						if (!state && hash) {
+							var hashMap = instance._parse(hash);
+
+							if (!isEmpty(hashMap)) {
+								state = hashMap;
+
+								uriData.pop();
+							}
+						}
+
+						A.mix(queryMap, state, true);
+
+						AObject.each(
+							queryMap,
+							function(item, index, collection) {
+								if (!isValue(item)) {
+									delete queryMap[index];
+								}
+							}
+						);
+
+						uriData[0] = QueryString.stringify(queryMap);
+
+						uriData.unshift(currentURI, '?');
+
+						return uriData.join('');
 					}
 				}
-			);
+			}
+		);
 
-			Liferay.HistoryHTML5 = HistoryHTML5;
+		if (HTML5) {
+			History.prototype.add = function(state, options) {
+				var instance = this;
 
-			return HistoryHTML5;
-		}
+				options = options || {};
 
-		function updateURI(maps, currentURI) {
-			maps = A.Array(maps);
+				options.url = options.url || instance._updateURI(state);
 
-			A.each(
-				maps,
-				function(value, index, collection) {
-					var escapedMatch = value.match.replace(REGEX_ESCAPE_REGEX, "\\$&");
+				return History.superclass.add.call(instance, state, options);
+			};
 
-					currentURI = currentURI.replace(new RegExp(escapedMatch, 'g'), value.newValue);
+			History.prototype._init = function(config) {
+				var instance = this;
+
+				if (LOCATION.hash) {
+					HISTORY.replaceState(null, null, instance._updateURI());
 				}
-			);
 
-			return currentURI;
+				config = config || {};
+
+				if (!owns(config, 'initialState')) {
+					var bookmarkedState = HISTORY && HISTORY.state;
+
+					var initialState = instance._parse(LOCATION.hash.substr(1));
+
+					if (bookmarkedState) {
+						initialState = A.merge(initialState, bookmarkedState);
+					}
+
+					if (!isEmpty(initialState)) {
+						config.initialState = initialState;
+					}
+
+					History.superclass._init.apply(instance, arguments);
+				}
+			};
 		}
 
-		History.SRC_ADD = HistoryBase.SRC_ADD;
-		History.SRC_HASH = A.HistoryHash.SRC_HASH;
-		History.SRC_POPSTATE = A.HistoryHTML5.SRC_POPSTATE;
-		History.SRC_REPLACE = HistoryBase.SRC_REPLACE;
+		HistoryManager = new History();
 
-		History.html5 = HistoryBase.html5;
+		HistoryManager.SRC_ADD = HistoryBase.SRC_ADD;
+		HistoryManager.SRC_HASH = A.HistoryHash.SRC_HASH;
+		HistoryManager.SRC_POPSTATE = A.HistoryHTML5.SRC_POPSTATE;
+		HistoryManager.SRC_REPLACE = HistoryBase.SRC_REPLACE;
+
+		HistoryManager.HTML5 = HTML5;
 
 		Liferay.History = History;
+		Liferay.HistoryManager = HistoryManager;
 	},
 	'',
 	{
-		requires: ['history', 'querystring-parse-simple', 'querystring-stringify-simple']
+		requires: ['history', 'querystring']
 	}
 );

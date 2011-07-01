@@ -51,7 +51,7 @@
 			'dynamic-select': ['aui-base'],
 			'form': ['aui-base', 'aui-form-validator'],
 			'form-navigator': ['aui-base'],
-			'history': ['history', 'querystring-parse-simple', 'querystring-stringify-simple'],
+			'history': ['history', 'querystring'],
 			'hudcrumbs': ['aui-base', 'plugin'],
 			'icon': ['aui-base'],
 			'input-move-boxes': ['aui-base', 'aui-toolbar'],

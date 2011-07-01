@@ -44,12 +44,13 @@ public class ViewAuthenticationSiteMinderTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_authenticationLink']", "Authentication"));
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Authentication"));
 		selenium.clickAt("link=SiteMinder", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -74,6 +75,6 @@ public class ViewAuthenticationSiteMinderTest extends BaseTestCase {
 				"_130_settings--siteminder.auth.enabled--Checkbox"));
 		assertTrue(selenium.isElementPresent(
 				"_130_settings--siteminder.import.from.ldap--Checkbox"));
-		assertTrue(selenium.isTextPresent("User Header "));
+		assertTrue(selenium.isTextPresent("User Header"));
 	}
 }

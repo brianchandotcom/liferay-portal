@@ -44,12 +44,13 @@ public class DeleteSettingsWebsiteTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
+				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Websites"));
 		assertEquals("http://www.liferay.com",
 			selenium.getValue("_130_websiteUrl0"));
 

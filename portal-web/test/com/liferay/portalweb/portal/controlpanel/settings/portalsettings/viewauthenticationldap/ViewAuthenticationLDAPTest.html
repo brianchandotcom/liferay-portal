@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -29,14 +29,19 @@
 	<td>Portal Settings</td>
 </tr>
 <tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_130_authenticationLink']</td>
+	<td>Authentication</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//a[@id='_130_authenticationLink']</td>
-	<td></td>
+	<td>Authentication</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=LDAP</td>
-	<td></td>
+	<td>LDAP</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -75,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_settings--ldap.base.provider.url--</td>
+	<td>//input[@id='_130_ldap.base.provider.url.0']</td>
 	<td>ldap://localhost:10389</td>
 </tr>
 <tr>
@@ -90,7 +95,7 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_settings--ldap.base.provider.url--</td>
+	<td>//input[@id='_130_ldap.base.provider.url.0']</td>
 	<td>ldap://localhost:389</td>
 </tr>
 <tr>

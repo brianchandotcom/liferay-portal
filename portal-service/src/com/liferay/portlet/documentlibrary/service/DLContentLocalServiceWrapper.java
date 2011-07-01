@@ -285,12 +285,12 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 			repositoryId, path);
 	}
 
-	public void deleteContentsByFuzzyPath(long companyId,
-		java.lang.String portletId, long repositoryId, java.lang.String path)
+	public void deleteContentsByDirectory(long companyId,
+		java.lang.String portletId, long repositoryId, java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlContentLocalService.deleteContentsByFuzzyPath(companyId, portletId,
-			repositoryId, path);
+		_dlContentLocalService.deleteContentsByDirectory(companyId, portletId,
+			repositoryId, dirName);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
@@ -345,11 +345,11 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 		return _dlContentLocalService.getContents(companyId, repositoryId, path);
 	}
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByFuzzyPath(
-		long companyId, long repositoryId, java.lang.String path)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContentsByFuzzyPath(companyId,
-			repositoryId, path);
+		return _dlContentLocalService.getContentsByDirectory(companyId,
+			repositoryId, dirName);
 	}
 
 	public boolean hasContent(long companyId, java.lang.String portletId,

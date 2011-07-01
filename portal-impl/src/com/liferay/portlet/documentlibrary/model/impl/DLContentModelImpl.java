@@ -229,16 +229,18 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		if (_dataBlobModel == null) {
 			try {
 				_dataBlobModel = DLContentLocalServiceUtil.getDataBlobModel(getPrimaryKey());
-
-				if (_dataBlobModel != null) {
-					return _dataBlobModel.getDataBlob();
-				}
 			}
 			catch (Exception e) {
 			}
 		}
 
-		return null;
+		Blob blob = null;
+
+		if (_dataBlobModel != null) {
+			blob = _dataBlobModel.getDataBlob();
+		}
+
+		return blob;
 	}
 
 	public void setData(Blob data) {

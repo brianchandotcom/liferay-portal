@@ -366,16 +366,18 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					if (_${column.name}BlobModel == null) {
 						try {
 							_${column.name}BlobModel = ${entity.name}LocalServiceUtil.get${column.methodName}BlobModel(getPrimaryKey());
-
-							if (_${column.name}BlobModel != null) {
-								return _${column.name}BlobModel.get${column.methodName}Blob();
-							}
 						}
 						catch (Exception e) {
 						}
 					}
 
-					return null;
+					Blob blob = null;
+
+					if (_${column.name}BlobModel != null) {
+						blob = _${column.name}BlobModel.get${column.methodName}Blob();
+					}
+
+					return blob;
 				<#else>
 					return _${column.name};
 				</#if>

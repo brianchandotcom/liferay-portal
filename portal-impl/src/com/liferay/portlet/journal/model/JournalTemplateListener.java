@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.velocity.LiferayResourceCacheUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
+
+import org.apache.velocity.runtime.resource.ResourceManager;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jon Steer
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class JournalTemplateListener
 	extends BaseModelListener<JournalTemplate> {
@@ -59,6 +63,14 @@ public class JournalTemplateListener
 		// Velocity cache
 
 		VelocityEngineUtil.flushTemplate(freeMarkerTemplateId);
+
+		// Liferay Resource Cache
+
+		LiferayResourceCacheUtil.remove(_RESOURCE_TEMPLATE_NAME_SPACE.concat(
+			freeMarkerTemplateId));
 	}
+
+	private static String _RESOURCE_TEMPLATE_NAME_SPACE = String.valueOf(
+		ResourceManager.RESOURCE_TEMPLATE);
 
 }

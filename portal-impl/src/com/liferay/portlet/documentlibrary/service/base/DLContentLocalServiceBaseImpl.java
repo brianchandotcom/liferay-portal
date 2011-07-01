@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,7 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
@@ -66,6 +68,8 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -324,6 +328,24 @@ public abstract class DLContentLocalServiceBaseImpl
 		}
 
 		return dlContent;
+	}
+
+	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey)
+		throws SystemException {
+		Session session = null;
+
+		try {
+			session = dlContentPersistence.openSession();
+
+			return (com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
+				primaryKey);
+		}
+		catch (Exception e) {
+			throw dlContentPersistence.processException(e);
+		}
+		finally {
+			dlContentPersistence.closeSession(session);
+		}
 	}
 
 	/**

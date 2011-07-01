@@ -446,8 +446,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageResourceImpl.class, resourcePrimKey, this);
 
+		if (wikiPageResource == _nullWikiPageResource) {
+			return null;
+		}
+
 		if (wikiPageResource == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -456,11 +462,18 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						Long.valueOf(resourcePrimKey));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (wikiPageResource != null) {
 					cacheResult(wikiPageResource);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+						WikiPageResourceImpl.class, resourcePrimKey,
+						_nullWikiPageResource);
 				}
 
 				closeSession(session);
@@ -879,6 +892,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param nodeId the node ID
 	 * @param title the title
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1354,4 +1368,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiPageResource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(WikiPageResourcePersistenceImpl.class);
+	private static WikiPageResource _nullWikiPageResource = new WikiPageResourceImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

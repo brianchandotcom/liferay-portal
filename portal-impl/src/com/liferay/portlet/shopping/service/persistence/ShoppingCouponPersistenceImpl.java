@@ -425,8 +425,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		ShoppingCoupon shoppingCoupon = (ShoppingCoupon)EntityCacheUtil.getResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCouponImpl.class, couponId, this);
 
+		if (shoppingCoupon == _nullShoppingCoupon) {
+			return null;
+		}
+
 		if (shoppingCoupon == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -435,11 +441,17 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 						Long.valueOf(couponId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (shoppingCoupon != null) {
 					cacheResult(shoppingCoupon);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
+						ShoppingCouponImpl.class, couponId, _nullShoppingCoupon);
 				}
 
 				closeSession(session);
@@ -836,6 +848,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Returns the shopping coupon where code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param code the code
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1297,4 +1310,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
+	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

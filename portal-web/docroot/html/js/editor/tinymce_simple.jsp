@@ -49,6 +49,10 @@ if (Validator.isNotNull(onChangeMethod)) {
 			tinyMCE.editors['<%= name %>'].destroy();
 		},
 
+		focus: function() {
+			tinyMCE.editors['<%= name %>'].focus();
+		},
+
 		fileBrowserCallback: function(field_name, url, type) {
 		},
 

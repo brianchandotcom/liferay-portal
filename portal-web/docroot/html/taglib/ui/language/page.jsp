@@ -85,7 +85,7 @@ for (int i = 0; i < locales.length; i++) {
 					String label = locales[i].getDisplayName(locales[i]);
 
 					if (LanguageUtil.isBetaLocale(locales[i])) {
-						label = label + " - " + LanguageUtil.get(pageContext, "beta");
+						label = label + " - Beta";
 					}
 				%>
 
@@ -138,7 +138,7 @@ for (int i = 0; i < locales.length; i++) {
 						</c:if>
 
 						<c:if test="<%= LanguageUtil.isBetaLocale(locales[i]) %>">
-							[<liferay-ui:message key="beta" />]
+							[Beta]
 						</c:if>
 					</a>
 				</c:when>
@@ -148,7 +148,7 @@ for (int i = 0; i < locales.length; i++) {
 					String message = locales[i].getDisplayName(locales[i]);
 
 					if (LanguageUtil.isBetaLocale(locales[i])) {
-						message = message + " - " + LanguageUtil.get(pageContext, "beta");
+						message = message + " - Beta";
 					}
 					%>
 

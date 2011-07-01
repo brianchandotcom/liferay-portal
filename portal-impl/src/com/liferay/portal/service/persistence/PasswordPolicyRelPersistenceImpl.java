@@ -486,8 +486,14 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)EntityCacheUtil.getResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 				PasswordPolicyRelImpl.class, passwordPolicyRelId, this);
 
+		if (passwordPolicyRel == _nullPasswordPolicyRel) {
+			return null;
+		}
+
 		if (passwordPolicyRel == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -496,11 +502,18 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 						Long.valueOf(passwordPolicyRelId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (passwordPolicyRel != null) {
 					cacheResult(passwordPolicyRel);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
+						PasswordPolicyRelImpl.class, passwordPolicyRelId,
+						_nullPasswordPolicyRel);
 				}
 
 				closeSession(session);
@@ -901,6 +914,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1047,6 +1061,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyId the password policy ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1691,4 +1706,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PasswordPolicyRel exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyRelPersistenceImpl.class);
+	private static PasswordPolicyRel _nullPasswordPolicyRel = new PasswordPolicyRelImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -251,8 +251,13 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 			return (JournalArticleImage)this;
 		}
 		else {
-			return (JournalArticleImage)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (JournalArticleImage)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -445,4 +450,5 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private String _originalLanguageId;
 	private boolean _tempImage;
 	private transient ExpandoBridge _expandoBridge;
+	private JournalArticleImage _escapedModelProxy;
 }

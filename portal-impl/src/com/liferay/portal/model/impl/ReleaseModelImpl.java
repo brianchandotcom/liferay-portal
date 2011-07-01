@@ -198,8 +198,13 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			return (Release)this;
 		}
 		else {
-			return (Release)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Release)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -371,4 +376,5 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private boolean _verified;
 	private String _testString;
 	private transient ExpandoBridge _expandoBridge;
+	private Release _escapedModelProxy;
 }

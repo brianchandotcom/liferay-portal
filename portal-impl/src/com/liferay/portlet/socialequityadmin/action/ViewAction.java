@@ -94,7 +94,7 @@ public class ViewAction extends PortletAction {
 		for (String className : classNames) {
 			List<SocialEquityActionMapping> mergedEquityActionMappings =
 				getMergedEquityActionMappings(
-					themeDisplay.getScopeGroupId(), className);
+					themeDisplay.getScopeGroupIdOrLiveGroupId(), className);
 
 			equityActionMappingsMap.put(className, mergedEquityActionMappings);
 		}
@@ -234,7 +234,7 @@ public class ViewAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		SocialEquityLogLocalServiceUtil.updateRanks(
-			themeDisplay.getScopeGroupId());
+			themeDisplay.getScopeGroupIdOrLiveGroupId());
 	}
 
 	protected void updateSettings(ActionRequest actionRequest)
@@ -246,11 +246,11 @@ public class ViewAction extends PortletAction {
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 
 		SocialEquityGroupSettingLocalServiceUtil.updateEquityGroupSetting(
-			themeDisplay.getScopeGroupId(), Group.class.getName(),
+			themeDisplay.getScopeGroupIdOrLiveGroupId(), Group.class.getName(),
 			SocialEquitySettingConstants.TYPE_INFORMATION, enabled);
 
 		SocialEquityGroupSettingLocalServiceUtil.updateEquityGroupSetting(
-			themeDisplay.getScopeGroupId(), Group.class.getName(),
+			themeDisplay.getScopeGroupIdOrLiveGroupId(), Group.class.getName(),
 			SocialEquitySettingConstants.TYPE_PARTICIPATION, enabled);
 
 		String[] classNames = ResourceActionsUtil.getSocialEquityClassNames();
@@ -260,19 +260,19 @@ public class ViewAction extends PortletAction {
 				getMergedEquityActionMappings(actionRequest, className);
 
 			SocialEquitySettingLocalServiceUtil.updateEquitySettings(
-				themeDisplay.getScopeGroupId(), className,
+				themeDisplay.getScopeGroupIdOrLiveGroupId(), className,
 				mergedEquityActionMappings);
 
 			enabled = ParamUtil.getBoolean(
 				actionRequest, className + ".enabled");
 
 			SocialEquityGroupSettingLocalServiceUtil.updateEquityGroupSetting(
-				themeDisplay.getScopeGroupId(), className,
+				themeDisplay.getScopeGroupIdOrLiveGroupId(), className,
 				SocialEquitySettingConstants.TYPE_INFORMATION,
 				enabled);
 
 			SocialEquityGroupSettingLocalServiceUtil.updateEquityGroupSetting(
-				themeDisplay.getScopeGroupId(), className,
+				themeDisplay.getScopeGroupIdOrLiveGroupId(), className,
 				SocialEquitySettingConstants.TYPE_PARTICIPATION,
 				enabled);
 		}

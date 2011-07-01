@@ -448,8 +448,14 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		ResourceCode resourceCode = (ResourceCode)EntityCacheUtil.getResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceCodeImpl.class, codeId, this);
 
+		if (resourceCode == _nullResourceCode) {
+			return null;
+		}
+
 		if (resourceCode == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -458,11 +464,17 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 						Long.valueOf(codeId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (resourceCode != null) {
 					cacheResult(resourceCode);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceCodeImpl.class, codeId, _nullResourceCode);
 				}
 
 				closeSession(session);
@@ -1219,6 +1231,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource code, or <code>null</code> if a matching resource code could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1885,4 +1898,9 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceCode exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ResourceCodePersistenceImpl.class);
+	private static ResourceCode _nullResourceCode = new ResourceCodeImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

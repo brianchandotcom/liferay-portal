@@ -457,8 +457,14 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		Permission permission = (Permission)EntityCacheUtil.getResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
 				PermissionImpl.class, permissionId, this);
 
+		if (permission == _nullPermission) {
+			return null;
+		}
+
 		if (permission == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -467,11 +473,17 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 						Long.valueOf(permissionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (permission != null) {
 					cacheResult(permission);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
+						PermissionImpl.class, permissionId, _nullPermission);
 				}
 
 				closeSession(session);
@@ -868,6 +880,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 *
 	 * @param actionId the action ID
 	 * @param resourceId the resource ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching permission, or <code>null</code> if a matching permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3368,4 +3381,9 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Permission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PermissionPersistenceImpl.class);
+	private static Permission _nullPermission = new PermissionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

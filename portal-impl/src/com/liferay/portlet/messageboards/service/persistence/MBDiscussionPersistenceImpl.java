@@ -454,8 +454,14 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		MBDiscussion mbDiscussion = (MBDiscussion)EntityCacheUtil.getResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
 				MBDiscussionImpl.class, discussionId, this);
 
+		if (mbDiscussion == _nullMBDiscussion) {
+			return null;
+		}
+
 		if (mbDiscussion == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -464,11 +470,17 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 						Long.valueOf(discussionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (mbDiscussion != null) {
 					cacheResult(mbDiscussion);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
+						MBDiscussionImpl.class, discussionId, _nullMBDiscussion);
 				}
 
 				closeSession(session);
@@ -859,6 +871,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 * Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param threadId the thread ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -992,6 +1005,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1504,4 +1518,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBDiscussion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBDiscussionPersistenceImpl.class);
+	private static MBDiscussion _nullMBDiscussion = new MBDiscussionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

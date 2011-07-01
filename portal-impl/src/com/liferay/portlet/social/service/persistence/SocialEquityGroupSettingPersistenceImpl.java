@@ -439,8 +439,14 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 		SocialEquityGroupSetting socialEquityGroupSetting = (SocialEquityGroupSetting)EntityCacheUtil.getResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquityGroupSettingImpl.class, equityGroupSettingId, this);
 
+		if (socialEquityGroupSetting == _nullSocialEquityGroupSetting) {
+			return null;
+		}
+
 		if (socialEquityGroupSetting == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -449,11 +455,18 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 						Long.valueOf(equityGroupSettingId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (socialEquityGroupSetting != null) {
 					cacheResult(socialEquityGroupSetting);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
+						SocialEquityGroupSettingImpl.class,
+						equityGroupSettingId, _nullSocialEquityGroupSetting);
 				}
 
 				closeSession(session);
@@ -524,6 +537,7 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity group setting, or <code>null</code> if a matching social equity group setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -921,4 +935,9 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquityGroupSetting exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityGroupSettingPersistenceImpl.class);
+	private static SocialEquityGroupSetting _nullSocialEquityGroupSetting = new SocialEquityGroupSettingImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

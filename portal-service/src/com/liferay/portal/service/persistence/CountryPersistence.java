@@ -123,6 +123,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -156,6 +157,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param a2 the a2
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -189,6 +191,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param a3 the a3
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
 	* @throws SystemException if a system exception occurred
 	*/

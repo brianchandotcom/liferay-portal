@@ -309,8 +309,13 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 			return (Phone)this;
 		}
 		else {
-			return (Phone)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Phone)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -509,4 +514,5 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private int _typeId;
 	private boolean _primary;
 	private transient ExpandoBridge _expandoBridge;
+	private Phone _escapedModelProxy;
 }

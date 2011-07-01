@@ -428,8 +428,14 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 				SCFrameworkVersionImpl.class, frameworkVersionId, this);
 
+		if (scFrameworkVersion == _nullSCFrameworkVersion) {
+			return null;
+		}
+
 		if (scFrameworkVersion == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -438,11 +444,18 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						Long.valueOf(frameworkVersionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (scFrameworkVersion != null) {
 					cacheResult(scFrameworkVersion);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
+						SCFrameworkVersionImpl.class, frameworkVersionId,
+						_nullSCFrameworkVersion);
 				}
 
 				closeSession(session);
@@ -859,7 +872,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -882,7 +895,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -976,7 +990,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1054,7 +1068,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1865,7 +1880,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1888,7 +1903,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1987,7 +2003,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2065,7 +2081,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2333,7 +2350,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2496,7 +2514,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCFrameworkVersion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCFrameworkVersion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3300,13 +3319,19 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "scFrameworkVersion.active = ?";
 	private static final String _FILTER_SQL_SELECT_SCFRAMEWORKVERSION_WHERE = "SELECT {scFrameworkVersion.*} FROM SCFrameworkVersion scFrameworkVersion WHERE ";
 	private static final String _FILTER_SQL_COUNT_SCFRAMEWORKVERSION_WHERE = "SELECT COUNT(DISTINCT scFrameworkVersion.frameworkVersionId) AS COUNT_VALUE FROM SCFrameworkVersion scFrameworkVersion WHERE ";
-	private static final String _FILTER_COLUMN_PK = "scFrameworkVersion.frameworkVersionId";
 	private static final String _FILTER_ENTITY_ALIAS = "scFrameworkVersion";
 	private static final String _FILTER_ENTITY_TABLE = "SCFrameworkVersion";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "scFrameworkVersion.frameworkVersionId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scFrameworkVersion.frameworkVersionId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scFrameworkVersion.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "SCFrameworkVersion.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCFrameworkVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCFrameworkVersion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCFrameworkVersionPersistenceImpl.class);
+	private static SCFrameworkVersion _nullSCFrameworkVersion = new SCFrameworkVersionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

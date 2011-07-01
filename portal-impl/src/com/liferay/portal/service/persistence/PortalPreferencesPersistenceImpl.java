@@ -413,8 +413,14 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		PortalPreferences portalPreferences = (PortalPreferences)EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 				PortalPreferencesImpl.class, portalPreferencesId, this);
 
+		if (portalPreferences == _nullPortalPreferences) {
+			return null;
+		}
+
 		if (portalPreferences == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -423,11 +429,18 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 						Long.valueOf(portalPreferencesId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (portalPreferences != null) {
 					cacheResult(portalPreferences);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+						PortalPreferencesImpl.class, portalPreferencesId,
+						_nullPortalPreferences);
 				}
 
 				closeSession(session);
@@ -491,6 +504,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 *
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -972,4 +986,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortalPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PortalPreferencesPersistenceImpl.class);
+	private static PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

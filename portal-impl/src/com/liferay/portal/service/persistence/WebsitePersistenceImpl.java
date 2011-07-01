@@ -425,8 +425,14 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		Website website = (Website)EntityCacheUtil.getResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 				WebsiteImpl.class, websiteId, this);
 
+		if (website == _nullWebsite) {
+			return null;
+		}
+
 		if (website == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -435,11 +441,17 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 						Long.valueOf(websiteId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (website != null) {
 					cacheResult(website);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+						WebsiteImpl.class, websiteId, _nullWebsite);
 				}
 
 				closeSession(session);
@@ -2971,4 +2983,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Website exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(WebsitePersistenceImpl.class);
+	private static Website _nullWebsite = new WebsiteImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -230,6 +230,12 @@ public class DLContentLocalServiceUtil {
 		return getService().updateDLContent(dlContent, merge);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDataBlobModel(primaryKey);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

@@ -534,8 +534,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		MBThread mbThread = (MBThread)EntityCacheUtil.getResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 				MBThreadImpl.class, threadId, this);
 
+		if (mbThread == _nullMBThread) {
+			return null;
+		}
+
 		if (mbThread == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -544,11 +550,17 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 						Long.valueOf(threadId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (mbThread != null) {
 					cacheResult(mbThread);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+						MBThreadImpl.class, threadId, _nullMBThread);
 				}
 
 				closeSession(session);
@@ -944,6 +956,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param rootMessageId the root message ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -5529,4 +5542,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBThread exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBThreadPersistenceImpl.class);
+	private static MBThread _nullMBThread = new MBThreadImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

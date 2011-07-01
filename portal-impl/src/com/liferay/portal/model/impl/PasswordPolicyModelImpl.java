@@ -579,8 +579,13 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			return (PasswordPolicy)this;
 		}
 		else {
-			return (PasswordPolicy)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PasswordPolicy)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -957,4 +962,5 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
 	private transient ExpandoBridge _expandoBridge;
+	private PasswordPolicy _escapedModelProxy;
 }

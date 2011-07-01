@@ -141,6 +141,18 @@ if (showOnlyLayoutAssets) {
 	assetEntryQuery.setLayout(layout);
 }
 
+boolean showLinkedAssets = GetterUtil.getBoolean(preferences.getValue("showLinkedAssets", null), false);
+
+if (showLinkedAssets) {
+	JournalArticle mainJournalArticle = themeDisplay.getMainJournalArticle();
+
+	if (mainJournalArticle != null) {
+		AssetEntry mainAssetEntry = AssetEntryLocalServiceUtil.getEntry(JournalArticle.class.getName(), mainJournalArticle.getResourcePrimKey());
+
+		assetEntryQuery.setLinkedAssetEntryId(mainAssetEntry.getEntryId());
+	}
+}
+
 boolean mergeUrlTags = GetterUtil.getBoolean(preferences.getValue("mergeUrlTags", null), true);
 boolean mergeLayoutTags = GetterUtil.getBoolean(preferences.getValue("mergeLayoutTags", null), false);
 

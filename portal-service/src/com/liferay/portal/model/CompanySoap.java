@@ -39,6 +39,7 @@ public class CompanySoap implements Serializable {
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setSystem(model.getSystem());
 		soapModel.setMaxUsers(model.getMaxUsers());
+		soapModel.setActive(model.getActive());
 
 		return soapModel;
 	}
@@ -167,6 +168,18 @@ public class CompanySoap implements Serializable {
 		_maxUsers = maxUsers;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	private long _companyId;
 	private long _accountId;
 	private String _webId;
@@ -176,4 +189,5 @@ public class CompanySoap implements Serializable {
 	private long _logoId;
 	private boolean _system;
 	private int _maxUsers;
+	private boolean _active;
 }

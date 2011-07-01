@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -166,11 +167,13 @@ public class LayoutStagingHandler implements InvocationHandler {
 				user, layoutSetBranchId, layout.getPlid());
 		}
 
-		try {
-			return LayoutRevisionLocalServiceUtil.getLayoutRevision(
-				layoutRevisionId);
-		}
-		catch (NoSuchLayoutRevisionException nslre) {
+		if (layoutRevisionId > 0) {
+			try {
+				return LayoutRevisionLocalServiceUtil.getLayoutRevision(
+					layoutRevisionId);
+			}
+			catch (NoSuchLayoutRevisionException nslre) {
+			}
 		}
 
 		try {
@@ -189,7 +192,7 @@ public class LayoutStagingHandler implements InvocationHandler {
 			}
 		}
 
-		return LayoutRevisionLocalServiceUtil.addLayoutRevision(
+		layoutRevision = LayoutRevisionLocalServiceUtil.addLayoutRevision(
 			serviceContext.getUserId(), layoutSetBranchId,
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 			false, LayoutRevisionConstants.DEFAULT_LAYOUT_VARIATION_NAME,
@@ -199,6 +202,18 @@ public class LayoutStagingHandler implements InvocationHandler {
 			layout.getIconImageId(), layout.getThemeId(),
 			layout.getColorSchemeId(), layout.getWapThemeId(),
 			layout.getWapColorSchemeId(), layout.getCss(), serviceContext);
+
+		boolean explicitCreation = ParamUtil.getBoolean(
+			serviceContext, "explicitCreation");
+
+		if (!explicitCreation) {
+			LayoutRevisionLocalServiceUtil.updateStatus(
+				serviceContext.getUserId(),
+				layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_INCOMPLETE, serviceContext);
+		}
+
+		return layoutRevision;
 	}
 
 	private LayoutType _getLayoutType() {

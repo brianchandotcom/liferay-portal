@@ -470,8 +470,14 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetCategoryPropertyImpl.class, categoryPropertyId, this);
 
+		if (assetCategoryProperty == _nullAssetCategoryProperty) {
+			return null;
+		}
+
 		if (assetCategoryProperty == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -480,11 +486,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 						Long.valueOf(categoryPropertyId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (assetCategoryProperty != null) {
 					cacheResult(assetCategoryProperty);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
+						AssetCategoryPropertyImpl.class, categoryPropertyId,
+						_nullAssetCategoryProperty);
 				}
 
 				closeSession(session);
@@ -1622,6 +1635,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 *
 	 * @param categoryId the category ID
 	 * @param key the key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2253,4 +2267,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategoryProperty exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPropertyPersistenceImpl.class);
+	private static AssetCategoryProperty _nullAssetCategoryProperty = new AssetCategoryPropertyImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

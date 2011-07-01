@@ -485,8 +485,14 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)EntityCacheUtil.getResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileEntryMetadataImpl.class, fileEntryMetadataId, this);
 
+		if (dlFileEntryMetadata == _nullDLFileEntryMetadata) {
+			return null;
+		}
+
 		if (dlFileEntryMetadata == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -495,11 +501,18 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 						Long.valueOf(fileEntryMetadataId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (dlFileEntryMetadata != null) {
 					cacheResult(dlFileEntryMetadata);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
+						DLFileEntryMetadataImpl.class, fileEntryMetadataId,
+						_nullDLFileEntryMetadata);
 				}
 
 				closeSession(session);
@@ -1930,6 +1943,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param DDMStructureId the d d m structure ID
 	 * @param fileVersionId the file version ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2599,4 +2613,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryMetadata exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryMetadataPersistenceImpl.class);
+	private static DLFileEntryMetadata _nullDLFileEntryMetadata = new DLFileEntryMetadataImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

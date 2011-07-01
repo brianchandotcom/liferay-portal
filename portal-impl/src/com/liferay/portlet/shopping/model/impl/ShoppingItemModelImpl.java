@@ -654,8 +654,13 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			return (ShoppingItem)this;
 		}
 		else {
-			return (ShoppingItem)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingItem)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -1066,4 +1071,5 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private boolean _setOriginalLargeImageId;
 	private String _largeImageURL;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingItem _escapedModelProxy;
 }

@@ -467,8 +467,14 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		DDLRecord ddlRecord = (DDLRecord)EntityCacheUtil.getResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 				DDLRecordImpl.class, recordId, this);
 
+		if (ddlRecord == _nullDDLRecord) {
+			return null;
+		}
+
 		if (ddlRecord == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -477,11 +483,17 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 						Long.valueOf(recordId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (ddlRecord != null) {
 					cacheResult(ddlRecord);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
+						DDLRecordImpl.class, recordId, _nullDDLRecord);
 				}
 
 				closeSession(session);
@@ -899,6 +911,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2206,4 +2219,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDLRecord exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordPersistenceImpl.class);
+	private static DDLRecord _nullDDLRecord = new DDLRecordImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -276,6 +276,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @param repositoryId the repository ID
 	* @param path the path
 	* @param version the version
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	* @throws SystemException if a system exception occurred
 	*/

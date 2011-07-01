@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -13,6 +14,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+
+import java.io.Serializable;
 
 import javax.sql.DataSource;
 
@@ -26,6 +29,13 @@ import javax.sql.DataSource;
 	</#if>
 
 	import ${packagePath}.model.${entity.name};
+
+	<#list entity.blobList as column>
+		<#if column.lazy>
+			import ${packagePath}.model.${entity.name}${column.methodName}BlobModel;
+		</#if>
+	</#list>
+
 	import ${packagePath}.model.impl.${entity.name}Impl;
 
 	import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -390,6 +400,26 @@ import javax.sql.DataSource;
 
 			return ${entity.varName};
 		}
+
+		<#list entity.blobList as column>
+			<#if column.lazy>
+				public ${entity.name}${column.methodName}BlobModel get${column.methodName}BlobModel(Serializable primaryKey) throws SystemException {
+					Session session = null;
+
+					try {
+						session = ${entity.varName}Persistence.openSession();
+
+						return (${packagePath}.model.${entity.name}${column.methodName}BlobModel)session.get(${entity.name}${column.methodName}BlobModel.class, primaryKey);
+					}
+					catch (Exception e) {
+						throw ${entity.varName}Persistence.processException(e);
+					}
+					finally {
+						${entity.varName}Persistence.closeSession(session);
+					}
+				}
+			</#if>
+		</#list>
 	</#if>
 
 	<#list referenceList as tempEntity>

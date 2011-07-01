@@ -425,8 +425,14 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, resourceActionId, this);
 
+		if (resourceAction == _nullResourceAction) {
+			return null;
+		}
+
 		if (resourceAction == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -435,11 +441,18 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 						Long.valueOf(resourceActionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (resourceAction != null) {
 					cacheResult(resourceAction);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceActionImpl.class, resourceActionId,
+						_nullResourceAction);
 				}
 
 				closeSession(session);
@@ -866,6 +879,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1483,4 +1497,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceAction exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ResourceActionPersistenceImpl.class);
+	private static ResourceAction _nullResourceAction = new ResourceActionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

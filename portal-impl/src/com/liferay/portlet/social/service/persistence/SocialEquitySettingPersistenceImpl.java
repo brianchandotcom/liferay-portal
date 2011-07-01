@@ -469,8 +469,14 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 		SocialEquitySetting socialEquitySetting = (SocialEquitySetting)EntityCacheUtil.getResult(SocialEquitySettingModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquitySettingImpl.class, equitySettingId, this);
 
+		if (socialEquitySetting == _nullSocialEquitySetting) {
+			return null;
+		}
+
 		if (socialEquitySetting == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -479,11 +485,18 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 						Long.valueOf(equitySettingId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (socialEquitySetting != null) {
 					cacheResult(socialEquitySetting);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SocialEquitySettingModelImpl.ENTITY_CACHE_ENABLED,
+						SocialEquitySettingImpl.class, equitySettingId,
+						_nullSocialEquitySetting);
 				}
 
 				closeSession(session);
@@ -962,6 +975,7 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 	 * @param classNameId the class name ID
 	 * @param actionId the action ID
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity setting, or <code>null</code> if a matching social equity setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1496,4 +1510,9 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquitySetting exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialEquitySettingPersistenceImpl.class);
+	private static SocialEquitySetting _nullSocialEquitySetting = new SocialEquitySettingImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

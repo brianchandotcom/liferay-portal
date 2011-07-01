@@ -22,7 +22,9 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel;
 import com.liferay.portlet.documentlibrary.model.DLContentModel;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
@@ -72,10 +74,10 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.entity.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
-			false);
+			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
-			false);
+			true);
 
 	public Class<?> getModelClass() {
 		return DLContent.class;
@@ -223,11 +225,28 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public Blob getData() {
-		return _data;
+		if (_dataBlobModel == null) {
+			try {
+				_dataBlobModel = DLContentLocalServiceUtil.getDataBlobModel(getPrimaryKey());
+
+				if (_dataBlobModel != null) {
+					return _dataBlobModel.getDataBlob();
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return null;
 	}
 
 	public void setData(Blob data) {
-		_data = data;
+		if (_dataBlobModel == null) {
+			_dataBlobModel = new DLContentDataBlobModel(getPrimaryKey(), data);
+		}
+		else {
+			_dataBlobModel.setDataBlob(data);
+		}
 	}
 
 	public long getSize() {
@@ -244,8 +263,13 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 			return (DLContent)this;
 		}
 		else {
-			return (DLContent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DLContent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -275,7 +299,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentImpl.setRepositoryId(getRepositoryId());
 		dlContentImpl.setPath(getPath());
 		dlContentImpl.setVersion(getVersion());
-		dlContentImpl.setData(getData());
 		dlContentImpl.setSize(getSize());
 
 		dlContentImpl.resetOriginalValues();
@@ -344,6 +367,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentModelImpl._originalPath = dlContentModelImpl._path;
 
 		dlContentModelImpl._originalVersion = dlContentModelImpl._version;
+
+		_dataBlobModel = null;
 	}
 
 	@Override
@@ -440,7 +465,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private String _originalPath;
 	private String _version;
 	private String _originalVersion;
-	private Blob _data;
+	private DLContentDataBlobModel _dataBlobModel;
 	private long _size;
 	private transient ExpandoBridge _expandoBridge;
+	private DLContent _escapedModelProxy;
 }

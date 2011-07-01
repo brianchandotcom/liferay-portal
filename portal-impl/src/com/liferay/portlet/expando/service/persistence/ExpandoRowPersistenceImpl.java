@@ -419,8 +419,14 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		ExpandoRow expandoRow = (ExpandoRow)EntityCacheUtil.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoRowImpl.class, rowId, this);
 
+		if (expandoRow == _nullExpandoRow) {
+			return null;
+		}
+
 		if (expandoRow == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -429,11 +435,17 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 						Long.valueOf(rowId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (expandoRow != null) {
 					cacheResult(expandoRow);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
+						ExpandoRowImpl.class, rowId, _nullExpandoRow);
 				}
 
 				closeSession(session);
@@ -828,6 +840,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 *
 	 * @param tableId the table ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1264,4 +1277,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoRow exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ExpandoRowPersistenceImpl.class);
+	private static ExpandoRow _nullExpandoRow = new ExpandoRowImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

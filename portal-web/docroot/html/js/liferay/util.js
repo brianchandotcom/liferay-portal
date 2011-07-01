@@ -1514,17 +1514,7 @@
 		Util,
 		'updateCheckboxValue',
 		function(checkbox) {
-			checkbox = A.one(checkbox);
-
-			if (checkbox) {
-				var value = '';
-
-				if (checkbox.attr('checked')) {
-					value = checkbox.val();
-				}
-
-				checkbox.previous().val(value);
-			}
+			A.one(checkbox).previous().val(checkbox.checked);
 		},
 		['aui-base']
 	);
@@ -1577,12 +1567,15 @@
 				var refresh = event.refresh;
 
 				if (refresh && openingWindow) {
+					var data;
+
 					if (!event.portletAjaxable) {
-						openingWindow.location.reload();
+						data = {
+							portletAjaxable: false
+						};
 					}
-					else {
-						openingWindow.Liferay.Portlet.refresh('#p_p_id_' + refresh + '_');
-					}
+
+					openingWindow.Liferay.Portlet.refresh('#p_p_id_' + refresh + '_', data);
 				}
 
 				dialog.close();

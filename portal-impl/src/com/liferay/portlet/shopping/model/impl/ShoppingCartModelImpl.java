@@ -253,8 +253,13 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			return (ShoppingCart)this;
 		}
 		else {
-			return (ShoppingCart)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ShoppingCart)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -460,4 +465,5 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private int _altShipping;
 	private boolean _insure;
 	private transient ExpandoBridge _expandoBridge;
+	private ShoppingCart _escapedModelProxy;
 }

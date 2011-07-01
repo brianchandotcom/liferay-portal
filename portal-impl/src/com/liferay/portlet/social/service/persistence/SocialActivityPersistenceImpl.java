@@ -596,8 +596,14 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		SocialActivity socialActivity = (SocialActivity)EntityCacheUtil.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 				SocialActivityImpl.class, activityId, this);
 
+		if (socialActivity == _nullSocialActivity) {
+			return null;
+		}
+
 		if (socialActivity == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -606,11 +612,18 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 						Long.valueOf(activityId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (socialActivity != null) {
 					cacheResult(socialActivity);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
+						SocialActivityImpl.class, activityId,
+						_nullSocialActivity);
 				}
 
 				closeSession(session);
@@ -1688,6 +1701,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mirrorActivityId the mirror activity ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3289,6 +3303,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4309,4 +4324,9 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivity exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialActivityPersistenceImpl.class);
+	private static SocialActivity _nullSocialActivity = new SocialActivityImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

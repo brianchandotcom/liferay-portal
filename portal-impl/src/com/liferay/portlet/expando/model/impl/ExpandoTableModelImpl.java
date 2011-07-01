@@ -178,8 +178,13 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 			return (ExpandoTable)this;
 		}
 		else {
-			return (ExpandoTable)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ExpandoTable)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -315,4 +320,5 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	private boolean _setOriginalClassNameId;
 	private String _name;
 	private String _originalName;
+	private ExpandoTable _escapedModelProxy;
 }

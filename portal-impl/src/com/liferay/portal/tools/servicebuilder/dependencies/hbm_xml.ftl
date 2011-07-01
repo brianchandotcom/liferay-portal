@@ -79,7 +79,7 @@
 					<#assign ejbName = false>
 				</#if>
 
-				<#if !column.isPrimary() && !column.isCollection() && !ejbName>
+				<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy))>
 					<property name="${column.name}"
 
 					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
@@ -99,14 +99,28 @@
 					<#if column.name != column.DBName>
 						column="${column.DBName}"
 					</#if>
-
-					<#if column.type == "Blob">
-						lazy="true"
-					</#if>
-
 					/>
+				</#if>
+
+				<#if (column.type == "Blob") && column.lazy>
+					<one-to-one name="${column.name}BlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" cascade="save-update" outer-join="false" constrained="true" />
 				</#if>
 			</#list>
 		</class>
+
+		<#list entity.blobList as blobColumn>
+			<#if blobColumn.lazy>
+				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
+					<#assign column = entity.getPKList()?first>
+
+					<id name="${column.name}" column="${column.name}">
+						<generator class="foreign">
+							<param name="property">${packagePath}.model.impl.${entity.name}Impl</param>
+						</generator>
+					</id>
+					<property column="${blobColumn.DBName}" name="${blobColumn.name}Blob" type="org.hibernate.type.BlobType" />
+				</class>
+			</#if>
+		</#list>
 	</#if>
 </#list>

@@ -17,6 +17,8 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
 Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 String portletId = portlet.getPortletId();
@@ -907,6 +909,19 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			if (portletException) {
 				portletContent = "/portal/portlet_error.jsp";
+			}
+
+			if (!portlet.isAjaxable() && cmd.equals("add")) {
+		%>
+
+				<liferay-util:buffer var="nonAjaxableContentMessage">
+					<div class="portlet-msg-info">
+						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
+					</div>
+				</liferay-util:buffer>
+
+		<%
+				renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, nonAjaxableContentMessage);
 			}
 		%>
 

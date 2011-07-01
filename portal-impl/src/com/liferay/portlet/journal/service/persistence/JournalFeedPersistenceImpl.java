@@ -519,8 +519,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, id, this);
 
+		if (journalFeed == _nullJournalFeed) {
+			return null;
+		}
+
 		if (journalFeed == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -529,11 +535,17 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						Long.valueOf(id));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (journalFeed != null) {
 					cacheResult(journalFeed);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+						JournalFeedImpl.class, id, _nullJournalFeed);
 				}
 
 				closeSession(session);
@@ -959,6 +971,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1462,7 +1475,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1485,7 +1498,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalFeed.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalFeed.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1576,7 +1590,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1654,7 +1668,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalFeed.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalFeed.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1744,6 +1759,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param groupId the group ID
 	 * @param feedId the feed ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2223,7 +2239,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalFeed.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalFeed.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2431,13 +2448,19 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final String _FINDER_COLUMN_G_F_FEEDID_3 = "(journalFeed.feedId IS NULL OR journalFeed.feedId = ?)";
 	private static final String _FILTER_SQL_SELECT_JOURNALFEED_WHERE = "SELECT {journalFeed.*} FROM JournalFeed journalFeed WHERE ";
 	private static final String _FILTER_SQL_COUNT_JOURNALFEED_WHERE = "SELECT COUNT(DISTINCT journalFeed.id) AS COUNT_VALUE FROM JournalFeed journalFeed WHERE ";
-	private static final String _FILTER_COLUMN_PK = "journalFeed.id";
 	private static final String _FILTER_ENTITY_ALIAS = "journalFeed";
 	private static final String _FILTER_ENTITY_TABLE = "JournalFeed";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalFeed.id";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalFeed.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalFeed.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalFeed.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalFeed exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalFeed exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalFeedPersistenceImpl.class);
+	private static JournalFeed _nullJournalFeed = new JournalFeedImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

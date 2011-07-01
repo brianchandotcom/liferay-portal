@@ -585,8 +585,14 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		JournalTemplate journalTemplate = (JournalTemplate)EntityCacheUtil.getResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
 				JournalTemplateImpl.class, id, this);
 
+		if (journalTemplate == _nullJournalTemplate) {
+			return null;
+		}
+
 		if (journalTemplate == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -595,11 +601,17 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 						Long.valueOf(id));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (journalTemplate != null) {
 					cacheResult(journalTemplate);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
+						JournalTemplateImpl.class, id, _nullJournalTemplate);
 				}
 
 				closeSession(session);
@@ -1026,6 +1038,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1530,7 +1543,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1553,7 +1566,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1645,7 +1659,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1723,7 +1737,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2172,6 +2187,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 * Returns the journal template where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param smallImageId the small image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2307,6 +2323,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param groupId the group ID
 	 * @param templateId the template ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2873,7 +2890,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2896,7 +2913,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3006,7 +3024,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3084,7 +3102,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3543,7 +3562,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3864,7 +3884,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalTemplate.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -4017,13 +4038,19 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	private static final String _FINDER_COLUMN_G_S_STRUCTUREID_3 = "(journalTemplate.structureId IS NULL OR journalTemplate.structureId = ?)";
 	private static final String _FILTER_SQL_SELECT_JOURNALTEMPLATE_WHERE = "SELECT {journalTemplate.*} FROM JournalTemplate journalTemplate WHERE ";
 	private static final String _FILTER_SQL_COUNT_JOURNALTEMPLATE_WHERE = "SELECT COUNT(DISTINCT journalTemplate.id) AS COUNT_VALUE FROM JournalTemplate journalTemplate WHERE ";
-	private static final String _FILTER_COLUMN_PK = "journalTemplate.id";
 	private static final String _FILTER_ENTITY_ALIAS = "journalTemplate";
 	private static final String _FILTER_ENTITY_TABLE = "JournalTemplate";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalTemplate.id";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalTemplate.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalTemplate.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalTemplate.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalTemplate exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalTemplate exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalTemplatePersistenceImpl.class);
+	private static JournalTemplate _nullJournalTemplate = new JournalTemplateImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

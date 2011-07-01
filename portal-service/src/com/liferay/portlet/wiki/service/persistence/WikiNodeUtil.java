@@ -347,6 +347,7 @@ public class WikiNodeUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -706,6 +707,7 @@ public class WikiNodeUtil {
 	*
 	* @param groupId the group ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	* @throws SystemException if a system exception occurred
 	*/

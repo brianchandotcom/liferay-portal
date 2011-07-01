@@ -470,8 +470,13 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 			return (CalEvent)this;
 		}
 		else {
-			return (CalEvent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (CalEvent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -775,4 +780,5 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private int _firstReminder;
 	private int _secondReminder;
 	private transient ExpandoBridge _expandoBridge;
+	private CalEvent _escapedModelProxy;
 }

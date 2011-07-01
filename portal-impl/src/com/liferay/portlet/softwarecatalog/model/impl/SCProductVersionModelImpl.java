@@ -326,8 +326,13 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 			return (SCProductVersion)this;
 		}
 		else {
-			return (SCProductVersion)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SCProductVersion)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -533,4 +538,5 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	private String _originalDirectDownloadURL;
 	private boolean _repoStoreArtifact;
 	private transient ExpandoBridge _expandoBridge;
+	private SCProductVersion _escapedModelProxy;
 }

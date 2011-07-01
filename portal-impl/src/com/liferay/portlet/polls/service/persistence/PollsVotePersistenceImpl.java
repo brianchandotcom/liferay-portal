@@ -432,8 +432,14 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 				PollsVoteImpl.class, voteId, this);
 
+		if (pollsVote == _nullPollsVote) {
+			return null;
+		}
+
 		if (pollsVote == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -442,11 +448,17 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						Long.valueOf(voteId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (pollsVote != null) {
 					cacheResult(pollsVote);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+						PollsVoteImpl.class, voteId, _nullPollsVote);
 				}
 
 				closeSession(session);
@@ -1175,6 +1187,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param questionId the question ID
 	 * @param userId the user ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1676,4 +1689,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PollsVote exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PollsVotePersistenceImpl.class);
+	private static PollsVote _nullPollsVote = new PollsVoteImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

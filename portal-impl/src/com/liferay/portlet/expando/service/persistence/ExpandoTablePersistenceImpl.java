@@ -444,8 +444,14 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		ExpandoTable expandoTable = (ExpandoTable)EntityCacheUtil.getResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoTableImpl.class, tableId, this);
 
+		if (expandoTable == _nullExpandoTable) {
+			return null;
+		}
+
 		if (expandoTable == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -454,11 +460,17 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 						Long.valueOf(tableId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (expandoTable != null) {
 					cacheResult(expandoTable);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+						ExpandoTableImpl.class, tableId, _nullExpandoTable);
 				}
 
 				closeSession(session);
@@ -882,6 +894,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1367,4 +1380,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoTable exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ExpandoTablePersistenceImpl.class);
+	private static ExpandoTable _nullExpandoTable = new ExpandoTableImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

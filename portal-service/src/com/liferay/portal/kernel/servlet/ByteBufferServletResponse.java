@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.PrintWriter;
 
@@ -88,7 +88,8 @@ public class ByteBufferServletResponse extends HeaderCacheServletResponse {
 		_unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
 		_servletOutputStream = new PipingServletOutputStream(
 			_unsyncByteArrayOutputStream);
-		_printWriter = new UnsyncPrintWriter(_unsyncByteArrayOutputStream);
+		_printWriter = UnsyncPrintWriterPool.borrow(
+			_unsyncByteArrayOutputStream);
 
 		return _printWriter;
 	}

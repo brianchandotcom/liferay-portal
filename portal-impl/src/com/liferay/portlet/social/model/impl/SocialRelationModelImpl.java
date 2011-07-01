@@ -201,8 +201,13 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 			return (SocialRelation)this;
 		}
 		else {
-			return (SocialRelation)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialRelation)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -381,4 +386,5 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private int _originalType;
 	private boolean _setOriginalType;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialRelation _escapedModelProxy;
 }

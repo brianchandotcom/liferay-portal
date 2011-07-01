@@ -459,6 +459,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	* @param companyId the company ID
 	* @param userId the user ID
 	* @param fileEntryId the file entry ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	* @throws SystemException if a system exception occurred
 	*/

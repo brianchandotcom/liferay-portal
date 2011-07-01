@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -140,6 +140,18 @@ public interface Portal {
 	 */
 	public void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url);
+
+	/**
+	 * Adds an entry to the portlet breadcrumbs for the page.
+	 *
+	 * @param request the servlet request for the page
+	 * @param title the title of the new breakcrumb entry
+	 * @param url the URL of the new breadcrumb entry
+	 * @param data the HTML5 data parameters of the new breadcrumb entry
+	 */
+	public void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data);
 
 	/**
 	 * Adds the default resource permissions for the portlet to the page.
@@ -611,6 +623,10 @@ public interface Portal {
 	public String getLayoutFullURL(long groupId, String portletId)
 		throws PortalException, SystemException;
 
+	public String getLayoutFullURL(
+			long groupId, String portletId, boolean secure)
+		throws PortalException, SystemException;
+
 	public String getLayoutFullURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
@@ -685,7 +701,12 @@ public interface Portal {
 
 	public String getPortalLibDir();
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public int getPortalPort();
+
+	public int getPortalPort(boolean secure);
 
 	public Properties getPortalProperties();
 
@@ -710,10 +731,11 @@ public interface Portal {
 	/**
 	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
-	public List<KeyValuePair> getPortletBreadcrumbList(
+	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request);
 
-	public List<KeyValuePair> getPortletBreadcrumbs(HttpServletRequest request);
+	public List<BreadcrumbEntry> getPortletBreadcrumbs(
+		HttpServletRequest request);
 
 	public String getPortletDescription(
 		Portlet portlet, ServletContext servletContext, Locale locale);

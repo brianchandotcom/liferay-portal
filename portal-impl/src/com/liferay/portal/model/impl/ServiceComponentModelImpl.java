@@ -177,8 +177,13 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			return (ServiceComponent)this;
 		}
 		else {
-			return (ServiceComponent)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (ServiceComponent)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -349,4 +354,5 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private long _buildDate;
 	private String _data;
 	private transient ExpandoBridge _expandoBridge;
+	private ServiceComponent _escapedModelProxy;
 }

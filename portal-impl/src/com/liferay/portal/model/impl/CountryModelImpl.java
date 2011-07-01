@@ -269,8 +269,13 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			return (Country)this;
 		}
 		else {
-			return (Country)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Country)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -438,4 +443,5 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private String _idd;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private Country _escapedModelProxy;
 }

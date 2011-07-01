@@ -210,8 +210,13 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 			return (Permission)this;
 		}
 		else {
-			return (Permission)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Permission)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -357,4 +362,5 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	private long _originalResourceId;
 	private boolean _setOriginalResourceId;
 	private transient ExpandoBridge _expandoBridge;
+	private Permission _escapedModelProxy;
 }

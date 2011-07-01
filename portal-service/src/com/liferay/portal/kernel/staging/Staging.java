@@ -110,6 +110,8 @@ public interface Staging {
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest);
 
+	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
+
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws Exception;

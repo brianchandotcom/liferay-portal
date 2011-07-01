@@ -385,8 +385,14 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 		OrgGroupPermission orgGroupPermission = (OrgGroupPermission)EntityCacheUtil.getResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 				OrgGroupPermissionImpl.class, orgGroupPermissionPK, this);
 
+		if (orgGroupPermission == _nullOrgGroupPermission) {
+			return null;
+		}
+
 		if (orgGroupPermission == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -395,11 +401,18 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 						orgGroupPermissionPK);
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (orgGroupPermission != null) {
 					cacheResult(orgGroupPermission);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
+						OrgGroupPermissionImpl.class, orgGroupPermissionPK,
+						_nullOrgGroupPermission);
 				}
 
 				closeSession(session);
@@ -1533,4 +1546,9 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupPermission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupPermissionPersistenceImpl.class);
+	private static OrgGroupPermission _nullOrgGroupPermission = new OrgGroupPermissionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

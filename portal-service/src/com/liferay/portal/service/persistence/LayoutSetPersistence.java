@@ -233,6 +233,7 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -865,8 +865,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 				UserImpl.class, userId, this);
 
+		if (user == _nullUser) {
+			return null;
+		}
+
 		if (user == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -874,11 +880,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				user = (User)session.get(UserImpl.class, Long.valueOf(userId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (user != null) {
 					cacheResult(user);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
+						UserImpl.class, userId, _nullUser);
 				}
 
 				closeSession(session);
@@ -1614,6 +1626,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * Returns the user where contactId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param contactId the contact ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2096,6 +2109,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portraitId the portrait ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2229,6 +2243,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param userId the user ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2367,6 +2382,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2505,6 +2521,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param screenName the screen name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2656,6 +2673,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param emailAddress the email address
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2807,6 +2825,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2945,6 +2964,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param companyId the company ID
 	 * @param openId the open ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -8565,4 +8585,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
+	private static User _nullUser = new UserImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

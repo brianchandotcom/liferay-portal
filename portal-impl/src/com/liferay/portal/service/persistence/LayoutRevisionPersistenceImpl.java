@@ -564,8 +564,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		LayoutRevision layoutRevision = (LayoutRevision)EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutRevisionImpl.class, layoutRevisionId, this);
 
+		if (layoutRevision == _nullLayoutRevision) {
+			return null;
+		}
+
 		if (layoutRevision == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -574,11 +580,18 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 						Long.valueOf(layoutRevisionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (layoutRevision != null) {
 					cacheResult(layoutRevision);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutRevisionImpl.class, layoutRevisionId,
+						_nullLayoutRevision);
 				}
 
 				closeSession(session);
@@ -2808,6 +2821,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param head the head
 	 * @param plid the plid
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4726,4 +4740,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutRevision exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionPersistenceImpl.class);
+	private static LayoutRevision _nullLayoutRevision = new LayoutRevisionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

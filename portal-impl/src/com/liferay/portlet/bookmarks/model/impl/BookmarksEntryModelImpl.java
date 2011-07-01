@@ -348,8 +348,13 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			return (BookmarksEntry)this;
 		}
 		else {
-			return (BookmarksEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (BookmarksEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -589,4 +594,5 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private int _visits;
 	private int _priority;
 	private transient ExpandoBridge _expandoBridge;
+	private BookmarksEntry _escapedModelProxy;
 }

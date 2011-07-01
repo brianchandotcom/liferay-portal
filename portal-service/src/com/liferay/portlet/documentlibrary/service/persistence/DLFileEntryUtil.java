@@ -352,6 +352,7 @@ public class DLFileEntryUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1598,6 +1599,7 @@ public class DLFileEntryUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1647,6 +1649,7 @@ public class DLFileEntryUtil {
 	* @param groupId the group ID
 	* @param folderId the folder ID
 	* @param title the title
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/

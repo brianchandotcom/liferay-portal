@@ -351,6 +351,7 @@ public class JournalArticleUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2589,6 +2590,7 @@ public class JournalArticleUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2638,6 +2640,7 @@ public class JournalArticleUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param structureId the structure ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -3140,6 +3143,7 @@ public class JournalArticleUtil {
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @param version the version
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/

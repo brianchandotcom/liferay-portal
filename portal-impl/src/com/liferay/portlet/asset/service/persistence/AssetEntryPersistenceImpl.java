@@ -534,8 +534,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		AssetEntry assetEntry = (AssetEntry)EntityCacheUtil.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetEntryImpl.class, entryId, this);
 
+		if (assetEntry == _nullAssetEntry) {
+			return null;
+		}
+
 		if (assetEntry == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -544,11 +550,17 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 						Long.valueOf(entryId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (assetEntry != null) {
 					cacheResult(assetEntry);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+						AssetEntryImpl.class, entryId, _nullAssetEntry);
 				}
 
 				closeSession(session);
@@ -945,6 +957,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param groupId the group ID
 	 * @param classUuid the class uuid
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1096,6 +1109,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2978,4 +2992,9 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
+	private static AssetEntry _nullAssetEntry = new AssetEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

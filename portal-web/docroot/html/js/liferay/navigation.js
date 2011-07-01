@@ -603,6 +603,7 @@ AUI().add(
 								data = {
 									cmd: 'add',
 									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+									explicitCreation: true,
 									groupId: themeDisplay.getParentGroupId(),
 									layoutPrototypeId: layoutPrototypeId,
 									mainPath: themeDisplay.getPathMain(),

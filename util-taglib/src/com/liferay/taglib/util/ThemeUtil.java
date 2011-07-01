@@ -17,7 +17,6 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
 import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
@@ -138,7 +138,7 @@ public class ThemeUtil {
 
 			// Wrapping is needed because of a bug in FreeMarker
 
-			writer = new UnsyncPrintWriter(pageContext.getOut());
+			writer = UnsyncPrintWriterPool.borrow(pageContext.getOut());
 		}
 		else {
 			writer = new UnsyncStringWriter();

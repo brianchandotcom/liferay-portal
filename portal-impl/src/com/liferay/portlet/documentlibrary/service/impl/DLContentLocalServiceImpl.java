@@ -44,18 +44,26 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		dlContent.setGroupId(groupId);
 		dlContent.setCompanyId(companyId);
+		dlContent.setPortletId(portletId);
 		dlContent.setRepositoryId(repositoryId);
 		dlContent.setPath(path);
 		dlContent.setVersion(version);
 
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(bytes);
+
 		OutputBlob dataOutputBlob = new OutputBlob(
-			new UnsyncByteArrayInputStream(bytes), bytes.length);
+			unsyncByteArrayInputStream, bytes.length);
 
 		dlContent.setData(dataOutputBlob);
 
 		dlContent.setSize(bytes.length);
 
 		dlContentPersistence.update(dlContent, false);
+
+		unsyncByteArrayInputStream.reset();
+
+		dlContent.setData(dataOutputBlob);
 
 		return dlContent;
 	}
@@ -71,6 +79,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		dlContent.setGroupId(groupId);
 		dlContent.setCompanyId(companyId);
+		dlContent.setPortletId(portletId);
 		dlContent.setRepositoryId(repositoryId);
 		dlContent.setPath(path);
 		dlContent.setVersion(version);

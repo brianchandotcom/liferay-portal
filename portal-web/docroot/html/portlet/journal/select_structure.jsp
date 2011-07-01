@@ -22,6 +22,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/journal/select_structure" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

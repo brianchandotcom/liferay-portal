@@ -575,8 +575,14 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		SocialEquityLog socialEquityLog = (SocialEquityLog)EntityCacheUtil.getResult(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquityLogImpl.class, equityLogId, this);
 
+		if (socialEquityLog == _nullSocialEquityLog) {
+			return null;
+		}
+
 		if (socialEquityLog == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -585,11 +591,18 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 						Long.valueOf(equityLogId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (socialEquityLog != null) {
 					cacheResult(socialEquityLog);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
+						SocialEquityLogImpl.class, equityLogId,
+						_nullSocialEquityLog);
 				}
 
 				closeSession(session);
@@ -2978,6 +2991,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	 * @param active the active
 	 * @param type the type
 	 * @param extraData the extra data
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity log, or <code>null</code> if a matching social equity log could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4091,4 +4105,9 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquityLog exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityLogPersistenceImpl.class);
+	private static SocialEquityLog _nullSocialEquityLog = new SocialEquityLogImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

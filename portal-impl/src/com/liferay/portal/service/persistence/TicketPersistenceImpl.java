@@ -390,8 +390,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 				TicketImpl.class, ticketId, this);
 
+		if (ticket == _nullTicket) {
+			return null;
+		}
+
 		if (ticket == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -400,11 +406,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 						Long.valueOf(ticketId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (ticket != null) {
 					cacheResult(ticket);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
+						TicketImpl.class, ticketId, _nullTicket);
 				}
 
 				closeSession(session);
@@ -461,6 +473,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param key the key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching ticket, or <code>null</code> if a matching ticket could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -957,4 +970,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Ticket exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(TicketPersistenceImpl.class);
+	private static Ticket _nullTicket = new TicketImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -159,55 +159,44 @@ String labelTag = AUIUtil.buildLabel(inlineLabel, showForLabel, forLabel);
 	<c:when test='<%= type.equals("checkbox") %>'>
 
 		<%
-		String valueString = GetterUtil.getString(checked);
+		boolean valueBoolean = checked;
 
 		if (value != null) {
-			valueString = value.toString();
+			String valueString = value.toString();
+
+			valueBoolean = GetterUtil.getBoolean(valueString);
 		}
 
 		if (!ignoreRequestValue) {
-			String[] requestValues = request.getParameterValues(name);
-
-			if ((requestValues != null) && (requestValues.length > 0)) {
-				checked = requestValues[0].equalsIgnoreCase("true") || ArrayUtil.contains(requestValues, valueString);
-			}
-			else {
-				String requestValue = ParamUtil.getString(request, name, valueString);
-
-				checked = requestValue.equalsIgnoreCase("true");
-			}
-		}
-
-		String defaultValueString = Boolean.TRUE.toString();
-
-		if (Validator.isNotNull(valueString) && !valueString.equalsIgnoreCase("false") && !valueString.equalsIgnoreCase("true")) {
-			defaultValueString = valueString;
+			valueBoolean = ParamUtil.getBoolean(request, name, valueBoolean);
 		}
 		%>
 
-		<input id="<%= id %>" name="<%= namespace + name %>" type="hidden" value="<%= checked ? valueString : StringPool.BLANK %>" />
+		<input id="<%= id %>" name="<%= namespace + name %>" type="hidden" value="<%= valueBoolean %>" />
 
-		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>Checkbox" name="<%= namespace + name %>Checkbox" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="checkbox" value="<%= defaultValueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		<input <%= valueBoolean ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>Checkbox" name="<%= namespace + name %>Checkbox" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="checkbox" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("radio") %>'>
 
 		<%
-		String valueString = GetterUtil.getString(checked);
+		boolean valueBoolean = checked;
+
+		String valueString = StringPool.BLANK;
 
 		if (value != null) {
 			valueString = value.toString();
-		}
 
-		if (!ignoreRequestValue) {
-			String requestValue = ParamUtil.getString(request, name);
+			if (!ignoreRequestValue) {
+				String requestValue = ParamUtil.getString(request, name);
 
-			if (Validator.isNotNull(requestValue)) {
-				checked = valueString.equals(requestValue);
+				if (Validator.isNotNull(requestValue)) {
+					valueBoolean = valueString.equals(requestValue);
+				}
 			}
 		}
 		%>
 
-		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= valueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		<input <%= valueBoolean ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= valueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("timeZone") %>'>
 		<span class="<%= fieldCss %>">

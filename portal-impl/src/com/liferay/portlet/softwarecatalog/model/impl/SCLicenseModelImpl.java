@@ -240,8 +240,13 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 			return (SCLicense)this;
 		}
 		else {
-			return (SCLicense)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SCLicense)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -391,4 +396,5 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	private boolean _active;
 	private boolean _recommended;
 	private transient ExpandoBridge _expandoBridge;
+	private SCLicense _escapedModelProxy;
 }

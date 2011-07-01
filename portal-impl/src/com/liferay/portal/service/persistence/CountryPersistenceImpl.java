@@ -458,8 +458,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		Country country = (Country)EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 				CountryImpl.class, countryId, this);
 
+		if (country == _nullCountry) {
+			return null;
+		}
+
 		if (country == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -468,11 +474,17 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 						Long.valueOf(countryId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (country != null) {
 					cacheResult(country);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
+						CountryImpl.class, countryId, _nullCountry);
 				}
 
 				closeSession(session);
@@ -529,6 +541,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -670,6 +683,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param a2 the a2
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -811,6 +825,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param a3 the a3
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1871,4 +1886,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Country exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(CountryPersistenceImpl.class);
+	private static Country _nullCountry = new CountryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

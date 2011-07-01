@@ -790,8 +790,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		Group group = (Group)EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 				GroupImpl.class, groupId, this);
 
+		if (group == _nullGroup) {
+			return null;
+		}
+
 		if (group == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -800,11 +806,17 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 						Long.valueOf(groupId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (group != null) {
 					cacheResult(group);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
+						GroupImpl.class, groupId, _nullGroup);
 				}
 
 				closeSession(session);
@@ -1199,6 +1211,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param liveGroupId the live group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1334,6 +1347,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1487,6 +1501,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly u r l
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2005,6 +2020,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2156,6 +2172,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param companyId the company ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2327,6 +2344,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param classNameId the class name ID
 	 * @param liveGroupId the live group ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -6730,4 +6748,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Group exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(GroupPersistenceImpl.class);
+	private static Group _nullGroup = new GroupImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

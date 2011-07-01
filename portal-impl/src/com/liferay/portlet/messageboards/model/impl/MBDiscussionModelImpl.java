@@ -178,8 +178,13 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			return (MBDiscussion)this;
 		}
 		else {
-			return (MBDiscussion)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (MBDiscussion)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -334,4 +339,5 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
 	private transient ExpandoBridge _expandoBridge;
+	private MBDiscussion _escapedModelProxy;
 }

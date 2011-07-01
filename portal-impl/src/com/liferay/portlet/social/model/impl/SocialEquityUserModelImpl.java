@@ -222,8 +222,13 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 			return (SocialEquityUser)this;
 		}
 		else {
-			return (SocialEquityUser)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquityUser)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -414,4 +419,5 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	private double _participationB;
 	private int _rank;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquityUser _escapedModelProxy;
 }

@@ -375,8 +375,13 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			return (DLFolder)this;
 		}
 		else {
-			return (DLFolder)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (DLFolder)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -631,4 +636,5 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private String _description;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private DLFolder _escapedModelProxy;
 }

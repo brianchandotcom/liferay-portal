@@ -625,6 +625,7 @@ public class PortletPreferencesUtil {
 	* @param ownerType the owner type
 	* @param plid the plid
 	* @param portletId the portlet ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -34,7 +34,7 @@ else if (splitThread && Validator.isNull(body)) {
 }
 %>
 
-<liferay-ui:input-editor configParams="<%= configParams %>" editorImpl="<%= BB_CODE_EDITOR_WYSIWYG_IMPL_KEY %>" toolbarSet="bbcode" />
+<liferay-ui:input-editor configParams="<%= configParams %>" editorImpl="<%= MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY %>" toolbarSet="bbcode" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
@@ -45,7 +45,3 @@ else if (splitThread && Validator.isNull(body)) {
 		return "<%= UnicodeFormatter.toString(body) %>";
 	}
 </aui:script>
-
-<%!
-public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp";
-%>

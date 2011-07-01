@@ -447,8 +447,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		MBStatsUser mbStatsUser = (MBStatsUser)EntityCacheUtil.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 				MBStatsUserImpl.class, statsUserId, this);
 
+		if (mbStatsUser == _nullMBStatsUser) {
+			return null;
+		}
+
 		if (mbStatsUser == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -457,11 +463,17 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 						Long.valueOf(statsUserId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (mbStatsUser != null) {
 					cacheResult(mbStatsUser);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+						MBStatsUserImpl.class, statsUserId, _nullMBStatsUser);
 				}
 
 				closeSession(session);
@@ -1203,6 +1215,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 *
 	 * @param groupId the group ID
 	 * @param userId the user ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards stats user, or <code>null</code> if a matching message boards stats user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2152,4 +2165,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBStatsUser exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBStatsUserPersistenceImpl.class);
+	private static MBStatsUser _nullMBStatsUser = new MBStatsUserImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

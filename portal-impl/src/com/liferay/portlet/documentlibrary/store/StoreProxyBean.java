@@ -56,6 +56,14 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	public void copyFileVersion(
+		long companyId, String portletId, long groupId, long repositoryId,
+		String fileName, String fromVersionNumber, String toVersionNumber,
+		String sourceFileName, ServiceContext serviceContext) {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void deleteDirectory(
 		long companyId, String portletId, long repositoryId, String dirName) {
 
@@ -164,6 +172,14 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		long companyId, String portletId, long groupId, long repositoryId,
 		String fileName, String versionNumber, String sourceFileName,
 		ServiceContext serviceContext, InputStream is) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public void updateFileVersion(
+		long companyId, String portletId, long groupId, long repositoryId,
+		String fileName, String fromVersionNumber, String toVersionNumber,
+		String sourceFileName, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

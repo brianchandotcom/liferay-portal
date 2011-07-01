@@ -233,8 +233,13 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 			return (AssetLink)this;
 		}
 		else {
-			return (AssetLink)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (AssetLink)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -436,4 +441,5 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	private boolean _setOriginalType;
 	private int _weight;
 	private transient ExpandoBridge _expandoBridge;
+	private AssetLink _escapedModelProxy;
 }

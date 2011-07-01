@@ -248,6 +248,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -438,8 +438,14 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		DDMStorageLink ddmStorageLink = (DDMStorageLink)EntityCacheUtil.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStorageLinkImpl.class, storageLinkId, this);
 
+		if (ddmStorageLink == _nullDDMStorageLink) {
+			return null;
+		}
+
 		if (ddmStorageLink == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -448,11 +454,18 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 						Long.valueOf(storageLinkId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (ddmStorageLink != null) {
 					cacheResult(ddmStorageLink);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
+						DDMStorageLinkImpl.class, storageLinkId,
+						_nullDDMStorageLink);
 				}
 
 				closeSession(session);
@@ -865,6 +878,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 * Returns the d d m storage link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1704,4 +1718,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStorageLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DDMStorageLinkPersistenceImpl.class);
+	private static DDMStorageLink _nullDDMStorageLink = new DDMStorageLinkImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

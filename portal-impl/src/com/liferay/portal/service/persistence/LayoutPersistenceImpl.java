@@ -676,8 +676,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		Layout layout = (Layout)EntityCacheUtil.getResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutImpl.class, plid, this);
 
+		if (layout == _nullLayout) {
+			return null;
+		}
+
 		if (layout == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -686,11 +692,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 						Long.valueOf(plid));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (layout != null) {
 					cacheResult(layout);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+						LayoutImpl.class, plid, _nullLayout);
 				}
 
 				closeSession(session);
@@ -1113,6 +1125,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1613,7 +1626,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1636,7 +1649,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -1727,7 +1741,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1805,7 +1819,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2227,6 +2242,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param iconImageId the icon image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2741,7 +2757,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2764,7 +2780,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -2861,7 +2878,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2939,7 +2956,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3037,6 +3055,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3589,7 +3608,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3612,7 +3631,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -3716,7 +3736,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3794,7 +3814,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3894,6 +3915,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4491,7 +4513,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4514,7 +4536,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -4628,7 +4651,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4706,7 +4729,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -5212,7 +5236,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5428,7 +5453,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5614,7 +5640,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -5834,7 +5861,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Layout.class.getName(), _FILTER_COLUMN_PK, groupId);
+				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+				groupId);
 
 		Session session = null;
 
@@ -6105,13 +6133,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = ?)";
 	private static final String _FILTER_SQL_SELECT_LAYOUT_WHERE = "SELECT {layout.*} FROM Layout layout WHERE ";
 	private static final String _FILTER_SQL_COUNT_LAYOUT_WHERE = "SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ";
-	private static final String _FILTER_COLUMN_PK = "layout.plid";
 	private static final String _FILTER_ENTITY_ALIAS = "layout";
 	private static final String _FILTER_ENTITY_TABLE = "Layout";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "layout.plid";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layout.plid";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layout.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Layout.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Layout exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Layout exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutPersistenceImpl.class);
+	private static Layout _nullLayout = new LayoutImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

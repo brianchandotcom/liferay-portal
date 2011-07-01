@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
@@ -211,7 +212,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
 			unsyncByteArrayOutputStream);
 
 		inputObjects.put("out", unsyncPrintWriter);

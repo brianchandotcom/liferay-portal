@@ -252,8 +252,13 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 			return (PortletPreferences)this;
 		}
 		else {
-			return (PortletPreferences)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (PortletPreferences)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -427,4 +432,5 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	private String _originalPortletId;
 	private String _preferences;
 	private transient ExpandoBridge _expandoBridge;
+	private PortletPreferences _escapedModelProxy;
 }

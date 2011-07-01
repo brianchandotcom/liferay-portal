@@ -301,8 +301,13 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 			return (SocialEquityLog)this;
 		}
 		else {
-			return (SocialEquityLog)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquityLog)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -540,4 +545,5 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	private String _extraData;
 	private String _originalExtraData;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquityLog _escapedModelProxy;
 }

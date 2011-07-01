@@ -509,8 +509,14 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 		MBMessageFlag mbMessageFlag = (MBMessageFlag)EntityCacheUtil.getResult(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageFlagImpl.class, messageFlagId, this);
 
+		if (mbMessageFlag == _nullMBMessageFlag) {
+			return null;
+		}
+
 		if (mbMessageFlag == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -519,11 +525,18 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 						Long.valueOf(messageFlagId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (mbMessageFlag != null) {
 					cacheResult(mbMessageFlag);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
+						MBMessageFlagImpl.class, messageFlagId,
+						_nullMBMessageFlag);
 				}
 
 				closeSession(session);
@@ -2671,6 +2684,7 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	 * @param userId the user ID
 	 * @param messageId the message ID
 	 * @param flag the flag
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards message flag, or <code>null</code> if a matching message boards message flag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3488,4 +3502,9 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMessageFlag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBMessageFlagPersistenceImpl.class);
+	private static MBMessageFlag _nullMBMessageFlag = new MBMessageFlagImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

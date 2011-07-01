@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 
@@ -32,6 +34,11 @@ public class FreeMarkerTemplateParser extends
 	@Override
 	protected String getErrorTemplateId() {
 		return PropsValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER;
+	}
+
+	@Override
+	protected TemplateContext getTemplateContext() {
+		return FreeMarkerEngineUtil.getWrappedStandardToolsContext();
 	}
 
 }

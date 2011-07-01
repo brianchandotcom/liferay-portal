@@ -488,8 +488,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 				AssetLinkImpl.class, linkId, this);
 
+		if (assetLink == _nullAssetLink) {
+			return null;
+		}
+
 		if (assetLink == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -498,11 +504,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 						Long.valueOf(linkId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (assetLink != null) {
 					cacheResult(assetLink);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+						AssetLinkImpl.class, linkId, _nullAssetLink);
 				}
 
 				closeSession(session);
@@ -2331,6 +2343,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 * @param entryId1 the entry id1
 	 * @param entryId2 the entry id2
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3077,4 +3090,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetLinkPersistenceImpl.class);
+	private static AssetLink _nullAssetLink = new AssetLinkImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

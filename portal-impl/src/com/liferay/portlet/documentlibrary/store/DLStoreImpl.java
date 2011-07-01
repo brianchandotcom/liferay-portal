@@ -109,6 +109,17 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		store.checkRoot(companyId);
 	}
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		store.copyFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+	}
+
 	public void deleteDirectory(
 			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -334,6 +345,17 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		store.updateFile(
 			companyId, portletId, groupId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, file);
+	}
+
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		store.updateFileVersion(
+			companyId, portletId, groupId, repositoryId, fileName,
+			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
 	}
 
 	public void validate(String fileName, boolean validateFileExtension)

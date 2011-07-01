@@ -349,8 +349,13 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			return (LayoutSet)this;
 		}
 		else {
-			return (LayoutSet)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (LayoutSet)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -579,4 +584,5 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _settings;
 	private long _layoutSetPrototypeId;
 	private transient ExpandoBridge _expandoBridge;
+	private LayoutSet _escapedModelProxy;
 }

@@ -558,8 +558,14 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		JournalContentSearch journalContentSearch = (JournalContentSearch)EntityCacheUtil.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 				JournalContentSearchImpl.class, contentSearchId, this);
 
+		if (journalContentSearch == _nullJournalContentSearch) {
+			return null;
+		}
+
 		if (journalContentSearch == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -568,11 +574,18 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 						Long.valueOf(contentSearchId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (journalContentSearch != null) {
 					cacheResult(journalContentSearch);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+						JournalContentSearchImpl.class, contentSearchId,
+						_nullJournalContentSearch);
 				}
 
 				closeSession(session);
@@ -2959,6 +2972,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 * @param layoutId the layout ID
 	 * @param portletId the portlet ID
 	 * @param articleId the article ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3975,4 +3989,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalContentSearch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalContentSearchPersistenceImpl.class);
+	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

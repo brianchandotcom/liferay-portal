@@ -817,6 +817,7 @@ public interface SocialEquityLogPersistence extends BasePersistence<SocialEquity
 	* @param active the active
 	* @param type the type
 	* @param extraData the extra data
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social equity log, or <code>null</code> if a matching social equity log could not be found
 	* @throws SystemException if a system exception occurred
 	*/

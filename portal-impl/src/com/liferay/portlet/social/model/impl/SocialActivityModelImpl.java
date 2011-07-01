@@ -316,8 +316,13 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			return (SocialActivity)this;
 		}
 		else {
-			return (SocialActivity)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialActivity)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -568,4 +573,5 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private long _originalReceiverUserId;
 	private boolean _setOriginalReceiverUserId;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialActivity _escapedModelProxy;
 }

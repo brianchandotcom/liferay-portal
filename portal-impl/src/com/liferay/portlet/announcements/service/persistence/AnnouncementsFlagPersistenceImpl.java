@@ -442,8 +442,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsFlagImpl.class, flagId, this);
 
+		if (announcementsFlag == _nullAnnouncementsFlag) {
+			return null;
+		}
+
 		if (announcementsFlag == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -452,11 +458,18 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 						Long.valueOf(flagId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (announcementsFlag != null) {
 					cacheResult(announcementsFlag);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+						AnnouncementsFlagImpl.class, flagId,
+						_nullAnnouncementsFlag);
 				}
 
 				closeSession(session);
@@ -867,6 +880,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1316,4 +1330,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
+	private static AnnouncementsFlag _nullAnnouncementsFlag = new AnnouncementsFlagImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

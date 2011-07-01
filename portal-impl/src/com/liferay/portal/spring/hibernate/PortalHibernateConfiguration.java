@@ -31,6 +31,8 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
+import javassist.util.proxy.ProxyFactory;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -40,11 +42,21 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 /**
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @author Shuyang Zhou
  */
 public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	@Override
 	public SessionFactory buildSessionFactory() throws Exception {
+		ProxyFactory.classLoaderProvider =
+			new ProxyFactory.ClassLoaderProvider() {
+
+				public ClassLoader get(ProxyFactory proxyFactory) {
+					return Thread.currentThread().getContextClassLoader();
+				}
+
+			};
+
 		return super.buildSessionFactory();
 	}
 

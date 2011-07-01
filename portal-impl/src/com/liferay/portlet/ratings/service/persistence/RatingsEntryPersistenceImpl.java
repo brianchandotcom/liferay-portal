@@ -442,8 +442,14 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		RatingsEntry ratingsEntry = (RatingsEntry)EntityCacheUtil.getResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				RatingsEntryImpl.class, entryId, this);
 
+		if (ratingsEntry == _nullRatingsEntry) {
+			return null;
+		}
+
 		if (ratingsEntry == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -452,11 +458,17 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 						Long.valueOf(entryId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (ratingsEntry != null) {
 					cacheResult(ratingsEntry);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
+						RatingsEntryImpl.class, entryId, _nullRatingsEntry);
 				}
 
 				closeSession(session);
@@ -880,6 +892,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1340,4 +1353,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RatingsEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(RatingsEntryPersistenceImpl.class);
+	private static RatingsEntry _nullRatingsEntry = new RatingsEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

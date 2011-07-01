@@ -436,8 +436,14 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		VirtualHost virtualHost = (VirtualHost)EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 				VirtualHostImpl.class, virtualHostId, this);
 
+		if (virtualHost == _nullVirtualHost) {
+			return null;
+		}
+
 		if (virtualHost == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -446,11 +452,17 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 						Long.valueOf(virtualHostId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (virtualHost != null) {
 					cacheResult(virtualHost);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+						VirtualHostImpl.class, virtualHostId, _nullVirtualHost);
 				}
 
 				closeSession(session);
@@ -508,6 +520,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param hostname the hostname
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -654,6 +667,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 *
 	 * @param companyId the company ID
 	 * @param layoutSetId the layout set ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1216,4 +1230,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VirtualHost exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(VirtualHostPersistenceImpl.class);
+	private static VirtualHost _nullVirtualHost = new VirtualHostImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

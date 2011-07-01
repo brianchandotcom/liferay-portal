@@ -375,8 +375,14 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		ShoppingItemField shoppingItemField = (ShoppingItemField)EntityCacheUtil.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingItemFieldImpl.class, itemFieldId, this);
 
+		if (shoppingItemField == _nullShoppingItemField) {
+			return null;
+		}
+
 		if (shoppingItemField == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -385,11 +391,18 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 						Long.valueOf(itemFieldId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (shoppingItemField != null) {
 					cacheResult(shoppingItemField);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
+						ShoppingItemFieldImpl.class, itemFieldId,
+						_nullShoppingItemField);
 				}
 
 				closeSession(session);
@@ -1025,4 +1038,9 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingItemField exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemFieldPersistenceImpl.class);
+	private static ShoppingItemField _nullShoppingItemField = new ShoppingItemFieldImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

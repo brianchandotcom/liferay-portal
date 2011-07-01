@@ -452,8 +452,13 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 			return (MBMailingList)this;
 		}
 		else {
-			return (MBMailingList)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (MBMailingList)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -782,4 +787,5 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private boolean _allowAnonymous;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private MBMailingList _escapedModelProxy;
 }

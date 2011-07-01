@@ -350,6 +350,7 @@ public class IGImageUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching i g image, or <code>null</code> if a matching i g image could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -585,6 +586,7 @@ public class IGImageUtil {
 	* Returns the i g image where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param smallImageId the small image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching i g image, or <code>null</code> if a matching i g image could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -627,6 +629,7 @@ public class IGImageUtil {
 	* Returns the i g image where largeImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param largeImageId the large image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching i g image, or <code>null</code> if a matching i g image could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -669,6 +672,7 @@ public class IGImageUtil {
 	* Returns the i g image where custom1ImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param custom1ImageId the custom1 image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching i g image, or <code>null</code> if a matching i g image could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -711,6 +715,7 @@ public class IGImageUtil {
 	* Returns the i g image where custom2ImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param custom2ImageId the custom2 image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching i g image, or <code>null</code> if a matching i g image could not be found
 	* @throws SystemException if a system exception occurred
 	*/

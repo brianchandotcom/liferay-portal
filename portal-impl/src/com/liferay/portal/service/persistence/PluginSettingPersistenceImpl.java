@@ -452,8 +452,14 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		PluginSetting pluginSetting = (PluginSetting)EntityCacheUtil.getResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 				PluginSettingImpl.class, pluginSettingId, this);
 
+		if (pluginSetting == _nullPluginSetting) {
+			return null;
+		}
+
 		if (pluginSetting == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -462,11 +468,18 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 						Long.valueOf(pluginSettingId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (pluginSetting != null) {
 					cacheResult(pluginSetting);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
+						PluginSettingImpl.class, pluginSettingId,
+						_nullPluginSetting);
 				}
 
 				closeSession(session);
@@ -870,6 +883,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1484,4 +1498,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PluginSetting exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PluginSettingPersistenceImpl.class);
+	private static PluginSetting _nullPluginSetting = new PluginSettingImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

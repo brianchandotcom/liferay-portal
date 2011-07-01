@@ -520,8 +520,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 				MBMailingListImpl.class, mailingListId, this);
 
+		if (mbMailingList == _nullMBMailingList) {
+			return null;
+		}
+
 		if (mbMailingList == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -530,11 +536,18 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						Long.valueOf(mailingListId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (mbMailingList != null) {
 					cacheResult(mbMailingList);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+						MBMailingListImpl.class, mailingListId,
+						_nullMBMailingList);
 				}
 
 				closeSession(session);
@@ -953,6 +966,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1435,6 +1449,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2049,4 +2064,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBMailingList exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(MBMailingListPersistenceImpl.class);
+	private static MBMailingList _nullMBMailingList = new MBMailingListImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

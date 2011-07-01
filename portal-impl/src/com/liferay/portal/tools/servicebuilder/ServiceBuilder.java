@@ -102,6 +102,7 @@ import org.dom4j.DocumentException;
  * @author Glenn Powell
  * @author Raymond Augé
  * @author Prashant Dighe
+ * @author Shuyang Zhou
  */
 public class ServiceBuilder {
 
@@ -177,6 +178,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.bad_json_types=" + _TPL_ROOT + "bad_json_types.txt\n"+
 				"\t-Dservice.tpl.bad_table_names=" + _TPL_ROOT + "bad_table_names.txt\n"+
 				"\t-Dservice.tpl.base_mode_impl=" + _TPL_ROOT + "base_mode_impl.ftl\n"+
+				"\t-Dservice.tpl.blob_model=" + _TPL_ROOT + "blob_model.ftl\n"+
 				"\t-Dservice.tpl.copyright.txt=copyright.txt\n"+
 				"\t-Dservice.tpl.ejb_pk=" + _TPL_ROOT + "ejb_pk.ftl\n"+
 				"\t-Dservice.tpl.exception=" + _TPL_ROOT + "exception.ftl\n"+
@@ -436,6 +438,7 @@ public class ServiceBuilder {
 		_tplBadJsonTypes = _getTplProperty("bad_json_types", _tplBadJsonTypes);
 		_tplBadTableNames = _getTplProperty(
 			"bad_table_names", _tplBadTableNames);
+		_tplBlobModel = _getTplProperty("blob_model", _tplBlobModel);
 		_tplEjbPk = _getTplProperty("ejb_pk", _tplEjbPk);
 		_tplException = _getTplProperty("exception", _tplException);
 		_tplExtendedModel = _getTplProperty(
@@ -650,6 +653,8 @@ public class ServiceBuilder {
 							_createModelWrapper(entity);
 
 							_createModelSoap(entity);
+
+							_createBlobModels(entity);
 
 							_createPool(entity);
 
@@ -1519,6 +1524,45 @@ public class ServiceBuilder {
 			Element childElement = entry.getValue();
 
 			element.add(childElement);
+		}
+	}
+
+	private void _createBlobModels(Entity entity) throws Exception {
+		List<EntityColumn> blobList = new ArrayList<EntityColumn>(
+			entity.getBlobList());
+
+		Iterator<EntityColumn> itr = blobList.iterator();
+
+		while (itr.hasNext()) {
+			EntityColumn col = itr.next();
+
+			if (!col.isLazy()) {
+				itr.remove();
+			}
+		}
+
+		if (blobList.isEmpty()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		for (EntityColumn col : blobList) {
+			context.put("column", col);
+
+			// Content
+
+			String content = _processTemplate(_tplBlobModel, context);
+
+			// Write file
+
+			File blobModelFile = new File(
+				_serviceOutputPath + "/model/" + entity.getName() + 
+					col.getMethodName() + "BlobModel.java");
+
+			writeFile(blobModelFile, content, _author);
 		}
 	}
 
@@ -3498,7 +3542,9 @@ public class ServiceBuilder {
 						".model.", "\" table=\""
 					});
 
-				if (line.indexOf(".model.impl.") == -1) {
+				if (!line.contains(".model.impl.") &&
+					!line.contains("BlobModel")) {
+
 					line = StringUtil.replace(
 						line,
 						new String[] {
@@ -4267,6 +4313,7 @@ public class ServiceBuilder {
 
 		List<EntityColumn> pkList = new ArrayList<EntityColumn>();
 		List<EntityColumn> regularColList = new ArrayList<EntityColumn>();
+		List<EntityColumn> blobList = new ArrayList<EntityColumn>();
 		List<EntityColumn> collectionList = new ArrayList<EntityColumn>();
 		List<EntityColumn> columnList = new ArrayList<EntityColumn>();
 
@@ -4319,6 +4366,8 @@ public class ServiceBuilder {
 			String idParam = columnElement.attributeValue("id-param");
 			boolean convertNull = GetterUtil.getBoolean(
 				columnElement.attributeValue("convert-null"), true);
+			boolean lazy = GetterUtil.getBoolean(
+				columnElement.attributeValue("lazy"), true);
 			boolean localized = GetterUtil.getBoolean(
 				columnElement.attributeValue("localized"));
 			boolean colJsonEnabled = GetterUtil.getBoolean(
@@ -4327,7 +4376,7 @@ public class ServiceBuilder {
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, filterPrimary,
 				collectionEntity, mappingKey, mappingTable, idType, idParam,
-				convertNull, localized, colJsonEnabled);
+				convertNull, lazy, localized, colJsonEnabled);
 
 			if (primary) {
 				pkList.add(col);
@@ -4338,6 +4387,10 @@ public class ServiceBuilder {
 			}
 			else {
 				regularColList.add(col);
+
+				if (columnType.equals("Blob")) {
+					blobList.add(col);
+				}
 			}
 
 			columnList.add(col);
@@ -4576,8 +4629,8 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, localService, remoteService,
 				persistenceClass, finderClass, dataSource, sessionFactory,
 				txManager, cacheEnabled, jsonEnabled, pkList, regularColList,
-				collectionList, columnList, order, finderList, referenceList,
-				txRequiredList));
+				blobList, collectionList, columnList, order, finderList, 
+				referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name) throws Exception {
@@ -4663,6 +4716,7 @@ public class ServiceBuilder {
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadJsonTypes = _TPL_ROOT + "bad_json_types.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
+	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";

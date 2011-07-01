@@ -55,7 +55,7 @@ public class CompanyServiceHttp {
 	public static com.liferay.portal.model.Company addCompany(
 		HttpPrincipal httpPrincipal, java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers)
+		java.lang.String shardName, boolean system, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -63,7 +63,7 @@ public class CompanyServiceHttp {
 					"addCompany", _addCompanyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, webId,
-					virtualHost, mx, shardName, system, maxUsers);
+					virtualHost, mx, shardName, system, maxUsers, active);
 
 			Object returnObj = null;
 
@@ -339,7 +339,8 @@ public class CompanyServiceHttp {
 
 	public static com.liferay.portal.model.Company updateCompany(
 		HttpPrincipal httpPrincipal, long companyId,
-		java.lang.String virtualHost, java.lang.String mx, int maxUsers)
+		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
+		boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -347,7 +348,7 @@ public class CompanyServiceHttp {
 					"updateCompany", _updateCompanyParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, virtualHost, mx, maxUsers);
+					companyId, virtualHost, mx, maxUsers, active);
 
 			Object returnObj = null;
 
@@ -612,7 +613,7 @@ public class CompanyServiceHttp {
 	private static final Class<?>[] _addCompanyParameterTypes0 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,
-			int.class
+			int.class, boolean.class
 		};
 	private static final Class<?>[] _deleteLogoParameterTypes1 = new Class[] {
 			long.class
@@ -637,7 +638,7 @@ public class CompanyServiceHttp {
 		};
 	private static final Class<?>[] _updateCompanyParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			int.class
+			int.class, boolean.class
 		};
 	private static final Class<?>[] _updateCompanyParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,

@@ -416,11 +416,12 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean incomplete, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getLayouts(groupId, privateLayout, parentLayoutId, start,
-			end);
+				   .getLayouts(groupId, privateLayout, parentLayoutId,
+			incomplete, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Layout> getLayouts(

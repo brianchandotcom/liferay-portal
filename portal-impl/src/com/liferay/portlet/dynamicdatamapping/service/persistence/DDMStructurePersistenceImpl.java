@@ -541,8 +541,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureImpl.class, structureId, this);
 
+		if (ddmStructure == _nullDDMStructure) {
+			return null;
+		}
+
 		if (ddmStructure == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -551,11 +557,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						Long.valueOf(structureId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (ddmStructure != null) {
 					cacheResult(ddmStructure);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+						DDMStructureImpl.class, structureId, _nullDDMStructure);
 				}
 
 				closeSession(session);
@@ -973,6 +985,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1466,7 +1479,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1480,7 +1493,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1573,7 +1587,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1642,7 +1656,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2065,6 +2080,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param structureKey the structure key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2683,7 +2699,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2697,7 +2713,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2826,7 +2843,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2895,7 +2912,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3346,7 +3364,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3632,7 +3651,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DDMStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3781,13 +3801,19 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_G_N_D_DESCRIPTION_3 = "(ddmStructure.description IS NULL OR ddmStructure.description = ?)";
 	private static final String _FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE = "SELECT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ";
 	private static final String _FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE = "SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ";
-	private static final String _FILTER_COLUMN_PK = "ddmStructure.structureId";
 	private static final String _FILTER_ENTITY_ALIAS = "ddmStructure";
 	private static final String _FILTER_ENTITY_TABLE = "DDMStructure";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "ddmStructure.structureId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmStructure.structureId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructure.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMStructure.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMStructure exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructure exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DDMStructurePersistenceImpl.class);
+	private static DDMStructure _nullDDMStructure = new DDMStructureImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

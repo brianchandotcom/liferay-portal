@@ -193,8 +193,13 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			return (RepositoryEntry)this;
 		}
 		else {
-			return (RepositoryEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (RepositoryEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -357,4 +362,5 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private String _mappedId;
 	private String _originalMappedId;
 	private transient ExpandoBridge _expandoBridge;
+	private RepositoryEntry _escapedModelProxy;
 }

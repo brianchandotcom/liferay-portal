@@ -475,8 +475,14 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		Subscription subscription = (Subscription)EntityCacheUtil.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
 				SubscriptionImpl.class, subscriptionId, this);
 
+		if (subscription == _nullSubscription) {
+			return null;
+		}
+
 		if (subscription == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -485,11 +491,18 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 						Long.valueOf(subscriptionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (subscription != null) {
 					cacheResult(subscription);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
+						SubscriptionImpl.class, subscriptionId,
+						_nullSubscription);
 				}
 
 				closeSession(session);
@@ -1627,6 +1640,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2366,4 +2380,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Subscription exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionPersistenceImpl.class);
+	private static Subscription _nullSubscription = new SubscriptionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

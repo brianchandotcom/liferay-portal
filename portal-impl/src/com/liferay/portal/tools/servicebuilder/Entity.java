@@ -64,7 +64,7 @@ public class Entity {
 		this(
 			null, null, null, name,  null,null, null, false, false, true, null,
 			null, null, null, null, true, false, null, null, null, null, null,
-			null, null, null);
+			null, null, null, null);
 	}
 
 	public Entity(
@@ -74,9 +74,10 @@ public class Entity {
 		String finderClass, String dataSource, String sessionFactory,
 		String txManager, boolean cacheEnabled, boolean jsonEnabled,
 		List<EntityColumn> pkList, List<EntityColumn> regularColList,
-		List<EntityColumn> collectionList, List<EntityColumn> columnList,
-		EntityOrder order, List<EntityFinder> finderList, List<Entity>
-		referenceList, List<String> txRequiredList) {
+		List<EntityColumn> blobList, List<EntityColumn> collectionList,
+		List<EntityColumn> columnList, EntityOrder order,
+		List<EntityFinder> finderList, List<Entity> referenceList,
+		List<String> txRequiredList) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -99,6 +100,7 @@ public class Entity {
 		_jsonEnabled = jsonEnabled;
 		_pkList = pkList;
 		_regularColList = regularColList;
+		_blobList = blobList;
 		_collectionList = collectionList;
 		_columnList = columnList;
 		_order = order;
@@ -106,11 +108,9 @@ public class Entity {
 		_referenceList = referenceList;
 		_txRequiredList = txRequiredList;
 
-		if (_cacheEnabled && (_regularColList != null)) {
-			for (EntityColumn col : _regularColList) {
-				String colType = col.getType();
-
-				if (colType.equals("Blob")) {
+		if ((_blobList != null) && !_blobList.isEmpty()) {
+			for (EntityColumn col : _blobList) {
+				if (!col.isLazy()) {
 					_cacheEnabled = false;
 
 					break;
@@ -135,6 +135,10 @@ public class Entity {
 
 	public String getAlias() {
 		return _alias;
+	}
+
+	public List<EntityColumn> getBlobList() {
+		return _blobList;
 	}
 
 	public List<EntityFinder> getCollectionFinderList() {
@@ -387,6 +391,34 @@ public class Entity {
 		return _name.hashCode();
 	}
 
+	public boolean hasEagerBlobColumn() {
+		if ((_blobList == null) || _blobList.isEmpty()) {
+			return false;
+		}
+
+		for (EntityColumn col : _blobList) {
+			if (!col.isLazy()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasLazyBlobColumn() {
+		if ((_blobList == null) || _blobList.isEmpty()) {
+			return false;
+		}
+
+		for (EntityColumn col : _blobList) {
+			if (col.isLazy()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasLocalizedColumn() {
 		for (EntityColumn col : _columnList) {
 			if (col.isLocalized()) {
@@ -616,6 +648,7 @@ public class Entity {
 	}
 
 	private String _alias;
+	private List<EntityColumn> _blobList;
 	private boolean _cacheEnabled;
 	private List<EntityColumn> _collectionList;
 	private List<EntityColumn> _columnList;

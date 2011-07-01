@@ -429,8 +429,14 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		ServiceComponent serviceComponent = (ServiceComponent)EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 				ServiceComponentImpl.class, serviceComponentId, this);
 
+		if (serviceComponent == _nullServiceComponent) {
+			return null;
+		}
+
 		if (serviceComponent == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -439,11 +445,18 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 						Long.valueOf(serviceComponentId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (serviceComponent != null) {
 					cacheResult(serviceComponent);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+						ServiceComponentImpl.class, serviceComponentId,
+						_nullServiceComponent);
 				}
 
 				closeSession(session);
@@ -877,6 +890,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching service component, or <code>null</code> if a matching service component could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1472,4 +1486,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ServiceComponent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ServiceComponentPersistenceImpl.class);
+	private static ServiceComponent _nullServiceComponent = new ServiceComponentImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -489,8 +489,14 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksFolderImpl.class, folderId, this);
 
+		if (bookmarksFolder == _nullBookmarksFolder) {
+			return null;
+		}
+
 		if (bookmarksFolder == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -499,11 +505,18 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						Long.valueOf(folderId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (bookmarksFolder != null) {
 					cacheResult(bookmarksFolder);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+						BookmarksFolderImpl.class, folderId,
+						_nullBookmarksFolder);
 				}
 
 				closeSession(session);
@@ -930,6 +943,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1434,7 +1448,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1457,7 +1471,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1550,7 +1565,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1628,7 +1643,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2439,7 +2455,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2462,7 +2478,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2560,7 +2577,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2638,7 +2655,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3068,7 +3086,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3231,7 +3250,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				BookmarksFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				BookmarksFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3361,13 +3381,19 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	private static final String _FINDER_COLUMN_G_P_PARENTFOLDERID_2 = "bookmarksFolder.parentFolderId = ?";
 	private static final String _FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE = "SELECT {bookmarksFolder.*} FROM BookmarksFolder bookmarksFolder WHERE ";
 	private static final String _FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE = "SELECT COUNT(DISTINCT bookmarksFolder.folderId) AS COUNT_VALUE FROM BookmarksFolder bookmarksFolder WHERE ";
-	private static final String _FILTER_COLUMN_PK = "bookmarksFolder.folderId";
 	private static final String _FILTER_ENTITY_ALIAS = "bookmarksFolder";
 	private static final String _FILTER_ENTITY_TABLE = "BookmarksFolder";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "bookmarksFolder.folderId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "bookmarksFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "bookmarksFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "BookmarksFolder.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BookmarksFolder exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BookmarksFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(BookmarksFolderPersistenceImpl.class);
+	private static BookmarksFolder _nullBookmarksFolder = new BookmarksFolderImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

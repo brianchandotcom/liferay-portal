@@ -577,8 +577,13 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			return (Contact)this;
 		}
 		else {
-			return (Contact)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Contact)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -923,4 +928,5 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _jobClass;
 	private String _hoursOfOperation;
 	private transient ExpandoBridge _expandoBridge;
+	private Contact _escapedModelProxy;
 }

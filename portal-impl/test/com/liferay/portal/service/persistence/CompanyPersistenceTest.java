@@ -84,6 +84,8 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 
 		newCompany.setMaxUsers(nextInt());
 
+		newCompany.setActive(randomBoolean());
+
 		_persistence.update(newCompany, false);
 
 		Company existingCompany = _persistence.findByPrimaryKey(newCompany.getPrimaryKey());
@@ -97,6 +99,7 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingCompany.getLogoId(), newCompany.getLogoId());
 		assertEquals(existingCompany.getSystem(), newCompany.getSystem());
 		assertEquals(existingCompany.getMaxUsers(), newCompany.getMaxUsers());
+		assertEquals(existingCompany.getActive(), newCompany.getActive());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -243,6 +246,8 @@ public class CompanyPersistenceTest extends BasePersistenceTestCase {
 		company.setSystem(randomBoolean());
 
 		company.setMaxUsers(nextInt());
+
+		company.setActive(randomBoolean());
 
 		_persistence.update(company, false);
 

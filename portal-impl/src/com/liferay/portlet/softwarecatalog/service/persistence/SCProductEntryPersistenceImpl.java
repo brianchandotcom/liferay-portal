@@ -497,8 +497,14 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SCProductEntryImpl.class, productEntryId, this);
 
+		if (scProductEntry == _nullSCProductEntry) {
+			return null;
+		}
+
 		if (scProductEntry == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -507,11 +513,18 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 						Long.valueOf(productEntryId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (scProductEntry != null) {
 					cacheResult(scProductEntry);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
+						SCProductEntryImpl.class, productEntryId,
+						_nullSCProductEntry);
 				}
 
 				closeSession(session);
@@ -926,7 +939,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -949,7 +962,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1042,7 +1056,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1120,7 +1134,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1929,7 +1944,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1952,7 +1967,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2050,7 +2066,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2128,7 +2144,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2220,6 +2237,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 *
 	 * @param repoGroupId the repo group ID
 	 * @param repoArtifactId the repo artifact ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2578,7 +2596,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2740,7 +2759,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCProductEntry.class.getName(), _FILTER_COLUMN_PK, groupId);
+				SCProductEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3629,13 +3649,19 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?)))";
 	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT {scProductEntry.*} FROM SCProductEntry scProductEntry WHERE ";
 	private static final String _FILTER_SQL_COUNT_SCPRODUCTENTRY_WHERE = "SELECT COUNT(DISTINCT scProductEntry.productEntryId) AS COUNT_VALUE FROM SCProductEntry scProductEntry WHERE ";
-	private static final String _FILTER_COLUMN_PK = "scProductEntry.productEntryId";
 	private static final String _FILTER_ENTITY_ALIAS = "scProductEntry";
 	private static final String _FILTER_ENTITY_TABLE = "SCProductEntry";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "scProductEntry.productEntryId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scProductEntry.productEntryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scProductEntry.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "SCProductEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SCProductEntryPersistenceImpl.class);
+	private static SCProductEntry _nullSCProductEntry = new SCProductEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

@@ -514,8 +514,14 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleResourceImpl.class, resourcePrimKey, this);
 
+		if (journalArticleResource == _nullJournalArticleResource) {
+			return null;
+		}
+
 		if (journalArticleResource == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -524,11 +530,18 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						Long.valueOf(resourcePrimKey));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (journalArticleResource != null) {
 					cacheResult(journalArticleResource);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+						JournalArticleResourceImpl.class, resourcePrimKey,
+						_nullJournalArticleResource);
 				}
 
 				closeSession(session);
@@ -949,6 +962,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1433,6 +1447,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param groupId the group ID
 	 * @param articleId the article ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2076,4 +2091,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleResource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleResourcePersistenceImpl.class);
+	private static JournalArticleResource _nullJournalArticleResource = new JournalArticleResourceImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

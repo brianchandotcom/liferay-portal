@@ -459,8 +459,14 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileRankImpl.class, fileRankId, this);
 
+		if (dlFileRank == _nullDLFileRank) {
+			return null;
+		}
+
 		if (dlFileRank == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -469,11 +475,17 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 						Long.valueOf(fileRankId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (dlFileRank != null) {
 					cacheResult(dlFileRank);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+						DLFileRankImpl.class, fileRankId, _nullDLFileRank);
 				}
 
 				closeSession(session);
@@ -1583,6 +1595,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param fileEntryId the file entry ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library file rank, or <code>null</code> if a matching document library file rank could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2184,4 +2197,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileRank exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFileRankPersistenceImpl.class);
+	private static DLFileRank _nullDLFileRank = new DLFileRankImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

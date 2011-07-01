@@ -225,8 +225,13 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 			return (BlogsStatsUser)this;
 		}
 		else {
-			return (BlogsStatsUser)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (BlogsStatsUser)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -425,4 +430,5 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;
 	private transient ExpandoBridge _expandoBridge;
+	private BlogsStatsUser _escapedModelProxy;
 }

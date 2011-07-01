@@ -59,16 +59,17 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 <c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
 	<aui:script use="aui-base">
 		if (window.parent) {
-			<c:choose>
-				<c:when test="<%= !selPortlet.isAjaxable() %>">
-					window.parent.location.reload();
-				</c:when>
-				<c:otherwise>
-					var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
+			var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
 
-					window.parent.Liferay.Portlet.refresh(curPortletBoundaryId);
-				</c:otherwise>
-			</c:choose>
+			var data;
+
+			<c:if test="<%= !selPortlet.isAjaxable() %>">
+				data = {
+					portletAjaxable: false
+				};
+			</c:if>
+
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}
 	</aui:script>
 </c:if>

@@ -483,8 +483,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 				UserIdMapperImpl.class, userIdMapperId, this);
 
+		if (userIdMapper == _nullUserIdMapper) {
+			return null;
+		}
+
 		if (userIdMapper == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -493,11 +499,18 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 						Long.valueOf(userIdMapperId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (userIdMapper != null) {
 					cacheResult(userIdMapper);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
+						UserIdMapperImpl.class, userIdMapperId,
+						_nullUserIdMapper);
 				}
 
 				closeSession(session);
@@ -892,6 +905,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param userId the user ID
 	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1043,6 +1057,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param type the type
 	 * @param externalUserId the external user ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1733,4 +1748,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserIdMapper exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserIdMapperPersistenceImpl.class);
+	private static UserIdMapper _nullUserIdMapper = new UserIdMapperImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

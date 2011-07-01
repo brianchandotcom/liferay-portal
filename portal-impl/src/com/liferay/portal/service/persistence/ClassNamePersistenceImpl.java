@@ -385,8 +385,14 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 				ClassNameImpl.class, classNameId, this);
 
+		if (className == _nullClassName) {
+			return null;
+		}
+
 		if (className == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -395,11 +401,17 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 						Long.valueOf(classNameId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (className != null) {
 					cacheResult(className);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+						ClassNameImpl.class, classNameId, _nullClassName);
 				}
 
 				closeSession(session);
@@ -456,6 +468,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param value the value
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -951,4 +964,9 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ClassName exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ClassNamePersistenceImpl.class);
+	private static ClassName _nullClassName = new ClassNameImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

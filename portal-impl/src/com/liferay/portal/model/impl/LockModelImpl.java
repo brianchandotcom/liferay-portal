@@ -257,8 +257,13 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			return (Lock)this;
 		}
 		else {
-			return (Lock)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (Lock)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -458,4 +463,5 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private boolean _inheritable;
 	private Date _expirationDate;
 	private transient ExpandoBridge _expandoBridge;
+	private Lock _escapedModelProxy;
 }

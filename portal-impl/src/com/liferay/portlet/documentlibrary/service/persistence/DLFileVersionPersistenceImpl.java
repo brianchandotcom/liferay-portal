@@ -464,8 +464,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		DLFileVersion dlFileVersion = (DLFileVersion)EntityCacheUtil.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileVersionImpl.class, fileVersionId, this);
 
+		if (dlFileVersion == _nullDLFileVersion) {
+			return null;
+		}
+
 		if (dlFileVersion == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -474,11 +480,18 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 						Long.valueOf(fileVersionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (dlFileVersion != null) {
 					cacheResult(dlFileVersion);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+						DLFileVersionImpl.class, fileVersionId,
+						_nullDLFileVersion);
 				}
 
 				closeSession(session);
@@ -883,6 +896,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1794,4 +1808,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileVersion exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFileVersionPersistenceImpl.class);
+	private static DLFileVersion _nullDLFileVersion = new DLFileVersionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

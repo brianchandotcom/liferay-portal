@@ -653,8 +653,14 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		ResourcePermission resourcePermission = (ResourcePermission)EntityCacheUtil.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourcePermissionImpl.class, resourcePermissionId, this);
 
+		if (resourcePermission == _nullResourcePermission) {
+			return null;
+		}
+
 		if (resourcePermission == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -663,11 +669,18 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						Long.valueOf(resourcePermissionId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (resourcePermission != null) {
 					cacheResult(resourcePermission);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourcePermissionImpl.class, resourcePermissionId,
+						_nullResourcePermission);
 				}
 
 				closeSession(session);
@@ -2373,6 +2386,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3060,6 +3074,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 * @param roleId the role ID
 	 * @param ownerId the owner ID
 	 * @param actionIds the action IDs
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4317,4 +4332,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourcePermission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ResourcePermissionPersistenceImpl.class);
+	private static ResourcePermission _nullResourcePermission = new ResourcePermissionImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

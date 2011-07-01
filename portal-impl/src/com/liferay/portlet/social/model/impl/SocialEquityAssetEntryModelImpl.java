@@ -185,8 +185,13 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 			return (SocialEquityAssetEntry)this;
 		}
 		else {
-			return (SocialEquityAssetEntry)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (SocialEquityAssetEntry)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -354,4 +359,5 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	private double _informationK;
 	private double _informationB;
 	private transient ExpandoBridge _expandoBridge;
+	private SocialEquityAssetEntry _escapedModelProxy;
 }

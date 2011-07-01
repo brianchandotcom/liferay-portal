@@ -62,7 +62,6 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NTCredentials;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthPolicy;
@@ -76,6 +75,9 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.params.HostParams;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -616,28 +618,30 @@ public class HttpImpl implements Http {
 	public String parameterMapToString(
 		Map<String, String[]> parameterMap, boolean addQuestion) {
 
+		if (parameterMap.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler();
 
-		if (parameterMap.size() > 0) {
-			if (addQuestion) {
-				sb.append(StringPool.QUESTION);
-			}
+		if (addQuestion) {
+			sb.append(StringPool.QUESTION);
+		}
 
-			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-				String name = entry.getKey();
-				String[] values = entry.getValue();
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
-				for (String value : values) {
-					sb.append(name);
-					sb.append(StringPool.EQUAL);
-					sb.append(encodeURL(value));
-					sb.append(StringPool.AMPERSAND);
-				}
+			for (String value : values) {
+				sb.append(name);
+				sb.append(StringPool.EQUAL);
+				sb.append(encodeURL(value));
+				sb.append(StringPool.AMPERSAND);
 			}
+		}
 
-			if (sb.index() > 1) {
-				sb.setIndex(sb.index() - 1);
-			}
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
@@ -806,7 +810,7 @@ public class HttpImpl implements Http {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getParts(), options.getResponse(),
+			options.getFileParts(), options.getParts(), options.getResponse(),
 			options.isFollowRedirects());
 	}
 
@@ -932,6 +936,16 @@ public class HttpImpl implements Http {
 		return commonCookies;
 	}
 
+	protected org.apache.commons.httpclient.methods.multipart.FilePart
+		toCommonsFilePart(Http.FilePart filePart) {
+
+		return new org.apache.commons.httpclient.methods.multipart.FilePart(
+			filePart.getName(),
+			new ByteArrayPartSource(
+				filePart.getFileName(), filePart.getValue()),
+			filePart.getContentType(), filePart.getCharSet());
+	}
+
 	protected Cookie toServletCookie(
 		org.apache.commons.httpclient.Cookie commonsCookie) {
 
@@ -987,8 +1001,9 @@ public class HttpImpl implements Http {
 
 	protected byte[] URLtoByteArray(
 			String location, Http.Method method, Map<String, String> headers,
-			Cookie[] cookies, Http.Auth auth, Http.Body body, Map<String,
-			String> parts, Http.Response response, boolean followRedirects)
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects)
 		throws IOException {
 
 		byte[] bytes = null;
@@ -1033,31 +1048,39 @@ public class HttpImpl implements Http {
 
 					entityEnclosingMethod.setRequestEntity(requestEntity);
 				}
-				else if ((parts != null) && (parts.size() > 0) &&
-						 method.equals(Http.Method.POST)) {
-
-					List<NameValuePair> nvpList =
-						new ArrayList<NameValuePair>();
-
-					for (Map.Entry<String, String> entry : parts.entrySet()) {
-						String key = entry.getKey();
-						String value = entry.getValue();
-
-						if (value != null) {
-							nvpList.add(new NameValuePair(key, value));
-						}
-					}
-
-					NameValuePair[] nvpArray = nvpList.toArray(
-						new NameValuePair[nvpList.size()]);
+				else if (method.equals(Http.Method.POST) &&
+						 (((fileParts != null) && !fileParts.isEmpty()) ||
+						  ((parts != null) && !parts.isEmpty()))) {
 
 					PostMethod postMethod = (PostMethod)httpMethod;
 
-					postMethod.setRequestBody(nvpArray);
+					List<Part> partsList = new ArrayList<Part>();
 
-					postMethod.addRequestHeader(
-						HttpHeaders.CONTENT_TYPE,
-						ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED_UTF8);
+					if (parts != null) {
+						for (Map.Entry<String, String> entry :
+								parts.entrySet()) {
+
+							String key = entry.getKey();
+							String value = entry.getValue();
+
+							if (value != null) {
+								postMethod.addParameter(key, value);
+							}
+						}
+					}
+
+					if (fileParts != null) {
+						for (Http.FilePart filePart : fileParts) {
+							partsList.add(toCommonsFilePart(filePart));
+						}
+					}
+
+					MultipartRequestEntity multipartRequestEntity =
+						new MultipartRequestEntity(
+							partsList.toArray(new Part[0]),
+							postMethod.getParams());
+
+					postMethod.setRequestEntity(multipartRequestEntity);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {
@@ -1079,7 +1102,9 @@ public class HttpImpl implements Http {
 
 			if ((method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
-				(body != null)) {
+				((body != null) ||
+				 ((fileParts != null) && !fileParts.isEmpty()) |
+				 ((parts != null) && !parts.isEmpty()))) {
 			}
 			else if (!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {
 				httpMethod.addRequestHeader(
@@ -1127,8 +1152,8 @@ public class HttpImpl implements Http {
 
 				if (followRedirects) {
 					return URLtoByteArray(
-						redirect, Http.Method.GET, headers,
-						cookies, auth, body, parts, response, followRedirects);
+						redirect, Http.Method.GET, headers, cookies, auth, body,
+						fileParts, parts, response, followRedirects);
 				}
 				else {
 					response.setRedirect(redirect);

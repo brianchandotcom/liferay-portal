@@ -838,8 +838,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageImpl.class, pageId, this);
 
+		if (wikiPage == _nullWikiPage) {
+			return null;
+		}
+
 		if (wikiPage == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -848,11 +854,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						Long.valueOf(pageId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (wikiPage != null) {
 					cacheResult(wikiPage);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+						WikiPageImpl.class, pageId, _nullWikiPage);
 				}
 
 				closeSession(session);
@@ -1278,6 +1290,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4374,6 +4387,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -5290,6 +5304,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -9275,4 +9290,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WikiPage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(WikiPagePersistenceImpl.class);
+	private static WikiPage _nullWikiPage = new WikiPageImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

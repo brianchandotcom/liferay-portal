@@ -465,8 +465,14 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		AssetTagProperty assetTagProperty = (AssetTagProperty)EntityCacheUtil.getResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetTagPropertyImpl.class, tagPropertyId, this);
 
+		if (assetTagProperty == _nullAssetTagProperty) {
+			return null;
+		}
+
 		if (assetTagProperty == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -475,11 +481,18 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 						Long.valueOf(tagPropertyId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (assetTagProperty != null) {
 					cacheResult(assetTagProperty);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
+						AssetTagPropertyImpl.class, tagPropertyId,
+						_nullAssetTagProperty);
 				}
 
 				closeSession(session);
@@ -1609,6 +1622,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagId the tag ID
 	 * @param key the key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2236,4 +2250,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetTagProperty exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetTagPropertyPersistenceImpl.class);
+	private static AssetTagProperty _nullAssetTagProperty = new AssetTagPropertyImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

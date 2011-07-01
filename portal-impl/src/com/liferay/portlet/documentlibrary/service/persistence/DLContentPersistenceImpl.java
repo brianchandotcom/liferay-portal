@@ -346,6 +346,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentImpl.class, dlContent.getPrimaryKey(), dlContent);
 
+		dlContent.resetOriginalValues();
+
 		if (!isNew &&
 				((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(dlContent.getPortletId(),
@@ -479,8 +481,14 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		DLContent dlContent = (DLContent)EntityCacheUtil.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 				DLContentImpl.class, contentId, this);
 
+		if (dlContent == _nullDLContent) {
+			return null;
+		}
+
 		if (dlContent == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -489,11 +497,17 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						Long.valueOf(contentId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (dlContent != null) {
 					cacheResult(dlContent);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
+						DLContentImpl.class, contentId, _nullDLContent);
 				}
 
 				closeSession(session);
@@ -1025,6 +1039,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1649,4 +1664,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLContent exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLContentPersistenceImpl.class);
+	private static DLContent _nullDLContent = new DLContentImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

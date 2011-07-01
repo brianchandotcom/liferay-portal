@@ -529,8 +529,14 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		JournalArticleImage journalArticleImage = (JournalArticleImage)EntityCacheUtil.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleImageImpl.class, articleImageId, this);
 
+		if (journalArticleImage == _nullJournalArticleImage) {
+			return null;
+		}
+
 		if (journalArticleImage == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -539,11 +545,18 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 						Long.valueOf(articleImageId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (journalArticleImage != null) {
 					cacheResult(journalArticleImage);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+						JournalArticleImageImpl.class, articleImageId,
+						_nullJournalArticleImage);
 				}
 
 				closeSession(session);
@@ -1703,6 +1716,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 * @param elInstanceId the el instance ID
 	 * @param elName the el name
 	 * @param languageId the language ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2478,4 +2492,9 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleImage exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleImagePersistenceImpl.class);
+	private static JournalArticleImage _nullJournalArticleImage = new JournalArticleImageImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

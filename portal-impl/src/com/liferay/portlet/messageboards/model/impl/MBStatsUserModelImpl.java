@@ -189,8 +189,13 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 			return (MBStatsUser)this;
 		}
 		else {
-			return (MBStatsUser)Proxy.newProxyInstance(_classLoader,
-				_escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
+			if (_escapedModelProxy == null) {
+				_escapedModelProxy = (MBStatsUser)Proxy.newProxyInstance(_classLoader,
+						_escapedModelProxyInterfaces,
+						new AutoEscapeBeanHandler(this));
+			}
+
+			return _escapedModelProxy;
 		}
 	}
 
@@ -357,4 +362,5 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private int _messageCount;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private MBStatsUser _escapedModelProxy;
 }

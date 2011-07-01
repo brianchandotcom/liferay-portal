@@ -230,6 +230,7 @@ public class ShoppingItemUtil {
 	* Returns the shopping item where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param smallImageId the small image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -272,6 +273,7 @@ public class ShoppingItemUtil {
 	* Returns the shopping item where mediumImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param mediumImageId the medium image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -314,6 +316,7 @@ public class ShoppingItemUtil {
 	* Returns the shopping item where largeImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param largeImageId the large image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -566,6 +569,7 @@ public class ShoppingItemUtil {
 	*
 	* @param companyId the company ID
 	* @param sku the sku
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	* @throws SystemException if a system exception occurred
 	*/

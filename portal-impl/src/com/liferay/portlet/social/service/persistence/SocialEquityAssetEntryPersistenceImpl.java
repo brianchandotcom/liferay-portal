@@ -416,8 +416,14 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 		SocialEquityAssetEntry socialEquityAssetEntry = (SocialEquityAssetEntry)EntityCacheUtil.getResult(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SocialEquityAssetEntryImpl.class, equityAssetEntryId, this);
 
+		if (socialEquityAssetEntry == _nullSocialEquityAssetEntry) {
+			return null;
+		}
+
 		if (socialEquityAssetEntry == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -426,11 +432,18 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 						Long.valueOf(equityAssetEntryId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (socialEquityAssetEntry != null) {
 					cacheResult(socialEquityAssetEntry);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+						SocialEquityAssetEntryImpl.class, equityAssetEntryId,
+						_nullSocialEquityAssetEntry);
 				}
 
 				closeSession(session);
@@ -488,6 +501,7 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	 * Returns the social equity asset entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param assetEntryId the asset entry ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social equity asset entry, or <code>null</code> if a matching social equity asset entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -856,4 +870,9 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialEquityAssetEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityAssetEntryPersistenceImpl.class);
+	private static SocialEquityAssetEntry _nullSocialEquityAssetEntry = new SocialEquityAssetEntryImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

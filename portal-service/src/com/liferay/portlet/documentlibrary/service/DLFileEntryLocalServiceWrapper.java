@@ -473,6 +473,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 		return _dlFileEntryLocalService.getLatestFileVersion(fileEntryId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getLatestFileVersion(fileEntryId,
+			excludeWorkingCopy);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getNoAssetFileEntries();

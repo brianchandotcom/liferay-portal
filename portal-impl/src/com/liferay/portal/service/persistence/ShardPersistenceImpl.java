@@ -430,8 +430,14 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
 				ShardImpl.class, shardId, this);
 
+		if (shard == _nullShard) {
+			return null;
+		}
+
 		if (shard == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -440,11 +446,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 						Long.valueOf(shardId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (shard != null) {
 					cacheResult(shard);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
+						ShardImpl.class, shardId, _nullShard);
 				}
 
 				closeSession(session);
@@ -501,6 +513,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 * Returns the shard where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shard, or <code>null</code> if a matching shard could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -647,6 +660,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shard, or <code>null</code> if a matching shard could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1208,4 +1222,9 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Shard exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShardPersistenceImpl.class);
+	private static Shard _nullShard = new ShardImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

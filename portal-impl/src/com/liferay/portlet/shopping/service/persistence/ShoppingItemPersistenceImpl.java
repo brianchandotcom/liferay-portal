@@ -567,8 +567,14 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		ShoppingItem shoppingItem = (ShoppingItem)EntityCacheUtil.getResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingItemImpl.class, itemId, this);
 
+		if (shoppingItem == _nullShoppingItem) {
+			return null;
+		}
+
 		if (shoppingItem == null) {
 			Session session = null;
+
+			boolean hasException = false;
 
 			try {
 				session = openSession();
@@ -577,11 +583,17 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 						Long.valueOf(itemId));
 			}
 			catch (Exception e) {
+				hasException = true;
+
 				throw processException(e);
 			}
 			finally {
 				if (shoppingItem != null) {
 					cacheResult(shoppingItem);
+				}
+				else if (!hasException) {
+					EntityCacheUtil.putResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
+						ShoppingItemImpl.class, itemId, _nullShoppingItem);
 				}
 
 				closeSession(session);
@@ -639,6 +651,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Returns the shopping item where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param smallImageId the small image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -768,6 +781,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Returns the shopping item where mediumImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param mediumImageId the medium image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -897,6 +911,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Returns the shopping item where largeImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param largeImageId the large image ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1411,7 +1426,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1434,7 +1449,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ShoppingItem.class.getName(), _FILTER_COLUMN_PK, groupId);
+				ShoppingItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1532,7 +1548,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1610,7 +1626,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ShoppingItem.class.getName(), _FILTER_COLUMN_PK, groupId);
+				ShoppingItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1702,6 +1719,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2230,7 +2248,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ShoppingItem.class.getName(), _FILTER_COLUMN_PK, groupId);
+				ShoppingItem.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2701,13 +2720,19 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = ?)";
 	private static final String _FILTER_SQL_SELECT_SHOPPINGITEM_WHERE = "SELECT {shoppingItem.*} FROM ShoppingItem shoppingItem WHERE ";
 	private static final String _FILTER_SQL_COUNT_SHOPPINGITEM_WHERE = "SELECT COUNT(DISTINCT shoppingItem.itemId) AS COUNT_VALUE FROM ShoppingItem shoppingItem WHERE ";
-	private static final String _FILTER_COLUMN_PK = "shoppingItem.itemId";
 	private static final String _FILTER_ENTITY_ALIAS = "shoppingItem";
 	private static final String _FILTER_ENTITY_TABLE = "ShoppingItem";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "shoppingItem.itemId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "shoppingItem.itemId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "shoppingItem.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "ShoppingItem.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingItem exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingItem exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPersistenceImpl.class);
+	private static ShoppingItem _nullShoppingItem = new ShoppingItemImpl() {
+			public Object clone() {
+				return this;
+			}
+		};
 }

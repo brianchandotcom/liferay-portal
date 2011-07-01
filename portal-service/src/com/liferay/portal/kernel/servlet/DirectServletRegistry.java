@@ -155,6 +155,8 @@ public class DirectServletRegistry {
 					if (_log.isDebugEnabled()) {
 						_log.debug("Reload dependent " + dependant);
 					}
+
+					break;
 				}
 			}
 		}

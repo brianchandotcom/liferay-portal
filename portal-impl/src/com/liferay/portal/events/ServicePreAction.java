@@ -706,7 +706,7 @@ public class ServicePreAction extends Action {
 				return true;
 			}
 			else {
-				if (controlPanelCategory != null) {
+				if (Validator.isNotNull(controlPanelCategory)) {
 					return true;
 				}
 				else {

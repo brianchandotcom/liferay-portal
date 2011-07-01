@@ -569,11 +569,21 @@ public class PortalUtil {
 
 		return getPortal().getLayoutFullURL(layout, themeDisplay, doAsUser);
 	}
-
+	
+	/**
+	 * @deprecated {@link #getLayoutFullURL(long, String, boolean)}
+	 */
+	
 	public static String getLayoutFullURL(long groupId, String portletId)
-		throws PortalException, SystemException {
+	throws PortalException, SystemException {
 
 		return getPortal().getLayoutFullURL(groupId, portletId);
+	}
+
+	public static String getLayoutFullURL(long groupId, String portletId, boolean secure)
+	throws PortalException, SystemException {
+
+		return getPortal().getLayoutFullURL(groupId, portletId, secure);
 	}
 
 	public static String getLayoutFullURL(ThemeDisplay themeDisplay)
@@ -760,8 +770,15 @@ public class PortalUtil {
 		return getPortal().getPortalLibDir();
 	}
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public static int getPortalPort() {
 		return getPortal().getPortalPort();
+	}
+
+	public static int getPortalPort(boolean secure) {
+		return getPortal().getPortalPort(secure);
 	}
 
 	public static Properties getPortalProperties() {

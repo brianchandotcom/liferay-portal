@@ -2080,7 +2080,16 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #getLayoutFullURL(long, String, boolean)}
+	 */
+
 	public String getLayoutFullURL(long groupId, String portletId)
+	throws PortalException, SystemException {
+		return getLayoutFullURL(groupId, portletId, false);
+	}	
+	
+	public String getLayoutFullURL(long groupId, String portletId, boolean secure)
 		throws PortalException, SystemException {
 
 		long plid = getPlidFromPortletId(groupId, portletId);
@@ -2118,7 +2127,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String portalURL = getPortalURL(
-			virtualHostname, getPortalPort(), false);
+			virtualHostname, getPortalPort(secure), secure);
 
 		sb.append(portalURL);
 
@@ -2619,7 +2628,17 @@ public class PortalImpl implements Portal {
 		return _portalLibDir;
 	}
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public int getPortalPort() {
+		return _portalPort.get();
+	}
+
+	public int getPortalPort(boolean secure) {
+		if(secure) {
+			return _securePortalPort.get();
+		}
 		return _portalPort.get();
 	}
 
@@ -4650,7 +4669,16 @@ public class PortalImpl implements Portal {
 	 * Sets the port obtained on the first request to the portal.
 	 */
 	public void setPortalPort(HttpServletRequest request) {
-		if (_portalPort.get() == -1) {
+		if(request.isSecure()) {
+			if(_securePortalPort.get() == -1) {
+				int securePortalPort = request.getServerPort();
+				_securePortalPort.compareAndSet(-1, securePortalPort);
+				// No notification. Has never been done for https.
+				// not sure if a notification should happen here or in
+				// the non-secure part, once or once for each port.
+				// Please fix in review
+			}
+		} else if (_portalPort.get() == -1) {
 			int portalPort = request.getServerPort();
 
 			if (_portalPort.compareAndSet(-1, portalPort)) {
@@ -5344,6 +5372,7 @@ public class PortalImpl implements Portal {
 		new ConcurrentHashMap<String, Long>();
 	private String _portalLibDir;
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
+	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
 	private List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<PortalPortEventListener>();
 	private String _portalWebDir;

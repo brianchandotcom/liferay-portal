@@ -620,7 +620,14 @@ public interface Portal {
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated {@link #getLayoutFullURL(long, String, boolean)}
+	 */
+
 	public String getLayoutFullURL(long groupId, String portletId)
+	throws PortalException, SystemException;
+	
+	public String getLayoutFullURL(long groupId, String portletId, boolean secure)
 		throws PortalException, SystemException;
 
 	public String getLayoutFullURL(ThemeDisplay themeDisplay)
@@ -697,7 +704,12 @@ public interface Portal {
 
 	public String getPortalLibDir();
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public int getPortalPort();
+
+	public int getPortalPort(boolean secure);
 
 	public Properties getPortalProperties();
 

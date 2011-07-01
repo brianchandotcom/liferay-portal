@@ -239,11 +239,17 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
 
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry);
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry);
 
-						if (supportedVideo) {
-							previewFileCount = 0;
+						if (supportedAudio) {
+							if (AudioProcessor.hasAudio(fileEntry)) {
+								previewFileCount = 1;
+							}
 
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + fileEntry.getTitle() + "?version=" + fileEntry.getVersion() + "&audioPreview=1";
+						}
+						else if (supportedVideo) {
 							if (VideoProcessor.hasVideo(fileEntry)) {
 								previewFileCount = 1;
 							}
@@ -265,7 +271,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !supportedVideo %>">
+									<c:when test ="<%= !supportedAudio && !supportedVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -324,8 +330,13 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 											so.addParam('allowFullScreen', 'true');
 
-											so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-											so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
+											if (<%= supportedVideo %>) {
+												so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
+												so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
+											}
+											else if (<%= supportedAudio %>) {
+												so.addVariable('<%= AudioProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
+											}
 
 											so.write('<portlet:namespace />previewFileContent');
 										</aui:script>

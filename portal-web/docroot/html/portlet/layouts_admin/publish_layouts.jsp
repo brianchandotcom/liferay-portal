@@ -182,6 +182,7 @@ selectURL.setParameter(Constants.CMD, cmd);
 selectURL.setParameter("pagesRedirect", pagesRedirect);
 selectURL.setParameter("groupId", String.valueOf(stagingGroupId));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
+selectURL.setParameter("selPlid", String.valueOf(selPlid));
 selectURL.setParameter("schedule", String.valueOf(schedule));
 
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));

@@ -537,10 +537,6 @@ public class LocalizationImpl implements Localization {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());
 			String value = entry.getValue();
 
-			if (entry.getKey() == LocaleUtil.getDefault()) {
-				continue;
-			}
-
 			setPreferencesValue(preferences, parameter, languageId, value);
 		}
 	}

@@ -257,8 +257,8 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 		long repositoryId, java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteContentsByFuzzyPath(long companyId,
-		java.lang.String portletId, long repositoryId, java.lang.String path)
+	public void deleteContentsByDirectory(long companyId,
+		java.lang.String portletId, long repositoryId, java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -304,8 +304,8 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByFuzzyPath(
-		long companyId, long repositoryId, java.lang.String path)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

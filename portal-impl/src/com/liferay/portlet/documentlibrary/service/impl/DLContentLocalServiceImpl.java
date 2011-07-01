@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -112,12 +113,18 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, portletId, repositoryId, path);
 	}
 
-	public void deleteContentsByFuzzyPath(
-			long companyId, String portletId, long repositoryId, String path)
+	public void deleteContentsByDirectory(
+			long companyId, String portletId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
+		if (!dirName.endsWith(StringPool.SLASH)) {
+			dirName = dirName.concat(StringPool.SLASH);
+		}
+
+		dirName.concat(StringPool.PERCENT);
+
 		dlContentPersistence.removeByC_P_R_LikeP(
-			companyId, portletId, repositoryId, path);
+			companyId, portletId, repositoryId, dirName);
 	}
 
 	public DLContent getContent(
@@ -179,12 +186,18 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return dlContentPersistence.findByC_R_P(companyId, repositoryId, path);
 	}
 
-	public List<DLContent> getContentsByFuzzyPath(
-			long companyId, long repositoryId, String path)
+	public List<DLContent> getContentsByDirectory(
+			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
+		if (!dirName.endsWith(StringPool.SLASH)) {
+			dirName = dirName.concat(StringPool.SLASH);
+		}
+
+		dirName.concat(StringPool.PERCENT);
+
 		return dlContentPersistence.findByC_R_LikeP(
-			companyId, repositoryId, path);
+			companyId, repositoryId, dirName);
 	}
 
 	public boolean hasContent(

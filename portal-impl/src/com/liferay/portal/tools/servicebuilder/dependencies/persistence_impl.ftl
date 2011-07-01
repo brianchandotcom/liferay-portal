@@ -209,6 +209,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), this) == null) {
 				cacheResult(${entity.varName});
 			}
+			<#if entity.hasLazyBlobColumn()>
+			else {
+				${entity.varName}.resetOriginalValues();
+			}
+			</#if>
 		}
 	}
 

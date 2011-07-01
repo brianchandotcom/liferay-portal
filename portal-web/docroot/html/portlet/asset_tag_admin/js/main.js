@@ -25,7 +25,7 @@ AUI().add(
 
 		var EVENT_SUBMIT = 'submit';
 
-		var History = Liferay.HistoryManager;
+		var HistoryManager = Liferay.HistoryManager;
 
 		var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
@@ -40,6 +40,10 @@ AUI().add(
 		var MESSAGE_TYPE_SUCCESS = 'success';
 
 		var NODE = 'node';
+
+		var SRC_HASH = HistoryManager.SRC_HASH;
+
+		var SRC_POPSTATE = HistoryManager.SRC_POPSTATE;
 
 		var TPL_PORTLET_MESSAGES = '<div class="aui-helper-hidden lfr-message-response" id="portletMessages" />';
 
@@ -157,7 +161,7 @@ AUI().add(
 
 						instance._createTagSearch();
 
-						History.on('change', instance._onHistoryChange, instance);
+						HistoryManager.on('change', instance._onHistoryChange, instance);
 
 						instance._loadData();
 
@@ -653,7 +657,7 @@ AUI().add(
 							AObject.each(
 								paginatorMap,
 								function(item, index, collection) {
-									config[index] = Number(History.get(item.historyEntry)) || item.defaultValue;
+									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
 								}
 							);
 
@@ -1055,10 +1059,10 @@ AUI().add(
 
 					_mergeTag: function(fromId, toId, callback) {
 						var serviceParameterTypes = [
-           					'long',
-           					'long',
-           					'boolean'
-           				];
+							'long',
+							'long',
+							'boolean'
+						];
 
 						Liferay.Service.Asset.AssetTag.mergeTags(
 							{
@@ -1122,7 +1126,7 @@ AUI().add(
 					_onHistoryChange: function(event) {
 						var instance = this;
 
-						if (event.src === History.SRC_HASH || event.src === History.SRC_POPSTATE) {
+						if (event.src === SRC_HASH || event.src === SRC_POPSTATE) {
 							var changed = event.changed;
 							var removed = event.removed;
 
@@ -1240,7 +1244,7 @@ AUI().add(
 									var value = INVALID_VALUE;
 
 									if (newItemValue === item.defaultValue &&
-										Lang.isValue(History.get(historyEntry))) {
+										Lang.isValue(HistoryManager.get(historyEntry))) {
 
 										value = null;
 									}
@@ -1256,7 +1260,7 @@ AUI().add(
 						);
 
 						if (!AObject.isEmpty(historyState)) {
-							History.add(historyState);
+							HistoryManager.add(historyState);
 						}
 
 						instance._reloadData();

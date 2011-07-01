@@ -318,13 +318,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 			version);
 	}
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentReferences(
-		long companyId, long repositoryId, java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContentReferences(companyId,
-			repositoryId, path);
-	}
-
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
 		long companyId, java.lang.String portletId, long repositoryId,
 		java.lang.String path)

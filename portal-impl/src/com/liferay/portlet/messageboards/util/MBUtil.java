@@ -694,8 +694,8 @@ public class MBUtil {
 		PortletPreferences preferences) {
 
 		return GetterUtil.getBoolean(
-				preferences.getValue("allowAnonymousPosting", null), 
-				PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+			preferences.getValue("allowAnonymousPosting", null),
+			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
 	private static String[] _findThreadPriority(

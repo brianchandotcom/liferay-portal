@@ -230,7 +230,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		new String[] {
 			DDMStructure.class.getName(),
 			"DDMStructure",
-			"structureKey"
+			"structureId"
 		},
 		new String[] {
 			DDMTemplate.class.getName(),

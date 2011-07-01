@@ -69,6 +69,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,portletId VARCHAR(75) null,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlContent.version DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLContent.version DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -309,17 +311,17 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public int compareTo(DLContent dlContent) {
-		long primaryKey = dlContent.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getVersion().compareTo(dlContent.getVersion());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

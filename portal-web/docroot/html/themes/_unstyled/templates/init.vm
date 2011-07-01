@@ -260,6 +260,12 @@
 	#set ($has_navigation = ($nav_items && $nav_items.size() > 0))
 #end
 
+#set ($nav_css_class = "sort-pages modify-pages")
+
+#if (!$has_navigation)
+	#set ($nav_css_class = $nav_css_class + " aui-helper-hidden")
+#end
+
 ## ---------- Staging ---------- ##
 
 #set ($show_staging = $theme_display.isShowStagingIcon())

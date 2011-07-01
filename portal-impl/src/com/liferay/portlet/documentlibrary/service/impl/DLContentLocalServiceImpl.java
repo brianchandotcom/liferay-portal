@@ -62,10 +62,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		dlContentPersistence.update(dlContent, false);
 
-		unsyncByteArrayInputStream.reset();
-
-		dlContent.setData(dataOutputBlob);
-
 		return dlContent;
 	}
 

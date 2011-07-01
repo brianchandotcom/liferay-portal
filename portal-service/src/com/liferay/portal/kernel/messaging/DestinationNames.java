@@ -39,6 +39,9 @@ public interface DestinationNames {
 	public static final String DEVICE_RECOGNITION_PROVIDER =
 		"liferay/device_recognition_provider";
 
+	public static final String DOCUMENT_LIBRARY_AUDIO_PROCESSOR =
+		"liferay/document_library_audio_processor";
+
 	public static final String DOCUMENT_LIBRARY_HOOK =
 		"liferay/document_library_hook";
 

@@ -4453,7 +4453,8 @@ public class PortalImpl implements Portal {
 				WebKeys.THEME_DISPLAY);
 
 			try {
-				if (!PortletPermissionUtil.contains(
+				if (!themeDisplay.getLayout().isTypeControlPanel() &&
+					!PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getPlid(), portlet.getPortletId(),
 						ActionKeys.CONFIGURATION)) {

@@ -469,6 +469,9 @@
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
+	<entity name="DLSync" local-service="true" remote-service="true">
+		<tx-required>getFileDeltaAsStream</tx-required>
+	</entity>
 	<exceptions>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>

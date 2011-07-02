@@ -35,7 +35,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,11 +47,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Password Policies",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Password Policies"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -64,7 +64,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -102,7 +103,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -140,7 +142,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -178,7 +181,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -216,7 +220,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -255,7 +260,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -294,7 +299,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -333,7 +338,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -372,7 +377,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -411,7 +416,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

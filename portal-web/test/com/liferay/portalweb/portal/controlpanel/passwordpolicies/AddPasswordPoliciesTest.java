@@ -30,7 +30,7 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Password Policies", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Password Policies",
+			RuntimeVariables.replace("Password Policies"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,7 +67,7 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -75,7 +77,7 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_129_name")) {
+				if (selenium.isVisible("//input[@id='_129_name']")) {
 					break;
 				}
 			}
@@ -86,35 +88,14 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_129_name", RuntimeVariables.replace("Test"));
+		selenium.type("//input[@id='_129_name']",
+			RuntimeVariables.replace("Test"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_129_description",
+		selenium.type("//textarea[@id='_129_description']",
 			RuntimeVariables.replace("This is a test password policy!"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_129_changeableCheckbox", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("_129_changeRequiredCheckbox")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_129_changeRequiredCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.select("_129_minAge", RuntimeVariables.replace("label=1 Week"));
-		selenium.clickAt("_129_checkSyntaxCheckbox",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_129_changeableCheckbox']",
+			RuntimeVariables.replace("Changeable Checkbox"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -123,7 +104,7 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"_129_allowDictionaryWordsCheckbox")) {
+							"//input[@id='_129_changeRequiredCheckbox']")) {
 					break;
 				}
 			}
@@ -134,11 +115,12 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_129_allowDictionaryWordsCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.type("_129_minLength", RuntimeVariables.replace("5"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_129_historyCheckbox", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_129_changeRequiredCheckbox']",
+			RuntimeVariables.replace("Change Required Checkbox"));
+		selenium.select("//select[@id='_129_minAge']",
+			RuntimeVariables.replace("label=1 Week"));
+		selenium.clickAt("//input[@id='_129_checkSyntaxCheckbox']",
+			RuntimeVariables.replace("Syntax Checking Enabled Checkbox"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -146,7 +128,8 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_129_historyCount")) {
+				if (selenium.isElementPresent(
+							"//input[@id='_129_allowDictionaryWordsCheckbox']")) {
 					break;
 				}
 			}
@@ -157,8 +140,13 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_129_historyCount", RuntimeVariables.replace("label=4"));
-		selenium.clickAt("_129_expireableCheckbox", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_129_allowDictionaryWordsCheckbox']",
+			RuntimeVariables.replace("Allow Dictionary Words Checkbox"));
+		selenium.type("//input[@id='_129_minLength']",
+			RuntimeVariables.replace("5"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_129_historyCheckbox']",
+			RuntimeVariables.replace("History Enabled Checkbox"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -166,7 +154,8 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_129_maxAge")) {
+				if (selenium.isElementPresent(
+							"//select[@id='_129_historyCount']")) {
 					break;
 				}
 			}
@@ -177,12 +166,37 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_129_maxAge", RuntimeVariables.replace("label=4 Weeks"));
-		selenium.select("_129_warningTime",
+		selenium.select("//select[@id='_129_historyCount']",
+			RuntimeVariables.replace("label=4"));
+		selenium.clickAt("//input[@id='_129_expireableCheckbox']",
+			RuntimeVariables.replace("Expiration Enabled Checkbox"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//select[@id='_129_maxAge']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_129_maxAge']",
+			RuntimeVariables.replace("label=4 Weeks"));
+		selenium.select("//select[@id='_129_warningTime']",
 			RuntimeVariables.replace("label=2 Days"));
-		selenium.type("_129_graceLimit", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_129_graceLimit']",
+			RuntimeVariables.replace("1"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_129_lockoutCheckbox", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_129_lockoutCheckbox']",
+			RuntimeVariables.replace("Lockout Enabled Checkbox"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -190,7 +204,7 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_129_maxFailure")) {
+				if (selenium.isElementPresent("//input[@id='_129_maxFailure']")) {
 					break;
 				}
 			}
@@ -201,17 +215,38 @@ public class AddPasswordPoliciesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_129_maxFailure", RuntimeVariables.replace("3"));
+		selenium.type("//input[@id='_129_maxFailure']",
+			RuntimeVariables.replace("3"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_129_resetFailureCount",
+		selenium.select("//select[@id='_129_resetFailureCount']",
 			RuntimeVariables.replace("label=10 Minutes"));
-		selenium.select("_129_lockoutDuration",
+		selenium.select("//select[@id='_129_lockoutDuration']",
 			RuntimeVariables.replace("label=5 Minutes"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Test"));
 		assertTrue(selenium.isElementPresent(
 				"link=This is a test password policy!"));

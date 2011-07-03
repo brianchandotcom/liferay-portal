@@ -19,7 +19,7 @@
 .portlet-asset-tag-admin {
 	.tags-admin-actions {
 		clear: none;
-		float: right;
+		float: left;
 		margin: 0;
 	}
 
@@ -159,16 +159,25 @@
 		}
 	}
 
-	.tags-admin-list-container {
-		.tag-admin-check {
-			float: left;
-			margin-left: 8px;
+	.select-tags {
+		border-color: #5F5F5F;
+		float: left;
+		line-height: 0;
+		margin-right: 2px;
+		padding: 0;
 
-			input {
-				float: none;
+		.aui-field-element {
+			padding: 5px 4px 4px;
+			border: 1px solid #FFF;
+			border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
+
+			.aui-field-input-choice {
+				margin: 0;
 			}
 		}
+	}
 
+	.tags-admin-list-container {
 		&:after {
 			clear: both;
 			content: "";

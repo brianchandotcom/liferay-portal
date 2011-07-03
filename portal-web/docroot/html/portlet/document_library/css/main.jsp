@@ -465,11 +465,6 @@
 		}
 	}
 
-	.document-library-breadcrumb ul {
-		margin-bottom: 6px;
-		padding: 4px 10px 0 10px;
-	}
-
 	.view {
 		border: 1px solid #7B7B7B;
 
@@ -516,6 +511,15 @@
 
 	.workflow-status-pending, .workflow-status-pending a {
 		color: orange;
+	}
+
+	.document-library-breadcrumb {
+		background-color: #EBEBEB;
+		background-image: url(<%= themeImagesPath %>/application/button_bg_selected.png);
+
+		ul {
+			margin-bottom: 0;
+		}
 	}
 
 	.aui-liferaylistview-content {

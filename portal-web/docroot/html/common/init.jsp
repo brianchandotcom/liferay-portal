@@ -127,6 +127,7 @@
 <%@ page import="com.liferay.portal.kernel.util.PropsKeys" %>
 <%@ page import="com.liferay.portal.kernel.util.Randomizer" %>
 <%@ page import="com.liferay.portal.kernel.util.ReleaseInfo" %>
+<%@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ServerDetector" %>
 <%@ page import="com.liferay.portal.kernel.util.SetUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.SortedProperties" %>

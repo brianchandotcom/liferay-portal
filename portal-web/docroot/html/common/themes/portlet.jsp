@@ -69,11 +69,7 @@ portletDisplay.setTitle(portletTitle);
 
 String portletDescription = StringPool.BLANK;
 
-try {
-	portletDescription = resourceBundle.getString(JavaConstants.JAVAX_PORTLET_DESCRIPTION);
-}
-catch (MissingResourceException mre) {
-}
+portletDescription = ResourceBundleUtil.getString(resourceBundle, JavaConstants.JAVAX_PORTLET_DESCRIPTION);
 
 if (Validator.isNull(portletDescription)) {
 	portletDescription = PortalUtil.getPortletDescription(portlet.getPortletId(), locale);

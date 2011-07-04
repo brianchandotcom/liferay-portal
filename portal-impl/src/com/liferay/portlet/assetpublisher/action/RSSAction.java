@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -88,7 +89,7 @@ public class RSSAction extends PortletAction {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String name, String description, String type, double version,
 			String displayStyle, String linkBehavior,
-			List<AssetEntry> assetEntries)
+			List<AssetEntry> assetEntries, String languageId)
 		throws Exception {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
@@ -122,7 +123,7 @@ public class RSSAction extends PortletAction {
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			syndEntry.setAuthor(author);
-			syndEntry.setTitle(assetEntry.getTitle());
+			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
 			syndEntry.setLink(link);
 			syndEntry.setUri(syndEntry.getLink());
 			syndEntry.setPublishedDate(assetEntry.getCreateDate());
@@ -301,9 +302,12 @@ public class RSSAction extends PortletAction {
 		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
 			assetEntryQuery);
 
+		String languageId = LanguageUtil.getLanguageId(portletRequest);
+
 		String rss = exportToRSS(
 			portletRequest, portletResponse, rssName, null, rssFormatType,
-			rssFormatVersion, rssDisplayStyle, assetLinkBehavior, assetEntries);
+			rssFormatVersion, rssDisplayStyle, assetLinkBehavior, assetEntries,
+			languageId);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

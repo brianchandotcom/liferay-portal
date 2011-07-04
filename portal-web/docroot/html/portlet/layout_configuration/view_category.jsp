@@ -66,11 +66,7 @@ while (itr.hasNext()) {
 
 			ResourceBundle resourceBundle = curPortletConfig.getResourceBundle(locale);
 
-			try {
-				externalPortletCategory = resourceBundle.getString(portletCategory.getName());
-			}
-			catch (MissingResourceException mre) {
-			}
+			externalPortletCategory = ResourceBundleUtil.getString(resourceBundle, portletCategory.getName());
 		}
 	}
 }

@@ -16,6 +16,8 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ResourceBundleReplaceThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Enumeration;
@@ -45,8 +47,11 @@ public class StrutsResourceBundle extends ResourceBundle {
 
 	@Override
 	protected Object handleGetObject(String key) {
-		if ((key != null) &&
-			(key.equals(JavaConstants.JAVAX_PORTLET_TITLE) ||
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
+		if ((key.equals(JavaConstants.JAVAX_PORTLET_TITLE) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION))) {
@@ -54,7 +59,13 @@ public class StrutsResourceBundle extends ResourceBundle {
 			key = key.concat(StringPool.PERIOD).concat(_portletName);
 		}
 
-		return LanguageUtil.get(_locale, key);
+		String value = LanguageUtil.get(_locale, key);
+
+		if ((value == null) && ResourceBundleReplaceThreadLocal.isReplace()) {
+			value = ResourceBundleUtil.NULL_VALUE_PLACE_HOLDER;
+		}
+
+		return value;
 	}
 
 	private String _portletName;

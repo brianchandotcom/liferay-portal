@@ -15,6 +15,8 @@
 package com.liferay.portal.language;
 
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ResourceBundleReplaceThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,7 +72,13 @@ public class LiferayResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		return _map.get(key);
+		String value = _map.get(key);
+
+		if ((value == null) && ResourceBundleReplaceThreadLocal.isReplace()) {
+			value = ResourceBundleUtil.NULL_VALUE_PLACE_HOLDER;
+		}
+
+		return value;
 	}
 
 	@Override

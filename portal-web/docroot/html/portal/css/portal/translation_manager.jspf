@@ -24,14 +24,6 @@
 	min-height: 1.8em;
 	padding: 0.5em;
 
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-
-	-moz-box-shadow: 1px 1px 8px #CCC inset;
-	-webkit-box-shadow: 1px 1px 8px #CCC inset;
-	box-shadow: 1px 1px 8px #CCC inset;
-
 	.lfr-translation-manager-icon-menu {
 		display: inline;
 		float: none;
@@ -39,9 +31,7 @@
 		padding: 0.4em 0;
 
 		li {
-			display: inline;
-
-			strong {
+			&, strong {
 				display: inline;
 			}
 		}
@@ -64,17 +54,13 @@
 		margin: 0 0.2em;
 		text-decoration: none;
 
-		-moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		border-radius: 4px;
-
 		&:hover {
 			background-color: #D1E5EF;
 		}
 
 		&.lfr-translation-manager-translation-editing {
-			background-color: #FFFFCC;
-			border-color: #FFCC00;
+			background-color: #FFC;
+			border-color: #FC0;
 		}
 
 		img {

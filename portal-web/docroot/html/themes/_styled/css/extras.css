@@ -4,7 +4,7 @@
 	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
 }
 
-.lfr-preview-file-image img {
+.lfr-preview-file-image img, .lfr-translation-manager {
 	-moz-box-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.8);
 	-webkit-box-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.8);
 	box-shadow: 0 3px 5px -3px rgba(0, 0, 0, 0.8);
@@ -64,7 +64,7 @@
 	border-radius: 4px;
 }
 
-.aui-paginator-link, .lfr-header-row .aui-toolbar-only, .select-documents, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote {
+.aui-paginator-link, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager .lfr-translation-manager-translation, .select-documents, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;

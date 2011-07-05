@@ -418,6 +418,13 @@ public class ResourcePermissionLocalServiceWrapper
 			name, scope, primKey);
 	}
 
+	public java.util.List<com.liferay.portal.model.ResourcePermission> getResourceResourcePermissions(
+		java.lang.String name, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourcePermissionLocalService.getResourceResourcePermissions(name,
+			primKey);
+	}
+
 	public java.util.List<com.liferay.portal.model.ResourcePermission> getRoleResourcePermissions(
 		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _resourcePermissionLocalService.getRoleResourcePermissions(roleId);

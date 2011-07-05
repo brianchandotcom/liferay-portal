@@ -156,7 +156,8 @@ public class ResourceBlockRoleActionWrapper implements ResourceBlockRoleAction {
 		return new ResourceBlockRoleActionWrapper((ResourceBlockRoleAction)_resourceBlockRoleAction.clone());
 	}
 
-	public int compareTo(ResourceBlockRoleAction resourceBlockRoleAction) {
+	public int compareTo(
+		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction) {
 		return _resourceBlockRoleAction.compareTo(resourceBlockRoleAction);
 	}
 
@@ -165,7 +166,7 @@ public class ResourceBlockRoleActionWrapper implements ResourceBlockRoleAction {
 		return _resourceBlockRoleAction.hashCode();
 	}
 
-	public ResourceBlockRoleAction toEscapedModel() {
+	public com.liferay.portal.model.ResourceBlockRoleAction toEscapedModel() {
 		return new ResourceBlockRoleActionWrapper(_resourceBlockRoleAction.toEscapedModel());
 	}
 

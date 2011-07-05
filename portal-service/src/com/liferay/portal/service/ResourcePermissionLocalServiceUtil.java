@@ -426,6 +426,12 @@ public class ResourcePermissionLocalServiceUtil {
 				   .getResourcePermissionsCount(companyId, name, scope, primKey);
 	}
 
+	public static java.util.List<com.liferay.portal.model.ResourcePermission> getResourceResourcePermissions(
+		java.lang.String name, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResourceResourcePermissions(name, primKey);
+	}
+
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> getRoleResourcePermissions(
 		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRoleResourcePermissions(roleId);

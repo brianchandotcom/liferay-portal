@@ -149,7 +149,7 @@ public class ResourceBlockRoleActionUtil {
 	* @return the new resource block role action
 	*/
 	public static com.liferay.portal.model.ResourceBlockRoleAction create(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK) {
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK) {
 		return getPersistence().create(resourceBlockRoleActionPK);
 	}
 
@@ -162,7 +162,7 @@ public class ResourceBlockRoleActionUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlockRoleAction remove(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().remove(resourceBlockRoleActionPK);
@@ -184,7 +184,7 @@ public class ResourceBlockRoleActionUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlockRoleAction findByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByPrimaryKey(resourceBlockRoleActionPK);
@@ -198,7 +198,7 @@ public class ResourceBlockRoleActionUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlockRoleAction fetchByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(resourceBlockRoleActionPK);
 	}
@@ -322,8 +322,8 @@ public class ResourceBlockRoleActionUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlockRoleAction[] findByR_A_PrevAndNext(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK, long roleId,
-		long actionId,
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK,
+		long roleId, long actionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException {

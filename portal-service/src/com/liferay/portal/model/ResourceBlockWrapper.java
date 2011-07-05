@@ -154,7 +154,7 @@ public class ResourceBlockWrapper implements ResourceBlock {
 		return new ResourceBlockWrapper((ResourceBlock)_resourceBlock.clone());
 	}
 
-	public int compareTo(ResourceBlock resourceBlock) {
+	public int compareTo(com.liferay.portal.model.ResourceBlock resourceBlock) {
 		return _resourceBlock.compareTo(resourceBlock);
 	}
 
@@ -163,7 +163,7 @@ public class ResourceBlockWrapper implements ResourceBlock {
 		return _resourceBlock.hashCode();
 	}
 
-	public ResourceBlock toEscapedModel() {
+	public com.liferay.portal.model.ResourceBlock toEscapedModel() {
 		return new ResourceBlockWrapper(_resourceBlock.toEscapedModel());
 	}
 

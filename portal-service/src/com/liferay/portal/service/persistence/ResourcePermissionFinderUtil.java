@@ -26,6 +26,12 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().countByR_S(roleId, scopes);
 	}
 
+	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByResource(
+		java.lang.String name, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByResource(name, primKey);
+	}
+
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
 		long roleId, int[] scopes, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

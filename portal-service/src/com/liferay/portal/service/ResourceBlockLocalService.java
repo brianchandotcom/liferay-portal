@@ -222,4 +222,20 @@ public interface ResourceBlockLocalService {
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
+	* Returns the permissions hash for the resource. The permissions hash is a
+	* representation of all the roles with access to the resource along with
+	* the actions they can perform.
+	*
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key of the resource
+	* @return the permissions hash for the resource
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getPermissionsHash(java.lang.String name,
+		java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -17,24 +17,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.service.base.ResourceBlockRoleActionLocalServiceBaseImpl;
 
 /**
- * The implementation of the resource block role action local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.ResourceBlockRoleActionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.ResourceBlockRoleActionLocalServiceBaseImpl
- * @see com.liferay.portal.service.ResourceBlockRoleActionLocalServiceUtil
+ * @author Connor McKay
  */
 public class ResourceBlockRoleActionLocalServiceImpl
 	extends ResourceBlockRoleActionLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portal.service.ResourceBlockRoleActionLocalServiceUtil} to access the resource block role action local service.
-	 */
 }

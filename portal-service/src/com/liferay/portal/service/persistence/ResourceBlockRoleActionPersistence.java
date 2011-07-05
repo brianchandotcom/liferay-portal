@@ -59,7 +59,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @return the new resource block role action
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction create(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK);
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK);
 
 	/**
 	* Removes the resource block role action with the primary key from the database. Also notifies the appropriate model listeners.
@@ -70,7 +70,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction remove(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -88,7 +88,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction findByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -100,7 +100,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction fetchByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -209,8 +209,8 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction[] findByR_A_PrevAndNext(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK, long roleId,
-		long actionId,
+		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK,
+		long roleId, long actionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;

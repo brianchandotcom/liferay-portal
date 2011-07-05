@@ -14,27 +14,50 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
 
+import java.nio.ByteBuffer;
+
+import java.util.List;
+
 /**
- * The implementation of the resource block local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.ResourceBlockLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl
- * @see com.liferay.portal.service.ResourceBlockLocalServiceUtil
+ * @author Connor McKay
  */
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
+
+	/**
+	 * Returns the permissions hash for the resource. The permissions hash is a
+	 * representation of all the roles with access to the resource along with
+	 * the actions they can perform.
 	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portal.service.ResourceBlockLocalServiceUtil} to access the resource block local service.
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
+	 * @param  primKey the primary key of the resource
+	 * @return the permissions hash for the resource
+	 * @throws SystemException if a system exception occurred
 	 */
+	public String getPermissionsHash(String name, String primKey)
+		throws SystemException {
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourceResourcePermissions(
+			name, primKey);
+
+		ByteBuffer buffer =
+			ByteBuffer.allocate(resourcePermissions.size() * 16);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			buffer.putLong(resourcePermission.getRoleId());
+			buffer.putLong(resourcePermission.getActionIds());
+		}
+
+		buffer.flip();
+
+		return DigesterUtil.digestHex("SHA-1", buffer);
+	}
+
 }

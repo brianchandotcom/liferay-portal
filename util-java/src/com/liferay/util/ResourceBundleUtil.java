@@ -15,7 +15,7 @@
 package com.liferay.util;
 
 /**
- * @author Neil Griffin
+ * @author     Neil Griffin
  * @deprecated {@link com.liferay.portal.kernel.util.ResourceBundleUtil}
  */
 public class ResourceBundleUtil

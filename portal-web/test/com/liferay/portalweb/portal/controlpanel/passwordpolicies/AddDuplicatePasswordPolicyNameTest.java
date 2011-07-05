@@ -30,7 +30,7 @@ public class AddDuplicatePasswordPolicyNameTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class AddDuplicatePasswordPolicyNameTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Password Policies", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Password Policies",
+			RuntimeVariables.replace("Password Policies"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,7 +67,7 @@ public class AddDuplicatePasswordPolicyNameTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -75,7 +77,7 @@ public class AddDuplicatePasswordPolicyNameTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_129_name")) {
+				if (selenium.isVisible("//input[@id='_129_name']")) {
 					break;
 				}
 			}
@@ -86,13 +88,15 @@ public class AddDuplicatePasswordPolicyNameTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_129_name", RuntimeVariables.replace("Test"));
+		selenium.type("//input[@id='_129_name']",
+			RuntimeVariables.replace("Test"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_129_description",
+		selenium.type("//textarea[@id='_129_description']",
 			RuntimeVariables.replace(
 				"This is a duplicate password policy test."));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

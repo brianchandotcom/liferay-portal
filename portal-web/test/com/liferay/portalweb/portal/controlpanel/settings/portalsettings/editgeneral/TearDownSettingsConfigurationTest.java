@@ -77,6 +77,7 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.type("_130_type", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
 		selenium.clickAt("//a[@id='_130_usersLink']",
 			RuntimeVariables.replace("Users"));
 		selenium.clickAt("link=Reserved Credentials",
@@ -98,13 +99,17 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.type("_130_settings--admin.default.user.group.names--",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_mailHostNamesLink']",
+				"Mail Host Names"));
 		selenium.clickAt("//a[@id='_130_mailHostNamesLink']",
 			RuntimeVariables.replace("Mail Host Names"));
 		selenium.type("_130_settings--admin.mail.host.names--",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Email Notifications"));
 		selenium.type("_130_settings--admin.email.from.name--",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.saveScreenShotAndSource();

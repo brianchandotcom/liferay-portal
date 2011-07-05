@@ -42,15 +42,19 @@ public class DeleteSettingsAdditionalEmailAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_additionalEmailAddressesLink']",
+				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Additional Email Addresses"));
 		assertEquals("Admin@Liferay.com",
 			selenium.getValue("_130_emailAddressAddress0"));
 

@@ -44,12 +44,13 @@ public class AddSettingsAddressTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
+				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Addresses"));
 		selenium.type("_130_addressStreet1_0",
 			RuntimeVariables.replace("123. Liferay Ln."));
 		selenium.saveScreenShotAndSource();
@@ -67,10 +68,7 @@ public class AddSettingsAddressTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"AlabamaAlaskaArizonaArkansasCaliforniaColoradoConnecticutDelawareDistrict of ColumbiaFloridaGeorgiaHawaiiIdahoIllinoisIndianaIowaKansasKentucky Louisiana MaineMarylandMassachusettsMichiganMinnesotaMississippiMissouriMontanaNebraskaNevadaNew HampshireNew JerseyNew MexicoNew YorkNorth CarolinaNorth DakotaOhioOklahoma OregonPennsylvaniaPuerto RicoRhode IslandSouth CarolinaSouth DakotaTennesseeTexasUtahVermontVirginiaWashingtonWest VirginiaWisconsinWyoming")
-										.equals(selenium.getText(
-								"_130_addressRegionId0"))) {
+				if (selenium.isPartialText("_130_addressRegionId0", "California")) {
 					break;
 				}
 			}

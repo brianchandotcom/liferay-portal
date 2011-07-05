@@ -44,25 +44,24 @@ public class AddSettingsWebsiteTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
+				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Websites"));
 		selenium.type("_130_websiteUrl0",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.select("_130_websiteTypeId0",
 			RuntimeVariables.replace("label=Public"));
-		selenium.clickAt("_130_primaryCheckbox", RuntimeVariables.replace(""));
+		selenium.clickAt("_130_websitePrimary", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//section/div/div/div/div"));
-		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("_130_websiteUrl0"));
 	}
 }

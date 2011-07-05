@@ -23,13 +23,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertPublicPageFriendlyURLTest extends BaseTestCase {
 	public void testAssertPublicPageFriendlyURL() throws Exception {
 		selenium.open("/web/alpha/");
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"http://localhost:8080/web/alpha/"), selenium.getLocation());
 		assertEquals(RuntimeVariables.replace("Virtual Hosting Community"),
 			selenium.getText("//li[2]/span/a"));
 		assertTrue(selenium.isElementPresent("link=Public Page"));
-		selenium.clickAt("link=Public Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Public Page",
+			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

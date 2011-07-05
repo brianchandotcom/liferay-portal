@@ -35,7 +35,7 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,21 +47,19 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Sites", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_134_name",
+				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Virtual Hosting Community"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -69,7 +67,27 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible("//td[7]/span/ul/li/strong/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 							break;
 						}
@@ -81,16 +99,17 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Manage Pages"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Private Pages",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Private Pages"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Add Page"),
-					selenium.getText("//div/span/button[1]"));
 				selenium.clickAt("//div/span/button[1]",
 					RuntimeVariables.replace("Add Page"));
 
@@ -100,7 +119,7 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_134_name_en_US")) {
+						if (selenium.isVisible("//input[@id='_134_name_en_US']")) {
 							break;
 						}
 					}
@@ -111,16 +130,35 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_134_name_en_US",
+				selenium.type("//input[@id='_134_name_en_US']",
 					RuntimeVariables.replace("Private Page"));
 				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Add Page']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isTextPresent(
-						"Your request completed successfully."));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean privatePagePresent = selenium.isElementPresent(
 						"//li/ul/li/div/div[3]/a");
@@ -131,10 +169,9 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("//div[2]/ul/li/div/div[1]");
+				selenium.click("//div[3]/ul/li/div/div[1]");
 
 			case 2:
-				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

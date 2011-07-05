@@ -14,59 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sites</td>
-	<td></td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td></td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td></td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td></td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Public Pages</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div/span/button[1]</td>
-	<td>Add Page</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -75,28 +75,28 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_134_name_en_US</td>
+	<td>//input[@id='_134_name_en_US']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name_en_US</td>
+	<td>//input[@id='_134_name_en_US']</td>
 	<td>Public Page</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
-	<td></td>
+	<td>Add Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -107,11 +107,6 @@
 	<td>gotoIf</td>
 	<td>${publicPagePresent}</td>
 	<td>PublicPagePresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -126,7 +121,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//li/ul/li/div/div[3]/a</td>
-	<td></td>
+	<td>Public Page</td>
 </tr>
 <tr>
 	<td>assertText</td>

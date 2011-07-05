@@ -95,6 +95,12 @@ if (folder != null) {
 	}
 	%>
 
+	<c:if test="<%= results.isEmpty() %>">
+		<div class="portlet-msg-info">
+			<%= LanguageUtil.get(pageContext, "there-are-no-folders") %>
+		</div>
+	</c:if>
+
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
 	<liferay-ui:header title="images" />
@@ -165,6 +171,12 @@ if (folder != null) {
 		resultRows.add(row);
 	}
 	%>
+
+	<c:if test="<%= results.isEmpty() %>">
+		<div class="portlet-msg-info">
+			<%= LanguageUtil.get(pageContext, "there-are-no-images-in-this-folder") %>
+		</div>
+	</c:if>
 
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>

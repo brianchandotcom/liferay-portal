@@ -74,17 +74,18 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByAssetEntryId",
-			new String[] { Long.class.getName() });
+			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByAssetEntryId", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByAssetEntryId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_LIST,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

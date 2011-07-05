@@ -76,7 +76,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_AEI_T_A = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByAEI_T_A",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST, "findByAEI_T_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(),
@@ -85,7 +85,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_T_A = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByAEI_T_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -93,7 +93,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByAEI_AID_A_E",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByAEI_AID_A_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(), String.class.getName(),
@@ -102,7 +103,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByAEI_AID_A_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -110,7 +111,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_U_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByU_AEI_AID_A_E",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByU_AEI_AID_A_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Boolean.class.getName(),
@@ -120,7 +122,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_AEI_AID_A_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -129,7 +131,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_U_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByU_AID_AD_A_T_E",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByU_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
@@ -139,7 +142,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -148,7 +151,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByAEI_AID_AD_A_T_E",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByAEI_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
@@ -158,7 +162,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByAEI_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -167,7 +171,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_U_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_AEI_AID_AD_A_T_E",
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByU_AEI_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -175,7 +180,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_AEI_AID_AD_A_T_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -185,9 +190,10 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityLogImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

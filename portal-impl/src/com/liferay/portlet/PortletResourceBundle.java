@@ -61,22 +61,20 @@ public class PortletResourceBundle extends ResourceBundle {
 
 		String value = null;
 
-		if (parent == null) {
+		if (parent != null) {
+			try {
+				value = parent.getString(key);
+			}
+			catch (MissingResourceException mre) {
+			}
+		}
+
+		if ((value == null) || (value == ResourceBundleUtil.NULL_VALUE)) {
 			value = _getJavaxPortletString(key);
 		}
 
 		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
-			if (parent != null) {
-				try {
-					value = parent.getString(key);
-				}
-				catch (MissingResourceException mre) {
-				}
-			}
-
-			if (value == null) {
-				value = ResourceBundleUtil.NULL_VALUE;
-			}
+			value = ResourceBundleUtil.NULL_VALUE;
 		}
 
 		return value;

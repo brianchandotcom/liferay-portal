@@ -74,7 +74,8 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,12 +83,13 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPRANKED = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupRanked",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByGroupRanked",
 			new String[] {
 				Long.class.getName(),
 				
@@ -95,12 +97,12 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPRANKED = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupRanked",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUserId",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -108,12 +110,12 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_RANK = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByRank",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST, "findByRank",
 			new String[] {
 				Integer.class.getName(),
 				
@@ -121,20 +123,20 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_RANK = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByRank",
 			new String[] { Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_R = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_R",
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST, "findByG_R",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -142,14 +144,15 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_R = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_R",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityUserImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

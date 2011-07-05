@@ -76,7 +76,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_CLASSNAMEID = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByClassNameId",
+			DDMStructureLinkImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByClassNameId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -84,20 +85,21 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSNAMEID = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByClassNameId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_CLASSPK = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
-			new String[] { Long.class.getName() });
+			DDMStructureLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByClassPK", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSPK = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByClassPK",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_STRUCTUREID = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByStructureId",
+			DDMStructureLinkImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByStructureId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -105,14 +107,15 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_STRUCTUREID = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByStructureId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			DDMStructureLinkImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

@@ -72,9 +72,10 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityHistoryImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

@@ -79,8 +79,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -88,22 +88,23 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByGroupId", new String[] { Long.class.getName() });
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_N",
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_N",
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the team in the entity cache if it is enabled.
@@ -1662,6 +1663,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	public static final FinderPath FINDER_PATH_GET_USERS = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			com.liferay.portal.model.impl.UserImpl.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getUsers",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -1743,7 +1745,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Long.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getUsersSize",
 			new String[] { Long.class.getName() });
 
@@ -1796,7 +1798,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USER = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Boolean.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "containsUser",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -2123,6 +2125,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			com.liferay.portal.model.impl.UserGroupImpl.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME, "getUserGroups",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -2205,7 +2208,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS, Long.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME,
 			"getUserGroupsSize", new String[] { Long.class.getName() });
 
@@ -2258,7 +2261,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USERGROUP = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS, Boolean.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME,
 			"containsUserGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });

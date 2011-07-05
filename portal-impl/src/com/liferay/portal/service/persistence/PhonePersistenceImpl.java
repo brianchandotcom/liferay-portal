@@ -69,8 +69,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -78,11 +78,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCompanyId", new String[] { Long.class.getName() });
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByUserId",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -90,11 +91,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUserId", new String[] { Long.class.getName() });
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUserId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByC_C",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -102,12 +104,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByC_C_C",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -115,14 +117,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C_C",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C_P = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByC_C_C_P",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByC_C_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(),
@@ -131,18 +133,18 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C_P = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C_C_P",
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			PhoneModelImpl.FINDER_CACHE_ENABLED, PhoneImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			PhoneModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the phone in the entity cache if it is enabled.

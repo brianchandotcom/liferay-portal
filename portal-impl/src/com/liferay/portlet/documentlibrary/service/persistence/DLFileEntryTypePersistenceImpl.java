@@ -84,7 +84,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			DLFileEntryTypeImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -92,12 +92,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
+			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_N_D = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_N_D",
+			DLFileEntryTypeImpl.class, FINDER_CLASS_NAME_LIST, "findByG_N_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(),
@@ -106,7 +106,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_N_D = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
+			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_N_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -114,9 +114,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			DLFileEntryTypeImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
+			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -2363,6 +2364,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	public static final FinderPath FINDER_PATH_GET_DDMSTRUCTURES = new FinderPath(com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPE_DDMSTRUCTURE,
+			com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl.class,
 			DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPE_DDMSTRUCTURE_NAME,
 			"getDDMStructures",
 			new String[] {
@@ -2447,6 +2449,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	public static final FinderPath FINDER_PATH_GET_DDMSTRUCTURES_SIZE = new FinderPath(com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPE_DDMSTRUCTURE,
+			Long.class,
 			DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPE_DDMSTRUCTURE_NAME,
 			"getDDMStructuresSize", new String[] { Long.class.getName() });
 
@@ -2500,6 +2503,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	public static final FinderPath FINDER_PATH_CONTAINS_DDMSTRUCTURE = new FinderPath(com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPE_DDMSTRUCTURE,
+			Boolean.class,
 			DLFileEntryTypeModelImpl.MAPPING_TABLE_DLFILEENTRYTYPE_DDMSTRUCTURE_NAME,
 			"containsDDMStructure",
 			new String[] { Long.class.getName(), Long.class.getName() });

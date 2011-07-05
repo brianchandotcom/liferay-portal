@@ -82,8 +82,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -91,14 +91,15 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByGroupId", new String[] { Long.class.getName() });
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the asset tag in the entity cache if it is enabled.
@@ -1377,6 +1378,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	public static final FinderPath FINDER_PATH_GET_ASSETENTRIES = new FinderPath(com.liferay.portlet.asset.model.impl.AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagModelImpl.FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS,
+			com.liferay.portlet.asset.model.impl.AssetEntryImpl.class,
 			AssetTagModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME,
 			"getAssetEntries",
 			new String[] {
@@ -1461,6 +1463,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	public static final FinderPath FINDER_PATH_GET_ASSETENTRIES_SIZE = new FinderPath(com.liferay.portlet.asset.model.impl.AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagModelImpl.FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS,
+			Long.class,
 			AssetTagModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME,
 			"getAssetEntriesSize", new String[] { Long.class.getName() });
 
@@ -1514,6 +1517,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ASSETENTRY = new FinderPath(com.liferay.portlet.asset.model.impl.AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagModelImpl.FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS,
+			Boolean.class,
 			AssetTagModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME,
 			"containsAssetEntry",
 			new String[] { Long.class.getName(), Long.class.getName() });

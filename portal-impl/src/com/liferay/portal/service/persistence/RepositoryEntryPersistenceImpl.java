@@ -72,7 +72,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUuid",
+			RepositoryEntryImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -80,20 +80,22 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
+			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			RepositoryEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
+			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_REPOSITORYID = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByRepositoryId",
+			RepositoryEntryImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByRepositoryId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -101,22 +103,23 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_REPOSITORYID = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
+			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByRepositoryId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_R_M = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
+			RepositoryEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_M = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
+			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_M",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			RepositoryEntryImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
+			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

@@ -70,7 +70,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_USERTRACKERID = new FinderPath(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUserTrackerId",
+			UserTrackerPathImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByUserTrackerId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -78,14 +79,15 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERTRACKERID = new FinderPath(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED,
+			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserTrackerId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			UserTrackerPathImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED,
+			UserTrackerPathModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

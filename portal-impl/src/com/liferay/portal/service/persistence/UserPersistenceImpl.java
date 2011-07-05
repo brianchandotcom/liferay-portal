@@ -92,8 +92,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByUuid",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -101,11 +101,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUuid", new String[] { String.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUuid",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -113,17 +114,20 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCompanyId", new String[] { Long.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_CONTACTID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByContactId", new String[] { Long.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByContactId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_CONTACTID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByContactId", new String[] { Long.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByContactId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_EMAILADDRESS = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByEmailAddress",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByEmailAddress",
 			new String[] {
 				String.class.getName(),
 				
@@ -131,65 +135,68 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_EMAILADDRESS = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByEmailAddress", new String[] { String.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByEmailAddress",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_PORTRAITID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByPortraitId", new String[] { Long.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByPortraitId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_PORTRAITID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByPortraitId", new String[] { Long.class.getName() });
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByPortraitId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_U = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_U",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_U = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_U",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_DU = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_DU",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_DU",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_DU = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_DU",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_DU",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_SN = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_SN",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_SN",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_SN = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_SN",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_SN",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_EA = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_EA",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_EA",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_EA = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_EA",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_EA",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_FID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_FID",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_FID",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_FID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_FID",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_FID",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_O = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_O",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_O = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_O",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_O",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByC_S",
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByC_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -197,15 +204,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_S",
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_S",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the user in the entity cache if it is enabled.
@@ -4503,6 +4510,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			com.liferay.portal.model.impl.GroupImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getGroups",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -4584,7 +4592,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getGroupsSize",
 			new String[] { Long.class.getName() });
 
@@ -4637,7 +4645,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_GROUP = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Boolean.class,
 			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "containsGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -4966,6 +4974,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS,
+			com.liferay.portal.model.impl.OrganizationImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME, "getOrganizations",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -5048,7 +5057,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME,
 			"getOrganizationsSize", new String[] { Long.class.getName() });
 
@@ -5101,7 +5110,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ORGANIZATION = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS, Boolean.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME,
 			"containsOrganization",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -5441,6 +5450,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
+			com.liferay.portal.model.impl.PermissionImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"getPermissions",
 			new String[] {
@@ -5524,7 +5534,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"getPermissionsSize", new String[] { Long.class.getName() });
 
@@ -5578,7 +5588,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_PERMISSION = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
-			UserModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
+			Boolean.class, UserModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"containsPermission",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -5917,6 +5927,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_ROLES = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			com.liferay.portal.model.impl.RoleImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getRoles",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -5998,7 +6009,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_ROLES_SIZE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getRolesSize",
 			new String[] { Long.class.getName() });
 
@@ -6051,7 +6062,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ROLE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Boolean.class,
 			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "containsRole",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -6378,6 +6389,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_TEAMS = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			com.liferay.portal.model.impl.TeamImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getTeams",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -6458,7 +6470,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_TEAMS_SIZE = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getTeamsSize",
 			new String[] { Long.class.getName() });
 
@@ -6511,7 +6523,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_TEAM = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Boolean.class,
 			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "containsTeam",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -6838,6 +6850,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS,
+			com.liferay.portal.model.impl.UserGroupImpl.class,
 			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME, "getUserGroups",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -6920,7 +6933,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS, Long.class,
 			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME,
 			"getUserGroupsSize", new String[] { Long.class.getName() });
 
@@ -6973,7 +6986,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USERGROUP = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS,
+			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS, Boolean.class,
 			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME,
 			"containsUserGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });

@@ -933,7 +933,13 @@ public class JavadocFormatter {
 
 			int pos = lineNumber - 2;
 
-			String line = lines[pos].trim();
+			String line = lines[pos];
+
+			if (line == null) {
+				continue;
+			}
+
+			line = line.trim();
 
 			if (line.endsWith("*/")) {
 				while (true) {

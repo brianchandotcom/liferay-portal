@@ -42,6 +42,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -387,6 +388,8 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId);
 
+		long sourceFileVersionId = dlFileVersion.getFileVersionId();
+
 		String version = dlFileVersion.getVersion();
 
 		if (!version.equals(
@@ -394,13 +397,10 @@ public class DLFileEntryLocalServiceImpl
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			HashMap<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
+			serviceContext.setUserId(userId);
+			serviceContext.setCompanyId(user.getCompanyId());
 
-			if (dlFileVersion.getFileEntryTypeId() > 0) {
-				fieldsMap = getDocumentMetadataFieldsMap(
-					dlFileVersion.getFileEntryTypeId(),
-					dlFileVersion.getFileVersionId());
-			}
+			HashMap<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
 
 			serviceContext.setAttribute("fieldsMap", fieldsMap);
 
@@ -414,12 +414,28 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
+			try {
+				DLStoreUtil.deleteFile(
+					dlFileEntry.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+			}
+			catch (NoSuchFileException nsfe) {
+			}
+
 			DLStoreUtil.copyFileVersion(
 				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
 				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 				dlFileVersion.getTitle(), serviceContext);
+
+			// Metadata
+
+			copyDocumentMetadata(
+				user.getCompanyId(), fileEntryId,
+				dlFileVersion.getFileEntryTypeId(), sourceFileVersionId,
+				dlFileVersion.getFileVersionId(), serviceContext);
 
 			// Index
 
@@ -1134,6 +1150,64 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	protected void copyDocumentMetadata(
+			long companyId, long fileEntryId, long fileEntryTypeId,
+			long fromFileVersionId, long toFileVersionId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+
+		List<DDMStructure> ddmStructures = null;
+
+		if (fileEntryTypeId > 0) {
+			DLFileEntryType fileEntryType =
+				dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+
+			ddmStructures = fileEntryType.getDDMStructures();
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				DLFileEntryMetadata dlFileEntryMetadata =
+					dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						fromFileVersionId);
+
+				Fields fields = StorageEngineUtil.getFields(
+					dlFileEntryMetadata.getDDMStorageId());
+
+				fieldsMap.put(ddmStructure.getStructureKey(), fields);
+			}
+
+			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+				companyId, ddmStructures, fileEntryTypeId, fileEntryId,
+				toFileVersionId, fieldsMap, serviceContext);
+		}
+
+		long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+
+		ddmStructures = ddmStructureLocalService.getClassStructures(
+			classNameId);
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			try {
+				DLFileEntryMetadata fileEntryMetadata =
+					dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						ddmStructure.getStructureId(), fromFileVersionId);
+
+				Fields fields = StorageEngineUtil.getFields(
+					fileEntryMetadata.getDDMStorageId());
+
+				fieldsMap.put(ddmStructure.getStructureKey(), fields);
+			}
+			catch (PortalException pe) {
+			}
+		}
+
+		dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+			companyId, ddmStructures, fileEntryTypeId, fileEntryId,
+			toFileVersionId, fieldsMap, serviceContext);
+	}
+
 	protected void deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
@@ -1215,32 +1289,6 @@ public class DLFileEntryLocalServiceImpl
 		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
 
 		indexer.delete(fileModel);
-	}
-
-	protected HashMap<Long, Fields> getDocumentMetadataFieldsMap(
-			long fileEntryTypeId, long fileVersionId)
-		throws PortalException, SystemException {
-
-		HashMap<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
-
-		DLFileEntryType fileEntryType =
-			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-
-		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata dlFileEntryMetadata =
-				dlFileEntryMetadataLocalService.getFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					fileVersionId);
-
-			Fields fields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
-
-			fieldsMap.put(ddmStructure.getStructureId(), fields);
-		}
-
-		return fieldsMap;
 	}
 
 	protected String getExtension(String title, ServiceContext serviceContext) {

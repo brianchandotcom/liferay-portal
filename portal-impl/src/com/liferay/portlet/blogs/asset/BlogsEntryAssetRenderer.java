@@ -34,6 +34,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Jorge Ferrer
@@ -91,6 +92,24 @@ public class BlogsEntryAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public String getUrlTitle() {
 		return _entry.getUrlTitle();
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			PortletKeys.BLOGS, PortletRequest.RENDER_PHASE);
+
+		portletURL.setWindowState(windowState);
+		portletURL.setParameter(
+			"struts_action", "/blogs/view_entry");
+		portletURL.setParameter(
+			"entryId", String.valueOf(_entry.getEntryId()));
+
+		return portletURL;
 	}
 
 	@Override

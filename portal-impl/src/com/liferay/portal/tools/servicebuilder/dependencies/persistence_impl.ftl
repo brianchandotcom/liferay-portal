@@ -1513,11 +1513,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
 					}
 
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					if (getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					}
+					else {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					}
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+					if (!getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					}
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
@@ -1657,11 +1664,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						query = new StringBundler(3);
 					}
 
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					if (getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					}
+					else {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					}
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+					if (!getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					}
 
 					if (orderByComparator != null) {
 						String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1916,11 +1930,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						StringBundler query = new StringBundler();
 
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						if (getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						}
+						else {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						}
 
 						<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-						appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+						if (!getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						}
 
 						if (orderByComparator != null) {
 							if (getDB().isSupportsInlineDistinct()) {
@@ -3839,7 +3860,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled()>
-		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
+
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1 = "SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKVarName} FROM ${entity.table} ${entity.alias} WHERE ";
+
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2 = ") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKVarName} = ${entity.table}.${entity.PKVarName}";
 
 		private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKVarName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
 

@@ -30,7 +30,7 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sites", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,9 +66,7 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -75,7 +74,8 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_134_name")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -86,17 +86,61 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_134_name",
-			RuntimeVariables.replace("Virtual Hosting Communit"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Virtual Hosting Community"));
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Custom Site"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_134_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.typeKeys("//input[@id='_134_name']",
+			RuntimeVariables.replace("Virtual Hosting Communit"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Virtual Hosting Community"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

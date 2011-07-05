@@ -30,7 +30,7 @@ public class RestoreFriendlyURLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,21 +41,40 @@ public class RestoreFriendlyURLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sites", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Virtual Hosting Community"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//td[7]/span/ul/li/strong/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -82,17 +101,37 @@ public class RestoreFriendlyURLTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Virtual Host", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Virtual Host",
+			RuntimeVariables.replace("Virtual Host"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_friendlyURL",
+		selenium.type("//input[@name='_134_friendlyURL']",
 			RuntimeVariables.replace("/virtual-hosting-community"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

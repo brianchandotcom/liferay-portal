@@ -31,7 +31,7 @@ public class AssertCannotDeleteApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,21 +42,27 @@ public class AssertCannotDeleteApplyUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=User Groups", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_127_allRowIds", RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Delete']",
+		selenium.clickAt("//input[@name='_125_allRowIds']",
 			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Delete']",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent(
-				"You cannot delete user groups that have users."));
+		assertEquals(RuntimeVariables.replace(
+				"You have entered invalid data. Please try again."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"You cannot delete user groups that have users."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

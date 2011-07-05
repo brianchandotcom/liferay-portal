@@ -6,27 +6,38 @@
 			SELECT
 				COUNT(*) AS COUNT_VALUE
 			FROM
-				JournalArticle
-			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(classNameId = ?) AND
 				(
-					(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(version = ?) [$AND_OR_CONNECTOR$]
-					(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(templateId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(
-						(status = ?) AND
-						(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-					)
-				)
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(companyId = ?) AND
+						(groupId = ?) AND
+						(classNameId = ?) AND
+						(
+							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(version = ?) [$AND_OR_CONNECTOR$]
+							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(templateId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(
+								(status = ?) AND
+								(reviewDate <= ? [$AND_OR_NULL_CHECK$])
+							)
+						)
+					[$GROUP_BY_CLAUSE$]
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">

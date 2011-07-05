@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public interface Query {
 
@@ -44,6 +45,8 @@ public interface Query {
 
 	public Query setBoolean(int pos, boolean value);
 
+	public Query setBoolean(String name, boolean value);
+
 	public Query setCacheable(boolean cacheable);
 
 	public Query setCacheMode(CacheMode cacheMode);
@@ -52,23 +55,39 @@ public interface Query {
 
 	public Query setDouble(int pos, double value);
 
+	public Query setDouble(String name, double value);
+
 	public Query setFirstResult(int firstResult);
 
 	public Query setFloat(int pos, float value);
 
+	public Query setFloat(String name, float value);
+
 	public Query setInteger(int pos, int value);
+
+	public Query setInteger(String name, int value);
 
 	public Query setLong(int pos, long value);
 
-	public Query setMaxResults(int maxResults);
+	public Query setLong(String name, long value);
 
-	public Query setShort(int pos, short value);
+	public Query setMaxResults(int maxResults);
 
 	public Query setSerializable(int pos, Serializable value);
 
+	public Query setSerializable(String name, Serializable value);
+
+	public Query setShort(int pos, short value);
+
+	public Query setShort(String name, short value);
+
 	public Query setString(int pos, String value);
 
+	public Query setString(String name, String value);
+
 	public Query setTimestamp(int pos, Timestamp value);
+
+	public Query setTimestamp(String name, Timestamp value);
 
 	public Object uniqueResult() throws ORMException;
 

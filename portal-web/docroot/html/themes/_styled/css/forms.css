@@ -146,6 +146,7 @@ input, textarea {
 .lfr-actions.lfr-extended {
 	&, ul {
 		@include button-default;
+		padding: 0;
 	}
 
 	&:focus {

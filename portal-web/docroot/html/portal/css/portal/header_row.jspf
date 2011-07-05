@@ -55,8 +55,12 @@
 	margin: 0;
 }
 
-.lfr-header-row .aui-buttonitem-content, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
+.lfr-header-row .aui-buttonitem-content, .lfr-header-row .aui-button-input, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
 	border-color: #5F5F5F;
+}
+
+.lfr-header-row .aui-button-input {
+	padding: 4px;
 }
 
 .lfr-header-row .lfr-search-combobox {

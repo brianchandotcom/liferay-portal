@@ -20,6 +20,7 @@ import java.sql.Connection;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public interface Session {
 
@@ -31,7 +32,13 @@ public interface Session {
 
 	public Query createQuery(String queryString) throws ORMException;
 
+	public Query createQuery(String queryString, boolean strictName)
+		throws ORMException;
+
 	public SQLQuery createSQLQuery(String queryString) throws ORMException;
+
+	public SQLQuery createSQLQuery(String queryString, boolean strictName)
+		throws ORMException;
 
 	public void delete(Object object) throws ORMException;
 

@@ -874,11 +874,18 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -988,11 +995,18 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3075,7 +3089,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "team.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "team.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(team.name IS NULL OR team.name = ?)";
-	private static final String _FILTER_SQL_SELECT_TEAM_WHERE = "SELECT {team.*} FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_WHERE = "SELECT DISTINCT {team.*} FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN Team ON TEMP_TABLE.teamId = Team.teamId";
 	private static final String _FILTER_SQL_COUNT_TEAM_WHERE = "SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "team";
 	private static final String _FILTER_ENTITY_TABLE = "Team";

@@ -106,6 +106,27 @@ public class ClassLoaderSession implements Session {
 		}
 	}
 
+	public Query createQuery(String queryString, boolean strictName)
+		throws ORMException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			return _session.createQuery(queryString, strictName);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
 	public SQLQuery createSQLQuery(String queryString) throws ORMException {
 		Thread currentThread = Thread.currentThread();
 
@@ -117,6 +138,27 @@ public class ClassLoaderSession implements Session {
 			}
 
 			return _session.createSQLQuery(queryString);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	public SQLQuery createSQLQuery(String queryString, boolean strictName)
+		throws ORMException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			return _session.createSQLQuery(queryString, strictName);
 		}
 		finally {
 			if (contextClassLoader != _classLoader) {

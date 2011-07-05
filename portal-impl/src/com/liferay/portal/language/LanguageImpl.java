@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -47,7 +48,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -605,11 +605,7 @@ public class LanguageImpl implements Language {
 			ResourceBundle resourceBundle = portletConfig.getResourceBundle(
 				locale);
 
-			try {
-				value = resourceBundle.getString(key);
-			}
-			catch (MissingResourceException mre) {
-			}
+			value = ResourceBundleUtil.getString(resourceBundle, key);
 
 			// LEP-7393
 
@@ -618,12 +614,7 @@ public class LanguageImpl implements Language {
 			if (((value == null) || (value.equals(defaultValue))) &&
 				(portletName.equals(PortletKeys.PORTLET_CONFIGURATION))) {
 
-				try {
-					value = _getPortletConfigurationValue(
-						pageContext, locale, key);
-				}
-				catch (MissingResourceException mre) {
-				}
+				value = _getPortletConfigurationValue(pageContext, locale, key);
 			}
 
 			if (value != null) {
@@ -688,7 +679,7 @@ public class LanguageImpl implements Language {
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(
 			locale);
 
-		return resourceBundle.getString(key);
+		return ResourceBundleUtil.getString(resourceBundle, key);
 	}
 
 	private void _resetAvailableLocales(long companyId) {

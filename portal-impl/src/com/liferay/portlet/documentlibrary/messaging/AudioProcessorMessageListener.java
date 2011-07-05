@@ -12,25 +12,24 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portlet.documentlibrary.messaging;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 
 /**
- * @author Shuyang Zhou
+ * @author Juan González
+ * @author Sergio González
  */
-public class RSSThreadLocal {
+public class AudioProcessorMessageListener extends BaseMessageListener {
 
-	public static boolean isExportRSS() {
-		return _exportRSS.get();
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		FileEntry fileEntry = (FileEntry)message.getPayload();
+
+		AudioProcessor.generateAudio(fileEntry);
 	}
-
-	public static void setExportRSS(boolean exportRSS) {
-		_exportRSS.set(exportRSS);
-	}
-
-	private static ThreadLocal<Boolean> _exportRSS =
-		new AutoResetThreadLocal<Boolean>(
-			RSSThreadLocal.class + "._exportRSS", false);
 
 }

@@ -935,11 +935,18 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1052,11 +1059,18 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1938,13 +1952,20 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2060,13 +2081,20 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3647,7 +3675,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_1 = "scProductEntry.repoArtifactId IS NULL";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_2 = "lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?))";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?)))";
-	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT {scProductEntry.*} FROM SCProductEntry scProductEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT DISTINCT {scProductEntry.*} FROM SCProductEntry scProductEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {SCProductEntry.*} FROM (SELECT DISTINCT scProductEntry.productEntryId FROM SCProductEntry scProductEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN SCProductEntry ON TEMP_TABLE.productEntryId = SCProductEntry.productEntryId";
 	private static final String _FILTER_SQL_COUNT_SCPRODUCTENTRY_WHERE = "SELECT COUNT(DISTINCT scProductEntry.productEntryId) AS COUNT_VALUE FROM SCProductEntry scProductEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "scProductEntry";
 	private static final String _FILTER_ENTITY_TABLE = "SCProductEntry";

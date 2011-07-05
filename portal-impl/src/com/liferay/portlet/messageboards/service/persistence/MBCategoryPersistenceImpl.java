@@ -1437,11 +1437,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1553,11 +1560,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2592,13 +2606,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2713,13 +2734,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2894,7 +2922,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		StringBundler query = new StringBundler();
 
-		query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		boolean conjunctionable = false;
 
@@ -2926,7 +2959,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			conjunctionable = true;
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3871,7 +3906,11 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		return sql;
 	}
 
-	private static final String _FILTER_SQL_SELECT_MBCATEGORY_WHERE = "SELECT {mbCategory.*} FROM MBCategory mbCategory WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBCATEGORY_WHERE = "SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId";
 	private static final String _FILTER_SQL_COUNT_MBCATEGORY_WHERE = "SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "mbCategory";
 	private static final String _FILTER_ENTITY_TABLE = "MBCategory";

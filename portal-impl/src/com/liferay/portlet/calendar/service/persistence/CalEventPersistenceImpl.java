@@ -1862,11 +1862,18 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1977,11 +1984,18 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3047,7 +3061,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
@@ -3063,7 +3082,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3180,7 +3201,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
@@ -3196,7 +3222,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3372,7 +3400,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		StringBundler query = new StringBundler();
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		boolean conjunctionable = false;
 
@@ -3416,7 +3449,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			conjunctionable = true;
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3900,13 +3935,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_R_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4021,13 +4063,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_R_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4795,7 +4844,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
@@ -4813,7 +4867,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4933,7 +4989,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
@@ -4951,7 +5012,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -5133,7 +5196,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		StringBundler query = new StringBundler();
 
-		query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		boolean conjunctionable = false;
 
@@ -5185,7 +5253,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		conjunctionable = true;
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -6765,7 +6835,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		return sql;
 	}
 
-	private static final String _FILTER_SQL_SELECT_CALEVENT_WHERE = "SELECT {calEvent.*} FROM CalEvent calEvent WHERE ";
+	private static final String _FILTER_SQL_SELECT_CALEVENT_WHERE = "SELECT DISTINCT {calEvent.*} FROM CalEvent calEvent WHERE ";
+	private static final String _FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {CalEvent.*} FROM (SELECT DISTINCT calEvent.eventId FROM CalEvent calEvent WHERE ";
+	private static final String _FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN CalEvent ON TEMP_TABLE.eventId = CalEvent.eventId";
 	private static final String _FILTER_SQL_COUNT_CALEVENT_WHERE = "SELECT COUNT(DISTINCT calEvent.eventId) AS COUNT_VALUE FROM CalEvent calEvent WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "calEvent";
 	private static final String _FILTER_ENTITY_TABLE = "CalEvent";

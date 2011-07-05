@@ -789,7 +789,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 		freeformStyles = sb.toString();
 	}
 
-	if (portletVisibility != null) {
+	if ((portletVisibility != null) && !layout.isTypeControlPanel()) {
 		cssClasses += " lfr-configurator-visibility";
 	}
 

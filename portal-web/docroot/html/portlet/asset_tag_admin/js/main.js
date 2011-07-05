@@ -25,6 +25,8 @@ AUI().add(
 
 		var EVENT_SUBMIT = 'submit';
 
+		var HistoryManager = Liferay.HistoryManager;
+
 		var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
 		var LIFECYCLE_RENDER = 0;
@@ -38,6 +40,10 @@ AUI().add(
 		var MESSAGE_TYPE_SUCCESS = 'success';
 
 		var NODE = 'node';
+
+		var SRC_HASH = HistoryManager.SRC_HASH;
+
+		var SRC_POPSTATE = HistoryManager.SRC_POPSTATE;
 
 		var TPL_PORTLET_MESSAGES = '<div class="aui-helper-hidden lfr-message-response" id="portletMessages" />';
 
@@ -155,11 +161,7 @@ AUI().add(
 
 						instance._createTagSearch();
 
-						var history = new A.HistoryHash();
-
-						history.on('change', instance._onHistoryChange, instance);
-
-						instance._history = history;
+						HistoryManager.on('change', instance._onHistoryChange, instance);
 
 						instance._loadData();
 
@@ -652,12 +654,10 @@ AUI().add(
 
 							var paginatorMap = instance._getTagsPaginatorMap();
 
-							var history = instance._history;
-
 							AObject.each(
 								paginatorMap,
 								function(item, index, collection) {
-									config[index] = Number(history.get(item.historyEntry)) || item.defaultValue;
+									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
 								}
 							);
 
@@ -1059,10 +1059,10 @@ AUI().add(
 
 					_mergeTag: function(fromId, toId, callback) {
 						var serviceParameterTypes = [
-           					'long',
-           					'long',
-           					'boolean'
-           				];
+							'long',
+							'long',
+							'boolean'
+						];
 
 						Liferay.Service.Asset.AssetTag.mergeTags(
 							{
@@ -1126,7 +1126,7 @@ AUI().add(
 					_onHistoryChange: function(event) {
 						var instance = this;
 
-						if (event.src === A.HistoryHash.SRC_HASH) {
+						if ((event.src === SRC_HASH) || (event.src === SRC_POPSTATE)) {
 							var changed = event.changed;
 							var removed = event.removed;
 
@@ -1233,8 +1233,6 @@ AUI().add(
 
 						var paginatorMap = instance._getTagsPaginatorMap();
 
-						var history = instance._history;
-
 						AObject.each(
 							paginatorMap,
 							function(item, index, collection) {
@@ -1246,7 +1244,7 @@ AUI().add(
 									var value = INVALID_VALUE;
 
 									if (newItemValue === item.defaultValue &&
-										Lang.isValue(history.get(historyEntry))) {
+										Lang.isValue(HistoryManager.get(historyEntry))) {
 
 										value = null;
 									}
@@ -1262,7 +1260,7 @@ AUI().add(
 						);
 
 						if (!AObject.isEmpty(historyState)) {
-							history.add(historyState);
+							HistoryManager.add(historyState);
 						}
 
 						instance._reloadData();
@@ -1665,6 +1663,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'history-hash', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

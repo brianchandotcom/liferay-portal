@@ -909,7 +909,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
@@ -923,7 +928,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1037,7 +1044,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
@@ -1051,7 +1063,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1569,11 +1583,18 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1685,11 +1706,18 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2231,13 +2259,20 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2353,13 +2388,20 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2929,7 +2971,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_C_A_CLASSNAMEID_2);
 
@@ -2937,7 +2984,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_A_ALERT_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3059,7 +3108,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_C_A_CLASSNAMEID_2);
 
@@ -3067,7 +3121,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_A_ALERT_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3927,7 +3983,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	private static final String _FINDER_COLUMN_C_C_A_CLASSNAMEID_2 = "announcementsEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_A_CLASSPK_2 = "announcementsEntry.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_A_ALERT_2 = "announcementsEntry.alert = ?";
-	private static final String _FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE = "SELECT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE = "SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId";
 	private static final String _FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE = "SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "announcementsEntry";
 	private static final String _FILTER_ENTITY_TABLE = "AnnouncementsEntry";

@@ -1703,11 +1703,18 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1819,11 +1826,18 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3724,13 +3738,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3845,13 +3866,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4394,13 +4422,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4515,13 +4550,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -5063,13 +5105,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -5184,13 +5233,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -7564,7 +7620,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_S_GROUPID_2);
 
@@ -7572,7 +7633,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_U_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -7691,7 +7754,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_U_S_GROUPID_2);
 
@@ -7699,7 +7767,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_U_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -8269,7 +8339,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
 
@@ -8277,7 +8352,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_T_THREADID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -8396,7 +8473,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
 
@@ -8404,7 +8486,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_T_THREADID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -8974,7 +9058,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
@@ -8982,7 +9071,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -9101,7 +9192,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
@@ -9109,7 +9205,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -10090,7 +10188,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(6);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_S_GROUPID_2);
 
@@ -10100,7 +10203,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_T_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -10224,7 +10329,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_S_GROUPID_2);
 
@@ -10234,7 +10344,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		query.append(_FINDER_COLUMN_G_C_T_S_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -12560,7 +12672,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_G_C_T_S_CATEGORYID_2 = "mbMessage.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_T_S_THREADID_2 = "mbMessage.threadId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_T_S_STATUS_2 = "mbMessage.status = ?";
-	private static final String _FILTER_SQL_SELECT_MBMESSAGE_WHERE = "SELECT {mbMessage.*} FROM MBMessage mbMessage WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBMESSAGE_WHERE = "SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ";
+	private static final String _FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId";
 	private static final String _FILTER_SQL_COUNT_MBMESSAGE_WHERE = "SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "mbMessage";
 	private static final String _FILTER_ENTITY_TABLE = "MBMessage";

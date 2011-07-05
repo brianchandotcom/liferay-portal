@@ -743,89 +743,93 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			activeState: false,
 			boundingBox: buttonRow,
 			children: [
-				{
-
-					<portlet:renderURL var="editURL">
-						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:renderURL>
-
-					handler: function(event) {
-						location.href = '<%= editURL.toString() %>';
-					},
-					icon: 'edit',
-					label: '<liferay-ui:message key="edit" />'
-				},
-				{
-
-					<portlet:renderURL var="moveURL">
-						<portlet:param name="struts_action" value="/document_library/move_file_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:renderURL>
-
-					handler: function(event) {
-						location.href = '<%= moveURL.toString() %>';
-					},
-					icon: 'move',
-					label: '<liferay-ui:message key="move" />'
-				},
-
-				<c:if test="<%= !fileEntry.isCheckedOut() %>">
-
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 					{
 
+						<portlet:renderURL var="editURL">
+							<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="backURL" value="<%= currentURL %>" />
+							<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+						</portlet:renderURL>
+
 						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-							submitForm(document.<portlet:namespace />fm);
+							location.href = '<%= editURL.toString() %>';
 						},
-						icon: 'lock',
-						label: '<liferay-ui:message key="checkout" />'
+						icon: 'edit',
+						label: '<liferay-ui:message key="edit" />'
+					},
+					{
+
+						<portlet:renderURL var="moveURL">
+							<portlet:param name="struts_action" value="/document_library/move_file_entry" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+						</portlet:renderURL>
+
+						handler: function(event) {
+							location.href = '<%= moveURL.toString() %>';
+						},
+						icon: 'move',
+						label: '<liferay-ui:message key="move" />'
 					},
 
+					<c:if test="<%= !fileEntry.isCheckedOut() %>">
+
+						{
+
+							handler: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
+								submitForm(document.<portlet:namespace />fm);
+							},
+							icon: 'lock',
+							label: '<liferay-ui:message key="checkout" />'
+						},
+
+					</c:if>
+
+					<c:if test="<%= fileEntry.isCheckedOut() %>">
+
+						{
+
+							handler: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
+								submitForm(document.<portlet:namespace />fm);
+							},
+							icon: 'undo',
+							label: '<liferay-ui:message key="cancel-checkout" />'
+						},
+
+						{
+
+							handler: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
+								submitForm(document.<portlet:namespace />fm);
+							},
+							icon: 'unlock',
+							label: '<liferay-ui:message key="checkin" />'
+						},
+
+					</c:if>
 				</c:if>
 
-				<c:if test="<%= fileEntry.isCheckedOut() %>">
-
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
 					{
 
-						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
-							submitForm(document.<portlet:namespace />fm);
-						},
-						icon: 'undo',
-						label: '<liferay-ui:message key="cancel-checkout" />'
-					},
-
-					{
+						<liferay-security:permissionsURL
+							modelResource="<%= DLFileEntryConstants.getClassName() %>"
+							modelResourceDescription="<%= fileEntry.getTitle() %>"
+							resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+							var="permissionsURL"
+						/>
 
 						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
-							submitForm(document.<portlet:namespace />fm);
+							location.href = '<%= permissionsURL.toString() %>';
 						},
-						icon: 'unlock',
-						label: '<liferay-ui:message key="checkin" />'
-					},
-
+						icon: 'permissions',
+						label: '<liferay-ui:message key="permissions" />'
+					}
 				</c:if>
-
-				{
-
-					<liferay-security:permissionsURL
-						modelResource="<%= DLFileEntryConstants.getClassName() %>"
-						modelResourceDescription="<%= fileEntry.getTitle() %>"
-						resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
-						var="permissionsURL"
-					/>
-
-					handler: function(event) {
-						location.href = '<%= permissionsURL.toString() %>';
-					},
-					icon: 'permissions',
-					label: '<liferay-ui:message key="permissions" />'
-				}
 			]
 		}
 	).render();

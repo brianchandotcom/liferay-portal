@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -75,7 +76,17 @@ public class LiferayResourceBundle extends ResourceBundle {
 		String value = _map.get(key);
 
 		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
-			value = ResourceBundleUtil.NULL_VALUE;
+			if (parent != null) {
+				try {
+					value = parent.getString(key);
+				}
+				catch (MissingResourceException mre) {
+				}
+			}
+
+			if (value == null) {
+				value = ResourceBundleUtil.NULL_VALUE;
+			}
 		}
 
 		return value;

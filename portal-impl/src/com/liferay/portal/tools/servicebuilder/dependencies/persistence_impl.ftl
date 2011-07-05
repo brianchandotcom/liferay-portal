@@ -107,6 +107,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			public static final FinderPath FINDER_PATH_FIND_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_LIST,
 				"findBy${finder.name}",
 				new String[] {
@@ -120,6 +121,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			public static final FinderPath FINDER_PATH_FETCH_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_ENTITY,
 				"fetchBy${finder.name}",
 				new String[] {
@@ -136,6 +138,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public static final FinderPath FINDER_PATH_COUNT_BY_${finder.name?upper_case} = new FinderPath(
 			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			Long.class,
 			FINDER_CLASS_NAME_LIST,
 			"countBy${finder.name}",
 			new String[] {
@@ -152,6 +155,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+		${entity.name}Impl.class,
 		FINDER_CLASS_NAME_LIST,
 		"findAll",
 		new String[0]);
@@ -159,6 +163,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+		Long.class,
 		FINDER_CLASS_NAME_LIST,
 		"countAll",
 		new String[0]);
@@ -2790,13 +2795,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 
@@ -2886,13 +2889,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					Long.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 
@@ -2957,13 +2958,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					Boolean.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 

@@ -14,11 +14,22 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.nio.ByteBuffer;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Connor McKay
  */
 public class DigesterUtil {
+
+	public static String digest(ByteBuffer buffer) {
+		return getDigester().digest(buffer);
+	}
+
+	public static String digest(String algorithm, ByteBuffer buffer) {
+		return getDigester().digest(algorithm, buffer);
+	}
 
 	public static String digest(String text) {
 		return getDigester().digest(text);
@@ -26,6 +37,14 @@ public class DigesterUtil {
 
 	public static String digest(String algorithm, String... text) {
 		return getDigester().digest(algorithm, text);
+	}
+
+	public static String digestBase64(ByteBuffer buffer) {
+		return getDigester().digestBase64(buffer);
+	}
+
+	public static String digestBase64(String algorithm, ByteBuffer buffer) {
+		return getDigester().digestBase64(algorithm, buffer);
 	}
 
 	public static String digestBase64(String text) {
@@ -36,12 +55,28 @@ public class DigesterUtil {
 		return getDigester().digestBase64(algorithm, text);
 	}
 
+	public static String digestHex(ByteBuffer buffer) {
+		return getDigester().digestHex(buffer);
+	}
+
+	public static String digestHex(String algorithm, ByteBuffer buffer) {
+		return getDigester().digestHex(algorithm, buffer);
+	}
+
 	public static String digestHex(String text) {
 		return getDigester().digestHex(text);
 	}
 
 	public static String digestHex(String algorithm, String... text) {
 		return getDigester().digestHex(algorithm, text);
+	}
+
+	public static byte[] digestRaw(ByteBuffer buffer) {
+		return getDigester().digestRaw(buffer);
+	}
+
+	public static byte[] digestRaw(String algorithm, ByteBuffer buffer) {
+		return getDigester().digestRaw(algorithm, buffer);
 	}
 
 	public static byte[] digestRaw(String text) {

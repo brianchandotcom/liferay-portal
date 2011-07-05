@@ -66,7 +66,7 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			Company company = getCompany(recipient);
+			Company company = getCompany(messageId);
 			long categoryId = getCategoryId(messageId);
 
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
@@ -108,9 +108,9 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Deliver message from " + from + " to " + recipient);
 			}
 
-			Company company = getCompany(recipient);
-
 			String messageId = getMessageId(recipient, message);
+
+			Company company = getCompany(messageId);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Message id " + messageId);
@@ -231,16 +231,16 @@ public class MessageListenerImpl implements MessageListener {
 		return GetterUtil.getLong(parts[0]);
 	}
 
-	protected Company getCompany(String recipient) throws Exception {
+	protected Company getCompany(String messageId) throws Exception {
 		int pos =
-			recipient.indexOf(CharPool.AT) +
+			messageId.indexOf(CharPool.AT) +
 				PropsValues.POP_SERVER_SUBDOMAIN.length() + 1;
 
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() > 0) {
 			pos++;
 		}
 
-		String mx = recipient.substring(pos);
+		String mx = messageId.substring(pos, messageId.length() - 1);
 
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
 	}

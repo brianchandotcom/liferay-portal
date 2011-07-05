@@ -14,80 +14,63 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
-
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
 public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
-	extends ChainableMethodAdvice implements BeanFactoryAware {
+	extends ChainableMethodAdvice {
+
+	public static void registerAnnotationType(
+		Class<? extends Annotation> annotationType) {
+
+		_annotationTypes.add(annotationType);
+	}
 
 	public AnnotationChainableMethodAdvice() {
 		_nullAnnotation = getNullAnnotation();
+
 		_annotationType = _nullAnnotation.annotationType();
+
+		_annotationTypes.add(_annotationType);
 	}
 
 	public abstract T getNullAnnotation();
 
-	public void setBeanFactory(BeanFactory beanFactory) {
-		if (beanFactory == null) {
-			_beanFactoryAnnotations.remove(_beanFactory);
+	protected T findAnnotation(MethodInvocation methodInvocation) {
+		Annotation annotation = ServiceMethodAnnotationCache.get(
+			methodInvocation, _annotationType, _nullAnnotation);
+
+		if (annotation != null) {
+			return (T)annotation;
 		}
-		else {
-			_beanFactory = beanFactory;
-
-			_beanFactoryAnnotations.putIfAbsent(
-				_beanFactory,
-				new ConcurrentHashMap<MethodTargetClassKey, Annotation[]>());
-		}
-	}
-
-	protected MethodTargetClassKey buildMethodTargetClassKey(
-		MethodInvocation methodInvocation) {
-
-		Method method = methodInvocation.getMethod();
-
-		Class<?> targetClass = null;
 
 		Object thisObject = methodInvocation.getThis();
 
-		if (thisObject != null) {
-			targetClass = thisObject.getClass();
+		Class<?> targetClass = thisObject.getClass();
+
+		Method method = methodInvocation.getMethod();
+
+		Method targetMethod = null;
+
+		try {
+			targetMethod = targetClass.getDeclaredMethod(
+				method.getName(), method.getParameterTypes());
+		}
+		catch (Throwable t) {
 		}
 
-		return new MethodTargetClassKey(method, targetClass);
-	}
-
-	protected T findAnnotation(MethodTargetClassKey methodTargetClassKey) {
-		Map<MethodTargetClassKey, Annotation[]> annotationsMap =
-			_beanFactoryAnnotations.get(_beanFactory);
-
-		if (annotationsMap == null) {
-			return _nullAnnotation;
-		}
-
-		Annotation[] annotations = annotationsMap.get(methodTargetClassKey);
-
-		if (annotations != null) {
-			return getAnnotation(annotations);
-		}
-
-		Method method = methodTargetClassKey.getMethod();
-
-		Method targetMethod = methodTargetClassKey.getTargetMethod();
+		Annotation[] annotations = null;
 
 		if (targetMethod != null) {
 			annotations = targetMethod.getAnnotations();
@@ -97,34 +80,37 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			annotations = method.getAnnotations();
 		}
 
-		if ((annotations == null) || (annotations.length == 0)) {
-			annotations = _emptyAnnotations;
+		if ((annotations != null) && (annotations.length > 0)) {
+			List<Annotation> filteredAnnotations = new ArrayList<Annotation>(
+							annotations.length);
+
+			for (Annotation curAnnotation : annotations) {
+				if (_annotationTypes.contains(
+						curAnnotation.annotationType())) {
+
+					filteredAnnotations.add(curAnnotation);
+				}
+			}
+
+			annotations = filteredAnnotations.toArray(
+				new Annotation[filteredAnnotations.size()]);
 		}
 
-		annotationsMap.put(methodTargetClassKey, annotations);
+		ServiceMethodAnnotationCache.put(methodInvocation, annotations);
 
-		return getAnnotation(annotations);
-	}
-
-	protected T getAnnotation(Annotation[] annotations) {
-		for (Annotation annotation : annotations) {
-			if (annotation.annotationType() == _annotationType) {
-				return (T)annotation;
+		for (Annotation curAnnotation : annotations) {
+			if (curAnnotation.annotationType() == _annotationType) {
+				return (T)curAnnotation;
 			}
 		}
 
 		return _nullAnnotation;
 	}
 
-	private static ConcurrentMap
-		<BeanFactory, Map<MethodTargetClassKey, Annotation[]>>
-			_beanFactoryAnnotations =
-				new ConcurrentHashMap
-					<BeanFactory, Map<MethodTargetClassKey, Annotation[]>>();
-	private static Annotation[] _emptyAnnotations = new Annotation[0];
+	private static Set<Class<? extends Annotation>> _annotationTypes =
+		new HashSet<Class<? extends Annotation>>();
 
 	private Class<? extends Annotation> _annotationType;
-	private BeanFactory _beanFactory;
 	private T _nullAnnotation;
 
 }

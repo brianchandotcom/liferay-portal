@@ -40,10 +40,10 @@ public class TransactionInterceptor
 
 		Class<?> targetClass = null;
 
-		Object thisObject = methodInvocation.getThis();
+		Object targetBean = methodInvocation.getThis();
 
-		if (thisObject != null) {
-			targetClass = thisObject.getClass();
+		if (targetBean != null) {
+			targetClass = targetBean.getClass();
 		}
 
 		TransactionAttributeSource transactionAttributeSource =

@@ -883,6 +883,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 * @param companyId the company ID
 	 * @param pluginId the plugin ID
 	 * @param pluginType the plugin type
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

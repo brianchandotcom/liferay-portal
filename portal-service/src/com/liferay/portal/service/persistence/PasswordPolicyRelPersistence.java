@@ -239,6 +239,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -280,6 +281,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @param passwordPolicyId the password policy ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	* @throws SystemException if a system exception occurred
 	*/

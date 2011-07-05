@@ -239,11 +239,17 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
 
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry);
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry);
 
-						if (supportedVideo) {
-							previewFileCount = 0;
+						if (supportedAudio) {
+							if (AudioProcessor.hasAudio(fileEntry)) {
+								previewFileCount = 1;
+							}
 
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + fileEntry.getTitle() + "?version=" + fileEntry.getVersion() + "&audioPreview=1";
+						}
+						else if (supportedVideo) {
 							if (VideoProcessor.hasVideo(fileEntry)) {
 								previewFileCount = 1;
 							}
@@ -265,7 +271,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !supportedVideo %>">
+									<c:when test ="<%= !supportedAudio && !supportedVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -324,8 +330,13 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 											so.addParam('allowFullScreen', 'true');
 
-											so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-											so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
+											if (<%= supportedAudio %>) {
+												so.addVariable('<%= AudioProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
+											}
+											else if (<%= supportedVideo %>) {
+												so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
+												so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
+											}
 
 											so.write('<portlet:namespace />previewFileContent');
 										</aui:script>
@@ -364,7 +375,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 			<div class="body-row asset-details">
 				<div class="asset-details-content">
-					<h3 class="version <%= isCheckedOut ? "document-locked" : StringPool.BLANK  %>">
+					<h3 class="version <%= isCheckedOut ? "document-locked" : StringPool.BLANK %>">
 						<liferay-ui:message key="version" /> <%= fileEntry.getVersion() %>
 					</h3>
 
@@ -460,39 +471,10 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
 
-					<%
-					if (fileEntryTypeId > 0) {
-						try {
-							DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
-
-							List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-							for (DDMStructure ddmStructure : ddmStructures) {
-								Fields fields = null;
-
-								try {
-									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-									fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
-								}
-								catch (Exception e) {
-								}
-					%>
-
-								<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey())) %>
-
-					<%
-							}
-						}
-						catch (Exception e) {
-						}
-					}
-					%>
-
 					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 						<liferay-ui:custom-attribute-list
 							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= (fileVersion != null) ? fileVersion.getFileVersionId() : 0 %>"
+							classPK="<%= fileVersionId %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
@@ -504,8 +486,73 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				%>
 
 				<div class="lfr-asset-panels">
-					<liferay-ui:panel-container extended="<%= false %>" persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" extended="<%= true %>" persistState="<%= true %>" title="version-history">
+					<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+
+						<%
+						if (fileEntryTypeId > 0) {
+							try {
+								DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+
+								List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+
+								for (DDMStructure ddmStructure : ddmStructures) {
+									Fields fields = null;
+
+									try {
+										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+										fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+									}
+									catch (Exception e) {
+									}
+						%>
+
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
+
+										<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+
+									</liferay-ui:panel>
+
+						<%
+								}
+							}
+							catch (Exception e) {
+							}
+						}
+
+						try {
+							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class));
+
+							for (DDMStructure ddmStructure : ddmStructures) {
+								Fields fields = null;
+
+								try {
+									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+									fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+								}
+								catch (Exception e) {
+								}
+
+								if (fields != null) {
+									String name = "metadata." + ddmStructure.getName(LocaleUtil.getDefault(), true);
+						%>
+
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" persistState="<%= true %>" title="<%= name %>">
+
+										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+
+									</liferay-ui:panel>
+
+						<%
+								}
+							}
+						}
+						catch (Exception e) {
+						}
+						%>
+
+						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" persistState="<%= true %>" title="version-history">
 
 							<%
 							boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(extension);

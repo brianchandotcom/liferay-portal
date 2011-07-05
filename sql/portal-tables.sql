@@ -326,7 +326,8 @@ create table Company (
 	homeURL STRING null,
 	logoId LONG,
 	system BOOLEAN,
-	maxUsers INTEGER
+	maxUsers INTEGER,
+	active_ BOOLEAN
 );
 
 create table Contact_ (

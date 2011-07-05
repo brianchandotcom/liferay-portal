@@ -98,6 +98,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 
 					if (node.layoutRevisionId) {
 						newNode.label = [newNode.label, " [", node.layoutSetBranchName, " ", node.layoutRevisionId, "]"].join('');
+
+						if (node.incomplete) {
+							newNode.label = [newNode.label, "incomplete"].join('');
+						}
 					}
 
 					if (!<%= selectableTree %>) {

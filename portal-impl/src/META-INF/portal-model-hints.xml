@@ -107,6 +107,7 @@
 		<field name="logoId" type="long" />
 		<field name="system" type="boolean" />
 		<field name="maxUsers" type="int" />
+		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.Contact">
 		<default-hints>

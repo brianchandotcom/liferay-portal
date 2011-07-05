@@ -67,9 +67,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 			{ "homeURL", Types.VARCHAR },
 			{ "logoId", Types.BIGINT },
 			{ "system", Types.BOOLEAN },
-			{ "maxUsers", Types.INTEGER }
+			{ "maxUsers", Types.INTEGER },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Company (companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(75) null,homeURL STRING null,logoId LONG,system BOOLEAN,maxUsers INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Company (companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(75) null,homeURL STRING null,logoId LONG,system BOOLEAN,maxUsers INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Company";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -99,6 +100,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		model.setLogoId(soapModel.getLogoId());
 		model.setSystem(soapModel.getSystem());
 		model.setMaxUsers(soapModel.getMaxUsers());
+		model.setActive(soapModel.getActive());
 
 		return model;
 	}
@@ -280,6 +282,19 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_maxUsers = maxUsers;
 	}
 
+	@JSON
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	@Override
 	public Company toEscapedModel() {
 		if (isEscapedModel()) {
@@ -324,6 +339,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyImpl.setLogoId(getLogoId());
 		companyImpl.setSystem(getSystem());
 		companyImpl.setMaxUsers(getMaxUsers());
+		companyImpl.setActive(getActive());
 
 		companyImpl.resetOriginalValues();
 
@@ -389,7 +405,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{companyId=");
 		sb.append(getCompanyId());
@@ -409,13 +425,15 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		sb.append(getSystem());
 		sb.append(", maxUsers=");
 		sb.append(getMaxUsers());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Company");
@@ -457,6 +475,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 			"<column><column-name>maxUsers</column-name><column-value><![CDATA[");
 		sb.append(getMaxUsers());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -480,6 +502,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private boolean _setOriginalLogoId;
 	private boolean _system;
 	private int _maxUsers;
+	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
 	private Company _escapedModelProxy;
 }

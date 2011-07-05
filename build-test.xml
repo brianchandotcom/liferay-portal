@@ -2578,31 +2578,33 @@ Please set "selenium.executable.zip" in test.properties to point to the Selenium
 executable ZIP file.
 				</fail>
 			</then>
-			<else>
-				<if>
-					<or>
-						<not>
-							<available file="portal-web/selenium" />
-						</not>
-						<not>
-							<uptodate
-								srcfile="${selenium.executable.zip}"
-								targetfile="portal-web/selenium"
-							/>
-						</not>
-					</or>
-					<then>
-						<delete dir="portal-web/selenium" />
-						<mkdir dir="portal-web/selenium" />
+		</if>
 
-						<unzip src="${selenium.executable.zip}" dest="portal-web/selenium" />
+		<if>
+			<or>
+				<not>
+					<available file="${selenium.nanny.executable}" />
+				</not>
+				<uptodate
+					srcfile="${selenium.nanny.executable}"
+					targetfile="${selenium.executable.zip}"
+				/>
+			</or>
+			<then>
+				<delete>
+					<fileset
+						dir="${project.dir}/tools/selenium"
+						includes="*.exe"
+					/>
+				</delete>
 
-						<touch>
-							<fileset dir="portal-web/selenium" />
-						</touch>
-					</then>
-				</if>
-			</else>
+				<unzip
+					dest="${project.dir}/tools/selenium"
+					src="${selenium.executable.zip}"
+				/>
+
+				<touch file="${selenium.nanny.executable}" />
+			</then>
 		</if>
 
 		<if>
@@ -2646,7 +2648,7 @@ executable ZIP file.
 				<replace
 					file="portal-web/test/test-portal-web.properties"
 					token="#selenium.executable.dir="
-					value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+					value="selenium.executable.dir=${project.dir}/tools/selenium"
 				/>
 				<replace
 					file="portal-web/test/test-portal-web.properties"
@@ -2668,7 +2670,7 @@ executable ZIP file.
 					<replace
 						file="portal-web/test/test-portal-web.properties"
 						token="#selenium.executable.dir="
-						value="selenium.executable.dir=L:\\portal\\build\\portal-web\\selenium\\"
+						value="selenium.executable.dir=${project.dir}/tools/selenium"
 					/>
 					<replace
 						file="portal-web/test/test-portal-web.properties"

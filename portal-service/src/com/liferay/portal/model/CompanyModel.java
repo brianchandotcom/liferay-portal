@@ -192,6 +192,27 @@ public interface CompanyModel extends BaseModel<Company> {
 	 */
 	public void setMaxUsers(int maxUsers);
 
+	/**
+	 * Returns the active of this company.
+	 *
+	 * @return the active of this company
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this company is active.
+	 *
+	 * @return <code>true</code> if this company is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this company is active.
+	 *
+	 * @param active the active of this company
+	 */
+	public void setActive(boolean active);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

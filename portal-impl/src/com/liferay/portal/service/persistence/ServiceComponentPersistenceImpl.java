@@ -890,6 +890,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching service component, or <code>null</code> if a matching service component could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -44,6 +44,7 @@ import org.apache.chemistry.opencmis.client.api.ObjectId;
 import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
+import org.apache.chemistry.opencmis.client.runtime.ObjectIdImpl;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
@@ -101,6 +102,36 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void checkRoot(long companyId) {
+	}
+
+	@Override
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder versioningFolder = getVersioningFolder(
+			companyId, repositoryId, fileName, false);
+
+		ObjectId versioningFolderObjectId = new ObjectIdImpl(
+			versioningFolder.getId());
+
+		Map<String, Object> documentProperties = new HashMap<String, Object>();
+
+		String title = String.valueOf(toVersionNumber);
+
+		documentProperties.put(PropertyIds.NAME, title);
+
+		documentProperties.put(
+			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
+
+		Document document = getVersionedDocument(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		document.copy(
+			versioningFolderObjectId, documentProperties, null,
+			document.getPolicies(), null, null, null);
 	}
 
 	@Override
@@ -342,6 +373,34 @@ public class CMISStore extends BaseStore {
 		}
 
 		createDocument(versioningFolder, title, is, serviceContext);
+	}
+
+	@Override
+	public void updateFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder versioningFolder = getVersioningFolder(
+			companyId, repositoryId, fileName, false);
+
+		String title = String.valueOf(toVersionNumber);
+
+		Document document = getDocument(versioningFolder, title);
+
+		if (document != null) {
+			throw new DuplicateFileException();
+		}
+
+		document = getVersionedDocument(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		Map<String, Object> documentProperties = new HashMap<String, Object>();
+
+		documentProperties.put(PropertyIds.NAME, title);
+
+		document.updateProperties(documentProperties);
 	}
 
 	protected Document createDocument(

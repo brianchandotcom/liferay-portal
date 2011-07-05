@@ -255,6 +255,7 @@ public class VideoProcessor extends DLProcessor {
 
 		sb.append(_PREVIEW_PATH);
 		sb.append(id);
+		sb.append("_tmp");
 		sb.append(StringPool.PERIOD);
 		sb.append(targetExtension);
 
@@ -349,8 +350,8 @@ public class VideoProcessor extends DLProcessor {
 	private static VideoProcessor _instance = new VideoProcessor();
 
 	private static List<String> _videoMimeTypes = Arrays.asList(
-		"video/quicktime", "video/mpeg", "video/x-msvideo", "video/mp4",
-		"video/x-ms-wmv", "video/avi");
+		"video/avi", "video/mp4", "video/mpeg", "video/quicktime",
+		"video/x-flv", "video/x-ms-wmv", "video/x-msvideo");
 
 	private List<Long> _fileEntries = new Vector<Long>();
 

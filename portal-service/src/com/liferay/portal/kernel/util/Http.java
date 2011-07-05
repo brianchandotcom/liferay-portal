@@ -18,7 +18,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -236,6 +238,47 @@ public interface Http {
 
 	}
 
+	public class FilePart {
+
+		public FilePart(
+			String name, String fileName, byte[] value, String contentType,
+			String charSet) {
+
+			_name = name;
+			_fileName = fileName;
+			_value = value;
+			_contentType = contentType;
+			_charSet = charSet;
+		}
+
+		public String getCharSet() {
+			return _charSet;
+		}
+
+		public String getContentType() {
+			return _contentType;
+		}
+
+		public String getFileName() {
+			return _fileName;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public byte[] getValue() {
+			return _value;
+		}
+
+		private String _charSet;
+		private String _contentType;
+		private String _fileName;
+		private String _name;
+		private byte[] _value;
+
+	}
+
 	public enum Method {
 
 		DELETE, GET, HEAD, POST, PUT
@@ -243,6 +286,26 @@ public interface Http {
 	}
 
 	public class Options {
+
+		public void addFilePart(
+			String name, String fileName, byte[] value, String contentType,
+			String charSet) {
+
+			if (_body != null) {
+				throw new IllegalArgumentException (
+					"Part file cannot be added because a body has already " +
+						"been set");
+			}
+
+			if (_fileParts == null) {
+				_fileParts = new ArrayList<FilePart>();
+			}
+
+			FilePart filePart = new FilePart(
+				name, fileName, value, contentType, charSet);
+
+			_fileParts.add(filePart);
+		}
 
 		public void addHeader(String name, String value) {
 			if (_headers == null) {
@@ -275,6 +338,10 @@ public interface Http {
 
 		public Cookie[] getCookies() {
 			return _cookies;
+		}
+
+		public List<FilePart> getFileParts() {
+			return _fileParts;
 		}
 
 		public Map<String, String> getHeaders() {
@@ -388,6 +455,10 @@ public interface Http {
 			}
 		}
 
+		public void setFileParts(List<FilePart> fileParts) {
+			_fileParts = fileParts;
+		}
+
 		public void setFollowRedirects(boolean followRedirects) {
 			_followRedirects = followRedirects;
 		}
@@ -438,6 +509,7 @@ public interface Http {
 		private Auth _auth;
 		private Body _body;
 		private Cookie[] _cookies;
+		private List<FilePart> _fileParts;
 		private boolean _followRedirects = true;
 		private Map<String, String> _headers;
 		private String _location;

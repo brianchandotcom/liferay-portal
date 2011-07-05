@@ -72,8 +72,12 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = false;
-	public static final boolean FINDER_CACHE_ENABLED = false;
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.entity.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+			true);
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+			true);
 
 	public Class<?> getModelClass() {
 		return DLContent.class;

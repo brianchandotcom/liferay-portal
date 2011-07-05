@@ -209,6 +209,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), this) == null) {
 				cacheResult(${entity.varName});
 			}
+
+			<#if entity.hasLazyBlobColumn()>
+				else {
+					${entity.varName}.resetOriginalValues();
+				}
+			</#if>
 		}
 	}
 
@@ -550,6 +556,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
+
+		<#if entity.hasLazyBlobColumn()>
+			${entity.varName}.resetOriginalValues();
+		</#if>
 
 		<#list uniqueFinderList as finder>
 			<#assign finderColsList = finder.getColumns()>
@@ -1507,7 +1517,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_COLUMN_PK);
+					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
@@ -1529,7 +1539,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						}
 					</#if>
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_COLUMN_PK<#if finder.hasColumn("groupId")>, groupId</#if>);
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
 					Session session = null;
 
@@ -1651,7 +1661,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_COLUMN_PK);
+					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 					if (orderByComparator != null) {
 						String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1730,7 +1740,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						}
 					</#if>
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_COLUMN_PK<#if finder.hasColumn("groupId")>, groupId</#if>);
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
 					SQLQuery q = session.createSQLQuery(sql);
 
@@ -1910,7 +1920,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-						appendGroupByComparator(query, _FILTER_COLUMN_PK);
+						appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 						if (orderByComparator != null) {
 							if (getDB().isSupportsInlineDistinct()) {
@@ -1932,7 +1942,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							}
 						</#if>
 
-						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_COLUMN_PK
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
 						<#if finder.hasColumn("groupId")>,
 							<#if finder.getColumn("groupId").hasArrayableOperator()>
@@ -2064,6 +2074,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#list finderColsList as finderCol>
 			 * @param ${finderCol.name} the ${finderCol.humanName}
 			</#list>
+			 * @param retrieveFromCache whether to use the finder cache
 			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
 			 * @throws SystemException if a system exception occurred
 			 */
@@ -2557,7 +2568,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#include "persistence_impl_finder_cols.ftl">
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_COLUMN_PK<#if finder.hasColumn("groupId")>, groupId</#if>);
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
 				Session session = null;
 
@@ -2645,7 +2656,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_COLUMN_PK
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
 					<#if finder.hasColumn("groupId")>,
 						<#if finder.getColumn("groupId").hasArrayableOperator()>
@@ -3832,11 +3843,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKVarName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
 
-		private static final String _FILTER_COLUMN_PK = "${entity.alias}.${entity.filterPKColumn.name}";
-
 		private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
 
 		private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
+
+		private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "${entity.alias}.${entity.PKVarName}";
+
+		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKColumn.name}";
 	</#if>
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "${entity.alias}.";

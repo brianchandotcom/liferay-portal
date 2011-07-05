@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -105,13 +105,13 @@ public class AssetUtil {
 			HttpServletRequest request, String title, String url)
 		throws Exception {
 
-		List<KeyValuePair> portletBreadcrumbs =
-			(List<KeyValuePair>)request.getAttribute(
+		List<BreadcrumbEntry> breadcrumbEntries =
+			(List<BreadcrumbEntry>)request.getAttribute(
 				WebKeys.PORTLET_BREADCRUMBS);
 
-		if (portletBreadcrumbs != null) {
-			for (KeyValuePair portletBreadcrumb : portletBreadcrumbs) {
-				if (title.equals(portletBreadcrumb.getKey())) {
+		if (breadcrumbEntries != null) {
+			for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
+				if (title.equals(breadcrumbEntry.getTitle())) {
 					return;
 				}
 			}

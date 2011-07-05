@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Swallowable;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.annotation.Annotation;
@@ -44,27 +43,24 @@ public class ClusterableAdvice
 			return;
 		}
 
-		MethodTargetClassKey methodTargetClassKey = buildMethodTargetClassKey(
-			methodInvocation);
-
-		Clusterable clusterable = findAnnotation(methodTargetClassKey);
+		Clusterable clusterable = findAnnotation(methodInvocation);
 
 		if (clusterable == _nullClusterable) {
 			return;
 		}
 
-		Object targetBean = methodInvocation.getThis();
+		Object thisObject = methodInvocation.getThis();
 
-		if (!(targetBean instanceof IdentifiableBean)) {
+		if (!(thisObject instanceof IdentifiableBean)) {
 			_log.error(
-				"Not clustering calls for " + targetBean.getClass().getName() +
+				"Not clustering calls for " + thisObject.getClass().getName() +
 					" because it does not implement " +
 						IdentifiableBean.class.getName());
 
 			return;
 		}
 
-		Method method = methodTargetClassKey.getMethod();
+		Method method = methodInvocation.getMethod();
 
 		MethodHandler methodHandler = new MethodHandler(
 			method, methodInvocation.getArguments());
@@ -72,7 +68,7 @@ public class ClusterableAdvice
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
-		IdentifiableBean identifiableBean = (IdentifiableBean)targetBean;
+		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
 
 		clusterRequest.setBeanIdentifier(identifiableBean.getBeanIdentifier());
 

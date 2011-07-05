@@ -366,6 +366,7 @@ public class ExpandoTableUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	* @throws SystemException if a system exception occurred
 	*/

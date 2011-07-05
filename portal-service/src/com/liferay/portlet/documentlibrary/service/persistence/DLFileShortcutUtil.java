@@ -353,6 +353,7 @@ public class DLFileShortcutUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/

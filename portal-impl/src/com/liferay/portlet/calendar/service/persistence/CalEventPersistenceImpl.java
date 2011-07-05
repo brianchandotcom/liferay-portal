@@ -1023,6 +1023,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching cal event, or <code>null</code> if a matching cal event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1865,7 +1866,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1888,7 +1889,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1979,7 +1981,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2057,7 +2059,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3060,7 +3063,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3083,7 +3086,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3192,7 +3196,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3270,7 +3274,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3411,7 +3416,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			conjunctionable = true;
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3434,7 +3439,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3900,7 +3906,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3923,7 +3929,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -4020,7 +4027,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4098,7 +4105,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -4805,7 +4813,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4828,7 +4836,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -4942,7 +4951,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -5020,7 +5029,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -5175,7 +5185,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		conjunctionable = true;
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -5198,7 +5208,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -5719,7 +5730,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6002,7 +6014,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6095,7 +6108,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6209,7 +6223,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		query.append(_FINDER_COLUMN_G_R_REPEATING_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6463,7 +6478,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6567,7 +6583,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		conjunctionable = true;
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				CalEvent.class.getName(), _FILTER_COLUMN_PK, groupId);
+				CalEvent.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -6750,9 +6767,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	private static final String _FILTER_SQL_SELECT_CALEVENT_WHERE = "SELECT {calEvent.*} FROM CalEvent calEvent WHERE ";
 	private static final String _FILTER_SQL_COUNT_CALEVENT_WHERE = "SELECT COUNT(DISTINCT calEvent.eventId) AS COUNT_VALUE FROM CalEvent calEvent WHERE ";
-	private static final String _FILTER_COLUMN_PK = "calEvent.eventId";
 	private static final String _FILTER_ENTITY_ALIAS = "calEvent";
 	private static final String _FILTER_ENTITY_TABLE = "CalEvent";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "calEvent.eventId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "calEvent.eventId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "calEvent.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "CalEvent.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CalEvent exists with the primary key ";

@@ -915,6 +915,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1419,7 +1420,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1442,7 +1443,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				PollsQuestion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				PollsQuestion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1535,7 +1537,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1613,7 +1615,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				PollsQuestion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				PollsQuestion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2015,7 +2018,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				PollsQuestion.class.getName(), _FILTER_COLUMN_PK, groupId);
+				PollsQuestion.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2138,9 +2142,10 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "pollsQuestion.groupId = ?";
 	private static final String _FILTER_SQL_SELECT_POLLSQUESTION_WHERE = "SELECT {pollsQuestion.*} FROM PollsQuestion pollsQuestion WHERE ";
 	private static final String _FILTER_SQL_COUNT_POLLSQUESTION_WHERE = "SELECT COUNT(DISTINCT pollsQuestion.questionId) AS COUNT_VALUE FROM PollsQuestion pollsQuestion WHERE ";
-	private static final String _FILTER_COLUMN_PK = "pollsQuestion.questionId";
 	private static final String _FILTER_ENTITY_ALIAS = "pollsQuestion";
 	private static final String _FILTER_ENTITY_TABLE = "PollsQuestion";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "pollsQuestion.questionId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "pollsQuestion.questionId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "pollsQuestion.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "PollsQuestion.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PollsQuestion exists with the primary key ";

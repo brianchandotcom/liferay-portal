@@ -1437,6 +1437,10 @@ public class DLFileEntryLocalServiceImpl
 			lockFileEntry(userId, fileEntryId);
 		}
 
+		if (checkedOut || autoCheckIn) {
+			dlFileVersion = getLatestFileVersion(fileEntryId);
+		}
+
 		try {
 			if (Validator.isNull(extension)) {
 				extension = dlFileEntry.getExtension();

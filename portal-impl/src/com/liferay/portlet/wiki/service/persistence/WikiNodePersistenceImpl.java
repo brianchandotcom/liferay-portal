@@ -960,6 +960,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1462,7 +1463,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1485,7 +1486,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				WikiNode.class.getName(), _FILTER_COLUMN_PK, groupId);
+				WikiNode.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1576,7 +1578,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1654,7 +1656,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				WikiNode.class.getName(), _FILTER_COLUMN_PK, groupId);
+				WikiNode.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2084,6 +2087,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2574,7 +2578,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				WikiNode.class.getName(), _FILTER_COLUMN_PK, groupId);
+				WikiNode.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2829,9 +2834,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(wikiNode.name IS NULL OR wikiNode.name = ?)";
 	private static final String _FILTER_SQL_SELECT_WIKINODE_WHERE = "SELECT {wikiNode.*} FROM WikiNode wikiNode WHERE ";
 	private static final String _FILTER_SQL_COUNT_WIKINODE_WHERE = "SELECT COUNT(DISTINCT wikiNode.nodeId) AS COUNT_VALUE FROM WikiNode wikiNode WHERE ";
-	private static final String _FILTER_COLUMN_PK = "wikiNode.nodeId";
 	private static final String _FILTER_ENTITY_ALIAS = "wikiNode";
 	private static final String _FILTER_ENTITY_TABLE = "WikiNode";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "wikiNode.nodeId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "wikiNode.nodeId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiNode.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiNode.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WikiNode exists with the primary key ";

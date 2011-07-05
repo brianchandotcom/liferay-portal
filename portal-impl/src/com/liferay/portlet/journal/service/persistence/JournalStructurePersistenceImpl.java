@@ -998,6 +998,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal structure, or <code>null</code> if a matching journal structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1502,7 +1503,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1525,7 +1526,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1617,7 +1619,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1695,7 +1697,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2151,6 +2154,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param groupId the group ID
 	 * @param structureId the structure ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching journal structure, or <code>null</code> if a matching journal structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2720,7 +2724,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2743,7 +2747,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2855,7 +2860,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2933,7 +2938,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3381,7 +3387,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3649,7 +3656,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				JournalStructure.class.getName(), _FILTER_COLUMN_PK, groupId);
+				JournalStructure.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -3799,9 +3807,10 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	private static final String _FINDER_COLUMN_G_P_PARENTSTRUCTUREID_3 = "(journalStructure.parentStructureId IS NULL OR journalStructure.parentStructureId = ?)";
 	private static final String _FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE = "SELECT {journalStructure.*} FROM JournalStructure journalStructure WHERE ";
 	private static final String _FILTER_SQL_COUNT_JOURNALSTRUCTURE_WHERE = "SELECT COUNT(DISTINCT journalStructure.id) AS COUNT_VALUE FROM JournalStructure journalStructure WHERE ";
-	private static final String _FILTER_COLUMN_PK = "journalStructure.id";
 	private static final String _FILTER_ENTITY_ALIAS = "journalStructure";
 	private static final String _FILTER_ENTITY_TABLE = "JournalStructure";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalStructure.id";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalStructure.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalStructure.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalStructure.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalStructure exists with the primary key ";

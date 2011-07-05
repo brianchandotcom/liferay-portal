@@ -1,14 +1,51 @@
+@mixin input-field-default {
+	background-image: url(../images/forms/input_shadow.png);
+	background-repeat: no-repeat;
+	border: 1px solid;
+	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+	font: 1em Arial, Helvetica, Verdana, sans-serif;
+	padding: 5px 1px;
+}
+
+@mixin input-field-focus {
+	background: #FFC none;
+	border: 1px solid #FC0;
+}
+
+@mixin button-default {
+	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
+	border: 1px solid;
+	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+	color: #34404F;
+	cursor: pointer;
+	font-weight: bold;
+	overflow: visible;
+	padding: 5px;
+	text-shadow: 1px 1px #FFF;
+	width: auto;
+}
+
+@mixin button-disabled {
+	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
+	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+	color: #555;
+	opacity: 0.5;
+}
+
+@mixin button-hover {
+	background: #B9CED9 url(../images/application/state_hover_bg.png) repeat-x 0 0;
+	border-color: #627782;
+	color: #369;
+}
+
+@mixin button-focus {
+	background: #EBEBEB url(../images/application/state_active_bg.png) repeat-x 0 0;
+	border-color: #555;
+}
+
 fieldset {
 	border: 1px solid #BFBFBF;
 	padding: 8px;
-}
-
-.ie fieldset {
-	padding-top: 0;
-}
-
-.ie7 .aui-fieldset {
-	zoom: 1;
 }
 
 .aui-fieldset {
@@ -25,18 +62,22 @@ fieldset {
 	margin: 10px 0;
 }
 
-.aui-field-inline .aui-field-content, .aui-field-row .aui-field-content {
-	margin: 0;
-	margin-right: 5px;
+.aui-field-inline, .aui-field-row {
+	.aui-field-content {
+		margin: 0;
+		margin-right: 5px;
+	}
 }
 
-.aui-search-bar .aui-field-content {
-	margin-right: 0;
-}
+.aui-search-bar {
+	.aui-field-content {
+		margin-right: 0;
+	}
 
-.aui-search-bar .aui-field-content, .aui-search-bar .aui-button-content {
-	display: inline-block;
-	vertical-align: middle;
+	.aui-field-content, .aui-button-content {
+		display: inline-block;
+		vertical-align: middle;
+	}
 }
 
 .aui-field-choice .aui-field-label {
@@ -71,12 +112,7 @@ input {
 }
 
 input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea, button {
-	background-image: url(../images/forms/input_shadow.png);
-	background-repeat: no-repeat;
-	border: 1px solid;
-	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
-	font: 1em Arial, Helvetica, Verdana, sans-serif;
-	padding: 5px 1px;
+	@include input-field-default;
 }
 
 select {
@@ -90,51 +126,61 @@ input[type="image"] {
 }
 
 input[type="submit"], input[type="button"], input[type="reset"], button {
-	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
-	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
-	color: #34404F;
-	cursor: pointer;
-	font-weight: bold;
-	overflow: visible;
-	padding: 5px;
-	width: auto;
+	@include button-default;
+
+	&:hover {
+		@include button-hover;
+	}
+
+	&:focus {
+		@include button-focus;
+	}
 }
 
-input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="button"]:focus, input[type="reset"]:focus, button:hover, button:focus {
-	background: #DFF4FF;
-	border: 1px solid #A7CEDF;
-	color: #369;
+input, textarea {
+	&.focus {
+		@include input-field-focus;
+	}
 }
 
-input[type="submit"], input[type="button"], input[type="reset"], button, .lfr-actions.lfr-extended, .lfr-actions.lfr-extended ul {
-	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
-	border: 1px solid;
-	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
-	color: #34404F;
-	font-weight: bold;
-	text-shadow: 1px 1px #FFF;
-}
+.lfr-actions.lfr-extended {
+	&, ul {
+		@include button-default;
+	}
 
-.aui-button-disabled input[type], .aui-button-disabled button, .aui-button-disabled input[type]:hover, .aui-button-disabled input[type]:focus, .aui-button-disabled button:hover, .aui-button-disabled button:focus, .aui-buttonitem-disabled, .aui-buttonitem-disabled:hover, .lfr-actions.lfr-extended.disabled, .lfr-actions.lfr-extended.disabled ul, .lfr-actions.lfr-extended.disabled:hover, .lfr-actions.lfr-extended.disabled:hover ul {
-	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
-	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
-	color: #555;
-	opacity: 0.5;
+	&:focus {
+		&, ul {
+			@include button-focus;
+		}
+	}
+
+	&:disabled {
+		&, ul {
+			@include button-disabled;
+		}
+	}
+
+	&:hover {
+		&, ul {
+			@include button-hover;
+		}
+	}
 }
 
 .lfr-actions.disabled .taglib-text {
 	color: #555;
 }
 
-input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover, button:hover, .lfr-actions.lfr-extended:hover, .lfr-actions.lfr-extended:hover ul {
-	background: #B9CED9 url(../images/application/state_hover_bg.png) repeat-x 0 0;
-	border-color: #627782;
-	color: #369;
+.aui-button-disabled {
+	input[type], button {
+		&:hover, &:focus {
+			@include button-disabled;
+		}
+	}
 }
 
-input[type="submit"]:focus, input[type="button"]:focus, input[type="reset"]:focus, button:focus, .lfr-actions.lfr-extended:focus, .lfr-actions.lfr-extended:focus ul {
-	background: #EBEBEB url(../images/application/state_active_bg.png) repeat-x 0 0;
-	border-color: #555;
+.aui-buttonitem-disabled {
+	@include button-disabled;
 }
 
 input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-form-validator-error {
@@ -144,34 +190,41 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 
 /* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */
 
-.ie6 input.text, input.password, .ie6 input.submit, .ie6 input.file, .ie6 input.button, .ie6 button {
-	background-image: url(../images/forms/input_shadow.png);
-	background-repeat: no-repeat;
-	border: 1px solid;
-	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
-	font: 1em Arial, Helvetica, Verdana, sans-serif;
-	padding: 5px 1px;
+.ie {
+	fieldset {
+		padding-top: 0;
+	}
+
+	.aui-button-disabled input {
+		-ms-filter: alpha(opacity=50);
+		filter: alpha(opacity=50);
+	}
 }
 
-.ie6 input.submit, .ie6 input.button, .ie6 button, .ie6 .aui-button-disabled input.submit, .ie6 .aui-button-disabled input.button, .ie6 .aui-button-disabled button {
-	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
-	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
-	color: #34404F;
-	cursor: pointer;
-	font-weight: bold;
-	padding: 5px;
+.ie7 {
+	.aui-fieldset {
+		zoom: 1;
+	}
 }
 
-input.focus, textarea.focus, .ie6 input.focus, .ie6 textarea.focus {
-	background: #FFC none;
-	border: 1px solid #FC0;
-}
+.ie6 {
+	input.text, input.password, input.submit, input.file, input.button, button {
+		@include input-field-default;
+	}
 
-.ie6 .aui-button-disabled input.submit, .ie6 .aui-button-disabled input.button, .ie6 .aui-button-disabled button {
-	color: #555;
-}
+	input.submit, input.button, button, .aui-button-disabled input.submit, .aui-button-disabled input.button, .aui-button-disabled button {
+		@include button-default;
+	}
 
-.ie .aui-button-disabled input {
-	-ms-filter: alpha(opacity=50);
-	filter: alpha(opacity=50);
+	.aui-button-disabled {
+		input.submit, input.button, button {
+			color: #555;
+		}
+	}
+
+	input, textarea {
+		&.focus {
+			@include input-field-focus;
+		}
+	}
 }

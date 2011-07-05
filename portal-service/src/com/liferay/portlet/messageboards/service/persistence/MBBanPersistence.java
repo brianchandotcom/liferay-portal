@@ -445,6 +445,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*
 	* @param groupId the group ID
 	* @param banUserId the ban user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards ban, or <code>null</code> if a matching message boards ban could not be found
 	* @throws SystemException if a system exception occurred
 	*/

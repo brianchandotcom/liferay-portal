@@ -24,6 +24,11 @@ alter table CalEvent add location STRING null;
 update ClassName_ set value = 'com.liferay.portal.model.UserPersonalSite' where value = 'com.liferay.portal.model.UserPersonalCommunity';
 
 drop index IX_975996C0 on Company;
+alter table Company add active_ BOOLEAN;
+
+COMMIT_TRANSACTION;
+
+update Company set active_ = TRUE;
 
 create table DDLRecord (
 	uuid_ VARCHAR(75) null,

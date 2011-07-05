@@ -468,6 +468,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param value the value
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

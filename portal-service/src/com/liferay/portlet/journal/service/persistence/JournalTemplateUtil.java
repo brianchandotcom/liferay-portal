@@ -351,6 +351,7 @@ public class JournalTemplateUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -707,6 +708,7 @@ public class JournalTemplateUtil {
 	* Returns the journal template where smallImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param smallImageId the small image ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -752,6 +754,7 @@ public class JournalTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @param templateId the template ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal template, or <code>null</code> if a matching journal template could not be found
 	* @throws SystemException if a system exception occurred
 	*/

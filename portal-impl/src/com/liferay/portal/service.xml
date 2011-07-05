@@ -160,6 +160,7 @@
 		<column name="logoId" type="long" />
 		<column name="system" type="boolean" />
 		<column name="maxUsers" type="int" />
+        <column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 

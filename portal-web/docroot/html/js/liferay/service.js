@@ -72,6 +72,7 @@ Liferay.Service.registerClass(
 		getUserGroup: true,
 		getUserGroupsGroups: true,
 		getUserOrganizationsGroups: true,
+		getUserPlaces: true,
 		hasUserGroup: true,
 		search: true,
 		searchCount: true,

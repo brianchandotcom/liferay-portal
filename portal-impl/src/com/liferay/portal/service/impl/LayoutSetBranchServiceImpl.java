@@ -33,7 +33,8 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 
 	public LayoutSetBranch addLayoutSetBranch(
 			long groupId, boolean privateLayout, String name,
-			String description, ServiceContext serviceContext)
+			String description, long copyLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -41,7 +42,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 
 		return layoutSetBranchLocalService.addLayoutSetBranch(
 			getUserId(), groupId, privateLayout, name, description,
-			serviceContext);
+			copyLayoutSetBranchId, serviceContext);
 	}
 
 	public void deleteLayoutSetBranch(long layoutSetBranchId)

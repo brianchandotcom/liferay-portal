@@ -1290,6 +1290,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4386,6 +4387,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param resourcePrimKey the resource prim key
 	 * @param nodeId the node ID
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -5302,6 +5304,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * @param nodeId the node ID
 	 * @param title the title
 	 * @param version the version
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

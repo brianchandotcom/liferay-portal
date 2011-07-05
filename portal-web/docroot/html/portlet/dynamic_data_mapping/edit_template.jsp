@@ -56,6 +56,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
+	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveCallback" type="hidden" value="<%= saveCallback %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 

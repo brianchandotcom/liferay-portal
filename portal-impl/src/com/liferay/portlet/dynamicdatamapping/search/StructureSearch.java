@@ -41,8 +41,7 @@ public class StructureSearch extends SearchContainer<DDMStructure> {
 		headerNames.add("modified-date");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"there-are-no-structures";
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
 	public StructureSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

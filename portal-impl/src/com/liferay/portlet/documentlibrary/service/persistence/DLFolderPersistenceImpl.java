@@ -1042,6 +1042,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1544,7 +1545,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1567,7 +1568,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1659,7 +1661,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1737,7 +1739,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2161,6 +2164,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * Returns the document library folder where repositoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param repositoryId the repository ID
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2676,7 +2680,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2699,7 +2703,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2796,7 +2801,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2874,7 +2879,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -3358,6 +3364,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3895,7 +3902,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -4111,7 +4119,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DLFolder.class.getName(), _FILTER_COLUMN_PK, groupId);
+				DLFolder.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -4416,9 +4425,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(dlFolder.name IS NULL OR dlFolder.name = ?)";
 	private static final String _FILTER_SQL_SELECT_DLFOLDER_WHERE = "SELECT {dlFolder.*} FROM DLFolder dlFolder WHERE ";
 	private static final String _FILTER_SQL_COUNT_DLFOLDER_WHERE = "SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ";
-	private static final String _FILTER_COLUMN_PK = "dlFolder.folderId";
 	private static final String _FILTER_ENTITY_ALIAS = "dlFolder";
 	private static final String _FILTER_ENTITY_TABLE = "DLFolder";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "dlFolder.folderId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFolder.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFolder exists with the primary key ";

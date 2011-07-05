@@ -1231,6 +1231,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource code, or <code>null</code> if a matching resource code could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

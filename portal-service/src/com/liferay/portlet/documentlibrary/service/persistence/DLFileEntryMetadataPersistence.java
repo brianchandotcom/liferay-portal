@@ -556,6 +556,7 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	*
 	* @param DDMStructureId the d d m structure ID
 	* @param fileVersionId the file version ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	* @throws SystemException if a system exception occurred
 	*/

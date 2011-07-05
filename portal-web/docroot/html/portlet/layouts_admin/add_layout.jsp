@@ -46,6 +46,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 		<aui:input id="addLayoutStagingGroupId" name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 		<aui:input id="addLayoutPrivateLayoutId" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 		<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= layoutId %>" />
+		<aui:input id="addLayoutExplicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
 
 		<aui:fieldset>
 			<aui:input name="name" />

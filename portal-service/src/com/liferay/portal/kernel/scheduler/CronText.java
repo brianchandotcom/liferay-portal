@@ -24,17 +24,19 @@ import java.util.Calendar;
  */
 public class CronText {
 
-	public static final int DAILY_FREQUENCY = 3;
+	public static final int DAILY_FREQUENCY = 4;
+
+	public static final int HOURLY_FREQUENCY = 3;
 
 	public static final int MINUTELY_FREQUENCY = 2;
 
-	public static final int MONTHLY_FREQUENCY = 4;
+	public static final int MONTHLY_FREQUENCY = 6;
 
 	public static final int NO_FREQUENCY = 1;
 
 	public static final int WEEKLY_FREQUENCY = 5;
 
-	public static final int YEARLY_FREQUENCY = 6;
+	public static final int YEARLY_FREQUENCY = 7;
 
 	public CronText(Calendar startDate) {
 		this(startDate, CronText.NO_FREQUENCY, 0);
@@ -60,6 +62,7 @@ public class CronText {
 
 	public void setFrequency(int frequency) {
 		if ((frequency != CronText.DAILY_FREQUENCY) &&
+			(frequency != CronText.HOURLY_FREQUENCY) &&
 			(frequency != CronText.MINUTELY_FREQUENCY) &&
 			(frequency != CronText.MONTHLY_FREQUENCY) &&
 			(frequency != CronText.NO_FREQUENCY) &&
@@ -95,6 +98,14 @@ public class CronText {
 		else if (_frequency == CronText.MINUTELY_FREQUENCY) {
 			minute = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;
 			hour = StringPool.STAR;
+			dayOfMonth = StringPool.STAR;
+			month = StringPool.STAR;
+			dayOfWeek = StringPool.QUESTION;
+			year = StringPool.STAR;
+		}
+		else if (_frequency == CronText.HOURLY_FREQUENCY) {
+			minute = StringPool.STAR;
+			hour = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;
 			dayOfMonth = StringPool.STAR;
 			month = StringPool.STAR;
 			dayOfWeek = StringPool.QUESTION;

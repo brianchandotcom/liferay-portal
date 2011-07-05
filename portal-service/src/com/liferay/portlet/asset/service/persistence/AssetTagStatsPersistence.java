@@ -343,6 +343,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*
 	* @param tagId the tag ID
 	* @param classNameId the class name ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
 	* @throws SystemException if a system exception occurred
 	*/

@@ -228,6 +228,7 @@ public class BrowserTrackerUtil {
 	* Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param userId the user ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
 	* @throws SystemException if a system exception occurred
 	*/

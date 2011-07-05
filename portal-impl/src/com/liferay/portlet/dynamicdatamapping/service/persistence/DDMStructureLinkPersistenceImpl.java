@@ -867,7 +867,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		query.append(_FINDER_COLUMN_CLASSNAMEID_CLASSNAMEID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -881,7 +881,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -975,7 +976,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		query.append(_FINDER_COLUMN_CLASSNAMEID_CLASSNAMEID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1044,7 +1045,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -1128,6 +1130,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 * Returns the d d m structure link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classPK the class p k
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1608,7 +1611,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		query.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1622,7 +1625,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -1716,7 +1720,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		query.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
 
-		appendGroupByComparator(query, _FILTER_COLUMN_PK);
+		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1785,7 +1789,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSQLQuery(sql);
 
@@ -2051,7 +2056,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		query.append(_FINDER_COLUMN_CLASSNAMEID_CLASSNAMEID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2205,7 +2211,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		query.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				DDMStructureLink.class.getName(), _FILTER_COLUMN_PK);
+				DDMStructureLink.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2327,9 +2334,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStructureLink.structureId = ?";
 	private static final String _FILTER_SQL_SELECT_DDMSTRUCTURELINK_WHERE = "SELECT {ddmStructureLink.*} FROM DDMStructureLink ddmStructureLink WHERE ";
 	private static final String _FILTER_SQL_COUNT_DDMSTRUCTURELINK_WHERE = "SELECT COUNT(DISTINCT ddmStructureLink.structureLinkId) AS COUNT_VALUE FROM DDMStructureLink ddmStructureLink WHERE ";
-	private static final String _FILTER_COLUMN_PK = "ddmStructureLink.structureLinkId";
 	private static final String _FILTER_ENTITY_ALIAS = "ddmStructureLink";
 	private static final String _FILTER_ENTITY_TABLE = "DDMStructureLink";
+	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "ddmStructureLink.structureLinkId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmStructureLink.structureLinkId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureLink.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMStructureLink.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMStructureLink exists with the primary key ";

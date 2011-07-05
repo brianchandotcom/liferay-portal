@@ -51,6 +51,7 @@ import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -79,7 +80,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	public Company addCompany(
 			String webId, String virtualHostname, String mx, String shardName,
-			boolean system, int maxUsers)
+			boolean system, int maxUsers, boolean active)
 		throws PortalException, SystemException {
 
 		// Company
@@ -100,6 +101,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		company.setMx(mx);
 		company.setSystem(system);
 		company.setMaxUsers(maxUsers);
+		company.setActive(active);
 
 		companyPersistence.update(company, false);
 
@@ -159,6 +161,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company.setWebId(webId);
 			company.setMx(mx);
+			company.setActive(true);
 
 			companyPersistence.update(company, false);
 
@@ -413,6 +416,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	public Company fetchCompany(long companyId) throws SystemException {
+		return companyPersistence.fetchByPrimaryKey(companyId);
+	}
+
 	public List<Company> getCompanies() throws SystemException {
 		return companyPersistence.findAll();
 	}
@@ -541,12 +548,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	public Company updateCompany(
-			long companyId, String virtualHostname, String mx, int maxUsers)
+			long companyId, String virtualHostname, String mx, int maxUsers,
+			boolean active)
 		throws PortalException, SystemException {
 
 		// Company
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
+
+		if (!active) {
+			if (companyId == PortalInstances.getDefaultCompanyId()) {
+				active = true;
+			}
+		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
@@ -557,6 +571,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		company.setMaxUsers(maxUsers);
+		company.setActive(active);
 
 		companyPersistence.update(company, false);
 

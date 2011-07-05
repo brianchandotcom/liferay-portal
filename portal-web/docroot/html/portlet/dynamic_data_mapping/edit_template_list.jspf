@@ -17,11 +17,8 @@
 <%
 String scriptContent = ParamUtil.getString(request, "scriptContent");
 
-if (scriptContent != null) {
-	script = JS.decodeURIComponent(script);
-}
-else {
-	script = BeanParamUtil.getString(template, request, "script");
+if (Validator.isNotNull(scriptContent)) {
+	script = JS.decodeURIComponent(scriptContent);
 }
 
 String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);

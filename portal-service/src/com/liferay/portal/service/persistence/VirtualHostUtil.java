@@ -229,6 +229,7 @@ public class VirtualHostUtil {
 	* Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param hostname the hostname
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -273,6 +274,7 @@ public class VirtualHostUtil {
 	*
 	* @param companyId the company ID
 	* @param layoutSetId the layout set ID
+	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	* @throws SystemException if a system exception occurred
 	*/

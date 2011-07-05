@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -39,9 +37,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
@@ -58,6 +54,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
@@ -71,12 +68,9 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.model.SocialEquityValue;
 import com.liferay.portlet.social.service.SocialEquityUserLocalServiceUtil;
-import com.liferay.util.UniqueList;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -278,10 +272,6 @@ public class UserImpl extends UserModelImpl implements User {
 	public List<Group> getMyPlaces(String[] classNames, int max)
 		throws PortalException, SystemException {
 
-		if (isDefaultUser()) {
-			return Collections.emptyList();
-		}
-
 		ThreadLocalCache<List<Group>> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.REQUEST, _GET_MY_PLACES_CACHE_NAME);
@@ -299,78 +289,7 @@ public class UserImpl extends UserModelImpl implements User {
 			return myPlaces;
 		}
 
-		myPlaces = new UniqueList<Group>();
-
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Group.class.getName())) {
-
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
-
-			groupParams.put("usersGroups", new Long(getUserId()));
-			//groupParams.put("pageCount", StringPool.BLANK);
-
-			myPlaces.addAll(
-				GroupLocalServiceUtil.search(
-					getCompanyId(), null, null, groupParams, start, end));
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, Organization.class.getName())) {
-
-			LinkedHashMap<String, Object> organizationParams =
-				new LinkedHashMap<String, Object>();
-
-			organizationParams.put("usersOrgs", new Long(getUserId()));
-
-			List<Organization> userOrgs = OrganizationLocalServiceUtil.search(
-				getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
-				null, null, organizationParams, start, end);
-
-			for (Organization organization : userOrgs) {
-				myPlaces.add(0, organization.getGroup());
-
-				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					for (Organization ancestorOrganization :
-							organization.getAncestors()) {
-
-						myPlaces.add(0, ancestorOrganization.getGroup());
-					}
-				}
-			}
-		}
-
-		if ((classNames == null) ||
-			ArrayUtil.contains(classNames, User.class.getName())) {
-
-			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
-				PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
-				Group userGroup = getGroup();
-
-				myPlaces.add(0, userGroup);
-			}
-		}
-
-		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
-			getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-		myPlaces.add(0, controlPanelGroup);
-
-		if ((max != QueryUtil.ALL_POS) && (myPlaces.size() > max)) {
-			myPlaces = ListUtil.subList(myPlaces, start, end);
-		}
-
-		myPlaces = Collections.unmodifiableList(myPlaces);
+		myPlaces = GroupServiceUtil.getUserPlaces(getUserId(), classNames, max);
 
 		threadLocalCache.put(key, myPlaces);
 

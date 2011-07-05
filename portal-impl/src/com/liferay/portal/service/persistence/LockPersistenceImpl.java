@@ -1219,6 +1219,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 *
 	 * @param className the class name
 	 * @param key the key
+	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -35,7 +35,7 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,16 +47,16 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Page Templates",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Page Templates"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
 				boolean pageTemplate1Present = selenium.isElementPresent(
-						"//strong/a");
+						"//td[3]/span/ul/li/strong/a");
 
 				if (!pageTemplate1Present) {
 					label = 2;
@@ -64,7 +64,8 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -94,7 +95,7 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 			case 2:
 
 				boolean pageTemplate2Present = selenium.isElementPresent(
-						"//strong/a");
+						"//td[3]/span/ul/li/strong/a");
 
 				if (!pageTemplate2Present) {
 					label = 3;
@@ -102,7 +103,8 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -132,7 +134,7 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 			case 3:
 
 				boolean pageTemplate3Present = selenium.isElementPresent(
-						"//strong/a");
+						"//td[3]/span/ul/li/strong/a");
 
 				if (!pageTemplate3Present) {
 					label = 4;
@@ -140,7 +142,8 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -170,7 +173,7 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 			case 4:
 
 				boolean pageTemplate4Present = selenium.isElementPresent(
-						"//strong/a");
+						"//td[3]/span/ul/li/strong/a");
 
 				if (!pageTemplate4Present) {
 					label = 5;
@@ -178,7 +181,8 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -208,7 +212,7 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 			case 5:
 
 				boolean pageTemplate5Present = selenium.isElementPresent(
-						"//strong/a");
+						"//td[3]/span/ul/li/strong/a");
 
 				if (!pageTemplate5Present) {
 					label = 6;
@@ -216,7 +220,8 @@ public class TearDownPageTemplateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

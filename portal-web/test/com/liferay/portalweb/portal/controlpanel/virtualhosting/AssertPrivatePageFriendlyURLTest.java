@@ -23,13 +23,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertPrivatePageFriendlyURLTest extends BaseTestCase {
 	public void testAssertPrivatePageFriendlyURL() throws Exception {
 		selenium.open("/group/alpha/");
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"http://localhost:8080/group/alpha/"), selenium.getLocation());
 		assertEquals(RuntimeVariables.replace("Virtual Hosting Community"),
 			selenium.getText("//li[2]/span/a"));
 		assertTrue(selenium.isElementPresent("link=Private Page"));
-		selenium.clickAt("link=Private Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Private Page",
+			RuntimeVariables.replace("Private Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

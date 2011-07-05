@@ -16,10 +16,14 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter;
+import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
+import org.compass.core.engine.spellcheck.SearchEngineSpellSuggestions;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +31,14 @@ import javax.servlet.http.HttpSessionListener;
 public class PortalSessionListener implements HttpSessionListener {
 
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+
+		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+			CompoundSessionIdHttpSession compoundSession =
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(compoundSession);
+		}
+
 		new PortalSessionCreator(httpSessionEvent);
 
 		HttpSession session = httpSessionEvent.getSession();
@@ -37,6 +49,13 @@ public class PortalSessionListener implements HttpSessionListener {
 	}
 
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+			CompoundSessionIdHttpSession compoundSession =
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(compoundSession);
+		}
+
 		new PortalSessionDestroyer(httpSessionEvent);
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.SESSION);

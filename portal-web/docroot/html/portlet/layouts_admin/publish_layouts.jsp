@@ -181,6 +181,7 @@ selectURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 selectURL.setParameter(Constants.CMD, cmd);
 selectURL.setParameter("pagesRedirect", pagesRedirect);
 selectURL.setParameter("groupId", String.valueOf(stagingGroupId));
+selectURL.setParameter("selPlid", String.valueOf(selPlid));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setParameter("schedule", String.valueOf(schedule));
 

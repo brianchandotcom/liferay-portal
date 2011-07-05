@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -122,7 +123,11 @@ public class RSSAction extends PortletAction {
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			syndEntry.setAuthor(author);
-			syndEntry.setTitle(assetEntry.getTitle());
+
+			String languageId = LanguageUtil.getLanguageId(portletRequest);
+
+			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
+
 			syndEntry.setLink(link);
 			syndEntry.setUri(syndEntry.getLink());
 			syndEntry.setPublishedDate(assetEntry.getCreateDate());

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,7 +28,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -173,15 +173,14 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			fileElement.setAttribute("desc", fileEntry.getTitle());
 			fileElement.setAttribute("size", getSize(fileEntry.getSize()));
 
-			StringBundler url = new StringBundler(5);
+			StringBundler url = new StringBundler(6);
 
-			ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
-
-			url.append(themeDisplay.getPathMain());
-			url.append("/document_library/get_file?uuid=");
-			url.append(fileEntry.getUuid());
-			url.append("&groupId=");
+			url.append("/documents/");
 			url.append(group.getGroupId());
+			url.append(StringPool.SLASH);
+			url.append(fileEntry.getFolderId());
+			url.append(StringPool.SLASH);
+			url.append(HttpUtil.encodeURL(fileEntry.getTitle()));
 
 			fileElement.setAttribute("url", url.toString());
 		}

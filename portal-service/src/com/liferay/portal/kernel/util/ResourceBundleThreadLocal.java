@@ -12,25 +12,23 @@
  * details.
  */
 
-package com.liferay.util;
-
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+package com.liferay.portal.kernel.util;
 
 /**
  * @author Shuyang Zhou
  */
-public class RSSThreadLocal {
+public class ResourceBundleThreadLocal {
 
-	public static boolean isExportRSS() {
-		return _exportRSS.get();
+	public static boolean isReplace() {
+		return _replace.get();
 	}
 
-	public static void setExportRSS(boolean exportRSS) {
-		_exportRSS.set(exportRSS);
+	public static void setReplace(boolean replace) {
+		_replace.set(replace);
 	}
 
-	private static ThreadLocal<Boolean> _exportRSS =
+	private static ThreadLocal<Boolean> _replace =
 		new AutoResetThreadLocal<Boolean>(
-			RSSThreadLocal.class + "._exportRSS", false);
+			ResourceBundleThreadLocal.class + "._replace", false);
 
 }

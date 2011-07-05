@@ -483,11 +483,14 @@
 		position: relative;
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .document-library-breadcrumb {
 		background: #D9D9D9 url(<%= themeImagesPath %>/application/subheader_bg.png) 0 0 repeat-x;
 		clear: both;
 		padding: 5px;
 		position: relative;
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
 		text-align: center;
 	}
 
@@ -508,6 +511,15 @@
 
 	.workflow-status-pending, .workflow-status-pending a {
 		color: orange;
+	}
+
+	.document-library-breadcrumb {
+		background-color: #EBEBEB;
+		background-image: url(<%= themeImagesPath %>/application/button_bg_selected.png);
+
+		ul {
+			margin-bottom: 0;
+		}
 	}
 
 	.aui-liferaylistview-content {
@@ -693,7 +705,7 @@
 }
 
 .portlet-document-library {
-	.lfr-asset-column-details .lfr-panel  {
+	.lfr-asset-column-details .lfr-panel {
 		margin-bottom: 0.5em;
 		padding-bottom: 0;
 

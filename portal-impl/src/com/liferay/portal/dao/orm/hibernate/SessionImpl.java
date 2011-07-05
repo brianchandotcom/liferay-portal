@@ -65,19 +65,28 @@ public class SessionImpl implements Session {
 	}
 
 	public Query createQuery(String queryString) throws ORMException {
+		return createQuery(queryString, true);
+	}
+
+	public Query createQuery(String queryString, boolean strictName)
+		throws ORMException {
 		try {
 			queryString = SQLTransformer.transform(queryString);
 
 			queryString = _jpqlToHql(queryString);
 
-			return new QueryImpl(_session.createQuery(queryString));
+			return new QueryImpl(_session.createQuery(queryString), strictName);
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);
 		}
 	}
 
-	public SQLQuery createSQLQuery(String queryString)
+	public SQLQuery createSQLQuery(String queryString) throws ORMException {
+		return createSQLQuery(queryString, true);
+	}
+
+	public SQLQuery createSQLQuery(String queryString, boolean strictName)
 		throws ORMException {
 
 		try {
@@ -85,7 +94,8 @@ public class SessionImpl implements Session {
 
 			queryString = _jpqlToHql(queryString);
 
-			return new SQLQueryImpl(_session.createSQLQuery(queryString));
+			return new SQLQueryImpl(
+				_session.createSQLQuery(queryString), strictName);
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

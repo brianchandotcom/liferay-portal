@@ -113,6 +113,8 @@ AUI().add(
 						var navBlock = instance.get('navBlock');
 						var addBlock = A.Node.create(TPL_LIST_ITEM);
 
+						navBlock.show();
+
 						navBlock.one('ul').append(addBlock);
 
 						instance._createEditor(
@@ -287,11 +289,12 @@ AUI().add(
 					_cancelPage: function(event) {
 						var instance = this;
 
-						var listItem = event.listItem;
+						var actionNode = event.actionNode;
 						var comboBox = event.comboBox;
 						var field = event.field;
+						var listItem = event.listItem;
 
-						var actionNode = event.actionNode;
+						var navBlock = instance.get('navBlock');
 
 						if (actionNode) {
 							actionNode.show();
@@ -303,6 +306,10 @@ AUI().add(
 						}
 
 						comboBox.destroy();
+
+						if (!navBlock.one('li')) {
+							navBlock.hide();
+						}
 					},
 
 					_deleteButton: function(obj) {
@@ -508,6 +515,8 @@ AUI().add(
 					_removePage: function(event) {
 						var instance = this;
 
+						var navBlock = instance.get('navBlock');
+
 						var tab = event.currentTarget.ancestor('li');
 
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-page'))) {
@@ -534,6 +543,10 @@ AUI().add(
 											);
 
 											tab.remove(true);
+
+											if (!navBlock.one('ul li')) {
+												navBlock.hide();
+											}
 										}
 									}
 								}
@@ -544,10 +557,10 @@ AUI().add(
 					_savePage: function(event, obj, oldName) {
 						var instance = this;
 
-						var listItem = event.listItem;
+						var actionNode = event.actionNode;
 						var comboBox = event.comboBox;
 						var field = event.field;
-						var actionNode = event.actionNode;
+						var listItem = event.listItem;
 						var textNode = event.textNode;
 
 						var pageTitle = field.get('value');

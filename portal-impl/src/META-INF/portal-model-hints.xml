@@ -1035,7 +1035,7 @@
 		<field name="publishDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="mimeType" type="String" />
-		<field name="title" type="String">
+		<field name="title" type="String" localized="true">
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="description" type="String">

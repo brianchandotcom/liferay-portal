@@ -93,6 +93,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				</div>
 			</div>
 
+			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+			</div>
+
 			<liferay-portlet:renderURL varImpl="editFileEntryURL">
 				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			</liferay-portlet:renderURL>
@@ -111,10 +115,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			</aui:form>
 		</aui:column>
 	</aui:layout>
-
-	<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-		<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
-	</div>
 </div>
 
 <%

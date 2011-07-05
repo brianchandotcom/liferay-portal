@@ -14,60 +14,10 @@
 
 package com.liferay.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.text.MessageFormat;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 /**
  * @author Neil Griffin
+ * @deprecated {@link com.liferay.portal.kernel.util.ResourceBundleUtil}
  */
-public class ResourceBundleUtil {
-
-	public static String getString(
-		ResourceBundle resourceBundle, Locale locale, String key,
-		Object[] arguments) {
-
-		String value = null;
-
-		if (resourceBundle == null) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Resource bundle is null");
-			}
-		}
-		else {
-
-			// Get the value associated with the specified key, and substitute
-			// any arguuments like {0}, {1}, {2}, etc. with the specified
-			// argument values.
-
-			value = resourceBundle.getString(key);
-
-			if (value == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("No value found for key " + key);
-				}
-			}
-			else {
-				if ((arguments != null) && (arguments.length > 0)) {
-					MessageFormat messageFormat = new MessageFormat(
-						value, locale);
-
-					value = messageFormat.format(arguments);
-				}
-			}
-		}
-
-		if (value == null) {
-			value = key;
-		}
-
-		return value;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(ResourceBundleUtil.class);
-
+public class ResourceBundleUtil
+	extends com.liferay.portal.kernel.util.ResourceBundleUtil {
 }

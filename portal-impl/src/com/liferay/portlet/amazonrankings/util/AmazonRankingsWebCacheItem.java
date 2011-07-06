@@ -14,10 +14,19 @@
 
 package com.liferay.portlet.amazonrankings.util;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,13 +35,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
-
-import java.text.DateFormat;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,17 +52,20 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		AmazonRankings amazonRankings = null;
 
 		try {
-			StringBundler sb = new StringBundler(7);
 
-			sb.append("http://ecs.amazonaws.com/onca/xml?Service=");
-			sb.append("AWSECommerceService&AWSAccessKeyId=");
-			sb.append(AmazonRankingsUtil.getAmazonAccessKeyId());
-			sb.append("&Operation=ItemLookup&IdType=ASIN&ItemId=");
-			sb.append(isbn);
-			sb.append("&ResponseGroup=Images,ItemAttributes,Offers,SalesRank&");
-			sb.append("Version=2009-02-01");
+			Map<String, String> parameters = new TreeMap<String, String>();
+			parameters.put("Service", "AWSECommerceService");
+			parameters.put("Operation", "ItemLookup");
+			parameters.put("IdType", "ASIN");
+			parameters.put("ItemId", isbn);
+			parameters.put("ResponseGroup", "Images,ItemAttributes,Offers,SalesRank");
+			parameters.put("AWSAccessKeyId", AmazonRankingsUtil.getAmazonAccessKeyId());
+			parameters.put("Timestamp", AmazonRankingsUtil.getTimestamp());
 
-			String xml = HttpUtil.URLtoString(sb.toString());
+			String urlWithSignature = 
+				AmazonSignedRequestsHelper.generateUrlWithSignature(parameters);
+						
+			String xml = HttpUtil.URLtoString(urlWithSignature);
 
 			Document doc = SAXReaderUtil.read(xml);
 
@@ -76,6 +81,23 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 				return null;
 			}
 
+			// check for any error and if found, log it
+			
+			Element request = items.element("Request");
+			if (request != null) {
+				Element errors = request.element("Errors");
+				if (errors != null) {
+					Element error = errors.element("Error");
+					if (error != null) {
+						Element message = error.element("Message");
+						if (message != null) {
+							_log.error("Amazon Error: " + message.getText());
+							return null;
+						}
+					}
+				}
+			}
+			
 			Element item = items.element("Item");
 
 			if (item == null) {
@@ -137,6 +159,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 				availability);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return amazonRankings;
@@ -161,10 +184,10 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			return null;
 		}
 
-		Element availabilityAttributes = offerListing.element(
-			"AvailabilityAttributes");
+		Element availability = offerListing.element(
+			"Availability");
 
-		return availabilityAttributes.elementText("AvailabilityType");
+		return availability.elementText("Availability");
 	}
 
 	protected String getImageURL(Element item, String name) {
@@ -225,5 +248,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
 	private String _isbn;
+	
+	private static Log _log = LogFactoryUtil.getLog(AmazonRankingsWebCacheItem.class);
 
 }

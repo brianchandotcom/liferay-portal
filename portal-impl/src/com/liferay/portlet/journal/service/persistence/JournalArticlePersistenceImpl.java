@@ -92,7 +92,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUuid",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -100,20 +100,22 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_RESOURCEPRIMKEY = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByResourcePrimKey",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByResourcePrimKey",
 			new String[] {
 				Long.class.getName(),
 				
@@ -121,12 +123,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByResourcePrimKey",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -134,12 +136,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -147,12 +150,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_SMALLIMAGEID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findBySmallImageId",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
+			"findBySmallImageId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -160,12 +164,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_SMALLIMAGEID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countBySmallImageId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_R_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByR_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByR_ST",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -173,12 +177,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_ST",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_A = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_A",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -186,12 +190,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_UT = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_UT",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_UT",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -199,12 +203,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_UT = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_UT",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_S",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -212,12 +216,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_S",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_T",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -225,12 +229,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_T",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_L",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -238,12 +242,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_L",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_ST",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -251,12 +255,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_ST",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_V",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_V",
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				
@@ -264,12 +268,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_V",
 			new String[] { Long.class.getName(), Double.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_ST",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -277,30 +281,30 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_ST",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -308,7 +312,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_C_T",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
@@ -317,7 +321,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -325,7 +329,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_C_L",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
@@ -334,7 +338,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -342,13 +346,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_A_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -356,7 +360,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_A_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_A_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_A_ST",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(),
@@ -365,7 +369,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A_ST",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -373,7 +377,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_UT_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_UT_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_UT_ST",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(),
@@ -382,7 +386,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_UT_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_UT_ST",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -390,7 +394,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_V_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_V_ST",
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_V_ST",
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				Integer.class.getName(),
@@ -399,7 +403,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_V_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_V_ST",
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
@@ -407,9 +411,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -2223,11 +2228,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2339,11 +2351,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3954,7 +3973,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
@@ -3970,7 +3994,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4088,7 +4114,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
@@ -4104,7 +4135,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4674,7 +4707,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_UT_GROUPID_2);
 
@@ -4690,7 +4728,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -4808,7 +4848,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_UT_GROUPID_2);
 
@@ -4824,7 +4869,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -5394,7 +5441,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
@@ -5410,7 +5462,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -5528,7 +5582,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
 
@@ -5544,7 +5603,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -6114,7 +6175,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
@@ -6130,7 +6196,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -6248,7 +6316,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
@@ -6264,7 +6337,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -6834,7 +6909,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_L_GROUPID_2);
 
@@ -6850,7 +6930,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -6968,7 +7050,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_L_GROUPID_2);
 
@@ -6984,7 +7071,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -7529,13 +7618,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -7650,13 +7746,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -9294,7 +9397,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
 
@@ -9312,7 +9420,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -9434,7 +9544,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
 
@@ -9452,7 +9567,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -10050,7 +10167,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_L_GROUPID_2);
 
@@ -10068,7 +10190,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -10190,7 +10314,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_C_L_GROUPID_2);
 
@@ -10208,7 +10337,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -10970,7 +11101,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_A_ST_GROUPID_2);
 
@@ -10988,7 +11124,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_A_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -11110,7 +11248,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_A_ST_GROUPID_2);
 
@@ -11128,7 +11271,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_A_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -11725,7 +11870,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(5);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_UT_ST_GROUPID_2);
 
@@ -11743,7 +11893,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_UT_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -11865,7 +12017,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_UT_ST_GROUPID_2);
 
@@ -11883,7 +12040,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_UT_ST_STATUS_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -15272,11 +15431,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final String _FINDER_COLUMN_C_V_ST_COMPANYID_2 = "journalArticle.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_V_ST_VERSION_2 = "journalArticle.version = ? AND ";
 	private static final String _FINDER_COLUMN_C_V_ST_STATUS_2 = "journalArticle.status = ?";
-	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT {journalArticle.*} FROM JournalArticle journalArticle WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id FROM JournalArticle journalArticle WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id = JournalArticle.id";
 	private static final String _FILTER_SQL_COUNT_JOURNALARTICLE_WHERE = "SELECT COUNT(DISTINCT journalArticle.id) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "journalArticle";
 	private static final String _FILTER_ENTITY_TABLE = "JournalArticle";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalArticle.id";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalArticle.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalArticle.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalArticle.";

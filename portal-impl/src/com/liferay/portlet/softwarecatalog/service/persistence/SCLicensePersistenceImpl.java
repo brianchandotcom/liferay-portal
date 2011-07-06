@@ -82,8 +82,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByActive",
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByActive",
 			new String[] {
 				Boolean.class.getName(),
 				
@@ -91,11 +91,12 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByActive", new String[] { Boolean.class.getName() });
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByActive",
+			new String[] { Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByA_R",
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByA_R",
 			new String[] {
 				Boolean.class.getName(), Boolean.class.getName(),
 				
@@ -103,15 +104,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByA_R",
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByA_R",
 			new String[] { Boolean.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the s c license in the entity cache if it is enabled.
@@ -838,11 +839,18 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -952,11 +960,18 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1497,13 +1512,20 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1617,13 +1639,20 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2169,6 +2198,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	public static final FinderPath FINDER_PATH_GET_SCPRODUCTENTRIES = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
+			com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl.class,
 			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
 			"getSCProductEntries",
 			new String[] {
@@ -2253,6 +2283,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	public static final FinderPath FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
+			Long.class,
 			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
 			"getSCProductEntriesSize", new String[] { Long.class.getName() });
 
@@ -2306,6 +2337,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_SCPRODUCTENTRY = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
+			Boolean.class,
 			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
 			"containsSCProductEntry",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -2859,11 +2891,14 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "scLicense.active = ?";
 	private static final String _FINDER_COLUMN_A_R_ACTIVE_2 = "scLicense.active = ? AND ";
 	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
-	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT {scLicense.*} FROM SCLicense scLicense WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT DISTINCT {scLicense.*} FROM SCLicense scLicense WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {SCLicense.*} FROM (SELECT DISTINCT scLicense.licenseId FROM SCLicense scLicense WHERE ";
+	private static final String _FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN SCLicense ON TEMP_TABLE.licenseId = SCLicense.licenseId";
 	private static final String _FILTER_SQL_COUNT_SCLICENSE_WHERE = "SELECT COUNT(DISTINCT scLicense.licenseId) AS COUNT_VALUE FROM SCLicense scLicense WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "scLicense";
 	private static final String _FILTER_ENTITY_TABLE = "SCLicense";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "scLicense.licenseId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scLicense.licenseId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scLicense.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "SCLicense.";

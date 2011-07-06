@@ -73,8 +73,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_CLASSNAMEID = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByClassNameId",
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByClassNameId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,29 +82,31 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSNAMEID = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByClassNameId", new String[] { Long.class.getName() });
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByClassNameId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_THREADID = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED,
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByThreadId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_THREADID = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByThreadId", new String[] { Long.class.getName() });
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByThreadId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED,
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C",
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the message boards discussion in the entity cache if it is enabled.

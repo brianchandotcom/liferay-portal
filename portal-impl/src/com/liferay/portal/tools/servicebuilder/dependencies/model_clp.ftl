@@ -336,6 +336,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
+	@Override
 	public ${entity.name} toEscapedModel() {
 		if (isEscapedModel()) {
 			return this;
@@ -345,6 +346,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	@Override
 	public Object clone() {
 		${entity.name}Clp clone = new ${entity.name}Clp();
 
@@ -427,6 +429,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -456,6 +459,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	@Override
 	public int hashCode() {
 		<#if entity.hasPrimitivePK(false)>
 			<#if entity.PKClassName == "int">
@@ -468,6 +472,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 	}
 
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(${entity.regularColList?size * 2 + 1});
 

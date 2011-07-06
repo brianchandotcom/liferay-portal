@@ -30,10 +30,6 @@ public abstract class BasePortalCache implements PortalCache {
 		_debug = debug;
 	}
 
-	protected String processKey(String key) {
-		return key;
-	}
-
 	private boolean _debug;
 
 }

@@ -362,6 +362,24 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			userId, permission.getPermissionId());
 	}
 
+	/**
+	 * Returns <code>true</code> if the user has permission to perform the
+	 * action on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group containing the resource
+	 * @param  resources representations of the resource at each scope level
+	 *         returned by {@link
+	 *         com.liferay.portal.security.permission.AdvancedPermissionChecker#getResources(
+	 *         long, long, String, String, String)}
+	 * @param  actionId the actionID
+	 * @param  permissionCheckerBag the permission checker bag
+	 * @return <code>true</code> if the user has permission to perform the
+	 *         action on the resource; <code>false</code> otherwise
+	 * @throws PortalException if a resource action with the resource name and
+	 *         action ID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasUserPermissions(
 			long userId, long groupId, List<Resource> resources,
 			String actionId, PermissionCheckerBag permissionCheckerBag)

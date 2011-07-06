@@ -17,6 +17,8 @@ package com.liferay.portal.cache.key;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.Serializable;
+
 /**
  * @author Shuyang Zhou
  */
@@ -43,8 +45,8 @@ public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
 	@Override
 	public abstract CacheKeyGenerator clone();
 
-	public String finish() {
-		String cacheKey = getCacheKey(keyBundler);
+	public Serializable finish() {
+		Serializable cacheKey = getCacheKey(keyBundler);
 
 		keyBundler.setIndex(0);
 

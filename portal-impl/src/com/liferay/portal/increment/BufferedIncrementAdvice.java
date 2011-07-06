@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
+import java.io.Serializable;
+
 import java.lang.annotation.Annotation;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -60,7 +62,7 @@ public class BufferedIncrementAdvice
 			cacheKeyGenerator.append(StringUtil.toHexString(arguments[i]));
 		}
 
-		String batchKey = cacheKeyGenerator.finish();
+		Serializable batchKey = cacheKeyGenerator.finish();
 
 		Increment<?> increment = IncrementFactory.createIncrement(
 			bufferedIncrement.incrementClass(), value);

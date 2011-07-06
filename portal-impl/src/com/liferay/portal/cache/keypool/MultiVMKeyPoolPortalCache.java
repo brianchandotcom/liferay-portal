@@ -38,17 +38,17 @@ public class MultiVMKeyPoolPortalCache extends BasePortalCache {
 		_localPortalCache = localPortalCache;
 	}
 
-	public Collection<Object> get(Collection<String> keys) {
+	public Collection<Object> get(Collection<Serializable> keys) {
 		List<Object> values = new ArrayList<Object>(keys.size());
 
-		for (String key : keys) {
+		for (Serializable key : keys) {
 			values.add(get(key));
 		}
 
 		return values;
 	}
 
-	public Object get(String key) {
+	public Object get(Serializable key) {
 		if (key == null) {
 			return null;
 		}
@@ -60,25 +60,25 @@ public class MultiVMKeyPoolPortalCache extends BasePortalCache {
 		return _clusterPortalCache.getName();
 	}
 
-	public void put(String key, Object obj) {
+	public void put(Serializable key, Object obj) {
 		_clusterPortalCache.put(key, key);
 
 		_localPortalCache.put(key, obj);
 	}
 
-	public void put(String key, Object obj, int timeToLive) {
+	public void put(Serializable key, Object obj, int timeToLive) {
 		_clusterPortalCache.put(key, key, timeToLive);
 
 		_localPortalCache.put(key, obj, timeToLive);
 	}
 
-	public void put(String key, Serializable obj) {
+	public void put(Serializable key, Serializable obj) {
 		_clusterPortalCache.put(key, key);
 
 		_localPortalCache.put(key, obj);
 	}
 
-	public void put(String key, Serializable obj, int timeToLive) {
+	public void put(Serializable key, Serializable obj, int timeToLive) {
 		_clusterPortalCache.put(key, key, timeToLive);
 
 		_localPortalCache.put(key, obj, timeToLive);
@@ -95,7 +95,7 @@ public class MultiVMKeyPoolPortalCache extends BasePortalCache {
 			cacheListener, cacheListenerScope);
 	}
 
-	public void remove(String key) {
+	public void remove(Serializable key) {
 		_clusterPortalCache.remove(key);
 		_localPortalCache.remove(key);
 	}

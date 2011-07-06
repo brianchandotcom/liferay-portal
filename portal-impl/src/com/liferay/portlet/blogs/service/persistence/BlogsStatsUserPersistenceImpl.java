@@ -77,7 +77,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -85,12 +85,12 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUserId",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -98,20 +98,20 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_NotE",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findByG_NotE",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -119,12 +119,12 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_NotE",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_NotE",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findByC_NotE",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -132,12 +132,12 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_NotE",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_U_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByU_L",
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findByU_L",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				
@@ -145,14 +145,15 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_L",
 			new String[] { Long.class.getName(), Date.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

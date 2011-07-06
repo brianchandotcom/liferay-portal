@@ -78,8 +78,8 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_RESOURCEID = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByResourceId",
+			PermissionModelImpl.FINDER_CACHE_ENABLED, PermissionImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByResourceId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -87,22 +87,23 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_RESOURCEID = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByResourceId", new String[] { Long.class.getName() });
+			PermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByResourceId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_A_R = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByA_R",
+			PermissionModelImpl.FINDER_CACHE_ENABLED, PermissionImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByA_R",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_A_R = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByA_R",
+			PermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByA_R",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			PermissionModelImpl.FINDER_CACHE_ENABLED, PermissionImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			PermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the permission in the entity cache if it is enabled.
@@ -1320,6 +1321,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			com.liferay.portal.model.impl.GroupImpl.class,
 			PermissionModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"getGroups",
 			new String[] {
@@ -1403,6 +1405,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			Long.class,
 			PermissionModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"getGroupsSize", new String[] { Long.class.getName() });
 
@@ -1456,6 +1459,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_GROUP = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			Boolean.class,
 			PermissionModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"containsGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -1785,6 +1789,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_ROLES = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
+			com.liferay.portal.model.impl.RoleImpl.class,
 			PermissionModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"getRoles",
 			new String[] {
@@ -1868,6 +1873,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_ROLES_SIZE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
+			Long.class,
 			PermissionModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"getRolesSize", new String[] { Long.class.getName() });
 
@@ -1921,6 +1927,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ROLE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
+			Boolean.class,
 			PermissionModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"containsRole",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -2248,6 +2255,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_USERS = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
+			com.liferay.portal.model.impl.UserImpl.class,
 			PermissionModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"getUsers",
 			new String[] {
@@ -2331,6 +2339,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_GET_USERS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
+			Long.class,
 			PermissionModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"getUsersSize", new String[] { Long.class.getName() });
 
@@ -2384,6 +2393,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USER = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			PermissionModelImpl.FINDER_CACHE_ENABLED_USERS_PERMISSIONS,
+			Boolean.class,
 			PermissionModelImpl.MAPPING_TABLE_USERS_PERMISSIONS_NAME,
 			"containsUser",
 			new String[] { Long.class.getName(), Long.class.getName() });

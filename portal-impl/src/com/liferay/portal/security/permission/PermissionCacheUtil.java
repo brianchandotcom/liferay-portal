@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Serializable;
+
 import java.util.Map;
 
 import org.apache.commons.collections.map.LRUMap;
@@ -56,7 +58,7 @@ public class PermissionCacheUtil {
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
 		PermissionCheckerBag bag = null;
 
-		String key = _encodeKey(userId, groupId);
+		Serializable key = _encodeKey(userId, groupId);
 
 		if (_localCacheAvailable) {
 			Map<String, Object> localCache = _localCache.get();
@@ -78,7 +80,7 @@ public class PermissionCacheUtil {
 
 		Boolean value = null;
 
-		String key = _encodeKey(
+		Serializable key = _encodeKey(
 			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
@@ -98,10 +100,10 @@ public class PermissionCacheUtil {
 		long userId, long groupId, PermissionCheckerBag bag) {
 
 		if (bag != null) {
-			String key = _encodeKey(userId, groupId);
+			Serializable key = _encodeKey(userId, groupId);
 
 			if (_localCacheAvailable) {
-				Map<String, Object> localCache = _localCache.get();
+				Map<Serializable, Object> localCache = _localCache.get();
 
 				localCache.put(key, bag);
 			}
@@ -117,11 +119,11 @@ public class PermissionCacheUtil {
 		String name, String primKey, String actionId, Boolean value) {
 
 		if (value != null) {
-			String key = _encodeKey(
+			Serializable key = _encodeKey(
 				userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 			if (_localCacheAvailable) {
-				Map<String, Object> localCache = _localCache.get();
+				Map<Serializable, Object> localCache = _localCache.get();
 
 				localCache.put(key, value);
 			}
@@ -132,7 +134,7 @@ public class PermissionCacheUtil {
 		return value;
 	}
 
-	private static String _encodeKey(long userId, long groupId) {
+	private static Serializable _encodeKey(long userId, long groupId) {
 		CacheKeyGenerator cacheKeyGenerator =
 			CacheKeyGeneratorUtil.getCacheKeyGenerator(
 				PERMISSION_CHECKER_BAG_CACHE_NAME);
@@ -143,7 +145,7 @@ public class PermissionCacheUtil {
 		return cacheKeyGenerator.finish();
 	}
 
-	private static String _encodeKey(
+	private static Serializable _encodeKey(
 		long userId, boolean signedIn, boolean checkGuest, long groupId,
 		String name, String primKey, String actionId) {
 

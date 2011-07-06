@@ -61,7 +61,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
-import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -1433,9 +1432,7 @@ public class ServicePreAction extends Action {
 
 		boolean wapTheme = BrowserSnifferUtil.isWap(request);
 
-		if ((layout != null) &&
-			group.isControlPanel()) {
-
+		if ((layout != null) && group.isControlPanel()) {
 			String themeId = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 			String colorSchemeId =
@@ -1453,39 +1450,10 @@ public class ServicePreAction extends Action {
 				colorScheme = ThemeLocalServiceUtil.getColorScheme(
 					companyId, theme.getThemeId(), colorSchemeId, false);
 			}
-		}
-		else if (layout != null) {
-			if (wapTheme) {
-				theme = layout.getWapTheme();
-				colorScheme = layout.getWapColorScheme();
-			}
-			else {
-				theme = layout.getTheme();
-				colorScheme = layout.getColorScheme();
-			}
-		}
-		else {
-			String themeId = null;
-			String colorSchemeId = null;
 
-			if (wapTheme) {
-				themeId = ThemeImpl.getDefaultWapThemeId(companyId);
-				colorSchemeId = ColorSchemeImpl.getDefaultWapColorSchemeId();
-			}
-			else {
-				themeId = ThemeImpl.getDefaultRegularThemeId(companyId);
-				colorSchemeId =
-					ColorSchemeImpl.getDefaultRegularColorSchemeId();
-			}
-
-			theme = ThemeLocalServiceUtil.getTheme(
-				companyId, themeId, wapTheme);
-			colorScheme = ThemeLocalServiceUtil.getColorScheme(
-				companyId, theme.getThemeId(), colorSchemeId, wapTheme);
+			request.setAttribute(WebKeys.THEME, theme);
+			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 		}
-
-		request.setAttribute(WebKeys.THEME, theme);
-		request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 
 		boolean themeCssFastLoad = SessionParamUtil.getBoolean(
 			request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);

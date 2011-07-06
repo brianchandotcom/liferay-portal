@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.Serializable;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,10 +30,12 @@ public class FinderPath {
 
 	public FinderPath(
 		boolean entityCacheEnabled, boolean finderCacheEnabled,
-		String className, String methodName, String[] params) {
+		Class<?> resultClass, String className, String methodName,
+		String[] params) {
 
 		_entityCacheEnabled = entityCacheEnabled;
 		_finderCacheEnabled = finderCacheEnabled;
+		_resultClass = resultClass;
 		_className = className;
 		_methodName = methodName;
 		_params = params;
@@ -40,7 +44,7 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
-	public String encodeCacheKey(Object[] args) {
+	public Serializable encodeCacheKey(Object[] args) {
 		StringBundler sb = new StringBundler(args.length * 2 + 3);
 
 		sb.append(ShardUtil.getCurrentShardName());
@@ -59,7 +63,7 @@ public class FinderPath {
 		return cacheKeyGenerator.getCacheKey(sb);
 	}
 
-	public String encodeLocalCacheKey(Object[] args) {
+	public Serializable encodeLocalCacheKey(Object[] args) {
 		StringBundler sb = new StringBundler(args.length * 2 + 3);
 
 		sb.append(ShardUtil.getCurrentShardName());
@@ -88,6 +92,10 @@ public class FinderPath {
 
 	public String[] getParams() {
 		return _params;
+	}
+
+	public Class<?> getResultClass() {
+		return _resultClass;
 	}
 
 	public boolean isEntityCacheEnabled() {
@@ -130,5 +138,6 @@ public class FinderPath {
 	private String _localCacheKeyPrefix;
 	private String _methodName;
 	private String[] _params;
+	private Class<?> _resultClass;
 
 }

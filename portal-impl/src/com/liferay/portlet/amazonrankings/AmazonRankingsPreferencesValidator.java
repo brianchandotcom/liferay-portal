@@ -39,13 +39,16 @@ public class AmazonRankingsPreferencesValidator
 
 		String[] isbns = preferences.getValues("isbns", new String[0]);
 
-		for (int i = 0; i < isbns.length; i++) {
+		for (String isbn : isbns) {
 			AmazonRankings amazonRankings =
-				AmazonRankingsUtil.getAmazonRankings(isbns[i]);
+				AmazonRankingsUtil.getAmazonRankings(isbn);
 
 			if (amazonRankings == null) {
-				badIsbns.add(isbns[i]);
-				_log.error("badIsbn: " + isbns[i]);
+				badIsbns.add(isbn);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Invalid ISBN " + isbn);
+				}
 			}
 		}
 
@@ -55,6 +58,7 @@ public class AmazonRankingsPreferencesValidator
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AmazonRankingsPreferencesValidator.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		AmazonRankingsPreferencesValidator.class);
 
 }

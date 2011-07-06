@@ -21,6 +21,7 @@ import com.liferay.portal.model.PortletInfo;
 
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -60,7 +61,15 @@ public class PortletResourceBundle extends ResourceBundle {
 
 		String value = null;
 
-		if (parent == null) {
+		if (parent != null) {
+			try {
+				value = parent.getString(key);
+			}
+			catch (MissingResourceException mre) {
+			}
+		}
+
+		if ((value == null) || (value == ResourceBundleUtil.NULL_VALUE)) {
 			value = _getJavaxPortletString(key);
 		}
 

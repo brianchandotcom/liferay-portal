@@ -14,29 +14,31 @@
 
 package com.liferay.portal.kernel.cache;
 
+import java.io.Serializable;
+
 /**
  * @author Edward Han
  */
 public interface CacheListener {
 
 	public void notifyEntryEvicted(
-			PortalCache portalCache, String key, Object value)
+			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException;
 
 	public void notifyEntryExpired(
-			PortalCache portalCache, String key, Object value)
+			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException;
 
 	public void notifyEntryPut(
-			PortalCache portalCache, String key, Object value)
+			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException;
 
 	public void notifyEntryRemoved(
-			PortalCache portalCache, String key, Object value)
+			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException;
 
 	public void notifyEntryUpdated(
-			PortalCache portalCache, String key, Object value)
+			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException;
 
 	public void notifyRemoveAll(PortalCache portalCache)

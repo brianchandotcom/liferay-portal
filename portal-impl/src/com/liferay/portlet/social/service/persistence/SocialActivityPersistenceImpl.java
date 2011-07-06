@@ -76,7 +76,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -84,12 +84,13 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -97,12 +98,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUserId",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -110,20 +111,21 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_MIRRORACTIVITYID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByMirrorActivityId",
-			new String[] { Long.class.getName() });
+			SocialActivityImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByMirrorActivityId", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_MIRRORACTIVITYID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByMirrorActivityId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_CLASSNAMEID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByClassNameId",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByClassNameId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -131,12 +133,13 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSNAMEID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByClassNameId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_RECEIVERUSERID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByReceiverUserId",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByReceiverUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -144,12 +147,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_RECEIVERUSERID = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByReceiverUserId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_C",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -157,12 +160,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_M_C_C = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByM_C_C",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST, "findByM_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -170,21 +173,22 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_M_C_C = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByM_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_CD_C_C_T_R",
+			SocialActivityImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_U_CD_C_C_T_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U_CD_C_C_T_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
@@ -193,9 +197,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialActivityImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

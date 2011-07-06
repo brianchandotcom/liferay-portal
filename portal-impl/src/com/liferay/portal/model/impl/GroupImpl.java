@@ -51,6 +51,30 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Represents either a site or a generic resource container.
+ *
+ * <p>
+ * Groups are most used in Liferay as a resource container for permissioning and
+ * content scoping purposes. For instance, an site is group, meaning that it can
+ * contain layouts, web content, wiki entries, etc. However, a single layout can
+ * also be a group containing its own unique set of resources. An example of
+ * this would be a site that has several distinct wikis on different layouts.
+ * Each of these layouts would have its own group, and all of the nodes in the
+ * wiki for a certain layout would be associated with that layout's group. This
+ * allows users to be given different permissions on each of the wikis, even
+ * though they are all within the same site. In addition to sites and layouts,
+ * users and organizations are also groups.
+ * </p>
+ *
+ * <p>
+ * Groups also have a second, partially conflicting purpose in Liferay. For
+ * legacy reasons, groups are also the model used to represent sites (known as
+ * communities before Liferay v6.1). Confusion may arise from the fact that a
+ * site group is both the resource container and the site itself, whereas a
+ * layout or organization would have both a primary model and an associated
+ * group.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
 public class GroupImpl extends GroupModelImpl implements Group {

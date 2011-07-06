@@ -74,7 +74,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_ITEMID = new FinderPath(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByItemId",
+			ShoppingItemPriceImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByItemId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,14 +83,15 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_ITEMID = new FinderPath(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByItemId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			ShoppingItemPriceImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingItemPriceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

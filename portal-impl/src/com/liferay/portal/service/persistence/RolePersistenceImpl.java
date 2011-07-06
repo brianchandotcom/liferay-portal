@@ -79,8 +79,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -88,11 +88,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCompanyId", new String[] { Long.class.getName() });
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_NAME = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByName",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByName",
 			new String[] {
 				String.class.getName(),
 				
@@ -100,11 +101,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByName", new String[] { String.class.getName() });
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByName",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_SUBTYPE = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findBySubtype",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST, "findBySubtype",
 			new String[] {
 				String.class.getName(),
 				
@@ -112,19 +114,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_SUBTYPE = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countBySubtype", new String[] { String.class.getName() });
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countBySubtype",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_N",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_N",
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_T_S = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByT_S",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByT_S",
 			new String[] {
 				Integer.class.getName(), String.class.getName(),
 				
@@ -132,27 +135,27 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_T_S = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByT_S",
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByT_S",
 			new String[] { Integer.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_C_C",
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C_C",
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			RoleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the role in the entity cache if it is enabled.
@@ -979,11 +982,18 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1093,11 +1103,18 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1628,7 +1645,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (name == null) {
 			query.append(_FINDER_COLUMN_NAME_NAME_1);
@@ -1642,7 +1664,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1753,7 +1777,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (name == null) {
 			query.append(_FINDER_COLUMN_NAME_NAME_1);
@@ -1767,7 +1796,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2304,7 +2335,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (subtype == null) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
@@ -2318,7 +2354,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2429,7 +2467,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (subtype == null) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
@@ -2443,7 +2486,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3159,7 +3204,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_T_S_TYPE_2);
 
@@ -3175,7 +3225,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -3291,7 +3343,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_T_S_TYPE_2);
 
@@ -3307,7 +3364,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -4464,6 +4523,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			com.liferay.portal.model.impl.GroupImpl.class,
 			RoleModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "getGroups",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -4545,7 +4605,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_GROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			RoleModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES, Long.class,
 			RoleModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "getGroupsSize",
 			new String[] { Long.class.getName() });
 
@@ -4598,7 +4658,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_GROUP = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			RoleModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES, Boolean.class,
 			RoleModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "containsGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -4927,6 +4987,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
+			com.liferay.portal.model.impl.PermissionImpl.class,
 			RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"getPermissions",
 			new String[] {
@@ -5010,7 +5071,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
+			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS, Long.class,
 			RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"getPermissionsSize", new String[] { Long.class.getName() });
 
@@ -5064,7 +5125,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_PERMISSION = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED_ROLES_PERMISSIONS,
-			RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
+			Boolean.class, RoleModelImpl.MAPPING_TABLE_ROLES_PERMISSIONS_NAME,
 			"containsPermission",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -5403,6 +5464,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	public static final FinderPath FINDER_PATH_GET_USERS = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			com.liferay.portal.model.impl.UserImpl.class,
 			RoleModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getUsers",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -5484,7 +5546,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			RoleModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Long.class,
 			RoleModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getUsersSize",
 			new String[] { Long.class.getName() });
 
@@ -5537,7 +5599,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USER = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			RoleModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
+			RoleModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Boolean.class,
 			RoleModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "containsUser",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -6549,11 +6611,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final String _FINDER_COLUMN_C_C_C_COMPANYID_2 = "role.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 = "role.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 = "role.classPK = ?";
-	private static final String _FILTER_SQL_SELECT_ROLE_WHERE = "SELECT {role.*} FROM Role_ role WHERE ";
+	private static final String _FILTER_SQL_SELECT_ROLE_WHERE = "SELECT DISTINCT {role.*} FROM Role_ role WHERE ";
+	private static final String _FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {Role_.*} FROM (SELECT DISTINCT role.roleId FROM Role_ role WHERE ";
+	private static final String _FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId";
 	private static final String _FILTER_SQL_COUNT_ROLE_WHERE = "SELECT COUNT(DISTINCT role.roleId) AS COUNT_VALUE FROM Role_ role WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "role";
 	private static final String _FILTER_ENTITY_TABLE = "Role_";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "role.roleId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "role.roleId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "role.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Role_.";

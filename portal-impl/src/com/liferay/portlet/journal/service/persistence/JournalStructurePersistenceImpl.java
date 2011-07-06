@@ -80,7 +80,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUuid",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -88,20 +88,22 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -109,12 +111,13 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_STRUCTUREID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByStructureId",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByStructureId",
 			new String[] {
 				String.class.getName(),
 				
@@ -122,20 +125,20 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_STRUCTUREID = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByStructureId",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_S = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_S",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P",
+			JournalStructureImpl.class, FINDER_CLASS_NAME_LIST, "findByG_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -143,14 +146,15 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
 			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			JournalStructureImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureModelImpl.FINDER_CACHE_ENABLED,
+			JournalStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -1499,11 +1503,18 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1615,11 +1626,18 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2708,7 +2726,12 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
@@ -2724,7 +2747,9 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2844,7 +2869,12 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
@@ -2860,7 +2890,9 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3805,11 +3837,14 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	private static final String _FINDER_COLUMN_G_P_PARENTSTRUCTUREID_1 = "journalStructure.parentStructureId IS NULL";
 	private static final String _FINDER_COLUMN_G_P_PARENTSTRUCTUREID_2 = "journalStructure.parentStructureId = ?";
 	private static final String _FINDER_COLUMN_G_P_PARENTSTRUCTUREID_3 = "(journalStructure.parentStructureId IS NULL OR journalStructure.parentStructureId = ?)";
-	private static final String _FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE = "SELECT {journalStructure.*} FROM JournalStructure journalStructure WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALSTRUCTURE_WHERE = "SELECT DISTINCT {journalStructure.*} FROM JournalStructure journalStructure WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {JournalStructure.*} FROM (SELECT DISTINCT journalStructure.id FROM JournalStructure journalStructure WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN JournalStructure ON TEMP_TABLE.id = JournalStructure.id";
 	private static final String _FILTER_SQL_COUNT_JOURNALSTRUCTURE_WHERE = "SELECT COUNT(DISTINCT journalStructure.id) AS COUNT_VALUE FROM JournalStructure journalStructure WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "journalStructure";
 	private static final String _FILTER_ENTITY_TABLE = "JournalStructure";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalStructure.id";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalStructure.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalStructure.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalStructure.";

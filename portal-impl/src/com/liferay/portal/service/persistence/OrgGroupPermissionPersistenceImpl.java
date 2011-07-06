@@ -70,7 +70,8 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			OrgGroupPermissionImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -78,12 +79,13 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
+			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_PERMISSIONID = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByPermissionId",
+			OrgGroupPermissionImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByPermissionId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -91,14 +93,15 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_PERMISSIONID = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
+			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByPermissionId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			OrgGroupPermissionImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED,
+			OrgGroupPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

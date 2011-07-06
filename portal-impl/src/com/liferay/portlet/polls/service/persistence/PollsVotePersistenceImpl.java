@@ -73,8 +73,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_QUESTIONID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByQuestionId",
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByQuestionId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,11 +82,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_QUESTIONID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByQuestionId", new String[] { Long.class.getName() });
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByQuestionId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_CHOICEID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByChoiceId",
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByChoiceId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -94,22 +95,23 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_CHOICEID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByChoiceId", new String[] { Long.class.getName() });
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByChoiceId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByQ_U",
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByQ_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByQ_U",
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByQ_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-			PollsVoteModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the polls vote in the entity cache if it is enabled.

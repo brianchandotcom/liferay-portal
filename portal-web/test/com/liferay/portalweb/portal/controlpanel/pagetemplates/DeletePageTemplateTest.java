@@ -30,7 +30,7 @@ public class DeletePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,33 @@ public class DeletePageTemplateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Page Templates", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Page Templates",
+			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Edited Test Page Template"),
-			selenium.getText("//tr[6]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[6]/td[3]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[6]/td[3]/span/ul/li/strong/a/span",
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[6]/td[3]/span/ul/li/strong/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//tr[6]/td[3]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -60,7 +76,7 @@ public class DeletePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 					break;
 				}
@@ -72,6 +88,9 @@ public class DeletePageTemplateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
@@ -85,8 +104,7 @@ public class DeletePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -97,7 +115,8 @@ public class DeletePageTemplateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

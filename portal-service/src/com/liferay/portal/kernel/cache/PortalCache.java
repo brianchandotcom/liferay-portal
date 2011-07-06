@@ -21,31 +21,32 @@ import java.util.Collection;
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
+ * @author Shuyang Zhou
  */
 public interface PortalCache {
 
 	public void destroy();
 
-	public Collection<Object> get(Collection<String> keys);
+	public Collection<Object> get(Collection<Serializable> keys);
 
-	public Object get(String key);
+	public Object get(Serializable key);
 
 	public String getName();
 
-	public void put(String key, Object value);
+	public void put(Serializable key, Object value);
 
-	public void put(String key, Object value, int timeToLive);
+	public void put(Serializable key, Object value, int timeToLive);
 
-	public void put(String key, Serializable value);
+	public void put(Serializable key, Serializable value);
 
-	public void put(String key, Serializable value, int timeToLive);
+	public void put(Serializable key, Serializable value, int timeToLive);
 
 	public void registerCacheListener(CacheListener cacheListener);
 
 	public void registerCacheListener(
 		CacheListener cacheListener, CacheListenerScope cacheListenerScope);
 
-	public void remove(String key);
+	public void remove(Serializable key);
 
 	public void removeAll();
 

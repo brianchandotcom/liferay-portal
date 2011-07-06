@@ -70,26 +70,27 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_HOSTNAME = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_HOSTNAME = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByHostname", new String[] { String.class.getName() });
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByHostname",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED,
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_L",
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_L",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the virtual host in the entity cache if it is enabled.

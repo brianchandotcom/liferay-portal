@@ -73,7 +73,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -81,12 +81,12 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P",
+			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_LIST, "findByG_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
@@ -94,18 +94,19 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
+			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P_N",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -113,9 +114,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -903,11 +905,18 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1021,11 +1030,18 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1568,13 +1584,20 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1691,13 +1714,20 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2637,11 +2667,14 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "layoutSetBranch.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "layoutSetBranch.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(layoutSetBranch.name IS NULL OR layoutSetBranch.name = ?)";
-	private static final String _FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE = "SELECT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE = "SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId";
 	private static final String _FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE = "SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "layoutSetBranch";
 	private static final String _FILTER_ENTITY_TABLE = "LayoutSetBranch";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "layoutSetBranch.layoutSetBranchId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layoutSetBranch.layoutSetBranchId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSetBranch.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "LayoutSetBranch.";

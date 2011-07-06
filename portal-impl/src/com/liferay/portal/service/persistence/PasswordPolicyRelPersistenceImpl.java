@@ -70,7 +70,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_PASSWORDPOLICYID = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByPasswordPolicyId",
+			PasswordPolicyRelImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByPasswordPolicyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -78,34 +79,37 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_PASSWORDPOLICYID = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
+			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByPasswordPolicyId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			PasswordPolicyRelImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
+			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_P_C_C = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_C_C",
+			PasswordPolicyRelImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByP_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_P_C_C = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
+			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByP_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			PasswordPolicyRelImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED,
+			PasswordPolicyRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

@@ -70,8 +70,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByG_C",
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, PortletItemImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByG_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -79,12 +79,12 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_C",
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByG_P_C",
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, PortletItemImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByG_P_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(),
@@ -93,32 +93,32 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_P_C",
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_P_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_N_P_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED,
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, PortletItemImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_N_P_C = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_N_P_C",
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_N_P_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, PortletItemImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-			PortletItemModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			PortletItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the portlet item in the entity cache if it is enabled.

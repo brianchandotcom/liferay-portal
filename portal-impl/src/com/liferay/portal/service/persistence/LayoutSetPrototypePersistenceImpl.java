@@ -74,7 +74,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUuid",
+			LayoutSetPrototypeImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -82,12 +82,13 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			LayoutSetPrototypeImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -95,12 +96,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_A = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByC_A",
+			LayoutSetPrototypeImpl.class, FINDER_CLASS_NAME_LIST, "findByC_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
@@ -108,14 +109,15 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_A = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_A",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			LayoutSetPrototypeImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetPrototypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -868,7 +870,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(2);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
@@ -882,7 +889,9 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -989,7 +998,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
@@ -1003,7 +1017,9 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			}
 		}
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1507,11 +1523,18 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(2);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1616,11 +1639,18 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2146,13 +2176,20 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
 		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2260,13 +2297,20 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
 		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3074,11 +3118,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "layoutSetPrototype.companyId = ?";
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 = "layoutSetPrototype.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutSetPrototype.active = ?";
-	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE = "SELECT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE = "SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {LayoutSetPrototype.*} FROM (SELECT DISTINCT layoutSetPrototype.layoutSetPrototypeId FROM LayoutSetPrototype layoutSetPrototype WHERE ";
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN LayoutSetPrototype ON TEMP_TABLE.layoutSetPrototypeId = LayoutSetPrototype.layoutSetPrototypeId";
 	private static final String _FILTER_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE = "SELECT COUNT(DISTINCT layoutSetPrototype.layoutSetPrototypeId) AS COUNT_VALUE FROM LayoutSetPrototype layoutSetPrototype WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "layoutSetPrototype";
 	private static final String _FILTER_ENTITY_TABLE = "LayoutSetPrototype";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "layoutSetPrototype.layoutSetPrototypeId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layoutSetPrototype.layoutSetPrototypeId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSetPrototype.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "LayoutSetPrototype.";

@@ -30,7 +30,7 @@ public class ApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,14 +41,16 @@ public class ApplyUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=User Groups", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[4]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
+			RuntimeVariables.replace("View"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -56,7 +58,7 @@ public class ApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
@@ -68,6 +70,9 @@ public class ApplyUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User Groups"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
@@ -79,7 +84,7 @@ public class ApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Available")) {
+				if (selenium.isVisible("//td[4]/span/ul/li/strong/a")) {
 					break;
 				}
 			}
@@ -90,7 +95,32 @@ public class ApplyUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Available", RuntimeVariables.replace(""));
+		selenium.clickAt("//td[4]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Assign Members"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -100,7 +130,7 @@ public class ApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_127_keywords")) {
+				if (selenium.isVisible("//li[2]/span/span/a")) {
 					break;
 				}
 			}
@@ -111,18 +141,61 @@ public class ApplyUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_127_keywords", RuntimeVariables.replace("selenium"));
+		selenium.clickAt("//li[2]/span/span/a",
+			RuntimeVariables.replace("Available"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@name='_125_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("selenium"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_127_allRowIds", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@name='_125_allRowIds']",
+			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Update Associations']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

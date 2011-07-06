@@ -75,7 +75,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -83,22 +83,23 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_CODE = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByCode",
+			ShoppingCouponImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByCode",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_CODE = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCode",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

@@ -107,6 +107,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			public static final FinderPath FINDER_PATH_FIND_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_LIST,
 				"findBy${finder.name}",
 				new String[] {
@@ -120,6 +121,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			public static final FinderPath FINDER_PATH_FETCH_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_ENTITY,
 				"fetchBy${finder.name}",
 				new String[] {
@@ -136,6 +138,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public static final FinderPath FINDER_PATH_COUNT_BY_${finder.name?upper_case} = new FinderPath(
 			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			Long.class,
 			FINDER_CLASS_NAME_LIST,
 			"countBy${finder.name}",
 			new String[] {
@@ -152,6 +155,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+		${entity.name}Impl.class,
 		FINDER_CLASS_NAME_LIST,
 		"findAll",
 		new String[0]);
@@ -159,6 +163,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+		Long.class,
 		FINDER_CLASS_NAME_LIST,
 		"countAll",
 		new String[0]);
@@ -1513,11 +1518,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
 					}
 
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					if (getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					}
+					else {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					}
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+					if (!getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					}
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
@@ -1657,11 +1669,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						query = new StringBundler(3);
 					}
 
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					if (getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					}
+					else {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					}
 
 					<#include "persistence_impl_finder_cols.ftl">
 
-					appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+					if (!getDB().isSupportsInlineDistinct()) {
+						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					}
 
 					if (orderByComparator != null) {
 						String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1916,11 +1935,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						StringBundler query = new StringBundler();
 
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						if (getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						}
+						else {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						}
 
 						<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-						appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+						if (!getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						}
 
 						if (orderByComparator != null) {
 							if (getDB().isSupportsInlineDistinct()) {
@@ -2769,13 +2795,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 
@@ -2865,13 +2889,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					Long.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 
@@ -2936,13 +2958,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if column.mappingTable??>
 					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-				</#if>
-
-				<#if column.mappingTable??>
+					Boolean.class,
 					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
 				<#else>
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
 					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST,
 				</#if>
 
@@ -3839,15 +3859,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled()>
-		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
+
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1 = "SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKVarName} FROM ${entity.table} ${entity.alias} WHERE ";
+
+		private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2 = ") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKVarName} = ${entity.table}.${entity.PKVarName}";
 
 		private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKVarName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
 
 		private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
 
 		private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
-
-		private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "${entity.alias}.${entity.PKVarName}";
 
 		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKColumn.name}";
 	</#if>

@@ -71,7 +71,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_BUILDNAMESPACE = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByBuildNamespace",
+			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByBuildNamespace",
 			new String[] {
 				String.class.getName(),
 				
@@ -79,22 +80,24 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_BUILDNAMESPACE = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByBuildNamespace",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_BNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByBNS_BNU",
+			ServiceComponentImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByBNS_BNU",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_BNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByBNS_BNU",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
+			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

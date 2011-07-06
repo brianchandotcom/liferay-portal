@@ -15,8 +15,7 @@
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -40,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-public class InvokerFilter implements Filter {
+public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	public InvokerFilter() {
 		if (_INVOKER_FILTER_CHAIN_SIZE > 0) {
@@ -50,17 +49,7 @@ public class InvokerFilter implements Filter {
 	}
 
 	public void destroy() {
-		ServletContext servletContext = _filterConfig.getServletContext();
-
-		InvokerFilterHelper invokerFilterHelper =
-			(InvokerFilterHelper)servletContext.getAttribute(
-				InvokerFilterHelper.class.getName());
-
-		if (invokerFilterHelper != null) {
-			servletContext.removeAttribute(InvokerFilterHelper.class.getName());
-
-			_invokerFilterHelper.destroy();
-		}
+		portalDestroy();
 	}
 
 	public void doFilter(
@@ -86,60 +75,73 @@ public class InvokerFilter implements Filter {
 		invokerFilterChain.doFilter(servletRequest, servletResponse);
 	}
 
-	public void init(FilterConfig filterConfig) throws ServletException {
-		try {
-			_filterConfig = filterConfig;
+	public void init(FilterConfig filterConfig) {
+		_filterConfig = filterConfig;
 
-			ServletContext servletContext = _filterConfig.getServletContext();
-
-			InvokerFilterHelper invokerFilterHelper =
-				(InvokerFilterHelper)servletContext.getAttribute(
-					InvokerFilterHelper.class.getName());
-
-			if (invokerFilterHelper == null) {
-				invokerFilterHelper = new InvokerFilterHelper();
-
-				invokerFilterHelper.readLiferayFilterWebXML(
-					servletContext, "/WEB-INF/liferay-web.xml");
-
-				servletContext.setAttribute(
-					InvokerFilterHelper.class.getName(), invokerFilterHelper);
-			}
-
-			_invokerFilterHelper = invokerFilterHelper;
-
-			_invokerFilterHelper.addInvokerFilter(this);
-
-			String dispatcher = GetterUtil.getString(
-				_filterConfig.getInitParameter("dispatcher"));
-
-			if (dispatcher.equals("ERROR")) {
-				_dispatcher = Dispatcher.ERROR;
-			}
-			else if (dispatcher.equals("FORWARD")) {
-				_dispatcher = Dispatcher.FORWARD;
-			}
-			else if (dispatcher.equals("INCLUDE")) {
-				_dispatcher = Dispatcher.INCLUDE;
-			}
-			else if (dispatcher.equals("REQUEST")) {
-				_dispatcher = Dispatcher.REQUEST;
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Invalid dispatcher " + dispatcher);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new ServletException(e);
-		}
+		registerPortalLifecycle();
 	}
 
 	protected void clearFilterChainsCache() {
 		if (_filterChains != null) {
 			_filterChains.clear();
+		}
+	}
+
+	@Override
+	protected void doPortalDestroy() {
+		ServletContext servletContext = _filterConfig.getServletContext();
+
+		InvokerFilterHelper invokerFilterHelper =
+			(InvokerFilterHelper)servletContext.getAttribute(
+				InvokerFilterHelper.class.getName());
+
+		if (invokerFilterHelper != null) {
+			servletContext.removeAttribute(InvokerFilterHelper.class.getName());
+
+			_invokerFilterHelper.destroy();
+		}
+	}
+
+	@Override
+	protected void doPortalInit() throws Exception {
+		ServletContext servletContext = _filterConfig.getServletContext();
+
+		InvokerFilterHelper invokerFilterHelper =
+			(InvokerFilterHelper)servletContext.getAttribute(
+				InvokerFilterHelper.class.getName());
+
+		if (invokerFilterHelper == null) {
+			invokerFilterHelper = new InvokerFilterHelper();
+
+			invokerFilterHelper.readLiferayFilterWebXML(
+				servletContext, "/WEB-INF/liferay-web.xml");
+
+			servletContext.setAttribute(
+				InvokerFilterHelper.class.getName(), invokerFilterHelper);
+		}
+
+		_invokerFilterHelper = invokerFilterHelper;
+
+		_invokerFilterHelper.addInvokerFilter(this);
+
+		String dispatcher = GetterUtil.getString(
+			_filterConfig.getInitParameter("dispatcher"));
+
+		if (dispatcher.equals("ERROR")) {
+			_dispatcher = Dispatcher.ERROR;
+		}
+		else if (dispatcher.equals("FORWARD")) {
+			_dispatcher = Dispatcher.FORWARD;
+		}
+		else if (dispatcher.equals("INCLUDE")) {
+			_dispatcher = Dispatcher.INCLUDE;
+		}
+		else if (dispatcher.equals("REQUEST")) {
+			_dispatcher = Dispatcher.REQUEST;
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid dispatcher " + dispatcher);
 		}
 	}
 
@@ -194,8 +196,6 @@ public class InvokerFilter implements Filter {
 
 	private static final int _INVOKER_FILTER_CHAIN_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
-
-	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
 
 	private Dispatcher _dispatcher;
 	private ConcurrentLRUCache<Integer, InvokerFilterChain> _filterChains;

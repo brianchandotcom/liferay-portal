@@ -15,6 +15,9 @@
 package com.liferay.portal.model;
 
 /**
+ * Contains constants used by roles, including the names of the default roles
+ * and the role types.
+ *
  * @author Brian Wing Shun Chan
  */
 public class RoleConstants {

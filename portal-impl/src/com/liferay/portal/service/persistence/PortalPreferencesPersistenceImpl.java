@@ -70,17 +70,19 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_O_O = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
+			PortalPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByO_O",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByO_O",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			PortalPreferencesImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**

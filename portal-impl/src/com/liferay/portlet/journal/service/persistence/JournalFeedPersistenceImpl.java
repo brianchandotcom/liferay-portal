@@ -78,8 +78,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByUuid",
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -87,19 +87,20 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUuid", new String[] { String.class.getName() });
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUuid",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED,
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUUID_G",
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -107,22 +108,23 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByGroupId", new String[] { Long.class.getName() });
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_F = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED,
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_F",
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_F",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			JournalFeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the journal feed in the entity cache if it is enabled.
@@ -1471,11 +1473,18 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALFEED_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1586,11 +1595,18 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_JOURNALFEED_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2446,11 +2462,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final String _FINDER_COLUMN_G_F_FEEDID_1 = "journalFeed.feedId IS NULL";
 	private static final String _FINDER_COLUMN_G_F_FEEDID_2 = "journalFeed.feedId = ?";
 	private static final String _FINDER_COLUMN_G_F_FEEDID_3 = "(journalFeed.feedId IS NULL OR journalFeed.feedId = ?)";
-	private static final String _FILTER_SQL_SELECT_JOURNALFEED_WHERE = "SELECT {journalFeed.*} FROM JournalFeed journalFeed WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALFEED_WHERE = "SELECT DISTINCT {journalFeed.*} FROM JournalFeed journalFeed WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {JournalFeed.*} FROM (SELECT DISTINCT journalFeed.id FROM JournalFeed journalFeed WHERE ";
+	private static final String _FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN JournalFeed ON TEMP_TABLE.id = JournalFeed.id";
 	private static final String _FILTER_SQL_COUNT_JOURNALFEED_WHERE = "SELECT COUNT(DISTINCT journalFeed.id) AS COUNT_VALUE FROM JournalFeed journalFeed WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "journalFeed";
 	private static final String _FILTER_ENTITY_TABLE = "JournalFeed";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "journalFeed.id";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalFeed.id";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalFeed.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalFeed.";

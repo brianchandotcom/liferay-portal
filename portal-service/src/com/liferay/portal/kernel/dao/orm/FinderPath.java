@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.Serializable;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -42,7 +44,7 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
-	public String encodeCacheKey(Object[] args) {
+	public Serializable encodeCacheKey(Object[] args) {
 		StringBundler sb = new StringBundler(args.length * 2 + 3);
 
 		sb.append(ShardUtil.getCurrentShardName());
@@ -61,7 +63,7 @@ public class FinderPath {
 		return cacheKeyGenerator.getCacheKey(sb);
 	}
 
-	public String encodeLocalCacheKey(Object[] args) {
+	public Serializable encodeLocalCacheKey(Object[] args) {
 		StringBundler sb = new StringBundler(args.length * 2 + 3);
 
 		sb.append(ShardUtil.getCurrentShardName());

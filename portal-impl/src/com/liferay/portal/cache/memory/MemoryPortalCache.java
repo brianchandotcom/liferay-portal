@@ -37,67 +37,49 @@ public class MemoryPortalCache extends BasePortalCache {
 
 	public MemoryPortalCache(String name, int initialCapacity) {
  		_name = name;
-		_map = new ConcurrentHashMap<String, Object>(initialCapacity);
+		_map = new ConcurrentHashMap<Serializable, Object>(initialCapacity);
 	}
 
-	public Collection<Object> get(Collection<String> keys) {
+	public Collection<Object> get(Collection<Serializable> keys) {
 		List<Object> values = new ArrayList<Object>(keys.size());
 
-		for (String key : keys) {
+		for (Serializable key : keys) {
 			values.add(get(key));
 		}
 
 		return values;
 	}
 
-	public Object get(String key) {
-		String processedKey = processKey(key);
-
-		return _map.get(processedKey);
+	public Object get(Serializable key) {
+		return _map.get(key);
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public void put(String key, Object value) {
-		String processedKey = processKey(key);
+	public void put(Serializable key, Object value) {
+		Object oldValue = _map.put(key, value);
 
-		boolean updated = _map.containsKey(key);
-
-		_map.put(processedKey, value);
-
-		notifyPutEvents(key, value, updated);
+		notifyPutEvents(key, value, oldValue != null);
 	}
 
-	public void put(String key, Object value, int timeToLive) {
-		String processedKey = processKey(key);
+	public void put(Serializable key, Object value, int timeToLive) {
+		Object oldValue = _map.put(key, value);
 
-		boolean updated = _map.containsKey(key);
-
-		_map.put(processedKey, value);
-
-		notifyPutEvents(key, value, updated);
+		notifyPutEvents(key, value, oldValue != null);
 	}
 
-	public void put(String key, Serializable value) {
-		String processedKey = processKey(key);
+	public void put(Serializable key, Serializable value) {
+		Object oldValue = _map.put(key, value);
 
-		boolean updated = _map.containsKey(key);
-
-		_map.put(processedKey, value);
-
-		notifyPutEvents(key, value, updated);
+		notifyPutEvents(key, value, oldValue != null);
 	}
 
-	public void put(String key, Serializable value, int timeToLive) {
-		String processedKey = processKey(key);
+	public void put(Serializable key, Serializable value, int timeToLive) {
+		Object oldValue = _map.put(key, value);
 
-		boolean updated = _map.containsKey(processedKey);
-
-		_map.put(processedKey, value);
-
-		notifyPutEvents(key, value, updated);
+		notifyPutEvents(key, value, oldValue != null);
 	}
 
 	public void registerCacheListener(CacheListener cacheListener) {
@@ -110,10 +92,8 @@ public class MemoryPortalCache extends BasePortalCache {
 		registerCacheListener(cacheListener);
 	}
 
-	public void remove(String key) {
-		String processedKey = processKey(key);
-
-		Object value = _map.remove(processedKey);
+	public void remove(Serializable key) {
+		Object value = _map.remove(key);
 
 		for (CacheListener cacheListener : _cacheListeners) {
 			cacheListener.notifyEntryRemoved(this, key, value);
@@ -136,7 +116,8 @@ public class MemoryPortalCache extends BasePortalCache {
 		_cacheListeners.clear();
 	}
 
-	protected void notifyPutEvents(String key, Object value, boolean updated) {
+	protected void notifyPutEvents(
+		Serializable key, Object value, boolean updated) {
 		if (updated) {
 			for (CacheListener cacheListener : _cacheListeners) {
 				cacheListener.notifyEntryUpdated(this, key, value);
@@ -151,7 +132,7 @@ public class MemoryPortalCache extends BasePortalCache {
 
 	private Set<CacheListener> _cacheListeners =
 		new ConcurrentHashSet<CacheListener>();
-	private Map<String, Object> _map;
+	private Map<Serializable, Object> _map;
 	private String _name;
 
 }

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,23 +34,23 @@ public class BaseCacheKeyGeneratorTest extends TestCase {
 	public void testConsistency() {
 		StringBundler sb = new StringBundler(_KEYS);
 
-		String hashCode1 = cacheKeyGenerator.getCacheKey(sb.toString());
-		String hashCode2 = cacheKeyGenerator.getCacheKey(_KEYS);
+		Serializable hashCode1 = cacheKeyGenerator.getCacheKey(sb.toString());
+		Serializable hashCode2 = cacheKeyGenerator.getCacheKey(_KEYS);
 
 		assertEquals(hashCode1, hashCode2);
 
-		String hashCode3 = cacheKeyGenerator.getCacheKey(sb);
+		Serializable hashCode3 = cacheKeyGenerator.getCacheKey(sb);
 
 		assertEquals(hashCode2, hashCode3);
 	}
 
 	public void testScan() {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<Serializable, String> map = new HashMap<Serializable, String>();
 
 		for (int i = 0; i < 1000000; i++) {
 			String value = String.valueOf(i);
 
-			String key = cacheKeyGenerator.getCacheKey(value);
+			Serializable key = cacheKeyGenerator.getCacheKey(value);
 
 			String oldValue = map.put(key, value);
 
@@ -61,12 +63,13 @@ public class BaseCacheKeyGeneratorTest extends TestCase {
 	}
 
 	public void testSpecialCases() {
-		Map<String, String> checkMap = new HashMap<String, String>();
+		Map<Serializable, String> checkMap =
+			new HashMap<Serializable, String>();
 
 		for (String[] values : _SPECIAL_CASES) {
 			String value = Arrays.toString(values);
 
-			String key = cacheKeyGenerator.getCacheKey(values);
+			Serializable key = cacheKeyGenerator.getCacheKey(values);
 
 			String oldValue = checkMap.put(key, Arrays.toString(values));
 

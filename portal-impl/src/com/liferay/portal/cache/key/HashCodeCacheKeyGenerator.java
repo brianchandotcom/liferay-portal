@@ -16,7 +16,6 @@ package com.liferay.portal.cache.key;
 
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Michael C. Han
@@ -29,17 +28,17 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 		return new HashCodeCacheKeyGenerator();
 	}
 
-	public String getCacheKey(String key) {
+	public Long getCacheKey(String key) {
 		long hashCode = 0;
 
 		for (int i = 0; i < key.length(); i++) {
 			hashCode = 31 * hashCode + key.charAt(i);
 		}
 
-		return StringUtil.toHexString(hashCode);
+		return hashCode;
 	}
 
-	public String getCacheKey(String[] keys) {
+	public Long getCacheKey(String[] keys) {
 		long hashCode = 0;
 
 		for (String key : keys) {
@@ -52,10 +51,10 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 			}
 		}
 
-		return StringUtil.toHexString(hashCode);
+		return hashCode;
 	}
 
-	public String getCacheKey(StringBundler sb) {
+	public Long getCacheKey(StringBundler sb) {
 		long hashCode = 0;
 
 		for (int i = 0; i < sb.index(); i++) {
@@ -66,7 +65,7 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 			}
 		}
 
-		return StringUtil.toHexString(hashCode);
+		return hashCode;
 	}
 
 }

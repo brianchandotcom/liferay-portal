@@ -17,6 +17,8 @@ package com.liferay.portal.cache.keypool;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 
+import java.io.Serializable;
+
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
@@ -28,31 +30,31 @@ public class MultiVMKeyPoolCacheListener implements CacheListener {
 	}
 
 	public void notifyEntryEvicted(
-		PortalCache portalCache, String key, Object value) {
+		PortalCache portalCache, Serializable key, Object value) {
 
 		_localPortalCache.remove(key);
 	}
 
 	public void notifyEntryExpired(
-		PortalCache portalCache, String key, Object value) {
+		PortalCache portalCache, Serializable key, Object value) {
 
 		_localPortalCache.remove(key);
 	}
 
 	public void notifyEntryPut(
-		PortalCache portalCache, String key, Object value) {
+		PortalCache portalCache, Serializable key, Object value) {
 
 		_localPortalCache.put(key, value);
 	}
 
 	public void notifyEntryRemoved(
-		PortalCache portalCache, String key, Object value) {
+		PortalCache portalCache, Serializable key, Object value) {
 
 		_localPortalCache.remove(key);
 	}
 
 	public void notifyEntryUpdated(
-		PortalCache portalCache, String key, Object value) {
+		PortalCache portalCache, Serializable key, Object value) {
 
 		_localPortalCache.put(key, value);
 	}

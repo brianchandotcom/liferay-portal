@@ -90,9 +90,9 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 
 		Object primaryKey = null;
 
-		Map<String, Object> localCache = null;
+		Map<Serializable, Object> localCache = null;
 
-		String localCacheKey = null;
+		Serializable localCacheKey = null;
 
 		if (_localCacheAvailable) {
 			localCache = _localCache.get();
@@ -106,7 +106,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 			PortalCache portalCache = _getPortalCache(
 				finderPath.getClassName(), true);
 
-			String cacheKey = finderPath.encodeCacheKey(args);
+			Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 			primaryKey = portalCache.get(cacheKey);
 
@@ -141,9 +141,9 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		Object primaryKey = _resultToPrimaryKey(result);
 
 		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
+			Map<Serializable, Object> localCache = _localCache.get();
 
-			String localCacheKey = finderPath.encodeLocalCacheKey(args);
+			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
 
 			localCache.put(localCacheKey, primaryKey);
 		}
@@ -151,7 +151,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		PortalCache portalCache = _getPortalCache(
 			finderPath.getClassName(), true);
 
-		String cacheKey = finderPath.encodeCacheKey(args);
+		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		portalCache.put(cacheKey, primaryKey);
 	}
@@ -172,9 +172,9 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 
 		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
+			Map<Serializable, Object> localCache = _localCache.get();
 
-			String localCacheKey = finderPath.encodeLocalCacheKey(args);
+			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
 
 			localCache.remove(localCacheKey);
 		}
@@ -182,7 +182,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		PortalCache portalCache = _getPortalCache(
 			finderPath.getClassName(), true);
 
-		String cacheKey = finderPath.encodeCacheKey(args);
+		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		portalCache.remove(cacheKey);
 	}

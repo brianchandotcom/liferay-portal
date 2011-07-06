@@ -34,11 +34,11 @@ public class BlockingPortalCache implements PortalCache {
 	public void destroy() {
 	}
 
-	public Collection<Object> get(Collection<String> keys) {
+	public Collection<Object> get(Collection<Serializable> keys) {
 		return _portalCache.get(keys);
 	}
 
-	public Object get(String key) {
+	public Object get(Serializable key) {
 		Object value = _portalCache.get(key);
 
 		if (value != null) {
@@ -87,7 +87,7 @@ public class BlockingPortalCache implements PortalCache {
 		return _portalCache.getName();
 	}
 
-	public void put(String key, Object value) {
+	public void put(Serializable key, Object value) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key is null");
 		}
@@ -109,7 +109,7 @@ public class BlockingPortalCache implements PortalCache {
 		_competeLatchMap.remove(key);
 	}
 
-	public void put(String key, Object value, int timeToLive) {
+	public void put(Serializable key, Object value, int timeToLive) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key is null");
 		}
@@ -131,7 +131,7 @@ public class BlockingPortalCache implements PortalCache {
 		_competeLatchMap.remove(key);
 	}
 
-	public void put(String key, Serializable value) {
+	public void put(Serializable key, Serializable value) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key is null");
 		}
@@ -153,7 +153,7 @@ public class BlockingPortalCache implements PortalCache {
 		_competeLatchMap.remove(key);
 	}
 
-	public void put(String key, Serializable value, int timeToLive) {
+	public void put(Serializable key, Serializable value, int timeToLive) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key is null");
 		}
@@ -185,7 +185,7 @@ public class BlockingPortalCache implements PortalCache {
 		_portalCache.registerCacheListener(cacheListener, cacheListenerScope);
 	}
 
-	public void remove(String key) {
+	public void remove(Serializable key) {
 		_portalCache.remove(key);
 
 		CompeteLatch competeLatch = _competeLatchMap.remove(key);
@@ -214,8 +214,8 @@ public class BlockingPortalCache implements PortalCache {
 
 	private static ThreadLocal<CompeteLatch> _competeLatch =
 		new ThreadLocal<CompeteLatch>();
-	private final ConcurrentMap<String, CompeteLatch> _competeLatchMap =
-		new ConcurrentHashMap<String, CompeteLatch>();
+	private final ConcurrentMap<Serializable, CompeteLatch> _competeLatchMap =
+		new ConcurrentHashMap<Serializable, CompeteLatch>();
 	private final PortalCache _portalCache;
 
 }

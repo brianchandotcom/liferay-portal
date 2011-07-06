@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.WorkflowDefinitionLink;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class WorkflowDefinitionLinkImpl
-	extends WorkflowDefinitionLinkModelImpl implements WorkflowDefinitionLink {
+public class WorkflowDefinitionLinkImpl extends WorkflowDefinitionLinkBaseImpl {
 
 	public WorkflowDefinitionLinkImpl() {
 	}

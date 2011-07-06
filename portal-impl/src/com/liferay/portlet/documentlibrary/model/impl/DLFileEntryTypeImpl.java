@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -24,8 +23,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public class DLFileEntryTypeImpl
-	extends DLFileEntryTypeModelImpl implements DLFileEntryType {
+public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 
 	public DLFileEntryTypeImpl() {
 	}

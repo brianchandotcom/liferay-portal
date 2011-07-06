@@ -404,6 +404,11 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolder.save();
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

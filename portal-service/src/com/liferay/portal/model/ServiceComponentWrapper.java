@@ -213,6 +213,11 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_serviceComponent.save();
+	}
+
 	public java.lang.String getTablesSQL() {
 		return _serviceComponent.getTablesSQL();
 	}

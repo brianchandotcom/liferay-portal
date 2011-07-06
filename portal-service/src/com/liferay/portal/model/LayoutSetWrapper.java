@@ -392,6 +392,11 @@ public class LayoutSetWrapper implements LayoutSet {
 		return _layoutSet.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layoutSet.save();
+	}
+
 	public com.liferay.portal.model.Theme getTheme()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSet.getTheme();

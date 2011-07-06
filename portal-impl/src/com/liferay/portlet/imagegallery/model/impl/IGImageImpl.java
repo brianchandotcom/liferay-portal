@@ -21,13 +21,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portlet.imagegallery.model.IGFolder;
-import com.liferay.portlet.imagegallery.model.IGImage;
 import com.liferay.portlet.imagegallery.service.IGFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class IGImageImpl extends IGImageModelImpl implements IGImage {
+public class IGImageImpl extends IGImageBaseImpl {
 
 	public static String getNameWithExtension(String name, String type) {
 		if (Validator.isNotNull(type)) {

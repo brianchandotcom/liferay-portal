@@ -493,6 +493,11 @@ public class AddressWrapper implements Address {
 		return _address.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_address.save();
+	}
+
 	public com.liferay.portal.model.Region getRegion() {
 		return _address.getRegion();
 	}

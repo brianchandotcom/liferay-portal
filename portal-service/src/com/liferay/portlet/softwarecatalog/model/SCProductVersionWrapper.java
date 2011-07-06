@@ -368,6 +368,11 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scProductVersion.save();
+	}
+
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getFrameworkVersions()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _scProductVersion.getFrameworkVersions();

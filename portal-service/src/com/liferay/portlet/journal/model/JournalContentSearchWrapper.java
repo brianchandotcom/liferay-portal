@@ -259,6 +259,11 @@ public class JournalContentSearchWrapper implements JournalContentSearch {
 		return _journalContentSearch.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalContentSearch.save();
+	}
+
 	public JournalContentSearch getWrappedJournalContentSearch() {
 		return _journalContentSearch;
 	}

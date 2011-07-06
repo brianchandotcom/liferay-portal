@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the UserNotificationEvent service. Represents a row in the &quot;UserNotificationEvent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the UserNotificationEvent service. Represents a row in the &quot;UserNotificationEvent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see UserNotificationEventModel
@@ -23,8 +23,9 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.UserNotificationEventModelImpl
  * @generated
  */
-public interface UserNotificationEvent extends UserNotificationEventModel {
-	/*
+public interface UserNotificationEvent extends UserNotificationEventModel,
+	SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserNotificationEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

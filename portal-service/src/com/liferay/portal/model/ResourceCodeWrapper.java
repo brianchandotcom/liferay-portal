@@ -194,6 +194,11 @@ public class ResourceCodeWrapper implements ResourceCode {
 		return _resourceCode.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceCode.save();
+	}
+
 	public ResourceCode getWrappedResourceCode() {
 		return _resourceCode;
 	}

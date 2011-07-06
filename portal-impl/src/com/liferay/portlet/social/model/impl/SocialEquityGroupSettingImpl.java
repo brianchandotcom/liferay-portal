@@ -14,14 +14,11 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialEquityGroupSetting;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class SocialEquityGroupSettingImpl
-	extends SocialEquityGroupSettingModelImpl
-	implements SocialEquityGroupSetting {
+	extends SocialEquityGroupSettingBaseImpl {
 
 	public SocialEquityGroupSettingImpl() {
 	}

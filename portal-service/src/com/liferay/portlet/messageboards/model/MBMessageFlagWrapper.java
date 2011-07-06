@@ -251,6 +251,11 @@ public class MBMessageFlagWrapper implements MBMessageFlag {
 		return _mbMessageFlag.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageFlag.save();
+	}
+
 	public MBMessageFlag getWrappedMBMessageFlag() {
 		return _mbMessageFlag;
 	}

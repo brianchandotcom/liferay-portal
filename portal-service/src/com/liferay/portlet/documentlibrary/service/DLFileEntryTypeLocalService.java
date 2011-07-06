@@ -187,7 +187,7 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the document library file entry type in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was updated
@@ -198,7 +198,7 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the document library file entry type in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryType the document library file entry type
 	* @param merge whether to merge the document library file entry type with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

@@ -341,6 +341,11 @@ public class IGFolderWrapper implements IGFolder {
 		return _igFolder.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_igFolder.save();
+	}
+
 	public java.util.List<com.liferay.portlet.imagegallery.model.IGFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

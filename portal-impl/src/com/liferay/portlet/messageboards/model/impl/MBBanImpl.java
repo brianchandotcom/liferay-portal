@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portlet.messageboards.model.MBBan;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBBanImpl extends MBBanModelImpl implements MBBan {
+public class MBBanImpl extends MBBanBaseImpl {
 
 	public MBBanImpl() {
 	}

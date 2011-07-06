@@ -190,7 +190,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService {
 	}
 
 	/**
-	* Updates the ticket in the database. Also notifies the appropriate model listeners.
+	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ticket the ticket
 	* @return the ticket that was updated
@@ -203,7 +203,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService {
 	}
 
 	/**
-	* Updates the ticket in the database. Also notifies the appropriate model listeners.
+	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ticket the ticket
 	* @param merge whether to merge the ticket with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

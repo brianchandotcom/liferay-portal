@@ -320,6 +320,11 @@ public class CompanyWrapper implements Company {
 		return _company.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_company.save();
+	}
+
 	public com.liferay.portal.model.Account getAccount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

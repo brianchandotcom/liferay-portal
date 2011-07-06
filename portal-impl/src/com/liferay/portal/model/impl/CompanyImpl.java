@@ -44,7 +44,7 @@ import java.util.TimeZone;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CompanyImpl extends CompanyModelImpl implements Company {
+public class CompanyImpl extends CompanyBaseImpl {
 
 	public CompanyImpl() {
 	}

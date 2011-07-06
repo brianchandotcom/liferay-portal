@@ -15,7 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.OrgGroupPermission;
 import com.liferay.portal.model.Organization;
 
 import java.util.List;
@@ -23,8 +22,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrgGroupPermissionImpl
-	extends OrgGroupPermissionModelImpl implements OrgGroupPermission {
+public class OrgGroupPermissionImpl extends OrgGroupPermissionBaseImpl {
 
 	public OrgGroupPermissionImpl() {
 	}

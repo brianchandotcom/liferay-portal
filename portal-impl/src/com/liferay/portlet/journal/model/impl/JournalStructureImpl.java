@@ -26,8 +26,7 @@ import java.util.Iterator;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalStructureImpl
-	extends JournalStructureModelImpl implements JournalStructure {
+public class JournalStructureImpl extends JournalStructureBaseImpl {
 
 	public JournalStructureImpl() {
 	}

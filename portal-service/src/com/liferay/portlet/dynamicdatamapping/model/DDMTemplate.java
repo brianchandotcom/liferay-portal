@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DDMTemplate service. Represents a row in the &quot;DDMTemplate&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DDMTemplate service. Represents a row in the &quot;DDMTemplate&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl
  * @generated
  */
-public interface DDMTemplate extends DDMTemplateModel {
-	/*
+public interface DDMTemplate extends DDMTemplateModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -27,8 +27,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginSettingImpl
-	extends PluginSettingModelImpl implements PluginSetting {
+public class PluginSettingImpl extends PluginSettingBaseImpl {
 
 	public PluginSettingImpl() {
 	}

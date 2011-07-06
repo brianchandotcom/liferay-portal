@@ -799,6 +799,11 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		return _passwordPolicy.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_passwordPolicy.save();
+	}
+
 	public PasswordPolicy getWrappedPasswordPolicy() {
 		return _passwordPolicy;
 	}

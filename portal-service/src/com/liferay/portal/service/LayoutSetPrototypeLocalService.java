@@ -189,7 +189,7 @@ public interface LayoutSetPrototypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the layout set prototype in the database. Also notifies the appropriate model listeners.
+	* Updates the layout set prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was updated
@@ -200,7 +200,7 @@ public interface LayoutSetPrototypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the layout set prototype in the database. Also notifies the appropriate model listeners.
+	* Updates the layout set prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototype the layout set prototype
 	* @param merge whether to merge the layout set prototype with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

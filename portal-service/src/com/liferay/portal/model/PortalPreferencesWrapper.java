@@ -195,6 +195,11 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 		return _portalPreferences.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portalPreferences.save();
+	}
+
 	public PortalPreferences getWrappedPortalPreferences() {
 		return _portalPreferences;
 	}

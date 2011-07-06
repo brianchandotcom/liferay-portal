@@ -413,6 +413,11 @@ public class MBCategoryWrapper implements MBCategory {
 		return _mbCategory.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbCategory.save();
+	}
+
 	public java.util.List<java.lang.Long> getAncestorCategoryIds()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

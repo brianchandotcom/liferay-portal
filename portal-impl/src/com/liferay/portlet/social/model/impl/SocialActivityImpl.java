@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialActivity;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialActivityImpl
-	extends SocialActivityModelImpl implements SocialActivity {
+public class SocialActivityImpl extends SocialActivityBaseImpl {
 
 	public SocialActivityImpl() {
 	}

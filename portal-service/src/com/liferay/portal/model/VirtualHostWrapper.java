@@ -194,6 +194,11 @@ public class VirtualHostWrapper implements VirtualHost {
 		return _virtualHost.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_virtualHost.save();
+	}
+
 	public VirtualHost getWrappedVirtualHost() {
 		return _virtualHost;
 	}

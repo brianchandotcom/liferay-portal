@@ -607,6 +607,11 @@ public class AssetCategoryWrapper implements AssetCategory {
 		return _assetCategory.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetCategory.save();
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

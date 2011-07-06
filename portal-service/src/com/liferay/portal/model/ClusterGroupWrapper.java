@@ -203,6 +203,11 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_clusterGroup.save();
+	}
+
 	public java.lang.String[] getClusterNodeIdsArray() {
 		return _clusterGroup.getClusterNodeIdsArray();
 	}

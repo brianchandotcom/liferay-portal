@@ -583,6 +583,11 @@ public class CalEventWrapper implements CalEvent {
 		return _calEvent.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_calEvent.save();
+	}
+
 	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj() {
 		return _calEvent.getRecurrenceObj();
 	}

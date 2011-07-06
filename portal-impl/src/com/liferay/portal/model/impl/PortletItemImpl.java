@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PortletItem;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletItemImpl
-	extends PortletItemModelImpl implements PortletItem {
+public class PortletItemImpl extends PortletItemBaseImpl {
 
 	public PortletItemImpl() {
 	}

@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the AnnouncementsDelivery service. Represents a row in the &quot;AnnouncementsDelivery&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AnnouncementsDelivery service. Represents a row in the &quot;AnnouncementsDelivery&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsDeliveryModel
@@ -23,8 +25,9 @@ package com.liferay.portlet.announcements.model;
  * @see com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl
  * @generated
  */
-public interface AnnouncementsDelivery extends AnnouncementsDeliveryModel {
-	/*
+public interface AnnouncementsDelivery extends AnnouncementsDeliveryModel,
+	SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

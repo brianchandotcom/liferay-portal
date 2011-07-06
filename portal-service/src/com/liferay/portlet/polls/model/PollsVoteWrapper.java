@@ -232,6 +232,11 @@ public class PollsVoteWrapper implements PollsVote {
 		return _pollsVote.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pollsVote.save();
+	}
+
 	public com.liferay.portlet.polls.model.PollsChoice getChoice()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

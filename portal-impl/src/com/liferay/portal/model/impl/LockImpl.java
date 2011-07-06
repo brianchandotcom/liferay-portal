@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Lock;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class LockImpl extends LockModelImpl implements Lock {
+public class LockImpl extends LockBaseImpl {
 
 	public LockImpl() {
 	}

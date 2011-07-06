@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portlet.journal.model.JournalFeed;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalFeedImpl
-	extends JournalFeedModelImpl implements JournalFeed {
+public class JournalFeedImpl extends JournalFeedBaseImpl {
 
 	public JournalFeedImpl() {
 	}

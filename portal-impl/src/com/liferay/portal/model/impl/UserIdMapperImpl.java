@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.UserIdMapper;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserIdMapperImpl
-	extends UserIdMapperModelImpl implements UserIdMapper {
+public class UserIdMapperImpl extends UserIdMapperBaseImpl {
 
 	public UserIdMapperImpl() {
 	}

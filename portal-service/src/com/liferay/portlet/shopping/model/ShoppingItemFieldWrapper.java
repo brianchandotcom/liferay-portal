@@ -213,6 +213,11 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField {
 		return _shoppingItemField.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemField.save();
+	}
+
 	public java.lang.String[] getValuesArray() {
 		return _shoppingItemField.getValuesArray();
 	}

@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialEquityLog;
-
 /**
  * @author Zsolt Berentey
  */
-public class SocialEquityLogImpl
-	extends SocialEquityLogModelImpl implements SocialEquityLog {
+public class SocialEquityLogImpl extends SocialEquityLogBaseImpl {
 
 	public SocialEquityLogImpl() {
 	}

@@ -205,7 +205,7 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Updates the user group in the database. Also notifies the appropriate model listeners.
+	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param userGroup the user group
 	* @return the user group that was updated
@@ -218,7 +218,7 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Updates the user group in the database. Also notifies the appropriate model listeners.
+	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param userGroup the user group
 	* @param merge whether to merge the user group with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

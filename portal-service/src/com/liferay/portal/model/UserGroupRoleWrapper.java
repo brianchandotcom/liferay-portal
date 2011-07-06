@@ -197,6 +197,11 @@ public class UserGroupRoleWrapper implements UserGroupRole {
 		return _userGroupRole.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userGroupRole.save();
+	}
+
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

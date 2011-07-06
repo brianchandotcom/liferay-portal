@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DDMStorageLink service. Represents a row in the &quot;DDMStorageLink&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DDMStorageLink service. Represents a row in the &quot;DDMStorageLink&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DDMStorageLinkModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl
  * @generated
  */
-public interface DDMStorageLink extends DDMStorageLinkModel {
-	/*
+public interface DDMStorageLink extends DDMStorageLinkModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

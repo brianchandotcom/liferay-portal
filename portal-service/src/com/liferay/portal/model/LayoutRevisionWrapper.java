@@ -1283,6 +1283,11 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layoutRevision.save();
+	}
+
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutRevision.getChildren();

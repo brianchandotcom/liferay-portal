@@ -476,6 +476,11 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 		return _shoppingCoupon.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingCoupon.save();
+	}
+
 	public boolean hasValidDateRange() {
 		return _shoppingCoupon.hasValidDateRange();
 	}

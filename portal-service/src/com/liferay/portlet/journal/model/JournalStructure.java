@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the JournalStructure service. Represents a row in the &quot;JournalStructure&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the JournalStructure service. Represents a row in the &quot;JournalStructure&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see JournalStructureModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see com.liferay.portlet.journal.model.impl.JournalStructureModelImpl
  * @generated
  */
-public interface JournalStructure extends JournalStructureModel {
-	/*
+public interface JournalStructure extends JournalStructureModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.journal.model.impl.JournalStructureImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

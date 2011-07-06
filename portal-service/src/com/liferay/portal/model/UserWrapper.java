@@ -898,6 +898,11 @@ public class UserWrapper implements User {
 		return _user.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_user.save();
+	}
+
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getAddresses();

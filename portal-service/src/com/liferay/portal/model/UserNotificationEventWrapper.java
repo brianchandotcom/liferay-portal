@@ -288,6 +288,11 @@ public class UserNotificationEventWrapper implements UserNotificationEvent {
 		return _userNotificationEvent.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userNotificationEvent.save();
+	}
+
 	public UserNotificationEvent getWrappedUserNotificationEvent() {
 		return _userNotificationEvent;
 	}

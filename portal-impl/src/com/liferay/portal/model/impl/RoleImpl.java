@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.service.TeamLocalServiceUtil;
@@ -29,7 +28,7 @@ import com.liferay.portal.util.PortalUtil;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class RoleImpl extends RoleModelImpl implements Role {
+public class RoleImpl extends RoleBaseImpl {
 
 	public RoleImpl() {
 	}

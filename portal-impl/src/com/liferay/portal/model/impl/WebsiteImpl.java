@@ -17,13 +17,12 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ListType;
-import com.liferay.portal.model.Website;
 import com.liferay.portal.service.ListTypeServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebsiteImpl extends WebsiteModelImpl implements Website {
+public class WebsiteImpl extends WebsiteBaseImpl {
 
 	public WebsiteImpl() {
 	}

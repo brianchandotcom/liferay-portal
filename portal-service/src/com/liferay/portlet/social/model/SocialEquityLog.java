@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the SocialEquityLog service. Represents a row in the &quot;SocialEquityLog&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the SocialEquityLog service. Represents a row in the &quot;SocialEquityLog&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SocialEquityLogModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.social.model;
  * @see com.liferay.portlet.social.model.impl.SocialEquityLogModelImpl
  * @generated
  */
-public interface SocialEquityLog extends SocialEquityLogModel {
-	/*
+public interface SocialEquityLog extends SocialEquityLogModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialEquityLogImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

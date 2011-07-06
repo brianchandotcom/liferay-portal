@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,8 +35,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMStructureImpl
-	extends DDMStructureModelImpl implements DDMStructure {
+public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	public DDMStructureImpl() {
 	}

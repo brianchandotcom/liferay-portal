@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PortletPreferences;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletPreferencesImpl
-	extends PortletPreferencesModelImpl implements PortletPreferences {
+public class PortletPreferencesImpl extends PortletPreferencesBaseImpl {
 
 	public PortletPreferencesImpl() {
 	}

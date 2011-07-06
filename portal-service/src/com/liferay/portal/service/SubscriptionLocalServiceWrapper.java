@@ -196,7 +196,7 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Updates the subscription in the database. Also notifies the appropriate model listeners.
+	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param subscription the subscription
 	* @return the subscription that was updated
@@ -209,7 +209,7 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Updates the subscription in the database. Also notifies the appropriate model listeners.
+	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param subscription the subscription
 	* @param merge whether to merge the subscription with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

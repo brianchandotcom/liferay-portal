@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Resource service. Represents a row in the &quot;Resource_&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Resource service. Represents a row in the &quot;Resource_&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ResourceModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ResourceModelImpl
  * @generated
  */
-public interface Resource extends ResourceModel {
-	/*
+public interface Resource extends ResourceModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ResourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -211,7 +211,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 	}
 
 	/**
-	* Updates the document library file entry in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was updated
@@ -224,7 +224,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 	}
 
 	/**
-	* Updates the document library file entry in the database. Also notifies the appropriate model listeners.
+	* Updates the document library file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntry the document library file entry
 	* @param merge whether to merge the document library file entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

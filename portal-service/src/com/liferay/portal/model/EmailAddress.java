@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see EmailAddressModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.EmailAddressModelImpl
  * @generated
  */
-public interface EmailAddress extends EmailAddressModel {
-	/*
+public interface EmailAddress extends EmailAddressModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.EmailAddressImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

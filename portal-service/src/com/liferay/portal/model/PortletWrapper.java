@@ -221,6 +221,11 @@ public class PortletWrapper implements Portlet {
 		return _portlet.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portlet.save();
+	}
+
 	/**
 	* Returns the root portlet of this portlet instance.
 	*

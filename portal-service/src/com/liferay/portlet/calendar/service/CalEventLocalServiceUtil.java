@@ -219,7 +219,7 @@ public class CalEventLocalServiceUtil {
 	}
 
 	/**
-	* Updates the cal event in the database. Also notifies the appropriate model listeners.
+	* Updates the cal event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param calEvent the cal event
 	* @return the cal event that was updated
@@ -232,7 +232,7 @@ public class CalEventLocalServiceUtil {
 	}
 
 	/**
-	* Updates the cal event in the database. Also notifies the appropriate model listeners.
+	* Updates the cal event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param calEvent the cal event
 	* @param merge whether to merge the cal event with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

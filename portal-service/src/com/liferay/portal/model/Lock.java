@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Lock service. Represents a row in the &quot;Lock_&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Lock service. Represents a row in the &quot;Lock_&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see LockModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LockModelImpl
  * @generated
  */
-public interface Lock extends LockModel {
-	/*
+public interface Lock extends LockModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LockImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

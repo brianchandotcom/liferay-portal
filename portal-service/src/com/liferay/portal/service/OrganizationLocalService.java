@@ -189,7 +189,7 @@ public interface OrganizationLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the organization in the database. Also notifies the appropriate model listeners.
+	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param organization the organization
 	* @return the organization that was updated
@@ -200,7 +200,7 @@ public interface OrganizationLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the organization in the database. Also notifies the appropriate model listeners.
+	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param organization the organization
 	* @param merge whether to merge the organization with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

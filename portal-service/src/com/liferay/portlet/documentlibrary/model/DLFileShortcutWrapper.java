@@ -476,6 +476,11 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileShortcut.save();
+	}
+
 	public com.liferay.portal.kernel.repository.model.Folder getFolder() {
 		return _dlFileShortcut.getFolder();
 	}

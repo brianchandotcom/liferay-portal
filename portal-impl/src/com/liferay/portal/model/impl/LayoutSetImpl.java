@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -37,7 +36,7 @@ import java.io.IOException;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class LayoutSetImpl extends LayoutSetModelImpl implements LayoutSet {
+public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	public LayoutSetImpl() {
 	}

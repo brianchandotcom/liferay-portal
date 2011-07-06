@@ -187,7 +187,7 @@ public interface ExpandoTableLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the expando table in the database. Also notifies the appropriate model listeners.
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoTable the expando table
 	* @return the expando table that was updated
@@ -198,7 +198,7 @@ public interface ExpandoTableLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the expando table in the database. Also notifies the appropriate model listeners.
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoTable the expando table
 	* @param merge whether to merge the expando table with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

@@ -321,6 +321,11 @@ public class SocialEquitySettingWrapper implements SocialEquitySetting {
 		return _socialEquitySetting.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquitySetting.save();
+	}
+
 	public void update(
 		com.liferay.portlet.social.model.SocialEquityActionMapping equityActionMapping) {
 		_socialEquitySetting.update(equityActionMapping);

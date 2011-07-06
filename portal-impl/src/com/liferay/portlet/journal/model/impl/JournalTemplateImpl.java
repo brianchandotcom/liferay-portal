@@ -18,13 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalTemplate;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalTemplateImpl
-	extends JournalTemplateModelImpl implements JournalTemplate {
+public class JournalTemplateImpl extends JournalTemplateBaseImpl {
 
 	public JournalTemplateImpl() {
 	}

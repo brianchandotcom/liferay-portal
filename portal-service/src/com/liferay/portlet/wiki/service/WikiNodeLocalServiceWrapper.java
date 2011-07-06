@@ -207,7 +207,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService {
 	}
 
 	/**
-	* Updates the wiki node in the database. Also notifies the appropriate model listeners.
+	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param wikiNode the wiki node
 	* @return the wiki node that was updated
@@ -220,7 +220,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService {
 	}
 
 	/**
-	* Updates the wiki node in the database. Also notifies the appropriate model listeners.
+	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param wikiNode the wiki node
 	* @param merge whether to merge the wiki node with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

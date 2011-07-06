@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the LayoutPrototype service. Represents a row in the &quot;LayoutPrototype&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the LayoutPrototype service. Represents a row in the &quot;LayoutPrototype&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see LayoutPrototypeModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LayoutPrototypeModelImpl
  * @generated
  */
-public interface LayoutPrototype extends LayoutPrototypeModel {
-	/*
+public interface LayoutPrototype extends LayoutPrototypeModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutPrototypeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

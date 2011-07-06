@@ -343,6 +343,11 @@ public class MembershipRequestWrapper implements MembershipRequest {
 		return _membershipRequest.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_membershipRequest.save();
+	}
+
 	public MembershipRequest getWrappedMembershipRequest() {
 		return _membershipRequest;
 	}

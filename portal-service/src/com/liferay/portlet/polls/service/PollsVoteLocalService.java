@@ -186,7 +186,7 @@ public interface PollsVoteLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the polls vote in the database. Also notifies the appropriate model listeners.
+	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param pollsVote the polls vote
 	* @return the polls vote that was updated
@@ -197,7 +197,7 @@ public interface PollsVoteLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the polls vote in the database. Also notifies the appropriate model listeners.
+	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param pollsVote the polls vote
 	* @param merge whether to merge the polls vote with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

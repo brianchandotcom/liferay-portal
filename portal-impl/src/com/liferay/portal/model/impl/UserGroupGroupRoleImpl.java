@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.UserGroupGroupRole;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserGroupGroupRoleImpl
-	extends UserGroupGroupRoleModelImpl implements UserGroupGroupRole {
+public class UserGroupGroupRoleImpl extends UserGroupGroupRoleBaseImpl {
 
 	public UserGroupGroupRoleImpl() {
 	}

@@ -836,6 +836,11 @@ public class ShoppingItemWrapper implements ShoppingItem {
 		return _shoppingItem.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItem.save();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory() {
 		return _shoppingItem.getCategory();
 	}

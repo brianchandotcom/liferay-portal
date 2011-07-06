@@ -16,7 +16,6 @@ package com.liferay.portlet.softwarecatalog.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
-import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
@@ -28,8 +27,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductEntryImpl
-	extends SCProductEntryModelImpl implements SCProductEntry {
+public class SCProductEntryImpl extends SCProductEntryBaseImpl {
 
 	public SCProductEntryImpl() {
 	}

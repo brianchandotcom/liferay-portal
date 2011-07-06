@@ -389,6 +389,11 @@ public class RoleWrapper implements Role {
 		return _role.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_role.save();
+	}
+
 	public java.lang.String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

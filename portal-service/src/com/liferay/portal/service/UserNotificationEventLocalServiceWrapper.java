@@ -197,7 +197,7 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
-	* Updates the user notification event in the database. Also notifies the appropriate model listeners.
+	* Updates the user notification event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationEvent the user notification event
 	* @return the user notification event that was updated
@@ -210,7 +210,7 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
-	* Updates the user notification event in the database. Also notifies the appropriate model listeners.
+	* Updates the user notification event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param userNotificationEvent the user notification event
 	* @param merge whether to merge the user notification event with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

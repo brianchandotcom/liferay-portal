@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.ResourceAction;
-
 /**
  * Maps actions on resources to the bitwise values stored in resource
  * permissions.
@@ -23,8 +21,7 @@ import com.liferay.portal.model.ResourceAction;
  * @author Brian Wing Shun Chan
  * @see    ResourcePermissionImpl
  */
-public class ResourceActionImpl
-	extends ResourceActionModelImpl implements ResourceAction {
+public class ResourceActionImpl extends ResourceActionBaseImpl {
 
 	public ResourceActionImpl() {
 	}

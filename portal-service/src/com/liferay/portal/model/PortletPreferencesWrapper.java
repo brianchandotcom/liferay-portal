@@ -231,6 +231,11 @@ public class PortletPreferencesWrapper implements PortletPreferences {
 		return _portletPreferences.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletPreferences.save();
+	}
+
 	public PortletPreferences getWrappedPortletPreferences() {
 		return _portletPreferences;
 	}

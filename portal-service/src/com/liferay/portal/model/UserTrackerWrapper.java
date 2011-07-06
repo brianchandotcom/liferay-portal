@@ -286,6 +286,11 @@ public class UserTrackerWrapper implements UserTracker {
 		return _userTracker.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTracker.save();
+	}
+
 	public java.lang.String getFullName() {
 		return _userTracker.getFullName();
 	}

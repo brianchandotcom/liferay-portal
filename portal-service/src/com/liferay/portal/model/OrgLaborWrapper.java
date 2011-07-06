@@ -428,6 +428,11 @@ public class OrgLaborWrapper implements OrgLabor {
 		return _orgLabor.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_orgLabor.save();
+	}
+
 	public com.liferay.portal.model.ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

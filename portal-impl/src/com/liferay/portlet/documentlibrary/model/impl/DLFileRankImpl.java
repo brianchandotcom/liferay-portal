@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileRankImpl extends DLFileRankModelImpl implements DLFileRank {
+public class DLFileRankImpl extends DLFileRankBaseImpl {
 
 	public DLFileRankImpl() {
 	}

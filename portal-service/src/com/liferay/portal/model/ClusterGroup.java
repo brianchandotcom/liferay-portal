@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the ClusterGroup service. Represents a row in the &quot;ClusterGroup&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ClusterGroup service. Represents a row in the &quot;ClusterGroup&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ClusterGroupModelImpl
  * @generated
  */
-public interface ClusterGroup extends ClusterGroupModel {
-	/*
+public interface ClusterGroup extends ClusterGroupModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ClusterGroupImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

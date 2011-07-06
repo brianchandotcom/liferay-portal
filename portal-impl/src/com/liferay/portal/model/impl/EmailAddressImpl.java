@@ -16,15 +16,13 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.service.ListTypeServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EmailAddressImpl
-	extends EmailAddressModelImpl implements EmailAddress {
+public class EmailAddressImpl extends EmailAddressBaseImpl {
 
 	public EmailAddressImpl() {
 	}

@@ -358,6 +358,11 @@ public class EmailAddressWrapper implements EmailAddress {
 		return _emailAddress.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_emailAddress.save();
+	}
+
 	public com.liferay.portal.model.ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

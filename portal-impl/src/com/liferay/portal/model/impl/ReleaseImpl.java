@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Release;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class ReleaseImpl extends ReleaseModelImpl implements Release {
+public class ReleaseImpl extends ReleaseBaseImpl {
 
 	public ReleaseImpl() {
 	}

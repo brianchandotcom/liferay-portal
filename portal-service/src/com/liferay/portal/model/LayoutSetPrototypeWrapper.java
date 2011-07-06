@@ -354,6 +354,11 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		return _layoutSetPrototype.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetPrototype.save();
+	}
+
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

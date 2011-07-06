@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
-import com.liferay.portlet.softwarecatalog.model.SCLicense;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCLicenseImpl extends SCLicenseModelImpl implements SCLicense {
+public class SCLicenseImpl extends SCLicenseBaseImpl {
 
 	public SCLicenseImpl() {
 	}

@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.BrowserTracker;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class BrowserTrackerImpl
-	extends BrowserTrackerModelImpl implements BrowserTracker {
+public class BrowserTrackerImpl extends BrowserTrackerBaseImpl {
 
 	public BrowserTrackerImpl() {
 	}

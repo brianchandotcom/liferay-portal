@@ -350,6 +350,11 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
 		return _scFrameworkVersion.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scFrameworkVersion.save();
+	}
+
 	public SCFrameworkVersion getWrappedSCFrameworkVersion() {
 		return _scFrameworkVersion;
 	}

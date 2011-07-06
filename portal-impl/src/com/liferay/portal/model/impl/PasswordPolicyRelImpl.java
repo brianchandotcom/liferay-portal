@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PasswordPolicyRel;
-
 /**
  * @author Scott Lee
  */
-public class PasswordPolicyRelImpl
-	extends PasswordPolicyRelModelImpl implements PasswordPolicyRel {
+public class PasswordPolicyRelImpl extends PasswordPolicyRelBaseImpl {
 
 	public PasswordPolicyRelImpl() {
 	}

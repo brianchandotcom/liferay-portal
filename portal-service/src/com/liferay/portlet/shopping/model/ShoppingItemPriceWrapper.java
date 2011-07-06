@@ -321,6 +321,11 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice {
 		return _shoppingItemPrice.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemPrice.save();
+	}
+
 	public ShoppingItemPrice getWrappedShoppingItemPrice() {
 		return _shoppingItemPrice;
 	}

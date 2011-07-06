@@ -421,6 +421,11 @@ public class GroupWrapper implements Group {
 		return _group.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_group.save();
+	}
+
 	public long getDefaultPrivatePlid() {
 		return _group.getDefaultPrivatePlid();
 	}

@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
-import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductScreenshotImpl
-	extends SCProductScreenshotModelImpl implements SCProductScreenshot {
+public class SCProductScreenshotImpl extends SCProductScreenshotBaseImpl {
 
 	public SCProductScreenshotImpl() {
 	}

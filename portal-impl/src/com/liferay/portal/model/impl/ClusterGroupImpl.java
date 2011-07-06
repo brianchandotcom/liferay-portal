@@ -15,13 +15,11 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.ClusterGroup;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClusterGroupImpl
-	extends ClusterGroupModelImpl implements ClusterGroup {
+public class ClusterGroupImpl extends ClusterGroupBaseImpl {
 
 	public ClusterGroupImpl() {
 	}

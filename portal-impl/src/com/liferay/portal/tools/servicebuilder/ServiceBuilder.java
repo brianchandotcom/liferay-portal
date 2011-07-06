@@ -183,6 +183,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.ejb_pk=" + _TPL_ROOT + "ejb_pk.ftl\n"+
 				"\t-Dservice.tpl.exception=" + _TPL_ROOT + "exception.ftl\n"+
 				"\t-Dservice.tpl.extended_model=" + _TPL_ROOT + "extended_model.ftl\n"+
+				"\t-Dservice.tpl.extended_model_base_impl=" + _TPL_ROOT + "extended_model_base_impl.ftl\n"+
 				"\t-Dservice.tpl.extended_model_impl=" + _TPL_ROOT + "extended_model_impl.ftl\n"+
 				"\t-Dservice.tpl.finder=" + _TPL_ROOT + "finder.ftl\n"+
 				"\t-Dservice.tpl.finder_util=" + _TPL_ROOT + "finder_util.ftl\n"+
@@ -383,15 +384,21 @@ public class ServiceBuilder {
 		newContent = newContent.substring(0, newContent.length() - 2) + "\n\n}";
 		*/
 
+		writeFileRaw(file, newContent);
+
+		tempFile.deleteOnExit();
+	}
+
+	public static void writeFileRaw(File file, String content)
+		throws IOException {
+
 		// Write file if and only if the file has changed
 
-		if (!file.exists() || !FileUtil.isSameContent(file, newContent)) {
-			FileUtil.write(file, newContent);
+		if (!file.exists() || !FileUtil.isSameContent(file, content)) {
+			FileUtil.write(file, content);
 
 			System.out.println("Writing " + file);
 		}
-
-		tempFile.deleteOnExit();
 	}
 
 	public ServiceBuilder(
@@ -443,6 +450,8 @@ public class ServiceBuilder {
 		_tplException = _getTplProperty("exception", _tplException);
 		_tplExtendedModel = _getTplProperty(
 			"extended_model", _tplExtendedModel);
+		_tplExtendedModelBaseImpl = _getTplProperty(
+			"extended_model_base_impl", _tplExtendedModelBaseImpl);
 		_tplExtendedModelImpl = _getTplProperty(
 			"extended_model_impl", _tplExtendedModelImpl);
 		_tplFinder = _getTplProperty("finder", _tplFinder);
@@ -640,6 +649,7 @@ public class ServiceBuilder {
 							}
 
 							_createModelImpl(entity);
+							_createExtendedModelBaseImpl(entity);
 							_createExtendedModelImpl(entity);
 
 							entity.setTransients(_getTransients(entity, false));
@@ -1559,7 +1569,7 @@ public class ServiceBuilder {
 			// Write file
 
 			File blobModelFile = new File(
-				_serviceOutputPath + "/model/" + entity.getName() + 
+				_serviceOutputPath + "/model/" + entity.getName() +
 					col.getMethodName() + "BlobModel.java");
 
 			writeFile(blobModelFile, content, _author);
@@ -1676,6 +1686,23 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplExtendedModelBaseImpl, context);
+
+		// Write file
+
+		File modelFile = new File(
+			_outputPath + "/model/impl/" + entity.getName() + "BaseImpl.java");
+
+		writeFile(modelFile, content, _author);
+	}
+
 	private void _createExtendedModelImpl(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -1690,7 +1717,17 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		if (!modelFile.exists()) {
+		if (modelFile.exists()) {
+			content = FileUtil.read(modelFile);
+
+			content = content.replaceAll(
+				"extends\\s+" + entity.getName() +
+				"ModelImpl\\s+implements\\s+" +	entity.getName(), "extends " +
+				entity.getName() + "BaseImpl");
+
+			writeFileRaw(modelFile, content);
+		}
+		else {
 			writeFile(modelFile, content, _author);
 		}
 	}
@@ -2155,10 +2192,18 @@ public class ServiceBuilder {
 	private void _createModelWrapper(Entity entity) throws Exception {
 		JavaClass modelJavaClass = _getJavaClass(
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
+
+		JavaClass extendedModelBaseImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() +
+			"BaseImpl.java");
+
 		JavaClass extendedModelJavaClass = _getJavaClass(
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
 		Object[] methods = _getMethods(modelJavaClass);
+
+		methods = ArrayUtil.append(
+			methods, _getMethods(extendedModelBaseImplJavaClass));
 
 		methods = ArrayUtil.append(
 			methods, _getMethods(extendedModelJavaClass));
@@ -4629,7 +4674,7 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, localService, remoteService,
 				persistenceClass, finderClass, dataSource, sessionFactory,
 				txManager, cacheEnabled, jsonEnabled, pkList, regularColList,
-				blobList, collectionList, columnList, order, finderList, 
+				blobList, collectionList, columnList, order, finderList,
 				referenceList, txRequiredList));
 	}
 
@@ -4720,6 +4765,8 @@ public class ServiceBuilder {
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
+	private String _tplExtendedModelBaseImpl =
+		_TPL_ROOT + "extended_model_base_impl.ftl";
 	private String _tplExtendedModelImpl =
 		_TPL_ROOT + "extended_model_impl.ftl";
 	private String _tplFinder = _TPL_ROOT + "finder.ftl";

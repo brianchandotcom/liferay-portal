@@ -496,6 +496,11 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbThread.save();
+	}
+
 	public java.lang.String getAttachmentsDir() {
 		return _mbThread.getAttachmentsDir();
 	}

@@ -158,6 +158,11 @@ public class CounterWrapper implements Counter {
 		return _counter.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_counter.save();
+	}
+
 	public Counter getWrappedCounter() {
 		return _counter;
 	}

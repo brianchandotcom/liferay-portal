@@ -598,6 +598,11 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructure.save();
+	}
+
 	public java.lang.String getFieldDataType(java.lang.String fieldName) {
 		return _ddmStructure.getFieldDataType(fieldName);
 	}

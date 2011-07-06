@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PasswordTracker;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class PasswordTrackerImpl
-	extends PasswordTrackerModelImpl implements PasswordTracker {
+public class PasswordTrackerImpl extends PasswordTrackerBaseImpl {
 
 	public PasswordTrackerImpl() {
 	}

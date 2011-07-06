@@ -305,6 +305,11 @@ public class AssetTagPropertyWrapper implements AssetTagProperty {
 		return _assetTagProperty.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagProperty.save();
+	}
+
 	public AssetTagProperty getWrappedAssetTagProperty() {
 		return _assetTagProperty;
 	}

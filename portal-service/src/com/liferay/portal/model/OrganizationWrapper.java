@@ -347,6 +347,11 @@ public class OrganizationWrapper implements Organization {
 		return _organization.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_organization.save();
+	}
+
 	public com.liferay.portal.model.Address getAddress() {
 		return _organization.getAddress();
 	}

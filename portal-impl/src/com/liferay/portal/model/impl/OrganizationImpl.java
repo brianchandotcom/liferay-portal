@@ -53,8 +53,7 @@ import javax.portlet.PortletPreferences;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class OrganizationImpl
-	extends OrganizationModelImpl implements Organization {
+public class OrganizationImpl extends OrganizationBaseImpl {
 
 	public static String[] getChildrenTypes(String type) {
 		return PropsUtil.getArray(

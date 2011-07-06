@@ -1119,6 +1119,11 @@ public class LayoutWrapper implements Layout {
 		return _layout.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layout.save();
+	}
+
 	public java.util.List<com.liferay.portal.model.Layout> getAllChildren()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layout.getAllChildren();

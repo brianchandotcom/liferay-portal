@@ -395,6 +395,11 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 		return _bookmarksEntry.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntry.save();
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder() {
 		return _bookmarksEntry.getFolder();
 	}

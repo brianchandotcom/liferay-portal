@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialRelation;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialRelationImpl
-	extends SocialRelationModelImpl implements SocialRelation {
+public class SocialRelationImpl extends SocialRelationBaseImpl {
 
 	public SocialRelationImpl() {
 	}

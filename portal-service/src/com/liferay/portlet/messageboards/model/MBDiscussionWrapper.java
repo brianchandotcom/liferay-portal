@@ -204,6 +204,11 @@ public class MBDiscussionWrapper implements MBDiscussion {
 		return _mbDiscussion.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbDiscussion.save();
+	}
+
 	public MBDiscussion getWrappedMBDiscussion() {
 		return _mbDiscussion;
 	}

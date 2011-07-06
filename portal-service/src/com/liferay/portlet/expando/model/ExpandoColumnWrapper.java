@@ -249,6 +249,11 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 		return _expandoColumn.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoColumn.save();
+	}
+
 	public java.io.Serializable getDefaultValue() {
 		return _expandoColumn.getDefaultValue();
 	}

@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.ServiceComponent;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ServiceComponentImpl
-	extends ServiceComponentModelImpl implements ServiceComponent {
+public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 
 	public ServiceComponentImpl() {
 	}

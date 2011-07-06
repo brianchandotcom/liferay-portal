@@ -285,6 +285,11 @@ public class DLContentWrapper implements DLContent {
 		return _dlContent.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlContent.save();
+	}
+
 	public DLContent getWrappedDLContent() {
 		return _dlContent;
 	}

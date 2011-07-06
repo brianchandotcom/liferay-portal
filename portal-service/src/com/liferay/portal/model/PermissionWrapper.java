@@ -194,6 +194,11 @@ public class PermissionWrapper implements Permission {
 		return _permission.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_permission.save();
+	}
+
 	public java.lang.String getName() {
 		return _permission.getName();
 	}

@@ -233,6 +233,11 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 		return _announcementsFlag.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_announcementsFlag.save();
+	}
+
 	public AnnouncementsFlag getWrappedAnnouncementsFlag() {
 		return _announcementsFlag;
 	}

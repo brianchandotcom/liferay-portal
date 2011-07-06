@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portlet.journal.model.JournalContentSearch;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalContentSearchImpl
-	extends JournalContentSearchModelImpl implements JournalContentSearch {
+public class JournalContentSearchImpl extends JournalContentSearchBaseImpl {
 
 	public JournalContentSearchImpl() {
 	}

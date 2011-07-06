@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the BrowserTracker service. Represents a row in the &quot;BrowserTracker&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the BrowserTracker service. Represents a row in the &quot;BrowserTracker&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see BrowserTrackerModel
@@ -23,8 +23,8 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.BrowserTrackerModelImpl
  * @generated
  */
-public interface BrowserTracker extends BrowserTrackerModel {
-	/*
+public interface BrowserTracker extends BrowserTrackerModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.BrowserTrackerImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

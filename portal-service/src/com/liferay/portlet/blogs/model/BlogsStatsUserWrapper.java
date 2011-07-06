@@ -325,6 +325,11 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser {
 		return _blogsStatsUser.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_blogsStatsUser.save();
+	}
+
 	public BlogsStatsUser getWrappedBlogsStatsUser() {
 		return _blogsStatsUser;
 	}

@@ -559,6 +559,11 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntry.save();
+	}
+
 	public java.io.InputStream getContentStream()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

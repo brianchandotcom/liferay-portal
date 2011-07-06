@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the WikiPage service. Represents a row in the &quot;WikiPage&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the WikiPage service. Represents a row in the &quot;WikiPage&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see WikiPageModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.wiki.model;
  * @see com.liferay.portlet.wiki.model.impl.WikiPageModelImpl
  * @generated
  */
-public interface WikiPage extends WikiPageModel {
-	/*
+public interface WikiPage extends WikiPageModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiPageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.bookmarks.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the BookmarksFolder service. Represents a row in the &quot;BookmarksFolder&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the BookmarksFolder service. Represents a row in the &quot;BookmarksFolder&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see BookmarksFolderModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.bookmarks.model;
  * @see com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl
  * @generated
  */
-public interface BookmarksFolder extends BookmarksFolderModel {
-	/*
+public interface BookmarksFolder extends BookmarksFolderModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

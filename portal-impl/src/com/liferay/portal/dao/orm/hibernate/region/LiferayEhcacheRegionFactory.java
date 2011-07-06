@@ -18,6 +18,7 @@ import com.liferay.portal.cache.ehcache.EhcacheConfigurationUtil;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
@@ -29,6 +30,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
+import net.sf.ehcache.config.ConfigurationFactory;
 import net.sf.ehcache.hibernate.EhCacheRegionFactory;
 import net.sf.ehcache.hibernate.regions.EhcacheCollectionRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheEntityRegion;
@@ -41,6 +43,7 @@ import org.hibernate.cache.CollectionRegion;
 import org.hibernate.cache.EntityRegion;
 import org.hibernate.cache.QueryResultsRegion;
 import org.hibernate.cache.TimestampsRegion;
+import org.hibernate.cfg.Settings;
 
 /**
  * @author Edward Han
@@ -134,6 +137,63 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 	}
 
+	@Override
+	public void start(Settings settings, Properties properties)
+		throws CacheException {
+
+		Object transactionManager = getOnePhaseCommitSyncTransactionManager(
+			settings, properties);
+
+		try {
+			String configurationResourceName = null;
+			if (properties != null) {
+				configurationResourceName = (String) properties.get(
+					NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME);
+			}
+
+			if (Validator.isNull(configurationResourceName)) {
+				configurationResourceName =
+					_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE;
+			}
+
+			boolean usingDefault = configurationResourceName.equals(
+				_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
+
+			Configuration configuration = null;
+
+			if (Validator.isNull(configurationResourceName)) {
+				configuration = ConfigurationFactory.parseConfiguration();
+			}
+			else {
+				configuration = EhcacheConfigurationUtil.getConfiguration(
+					configurationResourceName, true, usingDefault);
+			}
+
+			configuration.setDefaultTransactionManager(transactionManager);
+
+			manager = new CacheManager(configuration);
+
+			mbeanRegistrationHelper.registerMBean(manager, properties);
+		}
+		catch (net.sf.ehcache.CacheException e) {
+			if (e.getMessage().startsWith(
+				"Cannot parseConfiguration CacheManager. " +
+				"Attempt to create a new instance of CacheManager " +
+				"using the diskStorePath")) {
+
+				throw new CacheException(
+					"Attempt to restart an already started " +
+					"EhCacheRegionFactory.  Use sessionFactory.close() " +
+					"between repeated calls to buildSessionFactory. " +
+					"Consider using SingletonEhCacheRegionFactory." +
+					"Error from ehcache was: " + e.getMessage());
+			}
+			else {
+				throw new CacheException(e);
+			}
+		}
+	}
+
 	protected void configureCache(String regionName) {
 		synchronized (manager) {
 			Ehcache ehcache = manager.getEhcache(regionName);
@@ -197,6 +257,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			manager.replaceCacheWithDecoratedCache(replacementCache, ehcache);
 		}
 	}
+
+	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
+		"/ehcache/hibernate-clustered.xml";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayEhcacheRegionFactory.class);

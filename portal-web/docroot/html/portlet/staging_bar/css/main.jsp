@@ -17,82 +17,58 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.js .controls-hidden .staging-bar {
-		display: none;
-	}
-
-	.manage-backstages {
+	.manage-backstages-tab, .manage-page-variations-tab {
 		margin-left: 1em;
 	}
 
+	.staging-tabview-list {
+		border-color: #555;
+		border-width: 0 0 1px;
+		font-size: 1.2em;
+		margin-bottom: 0;
+	}
+
 	.staging-icon-menu-container {
+		display: inline-block;
+		margin-right: -9px;
+		margin-top: -0.1em;
 		overflow: hidden;
-		position: absolute;
-		right: 8px;
-		top: -5px;
+		vertical-align: middle;
 
 		a {
 			display: block;
 			float: right;
 			min-height: 15px;
-
 		}
 
 		.staging-icon-menu.lfr-actions .lfr-trigger strong {
 			min-width: 0;
+			padding: 0;
 
 			a {
-				background-color: #EEE;
+				background-color: #555;
+				background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
 				background-position: 50% 4px;
-				border-radius: 15px;
-				padding: 0 15px 0 0;
+				padding: 0 14px 0 0;
 			}
 		}
 	}
 
-	.tab-container {
-		position: relative;
-		margin-left: 5px;
+	.aui-tab-active {
+		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
+			background-color: #EEE;
+			background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
+		}
 	}
 
 	.staging-bar {
-		background-color: #777;
+		background-color: #888;
 
-		.staging-tabs {
+		.variations-tabview-list {
 			background-color: #DDD;
-			overflow: hidden;
-			padding-top: 1em;
-
-			.tab {
-				background-color: #EEE;
-				border: 1px solid #999;
-				border-bottom: none;
-				font-size: 1.5em;
-				margin: 0.5em 0 0;
-				min-width: 8em;
-				padding: 10px 30px 5px 10px;
-				position: relative;
-				top: 2px;
-
-				-moz-border-radius-topleft: 4px;
-				-moz-border-radius-topright: 4px;
-				-webkit-border-top-left-radius: 4px;
-				-webkit-border-top-right-radius: 4px;
-				border-top-left-radius: 4px;
-				border-top-right-radius: 4px;
-
-				&.selected {
-					background-color: #777;
-					border-right-color: #999;
-					border-top-color: #DDD;
-					border-left-color: #EEE;
-					color: #FFF;
-					font-weight: bold;
-				}
-			}
 		}
 
-		.staging-tabs-content {
+		.staging-tabview-content {
 			border-bottom: 1px solid #636364;
 			color: #EEE;
 			padding: 1em;
@@ -102,8 +78,59 @@
 				margin-right: 1em;
 			}
 
+			.backstage-info {
+            	font-size: 1.1em;
+				margin-bottom: 1em;
+
+            	.backstage-description {
+					border-right: 1px solid #AAA;
+					padding: 0 0.5em 0;
+                	font-style: italic;
+				}
+
+				.backstage-pages {
+                	padding-left: 0.5em;
+				}
+			}
+
+			.layout-info {
+				.variations-tabview-list {
+					margin-top: 1em;
+				}
+			}
+
 			.layout-title {
-				font-size: 1.3em;
+				font-size: 1.2em;
+
+				label {
+					float: left;
+				}
+
+				.layout-breadcrumb {
+					font-size: 1em;
+
+					.breadcrumbs a {
+						color: #EEE;
+					}
+
+					.breadcrumbs-horizontal {
+						margin-bottom: 0;
+						overflow: hidden;
+						padding-left: 0.5em;
+
+						li {
+							background-image: url(<%= themeImagesPath %>/arrows/09_right.png);
+
+							&.last {
+								background-image: none;
+								font-weight: bold;
+								position: relative;
+								text-decoration: none;
+								top: -0.2em;
+							}
+						}
+					}
+				}
 			}
 
 			.layout-revision-id {
@@ -159,8 +186,8 @@
 			}
 		}
 	}
+}
 
-	.layout-set-results {
-		min-height: 300px;
-	}
+.js .controls-hidden .staging-bar {
+	display: none;
 }

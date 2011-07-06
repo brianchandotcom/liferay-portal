@@ -267,6 +267,14 @@ public class LayoutRevisionLocalServiceWrapper
 		_layoutRevisionLocalService.deleteLayoutLayoutRevisions(plid);
 	}
 
+	public void deleteLayoutRevisions(long layoutSetBranchId, long plid,
+		java.lang.String variationName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutRevisionLocalService.deleteLayoutRevisions(layoutSetBranchId,
+			plid, variationName);
+	}
+
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

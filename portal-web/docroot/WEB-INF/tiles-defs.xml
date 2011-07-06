@@ -1484,6 +1484,8 @@
 
 	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
 
+	<definition name="portlet.staging_bar.view_root_layout_revisions" path="/portlet/staging_bar/view_root_layout_revisions.jsp" />
+
 	<!-- Update Manager -->
 
 	<definition name="portlet.update_manager" extends="portlet" />

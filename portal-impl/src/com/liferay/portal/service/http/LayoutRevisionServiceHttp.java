@@ -14,6 +14,13 @@
 
 package com.liferay.portal.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.service.LayoutRevisionServiceUtil;
+
 /**
  * <p>
  * This class provides a HTTP utility for the
@@ -45,4 +52,103 @@ package com.liferay.portal.service.http;
  * @generated
  */
 public class LayoutRevisionServiceHttp {
+	public static com.liferay.portal.model.LayoutRevision addLayoutRevision(
+		HttpPrincipal httpPrincipal, long userId, long layoutSetBranchId,
+		long parentLayoutRevisionId, boolean head,
+		java.lang.String variationName, long plid, boolean privateLayout,
+		java.lang.String name, java.lang.String title,
+		java.lang.String description, java.lang.String keywords,
+		java.lang.String robots, java.lang.String typeSettings,
+		boolean iconImage, long iconImageId, java.lang.String themeId,
+		java.lang.String colorSchemeId, java.lang.String wapThemeId,
+		java.lang.String wapColorSchemeId, java.lang.String css,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class.getName(),
+					"addLayoutRevision", _addLayoutRevisionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					layoutSetBranchId, parentLayoutRevisionId, head,
+					variationName, plid, privateLayout, name, title,
+					description, keywords, robots, typeSettings, iconImage,
+					iconImageId, themeId, colorSchemeId, wapThemeId,
+					wapColorSchemeId, css, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.LayoutRevision)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteLayoutRevisions(HttpPrincipal httpPrincipal,
+		long layoutSetBranchId, long plid, java.lang.String variationName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class.getName(),
+					"deleteLayoutRevisions",
+					_deleteLayoutRevisionsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutSetBranchId, plid, variationName);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionServiceHttp.class);
+	private static final Class<?>[] _addLayoutRevisionParameterTypes0 = new Class[] {
+			long.class, long.class, long.class, boolean.class,
+			java.lang.String.class, long.class, boolean.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, boolean.class,
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteLayoutRevisionsParameterTypes1 = new Class[] {
+			long.class, long.class, java.lang.String.class
+		};
 }

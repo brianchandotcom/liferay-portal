@@ -121,6 +121,14 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "LayoutRevision",
+	{
+		addLayoutRevision: true,
+		deleteLayoutRevisions: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSet",
 	{
 		updateLookAndFeel: true,

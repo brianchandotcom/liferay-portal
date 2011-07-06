@@ -424,7 +424,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the layout prototype in the database. Also notifies the appropriate model listeners.
+	 * Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutPrototype the layout prototype
 	 * @return the layout prototype that was updated
@@ -436,7 +436,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the layout prototype in the database. Also notifies the appropriate model listeners.
+	 * Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutPrototype the layout prototype
 	 * @param merge whether to merge the layout prototype with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

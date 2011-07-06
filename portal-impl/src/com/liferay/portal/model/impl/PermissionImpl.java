@@ -14,15 +14,13 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Permission;
-
 /**
  * Represents a permission to perform an action on a resource in permissions
  * versions &lt; 6.
  *
  * @author Brian Wing Shun Chan
  */
-public class PermissionImpl extends PermissionModelImpl implements Permission {
+public class PermissionImpl extends PermissionBaseImpl {
 
 	public PermissionImpl() {
 	}

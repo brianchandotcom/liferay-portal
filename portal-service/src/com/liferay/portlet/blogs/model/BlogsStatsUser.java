@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the BlogsStatsUser service. Represents a row in the &quot;BlogsStatsUser&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the BlogsStatsUser service. Represents a row in the &quot;BlogsStatsUser&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see BlogsStatsUserModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.blogs.model;
  * @see com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl
  * @generated
  */
-public interface BlogsStatsUser extends BlogsStatsUserModel {
-	/*
+public interface BlogsStatsUser extends BlogsStatsUserModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

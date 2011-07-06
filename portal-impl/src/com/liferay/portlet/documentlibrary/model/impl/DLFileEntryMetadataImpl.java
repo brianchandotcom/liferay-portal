@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -27,8 +26,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 /**
  * @author Alexander Chow
  */
-public class DLFileEntryMetadataImpl
-	extends DLFileEntryMetadataModelImpl implements DLFileEntryMetadata {
+public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
 
 	public DLFileEntryMetadataImpl() {
 	}

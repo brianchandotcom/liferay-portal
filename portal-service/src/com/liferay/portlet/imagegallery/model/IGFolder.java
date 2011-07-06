@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.imagegallery.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the IGFolder service. Represents a row in the &quot;IGFolder&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the IGFolder service. Represents a row in the &quot;IGFolder&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see IGFolderModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.imagegallery.model;
  * @see com.liferay.portlet.imagegallery.model.impl.IGFolderModelImpl
  * @generated
  */
-public interface IGFolder extends IGFolderModel {
-	/*
+public interface IGFolder extends IGFolderModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.imagegallery.model.impl.IGFolderImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

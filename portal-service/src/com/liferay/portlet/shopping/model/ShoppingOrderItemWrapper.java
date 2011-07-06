@@ -303,6 +303,11 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 		return _shoppingOrderItem.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingOrderItem.save();
+	}
+
 	public ShoppingOrderItem getWrappedShoppingOrderItem() {
 		return _shoppingOrderItem;
 	}

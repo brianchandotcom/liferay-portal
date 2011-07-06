@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialEquityAssetEntry;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialEquityAssetEntryImpl
-	extends SocialEquityAssetEntryModelImpl implements SocialEquityAssetEntry {
+public class SocialEquityAssetEntryImpl extends SocialEquityAssetEntryBaseImpl {
 
 	public SocialEquityAssetEntryImpl() {
 	}

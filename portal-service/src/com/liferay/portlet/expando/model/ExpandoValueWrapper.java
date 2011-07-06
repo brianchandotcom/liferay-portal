@@ -276,6 +276,11 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoValue.save();
+	}
+
 	public boolean getBoolean()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

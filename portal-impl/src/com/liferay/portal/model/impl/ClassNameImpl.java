@@ -15,12 +15,11 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ClassName;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClassNameImpl extends ClassNameModelImpl implements ClassName {
+public class ClassNameImpl extends ClassNameBaseImpl {
 
 	public ClassNameImpl() {
 		setValue(StringPool.BLANK);

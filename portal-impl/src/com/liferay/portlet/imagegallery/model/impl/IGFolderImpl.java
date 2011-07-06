@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class IGFolderImpl extends IGFolderModelImpl implements IGFolder {
+public class IGFolderImpl extends IGFolderBaseImpl {
 
 	public IGFolderImpl() {
 	}

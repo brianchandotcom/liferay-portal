@@ -167,6 +167,11 @@ public class ClassNameWrapper implements ClassName {
 		return _className.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_className.save();
+	}
+
 	public ClassName getWrappedClassName() {
 		return _className;
 	}

@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.ResourceCode;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceCodeImpl
-	extends ResourceCodeModelImpl implements ResourceCode {
+public class ResourceCodeImpl extends ResourceCodeBaseImpl {
 
 	public ResourceCodeImpl() {
 	}

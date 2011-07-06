@@ -266,7 +266,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the ratings stats in the database. Also notifies the appropriate model listeners.
+	 * Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param ratingsStats the ratings stats
 	 * @return the ratings stats that was updated
@@ -278,7 +278,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the ratings stats in the database. Also notifies the appropriate model listeners.
+	 * Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param ratingsStats the ratings stats
 	 * @param merge whether to merge the ratings stats with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

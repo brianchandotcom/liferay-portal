@@ -232,6 +232,11 @@ public class UserIdMapperWrapper implements UserIdMapper {
 		return _userIdMapper.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userIdMapper.save();
+	}
+
 	public UserIdMapper getWrappedUserIdMapper() {
 		return _userIdMapper;
 	}

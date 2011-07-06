@@ -14,14 +14,11 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
-import com.liferay.portlet.wiki.model.WikiPageResource;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class WikiPageResourceImpl
-	extends WikiPageResourceModelImpl implements WikiPageResource {
+public class WikiPageResourceImpl extends WikiPageResourceBaseImpl {
 
 	public WikiPageResourceImpl() {
 	}

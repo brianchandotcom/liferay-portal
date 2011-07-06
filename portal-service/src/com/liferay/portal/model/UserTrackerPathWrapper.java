@@ -195,6 +195,11 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		return _userTrackerPath.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTrackerPath.save();
+	}
+
 	public UserTrackerPath getWrappedUserTrackerPath() {
 		return _userTrackerPath;
 	}

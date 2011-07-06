@@ -16,15 +16,13 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMStorageLinkImpl
-	extends DDMStorageLinkModelImpl implements DDMStorageLink {
+public class DDMStorageLinkImpl extends DDMStorageLinkBaseImpl {
 
 	public DDMStorageLinkImpl() {
 	}

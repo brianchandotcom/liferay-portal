@@ -14,14 +14,12 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Ticket;
-
 import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TicketImpl extends TicketModelImpl implements Ticket {
+public class TicketImpl extends TicketBaseImpl {
 
 	public TicketImpl() {
 	}

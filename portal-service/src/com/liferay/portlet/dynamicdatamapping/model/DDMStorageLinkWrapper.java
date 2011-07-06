@@ -222,6 +222,11 @@ public class DDMStorageLinkWrapper implements DDMStorageLink {
 		return _ddmStorageLink.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmStorageLink.save();
+	}
+
 	public java.lang.String getStorageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

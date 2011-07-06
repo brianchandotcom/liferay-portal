@@ -196,6 +196,11 @@ public class BrowserTrackerWrapper implements BrowserTracker {
 		return _browserTracker.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_browserTracker.save();
+	}
+
 	public BrowserTracker getWrappedBrowserTracker() {
 		return _browserTracker;
 	}

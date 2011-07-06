@@ -204,6 +204,11 @@ public class AssetTagStatsWrapper implements AssetTagStats {
 		return _assetTagStats.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTagStats.save();
+	}
+
 	public AssetTagStats getWrappedAssetTagStats() {
 		return _assetTagStats;
 	}

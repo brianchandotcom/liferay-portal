@@ -191,7 +191,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService {
 	}
 
 	/**
-	* Updates the resource in the database. Also notifies the appropriate model listeners.
+	* Updates the resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resource the resource
 	* @return the resource that was updated
@@ -204,7 +204,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService {
 	}
 
 	/**
-	* Updates the resource in the database. Also notifies the appropriate model listeners.
+	* Updates the resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resource the resource
 	* @param merge whether to merge the resource with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

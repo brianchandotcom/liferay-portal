@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoValueModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.expando.model;
  * @see com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl
  * @generated
  */
-public interface ExpandoValue extends ExpandoValueModel {
-	/*
+public interface ExpandoValue extends ExpandoValueModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.expando.model.impl.ExpandoValueImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

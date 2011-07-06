@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the BlogsEntry service. Represents a row in the &quot;BlogsEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the BlogsEntry service. Represents a row in the &quot;BlogsEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.blogs.model;
  * @see com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl
  * @generated
  */
-public interface BlogsEntry extends BlogsEntryModel {
-	/*
+public interface BlogsEntry extends BlogsEntryModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.blogs.model.impl.BlogsEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

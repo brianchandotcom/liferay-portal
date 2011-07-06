@@ -15,13 +15,11 @@
 package com.liferay.portlet.shopping.model.impl;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.shopping.model.ShoppingItemField;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingItemFieldImpl
-	extends ShoppingItemFieldModelImpl implements ShoppingItemField {
+public class ShoppingItemFieldImpl extends ShoppingItemFieldBaseImpl {
 
 	public ShoppingItemFieldImpl() {
 	}

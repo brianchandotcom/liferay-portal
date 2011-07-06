@@ -431,6 +431,11 @@ public class SCProductEntryWrapper implements SCProductEntry {
 		return _scProductEntry.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scProductEntry.save();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getLatestVersion()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _scProductEntry.getLatestVersion();

@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Region;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class RegionImpl extends RegionModelImpl implements Region {
+public class RegionImpl extends RegionBaseImpl {
 
 	public RegionImpl() {
 	}

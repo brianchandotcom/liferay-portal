@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.ratings.model.impl;
 
-import com.liferay.portlet.ratings.model.RatingsEntry;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class RatingsEntryImpl
-	extends RatingsEntryModelImpl implements RatingsEntry {
+public class RatingsEntryImpl extends RatingsEntryBaseImpl {
 
 	public RatingsEntryImpl() {
 	}

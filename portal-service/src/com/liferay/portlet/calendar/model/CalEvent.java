@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.calendar.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the CalEvent service. Represents a row in the &quot;CalEvent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CalEvent service. Represents a row in the &quot;CalEvent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see CalEventModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.calendar.model;
  * @see com.liferay.portlet.calendar.model.impl.CalEventModelImpl
  * @generated
  */
-public interface CalEvent extends CalEventModel {
-	/*
+public interface CalEvent extends CalEventModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.calendar.model.impl.CalEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

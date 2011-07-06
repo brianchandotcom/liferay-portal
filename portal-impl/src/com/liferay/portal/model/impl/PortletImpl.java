@@ -83,7 +83,7 @@ import javax.portlet.WindowState;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletImpl extends PortletModelImpl implements Portlet {
+public class PortletImpl extends PortletBaseImpl {
 
 	/**
 	 * Constructs a portlet with no parameters.

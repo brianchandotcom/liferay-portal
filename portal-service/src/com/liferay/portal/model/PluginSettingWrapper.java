@@ -239,6 +239,11 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pluginSetting.save();
+	}
+
 	/**
 	* Adds a role to the list of roles.
 	*/

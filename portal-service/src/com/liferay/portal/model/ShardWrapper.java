@@ -203,6 +203,11 @@ public class ShardWrapper implements Shard {
 		return _shard.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shard.save();
+	}
+
 	public Shard getWrappedShard() {
 		return _shard;
 	}

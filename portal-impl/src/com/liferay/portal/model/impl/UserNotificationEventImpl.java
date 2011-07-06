@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.UserNotificationEvent;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserNotificationEventImpl
-	extends UserNotificationEventModelImpl implements UserNotificationEvent {
+public class UserNotificationEventImpl extends UserNotificationEventBaseImpl {
 
 	public UserNotificationEventImpl() {
 	}

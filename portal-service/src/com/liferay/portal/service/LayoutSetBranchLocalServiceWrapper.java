@@ -198,7 +198,7 @@ public class LayoutSetBranchLocalServiceWrapper
 	}
 
 	/**
-	* Updates the layout set branch in the database. Also notifies the appropriate model listeners.
+	* Updates the layout set branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetBranch the layout set branch
 	* @return the layout set branch that was updated
@@ -211,7 +211,7 @@ public class LayoutSetBranchLocalServiceWrapper
 	}
 
 	/**
-	* Updates the layout set branch in the database. Also notifies the appropriate model listeners.
+	* Updates the layout set branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetBranch the layout set branch
 	* @param merge whether to merge the layout set branch with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

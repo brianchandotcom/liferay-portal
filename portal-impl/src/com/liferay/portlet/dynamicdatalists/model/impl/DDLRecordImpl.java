@@ -16,7 +16,6 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
@@ -33,8 +32,7 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
-public class DDLRecordImpl
-	extends DDLRecordModelImpl implements DDLRecord {
+public class DDLRecordImpl extends DDLRecordBaseImpl {
 
 	public DDLRecordImpl() {
 	}

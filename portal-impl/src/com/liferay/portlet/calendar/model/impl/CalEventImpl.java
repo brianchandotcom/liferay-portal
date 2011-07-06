@@ -17,12 +17,11 @@ package com.liferay.portlet.calendar.model.impl;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.calendar.model.CalEvent;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CalEventImpl extends CalEventModelImpl implements CalEvent {
+public class CalEventImpl extends CalEventBaseImpl {
 
 	public CalEventImpl() {
 	}

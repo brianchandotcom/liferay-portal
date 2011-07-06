@@ -415,6 +415,11 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddlRecord.save();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
 		java.lang.String fieldName)
 		throws com.liferay.portlet.dynamicdatamapping.StorageException {

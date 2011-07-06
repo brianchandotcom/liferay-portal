@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialRequestImpl
-	extends SocialRequestModelImpl implements SocialRequest {
+public class SocialRequestImpl extends SocialRequestBaseImpl {
 
 	public SocialRequestImpl() {
 	}

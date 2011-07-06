@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBCategoryImpl extends MBCategoryModelImpl implements MBCategory {
+public class MBCategoryImpl extends MBCategoryBaseImpl {
 
 	public MBCategoryImpl() {
 	}

@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Shard;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShardImpl extends ShardModelImpl implements Shard {
+public class ShardImpl extends ShardBaseImpl {
 
 	public ShardImpl() {
 	}

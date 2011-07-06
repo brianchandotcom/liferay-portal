@@ -656,6 +656,11 @@ public class MBMailingListWrapper implements MBMailingList {
 		return _mbMailingList.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMailingList.save();
+	}
+
 	public MBMailingList getWrappedMBMailingList() {
 		return _mbMailingList;
 	}

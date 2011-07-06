@@ -215,6 +215,11 @@ public class PasswordTrackerWrapper implements PasswordTracker {
 		return _passwordTracker.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_passwordTracker.save();
+	}
+
 	public PasswordTracker getWrappedPasswordTracker() {
 		return _passwordTracker;
 	}

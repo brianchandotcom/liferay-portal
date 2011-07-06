@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.blogs.model.impl;
 
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsStatsUserImpl
-	extends BlogsStatsUserModelImpl implements BlogsStatsUser {
+public class BlogsStatsUserImpl extends BlogsStatsUserBaseImpl {
 
 	public BlogsStatsUserImpl() {
 	}

@@ -377,6 +377,11 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalStructure.save();
+	}
+
 	public java.lang.String getMergedXsd() {
 		return _journalStructure.getMergedXsd();
 	}

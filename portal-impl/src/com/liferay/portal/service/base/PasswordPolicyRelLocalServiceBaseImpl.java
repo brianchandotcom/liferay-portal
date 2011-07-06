@@ -423,7 +423,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the password policy rel in the database. Also notifies the appropriate model listeners.
+	 * Updates the password policy rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param passwordPolicyRel the password policy rel
 	 * @return the password policy rel that was updated
@@ -435,7 +435,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the password policy rel in the database. Also notifies the appropriate model listeners.
+	 * Updates the password policy rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param passwordPolicyRel the password policy rel
 	 * @param merge whether to merge the password policy rel with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

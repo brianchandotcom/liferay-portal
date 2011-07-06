@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.ResourcePermission;
-
 /**
  * Stores the permissions assigned to roles under permissions version 6. A
  * permission gives a role the ability to perform a set of actions on certain
@@ -76,8 +74,7 @@ import com.liferay.portal.model.ResourcePermission;
  * @author Brian Wing Shun Chan
  * @see    ResourceActionImpl
  */
-public class ResourcePermissionImpl
-	extends ResourcePermissionModelImpl implements ResourcePermission {
+public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 
 	public ResourcePermissionImpl() {
 	}

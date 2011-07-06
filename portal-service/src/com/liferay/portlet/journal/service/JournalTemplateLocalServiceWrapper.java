@@ -213,7 +213,7 @@ public class JournalTemplateLocalServiceWrapper
 	}
 
 	/**
-	* Updates the journal template in the database. Also notifies the appropriate model listeners.
+	* Updates the journal template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalTemplate the journal template
 	* @return the journal template that was updated
@@ -226,7 +226,7 @@ public class JournalTemplateLocalServiceWrapper
 	}
 
 	/**
-	* Updates the journal template in the database. Also notifies the appropriate model listeners.
+	* Updates the journal template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalTemplate the journal template
 	* @param merge whether to merge the journal template with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

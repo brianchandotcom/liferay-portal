@@ -240,6 +240,11 @@ public class RatingsStatsWrapper implements RatingsStats {
 		return _ratingsStats.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ratingsStats.save();
+	}
+
 	public RatingsStats getWrappedRatingsStats() {
 		return _ratingsStats;
 	}

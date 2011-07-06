@@ -352,6 +352,11 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink {
 		return _workflowDefinitionLink.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_workflowDefinitionLink.save();
+	}
+
 	public WorkflowDefinitionLink getWrappedWorkflowDefinitionLink() {
 		return _workflowDefinitionLink;
 	}

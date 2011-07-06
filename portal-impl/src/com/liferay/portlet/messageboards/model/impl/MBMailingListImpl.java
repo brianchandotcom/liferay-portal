@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portlet.messageboards.model.MBMailingList;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMailingListImpl
-	extends MBMailingListModelImpl implements MBMailingList {
+public class MBMailingListImpl extends MBMailingListBaseImpl {
 
 	public MBMailingListImpl() {
 	}

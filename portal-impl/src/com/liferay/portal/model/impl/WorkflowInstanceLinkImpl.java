@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.WorkflowInstanceLink;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class WorkflowInstanceLinkImpl
-	extends WorkflowInstanceLinkModelImpl implements WorkflowInstanceLink {
+public class WorkflowInstanceLinkImpl extends WorkflowInstanceLinkBaseImpl {
 
 	public WorkflowInstanceLinkImpl() {
 	}

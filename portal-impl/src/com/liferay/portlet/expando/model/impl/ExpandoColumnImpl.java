@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 
@@ -32,8 +31,7 @@ import java.util.Locale;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class ExpandoColumnImpl
-	extends ExpandoColumnModelImpl implements ExpandoColumn {
+public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 
 	public ExpandoColumnImpl() {
 	}

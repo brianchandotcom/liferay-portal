@@ -349,6 +349,11 @@ public class LockWrapper implements Lock {
 		return _lock.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lock.save();
+	}
+
 	public long getExpirationTime() {
 		return _lock.getExpirationTime();
 	}

@@ -203,7 +203,7 @@ public class SCProductScreenshotLocalServiceUtil {
 	}
 
 	/**
-	* Updates the s c product screenshot in the database. Also notifies the appropriate model listeners.
+	* Updates the s c product screenshot in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param scProductScreenshot the s c product screenshot
 	* @return the s c product screenshot that was updated
@@ -216,7 +216,7 @@ public class SCProductScreenshotLocalServiceUtil {
 	}
 
 	/**
-	* Updates the s c product screenshot in the database. Also notifies the appropriate model listeners.
+	* Updates the s c product screenshot in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param scProductScreenshot the s c product screenshot
 	* @param merge whether to merge the s c product screenshot with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

@@ -306,6 +306,11 @@ public class MBBanWrapper implements MBBan {
 		return _mbBan.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbBan.save();
+	}
+
 	public MBBan getWrappedMBBan() {
 		return _mbBan;
 	}

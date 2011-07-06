@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
-import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsDeliveryImpl
-	extends AnnouncementsDeliveryModelImpl implements AnnouncementsDelivery {
+public class AnnouncementsDeliveryImpl extends AnnouncementsDeliveryBaseImpl {
 
 	public AnnouncementsDeliveryImpl() {
 	}

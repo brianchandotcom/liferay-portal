@@ -15,12 +15,11 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Repository;
 
 /**
  * @author Alexander Chow
  */
-public class RepositoryImpl extends RepositoryModelImpl implements Repository {
+public class RepositoryImpl extends RepositoryBaseImpl {
 
 	public RepositoryImpl() {
 	}

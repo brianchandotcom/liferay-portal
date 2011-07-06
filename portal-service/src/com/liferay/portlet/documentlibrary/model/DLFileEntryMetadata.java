@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DLFileEntryMetadata service. Represents a row in the &quot;DLFileEntryMetadata&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DLFileEntryMetadata service. Represents a row in the &quot;DLFileEntryMetadata&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryMetadataModel
@@ -23,8 +25,9 @@ package com.liferay.portlet.documentlibrary.model;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl
  * @generated
  */
-public interface DLFileEntryMetadata extends DLFileEntryMetadataModel {
-	/*
+public interface DLFileEntryMetadata extends DLFileEntryMetadataModel,
+	SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

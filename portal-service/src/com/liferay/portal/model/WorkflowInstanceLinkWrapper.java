@@ -333,6 +333,11 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 		return _workflowInstanceLink.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_workflowInstanceLink.save();
+	}
+
 	public WorkflowInstanceLink getWrappedWorkflowInstanceLink() {
 		return _workflowInstanceLink;
 	}

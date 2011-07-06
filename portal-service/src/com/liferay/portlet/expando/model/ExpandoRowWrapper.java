@@ -195,6 +195,11 @@ public class ExpandoRowWrapper implements ExpandoRow {
 		return _expandoRow.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoRow.save();
+	}
+
 	public ExpandoRow getWrappedExpandoRow() {
 		return _expandoRow;
 	}

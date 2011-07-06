@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMContentImpl extends DDMContentModelImpl implements DDMContent {
+public class DDMContentImpl extends DDMContentBaseImpl {
 
 	public DDMContentImpl() {
 	}

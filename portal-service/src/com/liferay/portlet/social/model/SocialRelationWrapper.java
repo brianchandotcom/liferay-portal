@@ -249,6 +249,11 @@ public class SocialRelationWrapper implements SocialRelation {
 		return _socialRelation.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRelation.save();
+	}
+
 	public SocialRelation getWrappedSocialRelation() {
 		return _socialRelation;
 	}

@@ -14,15 +14,12 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
-import com.liferay.portlet.announcements.model.AnnouncementsFlag;
-
 /**
  * @author Thiago Moreira
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class AnnouncementsFlagImpl
-	extends AnnouncementsFlagModelImpl implements AnnouncementsFlag {
+public class AnnouncementsFlagImpl extends AnnouncementsFlagBaseImpl {
 
 	public AnnouncementsFlagImpl() {
 	}

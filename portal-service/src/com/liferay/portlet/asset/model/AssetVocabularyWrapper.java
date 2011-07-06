@@ -553,6 +553,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		return _assetVocabulary.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetVocabulary.save();
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _assetVocabulary.getSettingsProperties();
 	}

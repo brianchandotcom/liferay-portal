@@ -370,6 +370,11 @@ public class SocialActivityWrapper implements SocialActivity {
 		return _socialActivity.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivity.save();
+	}
+
 	public SocialActivity getWrappedSocialActivity() {
 		return _socialActivity;
 	}

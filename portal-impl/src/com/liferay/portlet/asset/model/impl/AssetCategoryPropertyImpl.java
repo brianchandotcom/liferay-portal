@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.asset.model.impl;
 
-import com.liferay.portlet.asset.model.AssetCategoryProperty;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetCategoryPropertyImpl
-	extends AssetCategoryPropertyModelImpl implements AssetCategoryProperty {
+public class AssetCategoryPropertyImpl extends AssetCategoryPropertyBaseImpl {
 
 	public AssetCategoryPropertyImpl() {
 	}

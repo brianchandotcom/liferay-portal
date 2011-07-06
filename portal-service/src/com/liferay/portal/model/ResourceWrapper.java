@@ -176,6 +176,11 @@ public class ResourceWrapper implements Resource {
 		return _resource.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resource.save();
+	}
+
 	public long getCompanyId()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

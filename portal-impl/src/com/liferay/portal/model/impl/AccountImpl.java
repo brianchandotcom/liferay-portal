@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Account;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class AccountImpl extends AccountModelImpl implements Account {
+public class AccountImpl extends AccountBaseImpl {
 
 	public AccountImpl() {
 	}

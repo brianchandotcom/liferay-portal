@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBDiscussionImpl
-	extends MBDiscussionModelImpl implements MBDiscussion {
+public class MBDiscussionImpl extends MBDiscussionBaseImpl {
 
 	public MBDiscussionImpl() {
 	}

@@ -553,6 +553,11 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pollsQuestion.save();
+	}
+
 	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getChoices()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _pollsQuestion.getChoices();

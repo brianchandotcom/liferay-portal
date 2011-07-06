@@ -430,6 +430,11 @@ public class AccountWrapper implements Account {
 		return _account.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_account.save();
+	}
+
 	public Account getWrappedAccount() {
 		return _account;
 	}

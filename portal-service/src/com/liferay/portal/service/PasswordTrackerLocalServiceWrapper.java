@@ -196,7 +196,7 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	/**
-	* Updates the password tracker in the database. Also notifies the appropriate model listeners.
+	* Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTracker the password tracker
 	* @return the password tracker that was updated
@@ -209,7 +209,7 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	/**
-	* Updates the password tracker in the database. Also notifies the appropriate model listeners.
+	* Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTracker the password tracker
 	* @param merge whether to merge the password tracker with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

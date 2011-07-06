@@ -250,6 +250,11 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 		return _socialEquityGroupSetting.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityGroupSetting.save();
+	}
+
 	public SocialEquityGroupSetting getWrappedSocialEquityGroupSetting() {
 		return _socialEquityGroupSetting;
 	}

@@ -258,6 +258,11 @@ public class SCLicenseWrapper implements SCLicense {
 		return _scLicense.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scLicense.save();
+	}
+
 	public SCLicense getWrappedSCLicense() {
 		return _scLicense;
 	}

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
 import java.util.Date;
@@ -31,8 +30,7 @@ import java.util.Date;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class ExpandoValueImpl
-	extends ExpandoValueModelImpl implements ExpandoValue {
+public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 	public ExpandoValueImpl() {
 	}

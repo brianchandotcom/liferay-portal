@@ -209,7 +209,7 @@ public class IGImageLocalServiceWrapper implements IGImageLocalService {
 	}
 
 	/**
-	* Updates the i g image in the database. Also notifies the appropriate model listeners.
+	* Updates the i g image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param igImage the i g image
 	* @return the i g image that was updated
@@ -222,7 +222,7 @@ public class IGImageLocalServiceWrapper implements IGImageLocalService {
 	}
 
 	/**
-	* Updates the i g image in the database. Also notifies the appropriate model listeners.
+	* Updates the i g image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param igImage the i g image
 	* @param merge whether to merge the i g image with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

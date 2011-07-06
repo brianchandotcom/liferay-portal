@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portlet.messageboards.model.MBMessageFlag;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMessageFlagImpl
-	extends MBMessageFlagModelImpl implements MBMessageFlag {
+public class MBMessageFlagImpl extends MBMessageFlagBaseImpl {
 
 	public MBMessageFlagImpl() {
 	}

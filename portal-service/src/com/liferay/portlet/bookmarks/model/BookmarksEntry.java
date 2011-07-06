@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.bookmarks.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the BookmarksEntry service. Represents a row in the &quot;BookmarksEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the BookmarksEntry service. Represents a row in the &quot;BookmarksEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see BookmarksEntryModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.bookmarks.model;
  * @see com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl
  * @generated
  */
-public interface BookmarksEntry extends BookmarksEntryModel {
-	/*
+public interface BookmarksEntry extends BookmarksEntryModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

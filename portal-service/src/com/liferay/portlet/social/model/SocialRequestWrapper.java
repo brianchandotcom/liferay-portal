@@ -406,6 +406,11 @@ public class SocialRequestWrapper implements SocialRequest {
 		return _socialRequest.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRequest.save();
+	}
+
 	public SocialRequest getWrappedSocialRequest() {
 		return _socialRequest;
 	}

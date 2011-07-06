@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the PollsChoice service. Represents a row in the &quot;PollsChoice&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the PollsChoice service. Represents a row in the &quot;PollsChoice&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see PollsChoiceModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.polls.model;
  * @see com.liferay.portlet.polls.model.impl.PollsChoiceModelImpl
  * @generated
  */
-public interface PollsChoice extends PollsChoiceModel {
-	/*
+public interface PollsChoice extends PollsChoiceModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.polls.model.impl.PollsChoiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

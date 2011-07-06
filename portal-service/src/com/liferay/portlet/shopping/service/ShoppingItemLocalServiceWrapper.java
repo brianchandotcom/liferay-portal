@@ -194,7 +194,7 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	/**
-	* Updates the shopping item in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was updated
@@ -207,7 +207,7 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	/**
-	* Updates the shopping item in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItem the shopping item
 	* @param merge whether to merge the shopping item with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the RatingsStats service. Represents a row in the &quot;RatingsStats&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RatingsStats service. Represents a row in the &quot;RatingsStats&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see RatingsStatsModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.ratings.model;
  * @see com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl
  * @generated
  */
-public interface RatingsStats extends RatingsStatsModel {
-	/*
+public interface RatingsStats extends RatingsStatsModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.ratings.model.impl.RatingsStatsImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

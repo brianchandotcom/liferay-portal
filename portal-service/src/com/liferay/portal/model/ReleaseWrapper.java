@@ -275,6 +275,11 @@ public class ReleaseWrapper implements Release {
 		return _release.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_release.save();
+	}
+
 	public Release getWrappedRelease() {
 		return _release;
 	}

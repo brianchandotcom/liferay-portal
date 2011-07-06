@@ -304,6 +304,11 @@ public class AssetTagWrapper implements AssetTag {
 		return _assetTag.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTag.save();
+	}
+
 	public AssetTag getWrappedAssetTag() {
 		return _assetTag;
 	}

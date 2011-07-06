@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.util.LocaleTransformerListener;
@@ -36,8 +35,7 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-public class JournalArticleImpl
-	extends JournalArticleModelImpl implements JournalArticle {
+public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	public static String getContentByLocale(
 		String content, boolean templateDriven, String languageId) {

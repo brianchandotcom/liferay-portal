@@ -646,6 +646,11 @@ public class BlogsEntryWrapper implements BlogsEntry {
 		return _blogsEntry.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntry.save();
+	}
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

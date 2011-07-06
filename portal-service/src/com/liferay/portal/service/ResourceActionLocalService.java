@@ -187,7 +187,7 @@ public interface ResourceActionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the resource action in the database. Also notifies the appropriate model listeners.
+	* Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourceAction the resource action
 	* @return the resource action that was updated
@@ -198,7 +198,7 @@ public interface ResourceActionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the resource action in the database. Also notifies the appropriate model listeners.
+	* Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourceAction the resource action
 	* @param merge whether to merge the resource action with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

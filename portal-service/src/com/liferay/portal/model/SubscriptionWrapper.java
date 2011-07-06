@@ -313,6 +313,11 @@ public class SubscriptionWrapper implements Subscription {
 		return _subscription.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_subscription.save();
+	}
+
 	public Subscription getWrappedSubscription() {
 		return _subscription;
 	}

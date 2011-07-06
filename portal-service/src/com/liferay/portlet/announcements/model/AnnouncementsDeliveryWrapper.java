@@ -297,6 +297,11 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 		return _announcementsDelivery.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_announcementsDelivery.save();
+	}
+
 	public AnnouncementsDelivery getWrappedAnnouncementsDelivery() {
 		return _announcementsDelivery;
 	}

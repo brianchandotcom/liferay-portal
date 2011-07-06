@@ -368,6 +368,11 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 		return _socialEquityLog.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityLog.save();
+	}
+
 	public int getLifespan() {
 		return _socialEquityLog.getLifespan();
 	}

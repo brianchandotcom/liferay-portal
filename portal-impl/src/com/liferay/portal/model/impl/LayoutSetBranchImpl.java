@@ -14,14 +14,12 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 
 /**
  * @author Raymond Augé
  */
-public class LayoutSetBranchImpl
-	extends LayoutSetBranchModelImpl implements LayoutSetBranch {
+public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 
 	public LayoutSetBranchImpl() {
 	}

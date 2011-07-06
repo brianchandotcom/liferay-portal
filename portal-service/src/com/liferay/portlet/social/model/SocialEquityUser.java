@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the SocialEquityUser service. Represents a row in the &quot;SocialEquityUser&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the SocialEquityUser service. Represents a row in the &quot;SocialEquityUser&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SocialEquityUserModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.social.model;
  * @see com.liferay.portlet.social.model.impl.SocialEquityUserModelImpl
  * @generated
  */
-public interface SocialEquityUser extends SocialEquityUserModel {
-	/*
+public interface SocialEquityUser extends SocialEquityUserModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialEquityUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

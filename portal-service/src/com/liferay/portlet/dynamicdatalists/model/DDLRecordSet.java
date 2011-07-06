@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DDLRecordSet service. Represents a row in the &quot;DDLRecordSet&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DDLRecordSet service. Represents a row in the &quot;DDLRecordSet&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetModel
@@ -23,8 +25,8 @@ package com.liferay.portlet.dynamicdatalists.model;
  * @see com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetModelImpl
  * @generated
  */
-public interface DDLRecordSet extends DDLRecordSetModel {
-	/*
+public interface DDLRecordSet extends DDLRecordSetModel, SaveableModel {
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

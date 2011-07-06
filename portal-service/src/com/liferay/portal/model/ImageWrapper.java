@@ -248,6 +248,11 @@ public class ImageWrapper implements Image {
 		return _image.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_image.save();
+	}
+
 	public byte[] getTextObj() {
 		return _image.getTextObj();
 	}

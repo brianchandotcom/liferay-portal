@@ -304,6 +304,11 @@ public class AssetLinkWrapper implements AssetLink {
 		return _assetLink.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetLink.save();
+	}
+
 	public AssetLink getWrappedAssetLink() {
 		return _assetLink;
 	}

@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
-import com.liferay.portlet.wiki.model.WikiNode;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiNodeImpl extends WikiNodeModelImpl implements WikiNode {
+public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 	public WikiNodeImpl() {
 	}

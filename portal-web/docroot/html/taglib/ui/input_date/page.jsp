@@ -180,6 +180,18 @@ if (yearValue > 0) {
 					dayNode: '#<%= dayParam %>',
 					disabled: <%= disabled %>,
 					monthNode: '#<%= monthParam %>',
+					<c:if test="<%= dayNullable %>">
+						nullableDay: true,
+					</c:if>
+
+					<c:if test="<%= monthNullable %>">
+						nullableMonth: true,
+					</c:if>
+
+					<c:if test="<%= yearNullable %>">
+						nullableYear: true,
+					</c:if>
+
 					on: {
 						'calendar:select': function(event) {
 							var formatted = event.date.formatted[0];
@@ -187,9 +199,6 @@ if (yearValue > 0) {
 							A.one('#<%= imageInputId %>Input').val(formatted);
 						}
 					},
-					populateDay: false,
-					populateMonth: false,
-					populateYear: false,
 					srcNode: '#<%= randomNamespace %>displayDateContent',
 					yearNode: '#<%= yearParam %>',
 					yearRange: [<%= yearRangeStart %>, <%= yearRangeEnd %>]

@@ -28,12 +28,10 @@ List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 if (classPK > 0) {
 	try {
 		assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+
+		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
 	}
 	catch (NoSuchEntryException nsee) {
-	}
-
-	if (assetEntry != null) {
-		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
 	}
 }
 %>

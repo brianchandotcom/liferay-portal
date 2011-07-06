@@ -44,12 +44,13 @@ public class EditTimeZoneTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[@id='_130_generalLink']",
-			RuntimeVariables.replace(""));
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_displaySettingsLink']", "Display Settings"));
+		selenium.clickAt("//a[@id='_130_displaySettingsLink']",
+			RuntimeVariables.replace("Display Settings"));
 		selenium.select("_130_timeZoneId",
 			RuntimeVariables.replace("label=(UTC -08:00) Pacific Standard Time"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));

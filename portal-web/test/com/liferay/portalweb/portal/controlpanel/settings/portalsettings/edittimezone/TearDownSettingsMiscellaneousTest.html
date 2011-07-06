@@ -26,12 +26,22 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td>Portal Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_130_displaySettingsLink']</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[@id='_130_displaySettingsLink']</td>
-	<td></td>
+	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>_130_languageId</td>
+	<td>Default Language</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -64,9 +74,19 @@
 	<td>label=Control Panel</td>
 </tr>
 <tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_130_googleAppsLink']</td>
+	<td>Google Apps</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//a[@id='_130_googleAppsLink']</td>
-	<td></td>
+	<td>Google Apps</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>_130_settings--google.apps.username--</td>
+	<td>User Name</td>
 </tr>
 <tr>
 	<td>type</td>

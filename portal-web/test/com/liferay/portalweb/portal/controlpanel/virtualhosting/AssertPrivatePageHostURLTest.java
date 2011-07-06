@@ -28,7 +28,6 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("http://www.baker.com:8080/");
-				Thread.sleep(5000);
 
 				boolean LoggedOut = selenium.isElementPresent("_58_login");
 
@@ -38,15 +37,16 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.type("_58_login",
+				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_58_password", RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='_58_password']",
+					RuntimeVariables.replace("test"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_58_rememberMeCheckbox",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+					RuntimeVariables.replace("Remember Me Checkbox"));
 				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -58,7 +58,7 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 					selenium.getText("//li[2]/span/a"));
 				assertTrue(selenium.isElementPresent("link=Private Page"));
 				selenium.clickAt("link=Private Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Private Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(

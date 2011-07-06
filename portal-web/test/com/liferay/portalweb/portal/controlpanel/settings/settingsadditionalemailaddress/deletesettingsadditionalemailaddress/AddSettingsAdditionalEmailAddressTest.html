@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddSettingsAdditionalEmailAddressTest</title>
 </head>
 <body>
@@ -19,12 +16,12 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -32,9 +29,14 @@
 	<td>Portal Settings</td>
 </tr>
 <tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_130_additionalEmailAddressesLink']</td>
+	<td>Additional Email Addresses</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//a[@id='_130_additionalEmailAddressesLink']</td>
-	<td></td>
+	<td>Additional Email Addresses</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -44,7 +46,7 @@
 <tr>
 	<td>select</td>
 	<td>_130_emailAddressTypeId0</td>
-	<td>label=Email</td>
+	<td>label=Email Address</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -54,7 +56,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -69,7 +71,7 @@
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>_130_emailAddressTypeId0</td>
-	<td>Email</td>
+	<td>Email Address</td>
 </tr>
 <tr>
 	<td>assertChecked</td>

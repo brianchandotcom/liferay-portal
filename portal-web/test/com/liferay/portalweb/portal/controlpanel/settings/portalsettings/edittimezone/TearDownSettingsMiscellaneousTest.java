@@ -44,12 +44,31 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_displaySettingsLink']", "Display Settings"));
 		selenium.clickAt("//a[@id='_130_displaySettingsLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Display Settings"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("_130_languageId")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.select("_130_languageId",
 			RuntimeVariables.replace("label=English (United States)"));
 		selenium.type("_130_settings--locales--",
@@ -64,8 +83,28 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			RuntimeVariables.replace("label=Mobile"));
 		selenium.select("_130_settings--control.panel.layout.regular.theme.id--",
 			RuntimeVariables.replace("label=Control Panel"));
+		assertTrue(selenium.isPartialText("//a[@id='_130_googleAppsLink']",
+				"Google Apps"));
 		selenium.clickAt("//a[@id='_130_googleAppsLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Apps"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("_130_settings--google.apps.username--")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.type("_130_settings--google.apps.username--",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();

@@ -14,104 +14,119 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_prefixId</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_prefixId</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td>label=Mrs.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium02</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test02@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen02</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium02</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_suffixId</td>
+	<td>//select[@id='_125_suffixId']</td>
 	<td>label=Phd.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayMonth</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
 	<td>label=September</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayDay</td>
+	<td>//select[@id='_125_birthdayDay']</td>
 	<td>label=24</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayYear</td>
+	<td>//select[@id='_125_birthdayYear']</td>
 	<td>label=1984</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_male</td>
+	<td>//select[@id='_125_male']</td>
 	<td>label=Female</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 
 </tbody></table>

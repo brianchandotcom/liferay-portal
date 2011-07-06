@@ -44,12 +44,13 @@ public class ViewAuthenticationOpenIDTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_authenticationLink']", "Authentication"));
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Authentication"));
 		selenium.clickAt("link=OpenID", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {

@@ -26,12 +26,17 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td>Portal Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_130_addressesLink']</td>
+	<td>Addresses</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[@id='_130_addressesLink']</td>
-	<td></td>
+	<td>Addresses</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -47,6 +52,21 @@
 	<td>type</td>
 	<td>_130_addressZip0</td>
 	<td>12345</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>_130_addressCountryId0</td>
+	<td>label=United States</td>
+</tr>
+<tr>
+	<td>waitForPartialText</td>
+	<td>_130_addressRegionId0</td>
+	<td>California</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>_130_addressRegionId0</td>
+	<td>label=California</td>
 </tr>
 <tr>
 	<td>select</td>

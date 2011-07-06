@@ -30,7 +30,7 @@ public class ViewAuthenticationLDAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,16 +41,19 @@ public class ViewAuthenticationLDAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_authenticationLink']", "Authentication"));
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("link=LDAP", RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Authentication"));
+		selenium.clickAt("link=LDAP", RuntimeVariables.replace("LDAP"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -83,13 +86,13 @@ public class ViewAuthenticationLDAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals("ldap://localhost:10389",
-			selenium.getValue("_130_settings--ldap.base.provider.url--"));
+			selenium.getValue("//input[@id='_130_ldap.base.provider.url.0']"));
 		selenium.clickAt("//input[@name='_130_defaultLdap' and @value='microsoft']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//div[2]/span/span/input",
 			RuntimeVariables.replace("Reset Values"));
 		assertEquals("ldap://localhost:389",
-			selenium.getValue("_130_settings--ldap.base.provider.url--"));
+			selenium.getValue("//input[@id='_130_ldap.base.provider.url.0']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Test LDAP Connection']"));
 		assertTrue(selenium.isElementPresent(

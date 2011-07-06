@@ -91,6 +91,12 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			return null;
 		}
 
+		if (rootElement != null) {
+			if (hasErrorMessage(rootElement)) {
+				return null;
+			}
+		}
+
 		Element itemsElement = rootElement.element("Items");
 
 		if (itemsElement == null) {
@@ -103,16 +109,8 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			Element errorsElement = requestElement.element("Errors");
 
 			if (errorsElement != null) {
-				Element errorElement = errorsElement.element("Error");
-
-				if (errorElement != null) {
-					Element messageElement = errorElement.element("Message");
-
-					if (messageElement != null) {
-						_log.error(messageElement.getText());
-
-						return null;
-					}
+				if (hasErrorMessage(errorsElement)) {
+					return null;
 				}
 			}
 		}
@@ -197,6 +195,22 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			"Availability");
 
 		return availabilityElement.elementText("Availability");
+	}
+
+	protected boolean hasErrorMessage(Element parentElement) {
+		
+		Element errorElement = parentElement.element("Error");
+
+		if (errorElement != null) {
+			Element messageElement = errorElement.element("Message");
+
+			if (messageElement != null) {
+				_log.error(messageElement.getText());
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	protected String getImageURL(Element itemElement, String name) {

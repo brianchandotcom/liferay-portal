@@ -87,6 +87,25 @@ public class FileSystemStore extends BaseStore {
 	public void checkRoot(long companyId) {
 	}
 
+	public void copyFileVersion(
+			long companyId, String portletId, long groupId, long repositoryId,
+			String fileName, String fromVersionNumber, String toVersionNumber,
+			String sourceFileName, ServiceContext serviceContext)
+		throws PortalException {
+
+		File fromFileNameVersionFile = getFileNameVersionFile(
+			companyId, repositoryId, fileName, fromVersionNumber);
+
+		File toFileNameVersionFile = getFileNameVersionFile(
+			companyId, repositoryId, fileName, toVersionNumber);
+
+		if (toFileNameVersionFile.exists()) {
+			throw new DuplicateFileException(toFileNameVersionFile.getPath());
+		}
+
+		FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+	}
+
 	@Override
 	public void copyFileVersion(
 			long companyId, String portletId, long groupId, long repositoryId,

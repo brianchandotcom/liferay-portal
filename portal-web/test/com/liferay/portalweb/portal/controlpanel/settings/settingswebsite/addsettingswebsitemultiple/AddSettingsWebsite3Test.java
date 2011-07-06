@@ -44,12 +44,13 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
+				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
 

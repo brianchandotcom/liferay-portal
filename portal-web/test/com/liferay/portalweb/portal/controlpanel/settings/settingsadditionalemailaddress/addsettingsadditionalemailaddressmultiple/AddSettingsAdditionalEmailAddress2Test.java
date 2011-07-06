@@ -31,7 +31,7 @@ public class AddSettingsAdditionalEmailAddress2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,15 +42,19 @@ public class AddSettingsAdditionalEmailAddress2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_additionalEmailAddressesLink']",
+				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Additional Email Addresses"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,8 +80,9 @@ public class AddSettingsAdditionalEmailAddress2Test extends BaseTestCase {
 			RuntimeVariables.replace("Admin@Liferay.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.select("_130_emailAddressTypeId2",
-			RuntimeVariables.replace("label=Email"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+			RuntimeVariables.replace("label=Email Address 2"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -85,7 +90,7 @@ public class AddSettingsAdditionalEmailAddress2Test extends BaseTestCase {
 			selenium.getText("//section/div/div/div/div"));
 		assertEquals("Admin@Liferay.com",
 			selenium.getValue("_130_emailAddressAddress1"));
-		assertEquals("Email",
+		assertEquals("Email Address 2",
 			selenium.getSelectedLabel("_130_emailAddressTypeId1"));
 	}
 }

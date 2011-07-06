@@ -44,12 +44,13 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
+				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Addresses"));
 		selenium.type("_130_addressStreet1_0",
 			RuntimeVariables.replace("123. Liferay Ln."));
 		selenium.saveScreenShotAndSource();

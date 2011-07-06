@@ -45,12 +45,13 @@ public class ViewEmailNotificationAccountCreatedTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Email Notifications"));
 		selenium.clickAt("link=Account Created Notification",
 			RuntimeVariables.replace(""));
 

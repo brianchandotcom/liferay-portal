@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.announcements.NoSuchEntryException" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -25,9 +26,15 @@ AssetEntry assetEntry = null;
 List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 
 if (classPK > 0) {
-	assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+	try {
+		assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+	}
+	catch (NoSuchEntryException nsee) {
+	}
 
-	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+	if (assetEntry != null) {
+		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+	}
 }
 %>
 

@@ -16,8 +16,8 @@ package com.liferay.util.servlet;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.util.PwdGenerator;
-import com.liferay.util.SystemProperties;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

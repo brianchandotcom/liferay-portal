@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.util.SystemProperties;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -16,7 +16,7 @@ package com.liferay.util.format;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.util.SystemProperties;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 /**
  * @author Brian Wing Shun Chan

@@ -41,10 +41,11 @@ public class AddBlogsEntryDraftCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
@@ -78,34 +79,14 @@ public class AddBlogsEntryDraftCPTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save as Draft']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Save as Draft"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//strong[@class='workflow-status-draft']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@class='save-status portlet-msg-success']",
-							"Draft saved")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='save-status portlet-msg-success']", "Draft saved"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -125,10 +106,11 @@ public class AddBlogsEntryDraftCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),

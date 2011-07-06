@@ -41,20 +41,21 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("xPath=(//strong/a)[2]"));
-		selenium.clickAt("xPath=(//strong/a)[2]",
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +85,7 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -109,10 +110,11 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),

@@ -41,10 +41,11 @@ public class ViewImportLARCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Entry"),
@@ -57,6 +58,6 @@ public class ViewImportLARCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("This is a test entry."),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("This is a test entry comment."),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@Class='lfr-discussion-message']"));
 	}
 }

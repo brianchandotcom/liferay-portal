@@ -14,22 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td></td>
+	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_emailNotificationsLink']</td>
 	<td>Email Notifications</td>
 </tr>
@@ -41,21 +41,21 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Sender</td>
-	<td></td>
+	<td>Sender</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>_130_settings--admin.email.from.name--</td>
+	<td>//input[@name='_130_settings--admin.email.from.name--']</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_settings--admin.email.from.name--</td>
+	<td>//input[@name='_130_settings--admin.email.from.name--']</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_settings--admin.email.from.address--</td>
+	<td>//input[@name='_130_settings--admin.email.from.address--']</td>
 	<td>test@liferay.com</td>
 </tr>
 

@@ -50,9 +50,25 @@ public class AddSettingsAdditionalEmailAddress3Test extends BaseTestCase {
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_additionalEmailAddressesLink']",
-				"Additional Email Addresses"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_130_additionalEmailAddressesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 
@@ -74,22 +90,41 @@ public class AddSettingsAdditionalEmailAddress3Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/span/span/button[1]",
-			RuntimeVariables.replace(""));
-		selenium.type("_130_emailAddressAddress3",
+			RuntimeVariables.replace("Add"));
+		selenium.type("//input[@id='_130_emailAddressAddress3']",
 			RuntimeVariables.replace("Admin@Liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_emailAddressTypeId3",
+		selenium.select("//select[@id='_130_emailAddressTypeId3']",
 			RuntimeVariables.replace("label=Email Address 3"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Admin@Liferay.com",
-			selenium.getValue("_130_emailAddressAddress2"));
+			selenium.getValue("//input[@id='_130_emailAddressAddress2']"));
 		assertEquals("Email Address 3",
-			selenium.getSelectedLabel("_130_emailAddressTypeId2"));
+			selenium.getSelectedLabel(
+				"//select[@id='_130_emailAddressTypeId2']"));
 	}
 }

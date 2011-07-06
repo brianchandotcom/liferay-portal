@@ -14,22 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td></td>
+	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_usersLink']</td>
 	<td>Users</td>
 </tr>
@@ -41,31 +41,36 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Default User Associations</td>
-	<td></td>
+	<td>Default User Associations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_settings--admin.default.role.names--</td>
+	<td>//textarea[@name='_130_settings--admin.default.role.names--']</td>
 	<td>Administrator</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Default User Associations</td>
-	<td></td>
+	<td>Default User Associations</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_settings--admin.default.role.names--</td>
+	<td>//textarea[@name='_130_settings--admin.default.role.names--']</td>
 	<td>Administrator</td>
 </tr>
 

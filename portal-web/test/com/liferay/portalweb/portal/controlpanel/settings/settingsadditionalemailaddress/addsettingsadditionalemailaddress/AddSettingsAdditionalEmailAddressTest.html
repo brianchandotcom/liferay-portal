@@ -29,7 +29,7 @@
 	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_additionalEmailAddressesLink']</td>
 	<td>Additional Email Addresses</td>
 </tr>
@@ -40,18 +40,18 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_emailAddressAddress0</td>
+	<td>//input[@id='_130_emailAddressAddress0']</td>
 	<td>Admin@Liferay.com</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_emailAddressTypeId0</td>
+	<td>//select[@id='_130_emailAddressTypeId0']</td>
 	<td>label=Email Address</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_130_emailAddressPrimary0</td>
-	<td></td>
+	<td>//input[@id='_130_emailAddressPrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -59,24 +59,29 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_emailAddressAddress0</td>
+	<td>//input[@id='_130_emailAddressAddress0']</td>
 	<td>Admin@Liferay.com</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_130_emailAddressTypeId0</td>
+	<td>//select[@id='_130_emailAddressTypeId0']</td>
 	<td>Email Address</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_130_emailAddressPrimary0</td>
-	<td></td>
+	<td>//input[@id='_130_emailAddressPrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 
 </tbody></table>

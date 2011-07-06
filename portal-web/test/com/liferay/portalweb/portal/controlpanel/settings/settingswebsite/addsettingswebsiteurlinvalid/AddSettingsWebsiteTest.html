@@ -14,22 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td></td>
+	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_websitesLink']</td>
 	<td>Websites</td>
 </tr>
@@ -40,27 +40,32 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_websiteUrl0</td>
+	<td>//input[@id='_130_websiteUrl0']</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_websiteTypeId0</td>
+	<td>//select[@id='_130_websiteTypeId0']</td>
 	<td>label=Public</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_130_websitePrimary</td>
-	<td></td>
+	<td>//input[@id='_130_websitePrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 

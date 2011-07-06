@@ -30,7 +30,7 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,14 +41,32 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
-				"Websites"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_websitesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div[2]/span/span/button[1]",
@@ -60,7 +78,7 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_130_websiteUrl3")) {
+				if (selenium.isVisible("//input[@id='_130_websiteUrl3']")) {
 					break;
 				}
 			}
@@ -71,19 +89,39 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_websiteUrl3",
+		selenium.type("//input[@id='_130_websiteUrl3']",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_websiteTypeId3",
+		selenium.select("//select[@id='_130_websiteTypeId3']",
 			RuntimeVariables.replace("label=Public"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("http://www.liferay.com",
-			selenium.getValue("_130_websiteUrl2"));
-		assertEquals("Public", selenium.getSelectedLabel("_130_websiteTypeId2"));
+			selenium.getValue("//input[@id='_130_websiteUrl2']"));
+		assertEquals("Public",
+			selenium.getSelectedLabel("//select[@id='_130_websiteTypeId2']"));
 	}
 }

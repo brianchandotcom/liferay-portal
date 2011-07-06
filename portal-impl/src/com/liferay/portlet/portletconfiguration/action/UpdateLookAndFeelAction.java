@@ -95,6 +95,8 @@ public class UpdateLookAndFeelAction extends JSONAction {
 
 		boolean useCustomTitle = portletData.getBoolean("useCustomTitle");
 		boolean showBorders = portletData.getBoolean("showBorders");
+		String portletInitialWindowState =
+			portletData.getString("portletInitialWindowState");
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletData.getString("portletLinksTarget"));
 
@@ -124,6 +126,8 @@ public class UpdateLookAndFeelAction extends JSONAction {
 			"portlet-setup-use-custom-title", String.valueOf(useCustomTitle));
 		portletSetup.setValue(
 			"portlet-setup-show-borders", String.valueOf(showBorders));
+		portletSetup.setValue(
+			"lfr-portlet-initial-window-state", portletInitialWindowState);
 
 		if (Validator.isNotNull(linkToLayoutUuid)) {
 			portletSetup.setValue(

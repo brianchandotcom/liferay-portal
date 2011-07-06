@@ -82,6 +82,24 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
 
+String portletInitialWindowState = portletSetup.getValue("lfr-portlet-initial-window-state", WindowState.NORMAL.toString());
+
+StringBundler sb = new StringBundler(5);
+
+sb.append("portlet-");
+sb.append(portletId);
+sb.append("plid-");
+sb.append(plid);
+sb.append("status");
+
+String portletWindowState = SessionClicks.get(request, sb.toString(), portletInitialWindowState);
+
+if (portletWindowState.equals(WindowState.MINIMIZED.toString())) {
+	layoutTypePortlet.addStateMinPortletId(portletId);
+
+	stateMin = true;
+}
+
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
 
 if (portletItemId > 0) {
@@ -774,7 +792,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	String cssClasses = StringPool.BLANK;
 
 	if (themeDisplay.isFreeformLayout() && !themeDisplay.isStatePopUp() && !runtimePortlet && !layoutTypePortlet.hasStateMax()) {
-		StringBundler sb = new StringBundler(7);
+		sb = new StringBundler(7);
 
 		Properties freeformStyleProps = PropertiesUtil.load(portletSetup.getValue("portlet-freeform-styles", StringPool.BLANK));
 

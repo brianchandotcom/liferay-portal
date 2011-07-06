@@ -113,6 +113,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 					<aui:input name="show-borders" type="checkbox" />
 
+					<aui:select label="initial-window-state" name="lfr-portlet-initial-window-state">
+						<aui:option label="<%= WindowState.NORMAL.toString() %>" />
+						<aui:option label="<%= WindowState.MINIMIZED.toString() %>" />
+					</aui:select>
+
 					<span class="form-hint portlet-msg-info aui-helper-hidden" id="border-note">
 						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 					</span>

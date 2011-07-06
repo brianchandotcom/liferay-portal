@@ -46,6 +46,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.util.servlet.DynamicServletRequest;
@@ -55,6 +56,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -160,11 +162,25 @@ public class UpdateLayoutAction extends JSONAction {
 		else if (cmd.equals("minimize")) {
 			boolean restore = ParamUtil.getBoolean(request, "p_p_restore");
 
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("portlet-");
+			sb.append(portletId);
+			sb.append("plid-");
+			sb.append(themeDisplay.getPlid());
+			sb.append("status");
+
 			if (restore) {
 				layoutTypePortlet.removeStateMinPortletId(portletId);
+
+				SessionClicks.put(
+					request, sb.toString(), WindowState.NORMAL.toString());
 			}
 			else {
 				layoutTypePortlet.addStateMinPortletId(portletId);
+
+				SessionClicks.put(
+					request, sb.toString(), WindowState.MINIMIZED.toString());
 			}
 
 			updateLayout = false;

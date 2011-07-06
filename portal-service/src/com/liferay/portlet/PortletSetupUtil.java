@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.WindowState;
 
 /**
  * @author Brian Wing Shun Chan
@@ -95,11 +96,15 @@ public class PortletSetupUtil {
 			portletSetup.getValue("portlet-setup-use-custom-title", null));
 		boolean showBorders = GetterUtil.getBoolean(
 			portletSetup.getValue("portlet-setup-show-borders", null), true);
+		String portletInitialWindowState = GetterUtil.getString(
+			portletSetup.getValue("lfr-portlet-initial-window-state",
+				WindowState.NORMAL.toString()));
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletSetup.getValue("portlet-setup-link-to-layout-uuid", null));
 
 		portletData.put("useCustomTitle", useCustomTitle);
 		portletData.put("showBorders", showBorders);
+		portletData.put("portletInitialWindowState", portletInitialWindowState);
 		portletData.put("portletLinksTarget", linkToLayoutUuid);
 
 		return jsonObj;

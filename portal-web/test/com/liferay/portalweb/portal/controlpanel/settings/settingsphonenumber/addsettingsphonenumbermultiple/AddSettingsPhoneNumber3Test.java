@@ -30,7 +30,7 @@ public class AddSettingsPhoneNumber3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,14 +41,32 @@ public class AddSettingsPhoneNumber3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
-				"Phone Numbers"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_phoneNumbersLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 
@@ -71,21 +89,44 @@ public class AddSettingsPhoneNumber3Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
-		selenium.type("_130_phoneNumber3",
+		selenium.type("//input[@id='_130_phoneNumber3']",
 			RuntimeVariables.replace("123-123-1234"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_phoneExtension3", RuntimeVariables.replace("123"));
+		selenium.type("//input[@id='_130_phoneExtension3']",
+			RuntimeVariables.replace("123"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_phoneTypeId3",
+		selenium.select("//select[@id='_130_phoneTypeId3']",
 			RuntimeVariables.replace("label=Other"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
-		assertEquals("1231231234", selenium.getValue("_130_phoneNumber2"));
-		assertEquals("123", selenium.getValue("_130_phoneExtension2"));
-		assertEquals("Other", selenium.getSelectedLabel("_130_phoneTypeId2"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("1231231234",
+			selenium.getValue("//input[@id='_130_phoneNumber2']"));
+		assertEquals("123",
+			selenium.getValue("//input[@id='_130_phoneExtension2']"));
+		assertEquals("Other",
+			selenium.getSelectedLabel("//select[@id='_130_phoneTypeId2']"));
 	}
 }

@@ -30,7 +30,7 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,14 +41,32 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_displaySettingsLink']", "Display Settings"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_displaySettingsLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
 
@@ -58,7 +76,7 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_130_languageId")) {
+				if (selenium.isVisible("//select[@id='_130_languageId']")) {
 					break;
 				}
 			}
@@ -69,19 +87,19 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_languageId",
+		selenium.select("//select[@id='_130_languageId']",
 			RuntimeVariables.replace("label=English (United States)"));
-		selenium.type("_130_settings--locales--",
+		selenium.type("//input[@id='_130_locales']",
 			RuntimeVariables.replace(
 				"ar_SA,eu_ES,bg_BG,ca_AD,ca_ES,zh_CN,zh_TW,cs_CZ,nl_NL,en_US,et_EE,fi_FI,fr_FR,gl_ES,de_DE,el_GR,iw_IL,hi_IN,hu_HU,it_IT,ja_JP,ko_KR,nb_NO,fa_IR,pl_PL,pt_BR,pt_PT,ru_RU,sk_SK,es_ES,sv_SE,tr_TR,uk_UA,vi_VN"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_timeZoneId",
+		selenium.select("//select[@name='_130_timeZoneId']",
 			RuntimeVariables.replace("label=(UTC ) Coordinated Universal Time"));
-		selenium.select("_130_settings--default.regular.theme.id--",
+		selenium.select("//select[@name='_130_settings--default.regular.theme.id--']",
 			RuntimeVariables.replace("label=Classic"));
 		selenium.select("//fieldset[3]/div/span[2]/span/span/select",
 			RuntimeVariables.replace("label=Mobile"));
-		selenium.select("_130_settings--control.panel.layout.regular.theme.id--",
+		selenium.select("//select[@name='_130_settings--control.panel.layout.regular.theme.id--']",
 			RuntimeVariables.replace("label=Control Panel"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_googleAppsLink']",
 				"Google Apps"));
@@ -94,7 +112,8 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_130_settings--google.apps.username--")) {
+				if (selenium.isVisible(
+							"//input[@name='_130_settings--google.apps.username--']")) {
 					break;
 				}
 			}
@@ -105,13 +124,14 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--google.apps.username--",
+		selenium.type("//input[@name='_130_settings--google.apps.username--']",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--google.apps.password--",
+		selenium.type("//input[@name='_130_settings--google.apps.password--']",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

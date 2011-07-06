@@ -30,7 +30,7 @@ public class EditGeneralTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,36 +41,81 @@ public class EditGeneralTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_generalLink']",
-				"General"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_generalLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_generalLink']",
 			RuntimeVariables.replace("General"));
-		selenium.type("_130_legalId", RuntimeVariables.replace("LIFE"));
+		selenium.type("//input[@id='_130_legalId']",
+			RuntimeVariables.replace("LIFE"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_sicCode", RuntimeVariables.replace("1234"));
+		selenium.type("//input[@id='_130_sicCode']",
+			RuntimeVariables.replace("1234"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_tickerSymbol", RuntimeVariables.replace("LFRY"));
+		selenium.type("//input[@id='_130_tickerSymbol']",
+			RuntimeVariables.replace("LFRY"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_industry", RuntimeVariables.replace("Web Portal"));
+		selenium.type("//input[@id='_130_industry']",
+			RuntimeVariables.replace("Web Portal"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_type", RuntimeVariables.replace("Open Source"));
+		selenium.type("//input[@id='_130_type']",
+			RuntimeVariables.replace("Open Source"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
-		assertEquals("LIFE", selenium.getValue("_130_legalId"));
-		assertEquals("1234", selenium.getValue("_130_sicCode"));
-		assertEquals("LFRY", selenium.getValue("_130_tickerSymbol"));
-		assertEquals("Web Portal", selenium.getValue("_130_industry"));
-		assertEquals("Open Source", selenium.getValue("_130_type"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("LIFE", selenium.getValue("//input[@id='_130_legalId']"));
+		assertEquals("1234", selenium.getValue("//input[@id='_130_sicCode']"));
+		assertEquals("LFRY",
+			selenium.getValue("//input[@id='_130_tickerSymbol']"));
+		assertEquals("Web Portal",
+			selenium.getValue("//input[@id='_130_industry']"));
+		assertEquals("Open Source",
+			selenium.getValue("//input[@id='_130_type']"));
 	}
 }

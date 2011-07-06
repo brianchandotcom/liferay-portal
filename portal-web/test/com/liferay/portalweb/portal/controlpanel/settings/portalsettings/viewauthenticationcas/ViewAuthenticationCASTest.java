@@ -30,7 +30,7 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,14 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_authenticationLink']", "Authentication"));
-		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace("Authentication"));
-		selenium.clickAt("link=CAS", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -59,8 +56,29 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"_130_settings--cas.import.from.ldap--Checkbox")) {
+				if (selenium.isVisible("//a[@id='_130_authenticationLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//a[@id='_130_authenticationLink']",
+			RuntimeVariables.replace("Authentication"));
+		selenium.clickAt("link=CAS", RuntimeVariables.replace("CAS"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@name='_130_settings--cas.import.from.ldap--Checkbox']")) {
 					break;
 				}
 			}
@@ -72,9 +90,9 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--cas.import.from.ldap--Checkbox"));
+				"//input[@name='_130_settings--cas.import.from.ldap--Checkbox']"));
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--cas.auth.enabled--Checkbox"));
+				"//input[@name='_130_settings--cas.auth.enabled--Checkbox']"));
 		assertTrue(selenium.isTextPresent("Login URL"));
 		assertTrue(selenium.isTextPresent("Logout URL"));
 		assertTrue(selenium.isTextPresent("Server Name"));

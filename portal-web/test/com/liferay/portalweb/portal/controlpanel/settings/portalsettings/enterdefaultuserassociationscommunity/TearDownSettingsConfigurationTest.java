@@ -30,7 +30,7 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,82 +41,94 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_name", RuntimeVariables.replace("Liferay"));
+		selenium.type("//input[@id='_130_name']",
+			RuntimeVariables.replace("Liferay"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_virtualHostname",
+		selenium.type("//input[@id='_130_virtualHostname']",
 			RuntimeVariables.replace("localhost"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_mx", RuntimeVariables.replace("liferay.com"));
+		selenium.type("//input[@id='_130_mx']",
+			RuntimeVariables.replace("liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_homeURL", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_homeURL']",
+			RuntimeVariables.replace("Home URL"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--default.landing.page.path--",
-			RuntimeVariables.replace(""));
+		selenium.type("//input[@name='_130_settings--default.landing.page.path--']",
+			RuntimeVariables.replace("Default Landing Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--default.logout.page.path--",
-			RuntimeVariables.replace(""));
+		selenium.type("//input[@name='_130_settings--default.logout.page.path--']",
+			RuntimeVariables.replace("Default Logout Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_legalName",
+		selenium.type("//input[@id='_130_legalName']",
 			RuntimeVariables.replace("Liferay, Inc."));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_sicCode", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_sicCode']",
+			RuntimeVariables.replace("SIC Code"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_legalId", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_legalId']",
+			RuntimeVariables.replace("Legal ID"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_tickerSymbol", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_tickerSymbol']",
+			RuntimeVariables.replace("Ticker Symbol"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_legalType", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_legalType']",
+			RuntimeVariables.replace("Legal Type"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_industry", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_industry']",
+			RuntimeVariables.replace("Industry"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_type", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_type']",
+			RuntimeVariables.replace("Type"));
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
 		selenium.clickAt("//a[@id='_130_usersLink']",
 			RuntimeVariables.replace("Users"));
 		selenium.clickAt("link=Reserved Credentials",
-			RuntimeVariables.replace(""));
-		selenium.type("_130_settings--admin.reserved.screen.names--",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Reserved Credentials"));
+		selenium.type("//textarea[@name='_130_settings--admin.reserved.screen.names--']",
+			RuntimeVariables.replace("Screen Names"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--admin.reserved.email.addresses--",
-			RuntimeVariables.replace(""));
+		selenium.type("//textarea[@name='_130_settings--admin.reserved.email.addresses--']",
+			RuntimeVariables.replace("Email Addresses"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Default User Associations",
-			RuntimeVariables.replace(""));
-		selenium.type("_130_settings--admin.default.group.names--",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Default User Associations"));
+		selenium.type("//textarea[@name='_130_settings--admin.default.group.names--']",
+			RuntimeVariables.replace("Sites"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--admin.default.role.names--",
+		selenium.type("//textarea[@name='_130_settings--admin.default.role.names--']",
 			RuntimeVariables.replace("Power User\nUser"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--admin.default.user.group.names--",
-			RuntimeVariables.replace(""));
+		selenium.type("//textarea[@name='_130_settings--admin.default.user.group.names--']",
+			RuntimeVariables.replace("User Groups"));
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_mailHostNamesLink']",
 				"Mail Host Names"));
 		selenium.clickAt("//a[@id='_130_mailHostNamesLink']",
 			RuntimeVariables.replace("Mail Host Names"));
-		selenium.type("_130_settings--admin.mail.host.names--",
-			RuntimeVariables.replace(""));
+		selenium.type("//textarea[@name='_130_settings--admin.mail.host.names--']",
+			RuntimeVariables.replace("Mail Host Names"));
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
 			RuntimeVariables.replace("Email Notifications"));
-		selenium.type("_130_settings--admin.email.from.name--",
+		selenium.type("//input[@name='_130_settings--admin.email.from.name--']",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_130_settings--admin.email.from.address--",
+		selenium.type("//input[@name='_130_settings--admin.email.from.address--']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

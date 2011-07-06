@@ -30,7 +30,7 @@ public class ViewAuthenticationOpenIDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,35 @@ public class ViewAuthenticationOpenIDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_authenticationLink']", "Authentication"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_authenticationLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
 			RuntimeVariables.replace("Authentication"));
-		selenium.clickAt("link=OpenID", RuntimeVariables.replace(""));
+		selenium.clickAt("link=OpenID", RuntimeVariables.replace("OpenID"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -60,7 +78,7 @@ public class ViewAuthenticationOpenIDTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"_130_settings--open.id.auth.enabled--Checkbox")) {
+							"//input[@name='_130_settings--open.id.auth.enabled--Checkbox']")) {
 					break;
 				}
 			}
@@ -72,6 +90,6 @@ public class ViewAuthenticationOpenIDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--open.id.auth.enabled--Checkbox"));
+				"//input[@name='_130_settings--open.id.auth.enabled--Checkbox']"));
 	}
 }

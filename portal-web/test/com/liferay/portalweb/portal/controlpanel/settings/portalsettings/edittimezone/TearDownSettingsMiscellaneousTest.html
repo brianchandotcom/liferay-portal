@@ -14,22 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td></td>
+	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_displaySettingsLink']</td>
 	<td>Display Settings</td>
 </tr>
@@ -40,27 +40,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_130_languageId</td>
+	<td>//select[@id='_130_languageId']</td>
 	<td>Default Language</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_languageId</td>
+	<td>//select[@id='_130_languageId']</td>
 	<td>label=English (United States)</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_settings--locales--</td>
+	<td>//input[@id='_130_locales']</td>
 	<td>ar_SA,eu_ES,bg_BG,ca_AD,ca_ES,zh_CN,zh_TW,cs_CZ,nl_NL,en_US,et_EE,fi_FI,fr_FR,gl_ES,de_DE,el_GR,iw_IL,hi_IN,hu_HU,it_IT,ja_JP,ko_KR,nb_NO,fa_IR,pl_PL,pt_BR,pt_PT,ru_RU,sk_SK,es_ES,sv_SE,tr_TR,uk_UA,vi_VN</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_timeZoneId</td>
+	<td>//select[@name='_130_timeZoneId']</td>
 	<td>label=(UTC ) Coordinated Universal Time</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_settings--default.regular.theme.id--</td>
+	<td>//select[@name='_130_settings--default.regular.theme.id--']</td>
 	<td>label=Classic</td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>_130_settings--control.panel.layout.regular.theme.id--</td>
+	<td>//select[@name='_130_settings--control.panel.layout.regular.theme.id--']</td>
 	<td>label=Control Panel</td>
 </tr>
 <tr>
@@ -85,23 +85,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_130_settings--google.apps.username--</td>
+	<td>//input[@name='_130_settings--google.apps.username--']</td>
 	<td>User Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_settings--google.apps.username--</td>
+	<td>//input[@name='_130_settings--google.apps.username--']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_130_settings--google.apps.password--</td>
+	<td>//input[@name='_130_settings--google.apps.password--']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 
 </tbody></table>

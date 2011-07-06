@@ -29,7 +29,7 @@
 	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_authenticationLink']</td>
 	<td>Authentication</td>
 </tr>
@@ -45,33 +45,33 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>_130_settings--ldap.auth.enabled--Checkbox</td>
-	<td></td>
+	<td>//input[@name='_130_settings--ldap.auth.enabled--Checkbox']</td>
+	<td>Enabled Checkbox</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>_130_settings--ldap.auth.enabled--Checkbox</td>
-	<td></td>
+	<td>//input[@name='_130_settings--ldap.auth.enabled--Checkbox']</td>
+	<td>Enabled Checkbox</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>_130_settings--ldap.auth.required--Checkbox</td>
-	<td></td>
+	<td>//input[@name='_130_settings--ldap.auth.required--Checkbox']</td>
+	<td>Required Checkbox</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>_130_ldapImportEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_130_ldapImportEnabledCheckbox']</td>
+	<td>Import Checkbox</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>_130_ldapExportEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_130_ldapExportEnabledCheckbox']</td>
+	<td>Export Checkbox</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>_130_settings--ldap.password.policy.enabled--Checkbox</td>
-	<td></td>
+	<td>//input[@name='_130_settings--ldap.password.policy.enabled--Checkbox']</td>
+	<td>Use LDAP Password Policy Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -86,7 +86,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_130_defaultLdap' and @value='microsoft']</td>
-	<td></td>
+	<td>Microsoft Active Directory Server Button</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -101,17 +101,17 @@
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Test LDAP Connection']</td>
-	<td></td>
+	<td>Test LDAP Connection</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Test LDAP Users']</td>
-	<td></td>
+	<td>Test LDAP Users</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Test LDAP Groups']</td>
-	<td></td>
+	<td>Test LDAP Groups</td>
 </tr>
 
 </tbody></table>

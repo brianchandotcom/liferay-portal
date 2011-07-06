@@ -49,6 +49,16 @@ public class ExpandoValueImpl
 		return GetterUtil.getBooleanValues(StringUtil.split(getData()));
 	}
 
+	public ExpandoColumn getColumn() throws PortalException, SystemException {
+		long columnId = getColumnId();
+
+		if (columnId <= 0) {
+			return  null;
+		}
+
+		return ExpandoColumnLocalServiceUtil.getColumn(columnId);
+	}
+
 	public Date getDate() throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.DATE);
 
@@ -256,14 +266,11 @@ public class ExpandoValueImpl
 	}
 
 	protected void validate(int type) throws PortalException, SystemException {
-		long columnId = getColumnId();
+		ExpandoColumn column = getColumn();
 
-		if (columnId <= 0) {
+		if (column == null) {
 			return;
 		}
-
-		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
-			columnId);
 
 		if (column.getType() == type) {
 			return;
@@ -272,7 +279,7 @@ public class ExpandoValueImpl
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("Column ");
-		sb.append(columnId);
+		sb.append(getColumnId());
 		sb.append(" has type ");
 		sb.append(ExpandoColumnConstants.getTypeLabel(column.getType()));
 		sb.append(" and is not compatible with type ");

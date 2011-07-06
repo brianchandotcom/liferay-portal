@@ -674,6 +674,16 @@
 		<field name="actionId" type="String" />
 		<field name="bitwiseValue" type="long" />
 	</model>
+	<model name="com.liferay.portal.model.ResourceBlock">
+		<field name="resourceBlockId" type="long" />
+		<field name="permissionsHash" type="String" />
+		<field name="referenceCount" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceBlockRoleAction">
+		<field name="actionId" type="long" />
+		<field name="resourceBlockId" type="long" />
+		<field name="roleId" type="long" />
+	</model>
 	<model name="com.liferay.portal.model.ResourceCode">
 		<field name="codeId" type="long" />
 		<field name="companyId" type="long" />

@@ -1443,6 +1443,10 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockRoleActionPersistence.class)
+	protected ResourceBlockRoleActionPersistence resourceBlockRoleActionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)

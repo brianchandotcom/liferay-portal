@@ -838,6 +838,25 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockModelImpl">
+		<attributes>
+			<id name="resourceBlockId" />
+			<basic name="permissionsHash" />
+			<basic name="referenceCount" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockRoleActionModelImpl">
+		<id-class class="com.liferay.portal.service.persistence.ResourceBlockRoleActionPK" />
+		<attributes>
+			<id name="actionId" />
+			<id name="resourceBlockId" />
+			<id name="roleId" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceCodeModelImpl">
 		<attributes>
 			<id name="codeId" />
@@ -3525,6 +3544,14 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourceActionImpl" name="ResourceAction">
 		<table name="ResourceAction" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceBlockImpl" name="ResourceBlock">
+		<table name="ResourceBlock" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceBlockRoleActionImpl" name="ResourceBlockRoleAction">
+		<table name="ResourceBlockRoleAction" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourceCodeImpl" name="ResourceCode">

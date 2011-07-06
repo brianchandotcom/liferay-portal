@@ -546,6 +546,10 @@ create unique index IX_354AA664 on RepositoryEntry (uuid_, groupId);
 create index IX_81F2DB09 on ResourceAction (name);
 create unique index IX_EDB9986E on ResourceAction (name, actionId);
 
+create unique index IX_451AA5FD on ResourceBlock (permissionsHash);
+
+create index IX_ADE2313B on ResourceBlockRoleAction (roleId, actionId);
+
 create index IX_717FDD47 on ResourceCode (companyId);
 create unique index IX_A32C097E on ResourceCode (companyId, name, scope);
 create index IX_AACAFF40 on ResourceCode (name);

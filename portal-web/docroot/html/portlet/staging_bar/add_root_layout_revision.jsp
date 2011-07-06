@@ -29,7 +29,7 @@ long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
 		<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 	</portlet:actionURL>
 
-	<aui:form name="fmVariation" action="<%= addVariationURL %>" method="post">
+	<aui:form action="<%= addVariationURL %>" method="post" name="fmVariation">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<div class="portlet-msg-info">

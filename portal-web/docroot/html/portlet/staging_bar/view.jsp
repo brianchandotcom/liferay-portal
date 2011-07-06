@@ -63,12 +63,14 @@ if (layout != null) {
 	%>
 
 	<div class="staging-bar">
-		<div class="staging-tabs">
-			<c:if test="<%= liveGroup != null %>">
-				<span class="tab-container">
-					<aui:a cssClass='<%= "tab first" + (!group.isStagingGroup() ? " selected" : StringPool.BLANK) %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
+		<ul class="aui-tabview-list staging-tabview-list">
+			<li class="aui-state-default aui-tab first <%= (!group.isStagingGroup() ? " aui-state-active  aui-tab-active" : StringPool.BLANK) %>">
+				<span class="aui-tab-content">
+					<span class="aui-tab-label">
+						<aui:a href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
+					</span>
 				</span>
-			</c:if>
+			</li>
 
 			<c:if test="<%= stagingGroup != null %>">
 
@@ -85,6 +87,16 @@ if (layout != null) {
 
 							boolean first = (i == 0) && (liveGroup == null);
 							boolean selected = group.isStagingGroup() && (layoutRevision != null) && (curlayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
+
+							String cssClass = "aui-state-default aui-tab";
+
+							if (first) {
+								cssClass += " first";
+							}
+
+							if (selected) {
+								cssClass += " aui-state-active  aui-tab-active";
+							}
 						%>
 
 							<portlet:actionURL var="layoutSetBranchURL">
@@ -95,12 +107,15 @@ if (layout != null) {
 								<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curlayoutSetBranch.getLayoutSetBranchId()) %>" />
 							</portlet:actionURL>
 
-							<span class="tab-container">
-								<aui:a cssClass='<%= "layout-set-branch tab" + (first ? " first" : StringPool.BLANK) + (selected ? " selected" : StringPool.BLANK) %>' href="<%= selected ? null : layoutSetBranchURL %>" label="<%= curlayoutSetBranch.getName() %>" />
+							<li class="<%= cssClass %>">
+								<span class="aui-tab-content">
+									<span class="aui-tab-label">
+										<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label="<%= curlayoutSetBranch.getName() %>" />
 
-								<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curlayoutSetBranch.getLayoutSetBranchId() %>" />
-							</span>
-
+										<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curlayoutSetBranch.getLayoutSetBranchId() %>" />
+									</span>
+								</span>
+							</li>
 						<%
 						}
 						%>
@@ -109,7 +124,13 @@ if (layout != null) {
 							<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 						</portlet:renderURL>
 
-						<liferay-ui:icon cssClass="manage-backstages" id="manageBackstages" image="configuration" label="<%= true %>" message="manage-backstages" url="<%= layoutSetBranchesURL %>" />
+						<li class="aui-state-default aui-tab last manage-backstages-tab">
+							<span class="aui-tab-content">
+								<span class="aui-tab-label">
+									<liferay-ui:icon cssClass="manage-backstages" id="manageBackstages" image="configuration" label="<%= true %>" message="manage-backstages" url="<%= layoutSetBranchesURL %>" />
+								</span>
+							</span>
+						</li>
 
 						<aui:script use="aui-base">
 							var layoutSetBranchesLink = A.one('#<portlet:namespace />manageBackstages');
@@ -144,147 +165,165 @@ if (layout != null) {
 						boolean selected = group.isStagingGroup() || group.isStagedRemotely();
 						%>
 
-						<span class="tab-container">
-							<aui:a cssClass='<%= "tab" +  (selected ? " selected" : StringPool.BLANK)  %>' href="<%= selected ? null : stagingFriendlyURL %>" label="backstage" />
+						<li class="aui-state-default aui-tab last <%= (selected ? " aui-state-active  aui-tab-active" : StringPool.BLANK) %>">
+							<span class="aui-tab-content">
+								<span class="aui-tab-label">
+									<aui:a href="<%= selected ? null : stagingFriendlyURL %>" label="backstage" />
 
-							<liferay-ui:staging extended="<%= false %>" />
-						</span>
+									<liferay-ui:staging extended="<%= false %>" />
+								</span>
+							</span>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
-		</div>
+		</ul>
 
-		<div class="staging-tabs-content">
-			<aui:layout>
-				<c:choose>
-					<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+		<div class="aui-tabview-content staging-tabview-content">
+			<c:choose>
+				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+					<c:if test="<%= layoutRevision != null %>">
+
+						<%
+						layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
+
+						int numberOfPages = themeDisplay.getLayouts().size();
+						%>
+
+						<div class="backstage-info">
+							<c:if test="<%= Validator.isNotNull(layoutSetBranch.getDescription()) %>">
+								<span class="backstage-description"><%= layoutSetBranch.getDescription() %></span>
+							</c:if>
+
+							<span class="backstage-pages"><liferay-ui:message arguments="<%= numberOfPages %>" key='<%= numberOfPages == 1 ? "1-page" : "x-pages" %>' /></span>
+						</div>
+					</c:if>
+
+					<div class="staging-details">
 						<c:if test="<%= layoutRevision != null %>">
+							<portlet:actionURL var="editLayoutRevisonURL">
+								<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+								<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+							</portlet:actionURL>
 
-							<%
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
+							<aui:form action="<%= editLayoutRevisonURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
+								<aui:input name="<%= Constants.CMD %>" type="hidden" />
+								<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+								<aui:input name="layoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
+								<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
+								<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />
 
-							int numberOfPages = themeDisplay.getLayouts().size();
-							%>
+								<liferay-util:buffer var="managePageVariationsLink">
+									<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="rootRevisionsURL">
+										<portlet:param name="struts_action" value="/staging_bar/view_root_layout_revisions" />
+										<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+									</portlet:renderURL>
 
-							<div class="backstage-info">
-								<c:if test="<%= Validator.isNotNull(layoutSetBranch.getDescription()) %>">
-									<span class="backstage-description"><%= layoutSetBranch.getDescription() %></span>
-								</c:if>
+									<liferay-ui:icon cssClass="manage-page-variations" id="manageRootRevisions" image="configuration" label="<%= true %>" message="manage-page-variations" url="<%= rootRevisionsURL %>" />
 
-								<span class="backstage-pages"><liferay-ui:message arguments="<%= numberOfPages %>" key='<%= numberOfPages == 1 ? "1-page" : "x-pages" %>' /></span>
-							</div>
-						</c:if>
+									<aui:script use="aui-base">
+										var rootRevisionsLink = A.one('#<portlet:namespace />manageRootRevisions');
 
-						<aui:column>
-							<img alt="" class="staging-icon" src="<%= themeDisplay.getPathThemeImages() %>/staging_bar/backstage.png" />
-						</aui:column>
+										if (rootRevisionsLink) {
+											rootRevisionsLink.detach('click');
 
-						<c:if test="<%= layoutRevision != null %>">
-							<aui:column columnWidth="90">
-								<portlet:actionURL var="editLayoutRevisonURL">
-									<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-									<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-								</portlet:actionURL>
+											rootRevisionsLink.on(
+												'click',
+												function(event) {
+													event.preventDefault();
 
-								<aui:form action="<%= editLayoutRevisonURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
-									<aui:input name="<%= Constants.CMD %>" type="hidden" />
-									<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-									<aui:input name="layoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
-									<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
-									<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />
-
-									<liferay-util:buffer var="managePageVariationsLink">
-										<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="rootRevisionsURL">
-											<portlet:param name="struts_action" value="/staging_bar/view_root_layout_revisions" />
-											<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
-										</portlet:renderURL>
-
-										<liferay-ui:icon cssClass="manage-page-variations" id="manageRootRevisions" image="configuration" label="<%= true %>" message="manage-page-variations" url="<%= rootRevisionsURL %>" />
-
-										<aui:script use="aui-base">
-											var rootRevisionsLink = A.one('#<portlet:namespace />manageRootRevisions');
-
-											if (rootRevisionsLink) {
-												rootRevisionsLink.detach('click');
-
-												rootRevisionsLink.on(
-													'click',
-													function(event) {
-														event.preventDefault();
-
-														Liferay.Util.openWindow(
-															{
-																dialog:
-																	{
-																		width: 820
-																	},
-																id: '<portlet:namespace />rootRevisions',
-																title: '<liferay-ui:message key="manage-page-variations" />',
-																uri: event.currentTarget.attr('href')
-															}
-														);
-													}
-												);
-											}
-										</aui:script>
-									</liferay-util:buffer>
-
-									<div class="layout-info">
-										<div class="layout-title">
-											<label><liferay-ui:message key="current-page" />:</label>
-
-											<span class="layout-breadcrumb"><liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" /> </span>
-										</div>
-
-										<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
-
-										<%
-										rootRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
-										%>
-
-										<c:if test="<%= rootRevisions.size() > 1 %>">
-											<div class="staging-tabs">
-
-												<%
-												for (int i = 0; i < rootRevisions.size(); i ++) {
-													LayoutRevision rootRevision = rootRevisions.get(i);
-
-													boolean selected = rootRevision.getVariationName().equals(layoutRevision.getVariationName());
-												%>
-
-													<portlet:actionURL var="rootRevisionURL">
-														<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-														<portlet:param name="<%= Constants.CMD %>" value="select_layout_variation" />
-														<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-														<portlet:param name="groupId" value="<%= String.valueOf(rootRevision.getGroupId()) %>" />
-														<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootRevision.getLayoutSetBranchId()) %>" />
-														<portlet:param name="variationName" value="<%= rootRevision.getVariationName() %>" />
-													</portlet:actionURL>
-
-													<span class="tab-container">
-														<aui:a cssClass='<%= "layout-set-branch tab" + (i == 0 ? " first" : StringPool.BLANK) + (selected ? " selected" : StringPool.BLANK) %>' href="<%= selected ? null : rootRevisionURL %>" label="<%= rootRevision.getVariationName() %>" />
-													</span>
-
-												<%
+													Liferay.Util.openWindow(
+														{
+															dialog:
+																{
+																	width: 820
+																},
+															id: '<portlet:namespace />rootRevisions',
+															title: '<liferay-ui:message key="manage-page-variations" />',
+															uri: event.currentTarget.attr('href')
+														}
+													);
 												}
-												%>
+											);
+										}
+									</aui:script>
+								</liferay-util:buffer>
 
-												<%= managePageVariationsLink %>
-											</div>
-										</c:if>
+								<div class="layout-info">
+									<div class="layout-title">
+										<label><liferay-ui:message key="current-page" />:</label>
 
-										<div class="<%= rootRevisions.size() > 1 ? "variation-tabs-content" : StringPool.BLANK %>">
-											<aui:workflow-status status='<%= layoutRevision.getStatus() %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+										<span class="layout-breadcrumb"><liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" /> </span>
+									</div>
 
-											<div class="layout-actions">
-												<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
+									<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-												<%= (rootRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
-											</div>
+									<%
+									rootRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
+									%>
+
+									<c:if test="<%= rootRevisions.size() > 1 %>">
+										<ul class="aui-tabview-list variations-tabview-list">
+
+											<%
+											for (int i = 0; i < rootRevisions.size(); i ++) {
+												LayoutRevision rootRevision = rootRevisions.get(i);
+
+												boolean selected = rootRevision.getVariationName().equals(layoutRevision.getVariationName());
+
+												String cssClass = "aui-state-default aui-tab layout-set-branch";
+
+												if (i == 0) {
+													cssClass += " first";
+												}
+
+												if (selected) {
+													cssClass += " aui-state-active  aui-tab-active";
+												}
+											%>
+
+												<portlet:actionURL var="rootRevisionURL">
+													<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+													<portlet:param name="<%= Constants.CMD %>" value="select_layout_variation" />
+													<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+													<portlet:param name="groupId" value="<%= String.valueOf(rootRevision.getGroupId()) %>" />
+													<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootRevision.getLayoutSetBranchId()) %>" />
+													<portlet:param name="variationName" value="<%= rootRevision.getVariationName() %>" />
+												</portlet:actionURL>
+
+												<li class="<%= cssClass %>">
+													<span class="aui-tab-content">
+														<span class="aui-tab-label">
+															<aui:a href="<%= selected ? null : rootRevisionURL %>" label="<%= rootRevision.getVariationName() %>" />
+														</span>
+													</span>
+												</li>
+
+											<%
+											}
+											%>
+
+											<li class="aui-state-default aui-tab last manage-page-variations-tab">
+												<span class="aui-tab-content">
+													<span class="aui-tab-label">
+														<%= managePageVariationsLink %>
+													</span>
+												</span>
+											</li>
+										</ul>
+									</c:if>
+
+									<div class="aui-tabview-content variations-tabview-content">
+										<aui:workflow-status status='<%= layoutRevision.getStatus() %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+
+										<div class="layout-actions">
+											<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
+
+											<%= (rootRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
 										</div>
 									</div>
-								</aui:form>
-							</aui:column>
+								</div>
+							</aui:form>
 
 							<aui:script use="liferay-staging">
 								var dockbar = Liferay.Staging.Dockbar;
@@ -300,16 +339,16 @@ if (layout != null) {
 								</c:if>
 							</aui:script>
 						</c:if>
-					</c:when>
-					<c:otherwise>
-						<img alt="" class="staging-icon" src="<%= themeDisplay.getPathThemeImages() %>/staging_bar/live.png" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<%
+					UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
 
-						<%
-						UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+					long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
+					%>
 
-						long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
-						%>
-
+					<div class="staging-details">
 						<c:choose>
 							<c:when test="<%= lastImportDate > 0 %>">
 
@@ -404,9 +443,9 @@ if (layout != null) {
 								<span class="staging-live-help"><liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key="staging-live-help-x" /></span>
 							</c:otherwise>
 						</c:choose>
-					</c:otherwise>
-				</c:choose>
-			</aui:layout>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </c:if>

@@ -170,18 +170,21 @@ AUI().add(
 
 				instance._namespace = namespace;
 
-				Dockbar.backstageToolbar = new A.Toolbar(
+				var backstageToolbar = new A.Toolbar(
 					{
 						activeState: false,
 						boundingBox: '#' + namespace + 'backstageToolbar',
 						children: [
 							{
+								handler: A.bind(instance._onUndoRevision, instance),
+								icon: 'arrowreturnthick-1-b',
+								title: Liferay.Language.get('undo')
+							},
+							{
 							type: 'ToolbarSpacer'
 							},
 							{
-								handler: function(event) {
-									instance._onViewHistory(event);
-								},
+								handler: A.bind(instance._onViewHistory, instance),
 								icon: 'clock',
 								label: Liferay.Language.get('history')
 							}
@@ -189,15 +192,8 @@ AUI().add(
 					}
 				).render();
 
-				Dockbar.undoButton = new A.ButtonItem(
-					{
-						handler: function(event) {
-							instance._onUndoRevision(event);
-						},
-						icon: 'arrowreturnthick-1-b',
-						title: Liferay.Language.get('undo')
-					}
-				);
+				Dockbar.backstageToolbar = backstageToolbar;
+				Dockbar.undoButton = backstageToolbar.item(0);
 			},
 
 			_getGraphDialog: function() {

@@ -40,49 +40,47 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 	</aui:button-row>
 </c:if>
 
-<div class="layout-set-results">
-	<liferay-ui:search-container>
-		<liferay-ui:search-container-results
-			results="<%= rootRevisions %>"
-			total="<%= rootRevisions.size() %>"
-		/>
+<liferay-ui:search-container>
+	<liferay-ui:search-container-results
+		results="<%= rootRevisions %>"
+		total="<%= rootRevisions.size() %>"
+	/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.LayoutRevision"
-			escapedModel="<%= true %>"
-			keyProperty="layoutRevisionId"
-			modelVar="curLayoutRevision"
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.LayoutRevision"
+		escapedModel="<%= true %>"
+		keyProperty="layoutRevisionId"
+		modelVar="curLayoutRevision"
+	>
+
+		<liferay-ui:search-container-column-text
+			buffer="buffer"
+			name="name"
 		>
 
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				name="name"
-			>
+			<%
+			String variationName = curLayoutRevision.getVariationName();
 
-				<%
-				String variationName = curLayoutRevision.getVariationName();
+			if (curLayoutRevision.isHead()) {
+				buffer.append("<strong>");
+			}
 
-				if (curLayoutRevision.isHead()) {
-					buffer.append("<strong>");
-				}
+			buffer.append(variationName);
 
-				buffer.append(variationName);
+			if (curLayoutRevision.isHead()) {
+				buffer.append(" (*)</strong>");
+			}
+			%>
 
-				if (curLayoutRevision.isHead()) {
-					buffer.append(" (*)</strong>");
-				}
-				%>
+		</liferay-ui:search-container-column-text>
 
-			</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-jsp
+			path="/html/portlet/staging_bar/root_layout_revision_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-jsp
-				path="/html/portlet/staging_bar/root_layout_revision_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
-	</liferay-ui:search-container>
-</div>
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+</liferay-ui:search-container>
 
 <aui:script position="inline" use="liferay-staging">
 	Liferay.Staging.Branching.init(

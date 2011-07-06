@@ -40,51 +40,49 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</aui:button-row>
 </c:if>
 
-<div class="layout-set-results">
-	<liferay-ui:search-container>
-		<liferay-ui:search-container-results
-			results="<%= layoutSetBranches %>"
-			total="<%= layoutSetBranches.size() %>"
-		/>
+<liferay-ui:search-container>
+	<liferay-ui:search-container-results
+		results="<%= layoutSetBranches %>"
+		total="<%= layoutSetBranches.size() %>"
+	/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.LayoutSetBranch"
-			escapedModel="<%= true %>"
-			keyProperty="layoutSetBranchId"
-			modelVar="curLayoutSetBranch"
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.LayoutSetBranch"
+		escapedModel="<%= true %>"
+		keyProperty="layoutSetBranchId"
+		modelVar="curLayoutSetBranch"
+	>
+
+		<liferay-ui:search-container-column-text
+			buffer="buffer"
+			name="name"
 		>
 
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				name="name"
-			>
+			<%
+			if (layoutSetBranch.equals(curLayoutSetBranch)) {
+				buffer.append("<strong>");
+			}
 
-				<%
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
-					buffer.append("<strong>");
-				}
+			buffer.append(curLayoutSetBranch.getName());
 
-				buffer.append(curLayoutSetBranch.getName());
+			if (layoutSetBranch.equals(curLayoutSetBranch)) {
+				buffer.append(" (*)</strong>");
+			}
+			%>
 
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
-					buffer.append(" (*)</strong>");
-				}
-				%>
+		</liferay-ui:search-container-column-text>
 
-			</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			property="description"
+		/>
 
-			<liferay-ui:search-container-column-text
-				property="description"
-			/>
+		<liferay-ui:search-container-column-jsp
+			path="/html/portlet/staging_bar/layout_set_branch_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-jsp
-				path="/html/portlet/staging_bar/layout_set_branch_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
-	</liferay-ui:search-container>
-</div>
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+</liferay-ui:search-container>
 
 <aui:script position="inline" use="liferay-staging">
 	Liferay.Staging.Branching.init(

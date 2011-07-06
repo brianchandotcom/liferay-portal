@@ -66,7 +66,7 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 	StringBundler sb = new StringBundler();
 
 	for (LayoutRevision layoutRevision : layoutRevisions) {
-		sb.append("<li class=\"layout-revision");
+		sb.append("<li class=\"layout-revision\"><div class=\"layout-revision-details");
 
 		if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			sb.append(" layout-revision-current");
@@ -76,7 +76,8 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 			sb.append(" layout-revision-head");
 		}
 
-		sb.append("\"><a class=\"selection-handle\" href=\"#\" data-layoutRevisionId=\"");
+		sb.append("\"><span class=\"selection-details\">");
+		sb.append("<a class=\"selection-handle\" href=\"#\" data-layoutRevisionId=\"");
 		sb.append(layoutRevision.getLayoutRevisionId());
 		sb.append("\" data-layoutSetBranchId=\"");
 		sb.append(layoutRevision.getLayoutSetBranchId());
@@ -107,6 +108,8 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 			sb.append("</span>");
 		}
 
+		sb.append("</span>");
+
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/html/portlet/staging_bar/layout_revision_action.jsp");
 
 		request.setAttribute("layout_revisions.jsp-layoutRevision", layoutRevision);
@@ -123,6 +126,7 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 		}
 
 		sb.append(stringResponse.getString());
+		sb.append("</div>");
 
 		List<LayoutRevision> curLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getLayoutRevisionId(), layoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 

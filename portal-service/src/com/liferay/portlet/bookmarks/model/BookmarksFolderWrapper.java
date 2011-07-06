@@ -219,6 +219,24 @@ public class BookmarksFolderWrapper implements BookmarksFolder {
 	}
 
 	/**
+	* Returns the resource block ID of this bookmarks folder.
+	*
+	* @return the resource block ID of this bookmarks folder
+	*/
+	public long getResourceBlockId() {
+		return _bookmarksFolder.getResourceBlockId();
+	}
+
+	/**
+	* Sets the resource block ID of this bookmarks folder.
+	*
+	* @param resourceBlockId the resource block ID of this bookmarks folder
+	*/
+	public void setResourceBlockId(long resourceBlockId) {
+		_bookmarksFolder.setResourceBlockId(resourceBlockId);
+	}
+
+	/**
 	* Returns the parent folder ID of this bookmarks folder.
 	*
 	* @return the parent folder ID of this bookmarks folder

@@ -288,6 +288,12 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.getBooleanArray();
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoColumn getColumn()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValue.getColumn();
+	}
+
 	public java.util.Date getDate()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

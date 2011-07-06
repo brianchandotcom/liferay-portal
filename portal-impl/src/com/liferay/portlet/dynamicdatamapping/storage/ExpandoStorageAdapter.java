@@ -15,10 +15,11 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -38,25 +39,27 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
-import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
 import edu.emory.mathcs.backport.java.util.Collections;
 
-import java.io.Serializable;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.expression.EvaluationException;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.ParseException;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 /**
  * @author Eduardo Lundgren
@@ -88,7 +91,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 	@Override
 	protected void doDeleteByClass(long classPK) throws Exception {
-		_deleteExpandoRows(new long[] {classPK});
+		ExpandoRowLocalServiceUtil.deleteRow(classPK);
 
 		DDMStorageLinkLocalServiceUtil.deleteClassStorageLink(classPK);
 	}
@@ -97,9 +100,13 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	protected void doDeleteByDDMStructure(long ddmStructureId)
 		throws Exception {
 
-		long[] expandoRowIds = _getExpandoRowIds(ddmStructureId);
+		List<DDMStorageLink> ddmStorageLinks =
+			DDMStorageLinkLocalServiceUtil.getStructureStorageLinks(
+				ddmStructureId);
 
-		_deleteExpandoRows(expandoRowIds);
+		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
+			ExpandoRowLocalServiceUtil.deleteRow(ddmStorageLink.getClassPK());
+		}
 
 		DDMStorageLinkLocalServiceUtil.deleteStructureStorageLinks(
 			ddmStructureId);
@@ -111,9 +118,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			OrderByComparator orderByComparator)
 		throws Exception {
 
-		Map<Long, Fields> fieldsMap = _doQuery(classPKs, fieldNames, null);
-
-		return _toList(fieldsMap, orderByComparator);
+		return _doQuery(
+			ddmStructureId, classPKs, fieldNames, null, orderByComparator);
 	}
 
 	@Override
@@ -122,11 +128,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			OrderByComparator orderByComparator)
 		throws Exception {
 
-		long[] expandoRowIds = _getExpandoRowIds(ddmStructureId);
-
-		Map<Long, Fields> fieldsMap = _doQuery(expandoRowIds, fieldNames, null);
-
-		return _toList(fieldsMap, orderByComparator);
+		return _doQuery(ddmStructureId, fieldNames, null, orderByComparator);
 	}
 
 	@Override
@@ -134,7 +136,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception {
 
-		return _doQuery(classPKs, fieldNames, null);
+		return _doQuery(ddmStructureId, classPKs, fieldNames);
 	}
 
 	@Override
@@ -143,21 +145,37 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			OrderByComparator orderByComparator)
 		throws Exception {
 
-		long[] expandoRowIds = _getExpandoRowIds(ddmStructureId);
-
-		Map<Long, Fields> fieldsMap = _doQuery(
-			expandoRowIds, fieldNames, condition);
-
-		return _toList(fieldsMap, orderByComparator);
+		return _doQuery(
+			ddmStructureId, fieldNames, condition, orderByComparator);
 	}
 
 	@Override
 	protected int doQueryCount(long ddmStructureId, Condition condition)
 		throws Exception {
 
-		long[] expandoRowIds = _getExpandoRowIds(ddmStructureId);
+		Expression expression = null;
 
-		return _doQueryCount(expandoRowIds, condition);
+		if (condition != null) {
+			expression = _parseExpression(condition);
+		}
+
+		int count = 0;
+
+		long[] rowIds = _getExpandoRowIds(ddmStructureId);
+
+		for (long rowId : rowIds) {
+			List<ExpandoValue> expandoValues =
+				ExpandoValueLocalServiceUtil.getRowValues(rowId);
+
+			if ((expression == null) ||
+				((expression != null) &&
+					_booleanValueOf(expression, expandoValues))) {
+
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	@Override
@@ -190,6 +208,24 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		_updateFields(expandoTable, expandoRow.getClassPK(), fields);
 	}
 
+	private boolean _booleanValueOf(
+		Expression expression, List<ExpandoValue> expandoValues) {
+
+		try {
+			StandardEvaluationContext context = new StandardEvaluationContext();
+
+			context.setBeanResolver(
+				new ExpandoValueBeanResolver(expandoValues));
+
+			return expression.getValue(context, Boolean.class);
+		}
+		catch (EvaluationException ee) {
+			_log.error("Error occurred during the expression evaluation.", ee);
+		}
+
+		return false;
+	}
+
 	private void _checkExpandoColumns(ExpandoTable expandoTable, Fields fields)
 		throws PortalException, SystemException {
 
@@ -206,107 +242,96 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		}
 	}
 
-	private void _deleteExpandoRows(long[] expandoRowIds)
-		throws PortalException, SystemException {
+	private List<Fields> _doQuery(
+			long ddmStructureId, List<String> fieldNames, Condition condition,
+			OrderByComparator orderByComparator)
+		throws Exception {
 
-		for (long rowId : expandoRowIds) {
-			ExpandoRowLocalServiceUtil.deleteExpandoRow(rowId);
-		}
+		return _doQuery(
+			ddmStructureId, _getExpandoRowIds(ddmStructureId), fieldNames,
+			condition, orderByComparator);
 	}
 
 	private Map<Long, Fields> _doQuery(
-			long[] expandoRowIds, List<String> fieldNames, Condition condition)
+			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception {
 
 		Map<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
 
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
+		List<Fields> fieldsList = _doQuery(
+			ddmStructureId, classPKs, fieldNames, null, null);
 
-		try {
-			connection = DataAccess.getConnection();
+		for (int i = 0; i < fieldsList.size(); i++) {
+			Fields fields = fieldsList.get(i);
 
-			statement = connection.createStatement();
-
-			String sql = _toSQL(expandoRowIds, fieldNames, condition, false);
-
-			resultSet = statement.executeQuery(sql);
-
-			while (resultSet.next()) {
-				long rowId = resultSet.getLong("rowId_");
-				String name = resultSet.getString("name");
-				int type = resultSet.getInt("type_");
-				String data = resultSet.getString("data_");
-
-				Fields fields = fieldsMap.get(rowId);
-
-				if (fields == null) {
-					fields = new Fields();
-
-					fieldsMap.put(rowId, fields);
-				}
-
-				Serializable value =
-					ExpandoConverterUtil.getAttributeFromString(type, data);
-
-				Field field = new Field(name, value);
-
-				fields.put(field);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(connection, statement, resultSet);
+			fieldsMap.put(classPKs[i], fields);
 		}
 
 		return fieldsMap;
 	}
 
-	private int _doQueryCount(long[] expandoRowIds, Condition condition)
+	private List<Fields> _doQuery(
+			long ddmStructureId, long[] expandoRowIds, List<String> fieldNames,
+			Condition condition, OrderByComparator orderByComparator)
 		throws Exception {
 
-		int count = 0;
+		List<Fields> fieldsList = new ArrayList<Fields>();
 
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet resultSet = null;
+		Expression expression = null;
 
-		try {
-			connection = DataAccess.getConnection();
+		if (condition != null) {
+			expression = _parseExpression(condition);
+		}
 
-			statement = connection.createStatement();
+		for (long expandoRowId : expandoRowIds) {
+			List<ExpandoValue> expandoValues =
+				ExpandoValueLocalServiceUtil.getRowValues(expandoRowId);
 
-			String sql = _toSQL(expandoRowIds, null, condition, true);
+			if ((expression == null) ||
+				((expression != null) &&
+					_booleanValueOf(expression, expandoValues))) {
 
-			resultSet = statement.executeQuery(sql);
+				Fields fields = new Fields();
 
-			if (resultSet.next()) {
-				count = resultSet.getInt("COUNT_VALUE");
+				for (ExpandoValue expandoValue : expandoValues) {
+					ExpandoColumn column = expandoValue.getColumn();
+
+					String fieldName = column.getName();
+					String fieldValue = expandoValue.getData();
+
+					if ((fieldNames == null) ||
+						((fieldNames != null) &&
+						 fieldNames.contains(fieldName))) {
+
+						fields.put(new Field(fieldName, fieldValue));
+					}
+				}
+
+				fieldsList.add(fields);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(connection, statement, resultSet);
+
+		if (orderByComparator != null) {
+			Collections.sort(fieldsList, orderByComparator);
 		}
 
-		return count;
+		return fieldsList;
 	}
 
 	private long[] _getExpandoRowIds(long ddmStructureId)
 		throws SystemException {
 
+		List<Long> rowIds = new ArrayList<Long>();
+
 		List<DDMStorageLink> ddmStorageLinks =
 			DDMStorageLinkLocalServiceUtil.getStructureStorageLinks(
 				ddmStructureId);
 
-		long[] expandoRowIds = new long[ddmStorageLinks.size()];
-
-		for (int i = 0; i < ddmStorageLinks.size(); i++) {
-			DDMStorageLink ddmStorageLink = ddmStorageLinks.get(i);
-
-			expandoRowIds[i] = ddmStorageLink.getClassPK();
+		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
+			rowIds.add(ddmStorageLink.getClassPK());
 		}
 
-		return expandoRowIds;
+		return ArrayUtil.toArray(rowIds.toArray(new Long[rowIds.size()]));
 	}
 
 	private ExpandoTable _getExpandoTable(
@@ -332,74 +357,63 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return expandoTable;
 	}
 
-	private List<Fields> _toList(
-		Map<Long, Fields> fieldsMap, OrderByComparator orderByComparator) {
+	private Expression _parseExpression(Condition condition) {
+		String expression = _toExpression(condition);
 
-		List<Fields> fieldsList = ListUtil.fromCollection(fieldsMap.values());
+		try {
+			ExpressionParser parser = new SpelExpressionParser();
 
-		if (orderByComparator != null) {
-			Collections.sort(fieldsList, orderByComparator);
+			return parser.parseExpression(expression);
+		}
+		catch (ParseException pe) {
+			_log.error("The expression could not be parsed: " + expression, pe);
 		}
 
-		return fieldsList;
+		return null;
 	}
 
-	private String _toSQL(Condition condition) {
+	private String _toExpression(Condition condition) {
 		if (condition.isJunction()) {
 			Junction junction = (Junction)condition;
 
 			return StringPool.OPEN_PARENTHESIS.concat(
-				_toSQL(junction)).concat(StringPool.CLOSE_PARENTHESIS);
+				_toExpression(junction)).concat(StringPool.CLOSE_PARENTHESIS);
 		}
 		else {
 			FieldCondition fieldCondition = (FieldCondition)condition;
 
-			return _toSQL(fieldCondition);
+			return _toExpression(fieldCondition);
 		}
 	}
 
-	private String _toSQL(FieldCondition fieldCondition) {
-		StringBundler sb = new StringBundler(10);
+	private String _toExpression(FieldCondition fieldCondition) {
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("(ExpandoColumn.name = '");
+		sb.append("(@");
+
 		sb.append(fieldCondition.getName());
-		sb.append("' AND ");
-
-		Object value = fieldCondition.getValue();
 
 		ComparisonOperator comparisonOperator =
 			fieldCondition.getComparisonOperator();
 
-		sb.append("ExpandoValue.data_ ");
-		sb.append(comparisonOperator);
-		sb.append(StringPool.SPACE);
-
-		if ((value.getClass() == String.class) &&
-			(!comparisonOperator.equals(ComparisonOperator.IN))) {
-
-			sb.append(StringPool.APOSTROPHE);
+		if (comparisonOperator.equals(ComparisonOperator.LIKE)) {
+			sb.append(".data matches ");
 		}
-		else if (comparisonOperator.equals(ComparisonOperator.IN)) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
+		else {
+			sb.append(".data == ");
 		}
+
+		String value = StringUtil.quote(
+			String.valueOf(fieldCondition.getValue()));
 
 		sb.append(value);
-
-		if ((value.getClass() == String.class) &&
-			(!comparisonOperator.equals(ComparisonOperator.IN))) {
-
-			sb.append(StringPool.APOSTROPHE);
-		}
-		else if (comparisonOperator.equals(ComparisonOperator.IN)) {
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
 
-	private String _toSQL(Junction junction) {
+	private String _toExpression(Junction junction) {
 		StringBundler sb = new StringBundler();
 
 		LogicalOperator logicalOperator = junction.getLogicalOperator();
@@ -409,7 +423,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		while (itr.hasNext()) {
 			Condition condition = itr.next();
 
-			sb.append(_toSQL(condition));
+			sb.append(_toExpression(condition));
 
 			if (itr.hasNext()) {
 				sb.append(StringPool.SPACE);
@@ -417,62 +431,6 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				sb.append(StringPool.SPACE);
 			}
 		}
-
-		return sb.toString();
-	}
-
-	private String _toSQL(
-		long[] expandoRowIds, List<String> fieldNames, Condition condition,
-		boolean count) {
-
-		StringBundler sb = new StringBundler();
-
-		if (count) {
-			sb.append("SELECT COUNT(DISTINCT(ExpandoValue.rowId_)) AS ");
-			sb.append("COUNT_VALUE ");
-		}
-		else {
-			sb.append("SELECT ExpandoColumn.name, ExpandoColumn.type_, ");
-			sb.append("ExpandoValue.rowId_, ExpandoValue.data_ ");
-		}
-
-		sb.append("FROM ExpandoValue INNER JOIN ExpandoColumn ON (");
-		sb.append("ExpandoColumn.columnId = ExpandoValue.columnId) WHERE ");
-		sb.append("ExpandoValue.rowId_ IN (");
-
-		if (condition == null) {
-			sb.append(StringUtil.merge(expandoRowIds));
-		}
-		else {
-			sb.append("SELECT DISTINCT (ExpandoValue.rowId_) FROM ");
-			sb.append("ExpandoValue INNER JOIN ExpandoColumn ON (");
-			sb.append("ExpandoColumn.columnId = ExpandoValue.columnId) WHERE ");
-			sb.append("ExpandoValue.rowId_ IN (");
-			sb.append(StringUtil.merge(expandoRowIds));
-			sb.append(") AND ");
-			sb.append(_toSQL(condition));
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (fieldNames != null && !fieldNames.isEmpty()) {
-			sb.append(" AND ExpandoColumn.name IN (");
-
-			for (int i = 0; i < fieldNames.size(); i++) {
-				String fieldName = fieldNames.get(i);
-
-				sb.append(StringUtil.quote(fieldName));
-
-				if ((i + 1) < fieldNames.size()) {
-					sb.append(StringPool.COMMA);
-				}
-				else {
-					sb.append(StringPool.CLOSE_PARENTHESIS);
-				}
-			}
-		}
-
-		sb.append(StringPool.SPACE);
 
 		return sb.toString();
 	}
@@ -492,5 +450,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				field.getName(), classPK, field.getValue());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ExpandoStorageAdapter.class);
 
 }

@@ -1557,8 +1557,13 @@
 
 		<column name="resourceBlockId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
+		<column name="name" type="String" />
 		<column name="permissionsHash" type="String" />
 		<column name="referenceCount" type="long" />
 
@@ -1573,6 +1578,7 @@
 		<!-- PK fields -->
 
 		<column name="resourceBlockId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 		<column name="actionIds" type="long" primary="true" />
 

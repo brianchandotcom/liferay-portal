@@ -55,7 +55,8 @@ public class SearchRecentDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Recent Documents']")) {
+				if (selenium.isVisible(
+							"//div[@title='Recently Downloaded Documents']")) {
 					break;
 				}
 			}
@@ -66,6 +67,7 @@ public class SearchRecentDocumentsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[@title='Recent Documents']"));
+		assertTrue(selenium.isVisible(
+				"//div[@title='Recently Downloaded Documents']"));
 	}
 }

@@ -31,7 +31,7 @@ public class ViewEmailNotificationPasswordChangedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,18 +42,36 @@ public class ViewEmailNotificationPasswordChangedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_emailNotificationsLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
 			RuntimeVariables.replace("Email Notifications"));
 		selenium.clickAt("link=Password Changed Notification",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Password Changed Notification"));
 		assertTrue(selenium.isTextPresent("Subject"));
 		assertTrue(selenium.isTextPresent("Body"));
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2904,6 +2905,16 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static AssetVocabulary _nullAssetVocabulary = new AssetVocabularyImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetVocabulary> toCacheModel() {
+				return _nullAssetVocabularyCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetVocabulary> _nullAssetVocabularyCacheModel = new CacheModel<AssetVocabulary>() {
+			public AssetVocabulary toEntityModel() {
+				return _nullAssetVocabulary;
 			}
 		};
 }

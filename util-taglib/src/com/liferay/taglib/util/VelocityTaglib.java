@@ -95,11 +95,28 @@ public class VelocityTaglib {
 		actionURL(LayoutConstants.DEFAULT_PLID, portletName, queryString);
 	}
 
+	/**
+	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean, String, long, String, Boolean, Boolean, long, long, Boolean, String)}
+	 */
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
 			long plid, String portletName, Boolean anchor, Boolean encrypt,
 			long doAsUserId, Boolean portletConfiguration, String queryString)
+		throws Exception {
+
+		actionURL(
+			windowState, portletMode, secure, copyCurrentRenderParameters,
+			escapeXml, name, plid, portletName, anchor, encrypt, 0, doAsUserId,
+			portletConfiguration, queryString);
+	}
+
+	public void actionURL(
+			String windowState, String portletMode, Boolean secure,
+			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
+			long plid, String portletName, Boolean anchor, Boolean encrypt,
+			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
+			String queryString)
 		throws Exception {
 
 		String var = null;
@@ -112,8 +129,8 @@ public class VelocityTaglib {
 		ActionURLTag.doTag(
 			PortletRequest.ACTION_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
-			cacheability, plid, portletName, anchor, encrypt, doAsUserId,
-			portletConfiguration, params, _pageContext);
+			cacheability, plid, portletName, anchor, encrypt, doAsGroupId,
+			doAsUserId, portletConfiguration, params, _pageContext);
 	}
 
 	public void actionURL(
@@ -127,13 +144,14 @@ public class VelocityTaglib {
 		String name = null;
 		Boolean anchor = null;
 		Boolean encrypt = null;
+		long doAsGroupId = 0;
 		long doAsUserId = 0;
 		Boolean portletConfiguration = null;
 
 		actionURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, name, plid, portletName, anchor, encrypt, doAsUserId,
-			portletConfiguration, queryString);
+			escapeXml, name, plid, portletName, anchor, encrypt, doAsGroupId,
+			doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void actionURL(
@@ -461,11 +479,28 @@ public class VelocityTaglib {
 		renderURL(LayoutConstants.DEFAULT_PLID, portletName, queryString);
 	}
 
+	/**
+	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean, long, String, Boolean, Boolean, long, long, Boolean, String)}
+	 */
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml,
 			long plid, String portletName, Boolean anchor, Boolean encrypt,
 			long doAsUserId, Boolean portletConfiguration, String queryString)
+		throws Exception {
+
+		renderURL(
+			windowState, portletMode, secure, copyCurrentRenderParameters,
+			escapeXml, plid, portletName, anchor, encrypt, 0, doAsUserId,
+			portletConfiguration, queryString);
+	}
+
+	public void renderURL(
+			String windowState, String portletMode, Boolean secure,
+			Boolean copyCurrentRenderParameters, Boolean escapeXml,
+			long plid, String portletName, Boolean anchor, Boolean encrypt,
+			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
+			String queryString)
 		throws Exception {
 
 		String var = null;
@@ -479,8 +514,8 @@ public class VelocityTaglib {
 		ActionURLTag.doTag(
 			PortletRequest.RENDER_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
-			cacheability, plid, portletName, anchor, encrypt, doAsUserId,
-			portletConfiguration, params, _pageContext);
+			cacheability, plid, portletName, anchor, encrypt, doAsGroupId,
+			doAsUserId, portletConfiguration, params, _pageContext);
 	}
 
 	public void renderURL(
@@ -493,13 +528,14 @@ public class VelocityTaglib {
 		Boolean escapeXml = null;
 		Boolean anchor = null;
 		Boolean encrypt = null;
+		long doAsGroupId = 0;
 		long doAsUserId = 0;
 		Boolean portletConfiguration = null;
 
 		renderURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, plid, portletName, anchor, encrypt, doAsUserId,
-			portletConfiguration, queryString);
+			escapeXml, plid, portletName, anchor, encrypt, doAsGroupId,
+			doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void renderURL(

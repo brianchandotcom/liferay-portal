@@ -184,7 +184,7 @@ public interface ClassNameLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the class name in the database. Also notifies the appropriate model listeners.
+	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param className the class name
 	* @return the class name that was updated
@@ -195,7 +195,7 @@ public interface ClassNameLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the class name in the database. Also notifies the appropriate model listeners.
+	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param className the class name
 	* @param merge whether to merge the class name with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

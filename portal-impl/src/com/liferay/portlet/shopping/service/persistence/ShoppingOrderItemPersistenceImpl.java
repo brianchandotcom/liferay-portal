@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1048,6 +1049,17 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static ShoppingOrderItem _nullShoppingOrderItem = new ShoppingOrderItemImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ShoppingOrderItem> toCacheModel() {
+				return _nullShoppingOrderItemCacheModel;
+			}
+		};
+
+	private static CacheModel<ShoppingOrderItem> _nullShoppingOrderItemCacheModel =
+		new CacheModel<ShoppingOrderItem>() {
+			public ShoppingOrderItem toEntityModel() {
+				return _nullShoppingOrderItem;
 			}
 		};
 }

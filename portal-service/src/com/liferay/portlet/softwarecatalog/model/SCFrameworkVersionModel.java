@@ -17,6 +17,7 @@ package com.liferay.portlet.softwarecatalog.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -265,6 +266,8 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 	public int compareTo(SCFrameworkVersion scFrameworkVersion);
 
 	public int hashCode();
+
+	public CacheModel<SCFrameworkVersion> toCacheModel();
 
 	public SCFrameworkVersion toEscapedModel();
 

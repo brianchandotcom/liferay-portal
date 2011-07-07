@@ -823,6 +823,10 @@ public class ShoppingItemWrapper implements ShoppingItem {
 		return _shoppingItem.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingItem> toCacheModel() {
+		return _shoppingItem.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingItem toEscapedModel() {
 		return new ShoppingItemWrapper(_shoppingItem.toEscapedModel());
 	}
@@ -834,6 +838,11 @@ public class ShoppingItemWrapper implements ShoppingItem {
 
 	public java.lang.String toXmlString() {
 		return _shoppingItem.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItem.save();
 	}
 
 	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory() {

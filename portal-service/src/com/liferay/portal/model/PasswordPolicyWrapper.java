@@ -786,6 +786,10 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		return _passwordPolicy.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PasswordPolicy> toCacheModel() {
+		return _passwordPolicy.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PasswordPolicy toEscapedModel() {
 		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
 	}
@@ -797,6 +801,11 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 
 	public java.lang.String toXmlString() {
 		return _passwordPolicy.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_passwordPolicy.save();
 	}
 
 	public PasswordPolicy getWrappedPasswordPolicy() {

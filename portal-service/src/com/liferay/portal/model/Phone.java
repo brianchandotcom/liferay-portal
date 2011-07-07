@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Phone service. Represents a row in the &quot;Phone&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Phone service. Represents a row in the &quot;Phone&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see PhoneModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PhoneModelImpl
  * @generated
  */
-public interface Phone extends PhoneModel {
+public interface Phone extends PhoneModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

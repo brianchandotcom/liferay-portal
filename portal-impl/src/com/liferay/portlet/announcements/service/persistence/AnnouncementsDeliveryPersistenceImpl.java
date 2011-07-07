@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1331,6 +1332,17 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	private static AnnouncementsDelivery _nullAnnouncementsDelivery = new AnnouncementsDeliveryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AnnouncementsDelivery> toCacheModel() {
+				return _nullAnnouncementsDeliveryCacheModel;
+			}
+		};
+
+	private static CacheModel<AnnouncementsDelivery> _nullAnnouncementsDeliveryCacheModel =
+		new CacheModel<AnnouncementsDelivery>() {
+			public AnnouncementsDelivery toEntityModel() {
+				return _nullAnnouncementsDelivery;
 			}
 		};
 }

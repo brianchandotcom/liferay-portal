@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupModel;
 import com.liferay.portal.model.UserGroupSoap;
@@ -341,6 +342,37 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupModelImpl._setOriginalCompanyId = false;
 
 		userGroupModelImpl._originalName = userGroupModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<UserGroup> toCacheModel() {
+		UserGroupCacheModel userGroupCacheModel = new UserGroupCacheModel();
+
+		userGroupCacheModel.userGroupId = getUserGroupId();
+
+		userGroupCacheModel.companyId = getCompanyId();
+
+		userGroupCacheModel.parentUserGroupId = getParentUserGroupId();
+
+		userGroupCacheModel.name = getName();
+
+		String name = userGroupCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			userGroupCacheModel.name = null;
+		}
+
+		userGroupCacheModel.description = getDescription();
+
+		String description = userGroupCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			userGroupCacheModel.description = null;
+		}
+
+		userGroupCacheModel.addedByLDAPImport = getAddedByLDAPImport();
+
+		return userGroupCacheModel;
 	}
 
 	@Override

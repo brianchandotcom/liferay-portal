@@ -235,6 +235,10 @@ public class ImageWrapper implements Image {
 		return _image.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Image> toCacheModel() {
+		return _image.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Image toEscapedModel() {
 		return new ImageWrapper(_image.toEscapedModel());
 	}
@@ -246,6 +250,11 @@ public class ImageWrapper implements Image {
 
 	public java.lang.String toXmlString() {
 		return _image.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_image.save();
 	}
 
 	public byte[] getTextObj() {

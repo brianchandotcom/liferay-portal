@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -8244,6 +8245,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	private static DLFileEntry _nullDLFileEntry = new DLFileEntryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DLFileEntry> toCacheModel() {
+				return _nullDLFileEntryCacheModel;
+			}
+		};
+
+	private static CacheModel<DLFileEntry> _nullDLFileEntryCacheModel = new CacheModel<DLFileEntry>() {
+			public DLFileEntry toEntityModel() {
+				return _nullDLFileEntry;
 			}
 		};
 }

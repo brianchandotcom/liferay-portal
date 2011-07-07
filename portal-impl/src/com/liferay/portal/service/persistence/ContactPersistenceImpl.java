@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ContactImpl;
@@ -1145,6 +1146,16 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	private static Contact _nullContact = new ContactImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Contact> toCacheModel() {
+				return _nullContactCacheModel;
+			}
+		};
+
+	private static CacheModel<Contact> _nullContactCacheModel = new CacheModel<Contact>() {
+			public Contact toEntityModel() {
+				return _nullContact;
 			}
 		};
 }

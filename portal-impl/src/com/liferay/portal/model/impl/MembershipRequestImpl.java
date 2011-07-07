@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.MembershipRequest;
-
 /**
  * @author Jorge Ferrer
  */
-public class MembershipRequestImpl
-	extends MembershipRequestModelImpl implements MembershipRequest {
+public class MembershipRequestImpl extends MembershipRequestBaseImpl {
 
 	public MembershipRequestImpl() {
 	}

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.CountryImpl;
@@ -1896,6 +1897,16 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static Country _nullCountry = new CountryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Country> toCacheModel() {
+				return _nullCountryCacheModel;
+			}
+		};
+
+	private static CacheModel<Country> _nullCountryCacheModel = new CacheModel<Country>() {
+			public Country toEntityModel() {
+				return _nullCountry;
 			}
 		};
 }

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClusterGroupImpl;
@@ -712,6 +713,16 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	private static ClusterGroup _nullClusterGroup = new ClusterGroupImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ClusterGroup> toCacheModel() {
+				return _nullClusterGroupCacheModel;
+			}
+		};
+
+	private static CacheModel<ClusterGroup> _nullClusterGroupCacheModel = new CacheModel<ClusterGroup>() {
+			public ClusterGroup toEntityModel() {
+				return _nullClusterGroup;
 			}
 		};
 }

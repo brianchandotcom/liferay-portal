@@ -183,6 +183,10 @@ public class BrowserTrackerWrapper implements BrowserTracker {
 		return _browserTracker.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.BrowserTracker> toCacheModel() {
+		return _browserTracker.toCacheModel();
+	}
+
 	public com.liferay.portal.model.BrowserTracker toEscapedModel() {
 		return new BrowserTrackerWrapper(_browserTracker.toEscapedModel());
 	}
@@ -194,6 +198,11 @@ public class BrowserTrackerWrapper implements BrowserTracker {
 
 	public java.lang.String toXmlString() {
 		return _browserTracker.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_browserTracker.save();
 	}
 
 	public BrowserTracker getWrappedBrowserTracker() {

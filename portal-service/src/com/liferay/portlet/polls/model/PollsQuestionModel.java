@@ -17,6 +17,7 @@ package com.liferay.portlet.polls.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -421,6 +422,8 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	public int compareTo(PollsQuestion pollsQuestion);
 
 	public int hashCode();
+
+	public CacheModel<PollsQuestion> toCacheModel();
 
 	public PollsQuestion toEscapedModel();
 

@@ -376,6 +376,10 @@ public class RoleWrapper implements Role {
 		return _role.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Role> toCacheModel() {
+		return _role.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Role toEscapedModel() {
 		return new RoleWrapper(_role.toEscapedModel());
 	}
@@ -387,6 +391,11 @@ public class RoleWrapper implements Role {
 
 	public java.lang.String toXmlString() {
 		return _role.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_role.save();
 	}
 
 	public java.lang.String getDescriptiveName()

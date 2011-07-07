@@ -570,6 +570,10 @@ public class CalEventWrapper implements CalEvent {
 		return _calEvent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.calendar.model.CalEvent> toCacheModel() {
+		return _calEvent.toCacheModel();
+	}
+
 	public com.liferay.portlet.calendar.model.CalEvent toEscapedModel() {
 		return new CalEventWrapper(_calEvent.toEscapedModel());
 	}
@@ -581,6 +585,11 @@ public class CalEventWrapper implements CalEvent {
 
 	public java.lang.String toXmlString() {
 		return _calEvent.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_calEvent.save();
 	}
 
 	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj() {

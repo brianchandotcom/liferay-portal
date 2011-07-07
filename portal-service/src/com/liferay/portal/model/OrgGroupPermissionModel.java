@@ -123,6 +123,8 @@ public interface OrgGroupPermissionModel extends BaseModel<OrgGroupPermission> {
 
 	public int hashCode();
 
+	public CacheModel<OrgGroupPermission> toCacheModel();
+
 	public OrgGroupPermission toEscapedModel();
 
 	public String toString();

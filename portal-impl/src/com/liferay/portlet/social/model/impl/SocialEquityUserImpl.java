@@ -14,14 +14,12 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialEquityUser;
 import com.liferay.portlet.social.model.SocialEquityValue;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialEquityUserImpl
-	extends SocialEquityUserModelImpl implements SocialEquityUser {
+public class SocialEquityUserImpl extends SocialEquityUserBaseImpl {
 
 	public SocialEquityUserImpl() {
 	}

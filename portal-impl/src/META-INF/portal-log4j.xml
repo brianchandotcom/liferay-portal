@@ -736,6 +736,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portlet.asset.util.AssetUtil">
 		<priority value="ERROR" />
 	</category>

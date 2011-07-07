@@ -30,7 +30,7 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
@@ -71,7 +73,8 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -96,10 +99,12 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
@@ -126,7 +131,8 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -151,10 +157,12 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
@@ -181,7 +189,8 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -206,10 +215,12 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
@@ -236,7 +247,8 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -261,10 +273,12 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
@@ -291,7 +305,8 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 			RuntimeVariables.replace("Websites"));
 		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

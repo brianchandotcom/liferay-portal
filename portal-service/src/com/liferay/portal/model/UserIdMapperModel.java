@@ -170,6 +170,8 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper> {
 
 	public int hashCode();
 
+	public CacheModel<UserIdMapper> toCacheModel();
+
 	public UserIdMapper toEscapedModel();
 
 	public String toString();

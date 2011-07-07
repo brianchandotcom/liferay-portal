@@ -336,6 +336,10 @@ public class LockWrapper implements Lock {
 		return _lock.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Lock> toCacheModel() {
+		return _lock.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Lock toEscapedModel() {
 		return new LockWrapper(_lock.toEscapedModel());
 	}
@@ -347,6 +351,11 @@ public class LockWrapper implements Lock {
 
 	public java.lang.String toXmlString() {
 		return _lock.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lock.save();
 	}
 
 	public long getExpirationTime() {

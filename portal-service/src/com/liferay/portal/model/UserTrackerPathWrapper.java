@@ -182,6 +182,10 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		return _userTrackerPath.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserTrackerPath> toCacheModel() {
+		return _userTrackerPath.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserTrackerPath toEscapedModel() {
 		return new UserTrackerPathWrapper(_userTrackerPath.toEscapedModel());
 	}
@@ -193,6 +197,11 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 
 	public java.lang.String toXmlString() {
 		return _userTrackerPath.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTrackerPath.save();
 	}
 
 	public UserTrackerPath getWrappedUserTrackerPath() {

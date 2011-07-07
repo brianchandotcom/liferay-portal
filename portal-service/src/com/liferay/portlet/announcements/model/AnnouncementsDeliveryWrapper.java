@@ -284,6 +284,10 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 		return _announcementsDelivery.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.announcements.model.AnnouncementsDelivery> toCacheModel() {
+		return _announcementsDelivery.toCacheModel();
+	}
+
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery toEscapedModel() {
 		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
 	}
@@ -295,6 +299,11 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 
 	public java.lang.String toXmlString() {
 		return _announcementsDelivery.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_announcementsDelivery.save();
 	}
 
 	public AnnouncementsDelivery getWrappedAnnouncementsDelivery() {

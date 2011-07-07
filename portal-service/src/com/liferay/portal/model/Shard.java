@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Shard service. Represents a row in the &quot;Shard&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Shard service. Represents a row in the &quot;Shard&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ShardModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ShardModelImpl
  * @generated
  */
-public interface Shard extends ShardModel {
+public interface Shard extends ShardModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

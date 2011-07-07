@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -363,6 +364,8 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public int compareTo(DLFileShortcut dlFileShortcut);
 
 	public int hashCode();
+
+	public CacheModel<DLFileShortcut> toCacheModel();
 
 	public DLFileShortcut toEscapedModel();
 

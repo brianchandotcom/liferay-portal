@@ -291,6 +291,10 @@ public class AssetLinkWrapper implements AssetLink {
 		return _assetLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetLink> toCacheModel() {
+		return _assetLink.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetLink toEscapedModel() {
 		return new AssetLinkWrapper(_assetLink.toEscapedModel());
 	}
@@ -302,6 +306,11 @@ public class AssetLinkWrapper implements AssetLink {
 
 	public java.lang.String toXmlString() {
 		return _assetLink.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetLink.save();
 	}
 
 	public AssetLink getWrappedAssetLink() {

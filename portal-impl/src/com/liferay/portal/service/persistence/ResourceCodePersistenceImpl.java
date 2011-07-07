@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.impl.ResourceCodeImpl;
@@ -1903,6 +1904,16 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	private static ResourceCode _nullResourceCode = new ResourceCodeImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ResourceCode> toCacheModel() {
+				return _nullResourceCodeCacheModel;
+			}
+		};
+
+	private static CacheModel<ResourceCode> _nullResourceCodeCacheModel = new CacheModel<ResourceCode>() {
+			public ResourceCode toEntityModel() {
+				return _nullResourceCode;
 			}
 		};
 }

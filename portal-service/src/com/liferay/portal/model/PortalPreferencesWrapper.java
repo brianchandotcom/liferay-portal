@@ -182,6 +182,10 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 		return _portalPreferences.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortalPreferences> toCacheModel() {
+		return _portalPreferences.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PortalPreferences toEscapedModel() {
 		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
 	}
@@ -193,6 +197,11 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 
 	public java.lang.String toXmlString() {
 		return _portalPreferences.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portalPreferences.save();
 	}
 
 	public PortalPreferences getWrappedPortalPreferences() {

@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the ShoppingCoupon service. Represents a row in the &quot;ShoppingCoupon&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ShoppingCoupon service. Represents a row in the &quot;ShoppingCoupon&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingCouponModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.shopping.model;
  * @see com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl
  * @generated
  */
-public interface ShoppingCoupon extends ShoppingCouponModel {
+public interface ShoppingCoupon extends ShoppingCouponModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

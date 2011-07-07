@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
-import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCFrameworkVersionImpl
-	extends SCFrameworkVersionModelImpl implements SCFrameworkVersion {
+public class SCFrameworkVersionImpl extends SCFrameworkVersionBaseImpl {
 
 	public SCFrameworkVersionImpl() {
 	}

@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.RepositoryEntry;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class RepositoryEntryImpl
-	extends RepositoryEntryModelImpl implements RepositoryEntry {
+public class RepositoryEntryImpl extends RepositoryEntryBaseImpl {
 
 	public RepositoryEntryImpl() {
 	}

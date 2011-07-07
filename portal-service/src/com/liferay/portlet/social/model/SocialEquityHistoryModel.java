@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -182,6 +183,8 @@ public interface SocialEquityHistoryModel extends BaseModel<SocialEquityHistory>
 	public int compareTo(SocialEquityHistory socialEquityHistory);
 
 	public int hashCode();
+
+	public CacheModel<SocialEquityHistory> toCacheModel();
 
 	public SocialEquityHistory toEscapedModel();
 

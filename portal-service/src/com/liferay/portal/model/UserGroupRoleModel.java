@@ -139,6 +139,8 @@ public interface UserGroupRoleModel extends BaseModel<UserGroupRole> {
 
 	public int hashCode();
 
+	public CacheModel<UserGroupRole> toCacheModel();
+
 	public UserGroupRole toEscapedModel();
 
 	public String toString();

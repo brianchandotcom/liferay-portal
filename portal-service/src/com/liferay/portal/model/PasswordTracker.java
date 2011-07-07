@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the PasswordTracker service. Represents a row in the &quot;PasswordTracker&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the PasswordTracker service. Represents a row in the &quot;PasswordTracker&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see PasswordTrackerModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PasswordTrackerModelImpl
  * @generated
  */
-public interface PasswordTracker extends PasswordTrackerModel {
+public interface PasswordTracker extends PasswordTrackerModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

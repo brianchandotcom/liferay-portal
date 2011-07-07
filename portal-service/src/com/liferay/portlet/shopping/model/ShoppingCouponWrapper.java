@@ -463,6 +463,10 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 		return _shoppingCoupon.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingCoupon> toCacheModel() {
+		return _shoppingCoupon.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCoupon toEscapedModel() {
 		return new ShoppingCouponWrapper(_shoppingCoupon.toEscapedModel());
 	}
@@ -474,6 +478,11 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 
 	public java.lang.String toXmlString() {
 		return _shoppingCoupon.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingCoupon.save();
 	}
 
 	public boolean hasValidDateRange() {

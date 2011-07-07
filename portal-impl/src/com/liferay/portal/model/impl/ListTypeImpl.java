@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.ListType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class ListTypeImpl extends ListTypeModelImpl implements ListType {
+public class ListTypeImpl extends ListTypeBaseImpl {
 
 	public ListTypeImpl() {
 	}

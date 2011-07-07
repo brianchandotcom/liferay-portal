@@ -18,7 +18,7 @@
 
 <%
 String articleId = ParamUtil.getString(request, "articleId");
-double version = ParamUtil.getDouble(request, "version", -1);
+double version = ParamUtil.getDouble(request, "version");
 %>
 
 <c:choose>

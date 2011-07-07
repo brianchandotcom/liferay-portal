@@ -357,6 +357,10 @@ public class SocialActivityWrapper implements SocialActivity {
 		return _socialActivity.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialActivity> toCacheModel() {
+		return _socialActivity.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialActivity toEscapedModel() {
 		return new SocialActivityWrapper(_socialActivity.toEscapedModel());
 	}
@@ -368,6 +372,11 @@ public class SocialActivityWrapper implements SocialActivity {
 
 	public java.lang.String toXmlString() {
 		return _socialActivity.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivity.save();
 	}
 
 	public SocialActivity getWrappedSocialActivity() {

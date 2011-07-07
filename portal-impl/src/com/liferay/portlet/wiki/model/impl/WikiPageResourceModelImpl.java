@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -259,6 +260,33 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		wikiPageResourceModelImpl._setOriginalNodeId = false;
 
 		wikiPageResourceModelImpl._originalTitle = wikiPageResourceModelImpl._title;
+	}
+
+	@Override
+	public CacheModel<WikiPageResource> toCacheModel() {
+		WikiPageResourceCacheModel wikiPageResourceCacheModel = new WikiPageResourceCacheModel();
+
+		wikiPageResourceCacheModel.uuid = getUuid();
+
+		String uuid = wikiPageResourceCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			wikiPageResourceCacheModel.uuid = null;
+		}
+
+		wikiPageResourceCacheModel.resourcePrimKey = getResourcePrimKey();
+
+		wikiPageResourceCacheModel.nodeId = getNodeId();
+
+		wikiPageResourceCacheModel.title = getTitle();
+
+		String title = wikiPageResourceCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			wikiPageResourceCacheModel.title = null;
+		}
+
+		return wikiPageResourceCacheModel;
 	}
 
 	@Override

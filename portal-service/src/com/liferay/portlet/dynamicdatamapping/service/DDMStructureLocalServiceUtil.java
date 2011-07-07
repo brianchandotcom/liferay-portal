@@ -219,7 +219,7 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d d m structure in the database. Also notifies the appropriate model listeners.
+	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructure the d d m structure
 	* @return the d d m structure that was updated
@@ -232,7 +232,7 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d d m structure in the database. Also notifies the appropriate model listeners.
+	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructure the d d m structure
 	* @param merge whether to merge the d d m structure with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

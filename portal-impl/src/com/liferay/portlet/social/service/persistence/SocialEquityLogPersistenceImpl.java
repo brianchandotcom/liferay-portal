@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -4114,6 +4115,16 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	private static SocialEquityLog _nullSocialEquityLog = new SocialEquityLogImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityLog> toCacheModel() {
+				return _nullSocialEquityLogCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityLog> _nullSocialEquityLogCacheModel = new CacheModel<SocialEquityLog>() {
+			public SocialEquityLog toEntityModel() {
+				return _nullSocialEquityLog;
 			}
 		};
 }

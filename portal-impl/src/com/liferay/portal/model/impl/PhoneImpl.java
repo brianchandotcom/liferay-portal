@@ -17,13 +17,12 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ListType;
-import com.liferay.portal.model.Phone;
 import com.liferay.portal.service.ListTypeServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PhoneImpl extends PhoneModelImpl implements Phone {
+public class PhoneImpl extends PhoneBaseImpl {
 
 	public PhoneImpl() {
 	}

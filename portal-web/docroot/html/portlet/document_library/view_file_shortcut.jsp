@@ -59,9 +59,6 @@ if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.O
 	conversions = (String[])DocumentConversionUtil.getConversions(extension);
 }
 
-Boolean isCheckedOut = toFileEntry.isCheckedOut();
-Boolean hasLock = toFileEntry.hasLock();
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", strutsAction);
@@ -173,7 +170,7 @@ if (Validator.isNotNull(folder.getName())) {
 	<aui:column columnWidth="<%= 25 %>" cssClass="detail-column detail-column-last" last="<%= true %>">
 		<img alt="" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png">
 
-		<c:if test="<%= isCheckedOut %>">
+		<c:if test="<%= toFileEntry.isCheckedOut() %>">
 			<img alt="" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
 		</c:if>
 
@@ -258,7 +255,7 @@ if (Validator.isNotNull(folder.getName())) {
 			for (int i = 0; i < results.size(); i++) {
 				FileVersion fileVersion = (FileVersion)results.get(i);
 
-				ResultRow row = new ResultRow(new Object[] {toFileEntry, fileVersion, results.size(), conversions, isCheckedOut, hasLock}, fileVersion.getFileVersionId(), i);
+				ResultRow row = new ResultRow(new Object[] {toFileEntry, fileVersion, results.size(), conversions, toFileEntry.isCheckedOut(), toFileEntry.hasLock()}, fileVersion.getFileVersionId(), i);
 
 				StringBundler sb = new StringBundler(6);
 

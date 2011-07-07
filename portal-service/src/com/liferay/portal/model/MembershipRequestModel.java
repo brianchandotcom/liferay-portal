@@ -256,6 +256,8 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
 
 	public int hashCode();
 
+	public CacheModel<MembershipRequest> toCacheModel();
+
 	public MembershipRequest toEscapedModel();
 
 	public String toString();

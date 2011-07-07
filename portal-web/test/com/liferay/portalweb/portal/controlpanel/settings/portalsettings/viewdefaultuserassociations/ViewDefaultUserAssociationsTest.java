@@ -30,7 +30,7 @@ public class ViewDefaultUserAssociationsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,36 @@ public class ViewDefaultUserAssociationsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_usersLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_usersLink']",
 			RuntimeVariables.replace("Users"));
 		selenium.clickAt("link=Default User Associations",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Default User Associations"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -60,7 +79,7 @@ public class ViewDefaultUserAssociationsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"_130_settings--admin.sync.default.associations--Checkbox")) {
+							"//input[@name='_130_settings--admin.sync.default.associations--Checkbox']")) {
 					break;
 				}
 			}
@@ -72,12 +91,12 @@ public class ViewDefaultUserAssociationsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--admin.sync.default.associations--Checkbox"));
+				"//input[@name='_130_settings--admin.sync.default.associations--Checkbox']"));
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--admin.default.group.names--"));
+				"//textarea[@name='_130_settings--admin.default.group.names--']"));
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--admin.default.role.names--"));
+				"//textarea[@name='_130_settings--admin.default.role.names--']"));
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--admin.default.user.group.names--"));
+				"//textarea[@name='_130_settings--admin.default.user.group.names--']"));
 	}
 }

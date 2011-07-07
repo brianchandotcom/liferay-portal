@@ -69,20 +69,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		dlFileEntryLocalService.cancelCheckOut(getUserId(), fileEntryId);
 	}
 
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException, SystemException {
-
-		try {
-			DLFileEntryPermission.check(
-				getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
-
-		dlFileEntryLocalService.checkInFileEntry(
-			getUserId(), fileEntryId, lockUuid);
-	}
-
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
@@ -97,6 +83,20 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		dlFileEntryLocalService.checkInFileEntry(
 			getUserId(), fileEntryId, major, changeLog, serviceContext);
+	}
+
+	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		try {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
+		}
+		catch (NoSuchFileEntryException nsfee) {
+		}
+
+		dlFileEntryLocalService.checkInFileEntry(
+			getUserId(), fileEntryId, lockUuid);
 	}
 
 	public DLFileEntry checkOutFileEntry(long fileEntryId)
@@ -318,6 +318,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return dlFileEntryPersistence.filterCountByG_U_F(
 				groupId, userId, folderIds);
 		}
+	}
+
+	public DLFileVersion getLatestFileVersion(long fileEntryId)
+		throws PortalException, SystemException {
+
+		return dlFileEntryLocalService.getLatestFileVersion(
+			getGuestOrUserId(), fileEntryId);
 	}
 
 	public boolean hasFileEntryLock(long fileEntryId)

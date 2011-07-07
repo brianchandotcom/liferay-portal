@@ -350,7 +350,7 @@ import javax.sql.DataSource;
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "update" + entity.name, [packagePath + ".model." + entity.name], ["SystemException"])>
 
 		/**
-		 * Updates the ${entity.humanName} in the database. Also notifies the appropriate model listeners.
+		 * Updates the ${entity.humanName} in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 		 *
 		 * @param ${entity.varName} the ${entity.humanName}
 		 * @return the ${entity.humanName} that was updated
@@ -367,7 +367,7 @@ import javax.sql.DataSource;
 		}
 
 		/**
-		 * Updates the ${entity.humanName} in the database. Also notifies the appropriate model listeners.
+		 * Updates the ${entity.humanName} in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 		 *
 		 * @param ${entity.varName} the ${entity.humanName}
 		 * @param merge whether to merge the ${entity.humanName} with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

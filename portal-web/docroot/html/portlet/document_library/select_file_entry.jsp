@@ -177,11 +177,9 @@ if (folder != null) {
 			row.addText(String.valueOf(fileEntry.getReadCount()), rowHREF);
 		}
 
-		// Checked Out
+		// Checked out
 
-		boolean isCheckedOut = fileEntry.isCheckedOut();
-
-		row.addText(LanguageUtil.get(pageContext, isCheckedOut ? "yes" : "no"), rowHREF);
+		row.addText(LanguageUtil.get(pageContext, fileEntry.isCheckedOut() ? "yes" : "no"), rowHREF);
 
 		// Add result row
 

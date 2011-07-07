@@ -245,6 +245,10 @@ public class SCLicenseWrapper implements SCLicense {
 		return _scLicense.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCLicense> toCacheModel() {
+		return _scLicense.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCLicense toEscapedModel() {
 		return new SCLicenseWrapper(_scLicense.toEscapedModel());
 	}
@@ -256,6 +260,11 @@ public class SCLicenseWrapper implements SCLicense {
 
 	public java.lang.String toXmlString() {
 		return _scLicense.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scLicense.save();
 	}
 
 	public SCLicense getWrappedSCLicense() {

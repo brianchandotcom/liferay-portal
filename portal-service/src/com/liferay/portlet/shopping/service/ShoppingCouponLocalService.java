@@ -187,7 +187,7 @@ public interface ShoppingCouponLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping coupon in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was updated
@@ -198,7 +198,7 @@ public interface ShoppingCouponLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping coupon in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCoupon the shopping coupon
 	* @param merge whether to merge the shopping coupon with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

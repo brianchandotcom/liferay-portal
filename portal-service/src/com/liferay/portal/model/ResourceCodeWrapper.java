@@ -181,6 +181,10 @@ public class ResourceCodeWrapper implements ResourceCode {
 		return _resourceCode.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ResourceCode> toCacheModel() {
+		return _resourceCode.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ResourceCode toEscapedModel() {
 		return new ResourceCodeWrapper(_resourceCode.toEscapedModel());
 	}
@@ -192,6 +196,11 @@ public class ResourceCodeWrapper implements ResourceCode {
 
 	public java.lang.String toXmlString() {
 		return _resourceCode.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceCode.save();
 	}
 
 	public ResourceCode getWrappedResourceCode() {

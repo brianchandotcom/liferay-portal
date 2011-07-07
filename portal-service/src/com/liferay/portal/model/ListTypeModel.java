@@ -125,6 +125,8 @@ public interface ListTypeModel extends BaseModel<ListType> {
 
 	public int hashCode();
 
+	public CacheModel<ListType> toCacheModel();
+
 	public ListType toEscapedModel();
 
 	public String toString();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.model.UserNotificationEventModel;
 import com.liferay.portal.service.ServiceContext;
@@ -296,6 +297,47 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<UserNotificationEvent> toCacheModel() {
+		UserNotificationEventCacheModel userNotificationEventCacheModel = new UserNotificationEventCacheModel();
+
+		userNotificationEventCacheModel.uuid = getUuid();
+
+		String uuid = userNotificationEventCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			userNotificationEventCacheModel.uuid = null;
+		}
+
+		userNotificationEventCacheModel.userNotificationEventId = getUserNotificationEventId();
+
+		userNotificationEventCacheModel.companyId = getCompanyId();
+
+		userNotificationEventCacheModel.userId = getUserId();
+
+		userNotificationEventCacheModel.type = getType();
+
+		String type = userNotificationEventCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			userNotificationEventCacheModel.type = null;
+		}
+
+		userNotificationEventCacheModel.timestamp = getTimestamp();
+
+		userNotificationEventCacheModel.deliverBy = getDeliverBy();
+
+		userNotificationEventCacheModel.payload = getPayload();
+
+		String payload = userNotificationEventCacheModel.payload;
+
+		if ((payload != null) && (payload.length() == 0)) {
+			userNotificationEventCacheModel.payload = null;
+		}
+
+		return userNotificationEventCacheModel;
 	}
 
 	@Override

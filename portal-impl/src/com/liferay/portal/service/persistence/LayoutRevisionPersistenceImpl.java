@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutRevisionImpl;
@@ -4745,6 +4746,16 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static LayoutRevision _nullLayoutRevision = new LayoutRevisionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<LayoutRevision> toCacheModel() {
+				return _nullLayoutRevisionCacheModel;
+			}
+		};
+
+	private static CacheModel<LayoutRevision> _nullLayoutRevisionCacheModel = new CacheModel<LayoutRevision>() {
+			public LayoutRevision toEntityModel() {
+				return _nullLayoutRevision;
 			}
 		};
 }

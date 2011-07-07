@@ -192,7 +192,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService {
 	}
 
 	/**
-	* Updates the asset tag in the database. Also notifies the appropriate model listeners.
+	* Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was updated
@@ -205,7 +205,7 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService {
 	}
 
 	/**
-	* Updates the asset tag in the database. Also notifies the appropriate model listeners.
+	* Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetTag the asset tag
 	* @param merge whether to merge the asset tag with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

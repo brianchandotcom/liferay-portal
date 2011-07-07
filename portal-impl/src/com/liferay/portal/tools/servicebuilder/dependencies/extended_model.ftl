@@ -1,7 +1,9 @@
 package ${packagePath}.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
  *
  * @author ${author}
  * @see ${entity.name}Model
@@ -9,7 +11,14 @@ package ${packagePath}.model;
  * @see ${packagePath}.model.impl.${entity.name}ModelImpl
  * @generated
  */
-public interface ${entity.name} extends ${entity.name}Model {
+public interface ${entity.name} extends
+	${entity.name}Model
+
+	<#if entity.hasLocalService() && entity.hasColumns()>
+		, SaveableModel
+	</#if>
+
+	{
 
 	/*
 	 * NOTE FOR DEVELOPERS:

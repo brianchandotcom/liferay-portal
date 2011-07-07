@@ -31,8 +31,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingItemImpl
-	extends ShoppingItemModelImpl implements ShoppingItem {
+public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 
 	public ShoppingItemImpl() {
 	}

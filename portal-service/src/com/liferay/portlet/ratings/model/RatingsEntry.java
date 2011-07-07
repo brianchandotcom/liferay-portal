@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the RatingsEntry service. Represents a row in the &quot;RatingsEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RatingsEntry service. Represents a row in the &quot;RatingsEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see RatingsEntryModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.ratings.model;
  * @see com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl
  * @generated
  */
-public interface RatingsEntry extends RatingsEntryModel {
+public interface RatingsEntry extends RatingsEntryModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

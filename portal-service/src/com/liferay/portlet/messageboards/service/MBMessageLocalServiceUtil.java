@@ -219,7 +219,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* Updates the message-boards message in the database. Also notifies the appropriate model listeners.
+	* Updates the message-boards message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param mbMessage the message-boards message
 	* @return the message-boards message that was updated
@@ -232,7 +232,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* Updates the message-boards message in the database. Also notifies the appropriate model listeners.
+	* Updates the message-boards message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param mbMessage the message-boards message
 	* @param merge whether to merge the message-boards message with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

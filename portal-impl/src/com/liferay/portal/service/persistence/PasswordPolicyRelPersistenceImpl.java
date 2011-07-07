@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.impl.PasswordPolicyRelImpl;
@@ -1713,6 +1714,17 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	private static PasswordPolicyRel _nullPasswordPolicyRel = new PasswordPolicyRelImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PasswordPolicyRel> toCacheModel() {
+				return _nullPasswordPolicyRelCacheModel;
+			}
+		};
+
+	private static CacheModel<PasswordPolicyRel> _nullPasswordPolicyRelCacheModel =
+		new CacheModel<PasswordPolicyRel>() {
+			public PasswordPolicyRel toEntityModel() {
+				return _nullPasswordPolicyRel;
 			}
 		};
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.impl.RepositoryImpl;
@@ -1140,6 +1141,16 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	private static Repository _nullRepository = new RepositoryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Repository> toCacheModel() {
+				return _nullRepositoryCacheModel;
+			}
+		};
+
+	private static CacheModel<Repository> _nullRepositoryCacheModel = new CacheModel<Repository>() {
+			public Repository toEntityModel() {
+				return _nullRepository;
 			}
 		};
 }

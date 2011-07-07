@@ -220,6 +220,10 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 		return _announcementsFlag.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.announcements.model.AnnouncementsFlag> toCacheModel() {
+		return _announcementsFlag.toCacheModel();
+	}
+
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag toEscapedModel() {
 		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
 	}
@@ -231,6 +235,11 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 
 	public java.lang.String toXmlString() {
 		return _announcementsFlag.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_announcementsFlag.save();
 	}
 
 	public AnnouncementsFlag getWrappedAnnouncementsFlag() {

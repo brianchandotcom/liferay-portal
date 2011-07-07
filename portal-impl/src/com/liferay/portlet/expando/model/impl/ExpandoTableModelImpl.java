@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -259,6 +260,27 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		expandoTableModelImpl._setOriginalClassNameId = false;
 
 		expandoTableModelImpl._originalName = expandoTableModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<ExpandoTable> toCacheModel() {
+		ExpandoTableCacheModel expandoTableCacheModel = new ExpandoTableCacheModel();
+
+		expandoTableCacheModel.tableId = getTableId();
+
+		expandoTableCacheModel.companyId = getCompanyId();
+
+		expandoTableCacheModel.classNameId = getClassNameId();
+
+		expandoTableCacheModel.name = getName();
+
+		String name = expandoTableCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			expandoTableCacheModel.name = null;
+		}
+
+		return expandoTableCacheModel;
 	}
 
 	@Override

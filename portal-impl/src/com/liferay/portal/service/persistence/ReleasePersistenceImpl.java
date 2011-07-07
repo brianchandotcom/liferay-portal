@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.model.impl.ReleaseImpl;
@@ -978,6 +979,16 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	private static Release _nullRelease = new ReleaseImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Release> toCacheModel() {
+				return _nullReleaseCacheModel;
+			}
+		};
+
+	private static CacheModel<Release> _nullReleaseCacheModel = new CacheModel<Release>() {
+			public Release toEntityModel() {
+				return _nullRelease;
 			}
 		};
 }

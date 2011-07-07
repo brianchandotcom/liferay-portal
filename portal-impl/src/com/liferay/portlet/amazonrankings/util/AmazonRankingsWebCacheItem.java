@@ -91,6 +91,10 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			return null;
 		}
 
+		if (hasErrorMessage(rootElement)) {
+			return null;
+		}
+
 		Element itemsElement = rootElement.element("Items");
 
 		if (itemsElement == null) {
@@ -102,18 +106,8 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		if (requestElement != null) {
 			Element errorsElement = requestElement.element("Errors");
 
-			if (errorsElement != null) {
-				Element errorElement = errorsElement.element("Error");
-
-				if (errorElement != null) {
-					Element messageElement = errorElement.element("Message");
-
-					if (messageElement != null) {
-						_log.error(messageElement.getText());
-
-						return null;
-					}
-				}
+			if (hasErrorMessage(errorsElement)) {
+				return null;
 			}
 		}
 
@@ -252,6 +246,28 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		}
 
 		return GetterUtil.getDate(releaseDateAsString, dateFormat);
+	}
+
+	protected boolean hasErrorMessage(Element element) {
+		if (element == null) {
+			return false;
+		}
+
+		Element errorElement = element.element("Error");
+
+		if (errorElement == null) {
+			return false;
+		}
+
+		Element messageElement = errorElement.element("Message");
+
+		if (messageElement == null) {
+			return false;
+		}
+
+		_log.error(messageElement.getText());
+
+		return true;
 	}
 
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;

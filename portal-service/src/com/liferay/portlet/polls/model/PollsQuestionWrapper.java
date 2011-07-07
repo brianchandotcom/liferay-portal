@@ -540,6 +540,10 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsQuestion> toCacheModel() {
+		return _pollsQuestion.toCacheModel();
+	}
+
 	public com.liferay.portlet.polls.model.PollsQuestion toEscapedModel() {
 		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
 	}
@@ -551,6 +555,11 @@ public class PollsQuestionWrapper implements PollsQuestion {
 
 	public java.lang.String toXmlString() {
 		return _pollsQuestion.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pollsQuestion.save();
 	}
 
 	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getChoices()

@@ -223,6 +223,8 @@ public interface LiferayPortletURL
 	public void setCopyCurrentRenderParameters(
 		boolean copyCurrentRenderParameters);
 
+	public void setDoAsGroupId(long doAsGroupId);
+
 	/**
 	 * Sets the ID of the user to impersonate.
 	 *

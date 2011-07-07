@@ -31,7 +31,7 @@ public class EnterDefaultUserAssociationsRoleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,29 +42,68 @@ public class EnterDefaultUserAssociationsRoleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_usersLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_usersLink']",
 			RuntimeVariables.replace("Users"));
 		selenium.clickAt("link=Default User Associations",
-			RuntimeVariables.replace(""));
-		selenium.type("_130_settings--admin.default.role.names--",
+			RuntimeVariables.replace("Default User Associations"));
+		selenium.type("//textarea[@name='_130_settings--admin.default.role.names--']",
 			RuntimeVariables.replace("Administrator"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Default User Associations",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Default User Associations"));
 		assertEquals("Administrator",
-			selenium.getValue("_130_settings--admin.default.role.names--"));
+			selenium.getValue(
+				"//textarea[@name='_130_settings--admin.default.role.names--']"));
 	}
 }

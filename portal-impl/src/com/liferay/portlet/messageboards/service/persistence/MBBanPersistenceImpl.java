@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -2102,6 +2103,16 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static MBBan _nullMBBan = new MBBanImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBBan> toCacheModel() {
+				return _nullMBBanCacheModel;
+			}
+		};
+
+	private static CacheModel<MBBan> _nullMBBanCacheModel = new CacheModel<MBBan>() {
+			public MBBan toEntityModel() {
+				return _nullMBBan;
 			}
 		};
 }

@@ -72,7 +72,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutImpl extends LayoutModelImpl implements Layout {
+public class LayoutImpl extends LayoutBaseImpl {
 
 	public static int validateFriendlyURL(String friendlyURL) {
 		if (friendlyURL.length() < 2) {

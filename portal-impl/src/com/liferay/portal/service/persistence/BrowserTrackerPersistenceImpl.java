@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BrowserTracker;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
@@ -952,6 +953,16 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	private static BrowserTracker _nullBrowserTracker = new BrowserTrackerImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<BrowserTracker> toCacheModel() {
+				return _nullBrowserTrackerCacheModel;
+			}
+		};
+
+	private static CacheModel<BrowserTracker> _nullBrowserTrackerCacheModel = new CacheModel<BrowserTracker>() {
+			public BrowserTracker toEntityModel() {
+				return _nullBrowserTracker;
 			}
 		};
 }

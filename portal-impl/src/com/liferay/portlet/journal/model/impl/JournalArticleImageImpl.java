@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portlet.journal.model.JournalArticleImage;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalArticleImageImpl
-	extends JournalArticleImageModelImpl implements JournalArticleImage {
+public class JournalArticleImageImpl extends JournalArticleImageBaseImpl {
 
 	public JournalArticleImageImpl() {
 	}

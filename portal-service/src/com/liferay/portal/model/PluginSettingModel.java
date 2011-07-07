@@ -175,6 +175,8 @@ public interface PluginSettingModel extends BaseModel<PluginSetting> {
 
 	public int hashCode();
 
+	public CacheModel<PluginSetting> toCacheModel();
+
 	public PluginSetting toEscapedModel();
 
 	public String toString();

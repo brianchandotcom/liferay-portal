@@ -424,6 +424,10 @@ public class DDMContentWrapper implements DDMContent {
 		return _ddmContent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMContent> toCacheModel() {
+		return _ddmContent.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent toEscapedModel() {
 		return new DDMContentWrapper(_ddmContent.toEscapedModel());
 	}
@@ -435,6 +439,11 @@ public class DDMContentWrapper implements DDMContent {
 
 	public java.lang.String toXmlString() {
 		return _ddmContent.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmContent.save();
 	}
 
 	public DDMContent getWrappedDDMContent() {

@@ -42,7 +42,6 @@ import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.Website;
@@ -84,7 +83,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Jorge Ferrer
  * @author Wesley Gong
  */
-public class UserImpl extends UserModelImpl implements User {
+public class UserImpl extends UserBaseImpl {
 
 	public UserImpl() {
 	}

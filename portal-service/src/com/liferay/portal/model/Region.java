@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Region service. Represents a row in the &quot;Region&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Region service. Represents a row in the &quot;Region&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see RegionModel

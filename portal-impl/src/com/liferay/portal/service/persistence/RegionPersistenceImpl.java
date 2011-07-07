@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.impl.RegionImpl;
@@ -1989,6 +1990,16 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	private static Region _nullRegion = new RegionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Region> toCacheModel() {
+				return _nullRegionCacheModel;
+			}
+		};
+
+	private static CacheModel<Region> _nullRegionCacheModel = new CacheModel<Region>() {
+			public Region toEntityModel() {
+				return _nullRegion;
 			}
 		};
 }

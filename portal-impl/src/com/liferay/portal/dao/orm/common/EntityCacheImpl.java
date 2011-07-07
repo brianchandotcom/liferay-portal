@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -112,8 +113,6 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 			if (result == null) {
 				result = StringPool.BLANK;
-
-				portalCache.put(cacheKey, result);
 			}
 
 			if (_localCacheAvailable) {
@@ -121,11 +120,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			}
 		}
 
-		if (result != null) {
-			result = _objectToResult(result);
-		}
-
-		return result;
+		return _toEntityModel(result);
 	}
 
 	public void invalidate() {
@@ -165,7 +160,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			result = localCache.get(localCacheKey);
 		}
 
-		boolean load = false;
+		Object loadResult = null;
 
 		if (result == null) {
 			PortalCache portalCache = _getPortalCache(clazz.getName(), true);
@@ -180,21 +175,19 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 						"Load " + clazz + " " + primaryKey + " from session");
 				}
 
-				load = true;
-
 				Session session = null;
 
 				try {
 					session = sessionFactory.openSession();
 
-					result = session.load(clazz, primaryKey);
+					loadResult = session.load(clazz, primaryKey);
 				}
 				finally {
-					if (result == null) {
+					if (loadResult == null) {
 						result = StringPool.BLANK;
 					}
 					else {
-						result = _objectToResult(result);
+						result = ((BaseModel<?>)loadResult).toCacheModel();
 					}
 
 					portalCache.put(cacheKey, result);
@@ -208,15 +201,11 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			}
 		}
 
-		if (!load) {
-			return _objectToResult(result);
-		}
-
-		if (result instanceof String) {
-			return null;
+		if (loadResult != null) {
+			return loadResult;
 		}
 		else {
-			return result;
+			return _toEntityModel(result);
 		}
 	}
 
@@ -231,7 +220,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			return;
 		}
 
-		result = _objectToResult(result);
+		result = ((BaseModel<?>)result).toCacheModel();
 
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
@@ -332,18 +321,18 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		return portalCache;
 	}
 
-	private Object _objectToResult(Object result) {
-		if (result instanceof String) {
+	private Object _toEntityModel(Object result) {
+		if (result == StringPool.BLANK) {
 			return null;
 		}
 		else {
-			result = ((BaseModel<?>)result).clone();
+			CacheModel<?> cacheModel = (CacheModel<?>)result;
 
-			BaseModel<?> model = (BaseModel<?>)result;
+			BaseModel<?> entityModel = (BaseModel<?>)cacheModel.toEntityModel();
 
-			model.setCachedModel(true);
+			entityModel.setCachedModel(true);
 
-			return model;
+			return entityModel;
 		}
 	}
 

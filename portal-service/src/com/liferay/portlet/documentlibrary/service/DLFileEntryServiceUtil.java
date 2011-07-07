@@ -56,13 +56,6 @@ public class DLFileEntryServiceUtil {
 		getService().cancelCheckOut(fileEntryId);
 	}
 
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkInFileEntry(fileEntryId, lockUuid);
-	}
-
 	public static void checkInFileEntry(long fileEntryId, boolean major,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -70,6 +63,13 @@ public class DLFileEntryServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.checkInFileEntry(fileEntryId, major, changeLog, serviceContext);
+	}
+
+	public static void checkInFileEntry(long fileEntryId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkInFileEntry(fileEntryId, lockUuid);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
@@ -198,6 +198,13 @@ public class DLFileEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getGroupFileEntriesCount(groupId, userId, rootFolderId);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLatestFileVersion(fileEntryId);
 	}
 
 	public static boolean hasFileEntryLock(long fileEntryId)

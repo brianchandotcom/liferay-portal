@@ -16,7 +16,6 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.model.Region;
@@ -27,7 +26,7 @@ import com.liferay.portal.service.RegionServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddressImpl extends AddressModelImpl implements Address {
+public class AddressImpl extends AddressBaseImpl {
 
 	public AddressImpl() {
 	}

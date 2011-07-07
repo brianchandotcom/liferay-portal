@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyModel;
 import com.liferay.portal.model.CompanySoap;
@@ -401,6 +402,57 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyModelImpl._originalLogoId = companyModelImpl._logoId;
 
 		companyModelImpl._setOriginalLogoId = false;
+	}
+
+	@Override
+	public CacheModel<Company> toCacheModel() {
+		CompanyCacheModel companyCacheModel = new CompanyCacheModel();
+
+		companyCacheModel.companyId = getCompanyId();
+
+		companyCacheModel.accountId = getAccountId();
+
+		companyCacheModel.webId = getWebId();
+
+		String webId = companyCacheModel.webId;
+
+		if ((webId != null) && (webId.length() == 0)) {
+			companyCacheModel.webId = null;
+		}
+
+		companyCacheModel.key = getKey();
+
+		String key = companyCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			companyCacheModel.key = null;
+		}
+
+		companyCacheModel.mx = getMx();
+
+		String mx = companyCacheModel.mx;
+
+		if ((mx != null) && (mx.length() == 0)) {
+			companyCacheModel.mx = null;
+		}
+
+		companyCacheModel.homeURL = getHomeURL();
+
+		String homeURL = companyCacheModel.homeURL;
+
+		if ((homeURL != null) && (homeURL.length() == 0)) {
+			companyCacheModel.homeURL = null;
+		}
+
+		companyCacheModel.logoId = getLogoId();
+
+		companyCacheModel.system = getSystem();
+
+		companyCacheModel.maxUsers = getMaxUsers();
+
+		companyCacheModel.active = getActive();
+
+		return companyCacheModel;
 	}
 
 	@Override

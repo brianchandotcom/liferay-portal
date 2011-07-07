@@ -46,8 +46,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-public class DLFileEntryImpl
-	extends DLFileEntryModelImpl implements DLFileEntry {
+public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	public DLFileEntryImpl() {
 	}
@@ -156,8 +155,7 @@ public class DLFileEntryImpl
 	public DLFileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
-		return DLFileEntryLocalServiceUtil.getLatestFileVersion(
-			getFileEntryId());
+		return DLFileEntryServiceUtil.getLatestFileVersion(getFileEntryId());
 	}
 
 	public Lock getLock() {

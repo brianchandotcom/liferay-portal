@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -570,6 +571,139 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListModelImpl._originalCategoryId = mbMailingListModelImpl._categoryId;
 
 		mbMailingListModelImpl._setOriginalCategoryId = false;
+	}
+
+	@Override
+	public CacheModel<MBMailingList> toCacheModel() {
+		MBMailingListCacheModel mbMailingListCacheModel = new MBMailingListCacheModel();
+
+		mbMailingListCacheModel.uuid = getUuid();
+
+		String uuid = mbMailingListCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbMailingListCacheModel.uuid = null;
+		}
+
+		mbMailingListCacheModel.mailingListId = getMailingListId();
+
+		mbMailingListCacheModel.groupId = getGroupId();
+
+		mbMailingListCacheModel.companyId = getCompanyId();
+
+		mbMailingListCacheModel.userId = getUserId();
+
+		mbMailingListCacheModel.userName = getUserName();
+
+		String userName = mbMailingListCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mbMailingListCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbMailingListCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbMailingListCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		mbMailingListCacheModel.categoryId = getCategoryId();
+
+		mbMailingListCacheModel.emailAddress = getEmailAddress();
+
+		String emailAddress = mbMailingListCacheModel.emailAddress;
+
+		if ((emailAddress != null) && (emailAddress.length() == 0)) {
+			mbMailingListCacheModel.emailAddress = null;
+		}
+
+		mbMailingListCacheModel.inProtocol = getInProtocol();
+
+		String inProtocol = mbMailingListCacheModel.inProtocol;
+
+		if ((inProtocol != null) && (inProtocol.length() == 0)) {
+			mbMailingListCacheModel.inProtocol = null;
+		}
+
+		mbMailingListCacheModel.inServerName = getInServerName();
+
+		String inServerName = mbMailingListCacheModel.inServerName;
+
+		if ((inServerName != null) && (inServerName.length() == 0)) {
+			mbMailingListCacheModel.inServerName = null;
+		}
+
+		mbMailingListCacheModel.inServerPort = getInServerPort();
+
+		mbMailingListCacheModel.inUseSSL = getInUseSSL();
+
+		mbMailingListCacheModel.inUserName = getInUserName();
+
+		String inUserName = mbMailingListCacheModel.inUserName;
+
+		if ((inUserName != null) && (inUserName.length() == 0)) {
+			mbMailingListCacheModel.inUserName = null;
+		}
+
+		mbMailingListCacheModel.inPassword = getInPassword();
+
+		String inPassword = mbMailingListCacheModel.inPassword;
+
+		if ((inPassword != null) && (inPassword.length() == 0)) {
+			mbMailingListCacheModel.inPassword = null;
+		}
+
+		mbMailingListCacheModel.inReadInterval = getInReadInterval();
+
+		mbMailingListCacheModel.outEmailAddress = getOutEmailAddress();
+
+		String outEmailAddress = mbMailingListCacheModel.outEmailAddress;
+
+		if ((outEmailAddress != null) && (outEmailAddress.length() == 0)) {
+			mbMailingListCacheModel.outEmailAddress = null;
+		}
+
+		mbMailingListCacheModel.outCustom = getOutCustom();
+
+		mbMailingListCacheModel.outServerName = getOutServerName();
+
+		String outServerName = mbMailingListCacheModel.outServerName;
+
+		if ((outServerName != null) && (outServerName.length() == 0)) {
+			mbMailingListCacheModel.outServerName = null;
+		}
+
+		mbMailingListCacheModel.outServerPort = getOutServerPort();
+
+		mbMailingListCacheModel.outUseSSL = getOutUseSSL();
+
+		mbMailingListCacheModel.outUserName = getOutUserName();
+
+		String outUserName = mbMailingListCacheModel.outUserName;
+
+		if ((outUserName != null) && (outUserName.length() == 0)) {
+			mbMailingListCacheModel.outUserName = null;
+		}
+
+		mbMailingListCacheModel.outPassword = getOutPassword();
+
+		String outPassword = mbMailingListCacheModel.outPassword;
+
+		if ((outPassword != null) && (outPassword.length() == 0)) {
+			mbMailingListCacheModel.outPassword = null;
+		}
+
+		mbMailingListCacheModel.allowAnonymous = getAllowAnonymous();
+
+		mbMailingListCacheModel.active = getActive();
+
+		return mbMailingListCacheModel;
 	}
 
 	@Override

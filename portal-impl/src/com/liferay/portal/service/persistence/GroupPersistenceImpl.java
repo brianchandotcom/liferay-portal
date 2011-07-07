@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.GroupImpl;
@@ -6760,6 +6761,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static Group _nullGroup = new GroupImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Group> toCacheModel() {
+				return _nullGroupCacheModel;
+			}
+		};
+
+	private static CacheModel<Group> _nullGroupCacheModel = new CacheModel<Group>() {
+			public Group toEntityModel() {
+				return _nullGroup;
 			}
 		};
 }

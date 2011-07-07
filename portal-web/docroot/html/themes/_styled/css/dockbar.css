@@ -111,34 +111,95 @@ html > .lfr-dockbar-pinned {
 /* ---------- Staging Dockbar ---------- */
 
 .layout-revision-container {
-	margin: 0 0 0 0.5em;
+	margin: 0;
+	margin-left: 0.8em;
 	padding: 0;
 }
 
 .layout-revision-container-root {
-	margin: 0 0 0 2em;
+	margin: 0;
 }
 
 .layout-revision {
-	list-style-image: url(../images/navigation/bullet.png);
+	list-style: none;
+}
+
+.layout-revision-details {
+	background: url(../images/common/revision.png) no-repeat 2px 50%;
 	margin: 1px 0;
-	padding: 6px 0;
+	min-height: 16px;
+	padding: 1px 0 1px 15px;
+}
+
+.layout-revision-details .selection-details {
+	display: inline-block;
+	line-height: 2;
+}
+
+.layout-revision-details .selection-details a {
+	vertical-align: middle;
+}
+
+.layout-revision-details:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.ie6 .layout-revision-details:after, .ie7 .layout-revision-details:after {
+	zoom: 1;
 }
 
 .layout-revision-current {
-	list-style-image: url(../images/arrows/01_right.png);
+	background-color: #B2D5ED;
+	background-image: url(../images/arrows/05_right.png);
 }
 
 .layout-revision-head {
-	list-style-image: url(../images/arrows/02_plus.png);
+	background-color: #ccc;
+	background-image: url(../images/common/all_pages.png);
+	background-position: 3px 50%;
+	font-weight: bold;
+	padding: 3px 0 3px 23px;
 }
 
 .layout-revision-current.layout-revision-head {
-	list-style-image: url(../images/arrows/02_right.png);
+	background-color: #82C1E2;
+}
+
+.layout-revision-current.layout-revision-head .selection-details {
+	background-image: url(../images/arrows/05_right.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding-left: 13px;
 }
 
 .layout-revision-container .lfr-menu-list {
 	z-index: 1002;
+}
+
+.staging-details {
+	background: url() no-repeat 0 0;
+	padding-left: 65px;
+	min-height: 50px;
+}
+
+.staging .staging-details {
+	background-image: url(../images/staging_bar/backstage.png);
+}
+
+.live-view .staging-details {
+	background-image: url(../images/staging_bar/live.png);
+}
+
+.staging .staging-tabview-list {
+	background-color: #FFDBA6;
+}
+
+.live-view .staging-tabview-list {
+	background-color: #C4F0BC;
 }
 
 /* ---------- Menus ---------- */

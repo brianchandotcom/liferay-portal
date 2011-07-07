@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -588,6 +589,16 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static Counter _nullCounter = new CounterImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Counter> toCacheModel() {
+				return _nullCounterCacheModel;
+			}
+		};
+
+	private static CacheModel<Counter> _nullCounterCacheModel = new CacheModel<Counter>() {
+			public Counter toEntityModel() {
+				return _nullCounter;
 			}
 		};
 }

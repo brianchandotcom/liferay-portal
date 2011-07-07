@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.shopping.NoSuchCouponException;
-import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingCartItem;
 import com.liferay.portlet.shopping.model.ShoppingCoupon;
 import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
@@ -31,8 +30,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCartImpl
-	extends ShoppingCartModelImpl implements ShoppingCart {
+public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 
 	public ShoppingCartImpl() {
 	}

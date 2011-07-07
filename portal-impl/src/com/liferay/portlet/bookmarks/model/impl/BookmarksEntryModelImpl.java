@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -463,6 +464,79 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryModelImpl._originalGroupId = bookmarksEntryModelImpl._groupId;
 
 		bookmarksEntryModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<BookmarksEntry> toCacheModel() {
+		BookmarksEntryCacheModel bookmarksEntryCacheModel = new BookmarksEntryCacheModel();
+
+		bookmarksEntryCacheModel.uuid = getUuid();
+
+		String uuid = bookmarksEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			bookmarksEntryCacheModel.uuid = null;
+		}
+
+		bookmarksEntryCacheModel.entryId = getEntryId();
+
+		bookmarksEntryCacheModel.groupId = getGroupId();
+
+		bookmarksEntryCacheModel.companyId = getCompanyId();
+
+		bookmarksEntryCacheModel.userId = getUserId();
+
+		bookmarksEntryCacheModel.userName = getUserName();
+
+		String userName = bookmarksEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			bookmarksEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			bookmarksEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			bookmarksEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		bookmarksEntryCacheModel.folderId = getFolderId();
+
+		bookmarksEntryCacheModel.name = getName();
+
+		String name = bookmarksEntryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			bookmarksEntryCacheModel.name = null;
+		}
+
+		bookmarksEntryCacheModel.url = getUrl();
+
+		String url = bookmarksEntryCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			bookmarksEntryCacheModel.url = null;
+		}
+
+		bookmarksEntryCacheModel.description = getDescription();
+
+		String description = bookmarksEntryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			bookmarksEntryCacheModel.description = null;
+		}
+
+		bookmarksEntryCacheModel.visits = getVisits();
+
+		bookmarksEntryCacheModel.priority = getPriority();
+
+		return bookmarksEntryCacheModel;
 	}
 
 	@Override

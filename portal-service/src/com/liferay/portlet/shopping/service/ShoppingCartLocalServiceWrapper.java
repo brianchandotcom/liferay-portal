@@ -194,7 +194,7 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	/**
-	* Updates the shopping cart in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCart the shopping cart
 	* @return the shopping cart that was updated
@@ -207,7 +207,7 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	/**
-	* Updates the shopping cart in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCart the shopping cart
 	* @param merge whether to merge the shopping cart with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

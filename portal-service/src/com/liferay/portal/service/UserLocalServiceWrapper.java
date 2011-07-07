@@ -191,7 +191,7 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	}
 
 	/**
-	* Updates the user in the database. Also notifies the appropriate model listeners.
+	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param user the user
 	* @return the user that was updated
@@ -204,7 +204,7 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	}
 
 	/**
-	* Updates the user in the database. Also notifies the appropriate model listeners.
+	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param user the user
 	* @param merge whether to merge the user with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

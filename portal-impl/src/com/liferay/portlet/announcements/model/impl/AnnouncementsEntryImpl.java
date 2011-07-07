@@ -20,14 +20,12 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-public class AnnouncementsEntryImpl
-	extends AnnouncementsEntryModelImpl implements AnnouncementsEntry {
+public class AnnouncementsEntryImpl extends AnnouncementsEntryBaseImpl {
 
 	public AnnouncementsEntryImpl() {
 	}

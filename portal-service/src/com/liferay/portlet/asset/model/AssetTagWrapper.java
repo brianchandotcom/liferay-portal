@@ -291,6 +291,10 @@ public class AssetTagWrapper implements AssetTag {
 		return _assetTag.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetTag> toCacheModel() {
+		return _assetTag.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetTag toEscapedModel() {
 		return new AssetTagWrapper(_assetTag.toEscapedModel());
 	}
@@ -302,6 +306,11 @@ public class AssetTagWrapper implements AssetTag {
 
 	public java.lang.String toXmlString() {
 		return _assetTag.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetTag.save();
 	}
 
 	public AssetTag getWrappedAssetTag() {

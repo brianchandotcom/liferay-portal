@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.impl.RoleImpl;
@@ -6629,6 +6630,16 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static Role _nullRole = new RoleImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Role> toCacheModel() {
+				return _nullRoleCacheModel;
+			}
+		};
+
+	private static CacheModel<Role> _nullRoleCacheModel = new CacheModel<Role>() {
+			public Role toEntityModel() {
+				return _nullRole;
 			}
 		};
 }

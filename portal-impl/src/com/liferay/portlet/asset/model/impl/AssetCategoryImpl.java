@@ -26,8 +26,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetCategoryImpl
-	extends AssetCategoryModelImpl implements AssetCategory {
+public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 
 	public AssetCategoryImpl() {
 	}

@@ -22,7 +22,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  */
-public class MBThreadImpl extends MBThreadModelImpl implements MBThread {
+public class MBThreadImpl extends MBThreadBaseImpl {
 
 	public MBThreadImpl() {
 	}

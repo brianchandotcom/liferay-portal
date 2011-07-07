@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.impl.PluginSettingImpl;
@@ -1502,6 +1503,16 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	private static PluginSetting _nullPluginSetting = new PluginSettingImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PluginSetting> toCacheModel() {
+				return _nullPluginSettingCacheModel;
+			}
+		};
+
+	private static CacheModel<PluginSetting> _nullPluginSettingCacheModel = new CacheModel<PluginSetting>() {
+			public PluginSetting toEntityModel() {
+				return _nullPluginSetting;
 			}
 		};
 }

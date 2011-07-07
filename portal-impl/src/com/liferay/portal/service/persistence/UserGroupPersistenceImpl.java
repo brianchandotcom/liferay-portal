@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupImpl;
@@ -4597,6 +4598,16 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static UserGroup _nullUserGroup = new UserGroupImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<UserGroup> toCacheModel() {
+				return _nullUserGroupCacheModel;
+			}
+		};
+
+	private static CacheModel<UserGroup> _nullUserGroupCacheModel = new CacheModel<UserGroup>() {
+			public UserGroup toEntityModel() {
+				return _nullUserGroup;
 			}
 		};
 }

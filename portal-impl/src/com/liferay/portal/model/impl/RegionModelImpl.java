@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.RegionModel;
 import com.liferay.portal.model.RegionSoap;
@@ -292,6 +293,35 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Region> toCacheModel() {
+		RegionCacheModel regionCacheModel = new RegionCacheModel();
+
+		regionCacheModel.regionId = getRegionId();
+
+		regionCacheModel.countryId = getCountryId();
+
+		regionCacheModel.regionCode = getRegionCode();
+
+		String regionCode = regionCacheModel.regionCode;
+
+		if ((regionCode != null) && (regionCode.length() == 0)) {
+			regionCacheModel.regionCode = null;
+		}
+
+		regionCacheModel.name = getName();
+
+		String name = regionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			regionCacheModel.name = null;
+		}
+
+		regionCacheModel.active = getActive();
+
+		return regionCacheModel;
 	}
 
 	@Override

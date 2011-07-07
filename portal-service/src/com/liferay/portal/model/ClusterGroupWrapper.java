@@ -190,6 +190,10 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ClusterGroup> toCacheModel() {
+		return _clusterGroup.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ClusterGroup toEscapedModel() {
 		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
 	}
@@ -201,6 +205,11 @@ public class ClusterGroupWrapper implements ClusterGroup {
 
 	public java.lang.String toXmlString() {
 		return _clusterGroup.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_clusterGroup.save();
 	}
 
 	public java.lang.String[] getClusterNodeIdsArray() {

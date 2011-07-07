@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.model.impl.UserNotificationEventImpl;
@@ -1620,6 +1621,17 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	private static UserNotificationEvent _nullUserNotificationEvent = new UserNotificationEventImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<UserNotificationEvent> toCacheModel() {
+				return _nullUserNotificationEventCacheModel;
+			}
+		};
+
+	private static CacheModel<UserNotificationEvent> _nullUserNotificationEventCacheModel =
+		new CacheModel<UserNotificationEvent>() {
+			public UserNotificationEvent toEntityModel() {
+				return _nullUserNotificationEvent;
 			}
 		};
 }

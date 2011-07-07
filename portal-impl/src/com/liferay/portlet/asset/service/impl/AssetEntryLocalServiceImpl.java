@@ -547,6 +547,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
+		boolean oldVisible = false;
+
+		if (entry != null) {
+			oldVisible = entry.isVisible();
+		}
+
 		if (entry == null) {
 			long entryId = counterLocalService.increment();
 
@@ -628,10 +634,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				}
 			}
 
-			if (entry.getVisible()) {
-				List<AssetTag> oldTags = assetEntryPersistence.getAssetTags(
-					entry.getEntryId());
+			List<AssetTag> oldTags = assetEntryPersistence.getAssetTags(
+				entry.getEntryId());
 
+			if (entry.isVisible()) {
 				boolean isNew = entry.isNew();
 
 				if (isNew) {
@@ -654,6 +660,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 								tag.getTagId(), classNameId);
 						}
 					}
+				}
+			}
+			else if (oldVisible) {
+				for (AssetTag oldTag : oldTags) {
+					assetTagLocalService.decrementAssetCount(
+						oldTag.getTagId(), classNameId);
 				}
 			}
 
@@ -740,13 +752,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
 			entry.getEntryId());
 
-		if (visible && !entry.getVisible()) {
+		if (visible && !entry.isVisible()) {
 			for (AssetTag tag : tags) {
 				assetTagLocalService.incrementAssetCount(
 					tag.getTagId(), classNameId);
 			}
 		}
-		else if (!visible && entry.getVisible()) {
+		else if (!visible && entry.isVisible()) {
 			for (AssetTag tag : tags) {
 				assetTagLocalService.decrementAssetCount(
 					tag.getTagId(), classNameId);

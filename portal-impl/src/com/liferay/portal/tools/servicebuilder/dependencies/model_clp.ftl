@@ -1,5 +1,9 @@
 package ${packagePath}.model;
 
+<#if entity.hasLocalService() && entity.hasColumns()>
+	import ${packagePath}.service.${entity.name}LocalServiceUtil;
+</#if>
+
 <#if entity.hasCompoundPK()>
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
@@ -333,6 +337,12 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			else {
 				return false;
 			}
+		}
+	</#if>
+
+	<#if entity.hasLocalService() && entity.hasColumns()>
+		public void save() throws SystemException {
+			${entity.name}LocalServiceUtil.update${entity.name}(this);
 		}
 	</#if>
 

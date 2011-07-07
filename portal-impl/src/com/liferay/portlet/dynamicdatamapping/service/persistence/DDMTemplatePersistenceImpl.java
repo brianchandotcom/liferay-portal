@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -3923,6 +3924,16 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static DDMTemplate _nullDDMTemplate = new DDMTemplateImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DDMTemplate> toCacheModel() {
+				return _nullDDMTemplateCacheModel;
+			}
+		};
+
+	private static CacheModel<DDMTemplate> _nullDDMTemplateCacheModel = new CacheModel<DDMTemplate>() {
+			public DDMTemplate toEntityModel() {
+				return _nullDDMTemplate;
 			}
 		};
 }

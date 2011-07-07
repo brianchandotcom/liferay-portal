@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionModel;
 import com.liferay.portal.model.LayoutRevisionSoap;
@@ -1181,6 +1182,171 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionModelImpl._originalPlid = layoutRevisionModelImpl._plid;
 
 		layoutRevisionModelImpl._setOriginalPlid = false;
+	}
+
+	@Override
+	public CacheModel<LayoutRevision> toCacheModel() {
+		LayoutRevisionCacheModel layoutRevisionCacheModel = new LayoutRevisionCacheModel();
+
+		layoutRevisionCacheModel.layoutRevisionId = getLayoutRevisionId();
+
+		layoutRevisionCacheModel.groupId = getGroupId();
+
+		layoutRevisionCacheModel.companyId = getCompanyId();
+
+		layoutRevisionCacheModel.userId = getUserId();
+
+		layoutRevisionCacheModel.userName = getUserName();
+
+		String userName = layoutRevisionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			layoutRevisionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			layoutRevisionCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			layoutRevisionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		layoutRevisionCacheModel.layoutSetBranchId = getLayoutSetBranchId();
+
+		layoutRevisionCacheModel.parentLayoutRevisionId = getParentLayoutRevisionId();
+
+		layoutRevisionCacheModel.head = getHead();
+
+		layoutRevisionCacheModel.major = getMajor();
+
+		layoutRevisionCacheModel.variationName = getVariationName();
+
+		String variationName = layoutRevisionCacheModel.variationName;
+
+		if ((variationName != null) && (variationName.length() == 0)) {
+			layoutRevisionCacheModel.variationName = null;
+		}
+
+		layoutRevisionCacheModel.plid = getPlid();
+
+		layoutRevisionCacheModel.privateLayout = getPrivateLayout();
+
+		layoutRevisionCacheModel.name = getName();
+
+		String name = layoutRevisionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			layoutRevisionCacheModel.name = null;
+		}
+
+		layoutRevisionCacheModel.title = getTitle();
+
+		String title = layoutRevisionCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			layoutRevisionCacheModel.title = null;
+		}
+
+		layoutRevisionCacheModel.description = getDescription();
+
+		String description = layoutRevisionCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			layoutRevisionCacheModel.description = null;
+		}
+
+		layoutRevisionCacheModel.keywords = getKeywords();
+
+		String keywords = layoutRevisionCacheModel.keywords;
+
+		if ((keywords != null) && (keywords.length() == 0)) {
+			layoutRevisionCacheModel.keywords = null;
+		}
+
+		layoutRevisionCacheModel.robots = getRobots();
+
+		String robots = layoutRevisionCacheModel.robots;
+
+		if ((robots != null) && (robots.length() == 0)) {
+			layoutRevisionCacheModel.robots = null;
+		}
+
+		layoutRevisionCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = layoutRevisionCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			layoutRevisionCacheModel.typeSettings = null;
+		}
+
+		layoutRevisionCacheModel.iconImage = getIconImage();
+
+		layoutRevisionCacheModel.iconImageId = getIconImageId();
+
+		layoutRevisionCacheModel.themeId = getThemeId();
+
+		String themeId = layoutRevisionCacheModel.themeId;
+
+		if ((themeId != null) && (themeId.length() == 0)) {
+			layoutRevisionCacheModel.themeId = null;
+		}
+
+		layoutRevisionCacheModel.colorSchemeId = getColorSchemeId();
+
+		String colorSchemeId = layoutRevisionCacheModel.colorSchemeId;
+
+		if ((colorSchemeId != null) && (colorSchemeId.length() == 0)) {
+			layoutRevisionCacheModel.colorSchemeId = null;
+		}
+
+		layoutRevisionCacheModel.wapThemeId = getWapThemeId();
+
+		String wapThemeId = layoutRevisionCacheModel.wapThemeId;
+
+		if ((wapThemeId != null) && (wapThemeId.length() == 0)) {
+			layoutRevisionCacheModel.wapThemeId = null;
+		}
+
+		layoutRevisionCacheModel.wapColorSchemeId = getWapColorSchemeId();
+
+		String wapColorSchemeId = layoutRevisionCacheModel.wapColorSchemeId;
+
+		if ((wapColorSchemeId != null) && (wapColorSchemeId.length() == 0)) {
+			layoutRevisionCacheModel.wapColorSchemeId = null;
+		}
+
+		layoutRevisionCacheModel.css = getCss();
+
+		String css = layoutRevisionCacheModel.css;
+
+		if ((css != null) && (css.length() == 0)) {
+			layoutRevisionCacheModel.css = null;
+		}
+
+		layoutRevisionCacheModel.status = getStatus();
+
+		layoutRevisionCacheModel.statusByUserId = getStatusByUserId();
+
+		layoutRevisionCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = layoutRevisionCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			layoutRevisionCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			layoutRevisionCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return layoutRevisionCacheModel;
 	}
 
 	@Override

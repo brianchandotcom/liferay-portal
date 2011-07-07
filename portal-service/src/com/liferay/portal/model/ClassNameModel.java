@@ -117,6 +117,8 @@ public interface ClassNameModel extends BaseModel<ClassName> {
 
 	public int hashCode();
 
+	public CacheModel<ClassName> toCacheModel();
+
 	public ClassName toEscapedModel();
 
 	public String toString();

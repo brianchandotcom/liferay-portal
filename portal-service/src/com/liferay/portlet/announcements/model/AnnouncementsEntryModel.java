@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -360,6 +361,8 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 	public int compareTo(AnnouncementsEntry announcementsEntry);
 
 	public int hashCode();
+
+	public CacheModel<AnnouncementsEntry> toCacheModel();
 
 	public AnnouncementsEntry toEscapedModel();
 

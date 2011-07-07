@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionModel;
 import com.liferay.portal.service.ServiceContext;
@@ -360,6 +361,51 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionModelImpl._originalClassPK = subscriptionModelImpl._classPK;
 
 		subscriptionModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<Subscription> toCacheModel() {
+		SubscriptionCacheModel subscriptionCacheModel = new SubscriptionCacheModel();
+
+		subscriptionCacheModel.subscriptionId = getSubscriptionId();
+
+		subscriptionCacheModel.companyId = getCompanyId();
+
+		subscriptionCacheModel.userId = getUserId();
+
+		subscriptionCacheModel.userName = getUserName();
+
+		String userName = subscriptionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			subscriptionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			subscriptionCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			subscriptionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		subscriptionCacheModel.classNameId = getClassNameId();
+
+		subscriptionCacheModel.classPK = getClassPK();
+
+		subscriptionCacheModel.frequency = getFrequency();
+
+		String frequency = subscriptionCacheModel.frequency;
+
+		if ((frequency != null) && (frequency.length() == 0)) {
+			subscriptionCacheModel.frequency = null;
+		}
+
+		return subscriptionCacheModel;
 	}
 
 	@Override

@@ -254,6 +254,10 @@ public class ResourcePermissionWrapper implements ResourcePermission {
 		return _resourcePermission.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ResourcePermission> toCacheModel() {
+		return _resourcePermission.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ResourcePermission toEscapedModel() {
 		return new ResourcePermissionWrapper(_resourcePermission.toEscapedModel());
 	}
@@ -265,6 +269,11 @@ public class ResourcePermissionWrapper implements ResourcePermission {
 
 	public java.lang.String toXmlString() {
 		return _resourcePermission.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourcePermission.save();
 	}
 
 	public ResourcePermission getWrappedResourcePermission() {

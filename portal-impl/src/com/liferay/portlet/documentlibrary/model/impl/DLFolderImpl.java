@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFolderImpl extends DLFolderModelImpl implements DLFolder {
+public class DLFolderImpl extends DLFolderBaseImpl {
 
 	public DLFolderImpl() {
 	}

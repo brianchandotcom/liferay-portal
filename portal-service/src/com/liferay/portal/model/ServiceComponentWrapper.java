@@ -200,6 +200,10 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ServiceComponent> toCacheModel() {
+		return _serviceComponent.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ServiceComponent toEscapedModel() {
 		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
 	}
@@ -211,6 +215,11 @@ public class ServiceComponentWrapper implements ServiceComponent {
 
 	public java.lang.String toXmlString() {
 		return _serviceComponent.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_serviceComponent.save();
 	}
 
 	public java.lang.String getTablesSQL() {

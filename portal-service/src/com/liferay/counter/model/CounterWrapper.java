@@ -145,6 +145,10 @@ public class CounterWrapper implements Counter {
 		return _counter.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.counter.model.Counter> toCacheModel() {
+		return _counter.toCacheModel();
+	}
+
 	public com.liferay.counter.model.Counter toEscapedModel() {
 		return new CounterWrapper(_counter.toEscapedModel());
 	}
@@ -156,6 +160,11 @@ public class CounterWrapper implements Counter {
 
 	public java.lang.String toXmlString() {
 		return _counter.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_counter.save();
 	}
 
 	public Counter getWrappedCounter() {

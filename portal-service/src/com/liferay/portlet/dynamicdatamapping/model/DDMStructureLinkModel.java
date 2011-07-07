@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -145,6 +146,8 @@ public interface DDMStructureLinkModel extends AttachedModel,
 	public int compareTo(DDMStructureLink ddmStructureLink);
 
 	public int hashCode();
+
+	public CacheModel<DDMStructureLink> toCacheModel();
 
 	public DDMStructureLink toEscapedModel();
 

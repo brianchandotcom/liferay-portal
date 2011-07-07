@@ -17,6 +17,7 @@ package com.liferay.portlet.shopping.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -244,6 +245,8 @@ public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
 	public int compareTo(ShoppingCategory shoppingCategory);
 
 	public int hashCode();
+
+	public CacheModel<ShoppingCategory> toCacheModel();
 
 	public ShoppingCategory toEscapedModel();
 

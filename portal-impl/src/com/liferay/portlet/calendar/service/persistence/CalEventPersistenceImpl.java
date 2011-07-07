@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -6857,6 +6858,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static CalEvent _nullCalEvent = new CalEventImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<CalEvent> toCacheModel() {
+				return _nullCalEventCacheModel;
+			}
+		};
+
+	private static CacheModel<CalEvent> _nullCalEventCacheModel = new CacheModel<CalEvent>() {
+			public CalEvent toEntityModel() {
+				return _nullCalEvent;
 			}
 		};
 }

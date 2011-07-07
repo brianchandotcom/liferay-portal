@@ -226,6 +226,10 @@ public class UserGroupWrapper implements UserGroup {
 		return _userGroup.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserGroup> toCacheModel() {
+		return _userGroup.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserGroup toEscapedModel() {
 		return new UserGroupWrapper(_userGroup.toEscapedModel());
 	}
@@ -237,6 +241,11 @@ public class UserGroupWrapper implements UserGroup {
 
 	public java.lang.String toXmlString() {
 		return _userGroup.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userGroup.save();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

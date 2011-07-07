@@ -136,12 +136,13 @@ AUI().add(
 			};
 		}
 
-		HistoryManager = new History();
+		var HistoryManager = new History();
 
 		HistoryManager.SRC_ADD = HistoryBase.SRC_ADD;
-		HistoryManager.SRC_HASH = A.HistoryHash.SRC_HASH;
-		HistoryManager.SRC_POPSTATE = A.HistoryHTML5.SRC_POPSTATE;
 		HistoryManager.SRC_REPLACE = HistoryBase.SRC_REPLACE;
+
+		HistoryManager.SRC_HASH = A.HistoryHash ? A.HistoryHash.SRC_HASH : 'hash';
+		HistoryManager.SRC_POPSTATE = A.HistoryHTML5 ? A.HistoryHTML5.SRC_POPSTATE : 'popstate';
 
 		HistoryManager.HTML5 = HTML5;
 

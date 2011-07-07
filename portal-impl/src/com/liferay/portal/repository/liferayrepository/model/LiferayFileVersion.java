@@ -98,6 +98,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return _dlFileVersion.getIcon();
 	}
 
+	public String getMimeType() {
+		return _dlFileVersion.getMimeType();
+	}
+
 	public Object getModel() {
 		return _dlFileVersion;
 	}

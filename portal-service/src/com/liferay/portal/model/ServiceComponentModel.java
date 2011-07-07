@@ -153,6 +153,8 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
 
 	public int hashCode();
 
+	public CacheModel<ServiceComponent> toCacheModel();
+
 	public ServiceComponent toEscapedModel();
 
 	public String toString();

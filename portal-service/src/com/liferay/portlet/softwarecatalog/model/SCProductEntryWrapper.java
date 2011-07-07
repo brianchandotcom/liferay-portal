@@ -418,6 +418,10 @@ public class SCProductEntryWrapper implements SCProductEntry {
 		return _scProductEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductEntry> toCacheModel() {
+		return _scProductEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry toEscapedModel() {
 		return new SCProductEntryWrapper(_scProductEntry.toEscapedModel());
 	}
@@ -429,6 +433,11 @@ public class SCProductEntryWrapper implements SCProductEntry {
 
 	public java.lang.String toXmlString() {
 		return _scProductEntry.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scProductEntry.save();
 	}
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getLatestVersion()

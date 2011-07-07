@@ -25,18 +25,24 @@ String emailFromName = ParamUtil.getString(request, "emailFromName", BlogsUtil.g
 String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", BlogsUtil.getEmailFromAddress(preferences));
 
 String emailParam = StringPool.BLANK;
+String defaultEmailSubject = StringPool.BLANK;
+String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("entry-added-email")) {
 	emailParam = "emailEntryAdded";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY));
 }
 else if (tabs2.equals("entry-updated-email")) {
 	emailParam = "emailEntryUpdated";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY));
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, StringPool.BLANK);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, StringPool.BLANK);
+String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
 
 String editorParam = emailParam + "Body_" + currentLanguageId;
 String editorContent = emailBody;

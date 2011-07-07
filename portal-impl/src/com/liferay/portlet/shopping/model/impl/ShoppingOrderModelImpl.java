@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -1052,6 +1053,323 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		shoppingOrderModelImpl._originalNumber = shoppingOrderModelImpl._number;
 
 		shoppingOrderModelImpl._originalPpTxnId = shoppingOrderModelImpl._ppTxnId;
+	}
+
+	@Override
+	public CacheModel<ShoppingOrder> toCacheModel() {
+		ShoppingOrderCacheModel shoppingOrderCacheModel = new ShoppingOrderCacheModel();
+
+		shoppingOrderCacheModel.orderId = getOrderId();
+
+		shoppingOrderCacheModel.groupId = getGroupId();
+
+		shoppingOrderCacheModel.companyId = getCompanyId();
+
+		shoppingOrderCacheModel.userId = getUserId();
+
+		shoppingOrderCacheModel.userName = getUserName();
+
+		String userName = shoppingOrderCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			shoppingOrderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingOrderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingOrderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingOrderCacheModel.number = getNumber();
+
+		String number = shoppingOrderCacheModel.number;
+
+		if ((number != null) && (number.length() == 0)) {
+			shoppingOrderCacheModel.number = null;
+		}
+
+		shoppingOrderCacheModel.tax = getTax();
+
+		shoppingOrderCacheModel.shipping = getShipping();
+
+		shoppingOrderCacheModel.altShipping = getAltShipping();
+
+		String altShipping = shoppingOrderCacheModel.altShipping;
+
+		if ((altShipping != null) && (altShipping.length() == 0)) {
+			shoppingOrderCacheModel.altShipping = null;
+		}
+
+		shoppingOrderCacheModel.requiresShipping = getRequiresShipping();
+
+		shoppingOrderCacheModel.insure = getInsure();
+
+		shoppingOrderCacheModel.insurance = getInsurance();
+
+		shoppingOrderCacheModel.couponCodes = getCouponCodes();
+
+		String couponCodes = shoppingOrderCacheModel.couponCodes;
+
+		if ((couponCodes != null) && (couponCodes.length() == 0)) {
+			shoppingOrderCacheModel.couponCodes = null;
+		}
+
+		shoppingOrderCacheModel.couponDiscount = getCouponDiscount();
+
+		shoppingOrderCacheModel.billingFirstName = getBillingFirstName();
+
+		String billingFirstName = shoppingOrderCacheModel.billingFirstName;
+
+		if ((billingFirstName != null) && (billingFirstName.length() == 0)) {
+			shoppingOrderCacheModel.billingFirstName = null;
+		}
+
+		shoppingOrderCacheModel.billingLastName = getBillingLastName();
+
+		String billingLastName = shoppingOrderCacheModel.billingLastName;
+
+		if ((billingLastName != null) && (billingLastName.length() == 0)) {
+			shoppingOrderCacheModel.billingLastName = null;
+		}
+
+		shoppingOrderCacheModel.billingEmailAddress = getBillingEmailAddress();
+
+		String billingEmailAddress = shoppingOrderCacheModel.billingEmailAddress;
+
+		if ((billingEmailAddress != null) &&
+				(billingEmailAddress.length() == 0)) {
+			shoppingOrderCacheModel.billingEmailAddress = null;
+		}
+
+		shoppingOrderCacheModel.billingCompany = getBillingCompany();
+
+		String billingCompany = shoppingOrderCacheModel.billingCompany;
+
+		if ((billingCompany != null) && (billingCompany.length() == 0)) {
+			shoppingOrderCacheModel.billingCompany = null;
+		}
+
+		shoppingOrderCacheModel.billingStreet = getBillingStreet();
+
+		String billingStreet = shoppingOrderCacheModel.billingStreet;
+
+		if ((billingStreet != null) && (billingStreet.length() == 0)) {
+			shoppingOrderCacheModel.billingStreet = null;
+		}
+
+		shoppingOrderCacheModel.billingCity = getBillingCity();
+
+		String billingCity = shoppingOrderCacheModel.billingCity;
+
+		if ((billingCity != null) && (billingCity.length() == 0)) {
+			shoppingOrderCacheModel.billingCity = null;
+		}
+
+		shoppingOrderCacheModel.billingState = getBillingState();
+
+		String billingState = shoppingOrderCacheModel.billingState;
+
+		if ((billingState != null) && (billingState.length() == 0)) {
+			shoppingOrderCacheModel.billingState = null;
+		}
+
+		shoppingOrderCacheModel.billingZip = getBillingZip();
+
+		String billingZip = shoppingOrderCacheModel.billingZip;
+
+		if ((billingZip != null) && (billingZip.length() == 0)) {
+			shoppingOrderCacheModel.billingZip = null;
+		}
+
+		shoppingOrderCacheModel.billingCountry = getBillingCountry();
+
+		String billingCountry = shoppingOrderCacheModel.billingCountry;
+
+		if ((billingCountry != null) && (billingCountry.length() == 0)) {
+			shoppingOrderCacheModel.billingCountry = null;
+		}
+
+		shoppingOrderCacheModel.billingPhone = getBillingPhone();
+
+		String billingPhone = shoppingOrderCacheModel.billingPhone;
+
+		if ((billingPhone != null) && (billingPhone.length() == 0)) {
+			shoppingOrderCacheModel.billingPhone = null;
+		}
+
+		shoppingOrderCacheModel.shipToBilling = getShipToBilling();
+
+		shoppingOrderCacheModel.shippingFirstName = getShippingFirstName();
+
+		String shippingFirstName = shoppingOrderCacheModel.shippingFirstName;
+
+		if ((shippingFirstName != null) && (shippingFirstName.length() == 0)) {
+			shoppingOrderCacheModel.shippingFirstName = null;
+		}
+
+		shoppingOrderCacheModel.shippingLastName = getShippingLastName();
+
+		String shippingLastName = shoppingOrderCacheModel.shippingLastName;
+
+		if ((shippingLastName != null) && (shippingLastName.length() == 0)) {
+			shoppingOrderCacheModel.shippingLastName = null;
+		}
+
+		shoppingOrderCacheModel.shippingEmailAddress = getShippingEmailAddress();
+
+		String shippingEmailAddress = shoppingOrderCacheModel.shippingEmailAddress;
+
+		if ((shippingEmailAddress != null) &&
+				(shippingEmailAddress.length() == 0)) {
+			shoppingOrderCacheModel.shippingEmailAddress = null;
+		}
+
+		shoppingOrderCacheModel.shippingCompany = getShippingCompany();
+
+		String shippingCompany = shoppingOrderCacheModel.shippingCompany;
+
+		if ((shippingCompany != null) && (shippingCompany.length() == 0)) {
+			shoppingOrderCacheModel.shippingCompany = null;
+		}
+
+		shoppingOrderCacheModel.shippingStreet = getShippingStreet();
+
+		String shippingStreet = shoppingOrderCacheModel.shippingStreet;
+
+		if ((shippingStreet != null) && (shippingStreet.length() == 0)) {
+			shoppingOrderCacheModel.shippingStreet = null;
+		}
+
+		shoppingOrderCacheModel.shippingCity = getShippingCity();
+
+		String shippingCity = shoppingOrderCacheModel.shippingCity;
+
+		if ((shippingCity != null) && (shippingCity.length() == 0)) {
+			shoppingOrderCacheModel.shippingCity = null;
+		}
+
+		shoppingOrderCacheModel.shippingState = getShippingState();
+
+		String shippingState = shoppingOrderCacheModel.shippingState;
+
+		if ((shippingState != null) && (shippingState.length() == 0)) {
+			shoppingOrderCacheModel.shippingState = null;
+		}
+
+		shoppingOrderCacheModel.shippingZip = getShippingZip();
+
+		String shippingZip = shoppingOrderCacheModel.shippingZip;
+
+		if ((shippingZip != null) && (shippingZip.length() == 0)) {
+			shoppingOrderCacheModel.shippingZip = null;
+		}
+
+		shoppingOrderCacheModel.shippingCountry = getShippingCountry();
+
+		String shippingCountry = shoppingOrderCacheModel.shippingCountry;
+
+		if ((shippingCountry != null) && (shippingCountry.length() == 0)) {
+			shoppingOrderCacheModel.shippingCountry = null;
+		}
+
+		shoppingOrderCacheModel.shippingPhone = getShippingPhone();
+
+		String shippingPhone = shoppingOrderCacheModel.shippingPhone;
+
+		if ((shippingPhone != null) && (shippingPhone.length() == 0)) {
+			shoppingOrderCacheModel.shippingPhone = null;
+		}
+
+		shoppingOrderCacheModel.ccName = getCcName();
+
+		String ccName = shoppingOrderCacheModel.ccName;
+
+		if ((ccName != null) && (ccName.length() == 0)) {
+			shoppingOrderCacheModel.ccName = null;
+		}
+
+		shoppingOrderCacheModel.ccType = getCcType();
+
+		String ccType = shoppingOrderCacheModel.ccType;
+
+		if ((ccType != null) && (ccType.length() == 0)) {
+			shoppingOrderCacheModel.ccType = null;
+		}
+
+		shoppingOrderCacheModel.ccNumber = getCcNumber();
+
+		String ccNumber = shoppingOrderCacheModel.ccNumber;
+
+		if ((ccNumber != null) && (ccNumber.length() == 0)) {
+			shoppingOrderCacheModel.ccNumber = null;
+		}
+
+		shoppingOrderCacheModel.ccExpMonth = getCcExpMonth();
+
+		shoppingOrderCacheModel.ccExpYear = getCcExpYear();
+
+		shoppingOrderCacheModel.ccVerNumber = getCcVerNumber();
+
+		String ccVerNumber = shoppingOrderCacheModel.ccVerNumber;
+
+		if ((ccVerNumber != null) && (ccVerNumber.length() == 0)) {
+			shoppingOrderCacheModel.ccVerNumber = null;
+		}
+
+		shoppingOrderCacheModel.comments = getComments();
+
+		String comments = shoppingOrderCacheModel.comments;
+
+		if ((comments != null) && (comments.length() == 0)) {
+			shoppingOrderCacheModel.comments = null;
+		}
+
+		shoppingOrderCacheModel.ppTxnId = getPpTxnId();
+
+		String ppTxnId = shoppingOrderCacheModel.ppTxnId;
+
+		if ((ppTxnId != null) && (ppTxnId.length() == 0)) {
+			shoppingOrderCacheModel.ppTxnId = null;
+		}
+
+		shoppingOrderCacheModel.ppPaymentStatus = getPpPaymentStatus();
+
+		String ppPaymentStatus = shoppingOrderCacheModel.ppPaymentStatus;
+
+		if ((ppPaymentStatus != null) && (ppPaymentStatus.length() == 0)) {
+			shoppingOrderCacheModel.ppPaymentStatus = null;
+		}
+
+		shoppingOrderCacheModel.ppPaymentGross = getPpPaymentGross();
+
+		shoppingOrderCacheModel.ppReceiverEmail = getPpReceiverEmail();
+
+		String ppReceiverEmail = shoppingOrderCacheModel.ppReceiverEmail;
+
+		if ((ppReceiverEmail != null) && (ppReceiverEmail.length() == 0)) {
+			shoppingOrderCacheModel.ppReceiverEmail = null;
+		}
+
+		shoppingOrderCacheModel.ppPayerEmail = getPpPayerEmail();
+
+		String ppPayerEmail = shoppingOrderCacheModel.ppPayerEmail;
+
+		if ((ppPayerEmail != null) && (ppPayerEmail.length() == 0)) {
+			shoppingOrderCacheModel.ppPayerEmail = null;
+		}
+
+		shoppingOrderCacheModel.sendOrderEmail = getSendOrderEmail();
+
+		shoppingOrderCacheModel.sendShippingEmail = getSendShippingEmail();
+
+		return shoppingOrderCacheModel;
 	}
 
 	@Override

@@ -693,6 +693,10 @@ public class AssetEntryWrapper implements AssetEntry {
 		return _assetEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetEntry> toCacheModel() {
+		return _assetEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetEntry toEscapedModel() {
 		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
 	}
@@ -704,6 +708,11 @@ public class AssetEntryWrapper implements AssetEntry {
 
 	public java.lang.String toXmlString() {
 		return _assetEntry.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetEntry.save();
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()

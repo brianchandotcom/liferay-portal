@@ -318,6 +318,8 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 
 	public int hashCode();
 
+	public CacheModel<Group> toCacheModel();
+
 	public Group toEscapedModel();
 
 	public String toString();

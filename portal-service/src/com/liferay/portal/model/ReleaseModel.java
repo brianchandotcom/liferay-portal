@@ -204,6 +204,8 @@ public interface ReleaseModel extends BaseModel<Release> {
 
 	public int hashCode();
 
+	public CacheModel<Release> toCacheModel();
+
 	public Release toEscapedModel();
 
 	public String toString();

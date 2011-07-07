@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
@@ -3136,6 +3137,17 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	private static LayoutSetPrototype _nullLayoutSetPrototype = new LayoutSetPrototypeImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<LayoutSetPrototype> toCacheModel() {
+				return _nullLayoutSetPrototypeCacheModel;
+			}
+		};
+
+	private static CacheModel<LayoutSetPrototype> _nullLayoutSetPrototypeCacheModel =
+		new CacheModel<LayoutSetPrototype>() {
+			public LayoutSetPrototype toEntityModel() {
+				return _nullLayoutSetPrototype;
 			}
 		};
 }

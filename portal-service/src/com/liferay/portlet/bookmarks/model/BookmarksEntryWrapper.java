@@ -382,6 +382,10 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 		return _bookmarksEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.bookmarks.model.BookmarksEntry> toCacheModel() {
+		return _bookmarksEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry toEscapedModel() {
 		return new BookmarksEntryWrapper(_bookmarksEntry.toEscapedModel());
 	}
@@ -393,6 +397,11 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 
 	public java.lang.String toXmlString() {
 		return _bookmarksEntry.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntry.save();
 	}
 
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder() {

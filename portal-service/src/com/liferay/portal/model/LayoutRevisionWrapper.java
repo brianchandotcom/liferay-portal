@@ -1270,6 +1270,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutRevision> toCacheModel() {
+		return _layoutRevision.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutRevision toEscapedModel() {
 		return new LayoutRevisionWrapper(_layoutRevision.toEscapedModel());
 	}
@@ -1281,6 +1285,11 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 
 	public java.lang.String toXmlString() {
 		return _layoutRevision.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layoutRevision.save();
 	}
 
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren()

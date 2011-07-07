@@ -280,6 +280,10 @@ public class TicketWrapper implements Ticket {
 		return _ticket.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Ticket> toCacheModel() {
+		return _ticket.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Ticket toEscapedModel() {
 		return new TicketWrapper(_ticket.toEscapedModel());
 	}
@@ -291,6 +295,11 @@ public class TicketWrapper implements Ticket {
 
 	public java.lang.String toXmlString() {
 		return _ticket.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ticket.save();
 	}
 
 	public boolean isExpired() {

@@ -14,14 +14,12 @@
 
 package com.liferay.portlet.expando.model.impl;
 
-import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExpandoTableImpl
-	extends ExpandoTableModelImpl implements ExpandoTable {
+public class ExpandoTableImpl extends ExpandoTableBaseImpl {
 
 	public ExpandoTableImpl() {
 	}

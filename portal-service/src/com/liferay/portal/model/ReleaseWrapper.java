@@ -262,6 +262,10 @@ public class ReleaseWrapper implements Release {
 		return _release.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Release> toCacheModel() {
+		return _release.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Release toEscapedModel() {
 		return new ReleaseWrapper(_release.toEscapedModel());
 	}
@@ -273,6 +277,11 @@ public class ReleaseWrapper implements Release {
 
 	public java.lang.String toXmlString() {
 		return _release.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_release.save();
 	}
 
 	public Release getWrappedRelease() {

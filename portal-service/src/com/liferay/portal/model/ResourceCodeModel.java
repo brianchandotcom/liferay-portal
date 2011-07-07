@@ -138,6 +138,8 @@ public interface ResourceCodeModel extends BaseModel<ResourceCode> {
 
 	public int hashCode();
 
+	public CacheModel<ResourceCode> toCacheModel();
+
 	public ResourceCode toEscapedModel();
 
 	public String toString();

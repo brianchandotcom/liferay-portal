@@ -318,6 +318,10 @@ public class PortletItemWrapper implements PortletItem {
 		return _portletItem.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortletItem> toCacheModel() {
+		return _portletItem.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PortletItem toEscapedModel() {
 		return new PortletItemWrapper(_portletItem.toEscapedModel());
 	}
@@ -329,6 +333,11 @@ public class PortletItemWrapper implements PortletItem {
 
 	public java.lang.String toXmlString() {
 		return _portletItem.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletItem.save();
 	}
 
 	public PortletItem getWrappedPortletItem() {

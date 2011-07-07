@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.PortalPreferences;
-
 /**
  * @author Alexander Chow
  */
-public class PortalPreferencesImpl
-	extends PortalPreferencesModelImpl implements PortalPreferences {
+public class PortalPreferencesImpl extends PortalPreferencesBaseImpl {
 
 	public PortalPreferencesImpl() {
 	}

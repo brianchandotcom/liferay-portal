@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the ExpandoColumn service. Represents a row in the &quot;ExpandoColumn&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ExpandoColumn service. Represents a row in the &quot;ExpandoColumn&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoColumnModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.expando.model;
  * @see com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl
  * @generated
  */
-public interface ExpandoColumn extends ExpandoColumnModel {
+public interface ExpandoColumn extends ExpandoColumnModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

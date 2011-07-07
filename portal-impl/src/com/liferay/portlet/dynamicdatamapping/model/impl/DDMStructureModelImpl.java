@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -637,6 +638,91 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureModelImpl._setOriginalGroupId = false;
 
 		ddmStructureModelImpl._originalStructureKey = ddmStructureModelImpl._structureKey;
+	}
+
+	@Override
+	public CacheModel<DDMStructure> toCacheModel() {
+		DDMStructureCacheModel ddmStructureCacheModel = new DDMStructureCacheModel();
+
+		ddmStructureCacheModel.uuid = getUuid();
+
+		String uuid = ddmStructureCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			ddmStructureCacheModel.uuid = null;
+		}
+
+		ddmStructureCacheModel.structureId = getStructureId();
+
+		ddmStructureCacheModel.groupId = getGroupId();
+
+		ddmStructureCacheModel.companyId = getCompanyId();
+
+		ddmStructureCacheModel.userId = getUserId();
+
+		ddmStructureCacheModel.userName = getUserName();
+
+		String userName = ddmStructureCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ddmStructureCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddmStructureCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddmStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddmStructureCacheModel.classNameId = getClassNameId();
+
+		ddmStructureCacheModel.structureKey = getStructureKey();
+
+		String structureKey = ddmStructureCacheModel.structureKey;
+
+		if ((structureKey != null) && (structureKey.length() == 0)) {
+			ddmStructureCacheModel.structureKey = null;
+		}
+
+		ddmStructureCacheModel.name = getName();
+
+		String name = ddmStructureCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			ddmStructureCacheModel.name = null;
+		}
+
+		ddmStructureCacheModel.description = getDescription();
+
+		String description = ddmStructureCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			ddmStructureCacheModel.description = null;
+		}
+
+		ddmStructureCacheModel.xsd = getXsd();
+
+		String xsd = ddmStructureCacheModel.xsd;
+
+		if ((xsd != null) && (xsd.length() == 0)) {
+			ddmStructureCacheModel.xsd = null;
+		}
+
+		ddmStructureCacheModel.storageType = getStorageType();
+
+		String storageType = ddmStructureCacheModel.storageType;
+
+		if ((storageType != null) && (storageType.length() == 0)) {
+			ddmStructureCacheModel.storageType = null;
+		}
+
+		return ddmStructureCacheModel;
 	}
 
 	@Override

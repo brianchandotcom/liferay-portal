@@ -615,7 +615,7 @@ public class JournalArticleFinderImpl
 			}
 			else {
 				sql = StringUtil.replace(
-					sql, "[$GROUP_BY_CLAUSE$]", "GROUP BY articleId");
+					sql, "[$GROUP_BY_CLAUSE$]", "GROUP BY groupId, articleId");
 			}
 
 			if (inlineSQLHelper) {

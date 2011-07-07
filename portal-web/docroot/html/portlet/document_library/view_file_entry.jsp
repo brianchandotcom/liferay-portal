@@ -32,12 +32,6 @@ long folderId = fileEntry.getFolderId();
 String extension = fileEntry.getExtension();
 String title = fileEntry.getTitle();
 
-String[] conversions = new String[0];
-
-if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED)) {
-	conversions = (String[]) DocumentConversionUtil.getConversions(extension);
-}
-
 Folder folder = fileEntry.getFolder();
 FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -46,7 +40,9 @@ long fileVersionId = 0;
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId");
 
 if (fileEntry != null) {
-	fileVersion = fileEntry.getLatestFileVersion();
+	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+		fileVersion = fileEntry.getLatestFileVersion();
+	}
 
 	fileVersionId = fileVersion.getFileVersionId();
 
@@ -57,20 +53,26 @@ if (fileEntry != null) {
 	}
 }
 
+Lock lock = fileEntry.getLock();
+
+String[] conversions = new String[0];
+
+if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED)) {
+	conversions = (String[]) DocumentConversionUtil.getConversions(extension);
+}
+
 long assetClassPK = 0;
 
 if ((fileVersion != null) && !fileVersion.isApproved() && (fileVersion.getVersion() != DLFileEntryConstants.DEFAULT_VERSION)) {
 	assetClassPK = fileVersion.getFileVersionId();
+	title = fileVersion.getTitle();
+	extension = fileVersion.getExtension();
 }
 else if (fileEntry != null) {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-Boolean isCheckedOut = fileEntry.isCheckedOut();
-Boolean hasLock = fileEntry.hasLock();
-Lock lock = fileEntry.getLock();
-
-String fileUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(title);
+String fileUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle());
 String webDavUrl = StringPool.BLANK;
 
 if (portletDisplay.isWebDAVEnabled()) {
@@ -93,7 +95,7 @@ if (portletDisplay.isWebDAVEnabled()) {
 	}
 
 	sb.append(StringPool.SLASH);
-	sb.append(HttpUtil.encodeURL(title, true));
+	sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
 
 	Group group = themeDisplay.getScopeGroup();
 
@@ -118,7 +120,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 <c:if test="<%= folder != null %>">
 
 	<%
-	String versionText = LanguageUtil.format(pageContext, "version-x", fileEntry.getVersion());
+	String versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
 
 	if (Validator.isNull(fileEntry.getVersion())) {
 		versionText = LanguageUtil.get(pageContext, "not-approved");
@@ -140,9 +142,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</div>
 			</div>
 
-			<c:if test="<%= isCheckedOut %>">
+			<c:if test="<%= fileEntry.isCheckedOut() && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
-					<c:when test="<%= hasLock %>">
+					<c:when test="<%= fileEntry.hasLock() %>">
 						<div class="portlet-msg-lock portlet-msg-success">
 							<c:choose>
 								<c:when test="<%= lock.isNeverExpires() %>">
@@ -169,18 +171,18 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 			<div class="body-row">
 				<div class="document-info">
-					<h2 class="document-title"><%= fileEntry.getTitle() %></h2>
+					<h2 class="document-title"><%= title %></h2>
 
 					<span class="document-thumbnail">
 
 						<%
-						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(extension) + ".png";
 
-						if (PDFProcessor.hasImages(fileEntry)) {
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
+						if (PDFProcessor.hasImages(fileEntry, fileVersion.getVersion())) {
+							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&documentThumbnail=1";
 						}
-						else if (VideoProcessor.hasVideo(fileEntry)){
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileEntry.getVersion() + "&videoThumbnail=1";
+						else if (VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion())){
+							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
 						}
 						%>
 
@@ -208,7 +210,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</div>
 
 					<span class="document-description">
-						<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+						<%= HtmlUtil.escape(fileVersion.getDescription()) %>
 					</span>
 
 					<c:if test="<%= fileEntry.isSupportsSocial() %>">
@@ -240,26 +242,26 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						String videoThumbnailURL = null;
 
 						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry);
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry);
+						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
 						if (supportedAudio) {
 							if (AudioProcessor.hasAudio(fileEntry)) {
 								previewFileCount = 1;
 							}
 
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + fileEntry.getTitle() + "?version=" + fileEntry.getVersion() + "&audioPreview=1";
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + title + "?version=" + fileVersion.getVersion() + "&audioPreview=1";
 						}
 						else if (supportedVideo) {
-							if (VideoProcessor.hasVideo(fileEntry)) {
+							if (VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion())) {
 								previewFileCount = 1;
 							}
 
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + HtmlUtil.escapeURL("?version=") + fileEntry.getVersion() + HtmlUtil.escapeURL("&videoPreview=1");
-							videoThumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + HtmlUtil.escapeURL("?version=") + fileEntry.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1");
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoPreview=1");
+							videoThumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1");
 						}
 						else {
-							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry);
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileEntry.getVersion() + "&previewFileIndex=";
+							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry, fileVersion.getVersion());
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&previewFileIndex=";
 						}
 						%>
 
@@ -360,7 +362,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							formName="fm2"
 							ratingsEnabled="<%= enableCommentRatings %>"
 							redirect="<%= currentURL %>"
-							subject="<%= fileEntry.getTitle() %>"
+							subject="<%= title %>"
 							userId="<%= fileEntry.getUserId() %>"
 						/>
 					</liferay-ui:panel>
@@ -375,25 +377,25 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 			<div class="body-row asset-details">
 				<div class="asset-details-content">
-					<h3 class="version <%= isCheckedOut ? "document-locked" : StringPool.BLANK %>">
-						<liferay-ui:message key="version" /> <%= fileEntry.getVersion() %>
+					<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
+						<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>
 					</h3>
 
 					<div class="lfr-asset-icon lfr-asset-author">
-						<liferay-ui:message arguments="<%= fileEntry.getVersionUserName() %>" key="last-updated-by-x" />
+						<liferay-ui:message arguments="<%= fileVersion.getUserName() %>" key="last-updated-by-x" />
 					</div>
 
 					<div class="lfr-asset-icon lfr-asset-date">
-						<%= dateFormatDateTime.format(fileEntry.getModifiedDate()) %>
+						<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 					</div>
 
 					<div class="lfr-asset-summary">
 						<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
 					</div>
 
-					<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+					<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 						<blockquote class="lfr-asset-description">
-							<%= fileEntry.getDescription() %>
+							<%= fileVersion.getDescription() %>
 						</blockquote>
 					</c:if>
 
@@ -403,7 +405,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image="download"
 								label="<%= true %>"
 								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
-								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) %>'
+								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>'
 							/>
 						</c:if>
 					</span>
@@ -596,7 +598,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							for (int i = 0; i < results.size(); i++) {
 								FileVersion curFileVersion = (FileVersion)results.get(i);
 
-								ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, isCheckedOut, hasLock}, String.valueOf(curFileVersion.getVersion()), i);
+								ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, fileEntry.isCheckedOut(), fileEntry.hasLock()}, String.valueOf(curFileVersion.getVersion()), i);
 
 								StringBundler sb = new StringBundler(10);
 
@@ -743,7 +745,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			activeState: false,
 			boundingBox: buttonRow,
 			children: [
-				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
 					{
 
 						<portlet:renderURL var="editURL">
@@ -788,7 +790,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					</c:if>
 
-					<c:if test="<%= fileEntry.isCheckedOut() %>">
+					<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
 
 						{
 

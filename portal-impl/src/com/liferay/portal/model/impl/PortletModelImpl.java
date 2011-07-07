@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.PortletSoap;
@@ -317,6 +318,35 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletModelImpl._setOriginalCompanyId = false;
 
 		portletModelImpl._originalPortletId = portletModelImpl._portletId;
+	}
+
+	@Override
+	public CacheModel<Portlet> toCacheModel() {
+		PortletCacheModel portletCacheModel = new PortletCacheModel();
+
+		portletCacheModel.id = getId();
+
+		portletCacheModel.companyId = getCompanyId();
+
+		portletCacheModel.portletId = getPortletId();
+
+		String portletId = portletCacheModel.portletId;
+
+		if ((portletId != null) && (portletId.length() == 0)) {
+			portletCacheModel.portletId = null;
+		}
+
+		portletCacheModel.roles = getRoles();
+
+		String roles = portletCacheModel.roles;
+
+		if ((roles != null) && (roles.length() == 0)) {
+			portletCacheModel.roles = null;
+		}
+
+		portletCacheModel.active = getActive();
+
+		return portletCacheModel;
 	}
 
 	@Override

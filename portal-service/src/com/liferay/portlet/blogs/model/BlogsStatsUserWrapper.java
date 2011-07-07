@@ -312,6 +312,10 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser {
 		return _blogsStatsUser.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.blogs.model.BlogsStatsUser> toCacheModel() {
+		return _blogsStatsUser.toCacheModel();
+	}
+
 	public com.liferay.portlet.blogs.model.BlogsStatsUser toEscapedModel() {
 		return new BlogsStatsUserWrapper(_blogsStatsUser.toEscapedModel());
 	}
@@ -323,6 +327,11 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser {
 
 	public java.lang.String toXmlString() {
 		return _blogsStatsUser.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_blogsStatsUser.save();
 	}
 
 	public BlogsStatsUser getWrappedBlogsStatsUser() {

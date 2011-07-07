@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -475,6 +476,85 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryModelImpl._originalGroupId = mbCategoryModelImpl._groupId;
 
 		mbCategoryModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<MBCategory> toCacheModel() {
+		MBCategoryCacheModel mbCategoryCacheModel = new MBCategoryCacheModel();
+
+		mbCategoryCacheModel.uuid = getUuid();
+
+		String uuid = mbCategoryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbCategoryCacheModel.uuid = null;
+		}
+
+		mbCategoryCacheModel.categoryId = getCategoryId();
+
+		mbCategoryCacheModel.groupId = getGroupId();
+
+		mbCategoryCacheModel.companyId = getCompanyId();
+
+		mbCategoryCacheModel.userId = getUserId();
+
+		mbCategoryCacheModel.userName = getUserName();
+
+		String userName = mbCategoryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mbCategoryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbCategoryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		mbCategoryCacheModel.parentCategoryId = getParentCategoryId();
+
+		mbCategoryCacheModel.name = getName();
+
+		String name = mbCategoryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			mbCategoryCacheModel.name = null;
+		}
+
+		mbCategoryCacheModel.description = getDescription();
+
+		String description = mbCategoryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			mbCategoryCacheModel.description = null;
+		}
+
+		mbCategoryCacheModel.displayStyle = getDisplayStyle();
+
+		String displayStyle = mbCategoryCacheModel.displayStyle;
+
+		if ((displayStyle != null) && (displayStyle.length() == 0)) {
+			mbCategoryCacheModel.displayStyle = null;
+		}
+
+		mbCategoryCacheModel.threadCount = getThreadCount();
+
+		mbCategoryCacheModel.messageCount = getMessageCount();
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			mbCategoryCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		return mbCategoryCacheModel;
 	}
 
 	@Override

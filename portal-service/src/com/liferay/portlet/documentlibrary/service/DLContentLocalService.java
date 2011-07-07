@@ -187,7 +187,7 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the document library content in the database. Also notifies the appropriate model listeners.
+	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
 	* @return the document library content that was updated
@@ -198,7 +198,7 @@ public interface DLContentLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the document library content in the database. Also notifies the appropriate model listeners.
+	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
 	* @param merge whether to merge the document library content with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

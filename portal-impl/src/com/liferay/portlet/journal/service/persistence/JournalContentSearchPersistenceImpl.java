@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -4000,6 +4001,17 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<JournalContentSearch> toCacheModel() {
+				return _nullJournalContentSearchCacheModel;
+			}
+		};
+
+	private static CacheModel<JournalContentSearch> _nullJournalContentSearchCacheModel =
+		new CacheModel<JournalContentSearch>() {
+			public JournalContentSearch toEntityModel() {
+				return _nullJournalContentSearch;
 			}
 		};
 }

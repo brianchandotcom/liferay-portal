@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -619,6 +620,91 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateModelImpl._originalGroupId = ddmTemplateModelImpl._groupId;
 
 		ddmTemplateModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<DDMTemplate> toCacheModel() {
+		DDMTemplateCacheModel ddmTemplateCacheModel = new DDMTemplateCacheModel();
+
+		ddmTemplateCacheModel.uuid = getUuid();
+
+		String uuid = ddmTemplateCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			ddmTemplateCacheModel.uuid = null;
+		}
+
+		ddmTemplateCacheModel.templateId = getTemplateId();
+
+		ddmTemplateCacheModel.groupId = getGroupId();
+
+		ddmTemplateCacheModel.companyId = getCompanyId();
+
+		ddmTemplateCacheModel.userId = getUserId();
+
+		ddmTemplateCacheModel.userName = getUserName();
+
+		String userName = ddmTemplateCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ddmTemplateCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddmTemplateCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddmTemplateCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddmTemplateCacheModel.structureId = getStructureId();
+
+		ddmTemplateCacheModel.name = getName();
+
+		String name = ddmTemplateCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			ddmTemplateCacheModel.name = null;
+		}
+
+		ddmTemplateCacheModel.description = getDescription();
+
+		String description = ddmTemplateCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			ddmTemplateCacheModel.description = null;
+		}
+
+		ddmTemplateCacheModel.type = getType();
+
+		String type = ddmTemplateCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			ddmTemplateCacheModel.type = null;
+		}
+
+		ddmTemplateCacheModel.language = getLanguage();
+
+		String language = ddmTemplateCacheModel.language;
+
+		if ((language != null) && (language.length() == 0)) {
+			ddmTemplateCacheModel.language = null;
+		}
+
+		ddmTemplateCacheModel.script = getScript();
+
+		String script = ddmTemplateCacheModel.script;
+
+		if ((script != null) && (script.length() == 0)) {
+			ddmTemplateCacheModel.script = null;
+		}
+
+		return ddmTemplateCacheModel;
 	}
 
 	@Override

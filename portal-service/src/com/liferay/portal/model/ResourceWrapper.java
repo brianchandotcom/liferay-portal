@@ -163,6 +163,10 @@ public class ResourceWrapper implements Resource {
 		return _resource.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Resource> toCacheModel() {
+		return _resource.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Resource toEscapedModel() {
 		return new ResourceWrapper(_resource.toEscapedModel());
 	}
@@ -174,6 +178,11 @@ public class ResourceWrapper implements Resource {
 
 	public java.lang.String toXmlString() {
 		return _resource.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resource.save();
 	}
 
 	public long getCompanyId()

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -438,6 +439,73 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		ddmContentModelImpl._originalGroupId = ddmContentModelImpl._groupId;
 
 		ddmContentModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<DDMContent> toCacheModel() {
+		DDMContentCacheModel ddmContentCacheModel = new DDMContentCacheModel();
+
+		ddmContentCacheModel.uuid = getUuid();
+
+		String uuid = ddmContentCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			ddmContentCacheModel.uuid = null;
+		}
+
+		ddmContentCacheModel.contentId = getContentId();
+
+		ddmContentCacheModel.groupId = getGroupId();
+
+		ddmContentCacheModel.companyId = getCompanyId();
+
+		ddmContentCacheModel.userId = getUserId();
+
+		ddmContentCacheModel.userName = getUserName();
+
+		String userName = ddmContentCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ddmContentCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddmContentCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddmContentCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddmContentCacheModel.name = getName();
+
+		String name = ddmContentCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			ddmContentCacheModel.name = null;
+		}
+
+		ddmContentCacheModel.description = getDescription();
+
+		String description = ddmContentCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			ddmContentCacheModel.description = null;
+		}
+
+		ddmContentCacheModel.xml = getXml();
+
+		String xml = ddmContentCacheModel.xml;
+
+		if ((xml != null) && (xml.length() == 0)) {
+			ddmContentCacheModel.xml = null;
+		}
+
+		return ddmContentCacheModel;
 	}
 
 	@Override

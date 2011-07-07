@@ -239,6 +239,8 @@ public interface CompanyModel extends BaseModel<Company> {
 
 	public int hashCode();
 
+	public CacheModel<Company> toCacheModel();
+
 	public Company toEscapedModel();
 
 	public String toString();

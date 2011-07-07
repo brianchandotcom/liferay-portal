@@ -226,6 +226,10 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PluginSetting> toCacheModel() {
+		return _pluginSetting.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PluginSetting toEscapedModel() {
 		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
 	}
@@ -237,6 +241,11 @@ public class PluginSettingWrapper implements PluginSetting {
 
 	public java.lang.String toXmlString() {
 		return _pluginSetting.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pluginSetting.save();
 	}
 
 	/**

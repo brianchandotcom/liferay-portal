@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutPrototypeImpl;
@@ -2294,6 +2295,16 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static LayoutPrototype _nullLayoutPrototype = new LayoutPrototypeImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<LayoutPrototype> toCacheModel() {
+				return _nullLayoutPrototypeCacheModel;
+			}
+		};
+
+	private static CacheModel<LayoutPrototype> _nullLayoutPrototypeCacheModel = new CacheModel<LayoutPrototype>() {
+			public LayoutPrototype toEntityModel() {
+				return _nullLayoutPrototype;
 			}
 		};
 }

@@ -14,22 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Settings</td>
-	<td></td>
+	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>waitForVisible</td>
 	<td>//a[@id='_130_websitesLink']</td>
 	<td>Websites</td>
 </tr>
@@ -40,27 +40,22 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_130_websiteUrl0</td>
+	<td>//input[@id='_130_websiteUrl0']</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//button[2]</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//button[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_130_websiteUrl0</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>_130_websiteUrl0</td>
+	<td>//input[@id='_130_websiteUrl0']</td>
 	<td>http://www.liferay.com</td>
 </tr>
 

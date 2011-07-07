@@ -88,7 +88,6 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
 		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

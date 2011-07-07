@@ -391,6 +391,10 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFolder> toCacheModel() {
+		return _dlFolder.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder toEscapedModel() {
 		return new DLFolderWrapper(_dlFolder.toEscapedModel());
 	}
@@ -402,6 +406,11 @@ public class DLFolderWrapper implements DLFolder {
 
 	public java.lang.String toXmlString() {
 		return _dlFolder.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolder.save();
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getAncestors()

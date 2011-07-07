@@ -14,14 +14,12 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
-import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.model.ShoppingCategoryConstants;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCategoryImpl
-	extends ShoppingCategoryModelImpl implements ShoppingCategory {
+public class ShoppingCategoryImpl extends ShoppingCategoryBaseImpl {
 
 	public ShoppingCategoryImpl() {
 	}

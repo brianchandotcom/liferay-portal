@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -662,6 +663,81 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryModelImpl._originalVocabularyId = assetCategoryModelImpl._vocabularyId;
 
 		assetCategoryModelImpl._setOriginalVocabularyId = false;
+	}
+
+	@Override
+	public CacheModel<AssetCategory> toCacheModel() {
+		AssetCategoryCacheModel assetCategoryCacheModel = new AssetCategoryCacheModel();
+
+		assetCategoryCacheModel.uuid = getUuid();
+
+		String uuid = assetCategoryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			assetCategoryCacheModel.uuid = null;
+		}
+
+		assetCategoryCacheModel.categoryId = getCategoryId();
+
+		assetCategoryCacheModel.groupId = getGroupId();
+
+		assetCategoryCacheModel.companyId = getCompanyId();
+
+		assetCategoryCacheModel.userId = getUserId();
+
+		assetCategoryCacheModel.userName = getUserName();
+
+		String userName = assetCategoryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			assetCategoryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetCategoryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetCategoryCacheModel.parentCategoryId = getParentCategoryId();
+
+		assetCategoryCacheModel.leftCategoryId = getLeftCategoryId();
+
+		assetCategoryCacheModel.rightCategoryId = getRightCategoryId();
+
+		assetCategoryCacheModel.name = getName();
+
+		String name = assetCategoryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			assetCategoryCacheModel.name = null;
+		}
+
+		assetCategoryCacheModel.title = getTitle();
+
+		String title = assetCategoryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			assetCategoryCacheModel.title = null;
+		}
+
+		assetCategoryCacheModel.description = getDescription();
+
+		String description = assetCategoryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			assetCategoryCacheModel.description = null;
+		}
+
+		assetCategoryCacheModel.vocabularyId = getVocabularyId();
+
+		return assetCategoryCacheModel;
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ImageImpl;
@@ -1129,6 +1130,16 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static Image _nullImage = new ImageImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Image> toCacheModel() {
+				return _nullImageCacheModel;
+			}
+		};
+
+	private static CacheModel<Image> _nullImageCacheModel = new CacheModel<Image>() {
+			public Image toEntityModel() {
+				return _nullImage;
 			}
 		};
 }

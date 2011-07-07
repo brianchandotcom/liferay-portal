@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Contact service. Represents a row in the &quot;Contact_&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Contact service. Represents a row in the &quot;Contact_&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ContactModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ContactModelImpl
  * @generated
  */
-public interface Contact extends ContactModel {
+public interface Contact extends ContactModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

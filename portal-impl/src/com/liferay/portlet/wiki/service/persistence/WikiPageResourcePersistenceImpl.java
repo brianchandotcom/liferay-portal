@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1372,6 +1373,16 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static WikiPageResource _nullWikiPageResource = new WikiPageResourceImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<WikiPageResource> toCacheModel() {
+				return _nullWikiPageResourceCacheModel;
+			}
+		};
+
+	private static CacheModel<WikiPageResource> _nullWikiPageResourceCacheModel = new CacheModel<WikiPageResource>() {
+			public WikiPageResource toEntityModel() {
+				return _nullWikiPageResource;
 			}
 		};
 }

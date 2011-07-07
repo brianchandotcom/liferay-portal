@@ -219,6 +219,10 @@ public class PollsVoteWrapper implements PollsVote {
 		return _pollsVote.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsVote> toCacheModel() {
+		return _pollsVote.toCacheModel();
+	}
+
 	public com.liferay.portlet.polls.model.PollsVote toEscapedModel() {
 		return new PollsVoteWrapper(_pollsVote.toEscapedModel());
 	}
@@ -230,6 +234,11 @@ public class PollsVoteWrapper implements PollsVote {
 
 	public java.lang.String toXmlString() {
 		return _pollsVote.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pollsVote.save();
 	}
 
 	public com.liferay.portlet.polls.model.PollsChoice getChoice()

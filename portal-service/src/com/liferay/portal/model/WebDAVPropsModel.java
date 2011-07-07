@@ -189,6 +189,8 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> 
 
 	public int hashCode();
 
+	public CacheModel<WebDAVProps> toCacheModel();
+
 	public WebDAVProps toEscapedModel();
 
 	public String toString();

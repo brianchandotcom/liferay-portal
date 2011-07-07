@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -493,6 +494,99 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<AnnouncementsEntry> toCacheModel() {
+		AnnouncementsEntryCacheModel announcementsEntryCacheModel = new AnnouncementsEntryCacheModel();
+
+		announcementsEntryCacheModel.uuid = getUuid();
+
+		String uuid = announcementsEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			announcementsEntryCacheModel.uuid = null;
+		}
+
+		announcementsEntryCacheModel.entryId = getEntryId();
+
+		announcementsEntryCacheModel.companyId = getCompanyId();
+
+		announcementsEntryCacheModel.userId = getUserId();
+
+		announcementsEntryCacheModel.userName = getUserName();
+
+		String userName = announcementsEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			announcementsEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			announcementsEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			announcementsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		announcementsEntryCacheModel.classNameId = getClassNameId();
+
+		announcementsEntryCacheModel.classPK = getClassPK();
+
+		announcementsEntryCacheModel.title = getTitle();
+
+		String title = announcementsEntryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			announcementsEntryCacheModel.title = null;
+		}
+
+		announcementsEntryCacheModel.content = getContent();
+
+		String content = announcementsEntryCacheModel.content;
+
+		if ((content != null) && (content.length() == 0)) {
+			announcementsEntryCacheModel.content = null;
+		}
+
+		announcementsEntryCacheModel.url = getUrl();
+
+		String url = announcementsEntryCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			announcementsEntryCacheModel.url = null;
+		}
+
+		announcementsEntryCacheModel.type = getType();
+
+		String type = announcementsEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			announcementsEntryCacheModel.type = null;
+		}
+
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			announcementsEntryCacheModel.displayDate = displayDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			announcementsEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		announcementsEntryCacheModel.priority = getPriority();
+
+		announcementsEntryCacheModel.alert = getAlert();
+
+		return announcementsEntryCacheModel;
 	}
 
 	@Override

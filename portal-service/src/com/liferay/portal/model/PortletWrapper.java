@@ -208,6 +208,10 @@ public class PortletWrapper implements Portlet {
 		return _portlet.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Portlet> toCacheModel() {
+		return _portlet.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Portlet toEscapedModel() {
 		return new PortletWrapper(_portlet.toEscapedModel());
 	}
@@ -219,6 +223,11 @@ public class PortletWrapper implements Portlet {
 
 	public java.lang.String toXmlString() {
 		return _portlet.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portlet.save();
 	}
 
 	/**

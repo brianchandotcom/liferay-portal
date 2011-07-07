@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
@@ -28,8 +27,7 @@ import java.util.List;
 /**
  * @author Jorge Ferrer
  */
-public class LayoutPrototypeImpl
-	extends LayoutPrototypeModelImpl implements LayoutPrototype {
+public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 
 	public LayoutPrototypeImpl() {
 	}

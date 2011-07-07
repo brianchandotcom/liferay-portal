@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -369,6 +370,47 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentModelImpl._originalVersion = dlContentModelImpl._version;
 
 		_dataBlobModel = null;
+	}
+
+	@Override
+	public CacheModel<DLContent> toCacheModel() {
+		DLContentCacheModel dlContentCacheModel = new DLContentCacheModel();
+
+		dlContentCacheModel.contentId = getContentId();
+
+		dlContentCacheModel.groupId = getGroupId();
+
+		dlContentCacheModel.companyId = getCompanyId();
+
+		dlContentCacheModel.portletId = getPortletId();
+
+		String portletId = dlContentCacheModel.portletId;
+
+		if ((portletId != null) && (portletId.length() == 0)) {
+			dlContentCacheModel.portletId = null;
+		}
+
+		dlContentCacheModel.repositoryId = getRepositoryId();
+
+		dlContentCacheModel.path = getPath();
+
+		String path = dlContentCacheModel.path;
+
+		if ((path != null) && (path.length() == 0)) {
+			dlContentCacheModel.path = null;
+		}
+
+		dlContentCacheModel.version = getVersion();
+
+		String version = dlContentCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			dlContentCacheModel.version = null;
+		}
+
+		dlContentCacheModel.size = getSize();
+
+		return dlContentCacheModel;
 	}
 
 	@Override

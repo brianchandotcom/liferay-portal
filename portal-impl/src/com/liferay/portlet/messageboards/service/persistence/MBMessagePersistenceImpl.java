@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -12696,6 +12697,16 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static MBMessage _nullMBMessage = new MBMessageImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBMessage> toCacheModel() {
+				return _nullMBMessageCacheModel;
+			}
+		};
+
+	private static CacheModel<MBMessage> _nullMBMessageCacheModel = new CacheModel<MBMessage>() {
+			public MBMessage toEntityModel() {
+				return _nullMBMessage;
 			}
 		};
 }

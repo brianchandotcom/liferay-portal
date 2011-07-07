@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -738,6 +739,135 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._setOriginalClassPK = false;
 
 		assetEntryModelImpl._originalClassUuid = assetEntryModelImpl._classUuid;
+	}
+
+	@Override
+	public CacheModel<AssetEntry> toCacheModel() {
+		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();
+
+		assetEntryCacheModel.entryId = getEntryId();
+
+		assetEntryCacheModel.groupId = getGroupId();
+
+		assetEntryCacheModel.companyId = getCompanyId();
+
+		assetEntryCacheModel.userId = getUserId();
+
+		assetEntryCacheModel.userName = getUserName();
+
+		String userName = assetEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			assetEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetEntryCacheModel.classNameId = getClassNameId();
+
+		assetEntryCacheModel.classPK = getClassPK();
+
+		assetEntryCacheModel.classUuid = getClassUuid();
+
+		String classUuid = assetEntryCacheModel.classUuid;
+
+		if ((classUuid != null) && (classUuid.length() == 0)) {
+			assetEntryCacheModel.classUuid = null;
+		}
+
+		assetEntryCacheModel.visible = getVisible();
+
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			assetEntryCacheModel.startDate = startDate.getTime();
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			assetEntryCacheModel.endDate = endDate.getTime();
+		}
+
+		Date publishDate = getPublishDate();
+
+		if (publishDate != null) {
+			assetEntryCacheModel.publishDate = publishDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			assetEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		assetEntryCacheModel.mimeType = getMimeType();
+
+		String mimeType = assetEntryCacheModel.mimeType;
+
+		if ((mimeType != null) && (mimeType.length() == 0)) {
+			assetEntryCacheModel.mimeType = null;
+		}
+
+		assetEntryCacheModel.title = getTitle();
+
+		String title = assetEntryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			assetEntryCacheModel.title = null;
+		}
+
+		assetEntryCacheModel.description = getDescription();
+
+		String description = assetEntryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			assetEntryCacheModel.description = null;
+		}
+
+		assetEntryCacheModel.summary = getSummary();
+
+		String summary = assetEntryCacheModel.summary;
+
+		if ((summary != null) && (summary.length() == 0)) {
+			assetEntryCacheModel.summary = null;
+		}
+
+		assetEntryCacheModel.url = getUrl();
+
+		String url = assetEntryCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			assetEntryCacheModel.url = null;
+		}
+
+		assetEntryCacheModel.layoutUuid = getLayoutUuid();
+
+		String layoutUuid = assetEntryCacheModel.layoutUuid;
+
+		if ((layoutUuid != null) && (layoutUuid.length() == 0)) {
+			assetEntryCacheModel.layoutUuid = null;
+		}
+
+		assetEntryCacheModel.height = getHeight();
+
+		assetEntryCacheModel.width = getWidth();
+
+		assetEntryCacheModel.priority = getPriority();
+
+		assetEntryCacheModel.viewCount = getViewCount();
+
+		return assetEntryCacheModel;
 	}
 
 	@Override

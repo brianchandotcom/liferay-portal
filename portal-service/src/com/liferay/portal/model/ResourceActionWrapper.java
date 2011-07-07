@@ -181,6 +181,10 @@ public class ResourceActionWrapper implements ResourceAction {
 		return _resourceAction.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ResourceAction> toCacheModel() {
+		return _resourceAction.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ResourceAction toEscapedModel() {
 		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
 	}
@@ -192,6 +196,11 @@ public class ResourceActionWrapper implements ResourceAction {
 
 	public java.lang.String toXmlString() {
 		return _resourceAction.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceAction.save();
 	}
 
 	public ResourceAction getWrappedResourceAction() {

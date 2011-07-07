@@ -290,6 +290,10 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 		return _shoppingOrderItem.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingOrderItem> toCacheModel() {
+		return _shoppingOrderItem.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem toEscapedModel() {
 		return new ShoppingOrderItemWrapper(_shoppingOrderItem.toEscapedModel());
 	}
@@ -301,6 +305,11 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 
 	public java.lang.String toXmlString() {
 		return _shoppingOrderItem.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingOrderItem.save();
 	}
 
 	public ShoppingOrderItem getWrappedShoppingOrderItem() {

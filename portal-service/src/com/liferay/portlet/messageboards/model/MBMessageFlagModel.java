@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -182,6 +183,8 @@ public interface MBMessageFlagModel extends BaseModel<MBMessageFlag> {
 	public int compareTo(MBMessageFlag mbMessageFlag);
 
 	public int hashCode();
+
+	public CacheModel<MBMessageFlag> toCacheModel();
 
 	public MBMessageFlag toEscapedModel();
 

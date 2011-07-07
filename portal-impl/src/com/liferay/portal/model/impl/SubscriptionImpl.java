@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Subscription;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SubscriptionImpl
-	extends SubscriptionModelImpl implements Subscription {
+public class SubscriptionImpl extends SubscriptionBaseImpl {
 
 	public SubscriptionImpl() {
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.model.impl.PasswordTrackerImpl;
@@ -1139,6 +1140,16 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	private static PasswordTracker _nullPasswordTracker = new PasswordTrackerImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PasswordTracker> toCacheModel() {
+				return _nullPasswordTrackerCacheModel;
+			}
+		};
+
+	private static CacheModel<PasswordTracker> _nullPasswordTrackerCacheModel = new CacheModel<PasswordTracker>() {
+			public PasswordTracker toEntityModel() {
+				return _nullPasswordTracker;
 			}
 		};
 }

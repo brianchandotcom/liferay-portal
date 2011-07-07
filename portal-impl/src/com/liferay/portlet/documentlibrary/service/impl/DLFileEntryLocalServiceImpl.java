@@ -235,7 +235,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId);
+		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
 
 		dlFileVersionPersistence.remove(dlFileVersion);
 
@@ -275,7 +275,7 @@ public class DLFileEntryLocalServiceImpl
 		String version = getNextVersion(
 			dlFileEntry, majorVersion, serviceContext.getWorkflowAction());
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId);
+		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
 
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setChangeLog(changeLog);
@@ -387,7 +387,7 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId);
+		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
 
 		long dlFileVersionId = dlFileVersion.getFileVersionId();
 
@@ -664,10 +664,16 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	public DLFileVersion getLatestFileVersion(long fileEntryId)
+	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		return getLatestFileVersion(fileEntryId, false);
+		boolean excludeWorkingCopy = true;
+
+		if (isFileEntryCheckedOut(fileEntryId)) {
+			excludeWorkingCopy = !hasFileEntryLock(userId, fileEntryId);
+		}
+
+		return getLatestFileVersion(fileEntryId, excludeWorkingCopy);
 	}
 
 	public DLFileVersion getLatestFileVersion(
@@ -738,7 +744,7 @@ public class DLFileEntryLocalServiceImpl
 	public boolean isFileEntryCheckedOut(long fileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId);
+		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
 
 		String version = dlFileVersion.getVersion();
 
@@ -1484,7 +1490,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if (checkedOut || autoCheckIn) {
-			dlFileVersion = getLatestFileVersion(fileEntryId);
+			dlFileVersion = getLatestFileVersion(fileEntryId, false);
 		}
 
 		try {

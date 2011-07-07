@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -3506,6 +3507,16 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	private static MBMessageFlag _nullMBMessageFlag = new MBMessageFlagImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBMessageFlag> toCacheModel() {
+				return _nullMBMessageFlagCacheModel;
+			}
+		};
+
+	private static CacheModel<MBMessageFlag> _nullMBMessageFlagCacheModel = new CacheModel<MBMessageFlag>() {
+			public MBMessageFlag toEntityModel() {
+				return _nullMBMessageFlag;
 			}
 		};
 }

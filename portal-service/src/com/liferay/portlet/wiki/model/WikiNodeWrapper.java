@@ -327,6 +327,10 @@ public class WikiNodeWrapper implements WikiNode {
 		return _wikiNode.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.wiki.model.WikiNode> toCacheModel() {
+		return _wikiNode.toCacheModel();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiNode toEscapedModel() {
 		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
 	}
@@ -338,6 +342,11 @@ public class WikiNodeWrapper implements WikiNode {
 
 	public java.lang.String toXmlString() {
 		return _wikiNode.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_wikiNode.save();
 	}
 
 	public WikiNode getWrappedWikiNode() {

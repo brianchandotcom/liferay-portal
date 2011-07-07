@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -3369,6 +3370,17 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	private static SCFrameworkVersion _nullSCFrameworkVersion = new SCFrameworkVersionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SCFrameworkVersion> toCacheModel() {
+				return _nullSCFrameworkVersionCacheModel;
+			}
+		};
+
+	private static CacheModel<SCFrameworkVersion> _nullSCFrameworkVersionCacheModel =
+		new CacheModel<SCFrameworkVersion>() {
+			public SCFrameworkVersion toEntityModel() {
+				return _nullSCFrameworkVersion;
 			}
 		};
 }

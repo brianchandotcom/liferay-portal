@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -508,6 +509,113 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		scProductEntryModelImpl._originalRepoGroupId = scProductEntryModelImpl._repoGroupId;
 
 		scProductEntryModelImpl._originalRepoArtifactId = scProductEntryModelImpl._repoArtifactId;
+	}
+
+	@Override
+	public CacheModel<SCProductEntry> toCacheModel() {
+		SCProductEntryCacheModel scProductEntryCacheModel = new SCProductEntryCacheModel();
+
+		scProductEntryCacheModel.productEntryId = getProductEntryId();
+
+		scProductEntryCacheModel.groupId = getGroupId();
+
+		scProductEntryCacheModel.companyId = getCompanyId();
+
+		scProductEntryCacheModel.userId = getUserId();
+
+		scProductEntryCacheModel.userName = getUserName();
+
+		String userName = scProductEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			scProductEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			scProductEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			scProductEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		scProductEntryCacheModel.name = getName();
+
+		String name = scProductEntryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			scProductEntryCacheModel.name = null;
+		}
+
+		scProductEntryCacheModel.type = getType();
+
+		String type = scProductEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			scProductEntryCacheModel.type = null;
+		}
+
+		scProductEntryCacheModel.tags = getTags();
+
+		String tags = scProductEntryCacheModel.tags;
+
+		if ((tags != null) && (tags.length() == 0)) {
+			scProductEntryCacheModel.tags = null;
+		}
+
+		scProductEntryCacheModel.shortDescription = getShortDescription();
+
+		String shortDescription = scProductEntryCacheModel.shortDescription;
+
+		if ((shortDescription != null) && (shortDescription.length() == 0)) {
+			scProductEntryCacheModel.shortDescription = null;
+		}
+
+		scProductEntryCacheModel.longDescription = getLongDescription();
+
+		String longDescription = scProductEntryCacheModel.longDescription;
+
+		if ((longDescription != null) && (longDescription.length() == 0)) {
+			scProductEntryCacheModel.longDescription = null;
+		}
+
+		scProductEntryCacheModel.pageURL = getPageURL();
+
+		String pageURL = scProductEntryCacheModel.pageURL;
+
+		if ((pageURL != null) && (pageURL.length() == 0)) {
+			scProductEntryCacheModel.pageURL = null;
+		}
+
+		scProductEntryCacheModel.author = getAuthor();
+
+		String author = scProductEntryCacheModel.author;
+
+		if ((author != null) && (author.length() == 0)) {
+			scProductEntryCacheModel.author = null;
+		}
+
+		scProductEntryCacheModel.repoGroupId = getRepoGroupId();
+
+		String repoGroupId = scProductEntryCacheModel.repoGroupId;
+
+		if ((repoGroupId != null) && (repoGroupId.length() == 0)) {
+			scProductEntryCacheModel.repoGroupId = null;
+		}
+
+		scProductEntryCacheModel.repoArtifactId = getRepoArtifactId();
+
+		String repoArtifactId = scProductEntryCacheModel.repoArtifactId;
+
+		if ((repoArtifactId != null) && (repoArtifactId.length() == 0)) {
+			scProductEntryCacheModel.repoArtifactId = null;
+		}
+
+		return scProductEntryCacheModel;
 	}
 
 	@Override

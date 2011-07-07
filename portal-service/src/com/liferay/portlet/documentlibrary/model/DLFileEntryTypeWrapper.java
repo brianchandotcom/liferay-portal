@@ -292,6 +292,10 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntryType> toCacheModel() {
+		return _dlFileEntryType.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType toEscapedModel() {
 		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
 	}
@@ -303,6 +307,11 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 
 	public java.lang.String toXmlString() {
 		return _dlFileEntryType.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryType.save();
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()

@@ -301,6 +301,10 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		return _ratingsEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.ratings.model.RatingsEntry> toCacheModel() {
+		return _ratingsEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.ratings.model.RatingsEntry toEscapedModel() {
 		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
 	}
@@ -312,6 +316,11 @@ public class RatingsEntryWrapper implements RatingsEntry {
 
 	public java.lang.String toXmlString() {
 		return _ratingsEntry.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ratingsEntry.save();
 	}
 
 	public RatingsEntry getWrappedRatingsEntry() {

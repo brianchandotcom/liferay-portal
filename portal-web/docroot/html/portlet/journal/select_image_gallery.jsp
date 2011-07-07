@@ -48,7 +48,7 @@ if (folder != null) {
 	headerNames.add("num-of-folders");
 	headerNames.add("num-of-images");
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-folders");
 
 	int total = IGFolderLocalServiceUtil.getFoldersCount(groupId, folderId);
 
@@ -109,7 +109,7 @@ if (folder != null) {
 	headerNames.add("size");
 	headerNames.add(StringPool.BLANK);
 
-	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-images-in-this-folder");
 
 	total = IGImageLocalServiceUtil.getImagesCount(groupId, folderId);
 

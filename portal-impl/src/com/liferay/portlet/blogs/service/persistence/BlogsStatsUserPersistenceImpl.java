@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -3095,6 +3096,16 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	private static BlogsStatsUser _nullBlogsStatsUser = new BlogsStatsUserImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<BlogsStatsUser> toCacheModel() {
+				return _nullBlogsStatsUserCacheModel;
+			}
+		};
+
+	private static CacheModel<BlogsStatsUser> _nullBlogsStatsUserCacheModel = new CacheModel<BlogsStatsUser>() {
+			public BlogsStatsUser toEntityModel() {
+				return _nullBlogsStatsUser;
 			}
 		};
 }

@@ -184,6 +184,10 @@ public class UserGroupRoleWrapper implements UserGroupRole {
 		return _userGroupRole.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserGroupRole> toCacheModel() {
+		return _userGroupRole.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserGroupRole toEscapedModel() {
 		return new UserGroupRoleWrapper(_userGroupRole.toEscapedModel());
 	}
@@ -195,6 +199,11 @@ public class UserGroupRoleWrapper implements UserGroupRole {
 
 	public java.lang.String toXmlString() {
 		return _userGroupRole.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userGroupRole.save();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

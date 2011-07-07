@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.model.ListTypeModel;
 import com.liferay.portal.model.ListTypeSoap;
@@ -246,6 +247,31 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ListType> toCacheModel() {
+		ListTypeCacheModel listTypeCacheModel = new ListTypeCacheModel();
+
+		listTypeCacheModel.listTypeId = getListTypeId();
+
+		listTypeCacheModel.name = getName();
+
+		String name = listTypeCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			listTypeCacheModel.name = null;
+		}
+
+		listTypeCacheModel.type = getType();
+
+		String type = listTypeCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			listTypeCacheModel.type = null;
+		}
+
+		return listTypeCacheModel;
 	}
 
 	@Override

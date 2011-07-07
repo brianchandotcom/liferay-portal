@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.model.impl.WorkflowInstanceLinkImpl;
@@ -1249,6 +1250,17 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	private static WorkflowInstanceLink _nullWorkflowInstanceLink = new WorkflowInstanceLinkImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<WorkflowInstanceLink> toCacheModel() {
+				return _nullWorkflowInstanceLinkCacheModel;
+			}
+		};
+
+	private static CacheModel<WorkflowInstanceLink> _nullWorkflowInstanceLinkCacheModel =
+		new CacheModel<WorkflowInstanceLink>() {
+			public WorkflowInstanceLink toEntityModel() {
+				return _nullWorkflowInstanceLink;
 			}
 		};
 }

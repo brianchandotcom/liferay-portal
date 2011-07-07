@@ -236,6 +236,10 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot {
 		return _scProductScreenshot.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> toCacheModel() {
+		return _scProductScreenshot.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot toEscapedModel() {
 		return new SCProductScreenshotWrapper(_scProductScreenshot.toEscapedModel());
 	}
@@ -247,6 +251,11 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot {
 
 	public java.lang.String toXmlString() {
 		return _scProductScreenshot.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scProductScreenshot.save();
 	}
 
 	public SCProductScreenshot getWrappedSCProductScreenshot() {

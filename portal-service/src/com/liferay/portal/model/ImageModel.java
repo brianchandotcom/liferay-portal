@@ -183,6 +183,8 @@ public interface ImageModel extends BaseModel<Image> {
 
 	public int hashCode();
 
+	public CacheModel<Image> toCacheModel();
+
 	public Image toEscapedModel();
 
 	public String toString();

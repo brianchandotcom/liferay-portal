@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -549,6 +550,117 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionModelImpl._setOriginalFileEntryId = false;
 
 		dlFileVersionModelImpl._originalVersion = dlFileVersionModelImpl._version;
+	}
+
+	@Override
+	public CacheModel<DLFileVersion> toCacheModel() {
+		DLFileVersionCacheModel dlFileVersionCacheModel = new DLFileVersionCacheModel();
+
+		dlFileVersionCacheModel.fileVersionId = getFileVersionId();
+
+		dlFileVersionCacheModel.groupId = getGroupId();
+
+		dlFileVersionCacheModel.companyId = getCompanyId();
+
+		dlFileVersionCacheModel.userId = getUserId();
+
+		dlFileVersionCacheModel.userName = getUserName();
+
+		String userName = dlFileVersionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			dlFileVersionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFileVersionCacheModel.createDate = createDate.getTime();
+		}
+
+		dlFileVersionCacheModel.repositoryId = getRepositoryId();
+
+		dlFileVersionCacheModel.fileEntryId = getFileEntryId();
+
+		dlFileVersionCacheModel.extension = getExtension();
+
+		String extension = dlFileVersionCacheModel.extension;
+
+		if ((extension != null) && (extension.length() == 0)) {
+			dlFileVersionCacheModel.extension = null;
+		}
+
+		dlFileVersionCacheModel.mimeType = getMimeType();
+
+		String mimeType = dlFileVersionCacheModel.mimeType;
+
+		if ((mimeType != null) && (mimeType.length() == 0)) {
+			dlFileVersionCacheModel.mimeType = null;
+		}
+
+		dlFileVersionCacheModel.title = getTitle();
+
+		String title = dlFileVersionCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			dlFileVersionCacheModel.title = null;
+		}
+
+		dlFileVersionCacheModel.description = getDescription();
+
+		String description = dlFileVersionCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			dlFileVersionCacheModel.description = null;
+		}
+
+		dlFileVersionCacheModel.changeLog = getChangeLog();
+
+		String changeLog = dlFileVersionCacheModel.changeLog;
+
+		if ((changeLog != null) && (changeLog.length() == 0)) {
+			dlFileVersionCacheModel.changeLog = null;
+		}
+
+		dlFileVersionCacheModel.extraSettings = getExtraSettings();
+
+		String extraSettings = dlFileVersionCacheModel.extraSettings;
+
+		if ((extraSettings != null) && (extraSettings.length() == 0)) {
+			dlFileVersionCacheModel.extraSettings = null;
+		}
+
+		dlFileVersionCacheModel.fileEntryTypeId = getFileEntryTypeId();
+
+		dlFileVersionCacheModel.version = getVersion();
+
+		String version = dlFileVersionCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			dlFileVersionCacheModel.version = null;
+		}
+
+		dlFileVersionCacheModel.size = getSize();
+
+		dlFileVersionCacheModel.status = getStatus();
+
+		dlFileVersionCacheModel.statusByUserId = getStatusByUserId();
+
+		dlFileVersionCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = dlFileVersionCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			dlFileVersionCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			dlFileVersionCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return dlFileVersionCacheModel;
 	}
 
 	@Override

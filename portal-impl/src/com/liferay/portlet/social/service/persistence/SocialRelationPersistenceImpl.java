@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -4345,6 +4346,16 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static SocialRelation _nullSocialRelation = new SocialRelationImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialRelation> toCacheModel() {
+				return _nullSocialRelationCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialRelation> _nullSocialRelationCacheModel = new CacheModel<SocialRelation>() {
+			public SocialRelation toEntityModel() {
+				return _nullSocialRelation;
 			}
 		};
 }

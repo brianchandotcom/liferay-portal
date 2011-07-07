@@ -202,7 +202,7 @@ public interface BookmarksFolderLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the bookmarks folder in the database. Also notifies the appropriate model listeners.
+	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param bookmarksFolder the bookmarks folder
 	* @return the bookmarks folder that was updated
@@ -213,7 +213,7 @@ public interface BookmarksFolderLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the bookmarks folder in the database. Also notifies the appropriate model listeners.
+	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param bookmarksFolder the bookmarks folder
 	* @param merge whether to merge the bookmarks folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

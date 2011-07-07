@@ -17,6 +17,7 @@ package com.liferay.portlet.social.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -274,6 +275,8 @@ public interface SocialEquityLogModel extends BaseModel<SocialEquityLog> {
 	public int compareTo(SocialEquityLog socialEquityLog);
 
 	public int hashCode();
+
+	public CacheModel<SocialEquityLog> toCacheModel();
 
 	public SocialEquityLog toEscapedModel();
 

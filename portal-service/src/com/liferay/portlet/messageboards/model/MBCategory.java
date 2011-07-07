@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the MBCategory service. Represents a row in the &quot;MBCategory&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the MBCategory service. Represents a row in the &quot;MBCategory&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see MBCategoryModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl
  * @generated
  */
-public interface MBCategory extends MBCategoryModel {
+public interface MBCategory extends MBCategoryModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -51,7 +51,7 @@
 			'dynamic-select': ['aui-base'],
 			'form': ['aui-base', 'aui-form-validator'],
 			'form-navigator': ['aui-base'],
-			'history': ['history', 'querystring'],
+			'history': getHistoryRequirements(),
 			'hudcrumbs': ['aui-base', 'plugin'],
 			'icon': ['aui-base'],
 			'input-move-boxes': ['aui-base', 'aui-toolbar'],
@@ -88,6 +88,30 @@
 		}
 
 		return modules;
+	};
+
+	var getHistoryRequirements = function() {
+		var CONFIG = A.config;
+
+		var DOC = CONFIG.doc;
+		var WIN = CONFIG.win;
+
+		var HISTORY = WIN.history;
+
+		var hasNativeHistory = (
+			HISTORY &&
+			HISTORY.pushState &&
+			HISTORY.replaceState &&
+			('onpopstate' in WIN || A.UA.gecko >= 2)
+		);
+
+		var module = 'history-hash';
+
+		if (hasNativeHistory) {
+			module = 'history-html5';
+		}
+
+		return ['history-base', 'querystring-parse-simple', module];
 	};
 
 	GROUPS.liferay = {

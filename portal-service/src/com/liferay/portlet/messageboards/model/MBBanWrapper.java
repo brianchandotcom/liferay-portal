@@ -293,6 +293,10 @@ public class MBBanWrapper implements MBBan {
 		return _mbBan.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBBan> toCacheModel() {
+		return _mbBan.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBBan toEscapedModel() {
 		return new MBBanWrapper(_mbBan.toEscapedModel());
 	}
@@ -304,6 +308,11 @@ public class MBBanWrapper implements MBBan {
 
 	public java.lang.String toXmlString() {
 		return _mbBan.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbBan.save();
 	}
 
 	public MBBan getWrappedMBBan() {

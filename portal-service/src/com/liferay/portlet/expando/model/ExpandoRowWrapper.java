@@ -182,6 +182,10 @@ public class ExpandoRowWrapper implements ExpandoRow {
 		return _expandoRow.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoRow> toCacheModel() {
+		return _expandoRow.toCacheModel();
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoRow toEscapedModel() {
 		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
 	}
@@ -193,6 +197,11 @@ public class ExpandoRowWrapper implements ExpandoRow {
 
 	public java.lang.String toXmlString() {
 		return _expandoRow.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoRow.save();
 	}
 
 	public ExpandoRow getWrappedExpandoRow() {

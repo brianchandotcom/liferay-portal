@@ -30,7 +30,7 @@ public class AddSettingsWebsiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,30 +41,69 @@ public class AddSettingsWebsiteTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
-				"Websites"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_websitesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.type("_130_websiteUrl0",
+		selenium.type("//input[@id='_130_websiteUrl0']",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_websiteTypeId0",
+		selenium.select("//select[@id='_130_websiteTypeId0']",
 			RuntimeVariables.replace("label=Public"));
-		selenium.clickAt("_130_websitePrimary0", RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_130_websitePrimary0']",
+			RuntimeVariables.replace("Primary Button"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("http://www.liferay.com",
-			selenium.getValue("_130_websiteUrl0"));
-		assertEquals("Public", selenium.getSelectedLabel("_130_websiteTypeId0"));
+			selenium.getValue("//input[@id='_130_websiteUrl0']"));
+		assertEquals("Public",
+			selenium.getSelectedLabel("//select[@id='_130_websiteTypeId0']"));
 	}
 }

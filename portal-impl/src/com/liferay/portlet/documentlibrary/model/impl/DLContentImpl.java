@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import com.liferay.portlet.documentlibrary.model.DLContent;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLContentImpl extends DLContentModelImpl implements DLContent {
+public class DLContentImpl extends DLContentBaseImpl {
 
 	public DLContentImpl() {
 	}

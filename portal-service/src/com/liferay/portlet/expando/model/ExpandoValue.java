@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoValueModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.expando.model;
  * @see com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl
  * @generated
  */
-public interface ExpandoValue extends ExpandoValueModel {
+public interface ExpandoValue extends ExpandoValueModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -34,6 +36,10 @@ public interface ExpandoValue extends ExpandoValueModel {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean[] getBooleanArray()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.expando.model.ExpandoColumn getColumn()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

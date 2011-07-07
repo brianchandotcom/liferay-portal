@@ -17,14 +17,13 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class UserGroupImpl extends UserGroupModelImpl implements UserGroup {
+public class UserGroupImpl extends UserGroupBaseImpl {
 
 	public UserGroupImpl() {
 	}

@@ -28,8 +28,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTrackerImpl
-	extends UserTrackerModelImpl implements UserTracker {
+public class UserTrackerImpl extends UserTrackerBaseImpl {
 
 	public UserTrackerImpl() {
 	}

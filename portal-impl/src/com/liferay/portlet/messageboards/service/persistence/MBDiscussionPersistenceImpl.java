@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1523,6 +1524,16 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static MBDiscussion _nullMBDiscussion = new MBDiscussionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBDiscussion> toCacheModel() {
+				return _nullMBDiscussionCacheModel;
+			}
+		};
+
+	private static CacheModel<MBDiscussion> _nullMBDiscussionCacheModel = new CacheModel<MBDiscussion>() {
+			public MBDiscussion toEntityModel() {
+				return _nullMBDiscussion;
 			}
 		};
 }

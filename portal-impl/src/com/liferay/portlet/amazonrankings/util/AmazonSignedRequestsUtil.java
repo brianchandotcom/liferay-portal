@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -57,6 +58,8 @@ public class AmazonSignedRequestsUtil {
 		}
 
 		StringBundler sb = new StringBundler();
+
+		parameters = new TreeMap<String, String>(parameters);
 
 		Set<Map.Entry<String, String>> parametersSet = parameters.entrySet();
 

@@ -614,6 +614,8 @@ public interface PasswordPolicyModel extends AuditedModel,
 
 	public int hashCode();
 
+	public CacheModel<PasswordPolicy> toCacheModel();
+
 	public PasswordPolicy toEscapedModel();
 
 	public String toString();

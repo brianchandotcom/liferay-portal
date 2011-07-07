@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.impl.PasswordPolicyImpl;
@@ -1310,6 +1311,16 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static PasswordPolicy _nullPasswordPolicy = new PasswordPolicyImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PasswordPolicy> toCacheModel() {
+				return _nullPasswordPolicyCacheModel;
+			}
+		};
+
+	private static CacheModel<PasswordPolicy> _nullPasswordPolicyCacheModel = new CacheModel<PasswordPolicy>() {
+			public PasswordPolicy toEntityModel() {
+				return _nullPasswordPolicy;
 			}
 		};
 }

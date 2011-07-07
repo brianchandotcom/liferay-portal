@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1780,6 +1781,16 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	private static DDLRecordVersion _nullDDLRecordVersion = new DDLRecordVersionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DDLRecordVersion> toCacheModel() {
+				return _nullDDLRecordVersionCacheModel;
+			}
+		};
+
+	private static CacheModel<DDLRecordVersion> _nullDDLRecordVersionCacheModel = new CacheModel<DDLRecordVersion>() {
+			public DDLRecordVersion toEntityModel() {
+				return _nullDDLRecordVersion;
 			}
 		};
 }

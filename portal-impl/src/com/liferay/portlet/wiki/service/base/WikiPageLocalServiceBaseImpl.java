@@ -320,7 +320,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the wiki page in the database. Also notifies the appropriate model listeners.
+	 * Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiPage the wiki page
 	 * @return the wiki page that was updated
@@ -331,7 +331,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the wiki page in the database. Also notifies the appropriate model listeners.
+	 * Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param wikiPage the wiki page
 	 * @param merge whether to merge the wiki page with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

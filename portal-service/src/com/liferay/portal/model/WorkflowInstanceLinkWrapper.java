@@ -320,6 +320,10 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 		return _workflowInstanceLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WorkflowInstanceLink> toCacheModel() {
+		return _workflowInstanceLink.toCacheModel();
+	}
+
 	public com.liferay.portal.model.WorkflowInstanceLink toEscapedModel() {
 		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
 	}
@@ -331,6 +335,11 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 
 	public java.lang.String toXmlString() {
 		return _workflowInstanceLink.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_workflowInstanceLink.save();
 	}
 
 	public WorkflowInstanceLink getWrappedWorkflowInstanceLink() {

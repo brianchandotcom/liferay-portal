@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -940,6 +941,17 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	private static SocialEquityGroupSetting _nullSocialEquityGroupSetting = new SocialEquityGroupSettingImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityGroupSetting> toCacheModel() {
+				return _nullSocialEquityGroupSettingCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityGroupSetting> _nullSocialEquityGroupSettingCacheModel =
+		new CacheModel<SocialEquityGroupSetting>() {
+			public SocialEquityGroupSetting toEntityModel() {
+				return _nullSocialEquityGroupSetting;
 			}
 		};
 }

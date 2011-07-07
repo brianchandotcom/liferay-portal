@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -264,6 +265,41 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ShoppingItemField> toCacheModel() {
+		ShoppingItemFieldCacheModel shoppingItemFieldCacheModel = new ShoppingItemFieldCacheModel();
+
+		shoppingItemFieldCacheModel.itemFieldId = getItemFieldId();
+
+		shoppingItemFieldCacheModel.itemId = getItemId();
+
+		shoppingItemFieldCacheModel.name = getName();
+
+		String name = shoppingItemFieldCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			shoppingItemFieldCacheModel.name = null;
+		}
+
+		shoppingItemFieldCacheModel.values = getValues();
+
+		String values = shoppingItemFieldCacheModel.values;
+
+		if ((values != null) && (values.length() == 0)) {
+			shoppingItemFieldCacheModel.values = null;
+		}
+
+		shoppingItemFieldCacheModel.description = getDescription();
+
+		String description = shoppingItemFieldCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			shoppingItemFieldCacheModel.description = null;
+		}
+
+		return shoppingItemFieldCacheModel;
 	}
 
 	@Override

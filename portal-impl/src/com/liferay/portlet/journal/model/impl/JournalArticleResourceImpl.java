@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portlet.journal.model.JournalArticleResource;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalArticleResourceImpl
-	extends JournalArticleResourceModelImpl implements JournalArticleResource {
+public class JournalArticleResourceImpl extends JournalArticleResourceBaseImpl {
 
 	public JournalArticleResourceImpl() {
 	}

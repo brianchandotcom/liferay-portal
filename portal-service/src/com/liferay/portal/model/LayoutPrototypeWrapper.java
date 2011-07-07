@@ -323,6 +323,10 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 		return _layoutPrototype.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutPrototype> toCacheModel() {
+		return _layoutPrototype.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutPrototype toEscapedModel() {
 		return new LayoutPrototypeWrapper(_layoutPrototype.toEscapedModel());
 	}
@@ -334,6 +338,11 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 
 	public java.lang.String toXmlString() {
 		return _layoutPrototype.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layoutPrototype.save();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

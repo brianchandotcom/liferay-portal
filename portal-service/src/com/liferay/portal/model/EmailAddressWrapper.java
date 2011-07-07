@@ -345,6 +345,10 @@ public class EmailAddressWrapper implements EmailAddress {
 		return _emailAddress.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.EmailAddress> toCacheModel() {
+		return _emailAddress.toCacheModel();
+	}
+
 	public com.liferay.portal.model.EmailAddress toEscapedModel() {
 		return new EmailAddressWrapper(_emailAddress.toEscapedModel());
 	}
@@ -356,6 +360,11 @@ public class EmailAddressWrapper implements EmailAddress {
 
 	public java.lang.String toXmlString() {
 		return _emailAddress.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_emailAddress.save();
 	}
 
 	public com.liferay.portal.model.ListType getType()

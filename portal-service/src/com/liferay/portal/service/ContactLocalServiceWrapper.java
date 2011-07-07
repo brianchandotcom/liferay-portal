@@ -190,7 +190,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService {
 	}
 
 	/**
-	* Updates the contact in the database. Also notifies the appropriate model listeners.
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param contact the contact
 	* @return the contact that was updated
@@ -203,7 +203,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService {
 	}
 
 	/**
-	* Updates the contact in the database. Also notifies the appropriate model listeners.
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param contact the contact
 	* @param merge whether to merge the contact with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

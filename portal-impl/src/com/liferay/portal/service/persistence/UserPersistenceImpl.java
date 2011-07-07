@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
@@ -8601,6 +8602,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static User _nullUser = new UserImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<User> toCacheModel() {
+				return _nullUserCacheModel;
+			}
+		};
+
+	private static CacheModel<User> _nullUserCacheModel = new CacheModel<User>() {
+			public User toEntityModel() {
+				return _nullUser;
 			}
 		};
 }

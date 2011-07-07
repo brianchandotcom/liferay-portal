@@ -310,6 +310,10 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 		return _shoppingCategory.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingCategory> toCacheModel() {
+		return _shoppingCategory.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCategory toEscapedModel() {
 		return new ShoppingCategoryWrapper(_shoppingCategory.toEscapedModel());
 	}
@@ -321,6 +325,11 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 
 	public java.lang.String toXmlString() {
 		return _shoppingCategory.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingCategory.save();
 	}
 
 	public boolean isRoot() {

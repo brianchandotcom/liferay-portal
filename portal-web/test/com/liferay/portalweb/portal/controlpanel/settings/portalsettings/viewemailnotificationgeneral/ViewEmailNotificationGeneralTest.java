@@ -30,7 +30,7 @@ public class ViewEmailNotificationGeneralTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,35 @@ public class ViewEmailNotificationGeneralTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Settings", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_emailNotificationsLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
 			RuntimeVariables.replace("Email Notifications"));
-		selenium.clickAt("link=Sender", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sender", RuntimeVariables.replace("Sender"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -60,7 +78,7 @@ public class ViewEmailNotificationGeneralTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"_130_settings--admin.email.from.name--")) {
+							"//input[@name='_130_settings--admin.email.from.name--']")) {
 					break;
 				}
 			}
@@ -72,8 +90,10 @@ public class ViewEmailNotificationGeneralTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals("Joe Bloggs",
-			selenium.getValue("_130_settings--admin.email.from.name--"));
+			selenium.getValue(
+				"//input[@name='_130_settings--admin.email.from.name--']"));
 		assertEquals("test@liferay.com",
-			selenium.getValue("_130_settings--admin.email.from.address--"));
+			selenium.getValue(
+				"//input[@name='_130_settings--admin.email.from.address--']"));
 	}
 }

@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -32,8 +31,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDLRecordSetImpl
-	extends DDLRecordSetModelImpl implements DDLRecordSet {
+public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 
 	public DDLRecordSetImpl() {
 	}

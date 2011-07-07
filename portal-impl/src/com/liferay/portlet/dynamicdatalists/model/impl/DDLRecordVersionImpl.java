@@ -17,14 +17,12 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDLRecordVersionImpl extends DDLRecordVersionModelImpl
-	implements DDLRecordVersion {
+public class DDLRecordVersionImpl extends DDLRecordVersionBaseImpl {
 
 	public DDLRecordVersionImpl() {
 	}

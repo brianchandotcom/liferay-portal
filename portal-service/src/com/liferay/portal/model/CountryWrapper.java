@@ -244,6 +244,10 @@ public class CountryWrapper implements Country {
 		return _country.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Country> toCacheModel() {
+		return _country.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Country toEscapedModel() {
 		return new CountryWrapper(_country.toEscapedModel());
 	}

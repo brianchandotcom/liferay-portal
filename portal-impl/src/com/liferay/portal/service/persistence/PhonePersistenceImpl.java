@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.impl.PhoneImpl;
@@ -2987,6 +2988,16 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static Phone _nullPhone = new PhoneImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Phone> toCacheModel() {
+				return _nullPhoneCacheModel;
+			}
+		};
+
+	private static CacheModel<Phone> _nullPhoneCacheModel = new CacheModel<Phone>() {
+			public Phone toEntityModel() {
+				return _nullPhone;
 			}
 		};
 }

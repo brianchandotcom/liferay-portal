@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -307,6 +308,8 @@ public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel {
 	public int compareTo(DLFolder dlFolder);
 
 	public int hashCode();
+
+	public CacheModel<DLFolder> toCacheModel();
 
 	public DLFolder toEscapedModel();
 

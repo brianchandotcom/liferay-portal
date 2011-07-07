@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DLFileEntryType service. Represents a row in the &quot;DLFileEntryType&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DLFileEntryType service. Represents a row in the &quot;DLFileEntryType&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryTypeModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl
  * @generated
  */
-public interface DLFileEntryType extends DLFileEntryTypeModel {
+public interface DLFileEntryType extends DLFileEntryTypeModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -183,6 +183,10 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 		return _journalArticleResource.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalArticleResource> toCacheModel() {
+		return _journalArticleResource.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticleResource toEscapedModel() {
 		return new JournalArticleResourceWrapper(_journalArticleResource.toEscapedModel());
 	}
@@ -194,6 +198,11 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 
 	public java.lang.String toXmlString() {
 		return _journalArticleResource.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleResource.save();
 	}
 
 	public JournalArticleResource getWrappedJournalArticleResource() {

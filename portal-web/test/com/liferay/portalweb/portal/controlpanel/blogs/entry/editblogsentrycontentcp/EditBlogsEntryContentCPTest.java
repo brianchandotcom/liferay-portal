@@ -50,8 +50,8 @@ public class EditBlogsEntryContentCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("xPath=(//strong/a)[2]"));
-		selenium.clickAt("xPath=(//strong/a)[2]",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

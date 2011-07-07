@@ -705,6 +705,8 @@ public interface UserModel extends BaseModel<User> {
 
 	public int hashCode();
 
+	public CacheModel<User> toCacheModel();
+
 	public User toEscapedModel();
 
 	public String toString();

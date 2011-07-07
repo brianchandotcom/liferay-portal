@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the SocialActivity service. Represents a row in the &quot;SocialActivity&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the SocialActivity service. Represents a row in the &quot;SocialActivity&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivityModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.social.model;
  * @see com.liferay.portlet.social.model.impl.SocialActivityModelImpl
  * @generated
  */
-public interface SocialActivity extends SocialActivityModel {
+public interface SocialActivity extends SocialActivityModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

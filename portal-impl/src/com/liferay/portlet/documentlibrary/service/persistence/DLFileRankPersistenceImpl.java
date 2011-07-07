@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LayoutPersistence;
@@ -2202,6 +2203,16 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static DLFileRank _nullDLFileRank = new DLFileRankImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DLFileRank> toCacheModel() {
+				return _nullDLFileRankCacheModel;
+			}
+		};
+
+	private static CacheModel<DLFileRank> _nullDLFileRankCacheModel = new CacheModel<DLFileRank>() {
+			public DLFileRank toEntityModel() {
+				return _nullDLFileRank;
 			}
 		};
 }

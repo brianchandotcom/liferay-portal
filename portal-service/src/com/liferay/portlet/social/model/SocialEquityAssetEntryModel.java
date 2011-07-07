@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -194,6 +195,8 @@ public interface SocialEquityAssetEntryModel extends BaseModel<SocialEquityAsset
 	public int compareTo(SocialEquityAssetEntry socialEquityAssetEntry);
 
 	public int hashCode();
+
+	public CacheModel<SocialEquityAssetEntry> toCacheModel();
 
 	public SocialEquityAssetEntry toEscapedModel();
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -439,6 +440,69 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		ddlRecordVersionModelImpl._setOriginalRecordId = false;
 
 		ddlRecordVersionModelImpl._originalVersion = ddlRecordVersionModelImpl._version;
+	}
+
+	@Override
+	public CacheModel<DDLRecordVersion> toCacheModel() {
+		DDLRecordVersionCacheModel ddlRecordVersionCacheModel = new DDLRecordVersionCacheModel();
+
+		ddlRecordVersionCacheModel.recordVersionId = getRecordVersionId();
+
+		ddlRecordVersionCacheModel.groupId = getGroupId();
+
+		ddlRecordVersionCacheModel.companyId = getCompanyId();
+
+		ddlRecordVersionCacheModel.userId = getUserId();
+
+		ddlRecordVersionCacheModel.userName = getUserName();
+
+		String userName = ddlRecordVersionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ddlRecordVersionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddlRecordVersionCacheModel.createDate = createDate.getTime();
+		}
+
+		ddlRecordVersionCacheModel.DDMStorageId = getDDMStorageId();
+
+		ddlRecordVersionCacheModel.recordSetId = getRecordSetId();
+
+		ddlRecordVersionCacheModel.recordId = getRecordId();
+
+		ddlRecordVersionCacheModel.version = getVersion();
+
+		String version = ddlRecordVersionCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			ddlRecordVersionCacheModel.version = null;
+		}
+
+		ddlRecordVersionCacheModel.displayIndex = getDisplayIndex();
+
+		ddlRecordVersionCacheModel.status = getStatus();
+
+		ddlRecordVersionCacheModel.statusByUserId = getStatusByUserId();
+
+		ddlRecordVersionCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = ddlRecordVersionCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			ddlRecordVersionCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			ddlRecordVersionCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return ddlRecordVersionCacheModel;
 	}
 
 	@Override

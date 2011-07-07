@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetBranchImpl;
@@ -2685,6 +2686,16 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	private static LayoutSetBranch _nullLayoutSetBranch = new LayoutSetBranchImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<LayoutSetBranch> toCacheModel() {
+				return _nullLayoutSetBranchCacheModel;
+			}
+		};
+
+	private static CacheModel<LayoutSetBranch> _nullLayoutSetBranchCacheModel = new CacheModel<LayoutSetBranch>() {
+			public LayoutSetBranch toEntityModel() {
+				return _nullLayoutSetBranch;
 			}
 		};
 }

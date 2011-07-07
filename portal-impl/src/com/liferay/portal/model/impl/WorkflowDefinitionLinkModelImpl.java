@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.WorkflowDefinitionLinkModel;
 import com.liferay.portal.service.ServiceContext;
@@ -381,6 +382,56 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkModelImpl._originalClassPK = workflowDefinitionLinkModelImpl._classPK;
 
 		workflowDefinitionLinkModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<WorkflowDefinitionLink> toCacheModel() {
+		WorkflowDefinitionLinkCacheModel workflowDefinitionLinkCacheModel = new WorkflowDefinitionLinkCacheModel();
+
+		workflowDefinitionLinkCacheModel.workflowDefinitionLinkId = getWorkflowDefinitionLinkId();
+
+		workflowDefinitionLinkCacheModel.groupId = getGroupId();
+
+		workflowDefinitionLinkCacheModel.companyId = getCompanyId();
+
+		workflowDefinitionLinkCacheModel.userId = getUserId();
+
+		workflowDefinitionLinkCacheModel.userName = getUserName();
+
+		String userName = workflowDefinitionLinkCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			workflowDefinitionLinkCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			workflowDefinitionLinkCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			workflowDefinitionLinkCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		workflowDefinitionLinkCacheModel.classNameId = getClassNameId();
+
+		workflowDefinitionLinkCacheModel.classPK = getClassPK();
+
+		workflowDefinitionLinkCacheModel.workflowDefinitionName = getWorkflowDefinitionName();
+
+		String workflowDefinitionName = workflowDefinitionLinkCacheModel.workflowDefinitionName;
+
+		if ((workflowDefinitionName != null) &&
+				(workflowDefinitionName.length() == 0)) {
+			workflowDefinitionLinkCacheModel.workflowDefinitionName = null;
+		}
+
+		workflowDefinitionLinkCacheModel.workflowDefinitionVersion = getWorkflowDefinitionVersion();
+
+		return workflowDefinitionLinkCacheModel;
 	}
 
 	@Override

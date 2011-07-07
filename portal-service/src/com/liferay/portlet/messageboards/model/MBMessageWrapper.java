@@ -679,6 +679,10 @@ public class MBMessageWrapper implements MBMessage {
 		return _mbMessage.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBMessage> toCacheModel() {
+		return _mbMessage.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBMessage toEscapedModel() {
 		return new MBMessageWrapper(_mbMessage.toEscapedModel());
 	}
@@ -690,6 +694,11 @@ public class MBMessageWrapper implements MBMessage {
 
 	public java.lang.String toXmlString() {
 		return _mbMessage.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMessage.save();
 	}
 
 	public java.lang.String[] getAssetTagNames()

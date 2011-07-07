@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetModel;
 import com.liferay.portal.model.LayoutSetSoap;
@@ -453,6 +454,77 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetModelImpl._originalPrivateLayout = layoutSetModelImpl._privateLayout;
 
 		layoutSetModelImpl._setOriginalPrivateLayout = false;
+	}
+
+	@Override
+	public CacheModel<LayoutSet> toCacheModel() {
+		LayoutSetCacheModel layoutSetCacheModel = new LayoutSetCacheModel();
+
+		layoutSetCacheModel.layoutSetId = getLayoutSetId();
+
+		layoutSetCacheModel.groupId = getGroupId();
+
+		layoutSetCacheModel.companyId = getCompanyId();
+
+		layoutSetCacheModel.privateLayout = getPrivateLayout();
+
+		layoutSetCacheModel.logo = getLogo();
+
+		layoutSetCacheModel.logoId = getLogoId();
+
+		layoutSetCacheModel.themeId = getThemeId();
+
+		String themeId = layoutSetCacheModel.themeId;
+
+		if ((themeId != null) && (themeId.length() == 0)) {
+			layoutSetCacheModel.themeId = null;
+		}
+
+		layoutSetCacheModel.colorSchemeId = getColorSchemeId();
+
+		String colorSchemeId = layoutSetCacheModel.colorSchemeId;
+
+		if ((colorSchemeId != null) && (colorSchemeId.length() == 0)) {
+			layoutSetCacheModel.colorSchemeId = null;
+		}
+
+		layoutSetCacheModel.wapThemeId = getWapThemeId();
+
+		String wapThemeId = layoutSetCacheModel.wapThemeId;
+
+		if ((wapThemeId != null) && (wapThemeId.length() == 0)) {
+			layoutSetCacheModel.wapThemeId = null;
+		}
+
+		layoutSetCacheModel.wapColorSchemeId = getWapColorSchemeId();
+
+		String wapColorSchemeId = layoutSetCacheModel.wapColorSchemeId;
+
+		if ((wapColorSchemeId != null) && (wapColorSchemeId.length() == 0)) {
+			layoutSetCacheModel.wapColorSchemeId = null;
+		}
+
+		layoutSetCacheModel.css = getCss();
+
+		String css = layoutSetCacheModel.css;
+
+		if ((css != null) && (css.length() == 0)) {
+			layoutSetCacheModel.css = null;
+		}
+
+		layoutSetCacheModel.pageCount = getPageCount();
+
+		layoutSetCacheModel.settings = getSettings();
+
+		String settings = layoutSetCacheModel.settings;
+
+		if ((settings != null) && (settings.length() == 0)) {
+			layoutSetCacheModel.settings = null;
+		}
+
+		layoutSetCacheModel.layoutSetPrototypeId = getLayoutSetPrototypeId();
+
+		return layoutSetCacheModel;
 	}
 
 	@Override

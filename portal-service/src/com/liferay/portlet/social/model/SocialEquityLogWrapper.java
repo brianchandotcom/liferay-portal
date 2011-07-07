@@ -355,6 +355,10 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 		return _socialEquityLog.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityLog> toCacheModel() {
+		return _socialEquityLog.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityLog toEscapedModel() {
 		return new SocialEquityLogWrapper(_socialEquityLog.toEscapedModel());
 	}
@@ -366,6 +370,11 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 
 	public java.lang.String toXmlString() {
 		return _socialEquityLog.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityLog.save();
 	}
 
 	public int getLifespan() {

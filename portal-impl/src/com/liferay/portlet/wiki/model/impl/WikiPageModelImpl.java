@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -724,6 +725,125 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		wikiPageModelImpl._originalVersion = wikiPageModelImpl._version;
 
 		wikiPageModelImpl._setOriginalVersion = false;
+	}
+
+	@Override
+	public CacheModel<WikiPage> toCacheModel() {
+		WikiPageCacheModel wikiPageCacheModel = new WikiPageCacheModel();
+
+		wikiPageCacheModel.uuid = getUuid();
+
+		String uuid = wikiPageCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			wikiPageCacheModel.uuid = null;
+		}
+
+		wikiPageCacheModel.pageId = getPageId();
+
+		wikiPageCacheModel.resourcePrimKey = getResourcePrimKey();
+
+		wikiPageCacheModel.groupId = getGroupId();
+
+		wikiPageCacheModel.companyId = getCompanyId();
+
+		wikiPageCacheModel.userId = getUserId();
+
+		wikiPageCacheModel.userName = getUserName();
+
+		String userName = wikiPageCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			wikiPageCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			wikiPageCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			wikiPageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		wikiPageCacheModel.nodeId = getNodeId();
+
+		wikiPageCacheModel.title = getTitle();
+
+		String title = wikiPageCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			wikiPageCacheModel.title = null;
+		}
+
+		wikiPageCacheModel.version = getVersion();
+
+		wikiPageCacheModel.minorEdit = getMinorEdit();
+
+		wikiPageCacheModel.content = getContent();
+
+		String content = wikiPageCacheModel.content;
+
+		if ((content != null) && (content.length() == 0)) {
+			wikiPageCacheModel.content = null;
+		}
+
+		wikiPageCacheModel.summary = getSummary();
+
+		String summary = wikiPageCacheModel.summary;
+
+		if ((summary != null) && (summary.length() == 0)) {
+			wikiPageCacheModel.summary = null;
+		}
+
+		wikiPageCacheModel.format = getFormat();
+
+		String format = wikiPageCacheModel.format;
+
+		if ((format != null) && (format.length() == 0)) {
+			wikiPageCacheModel.format = null;
+		}
+
+		wikiPageCacheModel.head = getHead();
+
+		wikiPageCacheModel.parentTitle = getParentTitle();
+
+		String parentTitle = wikiPageCacheModel.parentTitle;
+
+		if ((parentTitle != null) && (parentTitle.length() == 0)) {
+			wikiPageCacheModel.parentTitle = null;
+		}
+
+		wikiPageCacheModel.redirectTitle = getRedirectTitle();
+
+		String redirectTitle = wikiPageCacheModel.redirectTitle;
+
+		if ((redirectTitle != null) && (redirectTitle.length() == 0)) {
+			wikiPageCacheModel.redirectTitle = null;
+		}
+
+		wikiPageCacheModel.status = getStatus();
+
+		wikiPageCacheModel.statusByUserId = getStatusByUserId();
+
+		wikiPageCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = wikiPageCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			wikiPageCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			wikiPageCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return wikiPageCacheModel;
 	}
 
 	@Override

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.WebDAVProps;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,8 +31,7 @@ import java.util.Set;
 /**
  * @author Alexander Chow
  */
-public class WebDAVPropsImpl
-	extends WebDAVPropsModelImpl implements WebDAVProps {
+public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 	public WebDAVPropsImpl() {
 	}

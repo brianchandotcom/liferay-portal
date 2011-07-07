@@ -994,6 +994,10 @@ public class JournalArticleWrapper implements JournalArticle {
 		return _journalArticle.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalArticle> toCacheModel() {
+		return _journalArticle.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle toEscapedModel() {
 		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
 	}
@@ -1005,6 +1009,11 @@ public class JournalArticleWrapper implements JournalArticle {
 
 	public java.lang.String toXmlString() {
 		return _journalArticle.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalArticle.save();
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource()

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -457,6 +458,89 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		journalStructureModelImpl._setOriginalGroupId = false;
 
 		journalStructureModelImpl._originalStructureId = journalStructureModelImpl._structureId;
+	}
+
+	@Override
+	public CacheModel<JournalStructure> toCacheModel() {
+		JournalStructureCacheModel journalStructureCacheModel = new JournalStructureCacheModel();
+
+		journalStructureCacheModel.uuid = getUuid();
+
+		String uuid = journalStructureCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			journalStructureCacheModel.uuid = null;
+		}
+
+		journalStructureCacheModel.id = getId();
+
+		journalStructureCacheModel.groupId = getGroupId();
+
+		journalStructureCacheModel.companyId = getCompanyId();
+
+		journalStructureCacheModel.userId = getUserId();
+
+		journalStructureCacheModel.userName = getUserName();
+
+		String userName = journalStructureCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			journalStructureCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			journalStructureCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			journalStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		journalStructureCacheModel.structureId = getStructureId();
+
+		String structureId = journalStructureCacheModel.structureId;
+
+		if ((structureId != null) && (structureId.length() == 0)) {
+			journalStructureCacheModel.structureId = null;
+		}
+
+		journalStructureCacheModel.parentStructureId = getParentStructureId();
+
+		String parentStructureId = journalStructureCacheModel.parentStructureId;
+
+		if ((parentStructureId != null) && (parentStructureId.length() == 0)) {
+			journalStructureCacheModel.parentStructureId = null;
+		}
+
+		journalStructureCacheModel.name = getName();
+
+		String name = journalStructureCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			journalStructureCacheModel.name = null;
+		}
+
+		journalStructureCacheModel.description = getDescription();
+
+		String description = journalStructureCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			journalStructureCacheModel.description = null;
+		}
+
+		journalStructureCacheModel.xsd = getXsd();
+
+		String xsd = journalStructureCacheModel.xsd;
+
+		if ((xsd != null) && (xsd.length() == 0)) {
+			journalStructureCacheModel.xsd = null;
+		}
+
+		return journalStructureCacheModel;
 	}
 
 	@Override

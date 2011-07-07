@@ -21,67 +21,67 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the resource block role action local service.
+ * The interface for the resource block permission local service.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ResourceBlockRoleActionLocalServiceUtil
- * @see com.liferay.portal.service.base.ResourceBlockRoleActionLocalServiceBaseImpl
- * @see com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl
+ * @see ResourceBlockPermissionLocalServiceUtil
+ * @see com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl
+ * @see com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl
  * @generated
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface ResourceBlockRoleActionLocalService {
+public interface ResourceBlockPermissionLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ResourceBlockRoleActionLocalServiceUtil} to access the resource block role action local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link ResourceBlockPermissionLocalServiceUtil} to access the resource block permission local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the resource block role action to the database. Also notifies the appropriate model listeners.
+	* Adds the resource block permission to the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @return the resource block role action that was added
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlockRoleAction addResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new resource block role action with the primary key. Does not add the resource block role action to the database.
+	* Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	*
-	* @param resourceBlockRoleActionPK the primary key for the new resource block role action
-	* @return the new resource block role action
+	* @param resourceBlockPermissionPK the primary key for the new resource block permission
+	* @return the new resource block permission
 	*/
-	public com.liferay.portal.model.ResourceBlockRoleAction createResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK);
+	public com.liferay.portal.model.ResourceBlockPermission createResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK);
 
 	/**
-	* Deletes the resource block role action with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleActionPK the primary key of the resource block role action
-	* @throws PortalException if a resource block role action with the primary key could not be found
+	* @param resourceBlockPermissionPK the primary key of the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+	public void deleteResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the resource block role action from the database. Also notifies the appropriate model listeners.
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
+	* @param resourceBlockPermission the resource block permission
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public void deleteResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -147,67 +147,67 @@ public interface ResourceBlockRoleActionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block role action with the primary key.
+	* Returns the resource block permission with the primary key.
 	*
-	* @param resourceBlockRoleActionPK the primary key of the resource block role action
-	* @return the resource block role action
-	* @throws PortalException if a resource block role action with the primary key could not be found
+	* @param resourceBlockPermissionPK the primary key of the resource block permission
+	* @return the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceBlockRoleAction getResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+	public com.liferay.portal.model.ResourceBlockPermission getResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the resource block role actions.
+	* Returns a range of all the resource block permissions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of resource block role actions
-	* @param end the upper bound of the range of resource block role actions (not inclusive)
-	* @return the range of resource block role actions
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @return the range of resource block permissions
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceBlockRoleAction> getResourceBlockRoleActions(
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of resource block role actions.
+	* Returns the number of resource block permissions.
 	*
-	* @return the number of resource block role actions
+	* @return the number of resource block permissions
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceBlockRoleActionsCount()
+	public int getResourceBlockPermissionsCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the resource block role action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @return the resource block role action that was updated
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlockRoleAction updateResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the resource block role action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @param merge whether to merge the resource block role action with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the resource block role action that was updated
+	* @param resourceBlockPermission the resource block permission
+	* @param merge whether to merge the resource block permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the resource block permission that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlockRoleAction updateResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction,
+	public com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -225,7 +225,11 @@ public interface ResourceBlockRoleActionLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void addResourceBlockRoleActions(
+	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
+		long actionIds, long resourceBlockId, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void addResourceBlockPermissions(
 		com.liferay.portal.model.ResourceBlock resourceBlock,
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException;

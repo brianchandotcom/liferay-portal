@@ -17,10 +17,10 @@ package com.liferay.portal.model.impl;
 /**
  * @author Connor McKay
  */
-public class ResourceBlockRoleActionImpl
-	extends ResourceBlockRoleActionBaseImpl {
+public class ResourceBlockPermissionImpl
+	extends ResourceBlockPermissionBaseImpl {
 
-	public ResourceBlockRoleActionImpl() {
+	public ResourceBlockPermissionImpl() {
 	}
 
 }

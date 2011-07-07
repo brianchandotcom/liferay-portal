@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.service.persistence.ResourceBlockRoleActionPK;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
 
 import java.io.Serializable;
 
@@ -27,21 +27,21 @@ import java.util.List;
  * @author    Brian Wing Shun Chan
  * @generated
  */
-public class ResourceBlockRoleActionSoap implements Serializable {
-	public static ResourceBlockRoleActionSoap toSoapModel(
-		ResourceBlockRoleAction model) {
-		ResourceBlockRoleActionSoap soapModel = new ResourceBlockRoleActionSoap();
+public class ResourceBlockPermissionSoap implements Serializable {
+	public static ResourceBlockPermissionSoap toSoapModel(
+		ResourceBlockPermission model) {
+		ResourceBlockPermissionSoap soapModel = new ResourceBlockPermissionSoap();
 
-		soapModel.setActionIds(model.getActionIds());
 		soapModel.setResourceBlockId(model.getResourceBlockId());
 		soapModel.setRoleId(model.getRoleId());
+		soapModel.setActionIds(model.getActionIds());
 
 		return soapModel;
 	}
 
-	public static ResourceBlockRoleActionSoap[] toSoapModels(
-		ResourceBlockRoleAction[] models) {
-		ResourceBlockRoleActionSoap[] soapModels = new ResourceBlockRoleActionSoap[models.length];
+	public static ResourceBlockPermissionSoap[] toSoapModels(
+		ResourceBlockPermission[] models) {
+		ResourceBlockPermissionSoap[] soapModels = new ResourceBlockPermissionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -50,15 +50,15 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ResourceBlockRoleActionSoap[][] toSoapModels(
-		ResourceBlockRoleAction[][] models) {
-		ResourceBlockRoleActionSoap[][] soapModels = null;
+	public static ResourceBlockPermissionSoap[][] toSoapModels(
+		ResourceBlockPermission[][] models) {
+		ResourceBlockPermissionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new ResourceBlockRoleActionSoap[models.length][models[0].length];
+			soapModels = new ResourceBlockPermissionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new ResourceBlockRoleActionSoap[0][0];
+			soapModels = new ResourceBlockPermissionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -68,37 +68,29 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ResourceBlockRoleActionSoap[] toSoapModels(
-		List<ResourceBlockRoleAction> models) {
-		List<ResourceBlockRoleActionSoap> soapModels = new ArrayList<ResourceBlockRoleActionSoap>(models.size());
+	public static ResourceBlockPermissionSoap[] toSoapModels(
+		List<ResourceBlockPermission> models) {
+		List<ResourceBlockPermissionSoap> soapModels = new ArrayList<ResourceBlockPermissionSoap>(models.size());
 
-		for (ResourceBlockRoleAction model : models) {
+		for (ResourceBlockPermission model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new ResourceBlockRoleActionSoap[soapModels.size()]);
+		return soapModels.toArray(new ResourceBlockPermissionSoap[soapModels.size()]);
 	}
 
-	public ResourceBlockRoleActionSoap() {
+	public ResourceBlockPermissionSoap() {
 	}
 
-	public ResourceBlockRoleActionPK getPrimaryKey() {
-		return new ResourceBlockRoleActionPK(_actionIds, _resourceBlockId,
-			_roleId);
+	public ResourceBlockPermissionPK getPrimaryKey() {
+		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
+			_actionIds);
 	}
 
-	public void setPrimaryKey(ResourceBlockRoleActionPK pk) {
-		setActionIds(pk.actionIds);
+	public void setPrimaryKey(ResourceBlockPermissionPK pk) {
 		setResourceBlockId(pk.resourceBlockId);
 		setRoleId(pk.roleId);
-	}
-
-	public long getActionIds() {
-		return _actionIds;
-	}
-
-	public void setActionIds(long actionIds) {
-		_actionIds = actionIds;
+		setActionIds(pk.actionIds);
 	}
 
 	public long getResourceBlockId() {
@@ -117,7 +109,15 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 		_roleId = roleId;
 	}
 
-	private long _actionIds;
+	public long getActionIds() {
+		return _actionIds;
+	}
+
+	public void setActionIds(long actionIds) {
+		_actionIds = actionIds;
+	}
+
 	private long _resourceBlockId;
 	private long _roleId;
+	private long _actionIds;
 }

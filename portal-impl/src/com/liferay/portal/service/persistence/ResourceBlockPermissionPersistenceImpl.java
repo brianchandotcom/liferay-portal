@@ -15,7 +15,7 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.NoSuchResourceBlockRoleActionException;
+import com.liferay.portal.NoSuchResourceBlockPermissionException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.ResourceBlockRoleAction;
-import com.liferay.portal.model.impl.ResourceBlockRoleActionImpl;
-import com.liferay.portal.model.impl.ResourceBlockRoleActionModelImpl;
+import com.liferay.portal.model.ResourceBlockPermission;
+import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
+import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -47,30 +47,30 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The persistence implementation for the resource block role action service.
+ * The persistence implementation for the resource block permission service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ResourceBlockRoleActionPersistence
- * @see ResourceBlockRoleActionUtil
+ * @see ResourceBlockPermissionPersistence
+ * @see ResourceBlockPermissionUtil
  * @generated
  */
-public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<ResourceBlockRoleAction>
-	implements ResourceBlockRoleActionPersistence {
+public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<ResourceBlockPermission>
+	implements ResourceBlockPermissionPersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link ResourceBlockRoleActionUtil} to access the resource block role action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link ResourceBlockPermissionUtil} to access the resource block permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = ResourceBlockRoleActionImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_ENTITY = ResourceBlockPermissionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
-	public static final FinderPath FINDER_PATH_FIND_BY_R_A = new FinderPath(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_FIND_BY_R_A = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_LIST,
 			"findByR_A",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -78,50 +78,50 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_R_A = new FinderPath(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_A = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_A",
 			new String[] { Long.class.getName(), Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class, FINDER_CLASS_NAME_LIST,
+	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_LIST,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
-	 * Caches the resource block role action in the entity cache if it is enabled.
+	 * Caches the resource block permission in the entity cache if it is enabled.
 	 *
-	 * @param resourceBlockRoleAction the resource block role action
+	 * @param resourceBlockPermission the resource block permission
 	 */
-	public void cacheResult(ResourceBlockRoleAction resourceBlockRoleAction) {
-		EntityCacheUtil.putResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class,
-			resourceBlockRoleAction.getPrimaryKey(), resourceBlockRoleAction);
+	public void cacheResult(ResourceBlockPermission resourceBlockPermission) {
+		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class,
+			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
 
-		resourceBlockRoleAction.resetOriginalValues();
+		resourceBlockPermission.resetOriginalValues();
 	}
 
 	/**
-	 * Caches the resource block role actions in the entity cache if it is enabled.
+	 * Caches the resource block permissions in the entity cache if it is enabled.
 	 *
-	 * @param resourceBlockRoleActions the resource block role actions
+	 * @param resourceBlockPermissions the resource block permissions
 	 */
 	public void cacheResult(
-		List<ResourceBlockRoleAction> resourceBlockRoleActions) {
-		for (ResourceBlockRoleAction resourceBlockRoleAction : resourceBlockRoleActions) {
+		List<ResourceBlockPermission> resourceBlockPermissions) {
+		for (ResourceBlockPermission resourceBlockPermission : resourceBlockPermissions) {
 			if (EntityCacheUtil.getResult(
-						ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceBlockRoleActionImpl.class,
-						resourceBlockRoleAction.getPrimaryKey(), this) == null) {
-				cacheResult(resourceBlockRoleAction);
+						ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceBlockPermissionImpl.class,
+						resourceBlockPermission.getPrimaryKey(), this) == null) {
+				cacheResult(resourceBlockPermission);
 			}
 		}
 	}
 
 	/**
-	 * Clears the cache for all resource block role actions.
+	 * Clears the cache for all resource block permissions.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
@@ -130,90 +130,90 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public void clearCache() {
 		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(ResourceBlockRoleActionImpl.class.getName());
+			CacheRegistryUtil.clear(ResourceBlockPermissionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ResourceBlockRoleActionImpl.class.getName());
+		EntityCacheUtil.clearCache(ResourceBlockPermissionImpl.class.getName());
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 	}
 
 	/**
-	 * Clears the cache for the resource block role action.
+	 * Clears the cache for the resource block permission.
 	 *
 	 * <p>
 	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
-	public void clearCache(ResourceBlockRoleAction resourceBlockRoleAction) {
-		EntityCacheUtil.removeResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class,
-			resourceBlockRoleAction.getPrimaryKey());
+	public void clearCache(ResourceBlockPermission resourceBlockPermission) {
+		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class,
+			resourceBlockPermission.getPrimaryKey());
 	}
 
 	/**
-	 * Creates a new resource block role action with the primary key. Does not add the resource block role action to the database.
+	 * Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	 *
-	 * @param resourceBlockRoleActionPK the primary key for the new resource block role action
-	 * @return the new resource block role action
+	 * @param resourceBlockPermissionPK the primary key for the new resource block permission
+	 * @return the new resource block permission
 	 */
-	public ResourceBlockRoleAction create(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK) {
-		ResourceBlockRoleAction resourceBlockRoleAction = new ResourceBlockRoleActionImpl();
+	public ResourceBlockPermission create(
+		ResourceBlockPermissionPK resourceBlockPermissionPK) {
+		ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
 
-		resourceBlockRoleAction.setNew(true);
-		resourceBlockRoleAction.setPrimaryKey(resourceBlockRoleActionPK);
+		resourceBlockPermission.setNew(true);
+		resourceBlockPermission.setPrimaryKey(resourceBlockPermissionPK);
 
-		return resourceBlockRoleAction;
+		return resourceBlockPermission;
 	}
 
 	/**
-	 * Removes the resource block role action with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the resource block role action
-	 * @return the resource block role action that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource block role action with the primary key could not be found
+	 * @param primaryKey the primary key of the resource block permission
+	 * @return the resource block permission that was removed
+	 * @throws com.liferay.portal.NoSuchModelException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlockRoleAction remove(Serializable primaryKey)
+	public ResourceBlockPermission remove(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
-		return remove((ResourceBlockRoleActionPK)primaryKey);
+		return remove((ResourceBlockPermissionPK)primaryKey);
 	}
 
 	/**
-	 * Removes the resource block role action with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceBlockRoleActionPK the primary key of the resource block role action
-	 * @return the resource block role action that was removed
-	 * @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a resource block role action with the primary key could not be found
+	 * @param resourceBlockPermissionPK the primary key of the resource block permission
+	 * @return the resource block permission that was removed
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction remove(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
-		throws NoSuchResourceBlockRoleActionException, SystemException {
+	public ResourceBlockPermission remove(
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
+		throws NoSuchResourceBlockPermissionException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ResourceBlockRoleAction resourceBlockRoleAction = (ResourceBlockRoleAction)session.get(ResourceBlockRoleActionImpl.class,
-					resourceBlockRoleActionPK);
+			ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
+					resourceBlockPermissionPK);
 
-			if (resourceBlockRoleAction == null) {
+			if (resourceBlockPermission == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourceBlockRoleActionPK);
+						resourceBlockPermissionPK);
 				}
 
-				throw new NoSuchResourceBlockRoleActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceBlockRoleActionPK);
+				throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+					resourceBlockPermissionPK);
 			}
 
-			return resourceBlockRoleActionPersistence.remove(resourceBlockRoleAction);
+			return resourceBlockPermissionPersistence.remove(resourceBlockPermission);
 		}
-		catch (NoSuchResourceBlockRoleActionException nsee) {
+		catch (NoSuchResourceBlockPermissionException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -225,31 +225,31 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes the resource block role action from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource block permission from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceBlockRoleAction the resource block role action
-	 * @return the resource block role action that was removed
+	 * @param resourceBlockPermission the resource block permission
+	 * @return the resource block permission that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlockRoleAction remove(
-		ResourceBlockRoleAction resourceBlockRoleAction)
+	public ResourceBlockPermission remove(
+		ResourceBlockPermission resourceBlockPermission)
 		throws SystemException {
-		return super.remove(resourceBlockRoleAction);
+		return super.remove(resourceBlockPermission);
 	}
 
 	@Override
-	protected ResourceBlockRoleAction removeImpl(
-		ResourceBlockRoleAction resourceBlockRoleAction)
+	protected ResourceBlockPermission removeImpl(
+		ResourceBlockPermission resourceBlockPermission)
 		throws SystemException {
-		resourceBlockRoleAction = toUnwrappedModel(resourceBlockRoleAction);
+		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, resourceBlockRoleAction);
+			BatchSessionUtil.delete(session, resourceBlockPermission);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -260,27 +260,27 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		EntityCacheUtil.removeResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class,
-			resourceBlockRoleAction.getPrimaryKey());
+		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class,
+			resourceBlockPermission.getPrimaryKey());
 
-		return resourceBlockRoleAction;
+		return resourceBlockPermission;
 	}
 
 	@Override
-	public ResourceBlockRoleAction updateImpl(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction,
+	public ResourceBlockPermission updateImpl(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
 		boolean merge) throws SystemException {
-		resourceBlockRoleAction = toUnwrappedModel(resourceBlockRoleAction);
+		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, resourceBlockRoleAction, merge);
+			BatchSessionUtil.update(session, resourceBlockPermission, merge);
 
-			resourceBlockRoleAction.setNew(false);
+			resourceBlockPermission.setNew(false);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -291,103 +291,103 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		EntityCacheUtil.putResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockRoleActionImpl.class,
-			resourceBlockRoleAction.getPrimaryKey(), resourceBlockRoleAction);
+		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class,
+			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
 
-		return resourceBlockRoleAction;
+		return resourceBlockPermission;
 	}
 
-	protected ResourceBlockRoleAction toUnwrappedModel(
-		ResourceBlockRoleAction resourceBlockRoleAction) {
-		if (resourceBlockRoleAction instanceof ResourceBlockRoleActionImpl) {
-			return resourceBlockRoleAction;
+	protected ResourceBlockPermission toUnwrappedModel(
+		ResourceBlockPermission resourceBlockPermission) {
+		if (resourceBlockPermission instanceof ResourceBlockPermissionImpl) {
+			return resourceBlockPermission;
 		}
 
-		ResourceBlockRoleActionImpl resourceBlockRoleActionImpl = new ResourceBlockRoleActionImpl();
+		ResourceBlockPermissionImpl resourceBlockPermissionImpl = new ResourceBlockPermissionImpl();
 
-		resourceBlockRoleActionImpl.setNew(resourceBlockRoleAction.isNew());
-		resourceBlockRoleActionImpl.setPrimaryKey(resourceBlockRoleAction.getPrimaryKey());
+		resourceBlockPermissionImpl.setNew(resourceBlockPermission.isNew());
+		resourceBlockPermissionImpl.setPrimaryKey(resourceBlockPermission.getPrimaryKey());
 
-		resourceBlockRoleActionImpl.setActionIds(resourceBlockRoleAction.getActionIds());
-		resourceBlockRoleActionImpl.setResourceBlockId(resourceBlockRoleAction.getResourceBlockId());
-		resourceBlockRoleActionImpl.setRoleId(resourceBlockRoleAction.getRoleId());
+		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());
+		resourceBlockPermissionImpl.setRoleId(resourceBlockPermission.getRoleId());
+		resourceBlockPermissionImpl.setActionIds(resourceBlockPermission.getActionIds());
 
-		return resourceBlockRoleActionImpl;
+		return resourceBlockPermissionImpl;
 	}
 
 	/**
-	 * Returns the resource block role action with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the resource block permission with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the resource block role action
-	 * @return the resource block role action
-	 * @throws com.liferay.portal.NoSuchModelException if a resource block role action with the primary key could not be found
+	 * @param primaryKey the primary key of the resource block permission
+	 * @return the resource block permission
+	 * @throws com.liferay.portal.NoSuchModelException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlockRoleAction findByPrimaryKey(Serializable primaryKey)
+	public ResourceBlockPermission findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey((ResourceBlockRoleActionPK)primaryKey);
+		return findByPrimaryKey((ResourceBlockPermissionPK)primaryKey);
 	}
 
 	/**
-	 * Returns the resource block role action with the primary key or throws a {@link com.liferay.portal.NoSuchResourceBlockRoleActionException} if it could not be found.
+	 * Returns the resource block permission with the primary key or throws a {@link com.liferay.portal.NoSuchResourceBlockPermissionException} if it could not be found.
 	 *
-	 * @param resourceBlockRoleActionPK the primary key of the resource block role action
-	 * @return the resource block role action
-	 * @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a resource block role action with the primary key could not be found
+	 * @param resourceBlockPermissionPK the primary key of the resource block permission
+	 * @return the resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction findByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
-		throws NoSuchResourceBlockRoleActionException, SystemException {
-		ResourceBlockRoleAction resourceBlockRoleAction = fetchByPrimaryKey(resourceBlockRoleActionPK);
+	public ResourceBlockPermission findByPrimaryKey(
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(resourceBlockPermissionPK);
 
-		if (resourceBlockRoleAction == null) {
+		if (resourceBlockPermission == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceBlockRoleActionPK);
+					resourceBlockPermissionPK);
 			}
 
-			throw new NoSuchResourceBlockRoleActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourceBlockRoleActionPK);
+			throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				resourceBlockPermissionPK);
 		}
 
-		return resourceBlockRoleAction;
+		return resourceBlockPermission;
 	}
 
 	/**
-	 * Returns the resource block role action with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the resource block role action
-	 * @return the resource block role action, or <code>null</code> if a resource block role action with the primary key could not be found
+	 * @param primaryKey the primary key of the resource block permission
+	 * @return the resource block permission, or <code>null</code> if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlockRoleAction fetchByPrimaryKey(Serializable primaryKey)
+	public ResourceBlockPermission fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey((ResourceBlockRoleActionPK)primaryKey);
+		return fetchByPrimaryKey((ResourceBlockPermissionPK)primaryKey);
 	}
 
 	/**
-	 * Returns the resource block role action with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param resourceBlockRoleActionPK the primary key of the resource block role action
-	 * @return the resource block role action, or <code>null</code> if a resource block role action with the primary key could not be found
+	 * @param resourceBlockPermissionPK the primary key of the resource block permission
+	 * @return the resource block permission, or <code>null</code> if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction fetchByPrimaryKey(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+	public ResourceBlockPermission fetchByPrimaryKey(
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws SystemException {
-		ResourceBlockRoleAction resourceBlockRoleAction = (ResourceBlockRoleAction)EntityCacheUtil.getResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceBlockRoleActionImpl.class, resourceBlockRoleActionPK,
+		ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)EntityCacheUtil.getResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockPermissionImpl.class, resourceBlockPermissionPK,
 				this);
 
-		if (resourceBlockRoleAction == _nullResourceBlockRoleAction) {
+		if (resourceBlockPermission == _nullResourceBlockPermission) {
 			return null;
 		}
 
-		if (resourceBlockRoleAction == null) {
+		if (resourceBlockPermission == null) {
 			Session session = null;
 
 			boolean hasException = false;
@@ -395,8 +395,8 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 			try {
 				session = openSession();
 
-				resourceBlockRoleAction = (ResourceBlockRoleAction)session.get(ResourceBlockRoleActionImpl.class,
-						resourceBlockRoleActionPK);
+				resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
+						resourceBlockPermissionPK);
 			}
 			catch (Exception e) {
 				hasException = true;
@@ -404,38 +404,38 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				throw processException(e);
 			}
 			finally {
-				if (resourceBlockRoleAction != null) {
-					cacheResult(resourceBlockRoleAction);
+				if (resourceBlockPermission != null) {
+					cacheResult(resourceBlockPermission);
 				}
 				else if (!hasException) {
-					EntityCacheUtil.putResult(ResourceBlockRoleActionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceBlockRoleActionImpl.class,
-						resourceBlockRoleActionPK, _nullResourceBlockRoleAction);
+					EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+						ResourceBlockPermissionImpl.class,
+						resourceBlockPermissionPK, _nullResourceBlockPermission);
 				}
 
 				closeSession(session);
 			}
 		}
 
-		return resourceBlockRoleAction;
+		return resourceBlockPermission;
 	}
 
 	/**
-	 * Returns all the resource block role actions where roleId = &#63; and actionIds = &#63;.
+	 * Returns all the resource block permissions where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
-	 * @return the matching resource block role actions
+	 * @return the matching resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findByR_A(long roleId, long actionIds)
+	public List<ResourceBlockPermission> findByR_A(long roleId, long actionIds)
 		throws SystemException {
 		return findByR_A(roleId, actionIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the resource block role actions where roleId = &#63; and actionIds = &#63;.
+	 * Returns a range of all the resource block permissions where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -443,18 +443,18 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
-	 * @param start the lower bound of the range of resource block role actions
-	 * @param end the upper bound of the range of resource block role actions (not inclusive)
-	 * @return the range of matching resource block role actions
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
+	 * @return the range of matching resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findByR_A(long roleId, long actionIds,
+	public List<ResourceBlockPermission> findByR_A(long roleId, long actionIds,
 		int start, int end) throws SystemException {
 		return findByR_A(roleId, actionIds, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the resource block role actions where roleId = &#63; and actionIds = &#63;.
+	 * Returns an ordered range of all the resource block permissions where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -462,13 +462,13 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
-	 * @param start the lower bound of the range of resource block role actions
-	 * @param end the upper bound of the range of resource block role actions (not inclusive)
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource block role actions
+	 * @return the ordered range of matching resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findByR_A(long roleId, long actionIds,
+	public List<ResourceBlockPermission> findByR_A(long roleId, long actionIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		Object[] finderArgs = new Object[] {
@@ -478,7 +478,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				String.valueOf(orderByComparator)
 			};
 
-		List<ResourceBlockRoleAction> list = (List<ResourceBlockRoleAction>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_A,
+		List<ResourceBlockPermission> list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_A,
 				finderArgs, this);
 
 		if (list == null) {
@@ -492,7 +492,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				query = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_RESOURCEBLOCKROLEACTION_WHERE);
+			query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE);
 
 			query.append(_FINDER_COLUMN_R_A_ROLEID_2);
 
@@ -518,7 +518,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(actionIds);
 
-				list = (List<ResourceBlockRoleAction>)QueryUtil.list(q,
+				list = (List<ResourceBlockPermission>)QueryUtil.list(q,
 						getDialect(), start, end);
 			}
 			catch (Exception e) {
@@ -544,7 +544,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the first resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
+	 * Returns the first resource block permission in the ordered set where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -553,14 +553,14 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching resource block role action
-	 * @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a matching resource block role action could not be found
+	 * @return the first matching resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction findByR_A_First(long roleId, long actionIds,
+	public ResourceBlockPermission findByR_A_First(long roleId, long actionIds,
 		OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockRoleActionException, SystemException {
-		List<ResourceBlockRoleAction> list = findByR_A(roleId, actionIds, 0, 1,
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		List<ResourceBlockPermission> list = findByR_A(roleId, actionIds, 0, 1,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -576,7 +576,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchResourceBlockRoleActionException(msg.toString());
+			throw new NoSuchResourceBlockPermissionException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -584,7 +584,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the last resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
+	 * Returns the last resource block permission in the ordered set where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -593,16 +593,16 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching resource block role action
-	 * @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a matching resource block role action could not be found
+	 * @return the last matching resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction findByR_A_Last(long roleId, long actionIds,
+	public ResourceBlockPermission findByR_A_Last(long roleId, long actionIds,
 		OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockRoleActionException, SystemException {
+		throws NoSuchResourceBlockPermissionException, SystemException {
 		int count = countByR_A(roleId, actionIds);
 
-		List<ResourceBlockRoleAction> list = findByR_A(roleId, actionIds,
+		List<ResourceBlockPermission> list = findByR_A(roleId, actionIds,
 				count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
@@ -618,7 +618,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			throw new NoSuchResourceBlockRoleActionException(msg.toString());
+			throw new NoSuchResourceBlockPermissionException(msg.toString());
 		}
 		else {
 			return list.get(0);
@@ -626,39 +626,39 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the resource block role actions before and after the current resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
+	 * Returns the resource block permissions before and after the current resource block permission in the ordered set where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param resourceBlockRoleActionPK the primary key of the current resource block role action
+	 * @param resourceBlockPermissionPK the primary key of the current resource block permission
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource block role action
-	 * @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a resource block role action with the primary key could not be found
+	 * @return the previous, current, and next resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlockRoleAction[] findByR_A_PrevAndNext(
-		ResourceBlockRoleActionPK resourceBlockRoleActionPK, long roleId,
+	public ResourceBlockPermission[] findByR_A_PrevAndNext(
+		ResourceBlockPermissionPK resourceBlockPermissionPK, long roleId,
 		long actionIds, OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockRoleActionException, SystemException {
-		ResourceBlockRoleAction resourceBlockRoleAction = findByPrimaryKey(resourceBlockRoleActionPK);
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionPK);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ResourceBlockRoleAction[] array = new ResourceBlockRoleActionImpl[3];
+			ResourceBlockPermission[] array = new ResourceBlockPermissionImpl[3];
 
-			array[0] = getByR_A_PrevAndNext(session, resourceBlockRoleAction,
+			array[0] = getByR_A_PrevAndNext(session, resourceBlockPermission,
 					roleId, actionIds, orderByComparator, true);
 
-			array[1] = resourceBlockRoleAction;
+			array[1] = resourceBlockPermission;
 
-			array[2] = getByR_A_PrevAndNext(session, resourceBlockRoleAction,
+			array[2] = getByR_A_PrevAndNext(session, resourceBlockPermission,
 					roleId, actionIds, orderByComparator, false);
 
 			return array;
@@ -671,8 +671,8 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 		}
 	}
 
-	protected ResourceBlockRoleAction getByR_A_PrevAndNext(Session session,
-		ResourceBlockRoleAction resourceBlockRoleAction, long roleId,
+	protected ResourceBlockPermission getByR_A_PrevAndNext(Session session,
+		ResourceBlockPermission resourceBlockPermission, long roleId,
 		long actionIds, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -684,7 +684,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 			query = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_RESOURCEBLOCKROLEACTION_WHERE);
+		query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE);
 
 		query.append(_FINDER_COLUMN_R_A_ROLEID_2);
 
@@ -758,14 +758,14 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(actionIds);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(resourceBlockRoleAction);
+			Object[] values = orderByComparator.getOrderByValues(resourceBlockPermission);
 
 			for (Object value : values) {
 				qPos.add(value);
 			}
 		}
 
-		List<ResourceBlockRoleAction> list = q.list();
+		List<ResourceBlockPermission> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -776,53 +776,53 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns all the resource block role actions.
+	 * Returns all the resource block permissions.
 	 *
-	 * @return the resource block role actions
+	 * @return the resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findAll() throws SystemException {
+	public List<ResourceBlockPermission> findAll() throws SystemException {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the resource block role actions.
+	 * Returns a range of all the resource block permissions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of resource block role actions
-	 * @param end the upper bound of the range of resource block role actions (not inclusive)
-	 * @return the range of resource block role actions
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
+	 * @return the range of resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findAll(int start, int end)
+	public List<ResourceBlockPermission> findAll(int start, int end)
 		throws SystemException {
 		return findAll(start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the resource block role actions.
+	 * Returns an ordered range of all the resource block permissions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of resource block role actions
-	 * @param end the upper bound of the range of resource block role actions (not inclusive)
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of resource block role actions
+	 * @return the ordered range of resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceBlockRoleAction> findAll(int start, int end,
+	public List<ResourceBlockPermission> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<ResourceBlockRoleAction> list = (List<ResourceBlockRoleAction>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		List<ResourceBlockPermission> list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
 
 		if (list == null) {
@@ -833,7 +833,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				query = new StringBundler(2 +
 						(orderByComparator.getOrderByFields().length * 3));
 
-				query.append(_SQL_SELECT_RESOURCEBLOCKROLEACTION);
+				query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION);
 
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
 					orderByComparator);
@@ -841,7 +841,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_RESOURCEBLOCKROLEACTION;
+				sql = _SQL_SELECT_RESOURCEBLOCKPERMISSION;
 			}
 
 			Session session = null;
@@ -852,13 +852,13 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 				Query q = session.createQuery(sql);
 
 				if (orderByComparator == null) {
-					list = (List<ResourceBlockRoleAction>)QueryUtil.list(q,
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
 				}
 				else {
-					list = (List<ResourceBlockRoleAction>)QueryUtil.list(q,
+					list = (List<ResourceBlockPermission>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
 			}
@@ -885,7 +885,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes all the resource block role actions where roleId = &#63; and actionIds = &#63; from the database.
+	 * Removes all the resource block permissions where roleId = &#63; and actionIds = &#63; from the database.
 	 *
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
@@ -893,29 +893,29 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	public void removeByR_A(long roleId, long actionIds)
 		throws SystemException {
-		for (ResourceBlockRoleAction resourceBlockRoleAction : findByR_A(
+		for (ResourceBlockPermission resourceBlockPermission : findByR_A(
 				roleId, actionIds)) {
-			resourceBlockRoleActionPersistence.remove(resourceBlockRoleAction);
+			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
 		}
 	}
 
 	/**
-	 * Removes all the resource block role actions from the database.
+	 * Removes all the resource block permissions from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeAll() throws SystemException {
-		for (ResourceBlockRoleAction resourceBlockRoleAction : findAll()) {
-			resourceBlockRoleActionPersistence.remove(resourceBlockRoleAction);
+		for (ResourceBlockPermission resourceBlockPermission : findAll()) {
+			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
 		}
 	}
 
 	/**
-	 * Returns the number of resource block role actions where roleId = &#63; and actionIds = &#63;.
+	 * Returns the number of resource block permissions where roleId = &#63; and actionIds = &#63;.
 	 *
 	 * @param roleId the role ID
 	 * @param actionIds the action IDs
-	 * @return the number of matching resource block role actions
+	 * @return the number of matching resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countByR_A(long roleId, long actionIds)
@@ -928,7 +928,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
 
-			query.append(_SQL_COUNT_RESOURCEBLOCKROLEACTION_WHERE);
+			query.append(_SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE);
 
 			query.append(_FINDER_COLUMN_R_A_ROLEID_2);
 
@@ -970,9 +970,9 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Returns the number of resource block role actions.
+	 * Returns the number of resource block permissions.
 	 *
-	 * @return the number of resource block role actions
+	 * @return the number of resource block permissions
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
@@ -987,7 +987,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_RESOURCEBLOCKROLEACTION);
+				Query q = session.createQuery(_SQL_COUNT_RESOURCEBLOCKPERMISSION);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1010,19 +1010,19 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Initializes the resource block role action persistence.
+	 * Initializes the resource block permission persistence.
 	 */
 	public void afterPropertiesSet() {
 		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
 					com.liferay.portal.util.PropsUtil.get(
-						"value.object.listener.com.liferay.portal.model.ResourceBlockRoleAction")));
+						"value.object.listener.com.liferay.portal.model.ResourceBlockPermission")));
 
 		if (listenerClassNames.length > 0) {
 			try {
-				List<ModelListener<ResourceBlockRoleAction>> listenersList = new ArrayList<ModelListener<ResourceBlockRoleAction>>();
+				List<ModelListener<ResourceBlockPermission>> listenersList = new ArrayList<ModelListener<ResourceBlockPermission>>();
 
 				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<ResourceBlockRoleAction>)InstanceFactory.newInstance(
+					listenersList.add((ModelListener<ResourceBlockPermission>)InstanceFactory.newInstance(
 							listenerClassName));
 				}
 
@@ -1035,7 +1035,7 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ResourceBlockRoleActionImpl.class.getName());
+		EntityCacheUtil.removeCache(ResourceBlockPermissionImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
 	}
@@ -1122,8 +1122,8 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
-	@BeanReference(type = ResourceBlockRoleActionPersistence.class)
-	protected ResourceBlockRoleActionPersistence resourceBlockRoleActionPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
@@ -1166,18 +1166,18 @@ public class ResourceBlockRoleActionPersistenceImpl extends BasePersistenceImpl<
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	private static final String _SQL_SELECT_RESOURCEBLOCKROLEACTION = "SELECT resourceBlockRoleAction FROM ResourceBlockRoleAction resourceBlockRoleAction";
-	private static final String _SQL_SELECT_RESOURCEBLOCKROLEACTION_WHERE = "SELECT resourceBlockRoleAction FROM ResourceBlockRoleAction resourceBlockRoleAction WHERE ";
-	private static final String _SQL_COUNT_RESOURCEBLOCKROLEACTION = "SELECT COUNT(resourceBlockRoleAction) FROM ResourceBlockRoleAction resourceBlockRoleAction";
-	private static final String _SQL_COUNT_RESOURCEBLOCKROLEACTION_WHERE = "SELECT COUNT(resourceBlockRoleAction) FROM ResourceBlockRoleAction resourceBlockRoleAction WHERE ";
-	private static final String _FINDER_COLUMN_R_A_ROLEID_2 = "resourceBlockRoleAction.id.roleId = ? AND ";
-	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockRoleAction.id.actionIds = ?";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockRoleAction.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlockRoleAction exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlockRoleAction exists with the key {";
+	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission";
+	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
+	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+	private static final String _FINDER_COLUMN_R_A_ROLEID_2 = "resourceBlockPermission.id.roleId = ? AND ";
+	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockPermission.id.actionIds = ?";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockPermission.";
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlockPermission exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlockPermission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ResourceBlockRoleActionPersistenceImpl.class);
-	private static ResourceBlockRoleAction _nullResourceBlockRoleAction = new ResourceBlockRoleActionImpl() {
+	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionPersistenceImpl.class);
+	private static ResourceBlockPermission _nullResourceBlockPermission = new ResourceBlockPermissionImpl() {
 			public Object clone() {
 				return this;
 			}

@@ -1568,13 +1568,13 @@
 			<finder-column name="permissionsHash" />
 		</finder>
 	</entity>
-	<entity name="ResourceBlockRoleAction" local-service="true" remote-service="false">
+	<entity name="ResourceBlockPermission" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="actionIds" type="long" primary="true" />
 		<column name="resourceBlockId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
+		<column name="actionIds" type="long" primary="true" />
 
 		<!-- Finder methods -->
 

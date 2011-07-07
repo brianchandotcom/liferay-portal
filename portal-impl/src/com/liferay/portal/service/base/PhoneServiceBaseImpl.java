@@ -88,7 +88,7 @@ import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
-import com.liferay.portal.service.ResourceBlockRoleActionLocalService;
+import com.liferay.portal.service.ResourceBlockPermissionLocalService;
 import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
@@ -170,8 +170,8 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
-import com.liferay.portal.service.persistence.ResourceBlockRoleActionPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
@@ -2431,41 +2431,41 @@ public abstract class PhoneServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
-	 * Returns the resource block role action local service.
+	 * Returns the resource block permission local service.
 	 *
-	 * @return the resource block role action local service
+	 * @return the resource block permission local service
 	 */
-	public ResourceBlockRoleActionLocalService getResourceBlockRoleActionLocalService() {
-		return resourceBlockRoleActionLocalService;
+	public ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+		return resourceBlockPermissionLocalService;
 	}
 
 	/**
-	 * Sets the resource block role action local service.
+	 * Sets the resource block permission local service.
 	 *
-	 * @param resourceBlockRoleActionLocalService the resource block role action local service
+	 * @param resourceBlockPermissionLocalService the resource block permission local service
 	 */
-	public void setResourceBlockRoleActionLocalService(
-		ResourceBlockRoleActionLocalService resourceBlockRoleActionLocalService) {
-		this.resourceBlockRoleActionLocalService = resourceBlockRoleActionLocalService;
+	public void setResourceBlockPermissionLocalService(
+		ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
+		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
 	}
 
 	/**
-	 * Returns the resource block role action persistence.
+	 * Returns the resource block permission persistence.
 	 *
-	 * @return the resource block role action persistence
+	 * @return the resource block permission persistence
 	 */
-	public ResourceBlockRoleActionPersistence getResourceBlockRoleActionPersistence() {
-		return resourceBlockRoleActionPersistence;
+	public ResourceBlockPermissionPersistence getResourceBlockPermissionPersistence() {
+		return resourceBlockPermissionPersistence;
 	}
 
 	/**
-	 * Sets the resource block role action persistence.
+	 * Sets the resource block permission persistence.
 	 *
-	 * @param resourceBlockRoleActionPersistence the resource block role action persistence
+	 * @param resourceBlockPermissionPersistence the resource block permission persistence
 	 */
-	public void setResourceBlockRoleActionPersistence(
-		ResourceBlockRoleActionPersistence resourceBlockRoleActionPersistence) {
-		this.resourceBlockRoleActionPersistence = resourceBlockRoleActionPersistence;
+	public void setResourceBlockPermissionPersistence(
+		ResourceBlockPermissionPersistence resourceBlockPermissionPersistence) {
+		this.resourceBlockPermissionPersistence = resourceBlockPermissionPersistence;
 	}
 
 	/**
@@ -3853,10 +3853,10 @@ public abstract class PhoneServiceBaseImpl extends PrincipalBean
 	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
-	@BeanReference(type = ResourceBlockRoleActionLocalService.class)
-	protected ResourceBlockRoleActionLocalService resourceBlockRoleActionLocalService;
-	@BeanReference(type = ResourceBlockRoleActionPersistence.class)
-	protected ResourceBlockRoleActionPersistence resourceBlockRoleActionPersistence;
+	@BeanReference(type = ResourceBlockPermissionLocalService.class)
+	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodeLocalService.class)
 	protected ResourceCodeLocalService resourceCodeLocalService;
 	@BeanReference(type = ResourceCodePersistence.class)

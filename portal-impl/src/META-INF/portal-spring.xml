@@ -120,8 +120,8 @@
 	<bean id="com.liferay.portal.service.persistence.ResourceActionPersistence" class="com.liferay.portal.service.persistence.ResourceActionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockLocalService" class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.ResourceBlockRoleActionLocalService" class="com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.ResourceBlockRoleActionPersistence" class="com.liferay.portal.service.persistence.ResourceBlockRoleActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.ResourceBlockPermissionLocalService" class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceCodeLocalService" class="com.liferay.portal.service.impl.ResourceCodeLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceCodePersistence" class="com.liferay.portal.service.persistence.ResourceCodePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourcePermissionLocalService" class="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl" />

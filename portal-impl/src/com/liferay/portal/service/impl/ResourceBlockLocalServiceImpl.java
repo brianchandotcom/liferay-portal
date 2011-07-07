@@ -58,7 +58,7 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPersistence.update(resourceBlock, false);
 
-		resourceBlockRoleActionLocalService.addResourceBlockRoleActions(
+		resourceBlockPermissionLocalService.addResourceBlockPermission(
 			resourceBlock, resourcePermissions);
 
 		return resourceBlock;

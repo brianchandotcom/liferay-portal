@@ -22,27 +22,19 @@ import java.io.Serializable;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleActionPK>,
+public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermissionPK>,
 	Serializable {
-	public long actionIds;
 	public long resourceBlockId;
 	public long roleId;
+	public long actionIds;
 
-	public ResourceBlockRoleActionPK() {
+	public ResourceBlockPermissionPK() {
 	}
 
-	public ResourceBlockRoleActionPK(long actionIds, long resourceBlockId,
-		long roleId) {
-		this.actionIds = actionIds;
+	public ResourceBlockPermissionPK(long resourceBlockId, long roleId,
+		long actionIds) {
 		this.resourceBlockId = resourceBlockId;
 		this.roleId = roleId;
-	}
-
-	public long getActionIds() {
-		return actionIds;
-	}
-
-	public void setActionIds(long actionIds) {
 		this.actionIds = actionIds;
 	}
 
@@ -62,26 +54,20 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 		this.roleId = roleId;
 	}
 
-	public int compareTo(ResourceBlockRoleActionPK pk) {
+	public long getActionIds() {
+		return actionIds;
+	}
+
+	public void setActionIds(long actionIds) {
+		this.actionIds = actionIds;
+	}
+
+	public int compareTo(ResourceBlockPermissionPK pk) {
 		if (pk == null) {
 			return -1;
 		}
 
 		int value = 0;
-
-		if (actionIds < pk.actionIds) {
-			value = -1;
-		}
-		else if (actionIds > pk.actionIds) {
-			value = 1;
-		}
-		else {
-			value = 0;
-		}
-
-		if (value != 0) {
-			return value;
-		}
 
 		if (resourceBlockId < pk.resourceBlockId) {
 			value = -1;
@@ -111,6 +97,20 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 			return value;
 		}
 
+		if (actionIds < pk.actionIds) {
+			value = -1;
+		}
+		else if (actionIds > pk.actionIds) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
 		return 0;
 	}
 
@@ -120,18 +120,17 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 			return false;
 		}
 
-		ResourceBlockRoleActionPK pk = null;
+		ResourceBlockPermissionPK pk = null;
 
 		try {
-			pk = (ResourceBlockRoleActionPK)obj;
+			pk = (ResourceBlockPermissionPK)obj;
 		}
 		catch (ClassCastException cce) {
 			return false;
 		}
 
-		if ((actionIds == pk.actionIds) &&
-				(resourceBlockId == pk.resourceBlockId) &&
-				(roleId == pk.roleId)) {
+		if ((resourceBlockId == pk.resourceBlockId) && (roleId == pk.roleId) &&
+				(actionIds == pk.actionIds)) {
 			return true;
 		}
 		else {
@@ -141,8 +140,8 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 
 	@Override
 	public int hashCode() {
-		return (String.valueOf(actionIds) + String.valueOf(resourceBlockId) +
-		String.valueOf(roleId)).hashCode();
+		return (String.valueOf(resourceBlockId) + String.valueOf(roleId) +
+		String.valueOf(actionIds)).hashCode();
 	}
 
 	@Override
@@ -151,12 +150,6 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
-		sb.append("actionIds");
-		sb.append(StringPool.EQUAL);
-		sb.append(actionIds);
-
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
 		sb.append("resourceBlockId");
 		sb.append(StringPool.EQUAL);
 		sb.append(resourceBlockId);
@@ -166,6 +159,12 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 		sb.append("roleId");
 		sb.append(StringPool.EQUAL);
 		sb.append(roleId);
+
+		sb.append(StringPool.COMMA);
+		sb.append(StringPool.SPACE);
+		sb.append("actionIds");
+		sb.append(StringPool.EQUAL);
+		sb.append(actionIds);
 
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 

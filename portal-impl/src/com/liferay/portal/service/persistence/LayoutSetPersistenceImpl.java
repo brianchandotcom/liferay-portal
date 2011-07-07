@@ -1347,8 +1347,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
-	@BeanReference(type = ResourceBlockRoleActionPersistence.class)
-	protected ResourceBlockRoleActionPersistence resourceBlockRoleActionPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)

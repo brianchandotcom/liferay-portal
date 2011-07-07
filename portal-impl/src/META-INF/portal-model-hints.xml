@@ -679,10 +679,10 @@
 		<field name="permissionsHash" type="String" />
 		<field name="referenceCount" type="long" />
 	</model>
-	<model name="com.liferay.portal.model.ResourceBlockRoleAction">
-		<field name="actionIds" type="long" />
+	<model name="com.liferay.portal.model.ResourceBlockPermission">
 		<field name="resourceBlockId" type="long" />
 		<field name="roleId" type="long" />
+		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceCode">
 		<field name="codeId" type="long" />

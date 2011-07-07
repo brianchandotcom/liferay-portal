@@ -14,25 +14,26 @@
 
 package com.liferay.portal;
 
+import com.liferay.portal.NoSuchModelException;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchResourceBlockRoleActionException
-	extends NoSuchModelException {
+public class NoSuchResourceBlockPermissionException extends NoSuchModelException {
 
-	public NoSuchResourceBlockRoleActionException() {
+	public NoSuchResourceBlockPermissionException() {
 		super();
 	}
 
-	public NoSuchResourceBlockRoleActionException(String msg) {
+	public NoSuchResourceBlockPermissionException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchResourceBlockRoleActionException(String msg, Throwable cause) {
+	public NoSuchResourceBlockPermissionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchResourceBlockRoleActionException(Throwable cause) {
+	public NoSuchResourceBlockPermissionException(Throwable cause) {
 		super(cause);
 	}
 

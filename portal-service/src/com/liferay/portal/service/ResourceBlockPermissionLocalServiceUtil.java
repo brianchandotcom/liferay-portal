@@ -19,74 +19,74 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
- * The utility for the resource block role action local service. This utility wraps {@link com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
+ * The utility for the resource block permission local service. This utility wraps {@link com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ResourceBlockRoleActionLocalService
- * @see com.liferay.portal.service.base.ResourceBlockRoleActionLocalServiceBaseImpl
- * @see com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl
+ * @see ResourceBlockPermissionLocalService
+ * @see com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl
+ * @see com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl
  * @generated
  */
-public class ResourceBlockRoleActionLocalServiceUtil {
+public class ResourceBlockPermissionLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockRoleActionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
-	* Adds the resource block role action to the database. Also notifies the appropriate model listeners.
+	* Adds the resource block permission to the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @return the resource block role action that was added
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlockRoleAction addResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public static com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addResourceBlockRoleAction(resourceBlockRoleAction);
+		return getService().addResourceBlockPermission(resourceBlockPermission);
 	}
 
 	/**
-	* Creates a new resource block role action with the primary key. Does not add the resource block role action to the database.
+	* Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	*
-	* @param resourceBlockRoleActionPK the primary key for the new resource block role action
-	* @return the new resource block role action
+	* @param resourceBlockPermissionPK the primary key for the new resource block permission
+	* @return the new resource block permission
 	*/
-	public static com.liferay.portal.model.ResourceBlockRoleAction createResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK) {
+	public static com.liferay.portal.model.ResourceBlockPermission createResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK) {
 		return getService()
-				   .createResourceBlockRoleAction(resourceBlockRoleActionPK);
+				   .createResourceBlockPermission(resourceBlockPermissionPK);
 	}
 
 	/**
-	* Deletes the resource block role action with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleActionPK the primary key of the resource block role action
-	* @throws PortalException if a resource block role action with the primary key could not be found
+	* @param resourceBlockPermissionPK the primary key of the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+	public static void deleteResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceBlockRoleAction(resourceBlockRoleActionPK);
+		getService().deleteResourceBlockPermission(resourceBlockPermissionPK);
 	}
 
 	/**
-	* Deletes the resource block role action from the database. Also notifies the appropriate model listeners.
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
+	* @param resourceBlockPermission the resource block permission
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public static void deleteResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteResourceBlockRoleAction(resourceBlockRoleAction);
+		getService().deleteResourceBlockPermission(resourceBlockPermission);
 	}
 
 	/**
@@ -161,77 +161,77 @@ public class ResourceBlockRoleActionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the resource block role action with the primary key.
+	* Returns the resource block permission with the primary key.
 	*
-	* @param resourceBlockRoleActionPK the primary key of the resource block role action
-	* @return the resource block role action
-	* @throws PortalException if a resource block role action with the primary key could not be found
+	* @param resourceBlockPermissionPK the primary key of the resource block permission
+	* @return the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlockRoleAction getResourceBlockRoleAction(
-		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK)
+	public static com.liferay.portal.model.ResourceBlockPermission getResourceBlockPermission(
+		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResourceBlockRoleAction(resourceBlockRoleActionPK);
+		return getService().getResourceBlockPermission(resourceBlockPermissionPK);
 	}
 
 	/**
-	* Returns a range of all the resource block role actions.
+	* Returns a range of all the resource block permissions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of resource block role actions
-	* @param end the upper bound of the range of resource block role actions (not inclusive)
-	* @return the range of resource block role actions
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @return the range of resource block permissions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlockRoleAction> getResourceBlockRoleActions(
+	public static java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResourceBlockRoleActions(start, end);
+		return getService().getResourceBlockPermissions(start, end);
 	}
 
 	/**
-	* Returns the number of resource block role actions.
+	* Returns the number of resource block permissions.
 	*
-	* @return the number of resource block role actions
+	* @return the number of resource block permissions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int getResourceBlockRoleActionsCount()
+	public static int getResourceBlockPermissionsCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResourceBlockRoleActionsCount();
+		return getService().getResourceBlockPermissionsCount();
 	}
 
 	/**
-	* Updates the resource block role action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @return the resource block role action that was updated
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlockRoleAction updateResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction)
+	public static com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateResourceBlockRoleAction(resourceBlockRoleAction);
+				   .updateResourceBlockPermission(resourceBlockPermission);
 	}
 
 	/**
-	* Updates the resource block role action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param resourceBlockRoleAction the resource block role action
-	* @param merge whether to merge the resource block role action with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the resource block role action that was updated
+	* @param resourceBlockPermission the resource block permission
+	* @param merge whether to merge the resource block permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the resource block permission that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlockRoleAction updateResourceBlockRoleAction(
-		com.liferay.portal.model.ResourceBlockRoleAction resourceBlockRoleAction,
+	public static com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateResourceBlockRoleAction(resourceBlockRoleAction, merge);
+				   .updateResourceBlockPermission(resourceBlockPermission, merge);
 	}
 
 	/**
@@ -252,35 +252,43 @@ public class ResourceBlockRoleActionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void addResourceBlockRoleActions(
+	public static com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
+		long actionIds, long resourceBlockId, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addResourceBlockPermission(actionIds, resourceBlockId,
+			roleId);
+	}
+
+	public static void addResourceBlockPermissions(
 		com.liferay.portal.model.ResourceBlock resourceBlock,
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService()
-			.addResourceBlockRoleActions(resourceBlock, resourcePermissions);
+			.addResourceBlockPermissions(resourceBlock, resourcePermissions);
 	}
 
-	public static ResourceBlockRoleActionLocalService getService() {
+	public static ResourceBlockPermissionLocalService getService() {
 		if (_service == null) {
-			_service = (ResourceBlockRoleActionLocalService)PortalBeanLocatorUtil.locate(ResourceBlockRoleActionLocalService.class.getName());
+			_service = (ResourceBlockPermissionLocalService)PortalBeanLocatorUtil.locate(ResourceBlockPermissionLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(ResourceBlockRoleActionLocalServiceUtil.class,
+			ReferenceRegistry.registerReference(ResourceBlockPermissionLocalServiceUtil.class,
 				"_service");
-			MethodCache.remove(ResourceBlockRoleActionLocalService.class);
+			MethodCache.remove(ResourceBlockPermissionLocalService.class);
 		}
 
 		return _service;
 	}
 
-	public void setService(ResourceBlockRoleActionLocalService service) {
-		MethodCache.remove(ResourceBlockRoleActionLocalService.class);
+	public void setService(ResourceBlockPermissionLocalService service) {
+		MethodCache.remove(ResourceBlockPermissionLocalService.class);
 
 		_service = service;
 
-		ReferenceRegistry.registerReference(ResourceBlockRoleActionLocalServiceUtil.class,
+		ReferenceRegistry.registerReference(ResourceBlockPermissionLocalServiceUtil.class,
 			"_service");
-		MethodCache.remove(ResourceBlockRoleActionLocalService.class);
+		MethodCache.remove(ResourceBlockPermissionLocalService.class);
 	}
 
-	private static ResourceBlockRoleActionLocalService _service;
+	private static ResourceBlockPermissionLocalService _service;
 }

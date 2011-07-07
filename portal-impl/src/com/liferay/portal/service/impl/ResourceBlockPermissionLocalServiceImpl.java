@@ -16,34 +16,34 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceBlock;
-import com.liferay.portal.model.ResourceBlockRoleAction;
+import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.service.base.ResourceBlockRoleActionLocalServiceBaseImpl;
-import com.liferay.portal.service.persistence.ResourceBlockRoleActionPK;
+import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
 
 import java.util.List;
 
 /**
  * @author Connor McKay
  */
-public class ResourceBlockRoleActionLocalServiceImpl
-	extends ResourceBlockRoleActionLocalServiceBaseImpl {
+public class ResourceBlockPermissionLocalServiceImpl
+	extends ResourceBlockPermissionLocalServiceBaseImpl {
 
-	public ResourceBlockRoleAction addResourceBlockRoleAction(
+	public ResourceBlockPermission addResourceBlockPermission(
 				long actionIds, long resourceBlockId, long roleId)
 		throws SystemException {
 
-		ResourceBlockRoleActionPK pk =
-			new ResourceBlockRoleActionPK(actionIds, resourceBlockId, roleId);
+		ResourceBlockPermissionPK pk =
+			new ResourceBlockPermissionPK(actionIds, resourceBlockId, roleId);
 
-		ResourceBlockRoleAction resourceBlockRoleAction =
-			resourceBlockRoleActionPersistence.create(pk);
+		ResourceBlockPermission resourceBlockPermission =
+			resourceBlockPermissionPersistence.create(pk);
 
-		resourceBlockRoleActionPersistence.update(
-			resourceBlockRoleAction, false);
+		resourceBlockPermissionPersistence.update(
+			resourceBlockPermission, false);
 	}
 
-	public void addResourceBlockRoleActions(
+	public void addResourceBlockPermissions(
 			ResourceBlock resourceBlock,
 			List<ResourcePermission> resourcePermissions)
 		throws SystemException {

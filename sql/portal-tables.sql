@@ -1467,7 +1467,14 @@ create table ResourceBlock (
 	referenceCount LONG
 );
 
-create table ResourceBlockRoleAction (
+create table ResourceBlockPermission (
+	resourceBlockId LONG not null,
+	roleId LONG not null,
+	actionIds LONG not null,
+	primary key (resourceBlockId, roleId, actionIds)
+);
+
+create table ResourceBlockPermission (
 	actionIds LONG not null,
 	resourceBlockId LONG not null,
 	roleId LONG not null,

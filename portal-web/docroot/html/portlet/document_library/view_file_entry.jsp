@@ -748,7 +748,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			activeState: false,
 			boundingBox: buttonRow,
 			children: [
-				<c:if test="<%= canEdit && (!isCheckedOut || hasLock)%>">
+				<c:if test="<%= canEdit && (!isCheckedOut || hasLock) %>">
 					{
 
 						<portlet:renderURL var="editURL">

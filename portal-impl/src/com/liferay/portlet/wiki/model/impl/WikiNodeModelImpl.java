@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -418,6 +419,63 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeModelImpl._setOriginalGroupId = false;
 
 		wikiNodeModelImpl._originalName = wikiNodeModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<WikiNode> toCacheModel() {
+		WikiNodeCacheModel wikiNodeCacheModel = new WikiNodeCacheModel();
+
+		wikiNodeCacheModel.uuid = getUuid();
+
+		if ((wikiNodeCacheModel.uuid != null) &&
+				(wikiNodeCacheModel.uuid.length() == 0)) {
+			wikiNodeCacheModel.uuid = null;
+		}
+
+		wikiNodeCacheModel.nodeId = getNodeId();
+		wikiNodeCacheModel.groupId = getGroupId();
+		wikiNodeCacheModel.companyId = getCompanyId();
+		wikiNodeCacheModel.userId = getUserId();
+		wikiNodeCacheModel.userName = getUserName();
+
+		if ((wikiNodeCacheModel.userName != null) &&
+				(wikiNodeCacheModel.userName.length() == 0)) {
+			wikiNodeCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			wikiNodeCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			wikiNodeCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		wikiNodeCacheModel.name = getName();
+
+		if ((wikiNodeCacheModel.name != null) &&
+				(wikiNodeCacheModel.name.length() == 0)) {
+			wikiNodeCacheModel.name = null;
+		}
+
+		wikiNodeCacheModel.description = getDescription();
+
+		if ((wikiNodeCacheModel.description != null) &&
+				(wikiNodeCacheModel.description.length() == 0)) {
+			wikiNodeCacheModel.description = null;
+		}
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			wikiNodeCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		return wikiNodeCacheModel;
 	}
 
 	@Override

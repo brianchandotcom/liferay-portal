@@ -545,6 +545,8 @@ public interface ContactModel extends AuditedModel, BaseModel<Contact> {
 
 	public int hashCode();
 
+	public CacheModel<Contact> toCacheModel();
+
 	public Contact toEscapedModel();
 
 	public String toString();

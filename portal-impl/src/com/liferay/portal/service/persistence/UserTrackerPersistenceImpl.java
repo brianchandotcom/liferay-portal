@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.model.impl.UserTrackerImpl;
@@ -1990,6 +1991,16 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	private static UserTracker _nullUserTracker = new UserTrackerImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<UserTracker> toCacheModel() {
+				return _nullUserTrackerCacheModel;
+			}
+		};
+
+	private static CacheModel<UserTracker> _nullUserTrackerCacheModel = new CacheModel<UserTracker>() {
+			public UserTracker toEntityModel() {
+				return _nullUserTracker;
 			}
 		};
 }

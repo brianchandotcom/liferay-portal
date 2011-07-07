@@ -124,6 +124,8 @@ public interface ResourceModel extends BaseModel<Resource> {
 
 	public int hashCode();
 
+	public CacheModel<Resource> toCacheModel();
+
 	public Resource toEscapedModel();
 
 	public String toString();

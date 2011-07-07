@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -607,6 +608,67 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		ddlRecordSetModelImpl._setOriginalGroupId = false;
 
 		ddlRecordSetModelImpl._originalRecordSetKey = ddlRecordSetModelImpl._recordSetKey;
+	}
+
+	@Override
+	public CacheModel<DDLRecordSet> toCacheModel() {
+		DDLRecordSetCacheModel ddlRecordSetCacheModel = new DDLRecordSetCacheModel();
+
+		ddlRecordSetCacheModel.uuid = getUuid();
+
+		if ((ddlRecordSetCacheModel.uuid != null) &&
+				(ddlRecordSetCacheModel.uuid.length() == 0)) {
+			ddlRecordSetCacheModel.uuid = null;
+		}
+
+		ddlRecordSetCacheModel.recordSetId = getRecordSetId();
+		ddlRecordSetCacheModel.groupId = getGroupId();
+		ddlRecordSetCacheModel.companyId = getCompanyId();
+		ddlRecordSetCacheModel.userId = getUserId();
+		ddlRecordSetCacheModel.userName = getUserName();
+
+		if ((ddlRecordSetCacheModel.userName != null) &&
+				(ddlRecordSetCacheModel.userName.length() == 0)) {
+			ddlRecordSetCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddlRecordSetCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddlRecordSetCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddlRecordSetCacheModel.DDMStructureId = getDDMStructureId();
+		ddlRecordSetCacheModel.recordSetKey = getRecordSetKey();
+
+		if ((ddlRecordSetCacheModel.recordSetKey != null) &&
+				(ddlRecordSetCacheModel.recordSetKey.length() == 0)) {
+			ddlRecordSetCacheModel.recordSetKey = null;
+		}
+
+		ddlRecordSetCacheModel.name = getName();
+
+		if ((ddlRecordSetCacheModel.name != null) &&
+				(ddlRecordSetCacheModel.name.length() == 0)) {
+			ddlRecordSetCacheModel.name = null;
+		}
+
+		ddlRecordSetCacheModel.description = getDescription();
+
+		if ((ddlRecordSetCacheModel.description != null) &&
+				(ddlRecordSetCacheModel.description.length() == 0)) {
+			ddlRecordSetCacheModel.description = null;
+		}
+
+		ddlRecordSetCacheModel.minDisplayRows = getMinDisplayRows();
+
+		return ddlRecordSetCacheModel;
 	}
 
 	@Override

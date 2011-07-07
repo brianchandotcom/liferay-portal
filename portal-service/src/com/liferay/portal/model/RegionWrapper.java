@@ -208,6 +208,10 @@ public class RegionWrapper implements Region {
 		return _region.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Region> toCacheModel() {
+		return _region.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Region toEscapedModel() {
 		return new RegionWrapper(_region.toEscapedModel());
 	}

@@ -140,6 +140,8 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath> {
 
 	public int hashCode();
 
+	public CacheModel<UserTrackerPath> toCacheModel();
+
 	public UserTrackerPath toEscapedModel();
 
 	public String toString();

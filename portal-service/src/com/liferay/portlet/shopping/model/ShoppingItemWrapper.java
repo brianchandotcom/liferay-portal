@@ -823,6 +823,10 @@ public class ShoppingItemWrapper implements ShoppingItem {
 		return _shoppingItem.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingItem> toCacheModel() {
+		return _shoppingItem.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingItem toEscapedModel() {
 		return new ShoppingItemWrapper(_shoppingItem.toEscapedModel());
 	}

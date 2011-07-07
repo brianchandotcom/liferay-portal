@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -325,6 +326,32 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<SCLicense> toCacheModel() {
+		SCLicenseCacheModel scLicenseCacheModel = new SCLicenseCacheModel();
+
+		scLicenseCacheModel.licenseId = getLicenseId();
+		scLicenseCacheModel.name = getName();
+
+		if ((scLicenseCacheModel.name != null) &&
+				(scLicenseCacheModel.name.length() == 0)) {
+			scLicenseCacheModel.name = null;
+		}
+
+		scLicenseCacheModel.url = getUrl();
+
+		if ((scLicenseCacheModel.url != null) &&
+				(scLicenseCacheModel.url.length() == 0)) {
+			scLicenseCacheModel.url = null;
+		}
+
+		scLicenseCacheModel.openSource = getOpenSource();
+		scLicenseCacheModel.active = getActive();
+		scLicenseCacheModel.recommended = getRecommended();
+
+		return scLicenseCacheModel;
 	}
 
 	@Override

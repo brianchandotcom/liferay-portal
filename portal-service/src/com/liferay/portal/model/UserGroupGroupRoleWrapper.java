@@ -165,6 +165,10 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
 		return _userGroupGroupRole.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserGroupGroupRole> toCacheModel() {
+		return _userGroupGroupRole.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserGroupGroupRole toEscapedModel() {
 		return new UserGroupGroupRoleWrapper(_userGroupGroupRole.toEscapedModel());
 	}

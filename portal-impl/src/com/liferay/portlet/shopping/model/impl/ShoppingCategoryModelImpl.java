@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -381,6 +382,51 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ShoppingCategory> toCacheModel() {
+		ShoppingCategoryCacheModel shoppingCategoryCacheModel = new ShoppingCategoryCacheModel();
+
+		shoppingCategoryCacheModel.categoryId = getCategoryId();
+		shoppingCategoryCacheModel.groupId = getGroupId();
+		shoppingCategoryCacheModel.companyId = getCompanyId();
+		shoppingCategoryCacheModel.userId = getUserId();
+		shoppingCategoryCacheModel.userName = getUserName();
+
+		if ((shoppingCategoryCacheModel.userName != null) &&
+				(shoppingCategoryCacheModel.userName.length() == 0)) {
+			shoppingCategoryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingCategoryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingCategoryCacheModel.parentCategoryId = getParentCategoryId();
+		shoppingCategoryCacheModel.name = getName();
+
+		if ((shoppingCategoryCacheModel.name != null) &&
+				(shoppingCategoryCacheModel.name.length() == 0)) {
+			shoppingCategoryCacheModel.name = null;
+		}
+
+		shoppingCategoryCacheModel.description = getDescription();
+
+		if ((shoppingCategoryCacheModel.description != null) &&
+				(shoppingCategoryCacheModel.description.length() == 0)) {
+			shoppingCategoryCacheModel.description = null;
+		}
+
+		return shoppingCategoryCacheModel;
 	}
 
 	@Override

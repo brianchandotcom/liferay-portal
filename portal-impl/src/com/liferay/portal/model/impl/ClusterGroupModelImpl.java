@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.model.ClusterGroupModel;
 import com.liferay.portal.service.ServiceContext;
@@ -237,6 +238,30 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ClusterGroup> toCacheModel() {
+		ClusterGroupCacheModel clusterGroupCacheModel = new ClusterGroupCacheModel();
+
+		clusterGroupCacheModel.clusterGroupId = getClusterGroupId();
+		clusterGroupCacheModel.name = getName();
+
+		if ((clusterGroupCacheModel.name != null) &&
+				(clusterGroupCacheModel.name.length() == 0)) {
+			clusterGroupCacheModel.name = null;
+		}
+
+		clusterGroupCacheModel.clusterNodeIds = getClusterNodeIds();
+
+		if ((clusterGroupCacheModel.clusterNodeIds != null) &&
+				(clusterGroupCacheModel.clusterNodeIds.length() == 0)) {
+			clusterGroupCacheModel.clusterNodeIds = null;
+		}
+
+		clusterGroupCacheModel.wholeCluster = getWholeCluster();
+
+		return clusterGroupCacheModel;
 	}
 
 	@Override

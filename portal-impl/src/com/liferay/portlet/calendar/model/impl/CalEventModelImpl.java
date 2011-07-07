@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -586,6 +587,99 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		calEventModelImpl._originalGroupId = calEventModelImpl._groupId;
 
 		calEventModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<CalEvent> toCacheModel() {
+		CalEventCacheModel calEventCacheModel = new CalEventCacheModel();
+
+		calEventCacheModel.uuid = getUuid();
+
+		if ((calEventCacheModel.uuid != null) &&
+				(calEventCacheModel.uuid.length() == 0)) {
+			calEventCacheModel.uuid = null;
+		}
+
+		calEventCacheModel.eventId = getEventId();
+		calEventCacheModel.groupId = getGroupId();
+		calEventCacheModel.companyId = getCompanyId();
+		calEventCacheModel.userId = getUserId();
+		calEventCacheModel.userName = getUserName();
+
+		if ((calEventCacheModel.userName != null) &&
+				(calEventCacheModel.userName.length() == 0)) {
+			calEventCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			calEventCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			calEventCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		calEventCacheModel.title = getTitle();
+
+		if ((calEventCacheModel.title != null) &&
+				(calEventCacheModel.title.length() == 0)) {
+			calEventCacheModel.title = null;
+		}
+
+		calEventCacheModel.description = getDescription();
+
+		if ((calEventCacheModel.description != null) &&
+				(calEventCacheModel.description.length() == 0)) {
+			calEventCacheModel.description = null;
+		}
+
+		calEventCacheModel.location = getLocation();
+
+		if ((calEventCacheModel.location != null) &&
+				(calEventCacheModel.location.length() == 0)) {
+			calEventCacheModel.location = null;
+		}
+
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			calEventCacheModel.startDate = startDate.getTime();
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			calEventCacheModel.endDate = endDate.getTime();
+		}
+
+		calEventCacheModel.durationHour = getDurationHour();
+		calEventCacheModel.durationMinute = getDurationMinute();
+		calEventCacheModel.allDay = getAllDay();
+		calEventCacheModel.timeZoneSensitive = getTimeZoneSensitive();
+		calEventCacheModel.type = getType();
+
+		if ((calEventCacheModel.type != null) &&
+				(calEventCacheModel.type.length() == 0)) {
+			calEventCacheModel.type = null;
+		}
+
+		calEventCacheModel.repeating = getRepeating();
+		calEventCacheModel.recurrence = getRecurrence();
+
+		if ((calEventCacheModel.recurrence != null) &&
+				(calEventCacheModel.recurrence.length() == 0)) {
+			calEventCacheModel.recurrence = null;
+		}
+
+		calEventCacheModel.remindBy = getRemindBy();
+		calEventCacheModel.firstReminder = getFirstReminder();
+		calEventCacheModel.secondReminder = getSecondReminder();
+
+		return calEventCacheModel;
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -2275,6 +2276,17 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static AssetCategoryProperty _nullAssetCategoryProperty = new AssetCategoryPropertyImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetCategoryProperty> toCacheModel() {
+				return _nullAssetCategoryPropertyCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetCategoryProperty> _nullAssetCategoryPropertyCacheModel =
+		new CacheModel<AssetCategoryProperty>() {
+			public AssetCategoryProperty toEntityModel() {
+				return _nullAssetCategoryProperty;
 			}
 		};
 }

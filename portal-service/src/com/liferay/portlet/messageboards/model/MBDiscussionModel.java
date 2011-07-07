@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -144,6 +145,8 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	public int compareTo(MBDiscussion mbDiscussion);
 
 	public int hashCode();
+
+	public CacheModel<MBDiscussion> toCacheModel();
 
 	public MBDiscussion toEscapedModel();
 

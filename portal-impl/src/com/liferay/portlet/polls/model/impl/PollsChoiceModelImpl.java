@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -375,6 +376,36 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		pollsChoiceModelImpl._setOriginalQuestionId = false;
 
 		pollsChoiceModelImpl._originalName = pollsChoiceModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<PollsChoice> toCacheModel() {
+		PollsChoiceCacheModel pollsChoiceCacheModel = new PollsChoiceCacheModel();
+
+		pollsChoiceCacheModel.uuid = getUuid();
+
+		if ((pollsChoiceCacheModel.uuid != null) &&
+				(pollsChoiceCacheModel.uuid.length() == 0)) {
+			pollsChoiceCacheModel.uuid = null;
+		}
+
+		pollsChoiceCacheModel.choiceId = getChoiceId();
+		pollsChoiceCacheModel.questionId = getQuestionId();
+		pollsChoiceCacheModel.name = getName();
+
+		if ((pollsChoiceCacheModel.name != null) &&
+				(pollsChoiceCacheModel.name.length() == 0)) {
+			pollsChoiceCacheModel.name = null;
+		}
+
+		pollsChoiceCacheModel.description = getDescription();
+
+		if ((pollsChoiceCacheModel.description != null) &&
+				(pollsChoiceCacheModel.description.length() == 0)) {
+			pollsChoiceCacheModel.description = null;
+		}
+
+		return pollsChoiceCacheModel;
 	}
 
 	@Override

@@ -263,6 +263,10 @@ public class JournalArticleImageWrapper implements JournalArticleImage {
 		return _journalArticleImage.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalArticleImage> toCacheModel() {
+		return _journalArticleImage.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticleImage toEscapedModel() {
 		return new JournalArticleImageWrapper(_journalArticleImage.toEscapedModel());
 	}

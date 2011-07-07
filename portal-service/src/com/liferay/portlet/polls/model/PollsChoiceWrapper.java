@@ -298,6 +298,10 @@ public class PollsChoiceWrapper implements PollsChoice {
 		return _pollsChoice.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsChoice> toCacheModel() {
+		return _pollsChoice.toCacheModel();
+	}
+
 	public com.liferay.portlet.polls.model.PollsChoice toEscapedModel() {
 		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
 	}

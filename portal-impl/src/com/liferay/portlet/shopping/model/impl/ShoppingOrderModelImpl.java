@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -1052,6 +1053,273 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		shoppingOrderModelImpl._originalNumber = shoppingOrderModelImpl._number;
 
 		shoppingOrderModelImpl._originalPpTxnId = shoppingOrderModelImpl._ppTxnId;
+	}
+
+	@Override
+	public CacheModel<ShoppingOrder> toCacheModel() {
+		ShoppingOrderCacheModel shoppingOrderCacheModel = new ShoppingOrderCacheModel();
+
+		shoppingOrderCacheModel.orderId = getOrderId();
+		shoppingOrderCacheModel.groupId = getGroupId();
+		shoppingOrderCacheModel.companyId = getCompanyId();
+		shoppingOrderCacheModel.userId = getUserId();
+		shoppingOrderCacheModel.userName = getUserName();
+
+		if ((shoppingOrderCacheModel.userName != null) &&
+				(shoppingOrderCacheModel.userName.length() == 0)) {
+			shoppingOrderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingOrderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingOrderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingOrderCacheModel.number = getNumber();
+
+		if ((shoppingOrderCacheModel.number != null) &&
+				(shoppingOrderCacheModel.number.length() == 0)) {
+			shoppingOrderCacheModel.number = null;
+		}
+
+		shoppingOrderCacheModel.tax = getTax();
+		shoppingOrderCacheModel.shipping = getShipping();
+		shoppingOrderCacheModel.altShipping = getAltShipping();
+
+		if ((shoppingOrderCacheModel.altShipping != null) &&
+				(shoppingOrderCacheModel.altShipping.length() == 0)) {
+			shoppingOrderCacheModel.altShipping = null;
+		}
+
+		shoppingOrderCacheModel.requiresShipping = getRequiresShipping();
+		shoppingOrderCacheModel.insure = getInsure();
+		shoppingOrderCacheModel.insurance = getInsurance();
+		shoppingOrderCacheModel.couponCodes = getCouponCodes();
+
+		if ((shoppingOrderCacheModel.couponCodes != null) &&
+				(shoppingOrderCacheModel.couponCodes.length() == 0)) {
+			shoppingOrderCacheModel.couponCodes = null;
+		}
+
+		shoppingOrderCacheModel.couponDiscount = getCouponDiscount();
+		shoppingOrderCacheModel.billingFirstName = getBillingFirstName();
+
+		if ((shoppingOrderCacheModel.billingFirstName != null) &&
+				(shoppingOrderCacheModel.billingFirstName.length() == 0)) {
+			shoppingOrderCacheModel.billingFirstName = null;
+		}
+
+		shoppingOrderCacheModel.billingLastName = getBillingLastName();
+
+		if ((shoppingOrderCacheModel.billingLastName != null) &&
+				(shoppingOrderCacheModel.billingLastName.length() == 0)) {
+			shoppingOrderCacheModel.billingLastName = null;
+		}
+
+		shoppingOrderCacheModel.billingEmailAddress = getBillingEmailAddress();
+
+		if ((shoppingOrderCacheModel.billingEmailAddress != null) &&
+				(shoppingOrderCacheModel.billingEmailAddress.length() == 0)) {
+			shoppingOrderCacheModel.billingEmailAddress = null;
+		}
+
+		shoppingOrderCacheModel.billingCompany = getBillingCompany();
+
+		if ((shoppingOrderCacheModel.billingCompany != null) &&
+				(shoppingOrderCacheModel.billingCompany.length() == 0)) {
+			shoppingOrderCacheModel.billingCompany = null;
+		}
+
+		shoppingOrderCacheModel.billingStreet = getBillingStreet();
+
+		if ((shoppingOrderCacheModel.billingStreet != null) &&
+				(shoppingOrderCacheModel.billingStreet.length() == 0)) {
+			shoppingOrderCacheModel.billingStreet = null;
+		}
+
+		shoppingOrderCacheModel.billingCity = getBillingCity();
+
+		if ((shoppingOrderCacheModel.billingCity != null) &&
+				(shoppingOrderCacheModel.billingCity.length() == 0)) {
+			shoppingOrderCacheModel.billingCity = null;
+		}
+
+		shoppingOrderCacheModel.billingState = getBillingState();
+
+		if ((shoppingOrderCacheModel.billingState != null) &&
+				(shoppingOrderCacheModel.billingState.length() == 0)) {
+			shoppingOrderCacheModel.billingState = null;
+		}
+
+		shoppingOrderCacheModel.billingZip = getBillingZip();
+
+		if ((shoppingOrderCacheModel.billingZip != null) &&
+				(shoppingOrderCacheModel.billingZip.length() == 0)) {
+			shoppingOrderCacheModel.billingZip = null;
+		}
+
+		shoppingOrderCacheModel.billingCountry = getBillingCountry();
+
+		if ((shoppingOrderCacheModel.billingCountry != null) &&
+				(shoppingOrderCacheModel.billingCountry.length() == 0)) {
+			shoppingOrderCacheModel.billingCountry = null;
+		}
+
+		shoppingOrderCacheModel.billingPhone = getBillingPhone();
+
+		if ((shoppingOrderCacheModel.billingPhone != null) &&
+				(shoppingOrderCacheModel.billingPhone.length() == 0)) {
+			shoppingOrderCacheModel.billingPhone = null;
+		}
+
+		shoppingOrderCacheModel.shipToBilling = getShipToBilling();
+		shoppingOrderCacheModel.shippingFirstName = getShippingFirstName();
+
+		if ((shoppingOrderCacheModel.shippingFirstName != null) &&
+				(shoppingOrderCacheModel.shippingFirstName.length() == 0)) {
+			shoppingOrderCacheModel.shippingFirstName = null;
+		}
+
+		shoppingOrderCacheModel.shippingLastName = getShippingLastName();
+
+		if ((shoppingOrderCacheModel.shippingLastName != null) &&
+				(shoppingOrderCacheModel.shippingLastName.length() == 0)) {
+			shoppingOrderCacheModel.shippingLastName = null;
+		}
+
+		shoppingOrderCacheModel.shippingEmailAddress = getShippingEmailAddress();
+
+		if ((shoppingOrderCacheModel.shippingEmailAddress != null) &&
+				(shoppingOrderCacheModel.shippingEmailAddress.length() == 0)) {
+			shoppingOrderCacheModel.shippingEmailAddress = null;
+		}
+
+		shoppingOrderCacheModel.shippingCompany = getShippingCompany();
+
+		if ((shoppingOrderCacheModel.shippingCompany != null) &&
+				(shoppingOrderCacheModel.shippingCompany.length() == 0)) {
+			shoppingOrderCacheModel.shippingCompany = null;
+		}
+
+		shoppingOrderCacheModel.shippingStreet = getShippingStreet();
+
+		if ((shoppingOrderCacheModel.shippingStreet != null) &&
+				(shoppingOrderCacheModel.shippingStreet.length() == 0)) {
+			shoppingOrderCacheModel.shippingStreet = null;
+		}
+
+		shoppingOrderCacheModel.shippingCity = getShippingCity();
+
+		if ((shoppingOrderCacheModel.shippingCity != null) &&
+				(shoppingOrderCacheModel.shippingCity.length() == 0)) {
+			shoppingOrderCacheModel.shippingCity = null;
+		}
+
+		shoppingOrderCacheModel.shippingState = getShippingState();
+
+		if ((shoppingOrderCacheModel.shippingState != null) &&
+				(shoppingOrderCacheModel.shippingState.length() == 0)) {
+			shoppingOrderCacheModel.shippingState = null;
+		}
+
+		shoppingOrderCacheModel.shippingZip = getShippingZip();
+
+		if ((shoppingOrderCacheModel.shippingZip != null) &&
+				(shoppingOrderCacheModel.shippingZip.length() == 0)) {
+			shoppingOrderCacheModel.shippingZip = null;
+		}
+
+		shoppingOrderCacheModel.shippingCountry = getShippingCountry();
+
+		if ((shoppingOrderCacheModel.shippingCountry != null) &&
+				(shoppingOrderCacheModel.shippingCountry.length() == 0)) {
+			shoppingOrderCacheModel.shippingCountry = null;
+		}
+
+		shoppingOrderCacheModel.shippingPhone = getShippingPhone();
+
+		if ((shoppingOrderCacheModel.shippingPhone != null) &&
+				(shoppingOrderCacheModel.shippingPhone.length() == 0)) {
+			shoppingOrderCacheModel.shippingPhone = null;
+		}
+
+		shoppingOrderCacheModel.ccName = getCcName();
+
+		if ((shoppingOrderCacheModel.ccName != null) &&
+				(shoppingOrderCacheModel.ccName.length() == 0)) {
+			shoppingOrderCacheModel.ccName = null;
+		}
+
+		shoppingOrderCacheModel.ccType = getCcType();
+
+		if ((shoppingOrderCacheModel.ccType != null) &&
+				(shoppingOrderCacheModel.ccType.length() == 0)) {
+			shoppingOrderCacheModel.ccType = null;
+		}
+
+		shoppingOrderCacheModel.ccNumber = getCcNumber();
+
+		if ((shoppingOrderCacheModel.ccNumber != null) &&
+				(shoppingOrderCacheModel.ccNumber.length() == 0)) {
+			shoppingOrderCacheModel.ccNumber = null;
+		}
+
+		shoppingOrderCacheModel.ccExpMonth = getCcExpMonth();
+		shoppingOrderCacheModel.ccExpYear = getCcExpYear();
+		shoppingOrderCacheModel.ccVerNumber = getCcVerNumber();
+
+		if ((shoppingOrderCacheModel.ccVerNumber != null) &&
+				(shoppingOrderCacheModel.ccVerNumber.length() == 0)) {
+			shoppingOrderCacheModel.ccVerNumber = null;
+		}
+
+		shoppingOrderCacheModel.comments = getComments();
+
+		if ((shoppingOrderCacheModel.comments != null) &&
+				(shoppingOrderCacheModel.comments.length() == 0)) {
+			shoppingOrderCacheModel.comments = null;
+		}
+
+		shoppingOrderCacheModel.ppTxnId = getPpTxnId();
+
+		if ((shoppingOrderCacheModel.ppTxnId != null) &&
+				(shoppingOrderCacheModel.ppTxnId.length() == 0)) {
+			shoppingOrderCacheModel.ppTxnId = null;
+		}
+
+		shoppingOrderCacheModel.ppPaymentStatus = getPpPaymentStatus();
+
+		if ((shoppingOrderCacheModel.ppPaymentStatus != null) &&
+				(shoppingOrderCacheModel.ppPaymentStatus.length() == 0)) {
+			shoppingOrderCacheModel.ppPaymentStatus = null;
+		}
+
+		shoppingOrderCacheModel.ppPaymentGross = getPpPaymentGross();
+		shoppingOrderCacheModel.ppReceiverEmail = getPpReceiverEmail();
+
+		if ((shoppingOrderCacheModel.ppReceiverEmail != null) &&
+				(shoppingOrderCacheModel.ppReceiverEmail.length() == 0)) {
+			shoppingOrderCacheModel.ppReceiverEmail = null;
+		}
+
+		shoppingOrderCacheModel.ppPayerEmail = getPpPayerEmail();
+
+		if ((shoppingOrderCacheModel.ppPayerEmail != null) &&
+				(shoppingOrderCacheModel.ppPayerEmail.length() == 0)) {
+			shoppingOrderCacheModel.ppPayerEmail = null;
+		}
+
+		shoppingOrderCacheModel.sendOrderEmail = getSendOrderEmail();
+		shoppingOrderCacheModel.sendShippingEmail = getSendShippingEmail();
+
+		return shoppingOrderCacheModel;
 	}
 
 	@Override

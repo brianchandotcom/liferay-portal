@@ -320,6 +320,10 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 		return _workflowInstanceLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WorkflowInstanceLink> toCacheModel() {
+		return _workflowInstanceLink.toCacheModel();
+	}
+
 	public com.liferay.portal.model.WorkflowInstanceLink toEscapedModel() {
 		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
 	}

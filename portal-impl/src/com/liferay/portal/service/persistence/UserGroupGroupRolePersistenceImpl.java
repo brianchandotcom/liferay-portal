@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
@@ -2850,6 +2851,17 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	private static UserGroupGroupRole _nullUserGroupGroupRole = new UserGroupGroupRoleImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<UserGroupGroupRole> toCacheModel() {
+				return _nullUserGroupGroupRoleCacheModel;
+			}
+		};
+
+	private static CacheModel<UserGroupGroupRole> _nullUserGroupGroupRoleCacheModel =
+		new CacheModel<UserGroupGroupRole>() {
+			public UserGroupGroupRole toEntityModel() {
+				return _nullUserGroupGroupRole;
 			}
 		};
 }

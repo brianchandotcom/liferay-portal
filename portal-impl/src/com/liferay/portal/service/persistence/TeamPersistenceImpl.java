@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamImpl;
@@ -3110,6 +3111,16 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static Team _nullTeam = new TeamImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Team> toCacheModel() {
+				return _nullTeamCacheModel;
+			}
+		};
+
+	private static CacheModel<Team> _nullTeamCacheModel = new CacheModel<Team>() {
+			public Team toEntityModel() {
+				return _nullTeam;
 			}
 		};
 }

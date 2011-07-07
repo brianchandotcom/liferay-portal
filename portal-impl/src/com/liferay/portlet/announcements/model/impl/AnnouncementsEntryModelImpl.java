@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -493,6 +494,87 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<AnnouncementsEntry> toCacheModel() {
+		AnnouncementsEntryCacheModel announcementsEntryCacheModel = new AnnouncementsEntryCacheModel();
+
+		announcementsEntryCacheModel.uuid = getUuid();
+
+		if ((announcementsEntryCacheModel.uuid != null) &&
+				(announcementsEntryCacheModel.uuid.length() == 0)) {
+			announcementsEntryCacheModel.uuid = null;
+		}
+
+		announcementsEntryCacheModel.entryId = getEntryId();
+		announcementsEntryCacheModel.companyId = getCompanyId();
+		announcementsEntryCacheModel.userId = getUserId();
+		announcementsEntryCacheModel.userName = getUserName();
+
+		if ((announcementsEntryCacheModel.userName != null) &&
+				(announcementsEntryCacheModel.userName.length() == 0)) {
+			announcementsEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			announcementsEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			announcementsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		announcementsEntryCacheModel.classNameId = getClassNameId();
+		announcementsEntryCacheModel.classPK = getClassPK();
+		announcementsEntryCacheModel.title = getTitle();
+
+		if ((announcementsEntryCacheModel.title != null) &&
+				(announcementsEntryCacheModel.title.length() == 0)) {
+			announcementsEntryCacheModel.title = null;
+		}
+
+		announcementsEntryCacheModel.content = getContent();
+
+		if ((announcementsEntryCacheModel.content != null) &&
+				(announcementsEntryCacheModel.content.length() == 0)) {
+			announcementsEntryCacheModel.content = null;
+		}
+
+		announcementsEntryCacheModel.url = getUrl();
+
+		if ((announcementsEntryCacheModel.url != null) &&
+				(announcementsEntryCacheModel.url.length() == 0)) {
+			announcementsEntryCacheModel.url = null;
+		}
+
+		announcementsEntryCacheModel.type = getType();
+
+		if ((announcementsEntryCacheModel.type != null) &&
+				(announcementsEntryCacheModel.type.length() == 0)) {
+			announcementsEntryCacheModel.type = null;
+		}
+
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			announcementsEntryCacheModel.displayDate = displayDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			announcementsEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		announcementsEntryCacheModel.priority = getPriority();
+		announcementsEntryCacheModel.alert = getAlert();
+
+		return announcementsEntryCacheModel;
 	}
 
 	@Override

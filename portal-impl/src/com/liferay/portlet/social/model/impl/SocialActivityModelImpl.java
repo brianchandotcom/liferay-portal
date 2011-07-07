@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -449,6 +450,31 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		socialActivityModelImpl._originalReceiverUserId = socialActivityModelImpl._receiverUserId;
 
 		socialActivityModelImpl._setOriginalReceiverUserId = false;
+	}
+
+	@Override
+	public CacheModel<SocialActivity> toCacheModel() {
+		SocialActivityCacheModel socialActivityCacheModel = new SocialActivityCacheModel();
+
+		socialActivityCacheModel.activityId = getActivityId();
+		socialActivityCacheModel.groupId = getGroupId();
+		socialActivityCacheModel.companyId = getCompanyId();
+		socialActivityCacheModel.userId = getUserId();
+		socialActivityCacheModel.createDate = getCreateDate();
+		socialActivityCacheModel.mirrorActivityId = getMirrorActivityId();
+		socialActivityCacheModel.classNameId = getClassNameId();
+		socialActivityCacheModel.classPK = getClassPK();
+		socialActivityCacheModel.type = getType();
+		socialActivityCacheModel.extraData = getExtraData();
+
+		if ((socialActivityCacheModel.extraData != null) &&
+				(socialActivityCacheModel.extraData.length() == 0)) {
+			socialActivityCacheModel.extraData = null;
+		}
+
+		socialActivityCacheModel.receiverUserId = getReceiverUserId();
+
+		return socialActivityCacheModel;
 	}
 
 	@Override

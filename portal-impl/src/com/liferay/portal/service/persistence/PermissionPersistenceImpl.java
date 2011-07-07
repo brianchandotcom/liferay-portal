@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.impl.PermissionImpl;
@@ -3394,6 +3395,16 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	private static Permission _nullPermission = new PermissionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Permission> toCacheModel() {
+				return _nullPermissionCacheModel;
+			}
+		};
+
+	private static CacheModel<Permission> _nullPermissionCacheModel = new CacheModel<Permission>() {
+			public Permission toEntityModel() {
+				return _nullPermission;
 			}
 		};
 }

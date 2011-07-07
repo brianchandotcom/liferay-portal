@@ -218,6 +218,10 @@ public class PortletPreferencesWrapper implements PortletPreferences {
 		return _portletPreferences.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortletPreferences> toCacheModel() {
+		return _portletPreferences.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PortletPreferences toEscapedModel() {
 		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
 	}

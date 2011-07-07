@@ -248,6 +248,8 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 
 	public int hashCode();
 
+	public CacheModel<WorkflowInstanceLink> toCacheModel();
+
 	public WorkflowInstanceLink toEscapedModel();
 
 	public String toString();

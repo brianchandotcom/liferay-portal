@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -357,6 +358,27 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		announcementsDeliveryModelImpl._setOriginalUserId = false;
 
 		announcementsDeliveryModelImpl._originalType = announcementsDeliveryModelImpl._type;
+	}
+
+	@Override
+	public CacheModel<AnnouncementsDelivery> toCacheModel() {
+		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel = new AnnouncementsDeliveryCacheModel();
+
+		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
+		announcementsDeliveryCacheModel.companyId = getCompanyId();
+		announcementsDeliveryCacheModel.userId = getUserId();
+		announcementsDeliveryCacheModel.type = getType();
+
+		if ((announcementsDeliveryCacheModel.type != null) &&
+				(announcementsDeliveryCacheModel.type.length() == 0)) {
+			announcementsDeliveryCacheModel.type = null;
+		}
+
+		announcementsDeliveryCacheModel.email = getEmail();
+		announcementsDeliveryCacheModel.sms = getSms();
+		announcementsDeliveryCacheModel.website = getWebsite();
+
+		return announcementsDeliveryCacheModel;
 	}
 
 	@Override

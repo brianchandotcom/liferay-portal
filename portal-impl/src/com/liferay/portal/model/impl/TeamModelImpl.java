@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.TeamModel;
 import com.liferay.portal.model.TeamSoap;
@@ -380,6 +381,50 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamModelImpl._setOriginalGroupId = false;
 
 		teamModelImpl._originalName = teamModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<Team> toCacheModel() {
+		TeamCacheModel teamCacheModel = new TeamCacheModel();
+
+		teamCacheModel.teamId = getTeamId();
+		teamCacheModel.companyId = getCompanyId();
+		teamCacheModel.userId = getUserId();
+		teamCacheModel.userName = getUserName();
+
+		if ((teamCacheModel.userName != null) &&
+				(teamCacheModel.userName.length() == 0)) {
+			teamCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			teamCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			teamCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		teamCacheModel.groupId = getGroupId();
+		teamCacheModel.name = getName();
+
+		if ((teamCacheModel.name != null) &&
+				(teamCacheModel.name.length() == 0)) {
+			teamCacheModel.name = null;
+		}
+
+		teamCacheModel.description = getDescription();
+
+		if ((teamCacheModel.description != null) &&
+				(teamCacheModel.description.length() == 0)) {
+			teamCacheModel.description = null;
+		}
+
+		return teamCacheModel;
 	}
 
 	@Override

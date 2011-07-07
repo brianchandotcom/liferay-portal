@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -498,6 +499,8 @@ public interface WikiPageModel extends BaseModel<WikiPage>, GroupedModel,
 	public int compareTo(WikiPage wikiPage);
 
 	public int hashCode();
+
+	public CacheModel<WikiPage> toCacheModel();
 
 	public WikiPage toEscapedModel();
 

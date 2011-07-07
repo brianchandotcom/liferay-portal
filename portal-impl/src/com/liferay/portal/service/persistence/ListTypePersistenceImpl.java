@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ListTypeImpl;
@@ -1163,6 +1164,16 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static ListType _nullListType = new ListTypeImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ListType> toCacheModel() {
+				return _nullListTypeCacheModel;
+			}
+		};
+
+	private static CacheModel<ListType> _nullListTypeCacheModel = new CacheModel<ListType>() {
+			public ListType toEntityModel() {
+				return _nullListType;
 			}
 		};
 }

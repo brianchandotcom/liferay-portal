@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -188,6 +189,8 @@ public interface SCLicenseModel extends BaseModel<SCLicense> {
 	public int compareTo(SCLicense scLicense);
 
 	public int hashCode();
+
+	public CacheModel<SCLicense> toCacheModel();
 
 	public SCLicense toEscapedModel();
 

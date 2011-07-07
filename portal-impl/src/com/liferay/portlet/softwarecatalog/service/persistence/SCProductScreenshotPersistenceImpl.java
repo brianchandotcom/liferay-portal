@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ImagePersistence;
@@ -1793,6 +1794,17 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static SCProductScreenshot _nullSCProductScreenshot = new SCProductScreenshotImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SCProductScreenshot> toCacheModel() {
+				return _nullSCProductScreenshotCacheModel;
+			}
+		};
+
+	private static CacheModel<SCProductScreenshot> _nullSCProductScreenshotCacheModel =
+		new CacheModel<SCProductScreenshot>() {
+			public SCProductScreenshot toEntityModel() {
+				return _nullSCProductScreenshot;
 			}
 		};
 }

@@ -293,6 +293,10 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
 		return _assetCategoryProperty.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetCategoryProperty> toCacheModel() {
+		return _assetCategoryProperty.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetCategoryProperty toEscapedModel() {
 		return new AssetCategoryPropertyWrapper(_assetCategoryProperty.toEscapedModel());
 	}

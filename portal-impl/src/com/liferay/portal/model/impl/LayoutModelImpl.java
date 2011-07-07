@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutModel;
 import com.liferay.portal.model.LayoutSoap;
@@ -1112,6 +1113,136 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
 
 		layoutModelImpl._setOriginalIconImageId = false;
+	}
+
+	@Override
+	public CacheModel<Layout> toCacheModel() {
+		LayoutCacheModel layoutCacheModel = new LayoutCacheModel();
+
+		layoutCacheModel.uuid = getUuid();
+
+		if ((layoutCacheModel.uuid != null) &&
+				(layoutCacheModel.uuid.length() == 0)) {
+			layoutCacheModel.uuid = null;
+		}
+
+		layoutCacheModel.plid = getPlid();
+		layoutCacheModel.groupId = getGroupId();
+		layoutCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			layoutCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			layoutCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		layoutCacheModel.privateLayout = getPrivateLayout();
+		layoutCacheModel.layoutId = getLayoutId();
+		layoutCacheModel.parentLayoutId = getParentLayoutId();
+		layoutCacheModel.name = getName();
+
+		if ((layoutCacheModel.name != null) &&
+				(layoutCacheModel.name.length() == 0)) {
+			layoutCacheModel.name = null;
+		}
+
+		layoutCacheModel.title = getTitle();
+
+		if ((layoutCacheModel.title != null) &&
+				(layoutCacheModel.title.length() == 0)) {
+			layoutCacheModel.title = null;
+		}
+
+		layoutCacheModel.description = getDescription();
+
+		if ((layoutCacheModel.description != null) &&
+				(layoutCacheModel.description.length() == 0)) {
+			layoutCacheModel.description = null;
+		}
+
+		layoutCacheModel.keywords = getKeywords();
+
+		if ((layoutCacheModel.keywords != null) &&
+				(layoutCacheModel.keywords.length() == 0)) {
+			layoutCacheModel.keywords = null;
+		}
+
+		layoutCacheModel.robots = getRobots();
+
+		if ((layoutCacheModel.robots != null) &&
+				(layoutCacheModel.robots.length() == 0)) {
+			layoutCacheModel.robots = null;
+		}
+
+		layoutCacheModel.type = getType();
+
+		if ((layoutCacheModel.type != null) &&
+				(layoutCacheModel.type.length() == 0)) {
+			layoutCacheModel.type = null;
+		}
+
+		layoutCacheModel.typeSettings = getTypeSettings();
+
+		if ((layoutCacheModel.typeSettings != null) &&
+				(layoutCacheModel.typeSettings.length() == 0)) {
+			layoutCacheModel.typeSettings = null;
+		}
+
+		layoutCacheModel.hidden = getHidden();
+		layoutCacheModel.friendlyURL = getFriendlyURL();
+
+		if ((layoutCacheModel.friendlyURL != null) &&
+				(layoutCacheModel.friendlyURL.length() == 0)) {
+			layoutCacheModel.friendlyURL = null;
+		}
+
+		layoutCacheModel.iconImage = getIconImage();
+		layoutCacheModel.iconImageId = getIconImageId();
+		layoutCacheModel.themeId = getThemeId();
+
+		if ((layoutCacheModel.themeId != null) &&
+				(layoutCacheModel.themeId.length() == 0)) {
+			layoutCacheModel.themeId = null;
+		}
+
+		layoutCacheModel.colorSchemeId = getColorSchemeId();
+
+		if ((layoutCacheModel.colorSchemeId != null) &&
+				(layoutCacheModel.colorSchemeId.length() == 0)) {
+			layoutCacheModel.colorSchemeId = null;
+		}
+
+		layoutCacheModel.wapThemeId = getWapThemeId();
+
+		if ((layoutCacheModel.wapThemeId != null) &&
+				(layoutCacheModel.wapThemeId.length() == 0)) {
+			layoutCacheModel.wapThemeId = null;
+		}
+
+		layoutCacheModel.wapColorSchemeId = getWapColorSchemeId();
+
+		if ((layoutCacheModel.wapColorSchemeId != null) &&
+				(layoutCacheModel.wapColorSchemeId.length() == 0)) {
+			layoutCacheModel.wapColorSchemeId = null;
+		}
+
+		layoutCacheModel.css = getCss();
+
+		if ((layoutCacheModel.css != null) &&
+				(layoutCacheModel.css.length() == 0)) {
+			layoutCacheModel.css = null;
+		}
+
+		layoutCacheModel.priority = getPriority();
+		layoutCacheModel.layoutPrototypeId = getLayoutPrototypeId();
+
+		return layoutCacheModel;
 	}
 
 	@Override

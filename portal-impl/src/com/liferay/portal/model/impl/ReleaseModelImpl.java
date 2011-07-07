@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.model.ReleaseModel;
 import com.liferay.portal.service.ServiceContext;
@@ -290,6 +291,50 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		ReleaseModelImpl releaseModelImpl = this;
 
 		releaseModelImpl._originalServletContextName = releaseModelImpl._servletContextName;
+	}
+
+	@Override
+	public CacheModel<Release> toCacheModel() {
+		ReleaseCacheModel releaseCacheModel = new ReleaseCacheModel();
+
+		releaseCacheModel.releaseId = getReleaseId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			releaseCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			releaseCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		releaseCacheModel.servletContextName = getServletContextName();
+
+		if ((releaseCacheModel.servletContextName != null) &&
+				(releaseCacheModel.servletContextName.length() == 0)) {
+			releaseCacheModel.servletContextName = null;
+		}
+
+		releaseCacheModel.buildNumber = getBuildNumber();
+
+		Date buildDate = getBuildDate();
+
+		if (buildDate != null) {
+			releaseCacheModel.buildDate = buildDate.getTime();
+		}
+
+		releaseCacheModel.verified = getVerified();
+		releaseCacheModel.testString = getTestString();
+
+		if ((releaseCacheModel.testString != null) &&
+				(releaseCacheModel.testString.length() == 0)) {
+			releaseCacheModel.testString = null;
+		}
+
+		return releaseCacheModel;
 	}
 
 	@Override

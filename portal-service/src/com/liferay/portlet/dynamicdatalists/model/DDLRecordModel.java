@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -315,6 +316,8 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, GroupedModel {
 	public int compareTo(DDLRecord ddlRecord);
 
 	public int hashCode();
+
+	public CacheModel<DDLRecord> toCacheModel();
 
 	public DDLRecord toEscapedModel();
 

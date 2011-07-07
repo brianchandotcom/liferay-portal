@@ -417,6 +417,10 @@ public class AccountWrapper implements Account {
 		return _account.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Account> toCacheModel() {
+		return _account.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Account toEscapedModel() {
 		return new AccountWrapper(_account.toEscapedModel());
 	}

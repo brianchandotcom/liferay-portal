@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyModel;
 import com.liferay.portal.model.PasswordPolicySoap;
@@ -703,6 +704,74 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyModelImpl._setOriginalDefaultPolicy = false;
 
 		passwordPolicyModelImpl._originalName = passwordPolicyModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<PasswordPolicy> toCacheModel() {
+		PasswordPolicyCacheModel passwordPolicyCacheModel = new PasswordPolicyCacheModel();
+
+		passwordPolicyCacheModel.passwordPolicyId = getPasswordPolicyId();
+		passwordPolicyCacheModel.companyId = getCompanyId();
+		passwordPolicyCacheModel.userId = getUserId();
+		passwordPolicyCacheModel.userName = getUserName();
+
+		if ((passwordPolicyCacheModel.userName != null) &&
+				(passwordPolicyCacheModel.userName.length() == 0)) {
+			passwordPolicyCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			passwordPolicyCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			passwordPolicyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		passwordPolicyCacheModel.defaultPolicy = getDefaultPolicy();
+		passwordPolicyCacheModel.name = getName();
+
+		if ((passwordPolicyCacheModel.name != null) &&
+				(passwordPolicyCacheModel.name.length() == 0)) {
+			passwordPolicyCacheModel.name = null;
+		}
+
+		passwordPolicyCacheModel.description = getDescription();
+
+		if ((passwordPolicyCacheModel.description != null) &&
+				(passwordPolicyCacheModel.description.length() == 0)) {
+			passwordPolicyCacheModel.description = null;
+		}
+
+		passwordPolicyCacheModel.changeable = getChangeable();
+		passwordPolicyCacheModel.changeRequired = getChangeRequired();
+		passwordPolicyCacheModel.minAge = getMinAge();
+		passwordPolicyCacheModel.checkSyntax = getCheckSyntax();
+		passwordPolicyCacheModel.allowDictionaryWords = getAllowDictionaryWords();
+		passwordPolicyCacheModel.minAlphanumeric = getMinAlphanumeric();
+		passwordPolicyCacheModel.minLength = getMinLength();
+		passwordPolicyCacheModel.minLowerCase = getMinLowerCase();
+		passwordPolicyCacheModel.minNumbers = getMinNumbers();
+		passwordPolicyCacheModel.minSymbols = getMinSymbols();
+		passwordPolicyCacheModel.minUpperCase = getMinUpperCase();
+		passwordPolicyCacheModel.history = getHistory();
+		passwordPolicyCacheModel.historyCount = getHistoryCount();
+		passwordPolicyCacheModel.expireable = getExpireable();
+		passwordPolicyCacheModel.maxAge = getMaxAge();
+		passwordPolicyCacheModel.warningTime = getWarningTime();
+		passwordPolicyCacheModel.graceLimit = getGraceLimit();
+		passwordPolicyCacheModel.lockout = getLockout();
+		passwordPolicyCacheModel.maxFailure = getMaxFailure();
+		passwordPolicyCacheModel.lockoutDuration = getLockoutDuration();
+		passwordPolicyCacheModel.requireUnlock = getRequireUnlock();
+		passwordPolicyCacheModel.resetFailureCount = getResetFailureCount();
+		passwordPolicyCacheModel.resetTicketMaxAge = getResetTicketMaxAge();
+
+		return passwordPolicyCacheModel;
 	}
 
 	@Override

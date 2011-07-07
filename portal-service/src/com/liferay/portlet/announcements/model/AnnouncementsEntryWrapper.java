@@ -454,6 +454,10 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
 		return _announcementsEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.announcements.model.AnnouncementsEntry> toCacheModel() {
+		return _announcementsEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry toEscapedModel() {
 		return new AnnouncementsEntryWrapper(_announcementsEntry.toEscapedModel());
 	}

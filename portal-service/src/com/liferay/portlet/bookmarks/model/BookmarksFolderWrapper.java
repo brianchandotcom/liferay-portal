@@ -328,6 +328,10 @@ public class BookmarksFolderWrapper implements BookmarksFolder {
 		return _bookmarksFolder.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.bookmarks.model.BookmarksFolder> toCacheModel() {
+		return _bookmarksFolder.toCacheModel();
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder toEscapedModel() {
 		return new BookmarksFolderWrapper(_bookmarksFolder.toEscapedModel());
 	}

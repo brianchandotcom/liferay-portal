@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.EmailAddressImpl;
@@ -3010,6 +3011,16 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	private static EmailAddress _nullEmailAddress = new EmailAddressImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<EmailAddress> toCacheModel() {
+				return _nullEmailAddressCacheModel;
+			}
+		};
+
+	private static CacheModel<EmailAddress> _nullEmailAddressCacheModel = new CacheModel<EmailAddress>() {
+			public EmailAddress toEntityModel() {
+				return _nullEmailAddress;
 			}
 		};
 }

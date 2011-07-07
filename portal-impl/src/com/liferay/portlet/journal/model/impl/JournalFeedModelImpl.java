@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -616,6 +617,137 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedModelImpl._setOriginalGroupId = false;
 
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
+	}
+
+	@Override
+	public CacheModel<JournalFeed> toCacheModel() {
+		JournalFeedCacheModel journalFeedCacheModel = new JournalFeedCacheModel();
+
+		journalFeedCacheModel.uuid = getUuid();
+
+		if ((journalFeedCacheModel.uuid != null) &&
+				(journalFeedCacheModel.uuid.length() == 0)) {
+			journalFeedCacheModel.uuid = null;
+		}
+
+		journalFeedCacheModel.id = getId();
+		journalFeedCacheModel.groupId = getGroupId();
+		journalFeedCacheModel.companyId = getCompanyId();
+		journalFeedCacheModel.userId = getUserId();
+		journalFeedCacheModel.userName = getUserName();
+
+		if ((journalFeedCacheModel.userName != null) &&
+				(journalFeedCacheModel.userName.length() == 0)) {
+			journalFeedCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			journalFeedCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			journalFeedCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		journalFeedCacheModel.feedId = getFeedId();
+
+		if ((journalFeedCacheModel.feedId != null) &&
+				(journalFeedCacheModel.feedId.length() == 0)) {
+			journalFeedCacheModel.feedId = null;
+		}
+
+		journalFeedCacheModel.name = getName();
+
+		if ((journalFeedCacheModel.name != null) &&
+				(journalFeedCacheModel.name.length() == 0)) {
+			journalFeedCacheModel.name = null;
+		}
+
+		journalFeedCacheModel.description = getDescription();
+
+		if ((journalFeedCacheModel.description != null) &&
+				(journalFeedCacheModel.description.length() == 0)) {
+			journalFeedCacheModel.description = null;
+		}
+
+		journalFeedCacheModel.type = getType();
+
+		if ((journalFeedCacheModel.type != null) &&
+				(journalFeedCacheModel.type.length() == 0)) {
+			journalFeedCacheModel.type = null;
+		}
+
+		journalFeedCacheModel.structureId = getStructureId();
+
+		if ((journalFeedCacheModel.structureId != null) &&
+				(journalFeedCacheModel.structureId.length() == 0)) {
+			journalFeedCacheModel.structureId = null;
+		}
+
+		journalFeedCacheModel.templateId = getTemplateId();
+
+		if ((journalFeedCacheModel.templateId != null) &&
+				(journalFeedCacheModel.templateId.length() == 0)) {
+			journalFeedCacheModel.templateId = null;
+		}
+
+		journalFeedCacheModel.rendererTemplateId = getRendererTemplateId();
+
+		if ((journalFeedCacheModel.rendererTemplateId != null) &&
+				(journalFeedCacheModel.rendererTemplateId.length() == 0)) {
+			journalFeedCacheModel.rendererTemplateId = null;
+		}
+
+		journalFeedCacheModel.delta = getDelta();
+		journalFeedCacheModel.orderByCol = getOrderByCol();
+
+		if ((journalFeedCacheModel.orderByCol != null) &&
+				(journalFeedCacheModel.orderByCol.length() == 0)) {
+			journalFeedCacheModel.orderByCol = null;
+		}
+
+		journalFeedCacheModel.orderByType = getOrderByType();
+
+		if ((journalFeedCacheModel.orderByType != null) &&
+				(journalFeedCacheModel.orderByType.length() == 0)) {
+			journalFeedCacheModel.orderByType = null;
+		}
+
+		journalFeedCacheModel.targetLayoutFriendlyUrl = getTargetLayoutFriendlyUrl();
+
+		if ((journalFeedCacheModel.targetLayoutFriendlyUrl != null) &&
+				(journalFeedCacheModel.targetLayoutFriendlyUrl.length() == 0)) {
+			journalFeedCacheModel.targetLayoutFriendlyUrl = null;
+		}
+
+		journalFeedCacheModel.targetPortletId = getTargetPortletId();
+
+		if ((journalFeedCacheModel.targetPortletId != null) &&
+				(journalFeedCacheModel.targetPortletId.length() == 0)) {
+			journalFeedCacheModel.targetPortletId = null;
+		}
+
+		journalFeedCacheModel.contentField = getContentField();
+
+		if ((journalFeedCacheModel.contentField != null) &&
+				(journalFeedCacheModel.contentField.length() == 0)) {
+			journalFeedCacheModel.contentField = null;
+		}
+
+		journalFeedCacheModel.feedType = getFeedType();
+
+		if ((journalFeedCacheModel.feedType != null) &&
+				(journalFeedCacheModel.feedType.length() == 0)) {
+			journalFeedCacheModel.feedType = null;
+		}
+
+		journalFeedCacheModel.feedVersion = getFeedVersion();
+
+		return journalFeedCacheModel;
 	}
 
 	@Override

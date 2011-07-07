@@ -250,6 +250,8 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 
 	public int hashCode();
 
+	public CacheModel<LayoutSetBranch> toCacheModel();
+
 	public LayoutSetBranch toEscapedModel();
 
 	public String toString();

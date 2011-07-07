@@ -17,6 +17,7 @@ package com.liferay.portlet.softwarecatalog.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -332,6 +333,21 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		scProductScreenshotModelImpl._originalPriority = scProductScreenshotModelImpl._priority;
 
 		scProductScreenshotModelImpl._setOriginalPriority = false;
+	}
+
+	@Override
+	public CacheModel<SCProductScreenshot> toCacheModel() {
+		SCProductScreenshotCacheModel scProductScreenshotCacheModel = new SCProductScreenshotCacheModel();
+
+		scProductScreenshotCacheModel.productScreenshotId = getProductScreenshotId();
+		scProductScreenshotCacheModel.companyId = getCompanyId();
+		scProductScreenshotCacheModel.groupId = getGroupId();
+		scProductScreenshotCacheModel.productEntryId = getProductEntryId();
+		scProductScreenshotCacheModel.thumbnailId = getThumbnailId();
+		scProductScreenshotCacheModel.fullImageId = getFullImageId();
+		scProductScreenshotCacheModel.priority = getPriority();
+
+		return scProductScreenshotCacheModel;
 	}
 
 	@Override

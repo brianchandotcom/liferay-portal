@@ -292,6 +292,10 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntryType> toCacheModel() {
+		return _dlFileEntryType.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType toEscapedModel() {
 		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
 	}

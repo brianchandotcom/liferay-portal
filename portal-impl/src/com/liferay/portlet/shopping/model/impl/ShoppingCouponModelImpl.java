@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -498,6 +499,93 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		ShoppingCouponModelImpl shoppingCouponModelImpl = this;
 
 		shoppingCouponModelImpl._originalCode = shoppingCouponModelImpl._code;
+	}
+
+	@Override
+	public CacheModel<ShoppingCoupon> toCacheModel() {
+		ShoppingCouponCacheModel shoppingCouponCacheModel = new ShoppingCouponCacheModel();
+
+		shoppingCouponCacheModel.couponId = getCouponId();
+		shoppingCouponCacheModel.groupId = getGroupId();
+		shoppingCouponCacheModel.companyId = getCompanyId();
+		shoppingCouponCacheModel.userId = getUserId();
+		shoppingCouponCacheModel.userName = getUserName();
+
+		if ((shoppingCouponCacheModel.userName != null) &&
+				(shoppingCouponCacheModel.userName.length() == 0)) {
+			shoppingCouponCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingCouponCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingCouponCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingCouponCacheModel.code = getCode();
+
+		if ((shoppingCouponCacheModel.code != null) &&
+				(shoppingCouponCacheModel.code.length() == 0)) {
+			shoppingCouponCacheModel.code = null;
+		}
+
+		shoppingCouponCacheModel.name = getName();
+
+		if ((shoppingCouponCacheModel.name != null) &&
+				(shoppingCouponCacheModel.name.length() == 0)) {
+			shoppingCouponCacheModel.name = null;
+		}
+
+		shoppingCouponCacheModel.description = getDescription();
+
+		if ((shoppingCouponCacheModel.description != null) &&
+				(shoppingCouponCacheModel.description.length() == 0)) {
+			shoppingCouponCacheModel.description = null;
+		}
+
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			shoppingCouponCacheModel.startDate = startDate.getTime();
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			shoppingCouponCacheModel.endDate = endDate.getTime();
+		}
+
+		shoppingCouponCacheModel.active = getActive();
+		shoppingCouponCacheModel.limitCategories = getLimitCategories();
+
+		if ((shoppingCouponCacheModel.limitCategories != null) &&
+				(shoppingCouponCacheModel.limitCategories.length() == 0)) {
+			shoppingCouponCacheModel.limitCategories = null;
+		}
+
+		shoppingCouponCacheModel.limitSkus = getLimitSkus();
+
+		if ((shoppingCouponCacheModel.limitSkus != null) &&
+				(shoppingCouponCacheModel.limitSkus.length() == 0)) {
+			shoppingCouponCacheModel.limitSkus = null;
+		}
+
+		shoppingCouponCacheModel.minOrder = getMinOrder();
+		shoppingCouponCacheModel.discount = getDiscount();
+		shoppingCouponCacheModel.discountType = getDiscountType();
+
+		if ((shoppingCouponCacheModel.discountType != null) &&
+				(shoppingCouponCacheModel.discountType.length() == 0)) {
+			shoppingCouponCacheModel.discountType = null;
+		}
+
+		return shoppingCouponCacheModel;
 	}
 
 	@Override

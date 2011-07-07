@@ -1270,6 +1270,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutRevision> toCacheModel() {
+		return _layoutRevision.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutRevision toEscapedModel() {
 		return new LayoutRevisionWrapper(_layoutRevision.toEscapedModel());
 	}

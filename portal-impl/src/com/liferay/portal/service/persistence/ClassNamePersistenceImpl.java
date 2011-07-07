@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClassNameImpl;
@@ -969,6 +970,16 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static ClassName _nullClassName = new ClassNameImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ClassName> toCacheModel() {
+				return _nullClassNameCacheModel;
+			}
+		};
+
+	private static CacheModel<ClassName> _nullClassNameCacheModel = new CacheModel<ClassName>() {
+			public ClassName toEntityModel() {
+				return _nullClassName;
 			}
 		};
 }

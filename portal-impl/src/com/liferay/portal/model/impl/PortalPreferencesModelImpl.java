@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.PortalPreferencesModel;
 import com.liferay.portal.service.ServiceContext;
@@ -257,6 +258,23 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		portalPreferencesModelImpl._originalOwnerType = portalPreferencesModelImpl._ownerType;
 
 		portalPreferencesModelImpl._setOriginalOwnerType = false;
+	}
+
+	@Override
+	public CacheModel<PortalPreferences> toCacheModel() {
+		PortalPreferencesCacheModel portalPreferencesCacheModel = new PortalPreferencesCacheModel();
+
+		portalPreferencesCacheModel.portalPreferencesId = getPortalPreferencesId();
+		portalPreferencesCacheModel.ownerId = getOwnerId();
+		portalPreferencesCacheModel.ownerType = getOwnerType();
+		portalPreferencesCacheModel.preferences = getPreferences();
+
+		if ((portalPreferencesCacheModel.preferences != null) &&
+				(portalPreferencesCacheModel.preferences.length() == 0)) {
+			portalPreferencesCacheModel.preferences = null;
+		}
+
+		return portalPreferencesCacheModel;
 	}
 
 	@Override

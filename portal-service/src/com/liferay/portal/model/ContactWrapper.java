@@ -678,6 +678,10 @@ public class ContactWrapper implements Contact {
 		return _contact.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Contact> toCacheModel() {
+		return _contact.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Contact toEscapedModel() {
 		return new ContactWrapper(_contact.toEscapedModel());
 	}

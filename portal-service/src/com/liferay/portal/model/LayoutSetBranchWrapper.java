@@ -319,6 +319,10 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		return _layoutSetBranch.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutSetBranch> toCacheModel() {
+		return _layoutSetBranch.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutSetBranch toEscapedModel() {
 		return new LayoutSetBranchWrapper(_layoutSetBranch.toEscapedModel());
 	}

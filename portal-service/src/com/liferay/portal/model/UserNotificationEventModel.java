@@ -212,6 +212,8 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 
 	public int hashCode();
 
+	public CacheModel<UserNotificationEvent> toCacheModel();
+
 	public UserNotificationEvent toEscapedModel();
 
 	public String toString();

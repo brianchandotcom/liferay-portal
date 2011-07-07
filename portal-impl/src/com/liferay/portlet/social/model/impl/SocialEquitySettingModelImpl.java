@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -355,6 +356,30 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 		socialEquitySettingModelImpl._originalType = socialEquitySettingModelImpl._type;
 
 		socialEquitySettingModelImpl._setOriginalType = false;
+	}
+
+	@Override
+	public CacheModel<SocialEquitySetting> toCacheModel() {
+		SocialEquitySettingCacheModel socialEquitySettingCacheModel = new SocialEquitySettingCacheModel();
+
+		socialEquitySettingCacheModel.equitySettingId = getEquitySettingId();
+		socialEquitySettingCacheModel.groupId = getGroupId();
+		socialEquitySettingCacheModel.companyId = getCompanyId();
+		socialEquitySettingCacheModel.classNameId = getClassNameId();
+		socialEquitySettingCacheModel.actionId = getActionId();
+
+		if ((socialEquitySettingCacheModel.actionId != null) &&
+				(socialEquitySettingCacheModel.actionId.length() == 0)) {
+			socialEquitySettingCacheModel.actionId = null;
+		}
+
+		socialEquitySettingCacheModel.dailyLimit = getDailyLimit();
+		socialEquitySettingCacheModel.lifespan = getLifespan();
+		socialEquitySettingCacheModel.type = getType();
+		socialEquitySettingCacheModel.uniqueEntry = getUniqueEntry();
+		socialEquitySettingCacheModel.value = getValue();
+
+		return socialEquitySettingCacheModel;
 	}
 
 	@Override

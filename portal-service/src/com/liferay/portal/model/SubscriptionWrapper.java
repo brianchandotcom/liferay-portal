@@ -300,6 +300,10 @@ public class SubscriptionWrapper implements Subscription {
 		return _subscription.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Subscription> toCacheModel() {
+		return _subscription.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Subscription toEscapedModel() {
 		return new SubscriptionWrapper(_subscription.toEscapedModel());
 	}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -318,6 +319,24 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		pollsVoteModelImpl._originalQuestionId = pollsVoteModelImpl._questionId;
 
 		pollsVoteModelImpl._setOriginalQuestionId = false;
+	}
+
+	@Override
+	public CacheModel<PollsVote> toCacheModel() {
+		PollsVoteCacheModel pollsVoteCacheModel = new PollsVoteCacheModel();
+
+		pollsVoteCacheModel.voteId = getVoteId();
+		pollsVoteCacheModel.userId = getUserId();
+		pollsVoteCacheModel.questionId = getQuestionId();
+		pollsVoteCacheModel.choiceId = getChoiceId();
+
+		Date voteDate = getVoteDate();
+
+		if (voteDate != null) {
+			pollsVoteCacheModel.voteDate = voteDate.getTime();
+		}
+
+		return pollsVoteCacheModel;
 	}
 
 	@Override

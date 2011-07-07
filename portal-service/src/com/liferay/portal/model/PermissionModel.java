@@ -138,6 +138,8 @@ public interface PermissionModel extends BaseModel<Permission> {
 
 	public int hashCode();
 
+	public CacheModel<Permission> toCacheModel();
+
 	public Permission toEscapedModel();
 
 	public String toString();

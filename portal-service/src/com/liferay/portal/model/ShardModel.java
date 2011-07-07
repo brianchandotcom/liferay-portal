@@ -145,6 +145,8 @@ public interface ShardModel extends AttachedModel, BaseModel<Shard> {
 
 	public int hashCode();
 
+	public CacheModel<Shard> toCacheModel();
+
 	public Shard toEscapedModel();
 
 	public String toString();

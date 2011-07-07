@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -2023,6 +2024,16 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	private static SCProductVersion _nullSCProductVersion = new SCProductVersionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SCProductVersion> toCacheModel() {
+				return _nullSCProductVersionCacheModel;
+			}
+		};
+
+	private static CacheModel<SCProductVersion> _nullSCProductVersionCacheModel = new CacheModel<SCProductVersion>() {
+			public SCProductVersion toEntityModel() {
+				return _nullSCProductVersion;
 			}
 		};
 }

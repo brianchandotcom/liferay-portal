@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -255,6 +256,26 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<SocialEquityHistory> toCacheModel() {
+		SocialEquityHistoryCacheModel socialEquityHistoryCacheModel = new SocialEquityHistoryCacheModel();
+
+		socialEquityHistoryCacheModel.equityHistoryId = getEquityHistoryId();
+		socialEquityHistoryCacheModel.groupId = getGroupId();
+		socialEquityHistoryCacheModel.companyId = getCompanyId();
+		socialEquityHistoryCacheModel.userId = getUserId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			socialEquityHistoryCacheModel.createDate = createDate.getTime();
+		}
+
+		socialEquityHistoryCacheModel.personalEquity = getPersonalEquity();
+
+		return socialEquityHistoryCacheModel;
 	}
 
 	@Override

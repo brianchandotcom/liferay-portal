@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.impl.OrgLaborImpl;
@@ -1145,6 +1146,16 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	private static OrgLabor _nullOrgLabor = new OrgLaborImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<OrgLabor> toCacheModel() {
+				return _nullOrgLaborCacheModel;
+			}
+		};
+
+	private static CacheModel<OrgLabor> _nullOrgLaborCacheModel = new CacheModel<OrgLabor>() {
+			public OrgLabor toEntityModel() {
+				return _nullOrgLabor;
 			}
 		};
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.model.impl.WebDAVPropsImpl;
@@ -983,6 +984,16 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	private static WebDAVProps _nullWebDAVProps = new WebDAVPropsImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<WebDAVProps> toCacheModel() {
+				return _nullWebDAVPropsCacheModel;
+			}
+		};
+
+	private static CacheModel<WebDAVProps> _nullWebDAVPropsCacheModel = new CacheModel<WebDAVProps>() {
+			public WebDAVProps toEntityModel() {
+				return _nullWebDAVProps;
 			}
 		};
 }

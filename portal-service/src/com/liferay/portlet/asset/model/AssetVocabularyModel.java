@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -423,6 +424,8 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	public int compareTo(AssetVocabulary assetVocabulary);
 
 	public int hashCode();
+
+	public CacheModel<AssetVocabulary> toCacheModel();
 
 	public AssetVocabulary toEscapedModel();
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourcePermissionModel;
 import com.liferay.portal.model.ResourcePermissionSoap;
@@ -416,6 +417,34 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionModelImpl._originalActionIds = resourcePermissionModelImpl._actionIds;
 
 		resourcePermissionModelImpl._setOriginalActionIds = false;
+	}
+
+	@Override
+	public CacheModel<ResourcePermission> toCacheModel() {
+		ResourcePermissionCacheModel resourcePermissionCacheModel = new ResourcePermissionCacheModel();
+
+		resourcePermissionCacheModel.resourcePermissionId = getResourcePermissionId();
+		resourcePermissionCacheModel.companyId = getCompanyId();
+		resourcePermissionCacheModel.name = getName();
+
+		if ((resourcePermissionCacheModel.name != null) &&
+				(resourcePermissionCacheModel.name.length() == 0)) {
+			resourcePermissionCacheModel.name = null;
+		}
+
+		resourcePermissionCacheModel.scope = getScope();
+		resourcePermissionCacheModel.primKey = getPrimKey();
+
+		if ((resourcePermissionCacheModel.primKey != null) &&
+				(resourcePermissionCacheModel.primKey.length() == 0)) {
+			resourcePermissionCacheModel.primKey = null;
+		}
+
+		resourcePermissionCacheModel.roleId = getRoleId();
+		resourcePermissionCacheModel.ownerId = getOwnerId();
+		resourcePermissionCacheModel.actionIds = getActionIds();
+
+		return resourcePermissionCacheModel;
 	}
 
 	@Override

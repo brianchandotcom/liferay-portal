@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1314,6 +1315,16 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ShoppingCoupon> toCacheModel() {
+				return _nullShoppingCouponCacheModel;
+			}
+		};
+
+	private static CacheModel<ShoppingCoupon> _nullShoppingCouponCacheModel = new CacheModel<ShoppingCoupon>() {
+			public ShoppingCoupon toEntityModel() {
+				return _nullShoppingCoupon;
 			}
 		};
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -419,6 +420,37 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		socialEquityLogModelImpl._setOriginalType = false;
 
 		socialEquityLogModelImpl._originalExtraData = socialEquityLogModelImpl._extraData;
+	}
+
+	@Override
+	public CacheModel<SocialEquityLog> toCacheModel() {
+		SocialEquityLogCacheModel socialEquityLogCacheModel = new SocialEquityLogCacheModel();
+
+		socialEquityLogCacheModel.equityLogId = getEquityLogId();
+		socialEquityLogCacheModel.groupId = getGroupId();
+		socialEquityLogCacheModel.companyId = getCompanyId();
+		socialEquityLogCacheModel.userId = getUserId();
+		socialEquityLogCacheModel.assetEntryId = getAssetEntryId();
+		socialEquityLogCacheModel.actionId = getActionId();
+
+		if ((socialEquityLogCacheModel.actionId != null) &&
+				(socialEquityLogCacheModel.actionId.length() == 0)) {
+			socialEquityLogCacheModel.actionId = null;
+		}
+
+		socialEquityLogCacheModel.actionDate = getActionDate();
+		socialEquityLogCacheModel.active = getActive();
+		socialEquityLogCacheModel.expiration = getExpiration();
+		socialEquityLogCacheModel.type = getType();
+		socialEquityLogCacheModel.value = getValue();
+		socialEquityLogCacheModel.extraData = getExtraData();
+
+		if ((socialEquityLogCacheModel.extraData != null) &&
+				(socialEquityLogCacheModel.extraData.length() == 0)) {
+			socialEquityLogCacheModel.extraData = null;
+		}
+
+		return socialEquityLogCacheModel;
 	}
 
 	@Override

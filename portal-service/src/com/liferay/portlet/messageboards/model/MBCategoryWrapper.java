@@ -400,6 +400,10 @@ public class MBCategoryWrapper implements MBCategory {
 		return _mbCategory.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBCategory> toCacheModel() {
+		return _mbCategory.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBCategory toEscapedModel() {
 		return new MBCategoryWrapper(_mbCategory.toEscapedModel());
 	}

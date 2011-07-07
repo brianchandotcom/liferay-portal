@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletItemModel;
 import com.liferay.portal.service.ServiceContext;
@@ -367,6 +368,52 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		portletItemModelImpl._originalClassNameId = portletItemModelImpl._classNameId;
 
 		portletItemModelImpl._setOriginalClassNameId = false;
+	}
+
+	@Override
+	public CacheModel<PortletItem> toCacheModel() {
+		PortletItemCacheModel portletItemCacheModel = new PortletItemCacheModel();
+
+		portletItemCacheModel.portletItemId = getPortletItemId();
+		portletItemCacheModel.groupId = getGroupId();
+		portletItemCacheModel.companyId = getCompanyId();
+		portletItemCacheModel.userId = getUserId();
+		portletItemCacheModel.userName = getUserName();
+
+		if ((portletItemCacheModel.userName != null) &&
+				(portletItemCacheModel.userName.length() == 0)) {
+			portletItemCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			portletItemCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			portletItemCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		portletItemCacheModel.name = getName();
+
+		if ((portletItemCacheModel.name != null) &&
+				(portletItemCacheModel.name.length() == 0)) {
+			portletItemCacheModel.name = null;
+		}
+
+		portletItemCacheModel.portletId = getPortletId();
+
+		if ((portletItemCacheModel.portletId != null) &&
+				(portletItemCacheModel.portletId.length() == 0)) {
+			portletItemCacheModel.portletId = null;
+		}
+
+		portletItemCacheModel.classNameId = getClassNameId();
+
+		return portletItemCacheModel;
 	}
 
 	@Override

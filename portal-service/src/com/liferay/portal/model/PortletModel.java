@@ -160,6 +160,8 @@ public interface PortletModel extends BaseModel<Portlet> {
 
 	public int hashCode();
 
+	public CacheModel<Portlet> toCacheModel();
+
 	public Portlet toEscapedModel();
 
 	public String toString();

@@ -540,6 +540,10 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		return _assetVocabulary.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetVocabulary> toCacheModel() {
+		return _assetVocabulary.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetVocabulary toEscapedModel() {
 		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
 	}

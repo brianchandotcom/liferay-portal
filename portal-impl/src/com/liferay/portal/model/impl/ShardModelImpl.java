@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.ShardModel;
 import com.liferay.portal.service.ServiceContext;
@@ -275,6 +276,23 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		shardModelImpl._setOriginalClassPK = false;
 
 		shardModelImpl._originalName = shardModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<Shard> toCacheModel() {
+		ShardCacheModel shardCacheModel = new ShardCacheModel();
+
+		shardCacheModel.shardId = getShardId();
+		shardCacheModel.classNameId = getClassNameId();
+		shardCacheModel.classPK = getClassPK();
+		shardCacheModel.name = getName();
+
+		if ((shardCacheModel.name != null) &&
+				(shardCacheModel.name.length() == 0)) {
+			shardCacheModel.name = null;
+		}
+
+		return shardCacheModel;
 	}
 
 	@Override

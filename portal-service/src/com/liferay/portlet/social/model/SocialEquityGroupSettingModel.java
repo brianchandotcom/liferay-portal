@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.model;
 
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -178,6 +179,8 @@ public interface SocialEquityGroupSettingModel extends BaseModel<SocialEquityGro
 	public int compareTo(SocialEquityGroupSetting socialEquityGroupSetting);
 
 	public int hashCode();
+
+	public CacheModel<SocialEquityGroupSetting> toCacheModel();
 
 	public SocialEquityGroupSetting toEscapedModel();
 

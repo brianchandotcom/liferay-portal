@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -3095,6 +3096,16 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static AssetLink _nullAssetLink = new AssetLinkImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetLink> toCacheModel() {
+				return _nullAssetLinkCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetLink> _nullAssetLinkCacheModel = new CacheModel<AssetLink>() {
+			public AssetLink toEntityModel() {
+				return _nullAssetLink;
 			}
 		};
 }

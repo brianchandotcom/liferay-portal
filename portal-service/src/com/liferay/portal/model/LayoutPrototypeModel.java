@@ -250,6 +250,8 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype> {
 
 	public int hashCode();
 
+	public CacheModel<LayoutPrototype> toCacheModel();
+
 	public LayoutPrototype toEscapedModel();
 
 	public String toString();

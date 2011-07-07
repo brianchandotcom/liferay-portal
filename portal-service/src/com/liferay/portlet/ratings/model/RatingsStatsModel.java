@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.model;
 
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -172,6 +173,8 @@ public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats
 	public int compareTo(RatingsStats ratingsStats);
 
 	public int hashCode();
+
+	public CacheModel<RatingsStats> toCacheModel();
 
 	public RatingsStats toEscapedModel();
 

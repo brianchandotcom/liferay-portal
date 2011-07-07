@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -161,6 +162,8 @@ public interface DDMStorageLinkModel extends AttachedModel,
 	public int compareTo(DDMStorageLink ddmStorageLink);
 
 	public int hashCode();
+
+	public CacheModel<DDMStorageLink> toCacheModel();
 
 	public DDMStorageLink toEscapedModel();
 

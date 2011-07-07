@@ -200,6 +200,10 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ServiceComponent> toCacheModel() {
+		return _serviceComponent.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ServiceComponent toEscapedModel() {
 		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
 	}

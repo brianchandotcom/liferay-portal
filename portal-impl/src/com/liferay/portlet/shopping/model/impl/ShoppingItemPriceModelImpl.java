@@ -17,6 +17,7 @@ package com.liferay.portlet.shopping.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -313,6 +314,24 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ShoppingItemPrice> toCacheModel() {
+		ShoppingItemPriceCacheModel shoppingItemPriceCacheModel = new ShoppingItemPriceCacheModel();
+
+		shoppingItemPriceCacheModel.itemPriceId = getItemPriceId();
+		shoppingItemPriceCacheModel.itemId = getItemId();
+		shoppingItemPriceCacheModel.minQuantity = getMinQuantity();
+		shoppingItemPriceCacheModel.maxQuantity = getMaxQuantity();
+		shoppingItemPriceCacheModel.price = getPrice();
+		shoppingItemPriceCacheModel.discount = getDiscount();
+		shoppingItemPriceCacheModel.taxable = getTaxable();
+		shoppingItemPriceCacheModel.shipping = getShipping();
+		shoppingItemPriceCacheModel.useShippingFormula = getUseShippingFormula();
+		shoppingItemPriceCacheModel.status = getStatus();
+
+		return shoppingItemPriceCacheModel;
 	}
 
 	@Override

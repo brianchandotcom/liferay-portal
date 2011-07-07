@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetImpl;
@@ -1399,6 +1400,16 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	private static LayoutSet _nullLayoutSet = new LayoutSetImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<LayoutSet> toCacheModel() {
+				return _nullLayoutSetCacheModel;
+			}
+		};
+
+	private static CacheModel<LayoutSet> _nullLayoutSetCacheModel = new CacheModel<LayoutSet>() {
+			public LayoutSet toEntityModel() {
+				return _nullLayoutSet;
 			}
 		};
 }

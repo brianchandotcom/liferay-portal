@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -300,6 +301,20 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		socialEquityGroupSettingModelImpl._originalType = socialEquityGroupSettingModelImpl._type;
 
 		socialEquityGroupSettingModelImpl._setOriginalType = false;
+	}
+
+	@Override
+	public CacheModel<SocialEquityGroupSetting> toCacheModel() {
+		SocialEquityGroupSettingCacheModel socialEquityGroupSettingCacheModel = new SocialEquityGroupSettingCacheModel();
+
+		socialEquityGroupSettingCacheModel.equityGroupSettingId = getEquityGroupSettingId();
+		socialEquityGroupSettingCacheModel.groupId = getGroupId();
+		socialEquityGroupSettingCacheModel.companyId = getCompanyId();
+		socialEquityGroupSettingCacheModel.classNameId = getClassNameId();
+		socialEquityGroupSettingCacheModel.type = getType();
+		socialEquityGroupSettingCacheModel.enabled = getEnabled();
+
+		return socialEquityGroupSettingCacheModel;
 	}
 
 	@Override

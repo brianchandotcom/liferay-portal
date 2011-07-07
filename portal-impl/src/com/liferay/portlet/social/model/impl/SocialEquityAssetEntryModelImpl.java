@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -278,6 +279,21 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 		socialEquityAssetEntryModelImpl._originalAssetEntryId = socialEquityAssetEntryModelImpl._assetEntryId;
 
 		socialEquityAssetEntryModelImpl._setOriginalAssetEntryId = false;
+	}
+
+	@Override
+	public CacheModel<SocialEquityAssetEntry> toCacheModel() {
+		SocialEquityAssetEntryCacheModel socialEquityAssetEntryCacheModel = new SocialEquityAssetEntryCacheModel();
+
+		socialEquityAssetEntryCacheModel.equityAssetEntryId = getEquityAssetEntryId();
+		socialEquityAssetEntryCacheModel.groupId = getGroupId();
+		socialEquityAssetEntryCacheModel.companyId = getCompanyId();
+		socialEquityAssetEntryCacheModel.userId = getUserId();
+		socialEquityAssetEntryCacheModel.assetEntryId = getAssetEntryId();
+		socialEquityAssetEntryCacheModel.informationK = getInformationK();
+		socialEquityAssetEntryCacheModel.informationB = getInformationB();
+
+		return socialEquityAssetEntryCacheModel;
 	}
 
 	@Override

@@ -328,6 +328,10 @@ public class IGFolderWrapper implements IGFolder {
 		return _igFolder.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.imagegallery.model.IGFolder> toCacheModel() {
+		return _igFolder.toCacheModel();
+	}
+
 	public com.liferay.portlet.imagegallery.model.IGFolder toEscapedModel() {
 		return new IGFolderWrapper(_igFolder.toEscapedModel());
 	}

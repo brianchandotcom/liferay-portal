@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.model.UserIdMapperModel;
 import com.liferay.portal.service.ServiceContext;
@@ -293,6 +294,36 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		userIdMapperModelImpl._originalType = userIdMapperModelImpl._type;
 
 		userIdMapperModelImpl._originalExternalUserId = userIdMapperModelImpl._externalUserId;
+	}
+
+	@Override
+	public CacheModel<UserIdMapper> toCacheModel() {
+		UserIdMapperCacheModel userIdMapperCacheModel = new UserIdMapperCacheModel();
+
+		userIdMapperCacheModel.userIdMapperId = getUserIdMapperId();
+		userIdMapperCacheModel.userId = getUserId();
+		userIdMapperCacheModel.type = getType();
+
+		if ((userIdMapperCacheModel.type != null) &&
+				(userIdMapperCacheModel.type.length() == 0)) {
+			userIdMapperCacheModel.type = null;
+		}
+
+		userIdMapperCacheModel.description = getDescription();
+
+		if ((userIdMapperCacheModel.description != null) &&
+				(userIdMapperCacheModel.description.length() == 0)) {
+			userIdMapperCacheModel.description = null;
+		}
+
+		userIdMapperCacheModel.externalUserId = getExternalUserId();
+
+		if ((userIdMapperCacheModel.externalUserId != null) &&
+				(userIdMapperCacheModel.externalUserId.length() == 0)) {
+			userIdMapperCacheModel.externalUserId = null;
+		}
+
+		return userIdMapperCacheModel;
 	}
 
 	@Override

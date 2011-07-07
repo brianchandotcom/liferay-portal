@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -3848,6 +3849,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static DDMStructure _nullDDMStructure = new DDMStructureImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DDMStructure> toCacheModel() {
+				return _nullDDMStructureCacheModel;
+			}
+		};
+
+	private static CacheModel<DDMStructure> _nullDDMStructureCacheModel = new CacheModel<DDMStructure>() {
+			public DDMStructure toEntityModel() {
+				return _nullDDMStructure;
 			}
 		};
 }

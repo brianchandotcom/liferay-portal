@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -139,6 +140,8 @@ public interface WikiPageResourceModel extends BaseModel<WikiPageResource> {
 	public int compareTo(WikiPageResource wikiPageResource);
 
 	public int hashCode();
+
+	public CacheModel<WikiPageResource> toCacheModel();
 
 	public WikiPageResource toEscapedModel();
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1723,6 +1724,16 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	private static DDMStorageLink _nullDDMStorageLink = new DDMStorageLinkImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DDMStorageLink> toCacheModel() {
+				return _nullDDMStorageLinkCacheModel;
+			}
+		};
+
+	private static CacheModel<DDMStorageLink> _nullDDMStorageLinkCacheModel = new CacheModel<DDMStorageLink>() {
+			public DDMStorageLink toEntityModel() {
+				return _nullDDMStorageLink;
 			}
 		};
 }

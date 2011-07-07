@@ -628,6 +628,10 @@ public class WikiPageWrapper implements WikiPage {
 		return _wikiPage.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.wiki.model.WikiPage> toCacheModel() {
+		return _wikiPage.toCacheModel();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage toEscapedModel() {
 		return new WikiPageWrapper(_wikiPage.toEscapedModel());
 	}

@@ -337,6 +337,10 @@ public class ShoppingCartWrapper implements ShoppingCart {
 		return _shoppingCart.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingCart> toCacheModel() {
+		return _shoppingCart.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCart toEscapedModel() {
 		return new ShoppingCartWrapper(_shoppingCart.toEscapedModel());
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -305,6 +306,8 @@ public interface SocialRequestModel extends AttachedModel,
 	public int compareTo(SocialRequest socialRequest);
 
 	public int hashCode();
+
+	public CacheModel<SocialRequest> toCacheModel();
 
 	public SocialRequest toEscapedModel();
 

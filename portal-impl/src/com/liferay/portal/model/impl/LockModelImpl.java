@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.LockModel;
 import com.liferay.portal.service.ServiceContext;
@@ -354,6 +355,64 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
+	}
+
+	@Override
+	public CacheModel<Lock> toCacheModel() {
+		LockCacheModel lockCacheModel = new LockCacheModel();
+
+		lockCacheModel.uuid = getUuid();
+
+		if ((lockCacheModel.uuid != null) &&
+				(lockCacheModel.uuid.length() == 0)) {
+			lockCacheModel.uuid = null;
+		}
+
+		lockCacheModel.lockId = getLockId();
+		lockCacheModel.companyId = getCompanyId();
+		lockCacheModel.userId = getUserId();
+		lockCacheModel.userName = getUserName();
+
+		if ((lockCacheModel.userName != null) &&
+				(lockCacheModel.userName.length() == 0)) {
+			lockCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			lockCacheModel.createDate = createDate.getTime();
+		}
+
+		lockCacheModel.className = getClassName();
+
+		if ((lockCacheModel.className != null) &&
+				(lockCacheModel.className.length() == 0)) {
+			lockCacheModel.className = null;
+		}
+
+		lockCacheModel.key = getKey();
+
+		if ((lockCacheModel.key != null) && (lockCacheModel.key.length() == 0)) {
+			lockCacheModel.key = null;
+		}
+
+		lockCacheModel.owner = getOwner();
+
+		if ((lockCacheModel.owner != null) &&
+				(lockCacheModel.owner.length() == 0)) {
+			lockCacheModel.owner = null;
+		}
+
+		lockCacheModel.inheritable = getInheritable();
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			lockCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		return lockCacheModel;
 	}
 
 	@Override

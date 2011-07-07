@@ -463,6 +463,10 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 		return _ddlRecordVersion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> toCacheModel() {
+		return _ddlRecordVersion.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion toEscapedModel() {
 		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
 	}

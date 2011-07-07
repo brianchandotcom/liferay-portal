@@ -376,6 +376,10 @@ public class RoleWrapper implements Role {
 		return _role.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Role> toCacheModel() {
+		return _role.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Role toEscapedModel() {
 		return new RoleWrapper(_role.toEscapedModel());
 	}

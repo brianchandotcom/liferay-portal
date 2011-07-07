@@ -191,6 +191,8 @@ public interface CountryModel extends BaseModel<Country> {
 
 	public int hashCode();
 
+	public CacheModel<Country> toCacheModel();
+
 	public Country toEscapedModel();
 
 	public String toString();

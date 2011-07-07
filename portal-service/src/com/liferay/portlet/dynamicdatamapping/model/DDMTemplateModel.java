@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -451,6 +452,8 @@ public interface DDMTemplateModel extends BaseModel<DDMTemplate>, GroupedModel {
 	public int compareTo(DDMTemplate ddmTemplate);
 
 	public int hashCode();
+
+	public CacheModel<DDMTemplate> toCacheModel();
 
 	public DDMTemplate toEscapedModel();
 

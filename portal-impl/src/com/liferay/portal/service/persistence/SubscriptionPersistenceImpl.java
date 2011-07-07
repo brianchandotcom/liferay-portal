@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionImpl;
@@ -2384,6 +2385,16 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static Subscription _nullSubscription = new SubscriptionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Subscription> toCacheModel() {
+				return _nullSubscriptionCacheModel;
+			}
+		};
+
+	private static CacheModel<Subscription> _nullSubscriptionCacheModel = new CacheModel<Subscription>() {
+			public Subscription toEntityModel() {
+				return _nullSubscription;
 			}
 		};
 }

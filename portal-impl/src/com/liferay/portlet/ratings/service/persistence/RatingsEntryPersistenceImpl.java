@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1830,6 +1831,16 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	private static RatingsEntry _nullRatingsEntry = new RatingsEntryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<RatingsEntry> toCacheModel() {
+				return _nullRatingsEntryCacheModel;
+			}
+		};
+
+	private static CacheModel<RatingsEntry> _nullRatingsEntryCacheModel = new CacheModel<RatingsEntry>() {
+			public RatingsEntry toEntityModel() {
+				return _nullRatingsEntry;
 			}
 		};
 }

@@ -270,6 +270,8 @@ public interface EmailAddressModel extends AttachedModel, AuditedModel,
 
 	public int hashCode();
 
+	public CacheModel<EmailAddress> toCacheModel();
+
 	public EmailAddress toEscapedModel();
 
 	public String toString();

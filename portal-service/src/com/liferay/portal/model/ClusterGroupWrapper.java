@@ -190,6 +190,10 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ClusterGroup> toCacheModel() {
+		return _clusterGroup.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ClusterGroup toEscapedModel() {
 		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
 	}

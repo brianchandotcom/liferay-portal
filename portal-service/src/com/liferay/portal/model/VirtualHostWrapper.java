@@ -181,6 +181,10 @@ public class VirtualHostWrapper implements VirtualHost {
 		return _virtualHost.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.VirtualHost> toCacheModel() {
+		return _virtualHost.toCacheModel();
+	}
+
 	public com.liferay.portal.model.VirtualHost toEscapedModel() {
 		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
 	}

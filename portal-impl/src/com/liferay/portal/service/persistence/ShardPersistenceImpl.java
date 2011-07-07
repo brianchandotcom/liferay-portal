@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.impl.ShardImpl;
@@ -1227,6 +1228,16 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	private static Shard _nullShard = new ShardImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Shard> toCacheModel() {
+				return _nullShardCacheModel;
+			}
+		};
+
+	private static CacheModel<Shard> _nullShardCacheModel = new CacheModel<Shard>() {
+			public Shard toEntityModel() {
+				return _nullShard;
 			}
 		};
 }

@@ -138,6 +138,8 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
 
 	public int hashCode();
 
+	public CacheModel<BrowserTracker> toCacheModel();
+
 	public BrowserTracker toEscapedModel();
 
 	public String toString();

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceCodeModel;
 import com.liferay.portal.service.ServiceContext;
@@ -267,6 +268,24 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		resourceCodeModelImpl._originalScope = resourceCodeModelImpl._scope;
 
 		resourceCodeModelImpl._setOriginalScope = false;
+	}
+
+	@Override
+	public CacheModel<ResourceCode> toCacheModel() {
+		ResourceCodeCacheModel resourceCodeCacheModel = new ResourceCodeCacheModel();
+
+		resourceCodeCacheModel.codeId = getCodeId();
+		resourceCodeCacheModel.companyId = getCompanyId();
+		resourceCodeCacheModel.name = getName();
+
+		if ((resourceCodeCacheModel.name != null) &&
+				(resourceCodeCacheModel.name.length() == 0)) {
+			resourceCodeCacheModel.name = null;
+		}
+
+		resourceCodeCacheModel.scope = getScope();
+
+		return resourceCodeCacheModel;
 	}
 
 	@Override

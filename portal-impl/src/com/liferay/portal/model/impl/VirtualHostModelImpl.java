@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.VirtualHostModel;
 import com.liferay.portal.service.ServiceContext;
@@ -267,6 +268,23 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		virtualHostModelImpl._setOriginalLayoutSetId = false;
 
 		virtualHostModelImpl._originalHostname = virtualHostModelImpl._hostname;
+	}
+
+	@Override
+	public CacheModel<VirtualHost> toCacheModel() {
+		VirtualHostCacheModel virtualHostCacheModel = new VirtualHostCacheModel();
+
+		virtualHostCacheModel.virtualHostId = getVirtualHostId();
+		virtualHostCacheModel.companyId = getCompanyId();
+		virtualHostCacheModel.layoutSetId = getLayoutSetId();
+		virtualHostCacheModel.hostname = getHostname();
+
+		if ((virtualHostCacheModel.hostname != null) &&
+				(virtualHostCacheModel.hostname.length() == 0)) {
+			virtualHostCacheModel.hostname = null;
+		}
+
+		return virtualHostCacheModel;
 	}
 
 	@Override

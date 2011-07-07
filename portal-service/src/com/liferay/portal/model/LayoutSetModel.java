@@ -297,6 +297,8 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 
 	public int hashCode();
 
+	public CacheModel<LayoutSet> toCacheModel();
+
 	public LayoutSet toEscapedModel();
 
 	public String toString();

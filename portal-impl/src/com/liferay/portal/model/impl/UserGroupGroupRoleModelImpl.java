@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.UserGroupGroupRoleModel;
 import com.liferay.portal.model.UserGroupGroupRoleSoap;
@@ -230,6 +231,17 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<UserGroupGroupRole> toCacheModel() {
+		UserGroupGroupRoleCacheModel userGroupGroupRoleCacheModel = new UserGroupGroupRoleCacheModel();
+
+		userGroupGroupRoleCacheModel.userGroupId = getUserGroupId();
+		userGroupGroupRoleCacheModel.groupId = getGroupId();
+		userGroupGroupRoleCacheModel.roleId = getRoleId();
+
+		return userGroupGroupRoleCacheModel;
 	}
 
 	@Override

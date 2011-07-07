@@ -408,6 +408,10 @@ public class GroupWrapper implements Group {
 		return _group.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Group> toCacheModel() {
+		return _group.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Group toEscapedModel() {
 		return new GroupWrapper(_group.toEscapedModel());
 	}

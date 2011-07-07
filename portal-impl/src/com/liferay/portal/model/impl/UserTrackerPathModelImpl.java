@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserTrackerPath;
 import com.liferay.portal.model.UserTrackerPathModel;
 import com.liferay.portal.service.ServiceContext;
@@ -230,6 +231,28 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<UserTrackerPath> toCacheModel() {
+		UserTrackerPathCacheModel userTrackerPathCacheModel = new UserTrackerPathCacheModel();
+
+		userTrackerPathCacheModel.userTrackerPathId = getUserTrackerPathId();
+		userTrackerPathCacheModel.userTrackerId = getUserTrackerId();
+		userTrackerPathCacheModel.path = getPath();
+
+		if ((userTrackerPathCacheModel.path != null) &&
+				(userTrackerPathCacheModel.path.length() == 0)) {
+			userTrackerPathCacheModel.path = null;
+		}
+
+		Date pathDate = getPathDate();
+
+		if (pathDate != null) {
+			userTrackerPathCacheModel.pathDate = pathDate.getTime();
+		}
+
+		return userTrackerPathCacheModel;
 	}
 
 	@Override

@@ -265,6 +265,8 @@ public interface LockModel extends BaseModel<Lock> {
 
 	public int hashCode();
 
+	public CacheModel<Lock> toCacheModel();
+
 	public Lock toEscapedModel();
 
 	public String toString();

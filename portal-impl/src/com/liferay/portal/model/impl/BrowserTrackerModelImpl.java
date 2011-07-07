@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.BrowserTrackerModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -237,6 +238,17 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerModelImpl._originalUserId = browserTrackerModelImpl._userId;
 
 		browserTrackerModelImpl._setOriginalUserId = false;
+	}
+
+	@Override
+	public CacheModel<BrowserTracker> toCacheModel() {
+		BrowserTrackerCacheModel browserTrackerCacheModel = new BrowserTrackerCacheModel();
+
+		browserTrackerCacheModel.browserTrackerId = getBrowserTrackerId();
+		browserTrackerCacheModel.userId = getUserId();
+		browserTrackerCacheModel.browserKey = getBrowserKey();
+
+		return browserTrackerCacheModel;
 	}
 
 	@Override

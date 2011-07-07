@@ -418,6 +418,10 @@ public class SCProductEntryWrapper implements SCProductEntry {
 		return _scProductEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductEntry> toCacheModel() {
+		return _scProductEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry toEscapedModel() {
 		return new SCProductEntryWrapper(_scProductEntry.toEscapedModel());
 	}

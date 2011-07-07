@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -182,6 +183,8 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	public int compareTo(DLFileRank dlFileRank);
 
 	public int hashCode();
+
+	public CacheModel<DLFileRank> toCacheModel();
 
 	public DLFileRank toEscapedModel();
 

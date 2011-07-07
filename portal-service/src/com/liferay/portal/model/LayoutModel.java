@@ -861,6 +861,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 
 	public int hashCode();
 
+	public CacheModel<Layout> toCacheModel();
+
 	public Layout toEscapedModel();
 
 	public String toString();

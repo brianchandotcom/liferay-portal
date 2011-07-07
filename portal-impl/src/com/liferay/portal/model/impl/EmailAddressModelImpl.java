@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.EmailAddressModel;
 import com.liferay.portal.model.EmailAddressSoap;
@@ -384,6 +385,47 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<EmailAddress> toCacheModel() {
+		EmailAddressCacheModel emailAddressCacheModel = new EmailAddressCacheModel();
+
+		emailAddressCacheModel.emailAddressId = getEmailAddressId();
+		emailAddressCacheModel.companyId = getCompanyId();
+		emailAddressCacheModel.userId = getUserId();
+		emailAddressCacheModel.userName = getUserName();
+
+		if ((emailAddressCacheModel.userName != null) &&
+				(emailAddressCacheModel.userName.length() == 0)) {
+			emailAddressCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			emailAddressCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			emailAddressCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		emailAddressCacheModel.classNameId = getClassNameId();
+		emailAddressCacheModel.classPK = getClassPK();
+		emailAddressCacheModel.address = getAddress();
+
+		if ((emailAddressCacheModel.address != null) &&
+				(emailAddressCacheModel.address.length() == 0)) {
+			emailAddressCacheModel.address = null;
+		}
+
+		emailAddressCacheModel.typeId = getTypeId();
+		emailAddressCacheModel.primary = getPrimary();
+
+		return emailAddressCacheModel;
 	}
 
 	@Override

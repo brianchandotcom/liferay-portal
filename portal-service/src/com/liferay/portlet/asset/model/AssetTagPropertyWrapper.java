@@ -292,6 +292,10 @@ public class AssetTagPropertyWrapper implements AssetTagProperty {
 		return _assetTagProperty.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetTagProperty> toCacheModel() {
+		return _assetTagProperty.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetTagProperty toEscapedModel() {
 		return new AssetTagPropertyWrapper(_assetTagProperty.toEscapedModel());
 	}

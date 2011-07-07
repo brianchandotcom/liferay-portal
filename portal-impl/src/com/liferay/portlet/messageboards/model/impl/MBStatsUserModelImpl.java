@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -292,6 +293,24 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		mbStatsUserModelImpl._originalUserId = mbStatsUserModelImpl._userId;
 
 		mbStatsUserModelImpl._setOriginalUserId = false;
+	}
+
+	@Override
+	public CacheModel<MBStatsUser> toCacheModel() {
+		MBStatsUserCacheModel mbStatsUserCacheModel = new MBStatsUserCacheModel();
+
+		mbStatsUserCacheModel.statsUserId = getStatsUserId();
+		mbStatsUserCacheModel.groupId = getGroupId();
+		mbStatsUserCacheModel.userId = getUserId();
+		mbStatsUserCacheModel.messageCount = getMessageCount();
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			mbStatsUserCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		return mbStatsUserCacheModel;
 	}
 
 	@Override

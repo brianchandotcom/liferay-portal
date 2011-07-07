@@ -238,6 +238,10 @@ public class SocialEquityHistoryWrapper implements SocialEquityHistory {
 		return _socialEquityHistory.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityHistory> toCacheModel() {
+		return _socialEquityHistory.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityHistory toEscapedModel() {
 		return new SocialEquityHistoryWrapper(_socialEquityHistory.toEscapedModel());
 	}

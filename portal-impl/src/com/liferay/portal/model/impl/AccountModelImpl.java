@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.AccountModel;
 import com.liferay.portal.model.AccountSoap;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -471,6 +472,99 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Account> toCacheModel() {
+		AccountCacheModel accountCacheModel = new AccountCacheModel();
+
+		accountCacheModel.accountId = getAccountId();
+		accountCacheModel.companyId = getCompanyId();
+		accountCacheModel.userId = getUserId();
+		accountCacheModel.userName = getUserName();
+
+		if ((accountCacheModel.userName != null) &&
+				(accountCacheModel.userName.length() == 0)) {
+			accountCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			accountCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			accountCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		accountCacheModel.parentAccountId = getParentAccountId();
+		accountCacheModel.name = getName();
+
+		if ((accountCacheModel.name != null) &&
+				(accountCacheModel.name.length() == 0)) {
+			accountCacheModel.name = null;
+		}
+
+		accountCacheModel.legalName = getLegalName();
+
+		if ((accountCacheModel.legalName != null) &&
+				(accountCacheModel.legalName.length() == 0)) {
+			accountCacheModel.legalName = null;
+		}
+
+		accountCacheModel.legalId = getLegalId();
+
+		if ((accountCacheModel.legalId != null) &&
+				(accountCacheModel.legalId.length() == 0)) {
+			accountCacheModel.legalId = null;
+		}
+
+		accountCacheModel.legalType = getLegalType();
+
+		if ((accountCacheModel.legalType != null) &&
+				(accountCacheModel.legalType.length() == 0)) {
+			accountCacheModel.legalType = null;
+		}
+
+		accountCacheModel.sicCode = getSicCode();
+
+		if ((accountCacheModel.sicCode != null) &&
+				(accountCacheModel.sicCode.length() == 0)) {
+			accountCacheModel.sicCode = null;
+		}
+
+		accountCacheModel.tickerSymbol = getTickerSymbol();
+
+		if ((accountCacheModel.tickerSymbol != null) &&
+				(accountCacheModel.tickerSymbol.length() == 0)) {
+			accountCacheModel.tickerSymbol = null;
+		}
+
+		accountCacheModel.industry = getIndustry();
+
+		if ((accountCacheModel.industry != null) &&
+				(accountCacheModel.industry.length() == 0)) {
+			accountCacheModel.industry = null;
+		}
+
+		accountCacheModel.type = getType();
+
+		if ((accountCacheModel.type != null) &&
+				(accountCacheModel.type.length() == 0)) {
+			accountCacheModel.type = null;
+		}
+
+		accountCacheModel.size = getSize();
+
+		if ((accountCacheModel.size != null) &&
+				(accountCacheModel.size.length() == 0)) {
+			accountCacheModel.size = null;
+		}
+
+		return accountCacheModel;
 	}
 
 	@Override

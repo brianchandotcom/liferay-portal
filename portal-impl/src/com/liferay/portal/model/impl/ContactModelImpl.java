@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactModel;
 import com.liferay.portal.model.ContactSoap;
@@ -688,6 +689,173 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Contact> toCacheModel() {
+		ContactCacheModel contactCacheModel = new ContactCacheModel();
+
+		contactCacheModel.contactId = getContactId();
+		contactCacheModel.companyId = getCompanyId();
+		contactCacheModel.userId = getUserId();
+		contactCacheModel.userName = getUserName();
+
+		if ((contactCacheModel.userName != null) &&
+				(contactCacheModel.userName.length() == 0)) {
+			contactCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			contactCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			contactCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		contactCacheModel.accountId = getAccountId();
+		contactCacheModel.parentContactId = getParentContactId();
+		contactCacheModel.firstName = getFirstName();
+
+		if ((contactCacheModel.firstName != null) &&
+				(contactCacheModel.firstName.length() == 0)) {
+			contactCacheModel.firstName = null;
+		}
+
+		contactCacheModel.middleName = getMiddleName();
+
+		if ((contactCacheModel.middleName != null) &&
+				(contactCacheModel.middleName.length() == 0)) {
+			contactCacheModel.middleName = null;
+		}
+
+		contactCacheModel.lastName = getLastName();
+
+		if ((contactCacheModel.lastName != null) &&
+				(contactCacheModel.lastName.length() == 0)) {
+			contactCacheModel.lastName = null;
+		}
+
+		contactCacheModel.prefixId = getPrefixId();
+		contactCacheModel.suffixId = getSuffixId();
+		contactCacheModel.male = getMale();
+
+		Date birthday = getBirthday();
+
+		if (birthday != null) {
+			contactCacheModel.birthday = birthday.getTime();
+		}
+
+		contactCacheModel.smsSn = getSmsSn();
+
+		if ((contactCacheModel.smsSn != null) &&
+				(contactCacheModel.smsSn.length() == 0)) {
+			contactCacheModel.smsSn = null;
+		}
+
+		contactCacheModel.aimSn = getAimSn();
+
+		if ((contactCacheModel.aimSn != null) &&
+				(contactCacheModel.aimSn.length() == 0)) {
+			contactCacheModel.aimSn = null;
+		}
+
+		contactCacheModel.facebookSn = getFacebookSn();
+
+		if ((contactCacheModel.facebookSn != null) &&
+				(contactCacheModel.facebookSn.length() == 0)) {
+			contactCacheModel.facebookSn = null;
+		}
+
+		contactCacheModel.icqSn = getIcqSn();
+
+		if ((contactCacheModel.icqSn != null) &&
+				(contactCacheModel.icqSn.length() == 0)) {
+			contactCacheModel.icqSn = null;
+		}
+
+		contactCacheModel.jabberSn = getJabberSn();
+
+		if ((contactCacheModel.jabberSn != null) &&
+				(contactCacheModel.jabberSn.length() == 0)) {
+			contactCacheModel.jabberSn = null;
+		}
+
+		contactCacheModel.msnSn = getMsnSn();
+
+		if ((contactCacheModel.msnSn != null) &&
+				(contactCacheModel.msnSn.length() == 0)) {
+			contactCacheModel.msnSn = null;
+		}
+
+		contactCacheModel.mySpaceSn = getMySpaceSn();
+
+		if ((contactCacheModel.mySpaceSn != null) &&
+				(contactCacheModel.mySpaceSn.length() == 0)) {
+			contactCacheModel.mySpaceSn = null;
+		}
+
+		contactCacheModel.skypeSn = getSkypeSn();
+
+		if ((contactCacheModel.skypeSn != null) &&
+				(contactCacheModel.skypeSn.length() == 0)) {
+			contactCacheModel.skypeSn = null;
+		}
+
+		contactCacheModel.twitterSn = getTwitterSn();
+
+		if ((contactCacheModel.twitterSn != null) &&
+				(contactCacheModel.twitterSn.length() == 0)) {
+			contactCacheModel.twitterSn = null;
+		}
+
+		contactCacheModel.ymSn = getYmSn();
+
+		if ((contactCacheModel.ymSn != null) &&
+				(contactCacheModel.ymSn.length() == 0)) {
+			contactCacheModel.ymSn = null;
+		}
+
+		contactCacheModel.employeeStatusId = getEmployeeStatusId();
+
+		if ((contactCacheModel.employeeStatusId != null) &&
+				(contactCacheModel.employeeStatusId.length() == 0)) {
+			contactCacheModel.employeeStatusId = null;
+		}
+
+		contactCacheModel.employeeNumber = getEmployeeNumber();
+
+		if ((contactCacheModel.employeeNumber != null) &&
+				(contactCacheModel.employeeNumber.length() == 0)) {
+			contactCacheModel.employeeNumber = null;
+		}
+
+		contactCacheModel.jobTitle = getJobTitle();
+
+		if ((contactCacheModel.jobTitle != null) &&
+				(contactCacheModel.jobTitle.length() == 0)) {
+			contactCacheModel.jobTitle = null;
+		}
+
+		contactCacheModel.jobClass = getJobClass();
+
+		if ((contactCacheModel.jobClass != null) &&
+				(contactCacheModel.jobClass.length() == 0)) {
+			contactCacheModel.jobClass = null;
+		}
+
+		contactCacheModel.hoursOfOperation = getHoursOfOperation();
+
+		if ((contactCacheModel.hoursOfOperation != null) &&
+				(contactCacheModel.hoursOfOperation.length() == 0)) {
+			contactCacheModel.hoursOfOperation = null;
+		}
+
+		return contactCacheModel;
 	}
 
 	@Override

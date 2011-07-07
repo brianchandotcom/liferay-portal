@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ImageModel;
 import com.liferay.portal.model.ImageSoap;
@@ -320,6 +321,39 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Image> toCacheModel() {
+		ImageCacheModel imageCacheModel = new ImageCacheModel();
+
+		imageCacheModel.imageId = getImageId();
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			imageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		imageCacheModel.text = getText();
+
+		if ((imageCacheModel.text != null) &&
+				(imageCacheModel.text.length() == 0)) {
+			imageCacheModel.text = null;
+		}
+
+		imageCacheModel.type = getType();
+
+		if ((imageCacheModel.type != null) &&
+				(imageCacheModel.type.length() == 0)) {
+			imageCacheModel.type = null;
+		}
+
+		imageCacheModel.height = getHeight();
+		imageCacheModel.width = getWidth();
+		imageCacheModel.size = getSize();
+
+		return imageCacheModel;
 	}
 
 	@Override

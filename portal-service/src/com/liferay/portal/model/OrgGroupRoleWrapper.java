@@ -164,6 +164,10 @@ public class OrgGroupRoleWrapper implements OrgGroupRole {
 		return _orgGroupRole.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgGroupRole> toCacheModel() {
+		return _orgGroupRole.toCacheModel();
+	}
+
 	public com.liferay.portal.model.OrgGroupRole toEscapedModel() {
 		return new OrgGroupRoleWrapper(_orgGroupRole.toEscapedModel());
 	}

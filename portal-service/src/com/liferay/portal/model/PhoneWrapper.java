@@ -363,6 +363,10 @@ public class PhoneWrapper implements Phone {
 		return _phone.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Phone> toCacheModel() {
+		return _phone.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Phone toEscapedModel() {
 		return new PhoneWrapper(_phone.toEscapedModel());
 	}

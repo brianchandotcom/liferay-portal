@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceModel;
 import com.liferay.portal.model.ResourceSoap;
@@ -284,6 +285,22 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 		resourceModelImpl._setOriginalCodeId = false;
 
 		resourceModelImpl._originalPrimKey = resourceModelImpl._primKey;
+	}
+
+	@Override
+	public CacheModel<Resource> toCacheModel() {
+		ResourceCacheModel resourceCacheModel = new ResourceCacheModel();
+
+		resourceCacheModel.resourceId = getResourceId();
+		resourceCacheModel.codeId = getCodeId();
+		resourceCacheModel.primKey = getPrimKey();
+
+		if ((resourceCacheModel.primKey != null) &&
+				(resourceCacheModel.primKey.length() == 0)) {
+			resourceCacheModel.primKey = null;
+		}
+
+		return resourceCacheModel;
 	}
 
 	@Override

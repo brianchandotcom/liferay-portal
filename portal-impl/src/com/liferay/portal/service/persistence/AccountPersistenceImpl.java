@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.AccountImpl;
 import com.liferay.portal.model.impl.AccountModelImpl;
@@ -716,6 +717,16 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	private static Account _nullAccount = new AccountImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Account> toCacheModel() {
+				return _nullAccountCacheModel;
+			}
+		};
+
+	private static CacheModel<Account> _nullAccountCacheModel = new CacheModel<Account>() {
+			public Account toEntityModel() {
+				return _nullAccount;
 			}
 		};
 }

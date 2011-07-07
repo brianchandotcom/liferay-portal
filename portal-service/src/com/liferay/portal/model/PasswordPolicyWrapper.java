@@ -786,6 +786,10 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		return _passwordPolicy.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PasswordPolicy> toCacheModel() {
+		return _passwordPolicy.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PasswordPolicy toEscapedModel() {
 		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
 	}

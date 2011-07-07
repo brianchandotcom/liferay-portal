@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgGroupRole;
 import com.liferay.portal.model.OrgGroupRoleModel;
 import com.liferay.portal.service.persistence.OrgGroupRolePK;
@@ -188,6 +189,17 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<OrgGroupRole> toCacheModel() {
+		OrgGroupRoleCacheModel orgGroupRoleCacheModel = new OrgGroupRoleCacheModel();
+
+		orgGroupRoleCacheModel.organizationId = getOrganizationId();
+		orgGroupRoleCacheModel.groupId = getGroupId();
+		orgGroupRoleCacheModel.roleId = getRoleId();
+
+		return orgGroupRoleCacheModel;
 	}
 
 	@Override

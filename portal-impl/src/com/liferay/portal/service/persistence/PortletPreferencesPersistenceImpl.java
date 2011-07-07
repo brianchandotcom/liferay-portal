@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
@@ -2457,6 +2458,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PortletPreferences> toCacheModel() {
+				return _nullPortletPreferencesCacheModel;
+			}
+		};
+
+	private static CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
+		new CacheModel<PortletPreferences>() {
+			public PortletPreferences toEntityModel() {
+				return _nullPortletPreferences;
 			}
 		};
 }

@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -212,6 +213,8 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	public int compareTo(DLContent dlContent);
 
 	public int hashCode();
+
+	public CacheModel<DLContent> toCacheModel();
 
 	public DLContent toEscapedModel();
 

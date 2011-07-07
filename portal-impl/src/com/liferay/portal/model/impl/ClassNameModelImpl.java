@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ClassNameModel;
 import com.liferay.portal.model.ClassNameSoap;
@@ -267,6 +268,21 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		ClassNameModelImpl classNameModelImpl = this;
 
 		classNameModelImpl._originalValue = classNameModelImpl._value;
+	}
+
+	@Override
+	public CacheModel<ClassName> toCacheModel() {
+		ClassNameCacheModel classNameCacheModel = new ClassNameCacheModel();
+
+		classNameCacheModel.classNameId = getClassNameId();
+		classNameCacheModel.value = getValue();
+
+		if ((classNameCacheModel.value != null) &&
+				(classNameCacheModel.value.length() == 0)) {
+			classNameCacheModel.value = null;
+		}
+
+		return classNameCacheModel;
 	}
 
 	@Override

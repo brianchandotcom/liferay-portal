@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.OrganizationImpl;
@@ -5042,6 +5043,16 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static Organization _nullOrganization = new OrganizationImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Organization> toCacheModel() {
+				return _nullOrganizationCacheModel;
+			}
+		};
+
+	private static CacheModel<Organization> _nullOrganizationCacheModel = new CacheModel<Organization>() {
+			public Organization toEntityModel() {
+				return _nullOrganization;
 			}
 		};
 }

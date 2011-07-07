@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -4741,6 +4742,16 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static ExpandoValue _nullExpandoValue = new ExpandoValueImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ExpandoValue> toCacheModel() {
+				return _nullExpandoValueCacheModel;
+			}
+		};
+
+	private static CacheModel<ExpandoValue> _nullExpandoValueCacheModel = new CacheModel<ExpandoValue>() {
+			public ExpandoValue toEntityModel() {
+				return _nullExpandoValue;
 			}
 		};
 }

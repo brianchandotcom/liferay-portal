@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LockImpl;
@@ -1917,6 +1918,16 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static Lock _nullLock = new LockImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Lock> toCacheModel() {
+				return _nullLockCacheModel;
+			}
+		};
+
+	private static CacheModel<Lock> _nullLockCacheModel = new CacheModel<Lock>() {
+			public Lock toEntityModel() {
+				return _nullLock;
 			}
 		};
 }

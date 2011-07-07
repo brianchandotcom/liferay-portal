@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupModel;
 import com.liferay.portal.model.GroupSoap;
@@ -543,6 +544,52 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupModelImpl._originalName = groupModelImpl._name;
 
 		groupModelImpl._originalFriendlyURL = groupModelImpl._friendlyURL;
+	}
+
+	@Override
+	public CacheModel<Group> toCacheModel() {
+		GroupCacheModel groupCacheModel = new GroupCacheModel();
+
+		groupCacheModel.groupId = getGroupId();
+		groupCacheModel.companyId = getCompanyId();
+		groupCacheModel.creatorUserId = getCreatorUserId();
+		groupCacheModel.classNameId = getClassNameId();
+		groupCacheModel.classPK = getClassPK();
+		groupCacheModel.parentGroupId = getParentGroupId();
+		groupCacheModel.liveGroupId = getLiveGroupId();
+		groupCacheModel.name = getName();
+
+		if ((groupCacheModel.name != null) &&
+				(groupCacheModel.name.length() == 0)) {
+			groupCacheModel.name = null;
+		}
+
+		groupCacheModel.description = getDescription();
+
+		if ((groupCacheModel.description != null) &&
+				(groupCacheModel.description.length() == 0)) {
+			groupCacheModel.description = null;
+		}
+
+		groupCacheModel.type = getType();
+		groupCacheModel.typeSettings = getTypeSettings();
+
+		if ((groupCacheModel.typeSettings != null) &&
+				(groupCacheModel.typeSettings.length() == 0)) {
+			groupCacheModel.typeSettings = null;
+		}
+
+		groupCacheModel.friendlyURL = getFriendlyURL();
+
+		if ((groupCacheModel.friendlyURL != null) &&
+				(groupCacheModel.friendlyURL.length() == 0)) {
+			groupCacheModel.friendlyURL = null;
+		}
+
+		groupCacheModel.site = getSite();
+		groupCacheModel.active = getActive();
+
+		return groupCacheModel;
 	}
 
 	@Override

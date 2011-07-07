@@ -156,6 +156,8 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker> {
 
 	public int hashCode();
 
+	public CacheModel<PasswordTracker> toCacheModel();
+
 	public PasswordTracker toEscapedModel();
 
 	public String toString();

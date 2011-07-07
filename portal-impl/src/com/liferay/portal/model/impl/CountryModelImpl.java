@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.CountryModel;
 import com.liferay.portal.model.CountrySoap;
@@ -362,6 +363,51 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryModelImpl._originalA2 = countryModelImpl._a2;
 
 		countryModelImpl._originalA3 = countryModelImpl._a3;
+	}
+
+	@Override
+	public CacheModel<Country> toCacheModel() {
+		CountryCacheModel countryCacheModel = new CountryCacheModel();
+
+		countryCacheModel.countryId = getCountryId();
+		countryCacheModel.name = getName();
+
+		if ((countryCacheModel.name != null) &&
+				(countryCacheModel.name.length() == 0)) {
+			countryCacheModel.name = null;
+		}
+
+		countryCacheModel.a2 = getA2();
+
+		if ((countryCacheModel.a2 != null) &&
+				(countryCacheModel.a2.length() == 0)) {
+			countryCacheModel.a2 = null;
+		}
+
+		countryCacheModel.a3 = getA3();
+
+		if ((countryCacheModel.a3 != null) &&
+				(countryCacheModel.a3.length() == 0)) {
+			countryCacheModel.a3 = null;
+		}
+
+		countryCacheModel.number = getNumber();
+
+		if ((countryCacheModel.number != null) &&
+				(countryCacheModel.number.length() == 0)) {
+			countryCacheModel.number = null;
+		}
+
+		countryCacheModel.idd = getIdd();
+
+		if ((countryCacheModel.idd != null) &&
+				(countryCacheModel.idd.length() == 0)) {
+			countryCacheModel.idd = null;
+		}
+
+		countryCacheModel.active = getActive();
+
+		return countryCacheModel;
 	}
 
 	@Override

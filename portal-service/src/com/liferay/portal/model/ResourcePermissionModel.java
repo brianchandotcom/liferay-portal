@@ -195,6 +195,8 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission> {
 
 	public int hashCode();
 
+	public CacheModel<ResourcePermission> toCacheModel();
+
 	public ResourcePermission toEscapedModel();
 
 	public String toString();

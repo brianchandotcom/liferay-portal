@@ -258,6 +258,8 @@ public interface OrganizationModel extends BaseModel<Organization> {
 
 	public int hashCode();
 
+	public CacheModel<Organization> toCacheModel();
+
 	public Organization toEscapedModel();
 
 	public String toString();

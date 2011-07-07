@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -350,6 +351,45 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<AssetTag> toCacheModel() {
+		AssetTagCacheModel assetTagCacheModel = new AssetTagCacheModel();
+
+		assetTagCacheModel.tagId = getTagId();
+		assetTagCacheModel.groupId = getGroupId();
+		assetTagCacheModel.companyId = getCompanyId();
+		assetTagCacheModel.userId = getUserId();
+		assetTagCacheModel.userName = getUserName();
+
+		if ((assetTagCacheModel.userName != null) &&
+				(assetTagCacheModel.userName.length() == 0)) {
+			assetTagCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetTagCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetTagCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetTagCacheModel.name = getName();
+
+		if ((assetTagCacheModel.name != null) &&
+				(assetTagCacheModel.name.length() == 0)) {
+			assetTagCacheModel.name = null;
+		}
+
+		assetTagCacheModel.assetCount = getAssetCount();
+
+		return assetTagCacheModel;
 	}
 
 	@Override

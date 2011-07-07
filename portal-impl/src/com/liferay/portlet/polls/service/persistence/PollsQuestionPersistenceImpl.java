@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2173,6 +2174,16 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static PollsQuestion _nullPollsQuestion = new PollsQuestionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PollsQuestion> toCacheModel() {
+				return _nullPollsQuestionCacheModel;
+			}
+		};
+
+	private static CacheModel<PollsQuestion> _nullPollsQuestionCacheModel = new CacheModel<PollsQuestion>() {
+			public PollsQuestion toEntityModel() {
+				return _nullPollsQuestion;
 			}
 		};
 }

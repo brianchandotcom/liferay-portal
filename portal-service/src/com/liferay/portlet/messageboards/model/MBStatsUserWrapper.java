@@ -240,6 +240,10 @@ public class MBStatsUserWrapper implements MBStatsUser {
 		return _mbStatsUser.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBStatsUser> toCacheModel() {
+		return _mbStatsUser.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBStatsUser toEscapedModel() {
 		return new MBStatsUserWrapper(_mbStatsUser.toEscapedModel());
 	}

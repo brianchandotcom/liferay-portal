@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -2622,6 +2623,17 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static DLFileEntryMetadata _nullDLFileEntryMetadata = new DLFileEntryMetadataImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DLFileEntryMetadata> toCacheModel() {
+				return _nullDLFileEntryMetadataCacheModel;
+			}
+		};
+
+	private static CacheModel<DLFileEntryMetadata> _nullDLFileEntryMetadataCacheModel =
+		new CacheModel<DLFileEntryMetadata>() {
+			public DLFileEntryMetadata toEntityModel() {
+				return _nullDLFileEntryMetadata;
 			}
 		};
 }

@@ -238,6 +238,10 @@ public class DLFileRankWrapper implements DLFileRank {
 		return _dlFileRank.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileRank> toCacheModel() {
+		return _dlFileRank.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileRank toEscapedModel() {
 		return new DLFileRankWrapper(_dlFileRank.toEscapedModel());
 	}

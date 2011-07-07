@@ -379,6 +379,8 @@ public interface AddressModel extends AttachedModel, AuditedModel,
 
 	public int hashCode();
 
+	public CacheModel<Address> toCacheModel();
+
 	public Address toEscapedModel();
 
 	public String toString();

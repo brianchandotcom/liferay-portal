@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -519,6 +520,63 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		igImageModelImpl._originalCustom2ImageId = igImageModelImpl._custom2ImageId;
 
 		igImageModelImpl._setOriginalCustom2ImageId = false;
+	}
+
+	@Override
+	public CacheModel<IGImage> toCacheModel() {
+		IGImageCacheModel igImageCacheModel = new IGImageCacheModel();
+
+		igImageCacheModel.uuid = getUuid();
+
+		if ((igImageCacheModel.uuid != null) &&
+				(igImageCacheModel.uuid.length() == 0)) {
+			igImageCacheModel.uuid = null;
+		}
+
+		igImageCacheModel.imageId = getImageId();
+		igImageCacheModel.groupId = getGroupId();
+		igImageCacheModel.companyId = getCompanyId();
+		igImageCacheModel.userId = getUserId();
+		igImageCacheModel.userName = getUserName();
+
+		if ((igImageCacheModel.userName != null) &&
+				(igImageCacheModel.userName.length() == 0)) {
+			igImageCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			igImageCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			igImageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		igImageCacheModel.folderId = getFolderId();
+		igImageCacheModel.name = getName();
+
+		if ((igImageCacheModel.name != null) &&
+				(igImageCacheModel.name.length() == 0)) {
+			igImageCacheModel.name = null;
+		}
+
+		igImageCacheModel.description = getDescription();
+
+		if ((igImageCacheModel.description != null) &&
+				(igImageCacheModel.description.length() == 0)) {
+			igImageCacheModel.description = null;
+		}
+
+		igImageCacheModel.smallImageId = getSmallImageId();
+		igImageCacheModel.largeImageId = getLargeImageId();
+		igImageCacheModel.custom1ImageId = getCustom1ImageId();
+		igImageCacheModel.custom2ImageId = getCustom2ImageId();
+
+		return igImageCacheModel;
 	}
 
 	@Override

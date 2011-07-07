@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -332,6 +333,29 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		blogsStatsUserModelImpl._originalUserId = blogsStatsUserModelImpl._userId;
 
 		blogsStatsUserModelImpl._setOriginalUserId = false;
+	}
+
+	@Override
+	public CacheModel<BlogsStatsUser> toCacheModel() {
+		BlogsStatsUserCacheModel blogsStatsUserCacheModel = new BlogsStatsUserCacheModel();
+
+		blogsStatsUserCacheModel.statsUserId = getStatsUserId();
+		blogsStatsUserCacheModel.groupId = getGroupId();
+		blogsStatsUserCacheModel.companyId = getCompanyId();
+		blogsStatsUserCacheModel.userId = getUserId();
+		blogsStatsUserCacheModel.entryCount = getEntryCount();
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			blogsStatsUserCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		blogsStatsUserCacheModel.ratingsTotalEntries = getRatingsTotalEntries();
+		blogsStatsUserCacheModel.ratingsTotalScore = getRatingsTotalScore();
+		blogsStatsUserCacheModel.ratingsAverageScore = getRatingsAverageScore();
+
+		return blogsStatsUserCacheModel;
 	}
 
 	@Override

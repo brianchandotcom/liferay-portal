@@ -382,6 +382,10 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 		return _bookmarksEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.bookmarks.model.BookmarksEntry> toCacheModel() {
+		return _bookmarksEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry toEscapedModel() {
 		return new BookmarksEntryWrapper(_bookmarksEntry.toEscapedModel());
 	}

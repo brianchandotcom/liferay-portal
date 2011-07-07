@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.model.WorkflowInstanceLinkModel;
 import com.liferay.portal.service.ServiceContext;
@@ -312,6 +313,40 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<WorkflowInstanceLink> toCacheModel() {
+		WorkflowInstanceLinkCacheModel workflowInstanceLinkCacheModel = new WorkflowInstanceLinkCacheModel();
+
+		workflowInstanceLinkCacheModel.workflowInstanceLinkId = getWorkflowInstanceLinkId();
+		workflowInstanceLinkCacheModel.groupId = getGroupId();
+		workflowInstanceLinkCacheModel.companyId = getCompanyId();
+		workflowInstanceLinkCacheModel.userId = getUserId();
+		workflowInstanceLinkCacheModel.userName = getUserName();
+
+		if ((workflowInstanceLinkCacheModel.userName != null) &&
+				(workflowInstanceLinkCacheModel.userName.length() == 0)) {
+			workflowInstanceLinkCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			workflowInstanceLinkCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			workflowInstanceLinkCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		workflowInstanceLinkCacheModel.classNameId = getClassNameId();
+		workflowInstanceLinkCacheModel.classPK = getClassPK();
+		workflowInstanceLinkCacheModel.workflowInstanceId = getWorkflowInstanceId();
+
+		return workflowInstanceLinkCacheModel;
 	}
 
 	@Override

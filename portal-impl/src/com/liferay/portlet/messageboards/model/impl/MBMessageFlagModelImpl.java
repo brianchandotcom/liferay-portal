@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -344,6 +345,26 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		mbMessageFlagModelImpl._originalFlag = mbMessageFlagModelImpl._flag;
 
 		mbMessageFlagModelImpl._setOriginalFlag = false;
+	}
+
+	@Override
+	public CacheModel<MBMessageFlag> toCacheModel() {
+		MBMessageFlagCacheModel mbMessageFlagCacheModel = new MBMessageFlagCacheModel();
+
+		mbMessageFlagCacheModel.messageFlagId = getMessageFlagId();
+		mbMessageFlagCacheModel.userId = getUserId();
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbMessageFlagCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		mbMessageFlagCacheModel.threadId = getThreadId();
+		mbMessageFlagCacheModel.messageId = getMessageId();
+		mbMessageFlagCacheModel.flag = getFlag();
+
+		return mbMessageFlagCacheModel;
 	}
 
 	@Override

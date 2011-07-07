@@ -693,6 +693,10 @@ public class AssetEntryWrapper implements AssetEntry {
 		return _assetEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetEntry> toCacheModel() {
+		return _assetEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetEntry toEscapedModel() {
 		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
 	}

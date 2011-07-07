@@ -402,6 +402,10 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecord> toCacheModel() {
+		return _ddlRecord.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord toEscapedModel() {
 		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
 	}

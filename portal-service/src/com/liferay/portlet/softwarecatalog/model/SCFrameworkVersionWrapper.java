@@ -337,6 +337,10 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
 		return _scFrameworkVersion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> toCacheModel() {
+		return _scFrameworkVersion.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion toEscapedModel() {
 		return new SCFrameworkVersionWrapper(_scFrameworkVersion.toEscapedModel());
 	}

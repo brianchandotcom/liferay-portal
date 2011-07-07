@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -452,6 +453,8 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public int compareTo(DLFileVersion dlFileVersion);
 
 	public int hashCode();
+
+	public CacheModel<DLFileVersion> toCacheModel();
 
 	public DLFileVersion toEscapedModel();
 

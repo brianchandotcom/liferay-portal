@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -423,6 +424,58 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		bookmarksFolderModelImpl._originalGroupId = bookmarksFolderModelImpl._groupId;
 
 		bookmarksFolderModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<BookmarksFolder> toCacheModel() {
+		BookmarksFolderCacheModel bookmarksFolderCacheModel = new BookmarksFolderCacheModel();
+
+		bookmarksFolderCacheModel.uuid = getUuid();
+
+		if ((bookmarksFolderCacheModel.uuid != null) &&
+				(bookmarksFolderCacheModel.uuid.length() == 0)) {
+			bookmarksFolderCacheModel.uuid = null;
+		}
+
+		bookmarksFolderCacheModel.folderId = getFolderId();
+		bookmarksFolderCacheModel.groupId = getGroupId();
+		bookmarksFolderCacheModel.companyId = getCompanyId();
+		bookmarksFolderCacheModel.userId = getUserId();
+		bookmarksFolderCacheModel.userName = getUserName();
+
+		if ((bookmarksFolderCacheModel.userName != null) &&
+				(bookmarksFolderCacheModel.userName.length() == 0)) {
+			bookmarksFolderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			bookmarksFolderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			bookmarksFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		bookmarksFolderCacheModel.parentFolderId = getParentFolderId();
+		bookmarksFolderCacheModel.name = getName();
+
+		if ((bookmarksFolderCacheModel.name != null) &&
+				(bookmarksFolderCacheModel.name.length() == 0)) {
+			bookmarksFolderCacheModel.name = null;
+		}
+
+		bookmarksFolderCacheModel.description = getDescription();
+
+		if ((bookmarksFolderCacheModel.description != null) &&
+				(bookmarksFolderCacheModel.description.length() == 0)) {
+			bookmarksFolderCacheModel.description = null;
+		}
+
+		return bookmarksFolderCacheModel;
 	}
 
 	@Override

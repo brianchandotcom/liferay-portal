@@ -219,6 +219,10 @@ public class UserIdMapperWrapper implements UserIdMapper {
 		return _userIdMapper.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserIdMapper> toCacheModel() {
+		return _userIdMapper.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserIdMapper toEscapedModel() {
 		return new UserIdMapperWrapper(_userIdMapper.toEscapedModel());
 	}

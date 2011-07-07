@@ -301,6 +301,10 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		return _ratingsEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.ratings.model.RatingsEntry> toCacheModel() {
+		return _ratingsEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.ratings.model.RatingsEntry toEscapedModel() {
 		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
 	}

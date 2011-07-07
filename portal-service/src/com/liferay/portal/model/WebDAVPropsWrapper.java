@@ -244,6 +244,10 @@ public class WebDAVPropsWrapper implements WebDAVProps {
 		return _webDAVProps.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WebDAVProps> toCacheModel() {
+		return _webDAVProps.toCacheModel();
+	}
+
 	public com.liferay.portal.model.WebDAVProps toEscapedModel() {
 		return new WebDAVPropsWrapper(_webDAVProps.toEscapedModel());
 	}

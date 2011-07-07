@@ -307,6 +307,10 @@ public class CompanyWrapper implements Company {
 		return _company.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Company> toCacheModel() {
+		return _company.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Company toEscapedModel() {
 		return new CompanyWrapper(_company.toEscapedModel());
 	}

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostImpl;
@@ -1234,6 +1235,16 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	private static VirtualHost _nullVirtualHost = new VirtualHostImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<VirtualHost> toCacheModel() {
+				return _nullVirtualHostCacheModel;
+			}
+		};
+
+	private static CacheModel<VirtualHost> _nullVirtualHostCacheModel = new CacheModel<VirtualHost>() {
+			public VirtualHost toEntityModel() {
+				return _nullVirtualHost;
 			}
 		};
 }

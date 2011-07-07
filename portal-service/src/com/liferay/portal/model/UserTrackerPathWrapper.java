@@ -182,6 +182,10 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		return _userTrackerPath.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserTrackerPath> toCacheModel() {
+		return _userTrackerPath.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserTrackerPath toEscapedModel() {
 		return new UserTrackerPathWrapper(_userTrackerPath.toEscapedModel());
 	}

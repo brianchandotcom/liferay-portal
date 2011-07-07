@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -2979,6 +2980,16 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	private static SocialEquityUser _nullSocialEquityUser = new SocialEquityUserImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityUser> toCacheModel() {
+				return _nullSocialEquityUserCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityUser> _nullSocialEquityUserCacheModel = new CacheModel<SocialEquityUser>() {
+			public SocialEquityUser toEntityModel() {
+				return _nullSocialEquityUser;
 			}
 		};
 }

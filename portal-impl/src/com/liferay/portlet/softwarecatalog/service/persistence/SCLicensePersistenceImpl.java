@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2909,6 +2910,16 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static SCLicense _nullSCLicense = new SCLicenseImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SCLicense> toCacheModel() {
+				return _nullSCLicenseCacheModel;
+			}
+		};
+
+	private static CacheModel<SCLicense> _nullSCLicenseCacheModel = new CacheModel<SCLicense>() {
+			public SCLicense toEntityModel() {
+				return _nullSCLicense;
 			}
 		};
 }

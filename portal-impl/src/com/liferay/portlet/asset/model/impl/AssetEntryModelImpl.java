@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -738,6 +739,118 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._setOriginalClassPK = false;
 
 		assetEntryModelImpl._originalClassUuid = assetEntryModelImpl._classUuid;
+	}
+
+	@Override
+	public CacheModel<AssetEntry> toCacheModel() {
+		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();
+
+		assetEntryCacheModel.entryId = getEntryId();
+		assetEntryCacheModel.groupId = getGroupId();
+		assetEntryCacheModel.companyId = getCompanyId();
+		assetEntryCacheModel.userId = getUserId();
+		assetEntryCacheModel.userName = getUserName();
+
+		if ((assetEntryCacheModel.userName != null) &&
+				(assetEntryCacheModel.userName.length() == 0)) {
+			assetEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetEntryCacheModel.classNameId = getClassNameId();
+		assetEntryCacheModel.classPK = getClassPK();
+		assetEntryCacheModel.classUuid = getClassUuid();
+
+		if ((assetEntryCacheModel.classUuid != null) &&
+				(assetEntryCacheModel.classUuid.length() == 0)) {
+			assetEntryCacheModel.classUuid = null;
+		}
+
+		assetEntryCacheModel.visible = getVisible();
+
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			assetEntryCacheModel.startDate = startDate.getTime();
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			assetEntryCacheModel.endDate = endDate.getTime();
+		}
+
+		Date publishDate = getPublishDate();
+
+		if (publishDate != null) {
+			assetEntryCacheModel.publishDate = publishDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			assetEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		assetEntryCacheModel.mimeType = getMimeType();
+
+		if ((assetEntryCacheModel.mimeType != null) &&
+				(assetEntryCacheModel.mimeType.length() == 0)) {
+			assetEntryCacheModel.mimeType = null;
+		}
+
+		assetEntryCacheModel.title = getTitle();
+
+		if ((assetEntryCacheModel.title != null) &&
+				(assetEntryCacheModel.title.length() == 0)) {
+			assetEntryCacheModel.title = null;
+		}
+
+		assetEntryCacheModel.description = getDescription();
+
+		if ((assetEntryCacheModel.description != null) &&
+				(assetEntryCacheModel.description.length() == 0)) {
+			assetEntryCacheModel.description = null;
+		}
+
+		assetEntryCacheModel.summary = getSummary();
+
+		if ((assetEntryCacheModel.summary != null) &&
+				(assetEntryCacheModel.summary.length() == 0)) {
+			assetEntryCacheModel.summary = null;
+		}
+
+		assetEntryCacheModel.url = getUrl();
+
+		if ((assetEntryCacheModel.url != null) &&
+				(assetEntryCacheModel.url.length() == 0)) {
+			assetEntryCacheModel.url = null;
+		}
+
+		assetEntryCacheModel.layoutUuid = getLayoutUuid();
+
+		if ((assetEntryCacheModel.layoutUuid != null) &&
+				(assetEntryCacheModel.layoutUuid.length() == 0)) {
+			assetEntryCacheModel.layoutUuid = null;
+		}
+
+		assetEntryCacheModel.height = getHeight();
+		assetEntryCacheModel.width = getWidth();
+		assetEntryCacheModel.priority = getPriority();
+		assetEntryCacheModel.viewCount = getViewCount();
+
+		return assetEntryCacheModel;
 	}
 
 	@Override

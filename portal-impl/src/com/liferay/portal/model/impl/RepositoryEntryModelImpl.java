@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.RepositoryEntryModel;
 import com.liferay.portal.service.ServiceContext;
@@ -292,6 +293,30 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		repositoryEntryModelImpl._setOriginalRepositoryId = false;
 
 		repositoryEntryModelImpl._originalMappedId = repositoryEntryModelImpl._mappedId;
+	}
+
+	@Override
+	public CacheModel<RepositoryEntry> toCacheModel() {
+		RepositoryEntryCacheModel repositoryEntryCacheModel = new RepositoryEntryCacheModel();
+
+		repositoryEntryCacheModel.uuid = getUuid();
+
+		if ((repositoryEntryCacheModel.uuid != null) &&
+				(repositoryEntryCacheModel.uuid.length() == 0)) {
+			repositoryEntryCacheModel.uuid = null;
+		}
+
+		repositoryEntryCacheModel.repositoryEntryId = getRepositoryEntryId();
+		repositoryEntryCacheModel.groupId = getGroupId();
+		repositoryEntryCacheModel.repositoryId = getRepositoryId();
+		repositoryEntryCacheModel.mappedId = getMappedId();
+
+		if ((repositoryEntryCacheModel.mappedId != null) &&
+				(repositoryEntryCacheModel.mappedId.length() == 0)) {
+			repositoryEntryCacheModel.mappedId = null;
+		}
+
+		return repositoryEntryCacheModel;
 	}
 
 	@Override

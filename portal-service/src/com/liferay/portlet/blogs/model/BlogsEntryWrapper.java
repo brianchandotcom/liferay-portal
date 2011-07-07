@@ -633,6 +633,10 @@ public class BlogsEntryWrapper implements BlogsEntry {
 		return _blogsEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.blogs.model.BlogsEntry> toCacheModel() {
+		return _blogsEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.blogs.model.BlogsEntry toEscapedModel() {
 		return new BlogsEntryWrapper(_blogsEntry.toEscapedModel());
 	}

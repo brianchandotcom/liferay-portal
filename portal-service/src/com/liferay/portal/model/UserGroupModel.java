@@ -174,6 +174,8 @@ public interface UserGroupModel extends BaseModel<UserGroup> {
 
 	public int hashCode();
 
+	public CacheModel<UserGroup> toCacheModel();
+
 	public UserGroup toEscapedModel();
 
 	public String toString();

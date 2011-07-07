@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -342,6 +343,34 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		assetLinkModelImpl._originalType = assetLinkModelImpl._type;
 
 		assetLinkModelImpl._setOriginalType = false;
+	}
+
+	@Override
+	public CacheModel<AssetLink> toCacheModel() {
+		AssetLinkCacheModel assetLinkCacheModel = new AssetLinkCacheModel();
+
+		assetLinkCacheModel.linkId = getLinkId();
+		assetLinkCacheModel.companyId = getCompanyId();
+		assetLinkCacheModel.userId = getUserId();
+		assetLinkCacheModel.userName = getUserName();
+
+		if ((assetLinkCacheModel.userName != null) &&
+				(assetLinkCacheModel.userName.length() == 0)) {
+			assetLinkCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetLinkCacheModel.createDate = createDate.getTime();
+		}
+
+		assetLinkCacheModel.entryId1 = getEntryId1();
+		assetLinkCacheModel.entryId2 = getEntryId2();
+		assetLinkCacheModel.type = getType();
+		assetLinkCacheModel.weight = getWeight();
+
+		return assetLinkCacheModel;
 	}
 
 	@Override

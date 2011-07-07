@@ -202,6 +202,10 @@ public class PasswordTrackerWrapper implements PasswordTracker {
 		return _passwordTracker.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PasswordTracker> toCacheModel() {
+		return _passwordTracker.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PasswordTracker toEscapedModel() {
 		return new PasswordTrackerWrapper(_passwordTracker.toEscapedModel());
 	}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -463,6 +464,68 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryModelImpl._originalGroupId = bookmarksEntryModelImpl._groupId;
 
 		bookmarksEntryModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<BookmarksEntry> toCacheModel() {
+		BookmarksEntryCacheModel bookmarksEntryCacheModel = new BookmarksEntryCacheModel();
+
+		bookmarksEntryCacheModel.uuid = getUuid();
+
+		if ((bookmarksEntryCacheModel.uuid != null) &&
+				(bookmarksEntryCacheModel.uuid.length() == 0)) {
+			bookmarksEntryCacheModel.uuid = null;
+		}
+
+		bookmarksEntryCacheModel.entryId = getEntryId();
+		bookmarksEntryCacheModel.groupId = getGroupId();
+		bookmarksEntryCacheModel.companyId = getCompanyId();
+		bookmarksEntryCacheModel.userId = getUserId();
+		bookmarksEntryCacheModel.userName = getUserName();
+
+		if ((bookmarksEntryCacheModel.userName != null) &&
+				(bookmarksEntryCacheModel.userName.length() == 0)) {
+			bookmarksEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			bookmarksEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			bookmarksEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		bookmarksEntryCacheModel.folderId = getFolderId();
+		bookmarksEntryCacheModel.name = getName();
+
+		if ((bookmarksEntryCacheModel.name != null) &&
+				(bookmarksEntryCacheModel.name.length() == 0)) {
+			bookmarksEntryCacheModel.name = null;
+		}
+
+		bookmarksEntryCacheModel.url = getUrl();
+
+		if ((bookmarksEntryCacheModel.url != null) &&
+				(bookmarksEntryCacheModel.url.length() == 0)) {
+			bookmarksEntryCacheModel.url = null;
+		}
+
+		bookmarksEntryCacheModel.description = getDescription();
+
+		if ((bookmarksEntryCacheModel.description != null) &&
+				(bookmarksEntryCacheModel.description.length() == 0)) {
+			bookmarksEntryCacheModel.description = null;
+		}
+
+		bookmarksEntryCacheModel.visits = getVisits();
+		bookmarksEntryCacheModel.priority = getPriority();
+
+		return bookmarksEntryCacheModel;
 	}
 
 	@Override

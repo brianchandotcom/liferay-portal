@@ -545,6 +545,10 @@ public class JournalFeedWrapper implements JournalFeed {
 		return _journalFeed.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalFeed> toCacheModel() {
+		return _journalFeed.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalFeed toEscapedModel() {
 		return new JournalFeedWrapper(_journalFeed.toEscapedModel());
 	}

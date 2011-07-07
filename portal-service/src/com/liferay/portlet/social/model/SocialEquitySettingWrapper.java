@@ -308,6 +308,10 @@ public class SocialEquitySettingWrapper implements SocialEquitySetting {
 		return _socialEquitySetting.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquitySetting> toCacheModel() {
+		return _socialEquitySetting.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquitySetting toEscapedModel() {
 		return new SocialEquitySettingWrapper(_socialEquitySetting.toEscapedModel());
 	}

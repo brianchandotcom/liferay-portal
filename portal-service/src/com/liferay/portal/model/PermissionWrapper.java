@@ -181,6 +181,10 @@ public class PermissionWrapper implements Permission {
 		return _permission.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Permission> toCacheModel() {
+		return _permission.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Permission toEscapedModel() {
 		return new PermissionWrapper(_permission.toEscapedModel());
 	}

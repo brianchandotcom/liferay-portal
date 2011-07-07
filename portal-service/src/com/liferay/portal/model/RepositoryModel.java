@@ -248,6 +248,8 @@ public interface RepositoryModel extends BaseModel<Repository> {
 
 	public int hashCode();
 
+	public CacheModel<Repository> toCacheModel();
+
 	public Repository toEscapedModel();
 
 	public String toString();

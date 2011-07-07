@@ -994,6 +994,10 @@ public class JournalArticleWrapper implements JournalArticle {
 		return _journalArticle.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalArticle> toCacheModel() {
+		return _journalArticle.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle toEscapedModel() {
 		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
 	}

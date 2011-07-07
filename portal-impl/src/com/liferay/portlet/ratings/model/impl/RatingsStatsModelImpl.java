@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -282,6 +283,20 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		ratingsStatsModelImpl._originalClassPK = ratingsStatsModelImpl._classPK;
 
 		ratingsStatsModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<RatingsStats> toCacheModel() {
+		RatingsStatsCacheModel ratingsStatsCacheModel = new RatingsStatsCacheModel();
+
+		ratingsStatsCacheModel.statsId = getStatsId();
+		ratingsStatsCacheModel.classNameId = getClassNameId();
+		ratingsStatsCacheModel.classPK = getClassPK();
+		ratingsStatsCacheModel.totalEntries = getTotalEntries();
+		ratingsStatsCacheModel.totalScore = getTotalScore();
+		ratingsStatsCacheModel.averageScore = getAverageScore();
+
+		return ratingsStatsCacheModel;
 	}
 
 	@Override

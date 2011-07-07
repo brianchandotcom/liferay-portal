@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -548,6 +549,8 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public int compareTo(AssetEntry assetEntry);
 
 	public int hashCode();
+
+	public CacheModel<AssetEntry> toCacheModel();
 
 	public AssetEntry toEscapedModel();
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -380,6 +381,50 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
 
 		assetCategoryPropertyModelImpl._originalKey = assetCategoryPropertyModelImpl._key;
+	}
+
+	@Override
+	public CacheModel<AssetCategoryProperty> toCacheModel() {
+		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel = new AssetCategoryPropertyCacheModel();
+
+		assetCategoryPropertyCacheModel.categoryPropertyId = getCategoryPropertyId();
+		assetCategoryPropertyCacheModel.companyId = getCompanyId();
+		assetCategoryPropertyCacheModel.userId = getUserId();
+		assetCategoryPropertyCacheModel.userName = getUserName();
+
+		if ((assetCategoryPropertyCacheModel.userName != null) &&
+				(assetCategoryPropertyCacheModel.userName.length() == 0)) {
+			assetCategoryPropertyCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetCategoryPropertyCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetCategoryPropertyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetCategoryPropertyCacheModel.categoryId = getCategoryId();
+		assetCategoryPropertyCacheModel.key = getKey();
+
+		if ((assetCategoryPropertyCacheModel.key != null) &&
+				(assetCategoryPropertyCacheModel.key.length() == 0)) {
+			assetCategoryPropertyCacheModel.key = null;
+		}
+
+		assetCategoryPropertyCacheModel.value = getValue();
+
+		if ((assetCategoryPropertyCacheModel.value != null) &&
+				(assetCategoryPropertyCacheModel.value.length() == 0)) {
+			assetCategoryPropertyCacheModel.value = null;
+		}
+
+		return assetCategoryPropertyCacheModel;
 	}
 
 	@Override

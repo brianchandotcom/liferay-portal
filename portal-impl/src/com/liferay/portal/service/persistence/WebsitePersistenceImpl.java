@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.model.impl.WebsiteImpl;
@@ -2988,6 +2989,16 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static Website _nullWebsite = new WebsiteImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Website> toCacheModel() {
+				return _nullWebsiteCacheModel;
+			}
+		};
+
+	private static CacheModel<Website> _nullWebsiteCacheModel = new CacheModel<Website>() {
+			public Website toEntityModel() {
+				return _nullWebsite;
 			}
 		};
 }

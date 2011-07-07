@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationModel;
 import com.liferay.portal.model.OrganizationSoap;
@@ -424,6 +425,43 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationModelImpl._setOriginalParentOrganizationId = false;
 
 		organizationModelImpl._originalName = organizationModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<Organization> toCacheModel() {
+		OrganizationCacheModel organizationCacheModel = new OrganizationCacheModel();
+
+		organizationCacheModel.organizationId = getOrganizationId();
+		organizationCacheModel.companyId = getCompanyId();
+		organizationCacheModel.parentOrganizationId = getParentOrganizationId();
+		organizationCacheModel.leftOrganizationId = getLeftOrganizationId();
+		organizationCacheModel.rightOrganizationId = getRightOrganizationId();
+		organizationCacheModel.name = getName();
+
+		if ((organizationCacheModel.name != null) &&
+				(organizationCacheModel.name.length() == 0)) {
+			organizationCacheModel.name = null;
+		}
+
+		organizationCacheModel.type = getType();
+
+		if ((organizationCacheModel.type != null) &&
+				(organizationCacheModel.type.length() == 0)) {
+			organizationCacheModel.type = null;
+		}
+
+		organizationCacheModel.recursable = getRecursable();
+		organizationCacheModel.regionId = getRegionId();
+		organizationCacheModel.countryId = getCountryId();
+		organizationCacheModel.statusId = getStatusId();
+		organizationCacheModel.comments = getComments();
+
+		if ((organizationCacheModel.comments != null) &&
+				(organizationCacheModel.comments.length() == 0)) {
+			organizationCacheModel.comments = null;
+		}
+
+		return organizationCacheModel;
 	}
 
 	@Override

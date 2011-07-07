@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1728,6 +1729,16 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	private static AssetTagStats _nullAssetTagStats = new AssetTagStatsImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetTagStats> toCacheModel() {
+				return _nullAssetTagStatsCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetTagStats> _nullAssetTagStatsCacheModel = new CacheModel<AssetTagStats>() {
+			public AssetTagStats toEntityModel() {
+				return _nullAssetTagStats;
 			}
 		};
 }

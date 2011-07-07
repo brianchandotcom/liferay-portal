@@ -209,6 +209,10 @@ public class DDMStorageLinkWrapper implements DDMStorageLink {
 		return _ddmStorageLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> toCacheModel() {
+		return _ddmStorageLink.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toEscapedModel() {
 		return new DDMStorageLinkWrapper(_ddmStorageLink.toEscapedModel());
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2084,6 +2085,16 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static AssetTag _nullAssetTag = new AssetTagImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetTag> toCacheModel() {
+				return _nullAssetTagCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetTag> _nullAssetTagCacheModel = new CacheModel<AssetTag>() {
+			public AssetTag toEntityModel() {
+				return _nullAssetTag;
 			}
 		};
 }

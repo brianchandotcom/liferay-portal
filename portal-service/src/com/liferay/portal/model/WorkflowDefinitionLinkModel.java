@@ -263,6 +263,8 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 
 	public int hashCode();
 
+	public CacheModel<WorkflowDefinitionLink> toCacheModel();
+
 	public WorkflowDefinitionLink toEscapedModel();
 
 	public String toString();

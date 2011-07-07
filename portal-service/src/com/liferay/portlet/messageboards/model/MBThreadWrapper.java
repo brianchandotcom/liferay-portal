@@ -483,6 +483,10 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBThread> toCacheModel() {
+		return _mbThread.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBThread toEscapedModel() {
 		return new MBThreadWrapper(_mbThread.toEscapedModel());
 	}

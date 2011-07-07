@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestModel;
 import com.liferay.portal.model.MembershipRequestSoap;
@@ -373,6 +374,47 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<MembershipRequest> toCacheModel() {
+		MembershipRequestCacheModel membershipRequestCacheModel = new MembershipRequestCacheModel();
+
+		membershipRequestCacheModel.membershipRequestId = getMembershipRequestId();
+		membershipRequestCacheModel.groupId = getGroupId();
+		membershipRequestCacheModel.companyId = getCompanyId();
+		membershipRequestCacheModel.userId = getUserId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			membershipRequestCacheModel.createDate = createDate.getTime();
+		}
+
+		membershipRequestCacheModel.comments = getComments();
+
+		if ((membershipRequestCacheModel.comments != null) &&
+				(membershipRequestCacheModel.comments.length() == 0)) {
+			membershipRequestCacheModel.comments = null;
+		}
+
+		membershipRequestCacheModel.replyComments = getReplyComments();
+
+		if ((membershipRequestCacheModel.replyComments != null) &&
+				(membershipRequestCacheModel.replyComments.length() == 0)) {
+			membershipRequestCacheModel.replyComments = null;
+		}
+
+		Date replyDate = getReplyDate();
+
+		if (replyDate != null) {
+			membershipRequestCacheModel.replyDate = replyDate.getTime();
+		}
+
+		membershipRequestCacheModel.replierUserId = getReplierUserId();
+		membershipRequestCacheModel.statusId = getStatusId();
+
+		return membershipRequestCacheModel;
 	}
 
 	@Override

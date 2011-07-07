@@ -200,6 +200,10 @@ public class RepositoryEntryWrapper implements RepositoryEntry {
 		return _repositoryEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.RepositoryEntry> toCacheModel() {
+		return _repositoryEntry.toCacheModel();
+	}
+
 	public com.liferay.portal.model.RepositoryEntry toEscapedModel() {
 		return new RepositoryEntryWrapper(_repositoryEntry.toEscapedModel());
 	}

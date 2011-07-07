@@ -330,6 +330,10 @@ public class MembershipRequestWrapper implements MembershipRequest {
 		return _membershipRequest.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.MembershipRequest> toCacheModel() {
+		return _membershipRequest.toCacheModel();
+	}
+
 	public com.liferay.portal.model.MembershipRequest toEscapedModel() {
 		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
 	}

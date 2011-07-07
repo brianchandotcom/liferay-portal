@@ -333,6 +333,8 @@ public interface AccountModel extends AuditedModel, BaseModel<Account> {
 
 	public int hashCode();
 
+	public CacheModel<Account> toCacheModel();
+
 	public Account toEscapedModel();
 
 	public String toString();

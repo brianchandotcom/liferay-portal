@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.ServiceComponentModel;
 import com.liferay.portal.service.ServiceContext;
@@ -287,6 +288,30 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		serviceComponentModelImpl._originalBuildNumber = serviceComponentModelImpl._buildNumber;
 
 		serviceComponentModelImpl._setOriginalBuildNumber = false;
+	}
+
+	@Override
+	public CacheModel<ServiceComponent> toCacheModel() {
+		ServiceComponentCacheModel serviceComponentCacheModel = new ServiceComponentCacheModel();
+
+		serviceComponentCacheModel.serviceComponentId = getServiceComponentId();
+		serviceComponentCacheModel.buildNamespace = getBuildNamespace();
+
+		if ((serviceComponentCacheModel.buildNamespace != null) &&
+				(serviceComponentCacheModel.buildNamespace.length() == 0)) {
+			serviceComponentCacheModel.buildNamespace = null;
+		}
+
+		serviceComponentCacheModel.buildNumber = getBuildNumber();
+		serviceComponentCacheModel.buildDate = getBuildDate();
+		serviceComponentCacheModel.data = getData();
+
+		if ((serviceComponentCacheModel.data != null) &&
+				(serviceComponentCacheModel.data.length() == 0)) {
+			serviceComponentCacheModel.data = null;
+		}
+
+		return serviceComponentCacheModel;
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2381,6 +2382,16 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static DDMStructureLink _nullDDMStructureLink = new DDMStructureLinkImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DDMStructureLink> toCacheModel() {
+				return _nullDDMStructureLinkCacheModel;
+			}
+		};
+
+	private static CacheModel<DDMStructureLink> _nullDDMStructureLinkCacheModel = new CacheModel<DDMStructureLink>() {
+			public DDMStructureLink toEntityModel() {
+				return _nullDDMStructureLink;
 			}
 		};
 }

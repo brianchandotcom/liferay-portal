@@ -165,6 +165,10 @@ public class OrgGroupPermissionWrapper implements OrgGroupPermission {
 		return _orgGroupPermission.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgGroupPermission> toCacheModel() {
+		return _orgGroupPermission.toCacheModel();
+	}
+
 	public com.liferay.portal.model.OrgGroupPermission toEscapedModel() {
 		return new OrgGroupPermissionWrapper(_orgGroupPermission.toEscapedModel());
 	}

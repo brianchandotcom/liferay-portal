@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgGroupPermission;
 import com.liferay.portal.model.impl.OrgGroupPermissionImpl;
@@ -1552,6 +1553,17 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	private static OrgGroupPermission _nullOrgGroupPermission = new OrgGroupPermissionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<OrgGroupPermission> toCacheModel() {
+				return _nullOrgGroupPermissionCacheModel;
+			}
+		};
+
+	private static CacheModel<OrgGroupPermission> _nullOrgGroupPermissionCacheModel =
+		new CacheModel<OrgGroupPermission>() {
+			public OrgGroupPermission toEntityModel() {
+				return _nullOrgGroupPermission;
 			}
 		};
 }

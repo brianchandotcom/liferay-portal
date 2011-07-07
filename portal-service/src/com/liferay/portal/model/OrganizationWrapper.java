@@ -334,6 +334,10 @@ public class OrganizationWrapper implements Organization {
 		return _organization.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Organization> toCacheModel() {
+		return _organization.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Organization toEscapedModel() {
 		return new OrganizationWrapper(_organization.toEscapedModel());
 	}

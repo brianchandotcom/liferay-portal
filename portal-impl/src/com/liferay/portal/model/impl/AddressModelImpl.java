@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.AddressModel;
 import com.liferay.portal.model.AddressSoap;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -492,6 +493,78 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Address> toCacheModel() {
+		AddressCacheModel addressCacheModel = new AddressCacheModel();
+
+		addressCacheModel.addressId = getAddressId();
+		addressCacheModel.companyId = getCompanyId();
+		addressCacheModel.userId = getUserId();
+		addressCacheModel.userName = getUserName();
+
+		if ((addressCacheModel.userName != null) &&
+				(addressCacheModel.userName.length() == 0)) {
+			addressCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			addressCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			addressCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		addressCacheModel.classNameId = getClassNameId();
+		addressCacheModel.classPK = getClassPK();
+		addressCacheModel.street1 = getStreet1();
+
+		if ((addressCacheModel.street1 != null) &&
+				(addressCacheModel.street1.length() == 0)) {
+			addressCacheModel.street1 = null;
+		}
+
+		addressCacheModel.street2 = getStreet2();
+
+		if ((addressCacheModel.street2 != null) &&
+				(addressCacheModel.street2.length() == 0)) {
+			addressCacheModel.street2 = null;
+		}
+
+		addressCacheModel.street3 = getStreet3();
+
+		if ((addressCacheModel.street3 != null) &&
+				(addressCacheModel.street3.length() == 0)) {
+			addressCacheModel.street3 = null;
+		}
+
+		addressCacheModel.city = getCity();
+
+		if ((addressCacheModel.city != null) &&
+				(addressCacheModel.city.length() == 0)) {
+			addressCacheModel.city = null;
+		}
+
+		addressCacheModel.zip = getZip();
+
+		if ((addressCacheModel.zip != null) &&
+				(addressCacheModel.zip.length() == 0)) {
+			addressCacheModel.zip = null;
+		}
+
+		addressCacheModel.regionId = getRegionId();
+		addressCacheModel.countryId = getCountryId();
+		addressCacheModel.typeId = getTypeId();
+		addressCacheModel.mailing = getMailing();
+		addressCacheModel.primary = getPrimary();
+
+		return addressCacheModel;
 	}
 
 	@Override

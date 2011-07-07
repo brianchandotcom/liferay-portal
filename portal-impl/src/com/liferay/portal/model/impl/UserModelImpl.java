@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserModel;
 import com.liferay.portal.model.UserSoap;
@@ -973,6 +974,199 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userModelImpl._originalPortraitId = userModelImpl._portraitId;
 
 		userModelImpl._setOriginalPortraitId = false;
+	}
+
+	@Override
+	public CacheModel<User> toCacheModel() {
+		UserCacheModel userCacheModel = new UserCacheModel();
+
+		userCacheModel.uuid = getUuid();
+
+		if ((userCacheModel.uuid != null) &&
+				(userCacheModel.uuid.length() == 0)) {
+			userCacheModel.uuid = null;
+		}
+
+		userCacheModel.userId = getUserId();
+		userCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			userCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			userCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		userCacheModel.defaultUser = getDefaultUser();
+		userCacheModel.contactId = getContactId();
+		userCacheModel.password = getPassword();
+
+		if ((userCacheModel.password != null) &&
+				(userCacheModel.password.length() == 0)) {
+			userCacheModel.password = null;
+		}
+
+		userCacheModel.passwordEncrypted = getPasswordEncrypted();
+		userCacheModel.passwordReset = getPasswordReset();
+
+		Date passwordModifiedDate = getPasswordModifiedDate();
+
+		if (passwordModifiedDate != null) {
+			userCacheModel.passwordModifiedDate = passwordModifiedDate.getTime();
+		}
+
+		userCacheModel.digest = getDigest();
+
+		if ((userCacheModel.digest != null) &&
+				(userCacheModel.digest.length() == 0)) {
+			userCacheModel.digest = null;
+		}
+
+		userCacheModel.reminderQueryQuestion = getReminderQueryQuestion();
+
+		if ((userCacheModel.reminderQueryQuestion != null) &&
+				(userCacheModel.reminderQueryQuestion.length() == 0)) {
+			userCacheModel.reminderQueryQuestion = null;
+		}
+
+		userCacheModel.reminderQueryAnswer = getReminderQueryAnswer();
+
+		if ((userCacheModel.reminderQueryAnswer != null) &&
+				(userCacheModel.reminderQueryAnswer.length() == 0)) {
+			userCacheModel.reminderQueryAnswer = null;
+		}
+
+		userCacheModel.graceLoginCount = getGraceLoginCount();
+		userCacheModel.screenName = getScreenName();
+
+		if ((userCacheModel.screenName != null) &&
+				(userCacheModel.screenName.length() == 0)) {
+			userCacheModel.screenName = null;
+		}
+
+		userCacheModel.emailAddress = getEmailAddress();
+
+		if ((userCacheModel.emailAddress != null) &&
+				(userCacheModel.emailAddress.length() == 0)) {
+			userCacheModel.emailAddress = null;
+		}
+
+		userCacheModel.facebookId = getFacebookId();
+		userCacheModel.openId = getOpenId();
+
+		if ((userCacheModel.openId != null) &&
+				(userCacheModel.openId.length() == 0)) {
+			userCacheModel.openId = null;
+		}
+
+		userCacheModel.portraitId = getPortraitId();
+		userCacheModel.languageId = getLanguageId();
+
+		if ((userCacheModel.languageId != null) &&
+				(userCacheModel.languageId.length() == 0)) {
+			userCacheModel.languageId = null;
+		}
+
+		userCacheModel.timeZoneId = getTimeZoneId();
+
+		if ((userCacheModel.timeZoneId != null) &&
+				(userCacheModel.timeZoneId.length() == 0)) {
+			userCacheModel.timeZoneId = null;
+		}
+
+		userCacheModel.greeting = getGreeting();
+
+		if ((userCacheModel.greeting != null) &&
+				(userCacheModel.greeting.length() == 0)) {
+			userCacheModel.greeting = null;
+		}
+
+		userCacheModel.comments = getComments();
+
+		if ((userCacheModel.comments != null) &&
+				(userCacheModel.comments.length() == 0)) {
+			userCacheModel.comments = null;
+		}
+
+		userCacheModel.firstName = getFirstName();
+
+		if ((userCacheModel.firstName != null) &&
+				(userCacheModel.firstName.length() == 0)) {
+			userCacheModel.firstName = null;
+		}
+
+		userCacheModel.middleName = getMiddleName();
+
+		if ((userCacheModel.middleName != null) &&
+				(userCacheModel.middleName.length() == 0)) {
+			userCacheModel.middleName = null;
+		}
+
+		userCacheModel.lastName = getLastName();
+
+		if ((userCacheModel.lastName != null) &&
+				(userCacheModel.lastName.length() == 0)) {
+			userCacheModel.lastName = null;
+		}
+
+		userCacheModel.jobTitle = getJobTitle();
+
+		if ((userCacheModel.jobTitle != null) &&
+				(userCacheModel.jobTitle.length() == 0)) {
+			userCacheModel.jobTitle = null;
+		}
+
+		Date loginDate = getLoginDate();
+
+		if (loginDate != null) {
+			userCacheModel.loginDate = loginDate.getTime();
+		}
+
+		userCacheModel.loginIP = getLoginIP();
+
+		if ((userCacheModel.loginIP != null) &&
+				(userCacheModel.loginIP.length() == 0)) {
+			userCacheModel.loginIP = null;
+		}
+
+		Date lastLoginDate = getLastLoginDate();
+
+		if (lastLoginDate != null) {
+			userCacheModel.lastLoginDate = lastLoginDate.getTime();
+		}
+
+		userCacheModel.lastLoginIP = getLastLoginIP();
+
+		if ((userCacheModel.lastLoginIP != null) &&
+				(userCacheModel.lastLoginIP.length() == 0)) {
+			userCacheModel.lastLoginIP = null;
+		}
+
+		Date lastFailedLoginDate = getLastFailedLoginDate();
+
+		if (lastFailedLoginDate != null) {
+			userCacheModel.lastFailedLoginDate = lastFailedLoginDate.getTime();
+		}
+
+		userCacheModel.failedLoginAttempts = getFailedLoginAttempts();
+		userCacheModel.lockout = getLockout();
+
+		Date lockoutDate = getLockoutDate();
+
+		if (lockoutDate != null) {
+			userCacheModel.lockoutDate = lockoutDate.getTime();
+		}
+
+		userCacheModel.agreedToTermsOfUse = getAgreedToTermsOfUse();
+		userCacheModel.emailAddressVerified = getEmailAddressVerified();
+		userCacheModel.status = getStatus();
+
+		return userCacheModel;
 	}
 
 	@Override

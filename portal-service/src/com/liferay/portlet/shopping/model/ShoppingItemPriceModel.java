@@ -15,6 +15,7 @@
 package com.liferay.portlet.shopping.model;
 
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -234,6 +235,8 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 	public int compareTo(ShoppingItemPrice shoppingItemPrice);
 
 	public int hashCode();
+
+	public CacheModel<ShoppingItemPrice> toCacheModel();
 
 	public ShoppingItemPrice toEscapedModel();
 

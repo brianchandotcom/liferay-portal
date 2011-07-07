@@ -160,6 +160,8 @@ public interface RegionModel extends BaseModel<Region> {
 
 	public int hashCode();
 
+	public CacheModel<Region> toCacheModel();
+
 	public Region toEscapedModel();
 
 	public String toString();

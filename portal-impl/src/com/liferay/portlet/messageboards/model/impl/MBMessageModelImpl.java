@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -673,6 +674,89 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		mbMessageModelImpl._originalGroupId = mbMessageModelImpl._groupId;
 
 		mbMessageModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<MBMessage> toCacheModel() {
+		MBMessageCacheModel mbMessageCacheModel = new MBMessageCacheModel();
+
+		mbMessageCacheModel.uuid = getUuid();
+
+		if ((mbMessageCacheModel.uuid != null) &&
+				(mbMessageCacheModel.uuid.length() == 0)) {
+			mbMessageCacheModel.uuid = null;
+		}
+
+		mbMessageCacheModel.messageId = getMessageId();
+		mbMessageCacheModel.groupId = getGroupId();
+		mbMessageCacheModel.companyId = getCompanyId();
+		mbMessageCacheModel.userId = getUserId();
+		mbMessageCacheModel.userName = getUserName();
+
+		if ((mbMessageCacheModel.userName != null) &&
+				(mbMessageCacheModel.userName.length() == 0)) {
+			mbMessageCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbMessageCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbMessageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		mbMessageCacheModel.classNameId = getClassNameId();
+		mbMessageCacheModel.classPK = getClassPK();
+		mbMessageCacheModel.categoryId = getCategoryId();
+		mbMessageCacheModel.threadId = getThreadId();
+		mbMessageCacheModel.rootMessageId = getRootMessageId();
+		mbMessageCacheModel.parentMessageId = getParentMessageId();
+		mbMessageCacheModel.subject = getSubject();
+
+		if ((mbMessageCacheModel.subject != null) &&
+				(mbMessageCacheModel.subject.length() == 0)) {
+			mbMessageCacheModel.subject = null;
+		}
+
+		mbMessageCacheModel.body = getBody();
+
+		if ((mbMessageCacheModel.body != null) &&
+				(mbMessageCacheModel.body.length() == 0)) {
+			mbMessageCacheModel.body = null;
+		}
+
+		mbMessageCacheModel.format = getFormat();
+
+		if ((mbMessageCacheModel.format != null) &&
+				(mbMessageCacheModel.format.length() == 0)) {
+			mbMessageCacheModel.format = null;
+		}
+
+		mbMessageCacheModel.attachments = getAttachments();
+		mbMessageCacheModel.anonymous = getAnonymous();
+		mbMessageCacheModel.priority = getPriority();
+		mbMessageCacheModel.allowPingbacks = getAllowPingbacks();
+		mbMessageCacheModel.status = getStatus();
+		mbMessageCacheModel.statusByUserId = getStatusByUserId();
+		mbMessageCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((mbMessageCacheModel.statusByUserName != null) &&
+				(mbMessageCacheModel.statusByUserName.length() == 0)) {
+			mbMessageCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			mbMessageCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return mbMessageCacheModel;
 	}
 
 	@Override

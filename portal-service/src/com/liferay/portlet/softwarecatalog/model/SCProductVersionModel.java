@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -281,6 +282,8 @@ public interface SCProductVersionModel extends AuditedModel,
 	public int compareTo(SCProductVersion scProductVersion);
 
 	public int hashCode();
+
+	public CacheModel<SCProductVersion> toCacheModel();
 
 	public SCProductVersion toEscapedModel();
 

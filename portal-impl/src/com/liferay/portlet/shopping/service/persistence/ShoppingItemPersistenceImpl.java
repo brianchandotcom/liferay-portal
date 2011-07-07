@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2756,6 +2757,16 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	private static ShoppingItem _nullShoppingItem = new ShoppingItemImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ShoppingItem> toCacheModel() {
+				return _nullShoppingItemCacheModel;
+			}
+		};
+
+	private static CacheModel<ShoppingItem> _nullShoppingItemCacheModel = new CacheModel<ShoppingItem>() {
+			public ShoppingItem toEntityModel() {
+				return _nullShoppingItem;
 			}
 		};
 }

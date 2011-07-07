@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
@@ -1492,6 +1493,16 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	private static ServiceComponent _nullServiceComponent = new ServiceComponentImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ServiceComponent> toCacheModel() {
+				return _nullServiceComponentCacheModel;
+			}
+		};
+
+	private static CacheModel<ServiceComponent> _nullServiceComponentCacheModel = new CacheModel<ServiceComponent>() {
+			public ServiceComponent toEntityModel() {
+				return _nullServiceComponent;
 			}
 		};
 }

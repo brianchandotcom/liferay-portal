@@ -318,6 +318,10 @@ public class PortletItemWrapper implements PortletItem {
 		return _portletItem.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortletItem> toCacheModel() {
+		return _portletItem.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PortletItem toEscapedModel() {
 		return new PortletItemWrapper(_portletItem.toEscapedModel());
 	}

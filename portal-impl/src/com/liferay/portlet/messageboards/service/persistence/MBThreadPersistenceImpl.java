@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LockPersistence;
@@ -5548,6 +5549,16 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static MBThread _nullMBThread = new MBThreadImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBThread> toCacheModel() {
+				return _nullMBThreadCacheModel;
+			}
+		};
+
+	private static CacheModel<MBThread> _nullMBThreadCacheModel = new CacheModel<MBThread>() {
+			public MBThread toEntityModel() {
+				return _nullMBThread;
 			}
 		};
 }

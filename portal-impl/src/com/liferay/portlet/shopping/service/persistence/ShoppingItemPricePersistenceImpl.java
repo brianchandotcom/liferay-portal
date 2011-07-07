@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -1048,6 +1049,17 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static ShoppingItemPrice _nullShoppingItemPrice = new ShoppingItemPriceImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ShoppingItemPrice> toCacheModel() {
+				return _nullShoppingItemPriceCacheModel;
+			}
+		};
+
+	private static CacheModel<ShoppingItemPrice> _nullShoppingItemPriceCacheModel =
+		new CacheModel<ShoppingItemPrice>() {
+			public ShoppingItemPrice toEntityModel() {
+				return _nullShoppingItemPrice;
 			}
 		};
 }

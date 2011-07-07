@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.OrgLaborModel;
 import com.liferay.portal.model.OrgLaborSoap;
@@ -443,6 +444,31 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<OrgLabor> toCacheModel() {
+		OrgLaborCacheModel orgLaborCacheModel = new OrgLaborCacheModel();
+
+		orgLaborCacheModel.orgLaborId = getOrgLaborId();
+		orgLaborCacheModel.organizationId = getOrganizationId();
+		orgLaborCacheModel.typeId = getTypeId();
+		orgLaborCacheModel.sunOpen = getSunOpen();
+		orgLaborCacheModel.sunClose = getSunClose();
+		orgLaborCacheModel.monOpen = getMonOpen();
+		orgLaborCacheModel.monClose = getMonClose();
+		orgLaborCacheModel.tueOpen = getTueOpen();
+		orgLaborCacheModel.tueClose = getTueClose();
+		orgLaborCacheModel.wedOpen = getWedOpen();
+		orgLaborCacheModel.wedClose = getWedClose();
+		orgLaborCacheModel.thuOpen = getThuOpen();
+		orgLaborCacheModel.thuClose = getThuClose();
+		orgLaborCacheModel.friOpen = getFriOpen();
+		orgLaborCacheModel.friClose = getFriClose();
+		orgLaborCacheModel.satOpen = getSatOpen();
+		orgLaborCacheModel.satClose = getSatClose();
+
+		return orgLaborCacheModel;
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.impl.RepositoryEntryImpl;
@@ -2188,6 +2189,16 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static RepositoryEntry _nullRepositoryEntry = new RepositoryEntryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<RepositoryEntry> toCacheModel() {
+				return _nullRepositoryEntryCacheModel;
+			}
+		};
+
+	private static CacheModel<RepositoryEntry> _nullRepositoryEntryCacheModel = new CacheModel<RepositoryEntry>() {
+			public RepositoryEntry toEntityModel() {
+				return _nullRepositoryEntry;
 			}
 		};
 }

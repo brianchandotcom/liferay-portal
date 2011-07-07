@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgGroupPermission;
 import com.liferay.portal.model.OrgGroupPermissionModel;
 import com.liferay.portal.service.persistence.OrgGroupPermissionPK;
@@ -188,6 +189,17 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<OrgGroupPermission> toCacheModel() {
+		OrgGroupPermissionCacheModel orgGroupPermissionCacheModel = new OrgGroupPermissionCacheModel();
+
+		orgGroupPermissionCacheModel.organizationId = getOrganizationId();
+		orgGroupPermissionCacheModel.groupId = getGroupId();
+		orgGroupPermissionCacheModel.permissionId = getPermissionId();
+
+		return orgGroupPermissionCacheModel;
 	}
 
 	@Override

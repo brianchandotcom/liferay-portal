@@ -191,6 +191,10 @@ public class AssetTagStatsWrapper implements AssetTagStats {
 		return _assetTagStats.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetTagStats> toCacheModel() {
+		return _assetTagStats.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetTagStats toEscapedModel() {
 		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
 	}

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -6210,6 +6211,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static Layout _nullLayout = new LayoutImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Layout> toCacheModel() {
+				return _nullLayoutCacheModel;
+			}
+		};
+
+	private static CacheModel<Layout> _nullLayoutCacheModel = new CacheModel<Layout>() {
+			public Layout toEntityModel() {
+				return _nullLayout;
 			}
 		};
 }

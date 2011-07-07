@@ -284,6 +284,8 @@ public interface PhoneModel extends AttachedModel, AuditedModel, BaseModel<Phone
 
 	public int hashCode();
 
+	public CacheModel<Phone> toCacheModel();
+
 	public Phone toEscapedModel();
 
 	public String toString();

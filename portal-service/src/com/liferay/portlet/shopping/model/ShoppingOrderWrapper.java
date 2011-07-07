@@ -1093,6 +1093,10 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 		return _shoppingOrder.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingOrder> toCacheModel() {
+		return _shoppingOrder.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingOrder toEscapedModel() {
 		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
 	}

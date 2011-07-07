@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -457,6 +458,78 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		journalStructureModelImpl._setOriginalGroupId = false;
 
 		journalStructureModelImpl._originalStructureId = journalStructureModelImpl._structureId;
+	}
+
+	@Override
+	public CacheModel<JournalStructure> toCacheModel() {
+		JournalStructureCacheModel journalStructureCacheModel = new JournalStructureCacheModel();
+
+		journalStructureCacheModel.uuid = getUuid();
+
+		if ((journalStructureCacheModel.uuid != null) &&
+				(journalStructureCacheModel.uuid.length() == 0)) {
+			journalStructureCacheModel.uuid = null;
+		}
+
+		journalStructureCacheModel.id = getId();
+		journalStructureCacheModel.groupId = getGroupId();
+		journalStructureCacheModel.companyId = getCompanyId();
+		journalStructureCacheModel.userId = getUserId();
+		journalStructureCacheModel.userName = getUserName();
+
+		if ((journalStructureCacheModel.userName != null) &&
+				(journalStructureCacheModel.userName.length() == 0)) {
+			journalStructureCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			journalStructureCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			journalStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		journalStructureCacheModel.structureId = getStructureId();
+
+		if ((journalStructureCacheModel.structureId != null) &&
+				(journalStructureCacheModel.structureId.length() == 0)) {
+			journalStructureCacheModel.structureId = null;
+		}
+
+		journalStructureCacheModel.parentStructureId = getParentStructureId();
+
+		if ((journalStructureCacheModel.parentStructureId != null) &&
+				(journalStructureCacheModel.parentStructureId.length() == 0)) {
+			journalStructureCacheModel.parentStructureId = null;
+		}
+
+		journalStructureCacheModel.name = getName();
+
+		if ((journalStructureCacheModel.name != null) &&
+				(journalStructureCacheModel.name.length() == 0)) {
+			journalStructureCacheModel.name = null;
+		}
+
+		journalStructureCacheModel.description = getDescription();
+
+		if ((journalStructureCacheModel.description != null) &&
+				(journalStructureCacheModel.description.length() == 0)) {
+			journalStructureCacheModel.description = null;
+		}
+
+		journalStructureCacheModel.xsd = getXsd();
+
+		if ((journalStructureCacheModel.xsd != null) &&
+				(journalStructureCacheModel.xsd.length() == 0)) {
+			journalStructureCacheModel.xsd = null;
+		}
+
+		return journalStructureCacheModel;
 	}
 
 	@Override

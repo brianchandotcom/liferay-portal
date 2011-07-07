@@ -17,6 +17,7 @@ package com.liferay.portlet.expando.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -200,6 +201,8 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	public int compareTo(ExpandoValue expandoValue);
 
 	public int hashCode();
+
+	public CacheModel<ExpandoValue> toCacheModel();
 
 	public ExpandoValue toEscapedModel();
 

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -3089,6 +3090,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static DLFileEntryType _nullDLFileEntryType = new DLFileEntryTypeImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<DLFileEntryType> toCacheModel() {
+				return _nullDLFileEntryTypeCacheModel;
+			}
+		};
+
+	private static CacheModel<DLFileEntryType> _nullDLFileEntryTypeCacheModel = new CacheModel<DLFileEntryType>() {
+			public DLFileEntryType toEntityModel() {
+				return _nullDLFileEntryType;
 			}
 		};
 }

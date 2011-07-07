@@ -249,6 +249,8 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
 
 	public int hashCode();
 
+	public CacheModel<PortletItem> toCacheModel();
+
 	public PortletItem toEscapedModel();
 
 	public String toString();

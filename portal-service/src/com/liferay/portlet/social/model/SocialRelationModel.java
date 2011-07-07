@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -180,6 +181,8 @@ public interface SocialRelationModel extends BaseModel<SocialRelation> {
 	public int compareTo(SocialRelation socialRelation);
 
 	public int hashCode();
+
+	public CacheModel<SocialRelation> toCacheModel();
 
 	public SocialRelation toEscapedModel();
 

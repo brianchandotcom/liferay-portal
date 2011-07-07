@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -503,6 +504,61 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutModelImpl._originalGroupId = dlFileShortcutModelImpl._groupId;
 
 		dlFileShortcutModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<DLFileShortcut> toCacheModel() {
+		DLFileShortcutCacheModel dlFileShortcutCacheModel = new DLFileShortcutCacheModel();
+
+		dlFileShortcutCacheModel.uuid = getUuid();
+
+		if ((dlFileShortcutCacheModel.uuid != null) &&
+				(dlFileShortcutCacheModel.uuid.length() == 0)) {
+			dlFileShortcutCacheModel.uuid = null;
+		}
+
+		dlFileShortcutCacheModel.fileShortcutId = getFileShortcutId();
+		dlFileShortcutCacheModel.groupId = getGroupId();
+		dlFileShortcutCacheModel.companyId = getCompanyId();
+		dlFileShortcutCacheModel.userId = getUserId();
+		dlFileShortcutCacheModel.userName = getUserName();
+
+		if ((dlFileShortcutCacheModel.userName != null) &&
+				(dlFileShortcutCacheModel.userName.length() == 0)) {
+			dlFileShortcutCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFileShortcutCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			dlFileShortcutCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		dlFileShortcutCacheModel.repositoryId = getRepositoryId();
+		dlFileShortcutCacheModel.folderId = getFolderId();
+		dlFileShortcutCacheModel.toFileEntryId = getToFileEntryId();
+		dlFileShortcutCacheModel.status = getStatus();
+		dlFileShortcutCacheModel.statusByUserId = getStatusByUserId();
+		dlFileShortcutCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((dlFileShortcutCacheModel.statusByUserName != null) &&
+				(dlFileShortcutCacheModel.statusByUserName.length() == 0)) {
+			dlFileShortcutCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			dlFileShortcutCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return dlFileShortcutCacheModel;
 	}
 
 	@Override

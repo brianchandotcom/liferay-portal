@@ -275,6 +275,10 @@ public class UserNotificationEventWrapper implements UserNotificationEvent {
 		return _userNotificationEvent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserNotificationEvent> toCacheModel() {
+		return _userNotificationEvent.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserNotificationEvent toEscapedModel() {
 		return new UserNotificationEventWrapper(_userNotificationEvent.toEscapedModel());
 	}

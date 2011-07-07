@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -637,6 +638,79 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureModelImpl._setOriginalGroupId = false;
 
 		ddmStructureModelImpl._originalStructureKey = ddmStructureModelImpl._structureKey;
+	}
+
+	@Override
+	public CacheModel<DDMStructure> toCacheModel() {
+		DDMStructureCacheModel ddmStructureCacheModel = new DDMStructureCacheModel();
+
+		ddmStructureCacheModel.uuid = getUuid();
+
+		if ((ddmStructureCacheModel.uuid != null) &&
+				(ddmStructureCacheModel.uuid.length() == 0)) {
+			ddmStructureCacheModel.uuid = null;
+		}
+
+		ddmStructureCacheModel.structureId = getStructureId();
+		ddmStructureCacheModel.groupId = getGroupId();
+		ddmStructureCacheModel.companyId = getCompanyId();
+		ddmStructureCacheModel.userId = getUserId();
+		ddmStructureCacheModel.userName = getUserName();
+
+		if ((ddmStructureCacheModel.userName != null) &&
+				(ddmStructureCacheModel.userName.length() == 0)) {
+			ddmStructureCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddmStructureCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddmStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddmStructureCacheModel.classNameId = getClassNameId();
+		ddmStructureCacheModel.structureKey = getStructureKey();
+
+		if ((ddmStructureCacheModel.structureKey != null) &&
+				(ddmStructureCacheModel.structureKey.length() == 0)) {
+			ddmStructureCacheModel.structureKey = null;
+		}
+
+		ddmStructureCacheModel.name = getName();
+
+		if ((ddmStructureCacheModel.name != null) &&
+				(ddmStructureCacheModel.name.length() == 0)) {
+			ddmStructureCacheModel.name = null;
+		}
+
+		ddmStructureCacheModel.description = getDescription();
+
+		if ((ddmStructureCacheModel.description != null) &&
+				(ddmStructureCacheModel.description.length() == 0)) {
+			ddmStructureCacheModel.description = null;
+		}
+
+		ddmStructureCacheModel.xsd = getXsd();
+
+		if ((ddmStructureCacheModel.xsd != null) &&
+				(ddmStructureCacheModel.xsd.length() == 0)) {
+			ddmStructureCacheModel.xsd = null;
+		}
+
+		ddmStructureCacheModel.storageType = getStorageType();
+
+		if ((ddmStructureCacheModel.storageType != null) &&
+				(ddmStructureCacheModel.storageType.length() == 0)) {
+			ddmStructureCacheModel.storageType = null;
+		}
+
+		return ddmStructureCacheModel;
 	}
 
 	@Override

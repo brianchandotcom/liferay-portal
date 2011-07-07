@@ -246,6 +246,10 @@ public class JournalContentSearchWrapper implements JournalContentSearch {
 		return _journalContentSearch.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalContentSearch> toCacheModel() {
+		return _journalContentSearch.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalContentSearch toEscapedModel() {
 		return new JournalContentSearchWrapper(_journalContentSearch.toEscapedModel());
 	}

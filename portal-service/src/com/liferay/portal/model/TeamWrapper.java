@@ -291,6 +291,10 @@ public class TeamWrapper implements Team {
 		return _team.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Team> toCacheModel() {
+		return _team.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Team toEscapedModel() {
 		return new TeamWrapper(_team.toEscapedModel());
 	}

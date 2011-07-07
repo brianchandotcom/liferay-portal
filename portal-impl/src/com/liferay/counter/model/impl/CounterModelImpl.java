@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 
 import java.io.Serializable;
@@ -183,6 +184,22 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Counter> toCacheModel() {
+		CounterCacheModel counterCacheModel = new CounterCacheModel();
+
+		counterCacheModel.name = getName();
+
+		if ((counterCacheModel.name != null) &&
+				(counterCacheModel.name.length() == 0)) {
+			counterCacheModel.name = null;
+		}
+
+		counterCacheModel.currentId = getCurrentId();
+
+		return counterCacheModel;
 	}
 
 	@Override

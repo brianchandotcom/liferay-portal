@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.PluginSettingModel;
 import com.liferay.portal.model.PluginSettingSoap;
@@ -344,6 +345,38 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		pluginSettingModelImpl._originalPluginId = pluginSettingModelImpl._pluginId;
 
 		pluginSettingModelImpl._originalPluginType = pluginSettingModelImpl._pluginType;
+	}
+
+	@Override
+	public CacheModel<PluginSetting> toCacheModel() {
+		PluginSettingCacheModel pluginSettingCacheModel = new PluginSettingCacheModel();
+
+		pluginSettingCacheModel.pluginSettingId = getPluginSettingId();
+		pluginSettingCacheModel.companyId = getCompanyId();
+		pluginSettingCacheModel.pluginId = getPluginId();
+
+		if ((pluginSettingCacheModel.pluginId != null) &&
+				(pluginSettingCacheModel.pluginId.length() == 0)) {
+			pluginSettingCacheModel.pluginId = null;
+		}
+
+		pluginSettingCacheModel.pluginType = getPluginType();
+
+		if ((pluginSettingCacheModel.pluginType != null) &&
+				(pluginSettingCacheModel.pluginType.length() == 0)) {
+			pluginSettingCacheModel.pluginType = null;
+		}
+
+		pluginSettingCacheModel.roles = getRoles();
+
+		if ((pluginSettingCacheModel.roles != null) &&
+				(pluginSettingCacheModel.roles.length() == 0)) {
+			pluginSettingCacheModel.roles = null;
+		}
+
+		pluginSettingCacheModel.active = getActive();
+
+		return pluginSettingCacheModel;
 	}
 
 	@Override

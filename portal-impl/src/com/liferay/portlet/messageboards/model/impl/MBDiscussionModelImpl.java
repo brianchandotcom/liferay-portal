@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -276,6 +277,18 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionModelImpl._originalThreadId = mbDiscussionModelImpl._threadId;
 
 		mbDiscussionModelImpl._setOriginalThreadId = false;
+	}
+
+	@Override
+	public CacheModel<MBDiscussion> toCacheModel() {
+		MBDiscussionCacheModel mbDiscussionCacheModel = new MBDiscussionCacheModel();
+
+		mbDiscussionCacheModel.discussionId = getDiscussionId();
+		mbDiscussionCacheModel.classNameId = getClassNameId();
+		mbDiscussionCacheModel.classPK = getClassPK();
+		mbDiscussionCacheModel.threadId = getThreadId();
+
+		return mbDiscussionCacheModel;
 	}
 
 	@Override

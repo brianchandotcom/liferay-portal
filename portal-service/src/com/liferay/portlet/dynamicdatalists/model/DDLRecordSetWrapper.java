@@ -558,6 +558,10 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> toCacheModel() {
+		return _ddlRecordSet.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet toEscapedModel() {
 		return new DDLRecordSetWrapper(_ddlRecordSet.toEscapedModel());
 	}

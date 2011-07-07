@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -354,6 +355,53 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		shoppingCartModelImpl._originalUserId = shoppingCartModelImpl._userId;
 
 		shoppingCartModelImpl._setOriginalUserId = false;
+	}
+
+	@Override
+	public CacheModel<ShoppingCart> toCacheModel() {
+		ShoppingCartCacheModel shoppingCartCacheModel = new ShoppingCartCacheModel();
+
+		shoppingCartCacheModel.cartId = getCartId();
+		shoppingCartCacheModel.groupId = getGroupId();
+		shoppingCartCacheModel.companyId = getCompanyId();
+		shoppingCartCacheModel.userId = getUserId();
+		shoppingCartCacheModel.userName = getUserName();
+
+		if ((shoppingCartCacheModel.userName != null) &&
+				(shoppingCartCacheModel.userName.length() == 0)) {
+			shoppingCartCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingCartCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingCartCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingCartCacheModel.itemIds = getItemIds();
+
+		if ((shoppingCartCacheModel.itemIds != null) &&
+				(shoppingCartCacheModel.itemIds.length() == 0)) {
+			shoppingCartCacheModel.itemIds = null;
+		}
+
+		shoppingCartCacheModel.couponCodes = getCouponCodes();
+
+		if ((shoppingCartCacheModel.couponCodes != null) &&
+				(shoppingCartCacheModel.couponCodes.length() == 0)) {
+			shoppingCartCacheModel.couponCodes = null;
+		}
+
+		shoppingCartCacheModel.altShipping = getAltShipping();
+		shoppingCartCacheModel.insure = getInsure();
+
+		return shoppingCartCacheModel;
 	}
 
 	@Override

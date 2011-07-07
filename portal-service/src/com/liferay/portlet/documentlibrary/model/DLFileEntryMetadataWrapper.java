@@ -236,6 +236,10 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> toCacheModel() {
+		return _dlFileEntryMetadata.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata toEscapedModel() {
 		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
 	}

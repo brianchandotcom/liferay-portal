@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.AddressImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
@@ -3508,6 +3509,16 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	private static Address _nullAddress = new AddressImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Address> toCacheModel() {
+				return _nullAddressCacheModel;
+			}
+		};
+
+	private static CacheModel<Address> _nullAddressCacheModel = new CacheModel<Address>() {
+			public Address toEntityModel() {
+				return _nullAddress;
 			}
 		};
 }

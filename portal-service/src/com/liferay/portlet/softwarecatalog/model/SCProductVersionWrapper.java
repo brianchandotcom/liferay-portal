@@ -355,6 +355,10 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductVersion> toCacheModel() {
+		return _scProductVersion.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toEscapedModel() {
 		return new SCProductVersionWrapper(_scProductVersion.toEscapedModel());
 	}

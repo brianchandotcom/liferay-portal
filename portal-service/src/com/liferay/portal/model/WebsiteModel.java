@@ -270,6 +270,8 @@ public interface WebsiteModel extends AttachedModel, AuditedModel,
 
 	public int hashCode();
 
+	public CacheModel<Website> toCacheModel();
+
 	public Website toEscapedModel();
 
 	public String toString();

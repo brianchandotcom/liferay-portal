@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -288,6 +289,27 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		dlFileEntryMetadataModelImpl._originalFileVersionId = dlFileEntryMetadataModelImpl._fileVersionId;
 
 		dlFileEntryMetadataModelImpl._setOriginalFileVersionId = false;
+	}
+
+	@Override
+	public CacheModel<DLFileEntryMetadata> toCacheModel() {
+		DLFileEntryMetadataCacheModel dlFileEntryMetadataCacheModel = new DLFileEntryMetadataCacheModel();
+
+		dlFileEntryMetadataCacheModel.uuid = getUuid();
+
+		if ((dlFileEntryMetadataCacheModel.uuid != null) &&
+				(dlFileEntryMetadataCacheModel.uuid.length() == 0)) {
+			dlFileEntryMetadataCacheModel.uuid = null;
+		}
+
+		dlFileEntryMetadataCacheModel.fileEntryMetadataId = getFileEntryMetadataId();
+		dlFileEntryMetadataCacheModel.DDMStorageId = getDDMStorageId();
+		dlFileEntryMetadataCacheModel.DDMStructureId = getDDMStructureId();
+		dlFileEntryMetadataCacheModel.fileEntryTypeId = getFileEntryTypeId();
+		dlFileEntryMetadataCacheModel.fileEntryId = getFileEntryId();
+		dlFileEntryMetadataCacheModel.fileVersionId = getFileVersionId();
+
+		return dlFileEntryMetadataCacheModel;
 	}
 
 	@Override

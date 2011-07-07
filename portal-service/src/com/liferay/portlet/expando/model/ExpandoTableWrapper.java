@@ -191,6 +191,10 @@ public class ExpandoTableWrapper implements ExpandoTable {
 		return _expandoTable.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoTable> toCacheModel() {
+		return _expandoTable.toCacheModel();
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoTable toEscapedModel() {
 		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
 	}

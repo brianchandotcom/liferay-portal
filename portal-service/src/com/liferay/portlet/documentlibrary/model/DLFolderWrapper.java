@@ -391,6 +391,10 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFolder> toCacheModel() {
+		return _dlFolder.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder toEscapedModel() {
 		return new DLFolderWrapper(_dlFolder.toEscapedModel());
 	}

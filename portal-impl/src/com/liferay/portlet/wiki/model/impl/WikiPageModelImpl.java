@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -724,6 +725,105 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		wikiPageModelImpl._originalVersion = wikiPageModelImpl._version;
 
 		wikiPageModelImpl._setOriginalVersion = false;
+	}
+
+	@Override
+	public CacheModel<WikiPage> toCacheModel() {
+		WikiPageCacheModel wikiPageCacheModel = new WikiPageCacheModel();
+
+		wikiPageCacheModel.uuid = getUuid();
+
+		if ((wikiPageCacheModel.uuid != null) &&
+				(wikiPageCacheModel.uuid.length() == 0)) {
+			wikiPageCacheModel.uuid = null;
+		}
+
+		wikiPageCacheModel.pageId = getPageId();
+		wikiPageCacheModel.resourcePrimKey = getResourcePrimKey();
+		wikiPageCacheModel.groupId = getGroupId();
+		wikiPageCacheModel.companyId = getCompanyId();
+		wikiPageCacheModel.userId = getUserId();
+		wikiPageCacheModel.userName = getUserName();
+
+		if ((wikiPageCacheModel.userName != null) &&
+				(wikiPageCacheModel.userName.length() == 0)) {
+			wikiPageCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			wikiPageCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			wikiPageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		wikiPageCacheModel.nodeId = getNodeId();
+		wikiPageCacheModel.title = getTitle();
+
+		if ((wikiPageCacheModel.title != null) &&
+				(wikiPageCacheModel.title.length() == 0)) {
+			wikiPageCacheModel.title = null;
+		}
+
+		wikiPageCacheModel.version = getVersion();
+		wikiPageCacheModel.minorEdit = getMinorEdit();
+		wikiPageCacheModel.content = getContent();
+
+		if ((wikiPageCacheModel.content != null) &&
+				(wikiPageCacheModel.content.length() == 0)) {
+			wikiPageCacheModel.content = null;
+		}
+
+		wikiPageCacheModel.summary = getSummary();
+
+		if ((wikiPageCacheModel.summary != null) &&
+				(wikiPageCacheModel.summary.length() == 0)) {
+			wikiPageCacheModel.summary = null;
+		}
+
+		wikiPageCacheModel.format = getFormat();
+
+		if ((wikiPageCacheModel.format != null) &&
+				(wikiPageCacheModel.format.length() == 0)) {
+			wikiPageCacheModel.format = null;
+		}
+
+		wikiPageCacheModel.head = getHead();
+		wikiPageCacheModel.parentTitle = getParentTitle();
+
+		if ((wikiPageCacheModel.parentTitle != null) &&
+				(wikiPageCacheModel.parentTitle.length() == 0)) {
+			wikiPageCacheModel.parentTitle = null;
+		}
+
+		wikiPageCacheModel.redirectTitle = getRedirectTitle();
+
+		if ((wikiPageCacheModel.redirectTitle != null) &&
+				(wikiPageCacheModel.redirectTitle.length() == 0)) {
+			wikiPageCacheModel.redirectTitle = null;
+		}
+
+		wikiPageCacheModel.status = getStatus();
+		wikiPageCacheModel.statusByUserId = getStatusByUserId();
+		wikiPageCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((wikiPageCacheModel.statusByUserName != null) &&
+				(wikiPageCacheModel.statusByUserName.length() == 0)) {
+			wikiPageCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			wikiPageCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return wikiPageCacheModel;
 	}
 
 	@Override

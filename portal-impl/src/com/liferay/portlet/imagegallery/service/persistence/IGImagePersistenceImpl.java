@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -6174,6 +6175,16 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 	private static IGImage _nullIGImage = new IGImageImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<IGImage> toCacheModel() {
+				return _nullIGImageCacheModel;
+			}
+		};
+
+	private static CacheModel<IGImage> _nullIGImageCacheModel = new CacheModel<IGImage>() {
+			public IGImage toEntityModel() {
+				return _nullIGImage;
 			}
 		};
 }

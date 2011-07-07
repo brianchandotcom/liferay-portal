@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -5759,6 +5760,16 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static AssetCategory _nullAssetCategory = new AssetCategoryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<AssetCategory> toCacheModel() {
+				return _nullAssetCategoryCacheModel;
+			}
+		};
+
+	private static CacheModel<AssetCategory> _nullAssetCategoryCacheModel = new CacheModel<AssetCategory>() {
+			public AssetCategory toEntityModel() {
+				return _nullAssetCategory;
 			}
 		};
 }

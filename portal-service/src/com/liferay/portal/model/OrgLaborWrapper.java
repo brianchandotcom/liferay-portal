@@ -415,6 +415,10 @@ public class OrgLaborWrapper implements OrgLabor {
 		return _orgLabor.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgLabor> toCacheModel() {
+		return _orgLabor.toCacheModel();
+	}
+
 	public com.liferay.portal.model.OrgLabor toEscapedModel() {
 		return new OrgLaborWrapper(_orgLabor.toEscapedModel());
 	}

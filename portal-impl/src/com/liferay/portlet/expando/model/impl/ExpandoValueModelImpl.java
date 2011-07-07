@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -404,6 +405,27 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		expandoValueModelImpl._originalClassPK = expandoValueModelImpl._classPK;
 
 		expandoValueModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<ExpandoValue> toCacheModel() {
+		ExpandoValueCacheModel expandoValueCacheModel = new ExpandoValueCacheModel();
+
+		expandoValueCacheModel.valueId = getValueId();
+		expandoValueCacheModel.companyId = getCompanyId();
+		expandoValueCacheModel.tableId = getTableId();
+		expandoValueCacheModel.columnId = getColumnId();
+		expandoValueCacheModel.rowId = getRowId();
+		expandoValueCacheModel.classNameId = getClassNameId();
+		expandoValueCacheModel.classPK = getClassPK();
+		expandoValueCacheModel.data = getData();
+
+		if ((expandoValueCacheModel.data != null) &&
+				(expandoValueCacheModel.data.length() == 0)) {
+			expandoValueCacheModel.data = null;
+		}
+
+		return expandoValueCacheModel;
 	}
 
 	@Override

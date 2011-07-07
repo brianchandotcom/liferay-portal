@@ -191,6 +191,10 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel {
 		return _passwordPolicyRel.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PasswordPolicyRel> toCacheModel() {
+		return _passwordPolicyRel.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PasswordPolicyRel toEscapedModel() {
 		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toEscapedModel());
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -302,6 +303,27 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		socialRelationModelImpl._originalType = socialRelationModelImpl._type;
 
 		socialRelationModelImpl._setOriginalType = false;
+	}
+
+	@Override
+	public CacheModel<SocialRelation> toCacheModel() {
+		SocialRelationCacheModel socialRelationCacheModel = new SocialRelationCacheModel();
+
+		socialRelationCacheModel.uuid = getUuid();
+
+		if ((socialRelationCacheModel.uuid != null) &&
+				(socialRelationCacheModel.uuid.length() == 0)) {
+			socialRelationCacheModel.uuid = null;
+		}
+
+		socialRelationCacheModel.relationId = getRelationId();
+		socialRelationCacheModel.companyId = getCompanyId();
+		socialRelationCacheModel.createDate = getCreateDate();
+		socialRelationCacheModel.userId1 = getUserId1();
+		socialRelationCacheModel.userId2 = getUserId2();
+		socialRelationCacheModel.type = getType();
+
+		return socialRelationCacheModel;
 	}
 
 	@Override

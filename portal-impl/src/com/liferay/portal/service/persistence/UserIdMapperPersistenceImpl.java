@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.model.impl.UserIdMapperImpl;
@@ -1752,6 +1753,16 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static UserIdMapper _nullUserIdMapper = new UserIdMapperImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<UserIdMapper> toCacheModel() {
+				return _nullUserIdMapperCacheModel;
+			}
+		};
+
+	private static CacheModel<UserIdMapper> _nullUserIdMapperCacheModel = new CacheModel<UserIdMapper>() {
+			public UserIdMapper toEntityModel() {
+				return _nullUserIdMapper;
 			}
 		};
 }

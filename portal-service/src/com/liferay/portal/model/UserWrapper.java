@@ -885,6 +885,10 @@ public class UserWrapper implements User {
 		return _user.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.User> toCacheModel() {
+		return _user.toCacheModel();
+	}
+
 	public com.liferay.portal.model.User toEscapedModel() {
 		return new UserWrapper(_user.toEscapedModel());
 	}

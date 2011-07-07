@@ -182,6 +182,10 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 		return _wikiPageResource.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.wiki.model.WikiPageResource> toCacheModel() {
+		return _wikiPageResource.toCacheModel();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPageResource toEscapedModel() {
 		return new WikiPageResourceWrapper(_wikiPageResource.toEscapedModel());
 	}

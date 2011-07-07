@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -349,6 +350,25 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		announcementsFlagModelImpl._originalValue = announcementsFlagModelImpl._value;
 
 		announcementsFlagModelImpl._setOriginalValue = false;
+	}
+
+	@Override
+	public CacheModel<AnnouncementsFlag> toCacheModel() {
+		AnnouncementsFlagCacheModel announcementsFlagCacheModel = new AnnouncementsFlagCacheModel();
+
+		announcementsFlagCacheModel.flagId = getFlagId();
+		announcementsFlagCacheModel.userId = getUserId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			announcementsFlagCacheModel.createDate = createDate.getTime();
+		}
+
+		announcementsFlagCacheModel.entryId = getEntryId();
+		announcementsFlagCacheModel.value = getValue();
+
+		return announcementsFlagCacheModel;
 	}
 
 	@Override

@@ -154,6 +154,10 @@ public class ClassNameWrapper implements ClassName {
 		return _className.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ClassName> toCacheModel() {
+		return _className.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ClassName toEscapedModel() {
 		return new ClassNameWrapper(_className.toEscapedModel());
 	}

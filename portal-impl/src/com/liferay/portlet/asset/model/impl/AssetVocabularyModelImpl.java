@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -601,6 +602,71 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyModelImpl._setOriginalGroupId = false;
 
 		assetVocabularyModelImpl._originalName = assetVocabularyModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<AssetVocabulary> toCacheModel() {
+		AssetVocabularyCacheModel assetVocabularyCacheModel = new AssetVocabularyCacheModel();
+
+		assetVocabularyCacheModel.uuid = getUuid();
+
+		if ((assetVocabularyCacheModel.uuid != null) &&
+				(assetVocabularyCacheModel.uuid.length() == 0)) {
+			assetVocabularyCacheModel.uuid = null;
+		}
+
+		assetVocabularyCacheModel.vocabularyId = getVocabularyId();
+		assetVocabularyCacheModel.groupId = getGroupId();
+		assetVocabularyCacheModel.companyId = getCompanyId();
+		assetVocabularyCacheModel.userId = getUserId();
+		assetVocabularyCacheModel.userName = getUserName();
+
+		if ((assetVocabularyCacheModel.userName != null) &&
+				(assetVocabularyCacheModel.userName.length() == 0)) {
+			assetVocabularyCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetVocabularyCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetVocabularyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetVocabularyCacheModel.name = getName();
+
+		if ((assetVocabularyCacheModel.name != null) &&
+				(assetVocabularyCacheModel.name.length() == 0)) {
+			assetVocabularyCacheModel.name = null;
+		}
+
+		assetVocabularyCacheModel.title = getTitle();
+
+		if ((assetVocabularyCacheModel.title != null) &&
+				(assetVocabularyCacheModel.title.length() == 0)) {
+			assetVocabularyCacheModel.title = null;
+		}
+
+		assetVocabularyCacheModel.description = getDescription();
+
+		if ((assetVocabularyCacheModel.description != null) &&
+				(assetVocabularyCacheModel.description.length() == 0)) {
+			assetVocabularyCacheModel.description = null;
+		}
+
+		assetVocabularyCacheModel.settings = getSettings();
+
+		if ((assetVocabularyCacheModel.settings != null) &&
+				(assetVocabularyCacheModel.settings.length() == 0)) {
+			assetVocabularyCacheModel.settings = null;
+		}
+
+		return assetVocabularyCacheModel;
 	}
 
 	@Override

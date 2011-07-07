@@ -480,6 +480,10 @@ public class AddressWrapper implements Address {
 		return _address.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Address> toCacheModel() {
+		return _address.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Address toEscapedModel() {
 		return new AddressWrapper(_address.toEscapedModel());
 	}

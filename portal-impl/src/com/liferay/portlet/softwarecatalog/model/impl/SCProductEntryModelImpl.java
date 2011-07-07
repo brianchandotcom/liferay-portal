@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -508,6 +509,99 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		scProductEntryModelImpl._originalRepoGroupId = scProductEntryModelImpl._repoGroupId;
 
 		scProductEntryModelImpl._originalRepoArtifactId = scProductEntryModelImpl._repoArtifactId;
+	}
+
+	@Override
+	public CacheModel<SCProductEntry> toCacheModel() {
+		SCProductEntryCacheModel scProductEntryCacheModel = new SCProductEntryCacheModel();
+
+		scProductEntryCacheModel.productEntryId = getProductEntryId();
+		scProductEntryCacheModel.groupId = getGroupId();
+		scProductEntryCacheModel.companyId = getCompanyId();
+		scProductEntryCacheModel.userId = getUserId();
+		scProductEntryCacheModel.userName = getUserName();
+
+		if ((scProductEntryCacheModel.userName != null) &&
+				(scProductEntryCacheModel.userName.length() == 0)) {
+			scProductEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			scProductEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			scProductEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		scProductEntryCacheModel.name = getName();
+
+		if ((scProductEntryCacheModel.name != null) &&
+				(scProductEntryCacheModel.name.length() == 0)) {
+			scProductEntryCacheModel.name = null;
+		}
+
+		scProductEntryCacheModel.type = getType();
+
+		if ((scProductEntryCacheModel.type != null) &&
+				(scProductEntryCacheModel.type.length() == 0)) {
+			scProductEntryCacheModel.type = null;
+		}
+
+		scProductEntryCacheModel.tags = getTags();
+
+		if ((scProductEntryCacheModel.tags != null) &&
+				(scProductEntryCacheModel.tags.length() == 0)) {
+			scProductEntryCacheModel.tags = null;
+		}
+
+		scProductEntryCacheModel.shortDescription = getShortDescription();
+
+		if ((scProductEntryCacheModel.shortDescription != null) &&
+				(scProductEntryCacheModel.shortDescription.length() == 0)) {
+			scProductEntryCacheModel.shortDescription = null;
+		}
+
+		scProductEntryCacheModel.longDescription = getLongDescription();
+
+		if ((scProductEntryCacheModel.longDescription != null) &&
+				(scProductEntryCacheModel.longDescription.length() == 0)) {
+			scProductEntryCacheModel.longDescription = null;
+		}
+
+		scProductEntryCacheModel.pageURL = getPageURL();
+
+		if ((scProductEntryCacheModel.pageURL != null) &&
+				(scProductEntryCacheModel.pageURL.length() == 0)) {
+			scProductEntryCacheModel.pageURL = null;
+		}
+
+		scProductEntryCacheModel.author = getAuthor();
+
+		if ((scProductEntryCacheModel.author != null) &&
+				(scProductEntryCacheModel.author.length() == 0)) {
+			scProductEntryCacheModel.author = null;
+		}
+
+		scProductEntryCacheModel.repoGroupId = getRepoGroupId();
+
+		if ((scProductEntryCacheModel.repoGroupId != null) &&
+				(scProductEntryCacheModel.repoGroupId.length() == 0)) {
+			scProductEntryCacheModel.repoGroupId = null;
+		}
+
+		scProductEntryCacheModel.repoArtifactId = getRepoArtifactId();
+
+		if ((scProductEntryCacheModel.repoArtifactId != null) &&
+				(scProductEntryCacheModel.repoArtifactId.length() == 0)) {
+			scProductEntryCacheModel.repoArtifactId = null;
+		}
+
+		return scProductEntryCacheModel;
 	}
 
 	@Override

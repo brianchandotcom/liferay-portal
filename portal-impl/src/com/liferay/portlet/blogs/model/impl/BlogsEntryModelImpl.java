@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -654,6 +655,110 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryModelImpl._setOriginalGroupId = false;
 
 		blogsEntryModelImpl._originalUrlTitle = blogsEntryModelImpl._urlTitle;
+	}
+
+	@Override
+	public CacheModel<BlogsEntry> toCacheModel() {
+		BlogsEntryCacheModel blogsEntryCacheModel = new BlogsEntryCacheModel();
+
+		blogsEntryCacheModel.uuid = getUuid();
+
+		if ((blogsEntryCacheModel.uuid != null) &&
+				(blogsEntryCacheModel.uuid.length() == 0)) {
+			blogsEntryCacheModel.uuid = null;
+		}
+
+		blogsEntryCacheModel.entryId = getEntryId();
+		blogsEntryCacheModel.groupId = getGroupId();
+		blogsEntryCacheModel.companyId = getCompanyId();
+		blogsEntryCacheModel.userId = getUserId();
+		blogsEntryCacheModel.userName = getUserName();
+
+		if ((blogsEntryCacheModel.userName != null) &&
+				(blogsEntryCacheModel.userName.length() == 0)) {
+			blogsEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			blogsEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			blogsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		blogsEntryCacheModel.title = getTitle();
+
+		if ((blogsEntryCacheModel.title != null) &&
+				(blogsEntryCacheModel.title.length() == 0)) {
+			blogsEntryCacheModel.title = null;
+		}
+
+		blogsEntryCacheModel.urlTitle = getUrlTitle();
+
+		if ((blogsEntryCacheModel.urlTitle != null) &&
+				(blogsEntryCacheModel.urlTitle.length() == 0)) {
+			blogsEntryCacheModel.urlTitle = null;
+		}
+
+		blogsEntryCacheModel.description = getDescription();
+
+		if ((blogsEntryCacheModel.description != null) &&
+				(blogsEntryCacheModel.description.length() == 0)) {
+			blogsEntryCacheModel.description = null;
+		}
+
+		blogsEntryCacheModel.content = getContent();
+
+		if ((blogsEntryCacheModel.content != null) &&
+				(blogsEntryCacheModel.content.length() == 0)) {
+			blogsEntryCacheModel.content = null;
+		}
+
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			blogsEntryCacheModel.displayDate = displayDate.getTime();
+		}
+
+		blogsEntryCacheModel.allowPingbacks = getAllowPingbacks();
+		blogsEntryCacheModel.allowTrackbacks = getAllowTrackbacks();
+		blogsEntryCacheModel.trackbacks = getTrackbacks();
+
+		if ((blogsEntryCacheModel.trackbacks != null) &&
+				(blogsEntryCacheModel.trackbacks.length() == 0)) {
+			blogsEntryCacheModel.trackbacks = null;
+		}
+
+		blogsEntryCacheModel.smallImage = getSmallImage();
+		blogsEntryCacheModel.smallImageId = getSmallImageId();
+		blogsEntryCacheModel.smallImageURL = getSmallImageURL();
+
+		if ((blogsEntryCacheModel.smallImageURL != null) &&
+				(blogsEntryCacheModel.smallImageURL.length() == 0)) {
+			blogsEntryCacheModel.smallImageURL = null;
+		}
+
+		blogsEntryCacheModel.status = getStatus();
+		blogsEntryCacheModel.statusByUserId = getStatusByUserId();
+		blogsEntryCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((blogsEntryCacheModel.statusByUserName != null) &&
+				(blogsEntryCacheModel.statusByUserName.length() == 0)) {
+			blogsEntryCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			blogsEntryCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return blogsEntryCacheModel;
 	}
 
 	@Override

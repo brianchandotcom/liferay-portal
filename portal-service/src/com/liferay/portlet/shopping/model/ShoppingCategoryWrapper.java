@@ -310,6 +310,10 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 		return _shoppingCategory.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingCategory> toCacheModel() {
+		return _shoppingCategory.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCategory toEscapedModel() {
 		return new ShoppingCategoryWrapper(_shoppingCategory.toEscapedModel());
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.impl.PortalPreferencesImpl;
@@ -991,6 +992,17 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	private static PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PortalPreferences> toCacheModel() {
+				return _nullPortalPreferencesCacheModel;
+			}
+		};
+
+	private static CacheModel<PortalPreferences> _nullPortalPreferencesCacheModel =
+		new CacheModel<PortalPreferences>() {
+			public PortalPreferences toEntityModel() {
+				return _nullPortalPreferences;
 			}
 		};
 }

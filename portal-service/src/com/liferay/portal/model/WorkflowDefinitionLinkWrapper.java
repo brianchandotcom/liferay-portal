@@ -339,6 +339,10 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink {
 		return _workflowDefinitionLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WorkflowDefinitionLink> toCacheModel() {
+		return _workflowDefinitionLink.toCacheModel();
+	}
+
 	public com.liferay.portal.model.WorkflowDefinitionLink toEscapedModel() {
 		return new WorkflowDefinitionLinkWrapper(_workflowDefinitionLink.toEscapedModel());
 	}

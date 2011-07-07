@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -366,6 +367,50 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<DLFileEntryType> toCacheModel() {
+		DLFileEntryTypeCacheModel dlFileEntryTypeCacheModel = new DLFileEntryTypeCacheModel();
+
+		dlFileEntryTypeCacheModel.fileEntryTypeId = getFileEntryTypeId();
+		dlFileEntryTypeCacheModel.groupId = getGroupId();
+		dlFileEntryTypeCacheModel.companyId = getCompanyId();
+		dlFileEntryTypeCacheModel.userId = getUserId();
+		dlFileEntryTypeCacheModel.userName = getUserName();
+
+		if ((dlFileEntryTypeCacheModel.userName != null) &&
+				(dlFileEntryTypeCacheModel.userName.length() == 0)) {
+			dlFileEntryTypeCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFileEntryTypeCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			dlFileEntryTypeCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		dlFileEntryTypeCacheModel.name = getName();
+
+		if ((dlFileEntryTypeCacheModel.name != null) &&
+				(dlFileEntryTypeCacheModel.name.length() == 0)) {
+			dlFileEntryTypeCacheModel.name = null;
+		}
+
+		dlFileEntryTypeCacheModel.description = getDescription();
+
+		if ((dlFileEntryTypeCacheModel.description != null) &&
+				(dlFileEntryTypeCacheModel.description.length() == 0)) {
+			dlFileEntryTypeCacheModel.description = null;
+		}
+
+		return dlFileEntryTypeCacheModel;
 	}
 
 	@Override

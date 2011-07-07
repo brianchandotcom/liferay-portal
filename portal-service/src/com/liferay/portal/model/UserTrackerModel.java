@@ -215,6 +215,8 @@ public interface UserTrackerModel extends BaseModel<UserTracker> {
 
 	public int hashCode();
 
+	public CacheModel<UserTracker> toCacheModel();
+
 	public UserTracker toEscapedModel();
 
 	public String toString();

@@ -540,6 +540,10 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsQuestion> toCacheModel() {
+		return _pollsQuestion.toCacheModel();
+	}
+
 	public com.liferay.portlet.polls.model.PollsQuestion toEscapedModel() {
 		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
 	}

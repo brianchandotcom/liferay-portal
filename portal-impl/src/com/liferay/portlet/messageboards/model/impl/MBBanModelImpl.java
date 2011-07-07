@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -367,6 +368,38 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		mbBanModelImpl._originalBanUserId = mbBanModelImpl._banUserId;
 
 		mbBanModelImpl._setOriginalBanUserId = false;
+	}
+
+	@Override
+	public CacheModel<MBBan> toCacheModel() {
+		MBBanCacheModel mbBanCacheModel = new MBBanCacheModel();
+
+		mbBanCacheModel.banId = getBanId();
+		mbBanCacheModel.groupId = getGroupId();
+		mbBanCacheModel.companyId = getCompanyId();
+		mbBanCacheModel.userId = getUserId();
+		mbBanCacheModel.userName = getUserName();
+
+		if ((mbBanCacheModel.userName != null) &&
+				(mbBanCacheModel.userName.length() == 0)) {
+			mbBanCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbBanCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbBanCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		mbBanCacheModel.banUserId = getBanUserId();
+
+		return mbBanCacheModel;
 	}
 
 	@Override

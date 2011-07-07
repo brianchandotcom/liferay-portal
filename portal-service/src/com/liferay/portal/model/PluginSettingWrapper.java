@@ -226,6 +226,10 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PluginSetting> toCacheModel() {
+		return _pluginSetting.toCacheModel();
+	}
+
 	public com.liferay.portal.model.PluginSetting toEscapedModel() {
 		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
 	}

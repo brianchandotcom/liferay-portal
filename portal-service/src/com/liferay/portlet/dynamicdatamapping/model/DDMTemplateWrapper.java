@@ -576,6 +576,10 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> toCacheModel() {
+		return _ddmTemplate.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate toEscapedModel() {
 		return new DDMTemplateWrapper(_ddmTemplate.toEscapedModel());
 	}

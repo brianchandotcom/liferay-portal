@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.PhoneModel;
 import com.liferay.portal.model.PhoneSoap;
@@ -400,6 +401,54 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Phone> toCacheModel() {
+		PhoneCacheModel phoneCacheModel = new PhoneCacheModel();
+
+		phoneCacheModel.phoneId = getPhoneId();
+		phoneCacheModel.companyId = getCompanyId();
+		phoneCacheModel.userId = getUserId();
+		phoneCacheModel.userName = getUserName();
+
+		if ((phoneCacheModel.userName != null) &&
+				(phoneCacheModel.userName.length() == 0)) {
+			phoneCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			phoneCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			phoneCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		phoneCacheModel.classNameId = getClassNameId();
+		phoneCacheModel.classPK = getClassPK();
+		phoneCacheModel.number = getNumber();
+
+		if ((phoneCacheModel.number != null) &&
+				(phoneCacheModel.number.length() == 0)) {
+			phoneCacheModel.number = null;
+		}
+
+		phoneCacheModel.extension = getExtension();
+
+		if ((phoneCacheModel.extension != null) &&
+				(phoneCacheModel.extension.length() == 0)) {
+			phoneCacheModel.extension = null;
+		}
+
+		phoneCacheModel.typeId = getTypeId();
+		phoneCacheModel.primary = getPrimary();
+
+		return phoneCacheModel;
 	}
 
 	@Override

@@ -570,6 +570,10 @@ public class CalEventWrapper implements CalEvent {
 		return _calEvent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.calendar.model.CalEvent> toCacheModel() {
+		return _calEvent.toCacheModel();
+	}
+
 	public com.liferay.portlet.calendar.model.CalEvent toEscapedModel() {
 		return new CalEventWrapper(_calEvent.toEscapedModel());
 	}

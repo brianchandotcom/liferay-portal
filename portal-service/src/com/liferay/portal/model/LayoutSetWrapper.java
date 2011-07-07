@@ -379,6 +379,10 @@ public class LayoutSetWrapper implements LayoutSet {
 		return _layoutSet.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutSet> toCacheModel() {
+		return _layoutSet.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutSet toEscapedModel() {
 		return new LayoutSetWrapper(_layoutSet.toEscapedModel());
 	}

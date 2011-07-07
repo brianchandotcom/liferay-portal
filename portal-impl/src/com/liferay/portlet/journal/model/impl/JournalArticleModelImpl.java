@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -1016,6 +1017,153 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleModelImpl._setOriginalVersion = false;
 
 		journalArticleModelImpl._originalStructureId = journalArticleModelImpl._structureId;
+	}
+
+	@Override
+	public CacheModel<JournalArticle> toCacheModel() {
+		JournalArticleCacheModel journalArticleCacheModel = new JournalArticleCacheModel();
+
+		journalArticleCacheModel.uuid = getUuid();
+
+		if ((journalArticleCacheModel.uuid != null) &&
+				(journalArticleCacheModel.uuid.length() == 0)) {
+			journalArticleCacheModel.uuid = null;
+		}
+
+		journalArticleCacheModel.id = getId();
+		journalArticleCacheModel.resourcePrimKey = getResourcePrimKey();
+		journalArticleCacheModel.groupId = getGroupId();
+		journalArticleCacheModel.companyId = getCompanyId();
+		journalArticleCacheModel.userId = getUserId();
+		journalArticleCacheModel.userName = getUserName();
+
+		if ((journalArticleCacheModel.userName != null) &&
+				(journalArticleCacheModel.userName.length() == 0)) {
+			journalArticleCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			journalArticleCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			journalArticleCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		journalArticleCacheModel.classNameId = getClassNameId();
+		journalArticleCacheModel.classPK = getClassPK();
+		journalArticleCacheModel.articleId = getArticleId();
+
+		if ((journalArticleCacheModel.articleId != null) &&
+				(journalArticleCacheModel.articleId.length() == 0)) {
+			journalArticleCacheModel.articleId = null;
+		}
+
+		journalArticleCacheModel.version = getVersion();
+		journalArticleCacheModel.title = getTitle();
+
+		if ((journalArticleCacheModel.title != null) &&
+				(journalArticleCacheModel.title.length() == 0)) {
+			journalArticleCacheModel.title = null;
+		}
+
+		journalArticleCacheModel.urlTitle = getUrlTitle();
+
+		if ((journalArticleCacheModel.urlTitle != null) &&
+				(journalArticleCacheModel.urlTitle.length() == 0)) {
+			journalArticleCacheModel.urlTitle = null;
+		}
+
+		journalArticleCacheModel.description = getDescription();
+
+		if ((journalArticleCacheModel.description != null) &&
+				(journalArticleCacheModel.description.length() == 0)) {
+			journalArticleCacheModel.description = null;
+		}
+
+		journalArticleCacheModel.content = getContent();
+
+		if ((journalArticleCacheModel.content != null) &&
+				(journalArticleCacheModel.content.length() == 0)) {
+			journalArticleCacheModel.content = null;
+		}
+
+		journalArticleCacheModel.type = getType();
+
+		if ((journalArticleCacheModel.type != null) &&
+				(journalArticleCacheModel.type.length() == 0)) {
+			journalArticleCacheModel.type = null;
+		}
+
+		journalArticleCacheModel.structureId = getStructureId();
+
+		if ((journalArticleCacheModel.structureId != null) &&
+				(journalArticleCacheModel.structureId.length() == 0)) {
+			journalArticleCacheModel.structureId = null;
+		}
+
+		journalArticleCacheModel.templateId = getTemplateId();
+
+		if ((journalArticleCacheModel.templateId != null) &&
+				(journalArticleCacheModel.templateId.length() == 0)) {
+			journalArticleCacheModel.templateId = null;
+		}
+
+		journalArticleCacheModel.layoutUuid = getLayoutUuid();
+
+		if ((journalArticleCacheModel.layoutUuid != null) &&
+				(journalArticleCacheModel.layoutUuid.length() == 0)) {
+			journalArticleCacheModel.layoutUuid = null;
+		}
+
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			journalArticleCacheModel.displayDate = displayDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			journalArticleCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		Date reviewDate = getReviewDate();
+
+		if (reviewDate != null) {
+			journalArticleCacheModel.reviewDate = reviewDate.getTime();
+		}
+
+		journalArticleCacheModel.indexable = getIndexable();
+		journalArticleCacheModel.smallImage = getSmallImage();
+		journalArticleCacheModel.smallImageId = getSmallImageId();
+		journalArticleCacheModel.smallImageURL = getSmallImageURL();
+
+		if ((journalArticleCacheModel.smallImageURL != null) &&
+				(journalArticleCacheModel.smallImageURL.length() == 0)) {
+			journalArticleCacheModel.smallImageURL = null;
+		}
+
+		journalArticleCacheModel.status = getStatus();
+		journalArticleCacheModel.statusByUserId = getStatusByUserId();
+		journalArticleCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((journalArticleCacheModel.statusByUserName != null) &&
+				(journalArticleCacheModel.statusByUserName.length() == 0)) {
+			journalArticleCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			journalArticleCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return journalArticleCacheModel;
 	}
 
 	@Override

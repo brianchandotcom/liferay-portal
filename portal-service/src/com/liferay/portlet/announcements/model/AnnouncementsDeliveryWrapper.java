@@ -284,6 +284,10 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 		return _announcementsDelivery.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.announcements.model.AnnouncementsDelivery> toCacheModel() {
+		return _announcementsDelivery.toCacheModel();
+	}
+
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery toEscapedModel() {
 		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
 	}

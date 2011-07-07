@@ -1106,6 +1106,10 @@ public class LayoutWrapper implements Layout {
 		return _layout.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Layout> toCacheModel() {
+		return _layout.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Layout toEscapedModel() {
 		return new LayoutWrapper(_layout.toEscapedModel());
 	}

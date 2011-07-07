@@ -355,6 +355,10 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 		return _socialEquityLog.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityLog> toCacheModel() {
+		return _socialEquityLog.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityLog toEscapedModel() {
 		return new SocialEquityLogWrapper(_socialEquityLog.toEscapedModel());
 	}

@@ -167,6 +167,8 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
 
 	public int hashCode();
 
+	public CacheModel<PortletPreferences> toCacheModel();
+
 	public PortletPreferences toEscapedModel();
 
 	public String toString();

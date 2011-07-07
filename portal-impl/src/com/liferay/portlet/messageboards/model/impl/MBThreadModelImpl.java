@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -512,6 +513,45 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		mbThreadModelImpl._originalRootMessageId = mbThreadModelImpl._rootMessageId;
 
 		mbThreadModelImpl._setOriginalRootMessageId = false;
+	}
+
+	@Override
+	public CacheModel<MBThread> toCacheModel() {
+		MBThreadCacheModel mbThreadCacheModel = new MBThreadCacheModel();
+
+		mbThreadCacheModel.threadId = getThreadId();
+		mbThreadCacheModel.groupId = getGroupId();
+		mbThreadCacheModel.companyId = getCompanyId();
+		mbThreadCacheModel.categoryId = getCategoryId();
+		mbThreadCacheModel.rootMessageId = getRootMessageId();
+		mbThreadCacheModel.rootMessageUserId = getRootMessageUserId();
+		mbThreadCacheModel.messageCount = getMessageCount();
+		mbThreadCacheModel.viewCount = getViewCount();
+		mbThreadCacheModel.lastPostByUserId = getLastPostByUserId();
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			mbThreadCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		mbThreadCacheModel.priority = getPriority();
+		mbThreadCacheModel.status = getStatus();
+		mbThreadCacheModel.statusByUserId = getStatusByUserId();
+		mbThreadCacheModel.statusByUserName = getStatusByUserName();
+
+		if ((mbThreadCacheModel.statusByUserName != null) &&
+				(mbThreadCacheModel.statusByUserName.length() == 0)) {
+			mbThreadCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			mbThreadCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return mbThreadCacheModel;
 	}
 
 	@Override

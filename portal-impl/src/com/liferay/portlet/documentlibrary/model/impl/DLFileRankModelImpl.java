@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -301,6 +302,26 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		dlFileRankModelImpl._originalFileEntryId = dlFileRankModelImpl._fileEntryId;
 
 		dlFileRankModelImpl._setOriginalFileEntryId = false;
+	}
+
+	@Override
+	public CacheModel<DLFileRank> toCacheModel() {
+		DLFileRankCacheModel dlFileRankCacheModel = new DLFileRankCacheModel();
+
+		dlFileRankCacheModel.fileRankId = getFileRankId();
+		dlFileRankCacheModel.groupId = getGroupId();
+		dlFileRankCacheModel.companyId = getCompanyId();
+		dlFileRankCacheModel.userId = getUserId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFileRankCacheModel.createDate = createDate.getTime();
+		}
+
+		dlFileRankCacheModel.fileEntryId = getFileEntryId();
+
+		return dlFileRankCacheModel;
 	}
 
 	@Override

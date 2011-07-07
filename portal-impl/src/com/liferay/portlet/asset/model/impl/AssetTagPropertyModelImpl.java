@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -379,6 +380,50 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		assetTagPropertyModelImpl._setOriginalTagId = false;
 
 		assetTagPropertyModelImpl._originalKey = assetTagPropertyModelImpl._key;
+	}
+
+	@Override
+	public CacheModel<AssetTagProperty> toCacheModel() {
+		AssetTagPropertyCacheModel assetTagPropertyCacheModel = new AssetTagPropertyCacheModel();
+
+		assetTagPropertyCacheModel.tagPropertyId = getTagPropertyId();
+		assetTagPropertyCacheModel.companyId = getCompanyId();
+		assetTagPropertyCacheModel.userId = getUserId();
+		assetTagPropertyCacheModel.userName = getUserName();
+
+		if ((assetTagPropertyCacheModel.userName != null) &&
+				(assetTagPropertyCacheModel.userName.length() == 0)) {
+			assetTagPropertyCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetTagPropertyCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetTagPropertyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetTagPropertyCacheModel.tagId = getTagId();
+		assetTagPropertyCacheModel.key = getKey();
+
+		if ((assetTagPropertyCacheModel.key != null) &&
+				(assetTagPropertyCacheModel.key.length() == 0)) {
+			assetTagPropertyCacheModel.key = null;
+		}
+
+		assetTagPropertyCacheModel.value = getValue();
+
+		if ((assetTagPropertyCacheModel.value != null) &&
+				(assetTagPropertyCacheModel.value.length() == 0)) {
+			assetTagPropertyCacheModel.value = null;
+		}
+
+		return assetTagPropertyCacheModel;
 	}
 
 	@Override

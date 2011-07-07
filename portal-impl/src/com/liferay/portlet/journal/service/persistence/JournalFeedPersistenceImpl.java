@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -2480,6 +2481,16 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static JournalFeed _nullJournalFeed = new JournalFeedImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<JournalFeed> toCacheModel() {
+				return _nullJournalFeedCacheModel;
+			}
+		};
+
+	private static CacheModel<JournalFeed> _nullJournalFeedCacheModel = new CacheModel<JournalFeed>() {
+			public JournalFeed toEntityModel() {
+				return _nullJournalFeed;
 			}
 		};
 }

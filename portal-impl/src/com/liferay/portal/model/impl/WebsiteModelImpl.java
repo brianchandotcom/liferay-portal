@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.model.WebsiteModel;
 import com.liferay.portal.model.WebsiteSoap;
@@ -384,6 +385,47 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Website> toCacheModel() {
+		WebsiteCacheModel websiteCacheModel = new WebsiteCacheModel();
+
+		websiteCacheModel.websiteId = getWebsiteId();
+		websiteCacheModel.companyId = getCompanyId();
+		websiteCacheModel.userId = getUserId();
+		websiteCacheModel.userName = getUserName();
+
+		if ((websiteCacheModel.userName != null) &&
+				(websiteCacheModel.userName.length() == 0)) {
+			websiteCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			websiteCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			websiteCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		websiteCacheModel.classNameId = getClassNameId();
+		websiteCacheModel.classPK = getClassPK();
+		websiteCacheModel.url = getUrl();
+
+		if ((websiteCacheModel.url != null) &&
+				(websiteCacheModel.url.length() == 0)) {
+			websiteCacheModel.url = null;
+		}
+
+		websiteCacheModel.typeId = getTypeId();
+		websiteCacheModel.primary = getPrimary();
+
+		return websiteCacheModel;
 	}
 
 	@Override

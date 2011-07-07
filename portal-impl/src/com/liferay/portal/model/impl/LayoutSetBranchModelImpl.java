@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchModel;
 import com.liferay.portal.model.LayoutSetBranchSoap;
@@ -408,6 +409,51 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchModelImpl._setOriginalPrivateLayout = false;
 
 		layoutSetBranchModelImpl._originalName = layoutSetBranchModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<LayoutSetBranch> toCacheModel() {
+		LayoutSetBranchCacheModel layoutSetBranchCacheModel = new LayoutSetBranchCacheModel();
+
+		layoutSetBranchCacheModel.layoutSetBranchId = getLayoutSetBranchId();
+		layoutSetBranchCacheModel.groupId = getGroupId();
+		layoutSetBranchCacheModel.companyId = getCompanyId();
+		layoutSetBranchCacheModel.userId = getUserId();
+		layoutSetBranchCacheModel.userName = getUserName();
+
+		if ((layoutSetBranchCacheModel.userName != null) &&
+				(layoutSetBranchCacheModel.userName.length() == 0)) {
+			layoutSetBranchCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			layoutSetBranchCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			layoutSetBranchCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		layoutSetBranchCacheModel.privateLayout = getPrivateLayout();
+		layoutSetBranchCacheModel.name = getName();
+
+		if ((layoutSetBranchCacheModel.name != null) &&
+				(layoutSetBranchCacheModel.name.length() == 0)) {
+			layoutSetBranchCacheModel.name = null;
+		}
+
+		layoutSetBranchCacheModel.description = getDescription();
+
+		if ((layoutSetBranchCacheModel.description != null) &&
+				(layoutSetBranchCacheModel.description.length() == 0)) {
+			layoutSetBranchCacheModel.description = null;
+		}
+
+		return layoutSetBranchCacheModel;
 	}
 
 	@Override

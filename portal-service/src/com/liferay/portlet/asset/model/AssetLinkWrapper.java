@@ -291,6 +291,10 @@ public class AssetLinkWrapper implements AssetLink {
 		return _assetLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetLink> toCacheModel() {
+		return _assetLink.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetLink toEscapedModel() {
 		return new AssetLinkWrapper(_assetLink.toEscapedModel());
 	}

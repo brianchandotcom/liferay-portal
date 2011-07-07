@@ -341,6 +341,10 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		return _layoutSetPrototype.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutSetPrototype> toCacheModel() {
+		return _layoutSetPrototype.toCacheModel();
+	}
+
 	public com.liferay.portal.model.LayoutSetPrototype toEscapedModel() {
 		return new LayoutSetPrototypeWrapper(_layoutSetPrototype.toEscapedModel());
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.PasswordPolicyRelModel;
 import com.liferay.portal.service.ServiceContext;
@@ -275,6 +276,18 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		passwordPolicyRelModelImpl._originalClassPK = passwordPolicyRelModelImpl._classPK;
 
 		passwordPolicyRelModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<PasswordPolicyRel> toCacheModel() {
+		PasswordPolicyRelCacheModel passwordPolicyRelCacheModel = new PasswordPolicyRelCacheModel();
+
+		passwordPolicyRelCacheModel.passwordPolicyRelId = getPasswordPolicyRelId();
+		passwordPolicyRelCacheModel.passwordPolicyId = getPasswordPolicyId();
+		passwordPolicyRelCacheModel.classNameId = getClassNameId();
+		passwordPolicyRelCacheModel.classPK = getClassPK();
+
+		return passwordPolicyRelCacheModel;
 	}
 
 	@Override

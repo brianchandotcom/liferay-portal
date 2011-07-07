@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -446,6 +447,58 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		igFolderModelImpl._setOriginalParentFolderId = false;
 
 		igFolderModelImpl._originalName = igFolderModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<IGFolder> toCacheModel() {
+		IGFolderCacheModel igFolderCacheModel = new IGFolderCacheModel();
+
+		igFolderCacheModel.uuid = getUuid();
+
+		if ((igFolderCacheModel.uuid != null) &&
+				(igFolderCacheModel.uuid.length() == 0)) {
+			igFolderCacheModel.uuid = null;
+		}
+
+		igFolderCacheModel.folderId = getFolderId();
+		igFolderCacheModel.groupId = getGroupId();
+		igFolderCacheModel.companyId = getCompanyId();
+		igFolderCacheModel.userId = getUserId();
+		igFolderCacheModel.userName = getUserName();
+
+		if ((igFolderCacheModel.userName != null) &&
+				(igFolderCacheModel.userName.length() == 0)) {
+			igFolderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			igFolderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			igFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		igFolderCacheModel.parentFolderId = getParentFolderId();
+		igFolderCacheModel.name = getName();
+
+		if ((igFolderCacheModel.name != null) &&
+				(igFolderCacheModel.name.length() == 0)) {
+			igFolderCacheModel.name = null;
+		}
+
+		igFolderCacheModel.description = getDescription();
+
+		if ((igFolderCacheModel.description != null) &&
+				(igFolderCacheModel.description.length() == 0)) {
+			igFolderCacheModel.description = null;
+		}
+
+		return igFolderCacheModel;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -263,6 +264,25 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 		ddmStorageLinkModelImpl._originalClassPK = ddmStorageLinkModelImpl._classPK;
 
 		ddmStorageLinkModelImpl._setOriginalClassPK = false;
+	}
+
+	@Override
+	public CacheModel<DDMStorageLink> toCacheModel() {
+		DDMStorageLinkCacheModel ddmStorageLinkCacheModel = new DDMStorageLinkCacheModel();
+
+		ddmStorageLinkCacheModel.uuid = getUuid();
+
+		if ((ddmStorageLinkCacheModel.uuid != null) &&
+				(ddmStorageLinkCacheModel.uuid.length() == 0)) {
+			ddmStorageLinkCacheModel.uuid = null;
+		}
+
+		ddmStorageLinkCacheModel.storageLinkId = getStorageLinkId();
+		ddmStorageLinkCacheModel.classNameId = getClassNameId();
+		ddmStorageLinkCacheModel.classPK = getClassPK();
+		ddmStorageLinkCacheModel.structureId = getStructureId();
+
+		return ddmStorageLinkCacheModel;
 	}
 
 	@Override

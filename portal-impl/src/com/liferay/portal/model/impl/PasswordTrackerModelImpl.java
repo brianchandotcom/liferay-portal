@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.model.PasswordTrackerModel;
 import com.liferay.portal.service.ServiceContext;
@@ -260,6 +261,29 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<PasswordTracker> toCacheModel() {
+		PasswordTrackerCacheModel passwordTrackerCacheModel = new PasswordTrackerCacheModel();
+
+		passwordTrackerCacheModel.passwordTrackerId = getPasswordTrackerId();
+		passwordTrackerCacheModel.userId = getUserId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			passwordTrackerCacheModel.createDate = createDate.getTime();
+		}
+
+		passwordTrackerCacheModel.password = getPassword();
+
+		if ((passwordTrackerCacheModel.password != null) &&
+				(passwordTrackerCacheModel.password.length() == 0)) {
+			passwordTrackerCacheModel.password = null;
+		}
+
+		return passwordTrackerCacheModel;
 	}
 
 	@Override

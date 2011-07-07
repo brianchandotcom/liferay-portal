@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -331,6 +332,32 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		journalContentSearchModelImpl._originalPortletId = journalContentSearchModelImpl._portletId;
 
 		journalContentSearchModelImpl._originalArticleId = journalContentSearchModelImpl._articleId;
+	}
+
+	@Override
+	public CacheModel<JournalContentSearch> toCacheModel() {
+		JournalContentSearchCacheModel journalContentSearchCacheModel = new JournalContentSearchCacheModel();
+
+		journalContentSearchCacheModel.contentSearchId = getContentSearchId();
+		journalContentSearchCacheModel.groupId = getGroupId();
+		journalContentSearchCacheModel.companyId = getCompanyId();
+		journalContentSearchCacheModel.privateLayout = getPrivateLayout();
+		journalContentSearchCacheModel.layoutId = getLayoutId();
+		journalContentSearchCacheModel.portletId = getPortletId();
+
+		if ((journalContentSearchCacheModel.portletId != null) &&
+				(journalContentSearchCacheModel.portletId.length() == 0)) {
+			journalContentSearchCacheModel.portletId = null;
+		}
+
+		journalContentSearchCacheModel.articleId = getArticleId();
+
+		if ((journalContentSearchCacheModel.articleId != null) &&
+				(journalContentSearchCacheModel.articleId.length() == 0)) {
+			journalContentSearchCacheModel.articleId = null;
+		}
+
+		return journalContentSearchCacheModel;
 	}
 
 	@Override

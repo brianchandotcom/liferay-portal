@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryModel;
 import com.liferay.portal.model.RepositorySoap;
@@ -380,6 +381,60 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Repository> toCacheModel() {
+		RepositoryCacheModel repositoryCacheModel = new RepositoryCacheModel();
+
+		repositoryCacheModel.repositoryId = getRepositoryId();
+		repositoryCacheModel.groupId = getGroupId();
+		repositoryCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			repositoryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			repositoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		repositoryCacheModel.classNameId = getClassNameId();
+		repositoryCacheModel.name = getName();
+
+		if ((repositoryCacheModel.name != null) &&
+				(repositoryCacheModel.name.length() == 0)) {
+			repositoryCacheModel.name = null;
+		}
+
+		repositoryCacheModel.description = getDescription();
+
+		if ((repositoryCacheModel.description != null) &&
+				(repositoryCacheModel.description.length() == 0)) {
+			repositoryCacheModel.description = null;
+		}
+
+		repositoryCacheModel.portletId = getPortletId();
+
+		if ((repositoryCacheModel.portletId != null) &&
+				(repositoryCacheModel.portletId.length() == 0)) {
+			repositoryCacheModel.portletId = null;
+		}
+
+		repositoryCacheModel.typeSettings = getTypeSettings();
+
+		if ((repositoryCacheModel.typeSettings != null) &&
+				(repositoryCacheModel.typeSettings.length() == 0)) {
+			repositoryCacheModel.typeSettings = null;
+		}
+
+		repositoryCacheModel.dlFolderId = getDlFolderId();
+
+		return repositoryCacheModel;
 	}
 
 	@Override

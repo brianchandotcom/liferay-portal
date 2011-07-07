@@ -463,6 +463,10 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileShortcut> toCacheModel() {
+		return _dlFileShortcut.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut toEscapedModel() {
 		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
 	}

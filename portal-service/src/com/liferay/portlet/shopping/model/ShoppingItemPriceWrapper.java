@@ -308,6 +308,10 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice {
 		return _shoppingItemPrice.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingItemPrice> toCacheModel() {
+		return _shoppingItemPrice.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingItemPrice toEscapedModel() {
 		return new ShoppingItemPriceWrapper(_shoppingItemPrice.toEscapedModel());
 	}

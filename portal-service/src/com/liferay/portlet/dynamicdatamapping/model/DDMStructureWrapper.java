@@ -585,6 +585,10 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> toCacheModel() {
+		return _ddmStructure.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure toEscapedModel() {
 		return new DDMStructureWrapper(_ddmStructure.toEscapedModel());
 	}

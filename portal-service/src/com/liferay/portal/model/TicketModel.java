@@ -218,6 +218,8 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket> {
 
 	public int hashCode();
 
+	public CacheModel<Ticket> toCacheModel();
+
 	public Ticket toEscapedModel();
 
 	public String toString();

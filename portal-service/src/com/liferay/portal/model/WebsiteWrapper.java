@@ -345,6 +345,10 @@ public class WebsiteWrapper implements Website {
 		return _website.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Website> toCacheModel() {
+		return _website.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Website toEscapedModel() {
 		return new WebsiteWrapper(_website.toEscapedModel());
 	}

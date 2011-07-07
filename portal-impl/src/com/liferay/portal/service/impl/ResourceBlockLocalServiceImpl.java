@@ -58,8 +58,8 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPersistence.update(resourceBlock, false);
 
-		resourceBlockPermissionLocalService.addResourceBlockPermission(
-			resourceBlock, resourcePermissions);
+		resourceBlockPermissionLocalService.addResourceBlockPermissions(
+			resourceBlockId, resourcePermissions);
 
 		return resourceBlock;
 	}
@@ -99,6 +99,26 @@ public class ResourceBlockLocalServiceImpl
 		buffer.flip();
 
 		return DigesterUtil.digestHex("SHA-1", buffer);
+	}
+
+	@Override
+	public void deleteResourceBlock(long resourceBlockId)
+		throws PortalException, SystemException {
+
+		ResourceBlock resourceBlock =
+			resourceBlockPersistence.findByPrimaryKey(resourceBlockId);
+
+		deleteResourceBlock(resourceBlock);
+	}
+
+	@Override
+	public void deleteResourceBlock(ResourceBlock resourceBlock)
+		throws SystemException {
+
+		resourceBlockPermissionLocalService.deleteResourceBlockPermissions(
+				resourceBlock.getPrimaryKey());
+
+		resourceBlockPersistence.remove(resourceBlock);
 	}
 
 	/**
@@ -164,8 +184,7 @@ public class ResourceBlockLocalServiceImpl
 
 		String newPermissionsHash = getPermissionsHash(resourcePermissions);
 
-		String currentPermissionsHash =
-			resourceBlock.getPermissionsHash();
+		String currentPermissionsHash =	resourceBlock.getPermissionsHash();
 
 		// If the permissions hash is still the same, nothing needs to be done
 

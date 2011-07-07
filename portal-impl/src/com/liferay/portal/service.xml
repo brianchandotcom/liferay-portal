@@ -1578,6 +1578,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ResourceBlockId" return-type="Collection">
+			<finder-column name="resourceBlockId" />
+		</finder>
 		<finder name="R_A" return-type="Collection">
 			<finder-column name="roleId" />
 			<finder-column name="actionIds" />

@@ -68,6 +68,20 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public static final String FINDER_CLASS_NAME_ENTITY = ResourceBlockPermissionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final FinderPath FINDER_PATH_FIND_BY_RESOURCEBLOCKID = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByResourceBlockId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_RESOURCEBLOCKID = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByResourceBlockId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_R_A = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_LIST,
@@ -418,6 +432,344 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		return resourceBlockPermission;
+	}
+
+	/**
+	 * Returns all the resource block permissions where resourceBlockId = &#63;.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @return the matching resource block permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId) throws SystemException {
+		return findByResourceBlockId(resourceBlockId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource block permissions where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
+	 * @return the range of matching resource block permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId, int start, int end) throws SystemException {
+		return findByResourceBlockId(resourceBlockId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource block permissions where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param start the lower bound of the range of resource block permissions
+	 * @param end the upper bound of the range of resource block permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource block permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				resourceBlockId,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<ResourceBlockPermission> list = (List<ResourceBlockPermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_RESOURCEBLOCKID,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(2);
+			}
+
+			query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(resourceBlockId);
+
+				list = (List<ResourceBlockPermission>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_RESOURCEBLOCKID,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_RESOURCEBLOCKID,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission findByResourceBlockId_First(
+		long resourceBlockId, OrderByComparator orderByComparator)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
+				0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("resourceBlockId=");
+			msg.append(resourceBlockId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourceBlockPermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission findByResourceBlockId_Last(
+		long resourceBlockId, OrderByComparator orderByComparator)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		int count = countByResourceBlockId(resourceBlockId);
+
+		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
+				count - 1, count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("resourceBlockId=");
+			msg.append(resourceBlockId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourceBlockPermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourceBlockPermissionPK the primary key of the current resource block permission
+	 * @param resourceBlockId the resource block ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
+		ResourceBlockPermissionPK resourceBlockPermissionPK,
+		long resourceBlockId, OrderByComparator orderByComparator)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionPK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ResourceBlockPermission[] array = new ResourceBlockPermissionImpl[3];
+
+			array[0] = getByResourceBlockId_PrevAndNext(session,
+					resourceBlockPermission, resourceBlockId,
+					orderByComparator, true);
+
+			array[1] = resourceBlockPermission;
+
+			array[2] = getByResourceBlockId_PrevAndNext(session,
+					resourceBlockPermission, resourceBlockId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ResourceBlockPermission getByResourceBlockId_PrevAndNext(
+		Session session, ResourceBlockPermission resourceBlockPermission,
+		long resourceBlockId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE);
+
+		query.append(_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(resourceBlockId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(resourceBlockPermission);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ResourceBlockPermission> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
@@ -885,6 +1237,20 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
+	 * Removes all the resource block permissions where resourceBlockId = &#63; from the database.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByResourceBlockId(long resourceBlockId)
+		throws SystemException {
+		for (ResourceBlockPermission resourceBlockPermission : findByResourceBlockId(
+				resourceBlockId)) {
+			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+		}
+	}
+
+	/**
 	 * Removes all the resource block permissions where roleId = &#63; and actionIds = &#63; from the database.
 	 *
 	 * @param roleId the role ID
@@ -908,6 +1274,60 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		for (ResourceBlockPermission resourceBlockPermission : findAll()) {
 			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
 		}
+	}
+
+	/**
+	 * Returns the number of resource block permissions where resourceBlockId = &#63;.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @return the number of matching resource block permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByResourceBlockId(long resourceBlockId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { resourceBlockId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(resourceBlockId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -1170,6 +1590,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE ";
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission";
 	private static final String _SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE = "SELECT COUNT(resourceBlockPermission) FROM ResourceBlockPermission resourceBlockPermission WHERE ";
+	private static final String _FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2 =
+		"resourceBlockPermission.id.resourceBlockId = ?";
 	private static final String _FINDER_COLUMN_R_A_ROLEID_2 = "resourceBlockPermission.id.roleId = ? AND ";
 	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockPermission.id.actionIds = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockPermission.";

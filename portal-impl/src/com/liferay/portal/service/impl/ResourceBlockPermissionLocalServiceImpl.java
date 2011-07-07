@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
@@ -30,26 +29,41 @@ public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
 
 	public ResourceBlockPermission addResourceBlockPermission(
-				long actionIds, long resourceBlockId, long roleId)
+			long resourceBlockId, long roleId, long actionIds)
 		throws SystemException {
 
 		ResourceBlockPermissionPK pk =
-			new ResourceBlockPermissionPK(actionIds, resourceBlockId, roleId);
+			new ResourceBlockPermissionPK(resourceBlockId, roleId, actionIds);
 
 		ResourceBlockPermission resourceBlockPermission =
+			resourceBlockPermissionPersistence.fetchByPrimaryKey(pk);
+
+		if (resourceBlockPermission == null) {
 			resourceBlockPermissionPersistence.create(pk);
 
-		resourceBlockPermissionPersistence.update(
-			resourceBlockPermission, false);
+			resourceBlockPermissionPersistence.update(
+				resourceBlockPermission, false);
+		}
+
+		return resourceBlockPermission;
 	}
 
 	public void addResourceBlockPermissions(
-			ResourceBlock resourceBlock,
-			List<ResourcePermission> resourcePermissions)
+			long resourceBlockId, List<ResourcePermission> resourcePermissions)
 		throws SystemException {
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-
+			addResourceBlockPermission(
+				resourceBlockId, resourcePermission.getRoleId(),
+				resourcePermission.getActionIds());
 		}
 	}
+
+	public void deleteResourceBlockPermissions(long resourceBlockId)
+		throws SystemException {
+
+		resourceBlockPermissionPersistence.removeByResourceBlockId(
+			resourceBlockId);
+	}
+
 }

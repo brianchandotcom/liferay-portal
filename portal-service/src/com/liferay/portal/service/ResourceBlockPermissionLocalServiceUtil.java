@@ -253,19 +253,23 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long actionIds, long resourceBlockId, long roleId)
+		long resourceBlockId, long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addResourceBlockPermission(actionIds, resourceBlockId,
-			roleId);
+				   .addResourceBlockPermission(resourceBlockId, roleId,
+			actionIds);
 	}
 
-	public static void addResourceBlockPermissions(
-		com.liferay.portal.model.ResourceBlock resourceBlock,
+	public static void addResourceBlockPermissions(long resourceBlockId,
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService()
-			.addResourceBlockPermissions(resourceBlock, resourcePermissions);
+			.addResourceBlockPermissions(resourceBlockId, resourcePermissions);
+	}
+
+	public static void deleteResourceBlockPermissions(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourceBlockPermissions(resourceBlockId);
 	}
 
 	public static ResourceBlockPermissionLocalService getService() {

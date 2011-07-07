@@ -245,18 +245,22 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long actionIds, long resourceBlockId, long roleId)
+		long resourceBlockId, long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.addResourceBlockPermission(actionIds,
-			resourceBlockId, roleId);
+		return _resourceBlockPermissionLocalService.addResourceBlockPermission(resourceBlockId,
+			roleId, actionIds);
 	}
 
-	public void addResourceBlockPermissions(
-		com.liferay.portal.model.ResourceBlock resourceBlock,
+	public void addResourceBlockPermissions(long resourceBlockId,
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlock,
+		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
 			resourcePermissions);
+	}
+
+	public void deleteResourceBlockPermissions(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
 	}
 
 	public ResourceBlockPermissionLocalService getWrappedResourceBlockPermissionLocalService() {

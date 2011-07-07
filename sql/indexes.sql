@@ -548,6 +548,7 @@ create unique index IX_EDB9986E on ResourceAction (name, actionId);
 
 create unique index IX_451AA5FD on ResourceBlock (permissionsHash);
 
+create index IX_4AB3756 on ResourceBlockPermission (resourceBlockId);
 create index IX_ADE2313B on ResourceBlockPermission (roleId, actionId);
 create index IX_EA4BDE59 on ResourceBlockPermission (roleId, actionIds);
 

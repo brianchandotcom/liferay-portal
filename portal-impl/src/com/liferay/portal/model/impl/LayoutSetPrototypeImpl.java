@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 
@@ -31,8 +30,7 @@ import java.io.IOException;
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  */
-public class LayoutSetPrototypeImpl
-	extends LayoutSetPrototypeModelImpl implements LayoutSetPrototype {
+public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 
 	public LayoutSetPrototypeImpl() {
 	}

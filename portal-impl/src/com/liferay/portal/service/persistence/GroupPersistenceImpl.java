@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.GroupImpl;
@@ -99,8 +100,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -108,33 +109,36 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCompanyId", new String[] { Long.class.getName() });
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByLiveGroupId", new String[] { Long.class.getName() });
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByLiveGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByLiveGroupId", new String[] { Long.class.getName() });
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByLiveGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_F = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_F",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_F = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_F",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_F",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByT_A",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByT_A",
 			new String[] {
 				Integer.class.getName(), Boolean.class.getName(),
 				
@@ -142,55 +146,55 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByT_A",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByT_A",
 			new String[] { Integer.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_C_C",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C_C",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_L_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_L_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_L_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_L_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_L_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_L_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_L_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_C_L_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_L_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_L_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_C_L_N",
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_C_L_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the group in the entity cache if it is enabled.
@@ -3290,6 +3294,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ORGS,
+			com.liferay.portal.model.impl.OrganizationImpl.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ORGS_NAME, "getOrganizations",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -3372,7 +3377,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ORGS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ORGS, Long.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ORGS_NAME,
 			"getOrganizationsSize", new String[] { Long.class.getName() });
 
@@ -3425,7 +3430,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ORGANIZATION = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ORGS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ORGS, Boolean.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ORGS_NAME,
 			"containsOrganization",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -3765,6 +3770,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			com.liferay.portal.model.impl.PermissionImpl.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"getPermissions",
 			new String[] {
@@ -3848,7 +3854,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_PERMISSIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS, Long.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"getPermissionsSize", new String[] { Long.class.getName() });
 
@@ -3902,6 +3908,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_PERMISSION = new FinderPath(com.liferay.portal.model.impl.PermissionModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_PERMISSIONS,
+			Boolean.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_PERMISSIONS_NAME,
 			"containsPermission",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -4241,6 +4248,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_GET_ROLES = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			com.liferay.portal.model.impl.RoleImpl.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "getRoles",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -4322,7 +4330,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_ROLES_SIZE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES, Long.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "getRolesSize",
 			new String[] { Long.class.getName() });
 
@@ -4375,7 +4383,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_ROLE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_ROLES, Boolean.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME, "containsRole",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -4702,6 +4710,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_USERGROUPS,
+			com.liferay.portal.model.impl.UserGroupImpl.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME,
 			"getUserGroups",
 			new String[] {
@@ -4785,7 +4794,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_USERGROUPS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_USERGROUPS, Long.class,
 			GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME,
 			"getUserGroupsSize", new String[] { Long.class.getName() });
 
@@ -4839,7 +4848,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USERGROUP = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_GROUPS_USERGROUPS,
-			GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME,
+			Boolean.class, GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME,
 			"containsUserGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -5176,6 +5185,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	public static final FinderPath FINDER_PATH_GET_USERS = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			com.liferay.portal.model.impl.UserImpl.class,
 			GroupModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getUsers",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -5257,7 +5267,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Long.class,
 			GroupModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getUsersSize",
 			new String[] { Long.class.getName() });
 
@@ -5310,7 +5320,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USER = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
+			GroupModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Boolean.class,
 			GroupModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "containsUser",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -6751,6 +6761,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static Group _nullGroup = new GroupImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Group> toCacheModel() {
+				return _nullGroupCacheModel;
+			}
+		};
+
+	private static CacheModel<Group> _nullGroupCacheModel = new CacheModel<Group>() {
+			public Group toEntityModel() {
+				return _nullGroup;
 			}
 		};
 }

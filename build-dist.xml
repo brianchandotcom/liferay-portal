@@ -911,13 +911,13 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.jetty.zip.name}"
 		>
 			<patternset
-				excludes="jetty-6.1.24/bin/**,jetty-6.1.24/contexts/**,jetty-6.1.24/contrib/**,jetty-6.1.24/distribution/**,jetty-6.1.24/examples/**,jetty-6.1.24/extras/**,jetty-6.1.24/javadoc/**,jetty-6.1.24/jxr/**,jetty-6.1.24/modules/**,jetty-6.1.24/patches/**,jetty-6.1.24/patches/**,jetty-6.1.24/project-website/**,jetty-6.1.24/webapps/**"
+				excludes="jetty-6.1.26/bin/**,jetty-6.1.26/contexts/**,jetty-6.1.26/contrib/**,jetty-6.1.26/distribution/**,jetty-6.1.26/examples/**,jetty-6.1.26/extras/**,jetty-6.1.26/javadoc/**,jetty-6.1.26/jxr/**,jetty-6.1.26/modules/**,jetty-6.1.26/patches/**,jetty-6.1.26/patches/**,jetty-6.1.26/project-website/**,jetty-6.1.26/webapps/**"
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/jetty-6.1.24/bin" />
-		<mkdir dir="${app.server.parent.dir}/jetty-6.1.24/contexts" />
-		<mkdir dir="${app.server.parent.dir}/jetty-6.1.24/webapps" />
+		<mkdir dir="${app.server.parent.dir}/jetty-6.1.26/bin" />
+		<mkdir dir="${app.server.parent.dir}/jetty-6.1.26/contexts" />
+		<mkdir dir="${app.server.parent.dir}/jetty-6.1.26/webapps" />
 	</target>
 
 	<target name="unzip-jonas">

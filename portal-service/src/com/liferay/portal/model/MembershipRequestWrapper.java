@@ -330,6 +330,10 @@ public class MembershipRequestWrapper implements MembershipRequest {
 		return _membershipRequest.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.MembershipRequest> toCacheModel() {
+		return _membershipRequest.toCacheModel();
+	}
+
 	public com.liferay.portal.model.MembershipRequest toEscapedModel() {
 		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
 	}
@@ -341,6 +345,11 @@ public class MembershipRequestWrapper implements MembershipRequest {
 
 	public java.lang.String toXmlString() {
 		return _membershipRequest.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_membershipRequest.save();
 	}
 
 	public MembershipRequest getWrappedMembershipRequest() {

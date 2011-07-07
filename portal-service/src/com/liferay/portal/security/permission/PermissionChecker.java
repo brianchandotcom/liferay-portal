@@ -61,7 +61,8 @@ public interface PermissionChecker {
 	 * has permission to perform the action.
 	 *
 	 * @param  companyId the primary key of the user's company
-	 * @param  name the resource's name
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @param  ownerId the primary key of the resource's owner
 	 * @param  actionId the action ID
@@ -78,7 +79,8 @@ public interface PermissionChecker {
 	 * has permission to perform the action.
 	 *
 	 * @param  companyId the primary key of the user's company
-	 * @param  name the resource's name
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @param  ownerId the primary key of the resource's owner
 	 * @param  actionId the action ID
@@ -95,7 +97,8 @@ public interface PermissionChecker {
 	 * action on the resource.
 	 *
 	 * @param  groupId the primary key of the group containing the resource
-	 * @param  name the resource's name
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @param  actionId the action ID
 	 * @return <code>true</code> if the user has permission to perform the
@@ -109,7 +112,8 @@ public interface PermissionChecker {
 	 * action on the resource.
 	 *
 	 * @param  groupId the primary key of the group containing the resource
-	 * @param  name the resource's name
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @param  actionId the action ID
 	 * @return <code>true</code> if the user has permission to perform the
@@ -123,7 +127,8 @@ public interface PermissionChecker {
 	 * action on the resource without using guest permissions.
 	 *
 	 * @param  groupId the primary key of the group containing the resource
-	 * @param  name the resource's name
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @param  actionId the action ID
 	 * @param  checkAdmin whether to use permissions gained from administrator

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -397,6 +398,61 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<SCFrameworkVersion> toCacheModel() {
+		SCFrameworkVersionCacheModel scFrameworkVersionCacheModel = new SCFrameworkVersionCacheModel();
+
+		scFrameworkVersionCacheModel.frameworkVersionId = getFrameworkVersionId();
+
+		scFrameworkVersionCacheModel.groupId = getGroupId();
+
+		scFrameworkVersionCacheModel.companyId = getCompanyId();
+
+		scFrameworkVersionCacheModel.userId = getUserId();
+
+		scFrameworkVersionCacheModel.userName = getUserName();
+
+		String userName = scFrameworkVersionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			scFrameworkVersionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			scFrameworkVersionCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			scFrameworkVersionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		scFrameworkVersionCacheModel.name = getName();
+
+		String name = scFrameworkVersionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			scFrameworkVersionCacheModel.name = null;
+		}
+
+		scFrameworkVersionCacheModel.url = getUrl();
+
+		String url = scFrameworkVersionCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			scFrameworkVersionCacheModel.url = null;
+		}
+
+		scFrameworkVersionCacheModel.active = getActive();
+
+		scFrameworkVersionCacheModel.priority = getPriority();
+
+		return scFrameworkVersionCacheModel;
 	}
 
 	@Override

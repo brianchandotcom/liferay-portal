@@ -299,7 +299,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the journal article resource in the database. Also notifies the appropriate model listeners.
+	 * Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalArticleResource the journal article resource
 	 * @return the journal article resource that was updated
@@ -312,7 +312,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the journal article resource in the database. Also notifies the appropriate model listeners.
+	 * Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalArticleResource the journal article resource
 	 * @param merge whether to merge the journal article resource with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

@@ -24,29 +24,6 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 %>
 
-<div class="aui-helper-hidden" id="<portlet:namespace />addVariation">
-	<portlet:actionURL var="addVariationURL">
-		<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-		<portlet:param name="<%= Constants.CMD %>" value="add_root_revision" />
-		<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-		<portlet:param name="mergeLayoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
-		<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
-	</portlet:actionURL>
-
-	<aui:form name="fmVariation" action="<%= addVariationURL %>" method="post">
-		<div class="portlet-msg-info">
-			<liferay-ui:message key="new-page-variation-help" />
-		</div>
-
-		<aui:input label="page-variation-name" name="variationName" />
-
-		<aui:button-row>
-			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:form>
-</div>
-
 <div id="<portlet:namespace />revisionsToolbar"></div>
 
 <aui:script use="aui-toolbar,liferay-staging" position="inline">
@@ -66,13 +43,6 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutR
 					},
 					icon: 'trash',
 					label: '<liferay-ui:message key="clear-history" />'
-				},
-				{
-					handler: function (event) {
-						Liferay.Staging.Branching.addVariation('<%= addVariationURL %>');
-					},
-					icon: 'copy',
-					label: '<liferay-ui:message key="new-page-variation" />'
 				}
 			]
 		}
@@ -96,7 +66,7 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 	StringBundler sb = new StringBundler();
 
 	for (LayoutRevision layoutRevision : layoutRevisions) {
-		sb.append("<li class=\"layout-revision");
+		sb.append("<li class=\"layout-revision\"><div class=\"layout-revision-details");
 
 		if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			sb.append(" layout-revision-current");
@@ -106,7 +76,8 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 			sb.append(" layout-revision-head");
 		}
 
-		sb.append("\"><a class=\"selection-handle\" href=\"#\" data-layoutRevisionId=\"");
+		sb.append("\"><span class=\"selection-details\">");
+		sb.append("<a class=\"selection-handle\" href=\"#\" data-layoutRevisionId=\"");
 		sb.append(layoutRevision.getLayoutRevisionId());
 		sb.append("\" data-layoutSetBranchId=\"");
 		sb.append(layoutRevision.getLayoutSetBranchId());
@@ -137,6 +108,8 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 			sb.append("</span>");
 		}
 
+		sb.append("</span>");
+
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/html/portlet/staging_bar/layout_revision_action.jsp");
 
 		request.setAttribute("layout_revisions.jsp-layoutRevision", layoutRevision);
@@ -153,6 +126,7 @@ public String _getGraph(PageContext pageContext, long layoutRevisionId, List<Lay
 		}
 
 		sb.append(stringResponse.getString());
+		sb.append("</div>");
 
 		List<LayoutRevision> curLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getLayoutRevisionId(), layoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 

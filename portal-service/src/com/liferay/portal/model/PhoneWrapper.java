@@ -363,6 +363,10 @@ public class PhoneWrapper implements Phone {
 		return _phone.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Phone> toCacheModel() {
+		return _phone.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Phone toEscapedModel() {
 		return new PhoneWrapper(_phone.toEscapedModel());
 	}
@@ -374,6 +378,11 @@ public class PhoneWrapper implements Phone {
 
 	public java.lang.String toXmlString() {
 		return _phone.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_phone.save();
 	}
 
 	public com.liferay.portal.model.ListType getType()

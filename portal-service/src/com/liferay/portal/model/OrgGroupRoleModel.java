@@ -123,6 +123,8 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole> {
 
 	public int hashCode();
 
+	public CacheModel<OrgGroupRole> toCacheModel();
+
 	public OrgGroupRole toEscapedModel();
 
 	public String toString();

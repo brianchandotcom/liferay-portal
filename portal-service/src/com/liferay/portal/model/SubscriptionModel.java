@@ -235,6 +235,8 @@ public interface SubscriptionModel extends AttachedModel, AuditedModel,
 
 	public int hashCode();
 
+	public CacheModel<Subscription> toCacheModel();
+
 	public Subscription toEscapedModel();
 
 	public String toString();

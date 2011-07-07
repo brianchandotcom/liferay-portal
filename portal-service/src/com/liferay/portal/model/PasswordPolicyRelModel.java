@@ -144,6 +144,8 @@ public interface PasswordPolicyRelModel extends AttachedModel,
 
 	public int hashCode();
 
+	public CacheModel<PasswordPolicyRel> toCacheModel();
+
 	public PasswordPolicyRel toEscapedModel();
 
 	public String toString();

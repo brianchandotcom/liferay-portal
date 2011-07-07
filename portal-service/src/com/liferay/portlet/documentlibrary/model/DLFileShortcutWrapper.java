@@ -463,6 +463,10 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileShortcut> toCacheModel() {
+		return _dlFileShortcut.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut toEscapedModel() {
 		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
 	}
@@ -474,6 +478,11 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 
 	public java.lang.String toXmlString() {
 		return _dlFileShortcut.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileShortcut.save();
 	}
 
 	public com.liferay.portal.kernel.repository.model.Folder getFolder() {

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -72,9 +73,10 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityHistoryImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityHistoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -621,6 +623,17 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 	private static SocialEquityHistory _nullSocialEquityHistory = new SocialEquityHistoryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityHistory> toCacheModel() {
+				return _nullSocialEquityHistoryCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityHistory> _nullSocialEquityHistoryCacheModel =
+		new CacheModel<SocialEquityHistory>() {
+			public SocialEquityHistory toEntityModel() {
+				return _nullSocialEquityHistory;
 			}
 		};
 }

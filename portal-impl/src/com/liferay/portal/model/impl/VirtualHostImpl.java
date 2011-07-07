@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.VirtualHost;
-
 /**
  * @author Alexander Chow
  */
-public class VirtualHostImpl
-	extends VirtualHostModelImpl implements VirtualHost {
+public class VirtualHostImpl extends VirtualHostBaseImpl {
 
 	public VirtualHostImpl() {
 	}

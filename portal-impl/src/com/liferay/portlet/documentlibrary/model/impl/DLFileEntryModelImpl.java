@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -626,6 +627,125 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryModelImpl._originalName = dlFileEntryModelImpl._name;
 
 		dlFileEntryModelImpl._originalTitle = dlFileEntryModelImpl._title;
+	}
+
+	@Override
+	public CacheModel<DLFileEntry> toCacheModel() {
+		DLFileEntryCacheModel dlFileEntryCacheModel = new DLFileEntryCacheModel();
+
+		dlFileEntryCacheModel.uuid = getUuid();
+
+		String uuid = dlFileEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			dlFileEntryCacheModel.uuid = null;
+		}
+
+		dlFileEntryCacheModel.fileEntryId = getFileEntryId();
+
+		dlFileEntryCacheModel.groupId = getGroupId();
+
+		dlFileEntryCacheModel.companyId = getCompanyId();
+
+		dlFileEntryCacheModel.userId = getUserId();
+
+		dlFileEntryCacheModel.userName = getUserName();
+
+		String userName = dlFileEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			dlFileEntryCacheModel.userName = null;
+		}
+
+		dlFileEntryCacheModel.versionUserId = getVersionUserId();
+
+		dlFileEntryCacheModel.versionUserName = getVersionUserName();
+
+		String versionUserName = dlFileEntryCacheModel.versionUserName;
+
+		if ((versionUserName != null) && (versionUserName.length() == 0)) {
+			dlFileEntryCacheModel.versionUserName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFileEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			dlFileEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		dlFileEntryCacheModel.repositoryId = getRepositoryId();
+
+		dlFileEntryCacheModel.folderId = getFolderId();
+
+		dlFileEntryCacheModel.name = getName();
+
+		String name = dlFileEntryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			dlFileEntryCacheModel.name = null;
+		}
+
+		dlFileEntryCacheModel.extension = getExtension();
+
+		String extension = dlFileEntryCacheModel.extension;
+
+		if ((extension != null) && (extension.length() == 0)) {
+			dlFileEntryCacheModel.extension = null;
+		}
+
+		dlFileEntryCacheModel.mimeType = getMimeType();
+
+		String mimeType = dlFileEntryCacheModel.mimeType;
+
+		if ((mimeType != null) && (mimeType.length() == 0)) {
+			dlFileEntryCacheModel.mimeType = null;
+		}
+
+		dlFileEntryCacheModel.title = getTitle();
+
+		String title = dlFileEntryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			dlFileEntryCacheModel.title = null;
+		}
+
+		dlFileEntryCacheModel.description = getDescription();
+
+		String description = dlFileEntryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			dlFileEntryCacheModel.description = null;
+		}
+
+		dlFileEntryCacheModel.extraSettings = getExtraSettings();
+
+		String extraSettings = dlFileEntryCacheModel.extraSettings;
+
+		if ((extraSettings != null) && (extraSettings.length() == 0)) {
+			dlFileEntryCacheModel.extraSettings = null;
+		}
+
+		dlFileEntryCacheModel.fileEntryTypeId = getFileEntryTypeId();
+
+		dlFileEntryCacheModel.version = getVersion();
+
+		String version = dlFileEntryCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			dlFileEntryCacheModel.version = null;
+		}
+
+		dlFileEntryCacheModel.size = getSize();
+
+		dlFileEntryCacheModel.readCount = getReadCount();
+
+		return dlFileEntryCacheModel;
 	}
 
 	@Override

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
@@ -71,7 +72,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_PLID = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByPlid",
+			PortletPreferencesImpl.class, FINDER_CLASS_NAME_LIST, "findByPlid",
 			new String[] {
 				Long.class.getName(),
 				
@@ -79,12 +80,12 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_PLID = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByPlid",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByP_P",
+			PortletPreferencesImpl.class, FINDER_CLASS_NAME_LIST, "findByP_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -92,12 +93,13 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByP_P",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByO_O_P",
+			PortletPreferencesImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByO_O_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(),
@@ -106,7 +108,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByO_O_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -114,13 +116,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_O_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P_P",
+			PortletPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByO_O_P_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(), String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByO_O_P_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -128,9 +131,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			PortletPreferencesImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -2454,6 +2458,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<PortletPreferences> toCacheModel() {
+				return _nullPortletPreferencesCacheModel;
+			}
+		};
+
+	private static CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
+		new CacheModel<PortletPreferences>() {
+			public PortletPreferences toEntityModel() {
+				return _nullPortletPreferences;
 			}
 		};
 }

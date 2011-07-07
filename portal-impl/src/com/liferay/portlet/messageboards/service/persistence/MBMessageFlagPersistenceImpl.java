@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -74,7 +75,7 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByUserId",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,12 +83,12 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_THREADID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByThreadId",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByThreadId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -95,12 +96,12 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_THREADID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByThreadId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_MESSAGEID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByMessageId",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByMessageId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -108,12 +109,12 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_MESSAGEID = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByMessageId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_T_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByT_F",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByT_F",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -121,12 +122,12 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_T_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByT_F",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_M_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByM_F",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByM_F",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -134,12 +135,12 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_M_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByM_F",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_U_T_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByU_T_F",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findByU_T_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
@@ -148,7 +149,7 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_T_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_T_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -156,13 +157,13 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_U_M_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_M_F",
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByU_M_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_M_F = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_M_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -170,9 +171,10 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			MBMessageFlagImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(MBMessageFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED,
+			MBMessageFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -3505,6 +3507,16 @@ public class MBMessageFlagPersistenceImpl extends BasePersistenceImpl<MBMessageF
 	private static MBMessageFlag _nullMBMessageFlag = new MBMessageFlagImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<MBMessageFlag> toCacheModel() {
+				return _nullMBMessageFlagCacheModel;
+			}
+		};
+
+	private static CacheModel<MBMessageFlag> _nullMBMessageFlagCacheModel = new CacheModel<MBMessageFlag>() {
+			public MBMessageFlag toEntityModel() {
+				return _nullMBMessageFlag;
 			}
 		};
 }

@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.model.AssetVocabulary;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
  */
-public class AssetVocabularyImpl
-	extends AssetVocabularyModelImpl implements AssetVocabulary {
+public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	public AssetVocabularyImpl() {
 	}

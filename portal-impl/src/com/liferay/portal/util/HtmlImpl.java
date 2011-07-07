@@ -151,7 +151,14 @@ public class HtmlImpl implements Html {
 			}
 			else {
 				sb.append(prefix);
-				sb.append(StringUtil.toHexString(c));
+
+				String hexString = StringUtil.toHexString(c);
+
+				if (hexString.length() == 1) {
+					sb.append(StringPool.ASCII_TABLE[48]);
+				}
+
+				sb.append(hexString);
 				sb.append(postfix);
 			}
 		}

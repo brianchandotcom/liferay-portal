@@ -26,6 +26,10 @@ update ClassName_ set value = 'com.liferay.portal.model.UserPersonalSite' where 
 drop index IX_975996C0 on Company;
 alter table Company add active_ BOOLEAN;
 
+COMMIT_TRANSACTION;
+
+update Company set active_ = TRUE;
+
 create table DDLRecord (
 	uuid_ VARCHAR(75) null,
 	recordId LONG not null primary key,

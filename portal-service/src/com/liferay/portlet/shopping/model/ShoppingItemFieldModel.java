@@ -16,6 +16,7 @@ package com.liferay.portlet.shopping.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -154,6 +155,8 @@ public interface ShoppingItemFieldModel extends BaseModel<ShoppingItemField> {
 	public int compareTo(ShoppingItemField shoppingItemField);
 
 	public int hashCode();
+
+	public CacheModel<ShoppingItemField> toCacheModel();
 
 	public ShoppingItemField toEscapedModel();
 

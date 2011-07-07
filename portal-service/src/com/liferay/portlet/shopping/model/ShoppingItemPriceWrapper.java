@@ -308,6 +308,10 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice {
 		return _shoppingItemPrice.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingItemPrice> toCacheModel() {
+		return _shoppingItemPrice.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingItemPrice toEscapedModel() {
 		return new ShoppingItemPriceWrapper(_shoppingItemPrice.toEscapedModel());
 	}
@@ -319,6 +323,11 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice {
 
 	public java.lang.String toXmlString() {
 		return _shoppingItemPrice.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemPrice.save();
 	}
 
 	public ShoppingItemPrice getWrappedShoppingItemPrice() {

@@ -38,7 +38,7 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		templateId = DAOParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = DAOParamUtil.getString(portletRequest, TITLE);
 		type = DAOParamUtil.getString(portletRequest, TYPE);
-		version = ParamUtil.getDouble(portletRequest, VERSION, -1);
+		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
 	}

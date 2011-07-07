@@ -191,6 +191,10 @@ public class MBDiscussionWrapper implements MBDiscussion {
 		return _mbDiscussion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBDiscussion> toCacheModel() {
+		return _mbDiscussion.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBDiscussion toEscapedModel() {
 		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
 	}
@@ -202,6 +206,11 @@ public class MBDiscussionWrapper implements MBDiscussion {
 
 	public java.lang.String toXmlString() {
 		return _mbDiscussion.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbDiscussion.save();
 	}
 
 	public MBDiscussion getWrappedMBDiscussion() {

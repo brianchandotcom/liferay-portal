@@ -318,6 +318,8 @@ public interface OrgLaborModel extends BaseModel<OrgLabor> {
 
 	public int hashCode();
 
+	public CacheModel<OrgLabor> toCacheModel();
+
 	public OrgLabor toEscapedModel();
 
 	public String toString();

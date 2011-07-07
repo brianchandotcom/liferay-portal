@@ -244,6 +244,10 @@ public class WebDAVPropsWrapper implements WebDAVProps {
 		return _webDAVProps.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WebDAVProps> toCacheModel() {
+		return _webDAVProps.toCacheModel();
+	}
+
 	public com.liferay.portal.model.WebDAVProps toEscapedModel() {
 		return new WebDAVPropsWrapper(_webDAVProps.toEscapedModel());
 	}
@@ -255,6 +259,11 @@ public class WebDAVPropsWrapper implements WebDAVProps {
 
 	public java.lang.String toXmlString() {
 		return _webDAVProps.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_webDAVProps.save();
 	}
 
 	public java.util.Set<com.liferay.portal.kernel.xml.QName> getPropsSet()

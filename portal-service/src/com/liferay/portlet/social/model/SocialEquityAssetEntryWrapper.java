@@ -257,6 +257,10 @@ public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry {
 		return _socialEquityAssetEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityAssetEntry> toCacheModel() {
+		return _socialEquityAssetEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityAssetEntry toEscapedModel() {
 		return new SocialEquityAssetEntryWrapper(_socialEquityAssetEntry.toEscapedModel());
 	}

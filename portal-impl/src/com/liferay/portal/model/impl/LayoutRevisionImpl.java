@@ -33,8 +33,7 @@ import java.util.Locale;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutRevisionImpl
-	extends LayoutRevisionModelImpl implements LayoutRevision {
+public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 	public LayoutRevisionImpl() {
 	}

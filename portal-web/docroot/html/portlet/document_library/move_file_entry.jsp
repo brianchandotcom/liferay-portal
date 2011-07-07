@@ -31,8 +31,6 @@ long fileEntryId = BeanParamUtil.getLong(fileEntry, request, "fileEntryId");
 
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
-Boolean isCheckedOut = fileEntry.isCheckedOut();
-Boolean hasLock = fileEntry.hasLock();
 Lock lock = fileEntry.getLock();
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -47,9 +45,9 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 </c:if>
 
-<c:if test="<%= isCheckedOut %>">
+<c:if test="<%= fileEntry.isCheckedOut() %>">
 	<c:choose>
-		<c:when test="<%= hasLock %>">
+		<c:when test="<%= fileEntry.hasLock() %>">
 			<div class="portlet-msg-success">
 				<c:choose>
 					<c:when test="<%= lock.isNeverExpires() %>">
@@ -144,7 +142,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 		</aui:field-wrapper>
 
 		<aui:button-row>
-			<aui:button disabled="<%= isCheckedOut && !hasLock %>" type="submit" value="move" />
+			<aui:button disabled="<%= fileEntry.isCheckedOut() && !fileEntry.hasLock() %>" type="submit" value="move" />
 
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>

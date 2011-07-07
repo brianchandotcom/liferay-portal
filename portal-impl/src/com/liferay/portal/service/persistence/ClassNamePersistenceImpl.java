@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClassNameImpl;
@@ -70,17 +71,19 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_VALUE = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByValue", new String[] { String.class.getName() });
+			ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_VALUE = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByValue", new String[] { String.class.getName() });
+			ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByValue",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			ClassNameModelImpl.FINDER_CACHE_ENABLED, ClassNameImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the class name in the entity cache if it is enabled.
@@ -967,6 +970,16 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static ClassName _nullClassName = new ClassNameImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ClassName> toCacheModel() {
+				return _nullClassNameCacheModel;
+			}
+		};
+
+	private static CacheModel<ClassName> _nullClassNameCacheModel = new CacheModel<ClassName>() {
+			public ClassName toEntityModel() {
+				return _nullClassName;
 			}
 		};
 }

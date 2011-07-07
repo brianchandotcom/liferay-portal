@@ -399,6 +399,10 @@ public class IGImageWrapper implements IGImage {
 		return _igImage.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.imagegallery.model.IGImage> toCacheModel() {
+		return _igImage.toCacheModel();
+	}
+
 	public com.liferay.portlet.imagegallery.model.IGImage toEscapedModel() {
 		return new IGImageWrapper(_igImage.toEscapedModel());
 	}
@@ -410,6 +414,11 @@ public class IGImageWrapper implements IGImage {
 
 	public java.lang.String toXmlString() {
 		return _igImage.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_igImage.save();
 	}
 
 	public com.liferay.portlet.imagegallery.model.IGFolder getFolder() {

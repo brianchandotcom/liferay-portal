@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -78,7 +79,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_ARTICLEID = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByArticleId",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByArticleId",
 			new String[] {
 				String.class.getName(),
 				
@@ -86,12 +88,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_ARTICLEID = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByArticleId",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByG_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
@@ -99,12 +102,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_A",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByG_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -112,12 +116,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P_L = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P_L",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(),
@@ -126,7 +131,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_L = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -134,7 +139,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P_A",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByG_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(),
@@ -143,7 +149,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -151,7 +157,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P_L_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findByG_P_L_P",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByG_P_L_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), String.class.getName(),
@@ -160,7 +167,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_L_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P_L_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -168,14 +175,15 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_L_P_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L_P_A",
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_P_L_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_L_P_A = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_P_L_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -184,9 +192,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			JournalContentSearchImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
+			new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -3992,6 +4001,17 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<JournalContentSearch> toCacheModel() {
+				return _nullJournalContentSearchCacheModel;
+			}
+		};
+
+	private static CacheModel<JournalContentSearch> _nullJournalContentSearchCacheModel =
+		new CacheModel<JournalContentSearch>() {
+			public JournalContentSearch toEntityModel() {
+				return _nullJournalContentSearch;
 			}
 		};
 }

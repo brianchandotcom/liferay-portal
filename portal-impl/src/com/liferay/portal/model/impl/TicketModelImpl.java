@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.TicketModel;
 import com.liferay.portal.service.ServiceContext;
@@ -313,6 +314,51 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TicketModelImpl ticketModelImpl = this;
 
 		ticketModelImpl._originalKey = ticketModelImpl._key;
+	}
+
+	@Override
+	public CacheModel<Ticket> toCacheModel() {
+		TicketCacheModel ticketCacheModel = new TicketCacheModel();
+
+		ticketCacheModel.ticketId = getTicketId();
+
+		ticketCacheModel.companyId = getCompanyId();
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ticketCacheModel.createDate = createDate.getTime();
+		}
+
+		ticketCacheModel.classNameId = getClassNameId();
+
+		ticketCacheModel.classPK = getClassPK();
+
+		ticketCacheModel.key = getKey();
+
+		String key = ticketCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			ticketCacheModel.key = null;
+		}
+
+		ticketCacheModel.type = getType();
+
+		ticketCacheModel.extraInfo = getExtraInfo();
+
+		String extraInfo = ticketCacheModel.extraInfo;
+
+		if ((extraInfo != null) && (extraInfo.length() == 0)) {
+			ticketCacheModel.extraInfo = null;
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			ticketCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		return ticketCacheModel;
 	}
 
 	@Override

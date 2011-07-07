@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleModel;
 import com.liferay.portal.model.RoleSoap;
@@ -501,6 +502,55 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleModelImpl._setOriginalClassPK = false;
 
 		roleModelImpl._originalName = roleModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<Role> toCacheModel() {
+		RoleCacheModel roleCacheModel = new RoleCacheModel();
+
+		roleCacheModel.roleId = getRoleId();
+
+		roleCacheModel.companyId = getCompanyId();
+
+		roleCacheModel.classNameId = getClassNameId();
+
+		roleCacheModel.classPK = getClassPK();
+
+		roleCacheModel.name = getName();
+
+		String name = roleCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			roleCacheModel.name = null;
+		}
+
+		roleCacheModel.title = getTitle();
+
+		String title = roleCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			roleCacheModel.title = null;
+		}
+
+		roleCacheModel.description = getDescription();
+
+		String description = roleCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			roleCacheModel.description = null;
+		}
+
+		roleCacheModel.type = getType();
+
+		roleCacheModel.subtype = getSubtype();
+
+		String subtype = roleCacheModel.subtype;
+
+		if ((subtype != null) && (subtype.length() == 0)) {
+			roleCacheModel.subtype = null;
+		}
+
+		return roleCacheModel;
 	}
 
 	@Override

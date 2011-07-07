@@ -236,6 +236,10 @@ public class SocialRelationWrapper implements SocialRelation {
 		return _socialRelation.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialRelation> toCacheModel() {
+		return _socialRelation.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialRelation toEscapedModel() {
 		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
 	}
@@ -247,6 +251,11 @@ public class SocialRelationWrapper implements SocialRelation {
 
 	public java.lang.String toXmlString() {
 		return _socialRelation.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRelation.save();
 	}
 
 	public SocialRelation getWrappedSocialRelation() {

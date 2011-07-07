@@ -237,6 +237,10 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 		return _socialEquityGroupSetting.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityGroupSetting> toCacheModel() {
+		return _socialEquityGroupSetting.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityGroupSetting toEscapedModel() {
 		return new SocialEquityGroupSettingWrapper(_socialEquityGroupSetting.toEscapedModel());
 	}
@@ -248,6 +252,11 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 
 	public java.lang.String toXmlString() {
 		return _socialEquityGroupSetting.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityGroupSetting.save();
 	}
 
 	public SocialEquityGroupSetting getWrappedSocialEquityGroupSetting() {

@@ -480,6 +480,10 @@ public class AddressWrapper implements Address {
 		return _address.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Address> toCacheModel() {
+		return _address.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Address toEscapedModel() {
 		return new AddressWrapper(_address.toEscapedModel());
 	}
@@ -491,6 +495,11 @@ public class AddressWrapper implements Address {
 
 	public java.lang.String toXmlString() {
 		return _address.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_address.save();
 	}
 
 	public com.liferay.portal.model.Region getRegion() {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.LockModel;
 import com.liferay.portal.service.ServiceContext;
@@ -354,6 +355,73 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
+	}
+
+	@Override
+	public CacheModel<Lock> toCacheModel() {
+		LockCacheModel lockCacheModel = new LockCacheModel();
+
+		lockCacheModel.uuid = getUuid();
+
+		String uuid = lockCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			lockCacheModel.uuid = null;
+		}
+
+		lockCacheModel.lockId = getLockId();
+
+		lockCacheModel.companyId = getCompanyId();
+
+		lockCacheModel.userId = getUserId();
+
+		lockCacheModel.userName = getUserName();
+
+		String userName = lockCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			lockCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			lockCacheModel.createDate = createDate.getTime();
+		}
+
+		lockCacheModel.className = getClassName();
+
+		String className = lockCacheModel.className;
+
+		if ((className != null) && (className.length() == 0)) {
+			lockCacheModel.className = null;
+		}
+
+		lockCacheModel.key = getKey();
+
+		String key = lockCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			lockCacheModel.key = null;
+		}
+
+		lockCacheModel.owner = getOwner();
+
+		String owner = lockCacheModel.owner;
+
+		if ((owner != null) && (owner.length() == 0)) {
+			lockCacheModel.owner = null;
+		}
+
+		lockCacheModel.inheritable = getInheritable();
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			lockCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		return lockCacheModel;
 	}
 
 	@Override

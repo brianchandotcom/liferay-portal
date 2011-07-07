@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the AssetEntry service. Represents a row in the &quot;AssetEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AssetEntry service. Represents a row in the &quot;AssetEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.asset.model;
  * @see com.liferay.portlet.asset.model.impl.AssetEntryModelImpl
  * @generated
  */
-public interface AssetEntry extends AssetEntryModel {
+public interface AssetEntry extends AssetEntryModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

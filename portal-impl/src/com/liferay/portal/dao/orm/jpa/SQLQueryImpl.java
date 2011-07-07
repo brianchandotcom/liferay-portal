@@ -35,11 +35,14 @@ import java.util.regex.Pattern;
 /**
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 
-	public SQLQueryImpl(SessionImpl sessionImpl, String queryString) {
-		super(sessionImpl, queryString);
+	public SQLQueryImpl(
+		SessionImpl sessionImpl, String queryString, boolean strictName) {
+
+		super(sessionImpl, queryString, strictName);
 
 		sqlQuery = true;
 	}
@@ -119,8 +122,9 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 	public List<?> list(boolean unmodifiable) throws ORMException {
 		try {
 			List<?> list = sessionImpl.list(
-				queryString, parameterMap, firstResult, maxResults,
-				flushModeType, sqlQuery, entityClass);
+				queryString, positionalParameterMap, namedParameterMap,
+				strictName, firstResult, maxResults, flushModeType, sqlQuery,
+				entityClass);
 
 			if ((entityClass == null) && !list.isEmpty()) {
 				list = _transformList(list);
@@ -142,8 +146,9 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 	public Object uniqueResult() throws ORMException {
 		try {
 			Object object =  sessionImpl.uniqueResult(
-				queryString, parameterMap, firstResult, maxResults,
-				flushModeType, sqlQuery, entityClass);
+				queryString, positionalParameterMap, namedParameterMap,
+				strictName, firstResult, maxResults, flushModeType, sqlQuery,
+				entityClass);
 
 			if (object instanceof Collection<?>) {
 				Collection<Object> collection = (Collection<Object>)object;

@@ -546,6 +546,10 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntry> toCacheModel() {
+		return _dlFileEntry.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry toEscapedModel() {
 		return new DLFileEntryWrapper(_dlFileEntry.toEscapedModel());
 	}
@@ -557,6 +561,11 @@ public class DLFileEntryWrapper implements DLFileEntry {
 
 	public java.lang.String toXmlString() {
 		return _dlFileEntry.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntry.save();
 	}
 
 	public java.io.InputStream getContentStream()

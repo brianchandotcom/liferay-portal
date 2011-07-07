@@ -194,7 +194,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	}
 
 	/**
-	* Updates the expando value in the database. Also notifies the appropriate model listeners.
+	* Updates the expando value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoValue the expando value
 	* @return the expando value that was updated
@@ -207,7 +207,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	}
 
 	/**
-	* Updates the expando value in the database. Also notifies the appropriate model listeners.
+	* Updates the expando value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoValue the expando value
 	* @param merge whether to merge the expando value with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

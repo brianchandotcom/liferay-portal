@@ -15,14 +15,12 @@
 package com.liferay.portlet.polls.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsChoiceImpl
-	extends PollsChoiceModelImpl implements PollsChoice {
+public class PollsChoiceImpl extends PollsChoiceBaseImpl {
 
 	public PollsChoiceImpl() {
 	}

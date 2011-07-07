@@ -48,7 +48,7 @@ if (folder != null) {
 	headerNames.add("num-of-folders");
 	headerNames.add("num-of-documents");
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-folders");
 
 	int total = DLAppServiceUtil.getFoldersCount(groupId, folderId);
 
@@ -121,7 +121,7 @@ if (folder != null) {
 	headerNames.add("locked");
 	headerNames.add(StringPool.BLANK);
 
-	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-documents-in-this-folder");
 
 	total = DLAppServiceUtil.getFileEntriesCount(groupId, folderId);
 

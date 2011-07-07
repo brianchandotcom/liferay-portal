@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.model.UserTrackerModel;
 import com.liferay.portal.service.ServiceContext;
@@ -295,6 +296,57 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<UserTracker> toCacheModel() {
+		UserTrackerCacheModel userTrackerCacheModel = new UserTrackerCacheModel();
+
+		userTrackerCacheModel.userTrackerId = getUserTrackerId();
+
+		userTrackerCacheModel.companyId = getCompanyId();
+
+		userTrackerCacheModel.userId = getUserId();
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			userTrackerCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		userTrackerCacheModel.sessionId = getSessionId();
+
+		String sessionId = userTrackerCacheModel.sessionId;
+
+		if ((sessionId != null) && (sessionId.length() == 0)) {
+			userTrackerCacheModel.sessionId = null;
+		}
+
+		userTrackerCacheModel.remoteAddr = getRemoteAddr();
+
+		String remoteAddr = userTrackerCacheModel.remoteAddr;
+
+		if ((remoteAddr != null) && (remoteAddr.length() == 0)) {
+			userTrackerCacheModel.remoteAddr = null;
+		}
+
+		userTrackerCacheModel.remoteHost = getRemoteHost();
+
+		String remoteHost = userTrackerCacheModel.remoteHost;
+
+		if ((remoteHost != null) && (remoteHost.length() == 0)) {
+			userTrackerCacheModel.remoteHost = null;
+		}
+
+		userTrackerCacheModel.userAgent = getUserAgent();
+
+		String userAgent = userTrackerCacheModel.userAgent;
+
+		if ((userAgent != null) && (userAgent.length() == 0)) {
+			userTrackerCacheModel.userAgent = null;
+		}
+
+		return userTrackerCacheModel;
 	}
 
 	@Override

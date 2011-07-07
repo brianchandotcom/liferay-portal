@@ -31,7 +31,7 @@ public class AddSettingsAdditionalEmailAddressTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,33 +42,74 @@ public class AddSettingsAdditionalEmailAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_130_additionalEmailAddressesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
-			RuntimeVariables.replace(""));
-		selenium.type("_130_emailAddressAddress0",
+			RuntimeVariables.replace("Additional Email Addresses"));
+		selenium.type("//input[@id='_130_emailAddressAddress0']",
 			RuntimeVariables.replace("Admin@Liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_130_emailAddressTypeId0",
-			RuntimeVariables.replace("label=Email"));
-		selenium.clickAt("_130_emailAddressPrimary0",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_130_emailAddressTypeId0']",
+			RuntimeVariables.replace("label=Email Address"));
+		selenium.clickAt("//input[@id='_130_emailAddressPrimary0']",
+			RuntimeVariables.replace("Primary Button"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Admin@Liferay.com",
-			selenium.getValue("_130_emailAddressAddress0"));
-		assertEquals("Email",
-			selenium.getSelectedLabel("_130_emailAddressTypeId0"));
-		assertTrue(selenium.isChecked("_130_emailAddressPrimary0"));
+			selenium.getValue("//input[@id='_130_emailAddressAddress0']"));
+		assertEquals("Email Address",
+			selenium.getSelectedLabel(
+				"//select[@id='_130_emailAddressTypeId0']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_130_emailAddressPrimary0']"));
 		selenium.saveScreenShotAndSource();
 	}
 }

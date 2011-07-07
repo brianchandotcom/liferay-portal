@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portlet.messageboards.model.MBStatsUser;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBStatsUserImpl
-	extends MBStatsUserModelImpl implements MBStatsUser {
+public class MBStatsUserImpl extends MBStatsUserBaseImpl {
 
 	public MBStatsUserImpl() {
 	}

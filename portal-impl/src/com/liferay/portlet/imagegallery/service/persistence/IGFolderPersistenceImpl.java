@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -81,8 +82,8 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByUuid",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
 				
@@ -90,19 +91,20 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUuid", new String[] { String.class.getName() });
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUuid",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByUUID_G",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -110,11 +112,12 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByGroupId", new String[] { Long.class.getName() });
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCompanyId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -122,11 +125,12 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCompanyId", new String[] { Long.class.getName() });
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_P = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByG_P",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByG_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -134,29 +138,29 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_P",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_P",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_N = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_P_N",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_N = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_P_N",
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, IGFolderImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(IGFolderModelImpl.ENTITY_CACHE_ENABLED,
-			IGFolderModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			IGFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the i g folder in the entity cache if it is enabled.
@@ -1494,11 +1498,18 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -1610,11 +1621,18 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -2497,13 +2515,20 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 			query = new StringBundler(4);
 		}
 
-		query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -2618,13 +2643,20 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 		query.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3690,11 +3722,14 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "igFolder.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "igFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(igFolder.name IS NULL OR igFolder.name = ?)";
-	private static final String _FILTER_SQL_SELECT_IGFOLDER_WHERE = "SELECT {igFolder.*} FROM IGFolder igFolder WHERE ";
+	private static final String _FILTER_SQL_SELECT_IGFOLDER_WHERE = "SELECT DISTINCT {igFolder.*} FROM IGFolder igFolder WHERE ";
+	private static final String _FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {IGFolder.*} FROM (SELECT DISTINCT igFolder.folderId FROM IGFolder igFolder WHERE ";
+	private static final String _FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN IGFolder ON TEMP_TABLE.folderId = IGFolder.folderId";
 	private static final String _FILTER_SQL_COUNT_IGFOLDER_WHERE = "SELECT COUNT(DISTINCT igFolder.folderId) AS COUNT_VALUE FROM IGFolder igFolder WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "igFolder";
 	private static final String _FILTER_ENTITY_TABLE = "IGFolder";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "igFolder.folderId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "igFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "IGFolder.";
@@ -3705,6 +3740,16 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static IGFolder _nullIGFolder = new IGFolderImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<IGFolder> toCacheModel() {
+				return _nullIGFolderCacheModel;
+			}
+		};
+
+	private static CacheModel<IGFolder> _nullIGFolderCacheModel = new CacheModel<IGFolder>() {
+			public IGFolder toEntityModel() {
+				return _nullIGFolder;
 			}
 		};
 }

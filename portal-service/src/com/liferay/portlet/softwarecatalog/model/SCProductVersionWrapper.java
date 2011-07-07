@@ -355,6 +355,10 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.softwarecatalog.model.SCProductVersion> toCacheModel() {
+		return _scProductVersion.toCacheModel();
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toEscapedModel() {
 		return new SCProductVersionWrapper(_scProductVersion.toEscapedModel());
 	}
@@ -366,6 +370,11 @@ public class SCProductVersionWrapper implements SCProductVersion {
 
 	public java.lang.String toXmlString() {
 		return _scProductVersion.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scProductVersion.save();
 	}
 
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getFrameworkVersions()

@@ -185,7 +185,7 @@ public interface PermissionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the permission in the database. Also notifies the appropriate model listeners.
+	* Updates the permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param permission the permission
 	* @return the permission that was updated
@@ -196,7 +196,7 @@ public interface PermissionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the permission in the database. Also notifies the appropriate model listeners.
+	* Updates the permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param permission the permission
 	* @param merge whether to merge the permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
@@ -315,6 +315,24 @@ public interface PermissionLocalService {
 		long resourceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns <code>true</code> if the user has permission to perform the
+	* action on the resource.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group containing the resource
+	* @param resources representations of the resource at each scope level
+	returned by {@link
+	com.liferay.portal.security.permission.AdvancedPermissionChecker#getResources(
+	long, long, String, String, String)}
+	* @param actionId the actionID
+	* @param permissionCheckerBag the permission checker bag
+	* @return <code>true</code> if the user has permission to perform the
+	action on the resource; <code>false</code> otherwise
+	* @throws PortalException if a resource action with the resource name and
+	action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserPermissions(long userId, long groupId,
 		java.util.List<com.liferay.portal.model.Resource> resources,

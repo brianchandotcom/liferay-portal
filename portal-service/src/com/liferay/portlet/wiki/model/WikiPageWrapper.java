@@ -628,6 +628,10 @@ public class WikiPageWrapper implements WikiPage {
 		return _wikiPage.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.wiki.model.WikiPage> toCacheModel() {
+		return _wikiPage.toCacheModel();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage toEscapedModel() {
 		return new WikiPageWrapper(_wikiPage.toEscapedModel());
 	}
@@ -639,6 +643,11 @@ public class WikiPageWrapper implements WikiPage {
 
 	public java.lang.String toXmlString() {
 		return _wikiPage.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_wikiPage.save();
 	}
 
 	public java.lang.String getAttachmentsDir() {

@@ -312,6 +312,10 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 		return _socialEquityUser.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialEquityUser> toCacheModel() {
+		return _socialEquityUser.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityUser toEscapedModel() {
 		return new SocialEquityUserWrapper(_socialEquityUser.toEscapedModel());
 	}
@@ -323,6 +327,11 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 
 	public java.lang.String toXmlString() {
 		return _socialEquityUser.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityUser.save();
 	}
 
 	public double getContributionEquity() {

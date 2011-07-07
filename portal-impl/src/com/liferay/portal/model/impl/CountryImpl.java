@@ -14,12 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Country;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class CountryImpl extends CountryModelImpl implements Country {
+public class CountryImpl extends CountryBaseImpl {
 
 	public CountryImpl() {
 	}

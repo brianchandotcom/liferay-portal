@@ -1079,12 +1079,38 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../sql" target="rebuild-hypersonic" />
 	</target>
 
+	<target name="sync-plugins-git-to-svn">
+		<java
+			classname="com.liferay.portal.tools.PluginsGitSvnSyncer"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dgit.plugins.dir=L:/projects/github/liferay-plugins" />
+			<jvmarg value="-Dsvn.plugins.dir=L:/projects/liferay.public/plugins/trunk" />
+			<jvmarg value="-Dsync.to=svn" />
+		</java>
+	</target>
+
+	<target name="sync-plugins-svn-to-git">
+		<java
+			classname="com.liferay.portal.tools.PluginsGitSvnSyncer"
+			classpathref="project.classpath"
+			newenvironment="true"
+			fork="true"
+		>
+			<jvmarg value="-Dgit.plugins.dir=L:/projects/github/liferay-plugins" />
+			<jvmarg value="-Dsvn.plugins.dir=L:/projects/liferay.public/plugins/trunk" />
+			<jvmarg value="-Dsync.to=git" />
+		</java>
+	</target>
+
 	<target name="tcpmon">
 		<java
 			classname="org.apache.axis.utils.tcpmon"
 			classpathref="project.classpath"
-			newenvironment="true"
 			fork="true"
+			newenvironment="true"
 		>
 			<jvmarg value="-Xmx128m" />
 		</java>

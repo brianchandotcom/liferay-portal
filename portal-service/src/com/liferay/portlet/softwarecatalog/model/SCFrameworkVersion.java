@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the SCFrameworkVersion service. Represents a row in the &quot;SCFrameworkVersion&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the SCFrameworkVersion service. Represents a row in the &quot;SCFrameworkVersion&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SCFrameworkVersionModel
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl
  * @generated
  */
-public interface SCFrameworkVersion extends SCFrameworkVersionModel {
+public interface SCFrameworkVersion extends SCFrameworkVersionModel,
+	SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -55,7 +55,7 @@ public class SearchMyCommunitiesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='My Communities']")) {
+				if (selenium.isVisible("//div[@title='My Sites']")) {
 					break;
 				}
 			}
@@ -66,6 +66,6 @@ public class SearchMyCommunitiesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[@title='My Communities']"));
+		assertTrue(selenium.isVisible("//div[@title='My Sites']"));
 	}
 }

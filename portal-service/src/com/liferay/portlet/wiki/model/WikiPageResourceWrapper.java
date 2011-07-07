@@ -182,6 +182,10 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 		return _wikiPageResource.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.wiki.model.WikiPageResource> toCacheModel() {
+		return _wikiPageResource.toCacheModel();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPageResource toEscapedModel() {
 		return new WikiPageResourceWrapper(_wikiPageResource.toEscapedModel());
 	}
@@ -193,6 +197,11 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 
 	public java.lang.String toXmlString() {
 		return _wikiPageResource.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageResource.save();
 	}
 
 	public WikiPageResource getWrappedWikiPageResource() {

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
-import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServiceUtil;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil;
 
@@ -28,8 +27,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductVersionImpl
-	extends SCProductVersionModelImpl implements SCProductVersion {
+public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 
 	public SCProductVersionImpl() {
 	}

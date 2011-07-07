@@ -18,13 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
  */
-public class BlogsEntryImpl extends BlogsEntryModelImpl implements BlogsEntry {
+public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	public BlogsEntryImpl() {
 	}

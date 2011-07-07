@@ -138,6 +138,8 @@ public interface VirtualHostModel extends BaseModel<VirtualHost> {
 
 	public int hashCode();
 
+	public CacheModel<VirtualHost> toCacheModel();
+
 	public VirtualHost toEscapedModel();
 
 	public String toString();

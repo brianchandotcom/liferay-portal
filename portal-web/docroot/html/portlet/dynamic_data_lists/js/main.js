@@ -71,8 +71,8 @@ AUI().add(
 						var serviceParameterTypes = [
          					'long',
          					'long',
-         					'java.util.Map<java.lang.String, java.io.Serializable>',
          					'int',
+         					'java.util.Map<java.lang.String, java.io.Serializable>',
          					'com.liferay.portal.service.ServiceContext'
          				];
 
@@ -80,8 +80,8 @@ AUI().add(
 							{
 								groupId: themeDisplay.getScopeGroupId(),
 								recordSetId: recordsetId,
-								fieldsMap: JSON.stringify(fieldsMap),
 								displayIndex: displayIndex,
+								fieldsMap: JSON.stringify(fieldsMap),
 								serviceContext: JSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),

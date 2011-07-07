@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -357,6 +358,53 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		journalArticleImageModelImpl._originalElName = journalArticleImageModelImpl._elName;
 
 		journalArticleImageModelImpl._originalLanguageId = journalArticleImageModelImpl._languageId;
+	}
+
+	@Override
+	public CacheModel<JournalArticleImage> toCacheModel() {
+		JournalArticleImageCacheModel journalArticleImageCacheModel = new JournalArticleImageCacheModel();
+
+		journalArticleImageCacheModel.articleImageId = getArticleImageId();
+
+		journalArticleImageCacheModel.groupId = getGroupId();
+
+		journalArticleImageCacheModel.articleId = getArticleId();
+
+		String articleId = journalArticleImageCacheModel.articleId;
+
+		if ((articleId != null) && (articleId.length() == 0)) {
+			journalArticleImageCacheModel.articleId = null;
+		}
+
+		journalArticleImageCacheModel.version = getVersion();
+
+		journalArticleImageCacheModel.elInstanceId = getElInstanceId();
+
+		String elInstanceId = journalArticleImageCacheModel.elInstanceId;
+
+		if ((elInstanceId != null) && (elInstanceId.length() == 0)) {
+			journalArticleImageCacheModel.elInstanceId = null;
+		}
+
+		journalArticleImageCacheModel.elName = getElName();
+
+		String elName = journalArticleImageCacheModel.elName;
+
+		if ((elName != null) && (elName.length() == 0)) {
+			journalArticleImageCacheModel.elName = null;
+		}
+
+		journalArticleImageCacheModel.languageId = getLanguageId();
+
+		String languageId = journalArticleImageCacheModel.languageId;
+
+		if ((languageId != null) && (languageId.length() == 0)) {
+			journalArticleImageCacheModel.languageId = null;
+		}
+
+		journalArticleImageCacheModel.tempImage = getTempImage();
+
+		return journalArticleImageCacheModel;
 	}
 
 	@Override

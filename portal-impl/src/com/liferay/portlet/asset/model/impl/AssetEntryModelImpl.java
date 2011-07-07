@@ -17,9 +17,15 @@ package com.liferay.portlet.asset.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -39,6 +45,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model implementation for the AssetEntry service. Represents a row in the &quot;AssetEntry&quot; database table, with each column mapped to a property of this class.
@@ -433,8 +441,83 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 	}
 
+	public String getTitle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId);
+	}
+
+	public String getTitle(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId, useDefault);
+	}
+
+	public String getTitle(String languageId) {
+		String value = LocalizationUtil.getLocalization(getTitle(), languageId);
+
+		if (isEscapedModel()) {
+			return HtmlUtil.escape(value);
+		}
+		else {
+			return value;
+		}
+	}
+
+	public String getTitle(String languageId, boolean useDefault) {
+		String value = LocalizationUtil.getLocalization(getTitle(), languageId,
+				useDefault);
+
+		if (isEscapedModel()) {
+			return HtmlUtil.escape(value);
+		}
+		else {
+			return value;
+		}
+	}
+
+	public Map<Locale, String> getTitleMap() {
+		return LocalizationUtil.getLocalizationMap(getTitle());
+	}
+
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	public void setTitle(String title, Locale locale) {
+		setTitle(title, locale, LocaleUtil.getDefault());
+	}
+
+	public void setTitle(String title, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(title)) {
+			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
+					title, languageId, defaultLanguageId));
+		}
+		else {
+			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+					languageId));
+		}
+	}
+
+	public void setTitleMap(Map<Locale, String> titleMap) {
+		setTitleMap(titleMap, LocaleUtil.getDefault());
+	}
+
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
+		if (titleMap == null) {
+			return;
+		}
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String title = titleMap.get(locale);
+
+			setTitle(title, locale, defaultLocale);
+		}
 	}
 
 	@JSON
@@ -656,6 +739,135 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._setOriginalClassPK = false;
 
 		assetEntryModelImpl._originalClassUuid = assetEntryModelImpl._classUuid;
+	}
+
+	@Override
+	public CacheModel<AssetEntry> toCacheModel() {
+		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();
+
+		assetEntryCacheModel.entryId = getEntryId();
+
+		assetEntryCacheModel.groupId = getGroupId();
+
+		assetEntryCacheModel.companyId = getCompanyId();
+
+		assetEntryCacheModel.userId = getUserId();
+
+		assetEntryCacheModel.userName = getUserName();
+
+		String userName = assetEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			assetEntryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			assetEntryCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			assetEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		assetEntryCacheModel.classNameId = getClassNameId();
+
+		assetEntryCacheModel.classPK = getClassPK();
+
+		assetEntryCacheModel.classUuid = getClassUuid();
+
+		String classUuid = assetEntryCacheModel.classUuid;
+
+		if ((classUuid != null) && (classUuid.length() == 0)) {
+			assetEntryCacheModel.classUuid = null;
+		}
+
+		assetEntryCacheModel.visible = getVisible();
+
+		Date startDate = getStartDate();
+
+		if (startDate != null) {
+			assetEntryCacheModel.startDate = startDate.getTime();
+		}
+
+		Date endDate = getEndDate();
+
+		if (endDate != null) {
+			assetEntryCacheModel.endDate = endDate.getTime();
+		}
+
+		Date publishDate = getPublishDate();
+
+		if (publishDate != null) {
+			assetEntryCacheModel.publishDate = publishDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			assetEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		assetEntryCacheModel.mimeType = getMimeType();
+
+		String mimeType = assetEntryCacheModel.mimeType;
+
+		if ((mimeType != null) && (mimeType.length() == 0)) {
+			assetEntryCacheModel.mimeType = null;
+		}
+
+		assetEntryCacheModel.title = getTitle();
+
+		String title = assetEntryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			assetEntryCacheModel.title = null;
+		}
+
+		assetEntryCacheModel.description = getDescription();
+
+		String description = assetEntryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			assetEntryCacheModel.description = null;
+		}
+
+		assetEntryCacheModel.summary = getSummary();
+
+		String summary = assetEntryCacheModel.summary;
+
+		if ((summary != null) && (summary.length() == 0)) {
+			assetEntryCacheModel.summary = null;
+		}
+
+		assetEntryCacheModel.url = getUrl();
+
+		String url = assetEntryCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			assetEntryCacheModel.url = null;
+		}
+
+		assetEntryCacheModel.layoutUuid = getLayoutUuid();
+
+		String layoutUuid = assetEntryCacheModel.layoutUuid;
+
+		if ((layoutUuid != null) && (layoutUuid.length() == 0)) {
+			assetEntryCacheModel.layoutUuid = null;
+		}
+
+		assetEntryCacheModel.height = getHeight();
+
+		assetEntryCacheModel.width = getWidth();
+
+		assetEntryCacheModel.priority = getPriority();
+
+		assetEntryCacheModel.viewCount = getViewCount();
+
+		return assetEntryCacheModel;
 	}
 
 	@Override

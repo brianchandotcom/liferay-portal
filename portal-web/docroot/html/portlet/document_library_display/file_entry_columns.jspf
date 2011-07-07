@@ -65,7 +65,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				name="<%= fileEntryColumn %>"
 			>
 				<c:choose>
-					<c:when test="<%= PDFProcessor.hasImages(fileEntry) %>">
+					<c:when test="<%= PDFProcessor.hasImages(fileEntry, fileEntry.getVersion()) %>">
 						<div>
 							<img src="<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&thumbnail=1" %>" />
 

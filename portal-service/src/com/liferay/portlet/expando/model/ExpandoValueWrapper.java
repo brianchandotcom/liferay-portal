@@ -263,6 +263,10 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoValue> toCacheModel() {
+		return _expandoValue.toCacheModel();
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoValue toEscapedModel() {
 		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
 	}
@@ -276,6 +280,11 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.toXmlString();
 	}
 
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoValue.save();
+	}
+
 	public boolean getBoolean()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -286,6 +295,12 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _expandoValue.getBooleanArray();
+	}
+
+	public com.liferay.portlet.expando.model.ExpandoColumn getColumn()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValue.getColumn();
 	}
 
 	public java.util.Date getDate()

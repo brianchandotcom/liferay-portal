@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the SocialEquityHistory service. Represents a row in the &quot;SocialEquityHistory&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the SocialEquityHistory service. Represents a row in the &quot;SocialEquityHistory&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SocialEquityHistoryModel
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see com.liferay.portlet.social.model.impl.SocialEquityHistoryModelImpl
  * @generated
  */
-public interface SocialEquityHistory extends SocialEquityHistoryModel {
+public interface SocialEquityHistory extends SocialEquityHistoryModel,
+	SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

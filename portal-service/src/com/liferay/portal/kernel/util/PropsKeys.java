@@ -63,6 +63,8 @@ public interface PropsKeys {
 
 	public static final String AMAZON_ACCESS_KEY_ID = "amazon.access.key.id";
 
+	public static final String AMAZON_SECRET_ACCESS_KEY = "amazon.secret.access.key";
+
 	public static final String AMAZON_ASSOCIATE_TAG = "amazon.associate.tag";
 
 	public static final String ANNOUNCEMENTS_EMAIL_BODY = "announcements.email.body";
@@ -1644,6 +1646,8 @@ public interface PropsKeys {
 	public static final String SESSION_ENABLE_PHISHING_PROTECTION = "session.enable.phishing.protection";
 
 	public static final String SESSION_ENABLE_URL_WITH_SESSION_ID = "session.enable.url.with.session.id";
+
+	public static final String SESSION_ID_DELIMITER = "session.id.delimiter";
 
 	public static final String SESSION_PHISHING_PROTECTED_ATTRIBUTES = "session.phishing.protected.attributes";
 

@@ -16,15 +16,13 @@ package com.liferay.portlet.bookmarks.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksEntryImpl
-	extends BookmarksEntryModelImpl implements BookmarksEntry {
+public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 
 	public BookmarksEntryImpl() {
 	}

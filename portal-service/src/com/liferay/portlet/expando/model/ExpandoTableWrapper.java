@@ -191,6 +191,10 @@ public class ExpandoTableWrapper implements ExpandoTable {
 		return _expandoTable.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoTable> toCacheModel() {
+		return _expandoTable.toCacheModel();
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoTable toEscapedModel() {
 		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
 	}
@@ -202,6 +206,11 @@ public class ExpandoTableWrapper implements ExpandoTable {
 
 	public java.lang.String toXmlString() {
 		return _expandoTable.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoTable.save();
 	}
 
 	public boolean isDefaultTable() {

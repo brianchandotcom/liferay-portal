@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -189,7 +190,11 @@ public class ServletResponseUtil {
 					ServletOutputStream servletOutputStream =
 						response.getOutputStream();
 
-					servletOutputStream.write(bytes, offset, contentLength);
+					if ((contentLength == 0) && ServerDetector.isJetty()) {
+					}
+					else {
+						servletOutputStream.write(bytes, offset, contentLength);
+					}
 				}
 			}
 		}

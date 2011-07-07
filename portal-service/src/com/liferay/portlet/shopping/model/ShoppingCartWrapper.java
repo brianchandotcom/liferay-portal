@@ -337,6 +337,10 @@ public class ShoppingCartWrapper implements ShoppingCart {
 		return _shoppingCart.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingCart> toCacheModel() {
+		return _shoppingCart.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingCart toEscapedModel() {
 		return new ShoppingCartWrapper(_shoppingCart.toEscapedModel());
 	}
@@ -348,6 +352,11 @@ public class ShoppingCartWrapper implements ShoppingCart {
 
 	public java.lang.String toXmlString() {
 		return _shoppingCart.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingCart.save();
 	}
 
 	public void addItemId(long itemId, java.lang.String fields) {

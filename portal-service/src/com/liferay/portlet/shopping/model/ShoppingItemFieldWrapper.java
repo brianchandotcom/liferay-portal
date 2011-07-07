@@ -200,6 +200,10 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField {
 		return _shoppingItemField.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.shopping.model.ShoppingItemField> toCacheModel() {
+		return _shoppingItemField.toCacheModel();
+	}
+
 	public com.liferay.portlet.shopping.model.ShoppingItemField toEscapedModel() {
 		return new ShoppingItemFieldWrapper(_shoppingItemField.toEscapedModel());
 	}
@@ -211,6 +215,11 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField {
 
 	public java.lang.String toXmlString() {
 		return _shoppingItemField.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemField.save();
 	}
 
 	public java.lang.String[] getValuesArray() {

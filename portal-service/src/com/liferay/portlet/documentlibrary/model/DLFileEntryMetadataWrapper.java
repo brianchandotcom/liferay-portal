@@ -236,6 +236,10 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> toCacheModel() {
+		return _dlFileEntryMetadata.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata toEscapedModel() {
 		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
 	}
@@ -247,6 +251,11 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 
 	public java.lang.String toXmlString() {
 		return _dlFileEntryMetadata.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryMetadata.save();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()

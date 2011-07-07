@@ -35,7 +35,7 @@ import com.liferay.portlet.messageboards.util.BBCodeUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMessageImpl extends MBMessageModelImpl implements MBMessage {
+public class MBMessageImpl extends MBMessageBaseImpl {
 
 	public MBMessageImpl() {
 	}

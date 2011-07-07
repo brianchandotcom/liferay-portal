@@ -585,6 +585,10 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> toCacheModel() {
+		return _ddmStructure.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure toEscapedModel() {
 		return new DDMStructureWrapper(_ddmStructure.toEscapedModel());
 	}
@@ -596,6 +600,11 @@ public class DDMStructureWrapper implements DDMStructure {
 
 	public java.lang.String toXmlString() {
 		return _ddmStructure.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructure.save();
 	}
 
 	public java.lang.String getFieldDataType(java.lang.String fieldName) {

@@ -15,14 +15,12 @@
 package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portlet.social.model.SocialEquityActionMapping;
-import com.liferay.portlet.social.model.SocialEquitySetting;
 import com.liferay.portlet.social.model.SocialEquitySettingConstants;
 
 /**
  * @author Zsolt Berentey
  */
-public class SocialEquitySettingImpl
-	extends SocialEquitySettingModelImpl implements SocialEquitySetting {
+public class SocialEquitySettingImpl extends SocialEquitySettingBaseImpl {
 
 	public SocialEquitySettingImpl() {
 	}

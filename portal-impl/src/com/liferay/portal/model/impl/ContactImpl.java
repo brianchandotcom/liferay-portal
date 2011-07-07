@@ -14,14 +14,13 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.Contact;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ContactImpl extends ContactModelImpl implements Contact {
+public class ContactImpl extends ContactBaseImpl {
 
 	public ContactImpl() {
 	}

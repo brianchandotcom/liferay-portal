@@ -139,6 +139,8 @@ public interface ResourceActionModel extends BaseModel<ResourceAction> {
 
 	public int hashCode();
 
+	public CacheModel<ResourceAction> toCacheModel();
+
 	public ResourceAction toEscapedModel();
 
 	public String toString();

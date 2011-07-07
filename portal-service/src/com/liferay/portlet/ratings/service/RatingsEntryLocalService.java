@@ -187,7 +187,7 @@ public interface RatingsEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the ratings entry in the database. Also notifies the appropriate model listeners.
+	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ratingsEntry the ratings entry
 	* @return the ratings entry that was updated
@@ -198,7 +198,7 @@ public interface RatingsEntryLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the ratings entry in the database. Also notifies the appropriate model listeners.
+	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ratingsEntry the ratings entry
 	* @param merge whether to merge the ratings entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
@@ -238,6 +238,16 @@ public interface RatingsEntryLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
 		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK, double score)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(java.lang.String className, long classPK,
+		double score)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

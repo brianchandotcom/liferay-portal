@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -794,6 +795,143 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		shoppingItemModelImpl._originalLargeImageId = shoppingItemModelImpl._largeImageId;
 
 		shoppingItemModelImpl._setOriginalLargeImageId = false;
+	}
+
+	@Override
+	public CacheModel<ShoppingItem> toCacheModel() {
+		ShoppingItemCacheModel shoppingItemCacheModel = new ShoppingItemCacheModel();
+
+		shoppingItemCacheModel.itemId = getItemId();
+
+		shoppingItemCacheModel.groupId = getGroupId();
+
+		shoppingItemCacheModel.companyId = getCompanyId();
+
+		shoppingItemCacheModel.userId = getUserId();
+
+		shoppingItemCacheModel.userName = getUserName();
+
+		String userName = shoppingItemCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			shoppingItemCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			shoppingItemCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			shoppingItemCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		shoppingItemCacheModel.categoryId = getCategoryId();
+
+		shoppingItemCacheModel.sku = getSku();
+
+		String sku = shoppingItemCacheModel.sku;
+
+		if ((sku != null) && (sku.length() == 0)) {
+			shoppingItemCacheModel.sku = null;
+		}
+
+		shoppingItemCacheModel.name = getName();
+
+		String name = shoppingItemCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			shoppingItemCacheModel.name = null;
+		}
+
+		shoppingItemCacheModel.description = getDescription();
+
+		String description = shoppingItemCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			shoppingItemCacheModel.description = null;
+		}
+
+		shoppingItemCacheModel.properties = getProperties();
+
+		String properties = shoppingItemCacheModel.properties;
+
+		if ((properties != null) && (properties.length() == 0)) {
+			shoppingItemCacheModel.properties = null;
+		}
+
+		shoppingItemCacheModel.fields = getFields();
+
+		shoppingItemCacheModel.fieldsQuantities = getFieldsQuantities();
+
+		String fieldsQuantities = shoppingItemCacheModel.fieldsQuantities;
+
+		if ((fieldsQuantities != null) && (fieldsQuantities.length() == 0)) {
+			shoppingItemCacheModel.fieldsQuantities = null;
+		}
+
+		shoppingItemCacheModel.minQuantity = getMinQuantity();
+
+		shoppingItemCacheModel.maxQuantity = getMaxQuantity();
+
+		shoppingItemCacheModel.price = getPrice();
+
+		shoppingItemCacheModel.discount = getDiscount();
+
+		shoppingItemCacheModel.taxable = getTaxable();
+
+		shoppingItemCacheModel.shipping = getShipping();
+
+		shoppingItemCacheModel.useShippingFormula = getUseShippingFormula();
+
+		shoppingItemCacheModel.requiresShipping = getRequiresShipping();
+
+		shoppingItemCacheModel.stockQuantity = getStockQuantity();
+
+		shoppingItemCacheModel.featured = getFeatured();
+
+		shoppingItemCacheModel.sale = getSale();
+
+		shoppingItemCacheModel.smallImage = getSmallImage();
+
+		shoppingItemCacheModel.smallImageId = getSmallImageId();
+
+		shoppingItemCacheModel.smallImageURL = getSmallImageURL();
+
+		String smallImageURL = shoppingItemCacheModel.smallImageURL;
+
+		if ((smallImageURL != null) && (smallImageURL.length() == 0)) {
+			shoppingItemCacheModel.smallImageURL = null;
+		}
+
+		shoppingItemCacheModel.mediumImage = getMediumImage();
+
+		shoppingItemCacheModel.mediumImageId = getMediumImageId();
+
+		shoppingItemCacheModel.mediumImageURL = getMediumImageURL();
+
+		String mediumImageURL = shoppingItemCacheModel.mediumImageURL;
+
+		if ((mediumImageURL != null) && (mediumImageURL.length() == 0)) {
+			shoppingItemCacheModel.mediumImageURL = null;
+		}
+
+		shoppingItemCacheModel.largeImage = getLargeImage();
+
+		shoppingItemCacheModel.largeImageId = getLargeImageId();
+
+		shoppingItemCacheModel.largeImageURL = getLargeImageURL();
+
+		String largeImageURL = shoppingItemCacheModel.largeImageURL;
+
+		if ((largeImageURL != null) && (largeImageURL.length() == 0)) {
+			shoppingItemCacheModel.largeImageURL = null;
+		}
+
+		return shoppingItemCacheModel;
 	}
 
 	@Override

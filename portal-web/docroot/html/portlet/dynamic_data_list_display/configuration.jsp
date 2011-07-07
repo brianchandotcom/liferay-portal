@@ -30,6 +30,10 @@ try {
 }
 catch (NoSuchRecordSetException nsrse) {
 }
+
+request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
+
+request.setAttribute("record_set_action.jsp-chooseCallback", renderResponse.getNamespace().concat("selectRecordSet"));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -104,7 +108,7 @@ catch (NoSuchRecordSetException nsrse) {
 
 			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="editable" type="checkbox" value="<%= editable %>" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "editable.value = this.checked;" %>' />
 
-			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" name="spreadsheet" type="checkbox" value="<%= spreadsheet %>" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "spreadsheet.value = this.checked;" %>' />
+			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="spreadsheet" type="checkbox" value="<%= spreadsheet %>" onChange='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "spreadsheet.value = this.checked;" %>' />
 		</aui:fieldset>
 	</c:if>
 
@@ -135,22 +139,19 @@ catch (NoSuchRecordSetException nsrse) {
 				modelVar="recordSet"
 			>
 
-				<%
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:");
-				sb.append(renderResponse.getNamespace());
-				sb.append("selectRecordSet('");
-				sb.append(recordSet.getRecordSetId());
-				sb.append("','");
-				sb.append(recordSet.getName(locale));
-				sb.append("');");
-
-				String rowURL = sb.toString();
-				%>
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="rowURL">
+					<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+				</liferay-portlet:renderURL>
 
 				<%@ include file="/html/portlet/dynamic_data_lists/search_columns.jspf" %>
 
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					path="/html/portlet/dynamic_data_lists/record_set_action.jsp"
+				/>
 			</liferay-ui:search-container-row>
 
 			<div class="separator"><!-- --></div>

@@ -1106,6 +1106,10 @@ public class LayoutWrapper implements Layout {
 		return _layout.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Layout> toCacheModel() {
+		return _layout.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Layout toEscapedModel() {
 		return new LayoutWrapper(_layout.toEscapedModel());
 	}
@@ -1117,6 +1121,11 @@ public class LayoutWrapper implements Layout {
 
 	public java.lang.String toXmlString() {
 		return _layout.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_layout.save();
 	}
 
 	public java.util.List<com.liferay.portal.model.Layout> getAllChildren()

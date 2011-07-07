@@ -17,13 +17,12 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ListType;
-import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.service.ListTypeServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrgLaborImpl extends OrgLaborModelImpl implements OrgLabor {
+public class OrgLaborImpl extends OrgLaborBaseImpl {
 
 	public OrgLaborImpl() {
 	}

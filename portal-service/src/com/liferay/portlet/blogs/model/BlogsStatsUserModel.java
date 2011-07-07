@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -239,6 +240,8 @@ public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser> {
 	public int compareTo(BlogsStatsUser blogsStatsUser);
 
 	public int hashCode();
+
+	public CacheModel<BlogsStatsUser> toCacheModel();
 
 	public BlogsStatsUser toEscapedModel();
 

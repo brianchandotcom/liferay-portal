@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -61,7 +62,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -554,18 +554,31 @@ public class PortalImpl implements Portal {
 	public void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url) {
 
-		List<KeyValuePair> portletBreadcrumbs =
-			(List<KeyValuePair>)request.getAttribute(
+		addPortletBreadcrumbEntry(request, title, url, null);
+	}
+
+	public void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data) {
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			(List<BreadcrumbEntry>)request.getAttribute(
 				WebKeys.PORTLET_BREADCRUMBS);
 
-		if (portletBreadcrumbs == null) {
-			portletBreadcrumbs = new ArrayList<KeyValuePair>();
+		if (breadcrumbEntries == null) {
+			breadcrumbEntries = new ArrayList<BreadcrumbEntry>();
 
 			request.setAttribute(
-				WebKeys.PORTLET_BREADCRUMBS, portletBreadcrumbs);
+				WebKeys.PORTLET_BREADCRUMBS, breadcrumbEntries);
 		}
 
-		portletBreadcrumbs.add(new KeyValuePair(title, url));
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setData(data);
+		breadcrumbEntry.setTitle(title);
+		breadcrumbEntry.setURL(url);
+
+		breadcrumbEntries.add(breadcrumbEntry);
 	}
 
 	public void addPortletDefaultResource(
@@ -1145,7 +1158,8 @@ public class PortalImpl implements Portal {
 			group.getCompanyId());
 
 		sb.append(
-			getPortalURL(company.getVirtualHostname(), getPortalPort(), false));
+			getPortalURL(
+				company.getVirtualHostname(), getPortalPort(false), false));
 		sb.append(PortalUtil.getPathFriendlyURLPrivateGroup());
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
@@ -2070,6 +2084,13 @@ public class PortalImpl implements Portal {
 	public String getLayoutFullURL(long groupId, String portletId)
 		throws PortalException, SystemException {
 
+		return getLayoutFullURL(groupId, portletId, false);
+	}
+
+	public String getLayoutFullURL(
+			long groupId, String portletId, boolean secure)
+		throws PortalException, SystemException {
+
 		long plid = getPlidFromPortletId(groupId, portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -2105,7 +2126,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String portalURL = getPortalURL(
-			virtualHostname, getPortalPort(), false);
+			virtualHostname, getPortalPort(secure), secure);
 
 		sb.append(portalURL);
 
@@ -2606,8 +2627,20 @@ public class PortalImpl implements Portal {
 		return _portalLibDir;
 	}
 
+	/**
+	 * @deprecated {@link #getPortalPort(boolean)}
+	 */
 	public int getPortalPort() {
 		return _portalPort.get();
+	}
+
+	public int getPortalPort(boolean secure) {
+		if (secure) {
+			return _securePortalPort.get();
+		}
+		else {
+			return _portalPort.get();
+		}
 	}
 
 	public Properties getPortalProperties() {
@@ -2721,16 +2754,16 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
-	public List<KeyValuePair> getPortletBreadcrumbList(
+	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {
 
 		return getPortletBreadcrumbs(request);
 	}
 
-	public List<KeyValuePair> getPortletBreadcrumbs(
+	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
-		return (List<KeyValuePair>)request.getAttribute(
+		return (List<BreadcrumbEntry>)request.getAttribute(
 			WebKeys.PORTLET_BREADCRUMBS);
 	}
 
@@ -4420,7 +4453,10 @@ public class PortalImpl implements Portal {
 				WebKeys.THEME_DISPLAY);
 
 			try {
-				if (!PortletPermissionUtil.contains(
+				Layout layout = themeDisplay.getLayout();
+
+				if (!layout.isTypeControlPanel() &&
+					!PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getPlid(), portlet.getPortletId(),
 						ActionKeys.CONFIGURATION)) {
@@ -4637,11 +4673,20 @@ public class PortalImpl implements Portal {
 	 * Sets the port obtained on the first request to the portal.
 	 */
 	public void setPortalPort(HttpServletRequest request) {
-		if (_portalPort.get() == -1) {
-			int portalPort = request.getServerPort();
+		if (request.isSecure()) {
+			if (_securePortalPort.get() == -1) {
+				int securePortalPort = request.getServerPort();
 
-			if (_portalPort.compareAndSet(-1, portalPort)) {
-				notifyPortalPortEventListeners(portalPort);
+				_securePortalPort.compareAndSet(-1, securePortalPort);
+			}
+		}
+		else {
+			if (_portalPort.get() == -1) {
+				int portalPort = request.getServerPort();
+
+				if (_portalPort.compareAndSet(-1, portalPort)) {
+					notifyPortalPortEventListeners(portalPort);
+				}
 			}
 		}
 	}
@@ -5337,6 +5382,7 @@ public class PortalImpl implements Portal {
 	private Set<String> _portletAddDefaultResourceCheckWhitelist;
 	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
 	private Set<String> _reservedParams;
+	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
 	private String[] _sortedSystemGroups;
 	private String[] _sortedSystemOrganizationRoles;
 	private String[] _sortedSystemRoles;

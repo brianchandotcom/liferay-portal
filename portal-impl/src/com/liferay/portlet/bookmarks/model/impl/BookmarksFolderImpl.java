@@ -26,8 +26,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksFolderImpl
-	extends BookmarksFolderModelImpl implements BookmarksFolder {
+public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
 	public BookmarksFolderImpl() {
 	}

@@ -273,6 +273,10 @@ public class UserTrackerWrapper implements UserTracker {
 		return _userTracker.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserTracker> toCacheModel() {
+		return _userTracker.toCacheModel();
+	}
+
 	public com.liferay.portal.model.UserTracker toEscapedModel() {
 		return new UserTrackerWrapper(_userTracker.toEscapedModel());
 	}
@@ -284,6 +288,11 @@ public class UserTrackerWrapper implements UserTracker {
 
 	public java.lang.String toXmlString() {
 		return _userTracker.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTracker.save();
 	}
 
 	public java.lang.String getFullName() {

@@ -1,5 +1,9 @@
 package ${packagePath}.model;
 
+<#if entity.hasLocalService() && entity.hasColumns()>
+	import ${packagePath}.service.${entity.name}LocalServiceUtil;
+</#if>
+
 <#if entity.hasCompoundPK()>
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
@@ -336,6 +340,13 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
+	<#if entity.hasLocalService() && entity.hasColumns()>
+		public void save() throws SystemException {
+			${entity.name}LocalServiceUtil.update${entity.name}(this);
+		}
+	</#if>
+
+	@Override
 	public ${entity.name} toEscapedModel() {
 		if (isEscapedModel()) {
 			return this;
@@ -345,6 +356,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	@Override
 	public Object clone() {
 		${entity.name}Clp clone = new ${entity.name}Clp();
 
@@ -427,6 +439,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -456,6 +469,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	@Override
 	public int hashCode() {
 		<#if entity.hasPrimitivePK(false)>
 			<#if entity.PKClassName == "int">
@@ -468,6 +482,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 	}
 
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(${entity.regularColList?size * 2 + 1});
 

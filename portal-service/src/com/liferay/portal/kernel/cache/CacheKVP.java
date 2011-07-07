@@ -17,8 +17,10 @@ package com.liferay.portal.kernel.cache;
 import java.io.Serializable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
+ * @deprecated
  */
+@Deprecated
 public class CacheKVP implements Serializable {
 
 	public CacheKVP(Class<?> modelClass, Serializable primaryKeyObj) {

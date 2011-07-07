@@ -337,7 +337,7 @@ public class ClusterExecutorImpl
 			_localClusterNode.setPort(PropsValues.PORTAL_INSTANCE_HTTP_PORT);
 		}
 		else {
-			_localClusterNode.setPort(PortalUtil.getPortalPort());
+			_localClusterNode.setPort(PortalUtil.getPortalPort(false));
 		}
 
 		try {

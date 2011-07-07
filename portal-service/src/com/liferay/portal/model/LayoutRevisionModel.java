@@ -989,6 +989,8 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 
 	public int hashCode();
 
+	public CacheModel<LayoutRevision> toCacheModel();
+
 	public LayoutRevision toEscapedModel();
 
 	public String toString();

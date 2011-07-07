@@ -146,6 +146,8 @@ public interface ClusterGroupModel extends BaseModel<ClusterGroup> {
 
 	public int hashCode();
 
+	public CacheModel<ClusterGroup> toCacheModel();
+
 	public ClusterGroup toEscapedModel();
 
 	public String toString();

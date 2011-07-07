@@ -571,6 +571,10 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLFileVersion> toCacheModel() {
+		return _dlFileVersion.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion toEscapedModel() {
 		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
 	}

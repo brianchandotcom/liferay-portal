@@ -190,6 +190,10 @@ public class ShardWrapper implements Shard {
 		return _shard.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Shard> toCacheModel() {
+		return _shard.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Shard toEscapedModel() {
 		return new ShardWrapper(_shard.toEscapedModel());
 	}
@@ -201,6 +205,11 @@ public class ShardWrapper implements Shard {
 
 	public java.lang.String toXmlString() {
 		return _shard.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shard.save();
 	}
 
 	public Shard getWrappedShard() {

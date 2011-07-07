@@ -49,6 +49,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>doAsGroupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>doAsUserId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -272,6 +277,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>doAsGroupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>doAsUserId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -376,6 +386,11 @@
 		</attribute>
 		<attribute>
 			<name>copyCurrentRenderParameters</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>doAsGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

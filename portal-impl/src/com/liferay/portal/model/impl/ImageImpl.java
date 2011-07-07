@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.model.Image;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImageImpl extends ImageModelImpl implements Image {
+public class ImageImpl extends ImageBaseImpl {
 
 	public ImageImpl() {
 	}

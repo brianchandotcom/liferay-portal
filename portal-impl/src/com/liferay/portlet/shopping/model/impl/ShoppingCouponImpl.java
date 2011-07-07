@@ -15,15 +15,13 @@
 package com.liferay.portlet.shopping.model.impl;
 
 import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portlet.shopping.model.ShoppingCoupon;
 
 import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCouponImpl
-	extends ShoppingCouponModelImpl implements ShoppingCoupon {
+public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 
 	public ShoppingCouponImpl() {
 	}

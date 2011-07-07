@@ -14,10 +14,11 @@
 
 package com.liferay.portlet.amazonrankings.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,12 +32,15 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Samuel Kong
+ * @author Barrie Selack
  */
 public class AmazonRankingsWebCacheItem implements WebCacheItem {
 
@@ -45,98 +49,13 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 	}
 
 	public Object convert(String key) {
-		String isbn = _isbn;
-
 		AmazonRankings amazonRankings = null;
 
 		try {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("http://ecs.amazonaws.com/onca/xml?Service=");
-			sb.append("AWSECommerceService&AWSAccessKeyId=");
-			sb.append(AmazonRankingsUtil.getAmazonAccessKeyId());
-			sb.append("&Operation=ItemLookup&IdType=ASIN&ItemId=");
-			sb.append(isbn);
-			sb.append("&ResponseGroup=Images,ItemAttributes,Offers,SalesRank&");
-			sb.append("Version=2009-02-01");
-
-			String xml = HttpUtil.URLtoString(sb.toString());
-
-			Document doc = SAXReaderUtil.read(xml);
-
-			Element root = doc.getRootElement();
-
-			if (root == null) {
-				return null;
-			}
-
-			Element items = root.element("Items");
-
-			if (items == null) {
-				return null;
-			}
-
-			Element item = items.element("Item");
-
-			if (item == null) {
-				return null;
-			}
-
-			Element itemAttributes = item.element("ItemAttributes");
-
-			if (itemAttributes == null) {
-				return null;
-			}
-
-			String productName = itemAttributes.elementText("Title");
-			String catalog = StringPool.BLANK;
-			String[] authors = getAuthors(itemAttributes);
-			String releaseDateAsString = itemAttributes.elementText(
-				"PublicationDate");
-			Date releaseDate = getReleaseDate(releaseDateAsString);
-			String manufacturer = itemAttributes.elementText("Manufacturer");
-			String smallImageURL = getImageURL(item, "SmallImage");
-			String mediumImageURL = getImageURL(item, "MediumImage");
-			String largeImageURL = getImageURL(item, "LargeImage");
-			double listPrice = getPrice(itemAttributes.element("ListPrice"));
-
-			double ourPrice = 0;
-
-			Element offerListing = getOfferListing(item);
-
-			if (offerListing != null) {
-				ourPrice = getPrice(offerListing.element("Price"));
-			}
-
-			double usedPrice = 0;
-			double collectiblePrice = 0;
-			double thirdPartyNewPrice = 0;
-
-			Element offerSummary = item.element("OfferSummary");
-
-			if (offerSummary != null) {
-				usedPrice = getPrice(offerSummary.element("LowestUsedPrice"));
-
-				collectiblePrice = getPrice(
-					offerSummary.element("LowestCollectiblePrice"));
-
-				thirdPartyNewPrice = getPrice(
-					offerSummary.element("LowestNewPrice"));
-			}
-
-			int salesRank = GetterUtil.getInteger(
-				item.elementText("SalesRank"));
-			String media = StringPool.BLANK;
-			String availability = getAvailability(offerListing);
-
-			amazonRankings = new AmazonRankings(
-				isbn, productName, catalog, authors, releaseDate,
-				releaseDateAsString, manufacturer, smallImageURL,
-				mediumImageURL, largeImageURL, listPrice, ourPrice, usedPrice,
-				collectiblePrice, thirdPartyNewPrice, salesRank, media,
-				availability);
+			amazonRankings = doConvert(key);
 		}
 		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return amazonRankings;
@@ -146,61 +65,168 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		return _REFRESH_TIME;
 	}
 
-	protected String[] getAuthors(Element itemAttributes) {
+	protected AmazonRankings doConvert(String key) throws Exception {
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		parameters.put(
+			"AWSAccessKeyId", AmazonRankingsUtil.getAmazonAccessKeyId());
+		parameters.put("IdType", "ASIN");
+		parameters.put("ItemId", _isbn);
+		parameters.put("Operation", "ItemLookup");
+		parameters.put(
+			"ResponseGroup", "Images,ItemAttributes,Offers,SalesRank");
+		parameters.put("Service", "AWSECommerceService");
+		parameters.put("Timestamp", AmazonRankingsUtil.getTimestamp());
+
+		String urlWithSignature =
+			AmazonSignedRequestsUtil.generateUrlWithSignature(parameters);
+
+		String xml = HttpUtil.URLtoString(urlWithSignature);
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		if (rootElement == null) {
+			return null;
+		}
+
+		if (hasErrorMessage(rootElement)) {
+			return null;
+		}
+
+		Element itemsElement = rootElement.element("Items");
+
+		if (itemsElement == null) {
+			return null;
+		}
+
+		Element requestElement = itemsElement.element("Request");
+
+		if (requestElement != null) {
+			Element errorsElement = requestElement.element("Errors");
+
+			if (hasErrorMessage(errorsElement)) {
+				return null;
+			}
+		}
+
+		Element itemElement = itemsElement.element("Item");
+
+		if (itemElement == null) {
+			return null;
+		}
+
+		Element itemAttributesElement = itemElement.element("ItemAttributes");
+
+		if (itemAttributesElement == null) {
+			return null;
+		}
+
+		String productName = itemAttributesElement.elementText("Title");
+		String catalog = StringPool.BLANK;
+		String[] authors = getAuthors(itemAttributesElement);
+		String releaseDateAsString = itemAttributesElement.elementText(
+			"PublicationDate");
+		Date releaseDate = getReleaseDate(releaseDateAsString);
+		String manufacturer = itemAttributesElement.elementText("Manufacturer");
+		String smallImageURL = getImageURL(itemElement, "SmallImage");
+		String mediumImageURL = getImageURL(itemElement, "MediumImage");
+		String largeImageURL = getImageURL(itemElement, "LargeImage");
+		double listPrice = getPrice(itemAttributesElement.element("ListPrice"));
+
+		double ourPrice = 0;
+
+		Element offerListingElement = getOfferListing(itemElement);
+
+		if (offerListingElement != null) {
+			ourPrice = getPrice(offerListingElement.element("Price"));
+		}
+
+		double usedPrice = 0;
+		double collectiblePrice = 0;
+		double thirdPartyNewPrice = 0;
+
+		Element offerSummaryElement = itemElement.element("OfferSummary");
+
+		if (offerSummaryElement != null) {
+			usedPrice = getPrice(
+				offerSummaryElement.element("LowestUsedPrice"));
+
+			collectiblePrice = getPrice(
+				offerSummaryElement.element("LowestCollectiblePrice"));
+
+			thirdPartyNewPrice = getPrice(
+				offerSummaryElement.element("LowestNewPrice"));
+		}
+
+		int salesRank = GetterUtil.getInteger(
+			itemElement.elementText("SalesRank"));
+		String media = StringPool.BLANK;
+		String availability = getAvailability(offerListingElement);
+
+		return new AmazonRankings(
+			_isbn, productName, catalog, authors, releaseDate,
+			releaseDateAsString, manufacturer, smallImageURL, mediumImageURL,
+			largeImageURL, listPrice, ourPrice, usedPrice, collectiblePrice,
+			thirdPartyNewPrice, salesRank, media, availability);
+	}
+
+	protected String[] getAuthors(Element itemAttributesElement) {
 		List<String> authors = new ArrayList<String>();
 
-		for (Element author : itemAttributes.elements("Author")) {
-			authors.add(author.getText());
+		for (Element authorElement : itemAttributesElement.elements("Author")) {
+			authors.add(authorElement.getText());
 		}
 
 		return authors.toArray(new String[authors.size()]);
 	}
 
-	protected String getAvailability(Element offerListing) {
-		if (offerListing == null) {
+	protected String getAvailability(Element offerListingElement) {
+		if (offerListingElement == null) {
 			return null;
 		}
 
-		Element availabilityAttributes = offerListing.element(
-			"AvailabilityAttributes");
+		Element availabilityElement = offerListingElement.element(
+			"Availability");
 
-		return availabilityAttributes.elementText("AvailabilityType");
+		return availabilityElement.elementText("Availability");
 	}
 
-	protected String getImageURL(Element item, String name) {
+	protected String getImageURL(Element itemElement, String name) {
 		String imageURL = null;
 
-		Element image = item.element(name);
+		Element imageElement = itemElement.element(name);
 
-		if (image != null) {
-			imageURL = image.elementText("URL");
+		if (imageElement != null) {
+			imageURL = imageElement.elementText("URL");
 		}
 
 		return imageURL;
 	}
 
-	protected Element getOfferListing(Element item) {
-		Element offers = item.element("Offers");
+	protected Element getOfferListing(Element itemElement) {
+		Element offersElement = itemElement.element("Offers");
 
-		if (offers == null) {
+		if (offersElement == null) {
 			return null;
 		}
 
-		Element offer = offers.element("Offer");
+		Element offerElement = offersElement.element("Offer");
 
-		if (offer == null) {
+		if (offerElement == null) {
 			return null;
 		}
 
-		return offer.element("OfferListing");
+		return offerElement.element("OfferListing");
 	}
 
-	protected double getPrice(Element price) {
-		if (price == null) {
+	protected double getPrice(Element priceElement) {
+		if (priceElement == null) {
 			return 0;
 		}
 
-		return GetterUtil.getInteger(price.elementText("Amount")) * 0.01;
+		return GetterUtil.getInteger(priceElement.elementText("Amount")) * 0.01;
 	}
 
 	protected Date getReleaseDate(String releaseDateAsString) {
@@ -222,7 +248,32 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		return GetterUtil.getDate(releaseDateAsString, dateFormat);
 	}
 
+	protected boolean hasErrorMessage(Element element) {
+		if (element == null) {
+			return false;
+		}
+
+		Element errorElement = element.element("Error");
+
+		if (errorElement == null) {
+			return false;
+		}
+
+		Element messageElement = errorElement.element("Message");
+
+		if (messageElement == null) {
+			return false;
+		}
+
+		_log.error(messageElement.getText());
+
+		return true;
+	}
+
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AmazonRankingsWebCacheItem.class);
 
 	private String _isbn;
 

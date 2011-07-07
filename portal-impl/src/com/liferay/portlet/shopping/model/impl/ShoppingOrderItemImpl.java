@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
-import com.liferay.portlet.shopping.model.ShoppingOrderItem;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingOrderItemImpl
-	extends ShoppingOrderItemModelImpl implements ShoppingOrderItem {
+public class ShoppingOrderItemImpl extends ShoppingOrderItemBaseImpl {
 
 	public ShoppingOrderItemImpl() {
 	}

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
 import java.util.Date;
@@ -31,8 +30,7 @@ import java.util.Date;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class ExpandoValueImpl
-	extends ExpandoValueModelImpl implements ExpandoValue {
+public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 	public ExpandoValueImpl() {
 	}
@@ -47,6 +45,16 @@ public class ExpandoValueImpl
 		validate(ExpandoColumnConstants.BOOLEAN_ARRAY);
 
 		return GetterUtil.getBooleanValues(StringUtil.split(getData()));
+	}
+
+	public ExpandoColumn getColumn() throws PortalException, SystemException {
+		long columnId = getColumnId();
+
+		if (columnId <= 0) {
+			return  null;
+		}
+
+		return ExpandoColumnLocalServiceUtil.getColumn(columnId);
 	}
 
 	public Date getDate() throws PortalException, SystemException {
@@ -256,14 +264,11 @@ public class ExpandoValueImpl
 	}
 
 	protected void validate(int type) throws PortalException, SystemException {
-		long columnId = getColumnId();
+		ExpandoColumn column = getColumn();
 
-		if (columnId <= 0) {
+		if (column == null) {
 			return;
 		}
-
-		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
-			columnId);
 
 		if (column.getType() == type) {
 			return;
@@ -272,7 +277,7 @@ public class ExpandoValueImpl
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("Column ");
-		sb.append(columnId);
+		sb.append(getColumnId());
 		sb.append(" has type ");
 		sb.append(ExpandoColumnConstants.getTypeLabel(column.getType()));
 		sb.append(" and is not compatible with type ");

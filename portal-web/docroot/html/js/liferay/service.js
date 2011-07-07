@@ -121,6 +121,14 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "LayoutRevision",
+	{
+		addLayoutRevision: true,
+		deleteLayoutRevisions: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSet",
 	{
 		updateLookAndFeel: true,
@@ -690,6 +698,7 @@ Liferay.Service.registerClass(
 		getFoldersFileEntriesCount: true,
 		getGroupFileEntries: true,
 		getGroupFileEntriesCount: true,
+		getLatestFileVersion: true,
 		hasFileEntryLock: true,
 		isFileEntryCheckedOut: true,
 		moveFileEntry: true,

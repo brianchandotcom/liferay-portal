@@ -1057,6 +1057,8 @@ public class BaseDeployer implements Deployer {
 			sb.append("</jsp-config>");
 		}
 
+		sb.append(getSessionFiltersContent());
+
 		return sb.toString();
 	}
 
@@ -1261,6 +1263,13 @@ public class BaseDeployer implements Deployer {
 		else {
 			return StringPool.BLANK;
 		}
+	}
+
+	public String getSessionFiltersContent() throws Exception {
+		String sessionFiltersContent = FileUtil.read(
+			DeployUtil.getResourcePath("session-filters-web.xml"));
+
+		return sessionFiltersContent;
 	}
 
 	public String getSpeedFiltersContent(File srcFile) throws Exception {

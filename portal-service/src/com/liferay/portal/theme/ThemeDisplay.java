@@ -338,6 +338,23 @@ public class ThemeDisplay implements Serializable {
 		}
 	}
 
+	public long getScopeGroupIdOrLiveGroupId()
+		throws PortalException, SystemException {
+
+		if (_scopeGroupId == 0) {
+			return _scopeGroupId;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(_scopeGroupId);
+
+		if (group.isStagingGroup()) {
+			return group.getLiveGroupId();
+		}
+		else {
+			return _scopeGroupId;
+		}
+	}
+
 	public Layout getScopeLayout() throws PortalException, SystemException {
 		if (_layout.hasScopeGroup()) {
 			return _layout;

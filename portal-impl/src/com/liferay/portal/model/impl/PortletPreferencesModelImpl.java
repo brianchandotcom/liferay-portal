@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesModel;
 import com.liferay.portal.model.PortletPreferencesSoap;
@@ -354,6 +355,37 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		portletPreferencesModelImpl._setOriginalPlid = false;
 
 		portletPreferencesModelImpl._originalPortletId = portletPreferencesModelImpl._portletId;
+	}
+
+	@Override
+	public CacheModel<PortletPreferences> toCacheModel() {
+		PortletPreferencesCacheModel portletPreferencesCacheModel = new PortletPreferencesCacheModel();
+
+		portletPreferencesCacheModel.portletPreferencesId = getPortletPreferencesId();
+
+		portletPreferencesCacheModel.ownerId = getOwnerId();
+
+		portletPreferencesCacheModel.ownerType = getOwnerType();
+
+		portletPreferencesCacheModel.plid = getPlid();
+
+		portletPreferencesCacheModel.portletId = getPortletId();
+
+		String portletId = portletPreferencesCacheModel.portletId;
+
+		if ((portletId != null) && (portletId.length() == 0)) {
+			portletPreferencesCacheModel.portletId = null;
+		}
+
+		portletPreferencesCacheModel.preferences = getPreferences();
+
+		String preferences = portletPreferencesCacheModel.preferences;
+
+		if ((preferences != null) && (preferences.length() == 0)) {
+			portletPreferencesCacheModel.preferences = null;
+		}
+
+		return portletPreferencesCacheModel;
 	}
 
 	@Override

@@ -14,13 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.UserTrackerPath;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTrackerPathImpl
-	extends UserTrackerPathModelImpl implements UserTrackerPath {
+public class UserTrackerPathImpl extends UserTrackerPathBaseImpl {
 
 	public UserTrackerPathImpl() {
 	}

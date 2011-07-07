@@ -29,6 +29,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import org.apache.commons.configuration.PropertyConverter;
+import org.apache.commons.configuration.SystemConfiguration;
+
 /**
  * @author Olaf Fricke
  * @author Brian Wing Shun Chan
@@ -71,6 +74,9 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 			Element rootElement = document.getRootElement();
 
 			docBase = rootElement.attributeValue("docBase");
+
+			docBase = String.valueOf(
+				PropertyConverter.interpolate(docBase, _systemConfiguration));
 		}
 		catch (Exception e) {
 			throw new AutoDeployException(e);
@@ -134,5 +140,8 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseExplodedTomcatListener.class);
+
+	private static SystemConfiguration _systemConfiguration =
+		new SystemConfiguration();
 
 }

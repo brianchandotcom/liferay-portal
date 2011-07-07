@@ -423,7 +423,7 @@ $(jetty.home)/lib/liferay/*</echo>
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="lib/development"
-						includes="activation.jar,jta.jar"
+						includes="activation.jar,jta.jar,persistence.jar"
 					/>
 				</copy>
 			</then>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -456,6 +457,51 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		socialRequestModelImpl._originalReceiverUserId = socialRequestModelImpl._receiverUserId;
 
 		socialRequestModelImpl._setOriginalReceiverUserId = false;
+	}
+
+	@Override
+	public CacheModel<SocialRequest> toCacheModel() {
+		SocialRequestCacheModel socialRequestCacheModel = new SocialRequestCacheModel();
+
+		socialRequestCacheModel.uuid = getUuid();
+
+		String uuid = socialRequestCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			socialRequestCacheModel.uuid = null;
+		}
+
+		socialRequestCacheModel.requestId = getRequestId();
+
+		socialRequestCacheModel.groupId = getGroupId();
+
+		socialRequestCacheModel.companyId = getCompanyId();
+
+		socialRequestCacheModel.userId = getUserId();
+
+		socialRequestCacheModel.createDate = getCreateDate();
+
+		socialRequestCacheModel.modifiedDate = getModifiedDate();
+
+		socialRequestCacheModel.classNameId = getClassNameId();
+
+		socialRequestCacheModel.classPK = getClassPK();
+
+		socialRequestCacheModel.type = getType();
+
+		socialRequestCacheModel.extraData = getExtraData();
+
+		String extraData = socialRequestCacheModel.extraData;
+
+		if ((extraData != null) && (extraData.length() == 0)) {
+			socialRequestCacheModel.extraData = null;
+		}
+
+		socialRequestCacheModel.receiverUserId = getReceiverUserId();
+
+		socialRequestCacheModel.status = getStatus();
+
+		return socialRequestCacheModel;
 	}
 
 	@Override

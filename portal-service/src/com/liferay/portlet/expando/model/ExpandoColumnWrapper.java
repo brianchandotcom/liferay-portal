@@ -236,6 +236,10 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 		return _expandoColumn.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoColumn> toCacheModel() {
+		return _expandoColumn.toCacheModel();
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoColumn toEscapedModel() {
 		return new ExpandoColumnWrapper(_expandoColumn.toEscapedModel());
 	}
@@ -247,6 +251,11 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 
 	public java.lang.String toXmlString() {
 		return _expandoColumn.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoColumn.save();
 	}
 
 	public java.io.Serializable getDefaultValue() {

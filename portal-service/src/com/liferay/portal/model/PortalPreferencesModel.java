@@ -138,6 +138,8 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
 
 	public int hashCode();
 
+	public CacheModel<PortalPreferences> toCacheModel();
+
 	public PortalPreferences toEscapedModel();
 
 	public String toString();

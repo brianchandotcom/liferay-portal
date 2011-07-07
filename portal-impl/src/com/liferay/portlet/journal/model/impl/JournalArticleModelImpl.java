@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -1016,6 +1017,179 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleModelImpl._setOriginalVersion = false;
 
 		journalArticleModelImpl._originalStructureId = journalArticleModelImpl._structureId;
+	}
+
+	@Override
+	public CacheModel<JournalArticle> toCacheModel() {
+		JournalArticleCacheModel journalArticleCacheModel = new JournalArticleCacheModel();
+
+		journalArticleCacheModel.uuid = getUuid();
+
+		String uuid = journalArticleCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			journalArticleCacheModel.uuid = null;
+		}
+
+		journalArticleCacheModel.id = getId();
+
+		journalArticleCacheModel.resourcePrimKey = getResourcePrimKey();
+
+		journalArticleCacheModel.groupId = getGroupId();
+
+		journalArticleCacheModel.companyId = getCompanyId();
+
+		journalArticleCacheModel.userId = getUserId();
+
+		journalArticleCacheModel.userName = getUserName();
+
+		String userName = journalArticleCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			journalArticleCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			journalArticleCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			journalArticleCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		journalArticleCacheModel.classNameId = getClassNameId();
+
+		journalArticleCacheModel.classPK = getClassPK();
+
+		journalArticleCacheModel.articleId = getArticleId();
+
+		String articleId = journalArticleCacheModel.articleId;
+
+		if ((articleId != null) && (articleId.length() == 0)) {
+			journalArticleCacheModel.articleId = null;
+		}
+
+		journalArticleCacheModel.version = getVersion();
+
+		journalArticleCacheModel.title = getTitle();
+
+		String title = journalArticleCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			journalArticleCacheModel.title = null;
+		}
+
+		journalArticleCacheModel.urlTitle = getUrlTitle();
+
+		String urlTitle = journalArticleCacheModel.urlTitle;
+
+		if ((urlTitle != null) && (urlTitle.length() == 0)) {
+			journalArticleCacheModel.urlTitle = null;
+		}
+
+		journalArticleCacheModel.description = getDescription();
+
+		String description = journalArticleCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			journalArticleCacheModel.description = null;
+		}
+
+		journalArticleCacheModel.content = getContent();
+
+		String content = journalArticleCacheModel.content;
+
+		if ((content != null) && (content.length() == 0)) {
+			journalArticleCacheModel.content = null;
+		}
+
+		journalArticleCacheModel.type = getType();
+
+		String type = journalArticleCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			journalArticleCacheModel.type = null;
+		}
+
+		journalArticleCacheModel.structureId = getStructureId();
+
+		String structureId = journalArticleCacheModel.structureId;
+
+		if ((structureId != null) && (structureId.length() == 0)) {
+			journalArticleCacheModel.structureId = null;
+		}
+
+		journalArticleCacheModel.templateId = getTemplateId();
+
+		String templateId = journalArticleCacheModel.templateId;
+
+		if ((templateId != null) && (templateId.length() == 0)) {
+			journalArticleCacheModel.templateId = null;
+		}
+
+		journalArticleCacheModel.layoutUuid = getLayoutUuid();
+
+		String layoutUuid = journalArticleCacheModel.layoutUuid;
+
+		if ((layoutUuid != null) && (layoutUuid.length() == 0)) {
+			journalArticleCacheModel.layoutUuid = null;
+		}
+
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			journalArticleCacheModel.displayDate = displayDate.getTime();
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			journalArticleCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		Date reviewDate = getReviewDate();
+
+		if (reviewDate != null) {
+			journalArticleCacheModel.reviewDate = reviewDate.getTime();
+		}
+
+		journalArticleCacheModel.indexable = getIndexable();
+
+		journalArticleCacheModel.smallImage = getSmallImage();
+
+		journalArticleCacheModel.smallImageId = getSmallImageId();
+
+		journalArticleCacheModel.smallImageURL = getSmallImageURL();
+
+		String smallImageURL = journalArticleCacheModel.smallImageURL;
+
+		if ((smallImageURL != null) && (smallImageURL.length() == 0)) {
+			journalArticleCacheModel.smallImageURL = null;
+		}
+
+		journalArticleCacheModel.status = getStatus();
+
+		journalArticleCacheModel.statusByUserId = getStatusByUserId();
+
+		journalArticleCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = journalArticleCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			journalArticleCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			journalArticleCacheModel.statusDate = statusDate.getTime();
+		}
+
+		return journalArticleCacheModel;
 	}
 
 	@Override

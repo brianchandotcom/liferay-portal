@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -75,13 +76,14 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_T = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
+			SocialEquityGroupSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -89,9 +91,10 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityGroupSettingImpl.class, FINDER_CLASS_NAME_LIST,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -938,6 +941,17 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	private static SocialEquityGroupSetting _nullSocialEquityGroupSetting = new SocialEquityGroupSettingImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityGroupSetting> toCacheModel() {
+				return _nullSocialEquityGroupSettingCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityGroupSetting> _nullSocialEquityGroupSettingCacheModel =
+		new CacheModel<SocialEquityGroupSetting>() {
+			public SocialEquityGroupSetting toEntityModel() {
+				return _nullSocialEquityGroupSetting;
 			}
 		};
 }

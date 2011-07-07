@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -180,6 +181,8 @@ public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
 	public int compareTo(ExpandoColumn expandoColumn);
 
 	public int hashCode();
+
+	public CacheModel<ExpandoColumn> toCacheModel();
 
 	public ExpandoColumn toEscapedModel();
 

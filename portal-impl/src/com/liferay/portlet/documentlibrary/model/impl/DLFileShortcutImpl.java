@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileShortcutImpl
-	extends DLFileShortcutModelImpl implements DLFileShortcut {
+public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 
 	public DLFileShortcutImpl() {
 	}

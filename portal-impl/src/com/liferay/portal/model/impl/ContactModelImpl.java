@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactModel;
 import com.liferay.portal.model.ContactSoap;
@@ -688,6 +689,199 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Contact> toCacheModel() {
+		ContactCacheModel contactCacheModel = new ContactCacheModel();
+
+		contactCacheModel.contactId = getContactId();
+
+		contactCacheModel.companyId = getCompanyId();
+
+		contactCacheModel.userId = getUserId();
+
+		contactCacheModel.userName = getUserName();
+
+		String userName = contactCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			contactCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			contactCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			contactCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		contactCacheModel.accountId = getAccountId();
+
+		contactCacheModel.parentContactId = getParentContactId();
+
+		contactCacheModel.firstName = getFirstName();
+
+		String firstName = contactCacheModel.firstName;
+
+		if ((firstName != null) && (firstName.length() == 0)) {
+			contactCacheModel.firstName = null;
+		}
+
+		contactCacheModel.middleName = getMiddleName();
+
+		String middleName = contactCacheModel.middleName;
+
+		if ((middleName != null) && (middleName.length() == 0)) {
+			contactCacheModel.middleName = null;
+		}
+
+		contactCacheModel.lastName = getLastName();
+
+		String lastName = contactCacheModel.lastName;
+
+		if ((lastName != null) && (lastName.length() == 0)) {
+			contactCacheModel.lastName = null;
+		}
+
+		contactCacheModel.prefixId = getPrefixId();
+
+		contactCacheModel.suffixId = getSuffixId();
+
+		contactCacheModel.male = getMale();
+
+		Date birthday = getBirthday();
+
+		if (birthday != null) {
+			contactCacheModel.birthday = birthday.getTime();
+		}
+
+		contactCacheModel.smsSn = getSmsSn();
+
+		String smsSn = contactCacheModel.smsSn;
+
+		if ((smsSn != null) && (smsSn.length() == 0)) {
+			contactCacheModel.smsSn = null;
+		}
+
+		contactCacheModel.aimSn = getAimSn();
+
+		String aimSn = contactCacheModel.aimSn;
+
+		if ((aimSn != null) && (aimSn.length() == 0)) {
+			contactCacheModel.aimSn = null;
+		}
+
+		contactCacheModel.facebookSn = getFacebookSn();
+
+		String facebookSn = contactCacheModel.facebookSn;
+
+		if ((facebookSn != null) && (facebookSn.length() == 0)) {
+			contactCacheModel.facebookSn = null;
+		}
+
+		contactCacheModel.icqSn = getIcqSn();
+
+		String icqSn = contactCacheModel.icqSn;
+
+		if ((icqSn != null) && (icqSn.length() == 0)) {
+			contactCacheModel.icqSn = null;
+		}
+
+		contactCacheModel.jabberSn = getJabberSn();
+
+		String jabberSn = contactCacheModel.jabberSn;
+
+		if ((jabberSn != null) && (jabberSn.length() == 0)) {
+			contactCacheModel.jabberSn = null;
+		}
+
+		contactCacheModel.msnSn = getMsnSn();
+
+		String msnSn = contactCacheModel.msnSn;
+
+		if ((msnSn != null) && (msnSn.length() == 0)) {
+			contactCacheModel.msnSn = null;
+		}
+
+		contactCacheModel.mySpaceSn = getMySpaceSn();
+
+		String mySpaceSn = contactCacheModel.mySpaceSn;
+
+		if ((mySpaceSn != null) && (mySpaceSn.length() == 0)) {
+			contactCacheModel.mySpaceSn = null;
+		}
+
+		contactCacheModel.skypeSn = getSkypeSn();
+
+		String skypeSn = contactCacheModel.skypeSn;
+
+		if ((skypeSn != null) && (skypeSn.length() == 0)) {
+			contactCacheModel.skypeSn = null;
+		}
+
+		contactCacheModel.twitterSn = getTwitterSn();
+
+		String twitterSn = contactCacheModel.twitterSn;
+
+		if ((twitterSn != null) && (twitterSn.length() == 0)) {
+			contactCacheModel.twitterSn = null;
+		}
+
+		contactCacheModel.ymSn = getYmSn();
+
+		String ymSn = contactCacheModel.ymSn;
+
+		if ((ymSn != null) && (ymSn.length() == 0)) {
+			contactCacheModel.ymSn = null;
+		}
+
+		contactCacheModel.employeeStatusId = getEmployeeStatusId();
+
+		String employeeStatusId = contactCacheModel.employeeStatusId;
+
+		if ((employeeStatusId != null) && (employeeStatusId.length() == 0)) {
+			contactCacheModel.employeeStatusId = null;
+		}
+
+		contactCacheModel.employeeNumber = getEmployeeNumber();
+
+		String employeeNumber = contactCacheModel.employeeNumber;
+
+		if ((employeeNumber != null) && (employeeNumber.length() == 0)) {
+			contactCacheModel.employeeNumber = null;
+		}
+
+		contactCacheModel.jobTitle = getJobTitle();
+
+		String jobTitle = contactCacheModel.jobTitle;
+
+		if ((jobTitle != null) && (jobTitle.length() == 0)) {
+			contactCacheModel.jobTitle = null;
+		}
+
+		contactCacheModel.jobClass = getJobClass();
+
+		String jobClass = contactCacheModel.jobClass;
+
+		if ((jobClass != null) && (jobClass.length() == 0)) {
+			contactCacheModel.jobClass = null;
+		}
+
+		contactCacheModel.hoursOfOperation = getHoursOfOperation();
+
+		String hoursOfOperation = contactCacheModel.hoursOfOperation;
+
+		if ((hoursOfOperation != null) && (hoursOfOperation.length() == 0)) {
+			contactCacheModel.hoursOfOperation = null;
+		}
+
+		return contactCacheModel;
 	}
 
 	@Override

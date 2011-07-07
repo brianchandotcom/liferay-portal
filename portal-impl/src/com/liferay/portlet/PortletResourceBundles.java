@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
@@ -26,7 +27,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
@@ -158,11 +158,7 @@ public class PortletResourceBundles {
 			ResourceBundle resourceBundle = _getResourceBundle(
 				resourceBundles, languageId);
 
-			try {
-				return resourceBundle.getString(key);
-			}
-			catch (MissingResourceException mre) {
-			}
+			return ResourceBundleUtil.getString(resourceBundle, key);
 		}
 
 		return null;

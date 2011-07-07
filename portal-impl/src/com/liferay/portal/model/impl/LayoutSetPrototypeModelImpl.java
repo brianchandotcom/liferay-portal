@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutSetPrototypeModel;
 import com.liferay.portal.model.LayoutSetPrototypeSoap;
@@ -409,6 +410,51 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<LayoutSetPrototype> toCacheModel() {
+		LayoutSetPrototypeCacheModel layoutSetPrototypeCacheModel = new LayoutSetPrototypeCacheModel();
+
+		layoutSetPrototypeCacheModel.uuid = getUuid();
+
+		String uuid = layoutSetPrototypeCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			layoutSetPrototypeCacheModel.uuid = null;
+		}
+
+		layoutSetPrototypeCacheModel.layoutSetPrototypeId = getLayoutSetPrototypeId();
+
+		layoutSetPrototypeCacheModel.companyId = getCompanyId();
+
+		layoutSetPrototypeCacheModel.name = getName();
+
+		String name = layoutSetPrototypeCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			layoutSetPrototypeCacheModel.name = null;
+		}
+
+		layoutSetPrototypeCacheModel.description = getDescription();
+
+		String description = layoutSetPrototypeCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			layoutSetPrototypeCacheModel.description = null;
+		}
+
+		layoutSetPrototypeCacheModel.settings = getSettings();
+
+		String settings = layoutSetPrototypeCacheModel.settings;
+
+		if ((settings != null) && (settings.length() == 0)) {
+			layoutSetPrototypeCacheModel.settings = null;
+		}
+
+		layoutSetPrototypeCacheModel.active = getActive();
+
+		return layoutSetPrototypeCacheModel;
 	}
 
 	@Override

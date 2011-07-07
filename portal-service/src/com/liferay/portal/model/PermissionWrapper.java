@@ -181,6 +181,10 @@ public class PermissionWrapper implements Permission {
 		return _permission.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Permission> toCacheModel() {
+		return _permission.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Permission toEscapedModel() {
 		return new PermissionWrapper(_permission.toEscapedModel());
 	}
@@ -192,6 +196,11 @@ public class PermissionWrapper implements Permission {
 
 	public java.lang.String toXmlString() {
 		return _permission.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_permission.save();
 	}
 
 	public java.lang.String getName() {

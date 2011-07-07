@@ -16,6 +16,8 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter;
+import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -27,6 +29,15 @@ import javax.servlet.http.HttpSessionListener;
 public class PortalSessionListener implements HttpSessionListener {
 
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
+				new CompoundSessionIdHttpSession(
+					httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(
+				compoundSessionIdHttpSession);
+		}
+
 		new PortalSessionCreator(httpSessionEvent);
 
 		HttpSession session = httpSessionEvent.getSession();
@@ -37,6 +48,15 @@ public class PortalSessionListener implements HttpSessionListener {
 	}
 
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
+				new CompoundSessionIdHttpSession(
+					httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(
+				compoundSessionIdHttpSession);
+		}
+
 		new PortalSessionDestroyer(httpSessionEvent);
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.SESSION);

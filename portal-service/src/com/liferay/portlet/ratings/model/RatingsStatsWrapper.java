@@ -227,6 +227,10 @@ public class RatingsStatsWrapper implements RatingsStats {
 		return _ratingsStats.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.ratings.model.RatingsStats> toCacheModel() {
+		return _ratingsStats.toCacheModel();
+	}
+
 	public com.liferay.portlet.ratings.model.RatingsStats toEscapedModel() {
 		return new RatingsStatsWrapper(_ratingsStats.toEscapedModel());
 	}
@@ -238,6 +242,11 @@ public class RatingsStatsWrapper implements RatingsStats {
 
 	public java.lang.String toXmlString() {
 		return _ratingsStats.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ratingsStats.save();
 	}
 
 	public RatingsStats getWrappedRatingsStats() {

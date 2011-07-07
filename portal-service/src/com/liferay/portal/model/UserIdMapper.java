@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the UserIdMapper service. Represents a row in the &quot;UserIdMapper&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the UserIdMapper service. Represents a row in the &quot;UserIdMapper&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see UserIdMapperModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.UserIdMapperModelImpl
  * @generated
  */
-public interface UserIdMapper extends UserIdMapperModel {
+public interface UserIdMapper extends UserIdMapperModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

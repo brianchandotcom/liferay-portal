@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -452,6 +453,73 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		ddlRecordModelImpl._originalGroupId = ddlRecordModelImpl._groupId;
 
 		ddlRecordModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<DDLRecord> toCacheModel() {
+		DDLRecordCacheModel ddlRecordCacheModel = new DDLRecordCacheModel();
+
+		ddlRecordCacheModel.uuid = getUuid();
+
+		String uuid = ddlRecordCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			ddlRecordCacheModel.uuid = null;
+		}
+
+		ddlRecordCacheModel.recordId = getRecordId();
+
+		ddlRecordCacheModel.groupId = getGroupId();
+
+		ddlRecordCacheModel.companyId = getCompanyId();
+
+		ddlRecordCacheModel.userId = getUserId();
+
+		ddlRecordCacheModel.userName = getUserName();
+
+		String userName = ddlRecordCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			ddlRecordCacheModel.userName = null;
+		}
+
+		ddlRecordCacheModel.versionUserId = getVersionUserId();
+
+		ddlRecordCacheModel.versionUserName = getVersionUserName();
+
+		String versionUserName = ddlRecordCacheModel.versionUserName;
+
+		if ((versionUserName != null) && (versionUserName.length() == 0)) {
+			ddlRecordCacheModel.versionUserName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			ddlRecordCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			ddlRecordCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		ddlRecordCacheModel.DDMStorageId = getDDMStorageId();
+
+		ddlRecordCacheModel.recordSetId = getRecordSetId();
+
+		ddlRecordCacheModel.version = getVersion();
+
+		String version = ddlRecordCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			ddlRecordCacheModel.version = null;
+		}
+
+		ddlRecordCacheModel.displayIndex = getDisplayIndex();
+
+		return ddlRecordCacheModel;
 	}
 
 	@Override

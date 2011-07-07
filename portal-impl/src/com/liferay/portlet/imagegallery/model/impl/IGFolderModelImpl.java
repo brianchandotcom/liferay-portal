@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -446,6 +447,67 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		igFolderModelImpl._setOriginalParentFolderId = false;
 
 		igFolderModelImpl._originalName = igFolderModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<IGFolder> toCacheModel() {
+		IGFolderCacheModel igFolderCacheModel = new IGFolderCacheModel();
+
+		igFolderCacheModel.uuid = getUuid();
+
+		String uuid = igFolderCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			igFolderCacheModel.uuid = null;
+		}
+
+		igFolderCacheModel.folderId = getFolderId();
+
+		igFolderCacheModel.groupId = getGroupId();
+
+		igFolderCacheModel.companyId = getCompanyId();
+
+		igFolderCacheModel.userId = getUserId();
+
+		igFolderCacheModel.userName = getUserName();
+
+		String userName = igFolderCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			igFolderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			igFolderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			igFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		igFolderCacheModel.parentFolderId = getParentFolderId();
+
+		igFolderCacheModel.name = getName();
+
+		String name = igFolderCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			igFolderCacheModel.name = null;
+		}
+
+		igFolderCacheModel.description = getDescription();
+
+		String description = igFolderCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			igFolderCacheModel.description = null;
+		}
+
+		return igFolderCacheModel;
 	}
 
 	@Override

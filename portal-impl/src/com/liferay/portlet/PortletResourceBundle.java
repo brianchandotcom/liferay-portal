@@ -15,6 +15,8 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ResourceBundleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.PortletInfo;
 
 import java.util.Enumeration;
@@ -25,6 +27,7 @@ import java.util.ResourceBundle;
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
+ * @author Shuyang Zhou
  */
 public class PortletResourceBundle extends ResourceBundle {
 
@@ -35,46 +38,49 @@ public class PortletResourceBundle extends ResourceBundle {
 	public PortletResourceBundle(
 		ResourceBundle parentResourceBundle, PortletInfo portletInfo) {
 
-		_parentResourceBundle = parentResourceBundle;
+		parent = parentResourceBundle;
+
 		_portletInfo = portletInfo;
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return _parentResourceBundle.getKeys();
+		return parent.getKeys();
 	}
 
 	@Override
 	public Locale getLocale() {
-		return _parentResourceBundle.getLocale();
+		return parent.getLocale();
 	}
 
 	@Override
 	protected Object handleGetObject(String key) {
-		try {
-			if (_parentResourceBundle == null) {
-				return _getJavaxPortletString(key);
-			}
-			else {
-				return _parentResourceBundle.getObject(key);
-			}
+		if (key == null) {
+			throw new NullPointerException();
 		}
-		catch (MissingResourceException mre) {
-			String value = _getJavaxPortletString(key);
 
-			if (value != null) {
-				return value;
+		String value = null;
+
+		if (parent != null) {
+			try {
+				value = parent.getString(key);
 			}
-			else {
-				throw mre;
+			catch (MissingResourceException mre) {
 			}
 		}
+
+		if ((value == null) || (value == ResourceBundleUtil.NULL_VALUE)) {
+			value = _getJavaxPortletString(key);
+		}
+
+		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
+			value = ResourceBundleUtil.NULL_VALUE;
+		}
+
+		return value;
 	}
 	private String _getJavaxPortletString(String key) {
-		if (key == null) {
-			return null;
-		}
-		else if (key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
+		if (key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
 			return _portletInfo.getTitle();
 		}
 		else if (key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE)) {
@@ -90,7 +96,6 @@ public class PortletResourceBundle extends ResourceBundle {
 		return null;
 	}
 
-	private ResourceBundle _parentResourceBundle;
 	private PortletInfo _portletInfo;
 
 }

@@ -30,7 +30,7 @@ public class ViewAuthenticationNTLMTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,16 +41,35 @@ public class ViewAuthenticationNTLMTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_130_authenticationLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("link=NTLM", RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Authentication"));
+		selenium.clickAt("link=NTLM", RuntimeVariables.replace("NTLM"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -59,7 +78,7 @@ public class ViewAuthenticationNTLMTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"_130_settings--ntlm.auth.enabled--Checkbox")) {
+							"//input[@name='_130_settings--ntlm.auth.enabled--Checkbox']")) {
 					break;
 				}
 			}
@@ -71,7 +90,7 @@ public class ViewAuthenticationNTLMTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
-				"_130_settings--ntlm.auth.enabled--Checkbox"));
+				"//input[@name='_130_settings--ntlm.auth.enabled--Checkbox']"));
 		assertTrue(selenium.isTextPresent("Domain Controller"));
 		assertTrue(selenium.isTextPresent("Domain"));
 	}

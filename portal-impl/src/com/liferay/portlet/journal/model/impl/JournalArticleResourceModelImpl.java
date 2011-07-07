@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -269,6 +270,33 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
 
 		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
+	}
+
+	@Override
+	public CacheModel<JournalArticleResource> toCacheModel() {
+		JournalArticleResourceCacheModel journalArticleResourceCacheModel = new JournalArticleResourceCacheModel();
+
+		journalArticleResourceCacheModel.uuid = getUuid();
+
+		String uuid = journalArticleResourceCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			journalArticleResourceCacheModel.uuid = null;
+		}
+
+		journalArticleResourceCacheModel.resourcePrimKey = getResourcePrimKey();
+
+		journalArticleResourceCacheModel.groupId = getGroupId();
+
+		journalArticleResourceCacheModel.articleId = getArticleId();
+
+		String articleId = journalArticleResourceCacheModel.articleId;
+
+		if ((articleId != null) && (articleId.length() == 0)) {
+			journalArticleResourceCacheModel.articleId = null;
+		}
+
+		return journalArticleResourceCacheModel;
 	}
 
 	@Override

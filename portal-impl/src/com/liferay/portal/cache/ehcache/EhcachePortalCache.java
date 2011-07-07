@@ -35,6 +35,7 @@ import net.sf.ehcache.event.RegisteredEventListeners;
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
+ * @author Shuyang Zhou
  */
 public class EhcachePortalCache extends BasePortalCache {
 
@@ -42,10 +43,8 @@ public class EhcachePortalCache extends BasePortalCache {
 		_ehcache = ehcache;
 	}
 
-	public Object get(String key) {
-		String processedKey = processKey(key);
-
-		Element element = _ehcache.get(processedKey);
+	public Object get(Serializable key) {
+		Element element = _ehcache.get(key);
 
 		if (element == null) {
 			return null;
@@ -55,10 +54,10 @@ public class EhcachePortalCache extends BasePortalCache {
 		}
 	}
 
-	public Collection<Object> get(Collection<String> keys) {
+	public Collection<Object> get(Collection<Serializable> keys) {
 		List<Object> values = new ArrayList<Object>(keys.size());
 
-		for (String key : keys) {
+		for (Serializable key : keys) {
 			values.add(get(key));
 		}
 
@@ -69,28 +68,28 @@ public class EhcachePortalCache extends BasePortalCache {
 		return _ehcache.getName();
 	}
 
-	public void put(String key, Object value) {
-		Element element = createElement(key, value);
+	public void put(Serializable key, Object value) {
+		Element element = new Element(key, value);
 
 		_ehcache.put(element);
 	}
 
-	public void put(String key, Object value, int timeToLive) {
-		Element element = createElement(key, value);
+	public void put(Serializable key, Object value, int timeToLive) {
+		Element element = new Element(key, value);
 
 		element.setTimeToLive(timeToLive);
 
 		_ehcache.put(element);
 	}
 
-	public void put(String key, Serializable value) {
-		Element element = createElement(key, value);
+	public void put(Serializable key, Serializable value) {
+		Element element = new Element(key, value);
 
 		_ehcache.put(element);
 	}
 
-	public void put(String key, Serializable value, int timeToLive) {
-		Element element = createElement(key, value);
+	public void put(Serializable key, Serializable value, int timeToLive) {
+		Element element = new Element(key, value);
 
 		element.setTimeToLive(timeToLive);
 
@@ -123,10 +122,8 @@ public class EhcachePortalCache extends BasePortalCache {
 			cacheEventListener, notificationScope);
 	}
 
-	public void remove(String key) {
-		String processedKey = processKey(key);
-
-		_ehcache.remove(processedKey);
+	public void remove(Serializable key) {
+		_ehcache.remove(key);
 	}
 
 	public void removeAll() {
@@ -162,14 +159,6 @@ public class EhcachePortalCache extends BasePortalCache {
 		}
 
 		_cacheEventListeners.clear();
-	}
-
-	protected Element createElement(String key, Object value) {
-		String processedKey = processKey(key);
-
-		Element element = new Element(processedKey, value);
-
-		return element;
 	}
 
 	protected NotificationScope getNotificationScope(

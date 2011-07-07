@@ -15,6 +15,8 @@
 package com.liferay.portal.language;
 
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ResourceBundleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -70,7 +73,23 @@ public class LiferayResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		return _map.get(key);
+		String value = _map.get(key);
+
+		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
+			if (parent != null) {
+				try {
+					value = parent.getString(key);
+				}
+				catch (MissingResourceException mre) {
+				}
+			}
+
+			if (value == null) {
+				value = ResourceBundleUtil.NULL_VALUE;
+			}
+		}
+
+		return value;
 	}
 
 	@Override

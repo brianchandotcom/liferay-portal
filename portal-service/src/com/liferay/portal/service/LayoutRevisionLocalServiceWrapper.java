@@ -197,7 +197,7 @@ public class LayoutRevisionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the layout revision in the database. Also notifies the appropriate model listeners.
+	* Updates the layout revision in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutRevision the layout revision
 	* @return the layout revision that was updated
@@ -210,7 +210,7 @@ public class LayoutRevisionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the layout revision in the database. Also notifies the appropriate model listeners.
+	* Updates the layout revision in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param layoutRevision the layout revision
 	* @param merge whether to merge the layout revision with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
@@ -265,6 +265,14 @@ public class LayoutRevisionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutRevisionLocalService.deleteLayoutLayoutRevisions(plid);
+	}
+
+	public void deleteLayoutRevisions(long layoutSetBranchId, long plid,
+		java.lang.String variationName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutRevisionLocalService.deleteLayoutRevisions(layoutSetBranchId,
+			plid, variationName);
 	}
 
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid)

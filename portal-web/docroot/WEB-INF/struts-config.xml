@@ -699,6 +699,8 @@
 
 		<action path="/group_pages/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
+		<action path="/group_pages/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
+
 		<!-- IFrame -->
 
 		<action path="/iframe/proxy" forward="/portlet/iframe/proxy.jsp" />
@@ -981,6 +983,8 @@
 		<action path="/layouts_admin/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
 
 		<action path="/layouts_admin/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+
+		<action path="/layouts_admin/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
 
 		<!-- Login -->
 
@@ -1742,6 +1746,8 @@
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+
+		<action path="/staging_bar/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
 
 		<!-- Update Manager -->
 

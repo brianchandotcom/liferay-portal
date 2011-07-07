@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -183,6 +184,8 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 	public int compareTo(MBStatsUser mbStatsUser);
 
 	public int hashCode();
+
+	public CacheModel<MBStatsUser> toCacheModel();
 
 	public MBStatsUser toEscapedModel();
 

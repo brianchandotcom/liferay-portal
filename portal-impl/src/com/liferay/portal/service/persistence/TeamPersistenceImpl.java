@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamImpl;
@@ -79,8 +80,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByGroupId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -88,22 +89,23 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByGroupId", new String[] { Long.class.getName() });
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_N",
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByG_N",
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByG_N",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			TeamModelImpl.FINDER_CACHE_ENABLED, TeamImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			TeamModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the team in the entity cache if it is enabled.
@@ -874,11 +876,18 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
@@ -988,11 +997,18 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			query = new StringBundler(3);
 		}
 
-		query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1);
+		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		appendGroupByComparator(query, _FILTER_ENTITY_TABLE_PK_COLUMN);
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -1648,6 +1664,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	public static final FinderPath FINDER_PATH_GET_USERS = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
 			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			com.liferay.portal.model.impl.UserImpl.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getUsers",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -1729,7 +1746,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Long.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getUsersSize",
 			new String[] { Long.class.getName() });
 
@@ -1782,7 +1799,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USER = new FinderPath(com.liferay.portal.model.impl.UserModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Boolean.class,
 			TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "containsUser",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
@@ -2109,6 +2126,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			com.liferay.portal.model.impl.UserGroupImpl.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME, "getUserGroups",
 			new String[] {
 				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
@@ -2191,7 +2209,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_GET_USERGROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS, Long.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME,
 			"getUserGroupsSize", new String[] { Long.class.getName() });
 
@@ -2244,7 +2262,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	public static final FinderPath FINDER_PATH_CONTAINS_USERGROUP = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS,
+			TeamModelImpl.FINDER_CACHE_ENABLED_USERGROUPS_TEAMS, Boolean.class,
 			TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME,
 			"containsUserGroup",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -3075,11 +3093,14 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "team.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "team.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(team.name IS NULL OR team.name = ?)";
-	private static final String _FILTER_SQL_SELECT_TEAM_WHERE = "SELECT {team.*} FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_WHERE = "SELECT DISTINCT {team.*} FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ";
+	private static final String _FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN Team ON TEMP_TABLE.teamId = Team.teamId";
 	private static final String _FILTER_SQL_COUNT_TEAM_WHERE = "SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "team";
 	private static final String _FILTER_ENTITY_TABLE = "Team";
-	private static final String _FILTER_ENTITY_TABLE_PK_COLUMN = "team.teamId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "team.teamId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "team.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Team.";
@@ -3090,6 +3111,16 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static Team _nullTeam = new TeamImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Team> toCacheModel() {
+				return _nullTeamCacheModel;
+			}
+		};
+
+	private static CacheModel<Team> _nullTeamCacheModel = new CacheModel<Team>() {
+			public Team toEntityModel() {
+				return _nullTeam;
 			}
 		};
 }

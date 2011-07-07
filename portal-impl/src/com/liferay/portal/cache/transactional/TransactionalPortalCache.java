@@ -35,17 +35,17 @@ public class TransactionalPortalCache extends BasePortalCache {
 		_portalCache = portalCache;
 	}
 
-	public Collection<Object> get(Collection<String> keys) {
+	public Collection<Object> get(Collection<Serializable> keys) {
 		List<Object> values = new ArrayList<Object>(keys.size());
 
-		for (String key : keys) {
+		for (Serializable key : keys) {
 			values.add(get(key));
 		}
 
 		return values;
 	}
 
-	public Object get(String key) {
+	public Object get(Serializable key) {
 		Object result = null;
 
 		if (TransactionalPortalCacheHelper.isEnabled()) {
@@ -67,7 +67,7 @@ public class TransactionalPortalCache extends BasePortalCache {
 		return _portalCache.getName();
 	}
 
-	public void put(String key, Object value) {
+	public void put(Serializable key, Object value) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
 				value = _nullHolder;
@@ -80,7 +80,7 @@ public class TransactionalPortalCache extends BasePortalCache {
 		}
 	}
 
-	public void put(String key, Object value, int timeToLive) {
+	public void put(Serializable key, Object value, int timeToLive) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
 				value = _nullHolder;
@@ -93,7 +93,7 @@ public class TransactionalPortalCache extends BasePortalCache {
 		}
 	}
 
-	public void put(String key, Serializable value) {
+	public void put(Serializable key, Serializable value) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
 				value = _nullHolder;
@@ -106,7 +106,7 @@ public class TransactionalPortalCache extends BasePortalCache {
 		}
 	}
 
-	public void put(String key, Serializable value, int timeToLive) {
+	public void put(Serializable key, Serializable value, int timeToLive) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
 				value = _nullHolder;
@@ -129,7 +129,7 @@ public class TransactionalPortalCache extends BasePortalCache {
 		_portalCache.registerCacheListener(cacheListener, cacheListenerScope);
 	}
 
-	public void remove(String key) {
+	public void remove(Serializable key) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			TransactionalPortalCacheHelper.remove(_portalCache, key);
 		}

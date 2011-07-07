@@ -163,6 +163,10 @@ public class ListTypeWrapper implements ListType {
 		return _listType.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ListType> toCacheModel() {
+		return _listType.toCacheModel();
+	}
+
 	public com.liferay.portal.model.ListType toEscapedModel() {
 		return new ListTypeWrapper(_listType.toEscapedModel());
 	}

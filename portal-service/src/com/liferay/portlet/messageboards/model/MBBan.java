@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the MBBan service. Represents a row in the &quot;MBBan&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the MBBan service. Represents a row in the &quot;MBBan&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see MBBanModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see com.liferay.portlet.messageboards.model.impl.MBBanModelImpl
  * @generated
  */
-public interface MBBan extends MBBanModel {
+public interface MBBan extends MBBanModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

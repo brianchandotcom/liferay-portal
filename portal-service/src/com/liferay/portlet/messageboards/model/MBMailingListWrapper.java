@@ -643,6 +643,10 @@ public class MBMailingListWrapper implements MBMailingList {
 		return _mbMailingList.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBMailingList> toCacheModel() {
+		return _mbMailingList.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBMailingList toEscapedModel() {
 		return new MBMailingListWrapper(_mbMailingList.toEscapedModel());
 	}
@@ -654,6 +658,11 @@ public class MBMailingListWrapper implements MBMailingList {
 
 	public java.lang.String toXmlString() {
 		return _mbMailingList.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMailingList.save();
 	}
 
 	public MBMailingList getWrappedMBMailingList() {

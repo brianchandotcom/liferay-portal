@@ -27,16 +27,24 @@ import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class SQLQueryImpl implements SQLQuery {
 
-	public SQLQueryImpl(org.hibernate.SQLQuery sqlQuery) {
+	public SQLQueryImpl(org.hibernate.SQLQuery sqlQuery, boolean strictName) {
 		_sqlQuery = sqlQuery;
+
+		if (!_strictName) {
+			_names = sqlQuery.getNamedParameters();
+
+			Arrays.sort(_names);
+		}
 	}
 
 	public SQLQuery addEntity(String alias, Class<?> entityClass) {
@@ -112,6 +120,16 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	public Query setBoolean(String name, boolean value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setBoolean(name, value);
+
+		return this;
+	}
+
 	public Query setCacheable(boolean cacheable) {
 		_sqlQuery.setCacheable(cacheable);
 
@@ -136,6 +154,16 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	public Query setDouble(String name, double value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setDouble(name, value);
+
+		return this;
+	}
+
 	public Query setFirstResult(int firstResult) {
 		_sqlQuery.setFirstResult(firstResult);
 
@@ -148,14 +176,44 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	public Query setFloat(String name, float value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setFloat(name, value);
+
+		return this;
+	}
+
 	public Query setInteger(int pos, int value) {
 		_sqlQuery.setInteger(pos, value);
 
 		return this;
 	}
 
+	public Query setInteger(String name, int value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setInteger(name, value);
+
+		return this;
+	}
+
 	public Query setLong(int pos, long value) {
 		_sqlQuery.setLong(pos, value);
+
+		return this;
+	}
+
+	public Query setLong(String name, long value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setLong(name, value);
 
 		return this;
 	}
@@ -172,8 +230,28 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	public Query setSerializable(String name, Serializable value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setSerializable(name, value);
+
+		return this;
+	}
+
 	public Query setShort(int pos, short value) {
 		_sqlQuery.setShort(pos, value);
+
+		return this;
+	}
+
+	public Query setShort(String name, short value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setShort(name, value);
 
 		return this;
 	}
@@ -184,8 +262,28 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	public Query setString(String name, String value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setString(name, value);
+
+		return this;
+	}
+
 	public Query setTimestamp(int pos, Timestamp value) {
 		_sqlQuery.setTimestamp(pos, value);
+
+		return this;
+	}
+
+	public Query setTimestamp(String name, Timestamp value) {
+		if (!_strictName && (Arrays.binarySearch(_names, name) < 0)) {
+			return this;
+		}
+
+		_sqlQuery.setTimestamp(name, value);
 
 		return this;
 	}
@@ -199,6 +297,8 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
+	private String[] _names;
 	private org.hibernate.SQLQuery _sqlQuery;
+	private boolean _strictName;
 
 }

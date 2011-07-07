@@ -211,7 +211,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Updates the d d l record set in the database. Also notifies the appropriate model listeners.
+	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddlRecordSet the d d l record set
 	* @return the d d l record set that was updated
@@ -224,7 +224,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Updates the d d l record set in the database. Also notifies the appropriate model listeners.
+	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddlRecordSet the d d l record set
 	* @param merge whether to merge the d d l record set with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

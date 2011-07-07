@@ -65,7 +65,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = ParamUtil.getString(portletRequest, TITLE);
 		type = ParamUtil.getString(portletRequest, TYPE);
-		version = ParamUtil.getDouble(portletRequest, VERSION, -1);
+		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
 	}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ServiceContext;
@@ -281,26 +280,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 	}
 
-	protected void appendGroupByComparator(
-		StringBundler query, String groupByField) {
-
-		appendGroupByComparator(query, new String[] {groupByField});
-	}
-
-	protected void appendGroupByComparator(
-		StringBundler query, String[] groupByFields) {
-
-		query.append(GROUP_BY_CLAUSE);
-
-		for (int i = 0; i < groupByFields.length; i++) {
-			if (i > 0) {
-				query.append(StringPool.COMMA);
-			}
-
-			query.append(groupByFields[i]);
-		}
-	}
-
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
 		OrderByComparator orderByComparator) {
@@ -362,8 +341,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected T updateImpl(T model, boolean merge) throws SystemException {
 		throw new UnsupportedOperationException();
 	}
-
-	protected static final String GROUP_BY_CLAUSE = " GROUP BY ";
 
 	protected static final String ORDER_BY_ASC = " ASC";
 

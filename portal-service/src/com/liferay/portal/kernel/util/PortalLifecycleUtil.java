@@ -14,15 +14,15 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PortalLifecycleUtil {
 
-	public static synchronized void flushDestroys() {
+	public static void flushDestroys() {
 		_inFlushDestroys = true;
 
 		for (PortalLifecycle portalLifecycle : _portalLifecyclesDestroy) {
@@ -35,25 +35,25 @@ public class PortalLifecycleUtil {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static synchronized void flushInits() {
+	public static void flushInits() {
 		if (_portalLifecyclesInit != null) {
-			for (PortalLifecycle portalLifecycle : _portalLifecyclesInit) {
-				portalLifecycle.portalInit();
-			}
+			List<PortalLifecycle> portalLifecyclesInit = _portalLifecyclesInit;
 
 			_portalLifecyclesInit = null;
+
+			for (PortalLifecycle portalLifecycle : portalLifecyclesInit) {
+				portalLifecycle.portalInit();
+			}
 		}
 
 		PortalInitableUtil.flushInitables();
 	}
 
-	public static synchronized void register(PortalLifecycle portalLifecycle) {
+	public static void register(PortalLifecycle portalLifecycle) {
 		register(portalLifecycle, PortalLifecycle.METHOD_ALL);
 	}
 
-	public static synchronized void register(
-		PortalLifecycle portalLifecycle, int method) {
-
+	public static void register(PortalLifecycle portalLifecycle, int method) {
 		if ((method == PortalLifecycle.METHOD_ALL) ||
 			(method == PortalLifecycle.METHOD_INIT)) {
 
@@ -72,9 +72,7 @@ public class PortalLifecycleUtil {
 		}
 	}
 
-	public static synchronized void removeDestroy(
-		PortalLifecycle portalLifecycle) {
-
+	public static void removeDestroy(PortalLifecycle portalLifecycle) {
 		if (!_inFlushDestroys) {
 			_portalLifecyclesDestroy.remove(portalLifecycle);
 		}
@@ -82,8 +80,8 @@ public class PortalLifecycleUtil {
 
 	private static boolean _inFlushDestroys;
 	private static List<PortalLifecycle> _portalLifecyclesDestroy =
-		new Vector<PortalLifecycle>();
+		new ArrayList<PortalLifecycle>();
 	private static List<PortalLifecycle> _portalLifecyclesInit =
-		new Vector<PortalLifecycle>();
+		new ArrayList<PortalLifecycle>();
 
 }

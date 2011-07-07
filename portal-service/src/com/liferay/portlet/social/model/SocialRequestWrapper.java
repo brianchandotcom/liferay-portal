@@ -393,6 +393,10 @@ public class SocialRequestWrapper implements SocialRequest {
 		return _socialRequest.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.social.model.SocialRequest> toCacheModel() {
+		return _socialRequest.toCacheModel();
+	}
+
 	public com.liferay.portlet.social.model.SocialRequest toEscapedModel() {
 		return new SocialRequestWrapper(_socialRequest.toEscapedModel());
 	}
@@ -404,6 +408,11 @@ public class SocialRequestWrapper implements SocialRequest {
 
 	public java.lang.String toXmlString() {
 		return _socialRequest.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRequest.save();
 	}
 
 	public SocialRequest getWrappedSocialRequest() {

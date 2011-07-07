@@ -423,7 +423,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the service component in the database. Also notifies the appropriate model listeners.
+	 * Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param serviceComponent the service component
 	 * @return the service component that was updated
@@ -435,7 +435,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the service component in the database. Also notifies the appropriate model listeners.
+	 * Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param serviceComponent the service component
 	 * @param merge whether to merge the service component with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

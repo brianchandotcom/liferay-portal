@@ -58,9 +58,6 @@ if (toFileEntryId > 0) {
 	}
 }
 
-Boolean isLocked = Boolean.TRUE;
-Boolean hasLock = Boolean.FALSE;
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", strutsAction);

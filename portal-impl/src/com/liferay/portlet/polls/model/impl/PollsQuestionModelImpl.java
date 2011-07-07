@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -584,6 +585,77 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		pollsQuestionModelImpl._originalGroupId = pollsQuestionModelImpl._groupId;
 
 		pollsQuestionModelImpl._setOriginalGroupId = false;
+	}
+
+	@Override
+	public CacheModel<PollsQuestion> toCacheModel() {
+		PollsQuestionCacheModel pollsQuestionCacheModel = new PollsQuestionCacheModel();
+
+		pollsQuestionCacheModel.uuid = getUuid();
+
+		String uuid = pollsQuestionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			pollsQuestionCacheModel.uuid = null;
+		}
+
+		pollsQuestionCacheModel.questionId = getQuestionId();
+
+		pollsQuestionCacheModel.groupId = getGroupId();
+
+		pollsQuestionCacheModel.companyId = getCompanyId();
+
+		pollsQuestionCacheModel.userId = getUserId();
+
+		pollsQuestionCacheModel.userName = getUserName();
+
+		String userName = pollsQuestionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			pollsQuestionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			pollsQuestionCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			pollsQuestionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		pollsQuestionCacheModel.title = getTitle();
+
+		String title = pollsQuestionCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			pollsQuestionCacheModel.title = null;
+		}
+
+		pollsQuestionCacheModel.description = getDescription();
+
+		String description = pollsQuestionCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			pollsQuestionCacheModel.description = null;
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			pollsQuestionCacheModel.expirationDate = expirationDate.getTime();
+		}
+
+		Date lastVoteDate = getLastVoteDate();
+
+		if (lastVoteDate != null) {
+			pollsQuestionCacheModel.lastVoteDate = lastVoteDate.getTime();
+		}
+
+		return pollsQuestionCacheModel;
 	}
 
 	@Override

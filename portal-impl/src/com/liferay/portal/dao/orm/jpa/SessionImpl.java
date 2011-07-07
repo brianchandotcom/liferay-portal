@@ -25,17 +25,21 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 
 /**
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class SessionImpl implements Session {
 
@@ -62,11 +66,23 @@ public class SessionImpl implements Session {
 	}
 
 	public Query createQuery(String queryString) throws ORMException {
-		return new QueryImpl(this, queryString);
+		return createQuery(queryString, true);
+	}
+
+	public Query createQuery(String queryString, boolean strictName)
+		throws ORMException {
+
+		return new QueryImpl(this, queryString, strictName);
 	}
 
 	public SQLQuery createSQLQuery(String queryString) throws ORMException {
-		return new SQLQueryImpl(this, queryString);
+		return createSQLQuery(queryString, true);
+	}
+
+	public SQLQuery createSQLQuery(String queryString, boolean strictName)
+		throws ORMException {
+
+		return new SQLQueryImpl(this, queryString, strictName);
 	}
 
 	public void delete(Object object) throws ORMException {
@@ -165,44 +181,48 @@ public class SessionImpl implements Session {
 	}
 
 	protected int executeUpdate(
-		String queryString, Map<Integer, Object> parameterMap,
+		String queryString, Map<Integer, Object> positionalParameterMap,
+		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
 		boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
-			queryString, parameterMap, firstResult, maxResults,
-			flushMode, sqlQuery, entityClass);
+			queryString, positionalParameterMap, namedParameterMap, strictName,
+			firstResult, maxResults, flushMode, sqlQuery, entityClass);
 
 		return query.executeUpdate();
 	}
 
 	protected List<?> list(
-		String queryString, Map<Integer, Object> parameterMap, int firstResult,
-		int maxResults, FlushModeType flushMode, boolean sqlQuery,
-		Class<?> entityClass) {
+		String queryString, Map<Integer, Object> positionalParameterMap,
+		Map<String, Object> namedParameterMap, boolean strictName,
+		int firstResult, int maxResults, FlushModeType flushMode,
+		boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
-			queryString, parameterMap, firstResult, maxResults,
-			flushMode, sqlQuery, entityClass);
+			queryString, positionalParameterMap, namedParameterMap, strictName,
+			firstResult, maxResults, flushMode, sqlQuery, entityClass);
 
 		return query.getResultList();
 	}
 
 	protected Object uniqueResult(
-		String queryString, Map<Integer, Object> parameterMap, int firstResult,
-		int maxResults, FlushModeType flushMode, boolean sqlQuery,
-		Class<?> entityClass) {
+		String queryString, Map<Integer, Object> positionalParameterMap,
+		Map<String, Object> namedParameterMap, boolean strictName,
+		int firstResult, int maxResults, FlushModeType flushMode,
+		boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
-			queryString, parameterMap, firstResult, maxResults,
-			flushMode, sqlQuery, entityClass);
+			queryString, positionalParameterMap, namedParameterMap, strictName,
+			firstResult, maxResults, flushMode, sqlQuery, entityClass);
 
 		return query.getSingleResult();
 
 	}
 
 	private javax.persistence.Query _getExecutableQuery(
-		String queryString, Map<Integer, Object> parameterMap,
+		String queryString, Map<Integer, Object> positionalParameterMap,
+		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
 		boolean sqlQuery, Class<?> entityClass) {
 
@@ -221,7 +241,8 @@ public class SessionImpl implements Session {
 			query = _entityManager.createQuery(queryString);
 		}
 
-		_setParameters(query, parameterMap);
+		_setParameters(
+			query, positionalParameterMap, namedParameterMap, strictName);
 
 		if (firstResult != -1) {
 			query.setFirstResult(firstResult);
@@ -239,11 +260,14 @@ public class SessionImpl implements Session {
 	}
 
 	private void _setParameters(
-		javax.persistence.Query query, Map<Integer, Object> parameterMap) {
+		javax.persistence.Query query,
+		Map<Integer, Object> positionalParameterMap,
+		Map<String, Object> namedParameterMap, boolean strictName) {
 
-		for (Map.Entry<Integer, Object> entry : parameterMap.entrySet()) {
+		for (Map.Entry<Integer, Object> entry :
+				positionalParameterMap.entrySet()) {
+
 			int position = entry.getKey() + 1;
-
 			Object value = entry.getValue();
 
 			if (value instanceof Date) {
@@ -252,6 +276,36 @@ public class SessionImpl implements Session {
 			}
 			else {
 				query.setParameter(position, value);
+			}
+		}
+
+		if (!strictName) {
+			Set<Parameter<?>> parameters = query.getParameters();
+
+			Set<String> parameterNames = new HashSet<String>();
+
+			if (parameters != null) {
+				for (Parameter<?> parameter : parameters) {
+					String parameterName = parameter.getName();
+
+					if (parameterName != null) {
+						parameterNames.add(parameterName);
+					}
+				}
+			}
+
+			namedParameterMap.keySet().retainAll(parameterNames);
+		}
+
+		for (Map.Entry<String, Object> entry : namedParameterMap.entrySet()) {
+			String name = entry.getKey();
+			Object value = entry.getValue();
+
+			if (value instanceof Date) {
+				query.setParameter(name, (Date)value, TemporalType.TIMESTAMP);
+			}
+			else {
+				query.setParameter(name, value);
 			}
 		}
 	}

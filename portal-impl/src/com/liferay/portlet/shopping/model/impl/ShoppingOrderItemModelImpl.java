@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
@@ -317,6 +318,67 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ShoppingOrderItem> toCacheModel() {
+		ShoppingOrderItemCacheModel shoppingOrderItemCacheModel = new ShoppingOrderItemCacheModel();
+
+		shoppingOrderItemCacheModel.orderItemId = getOrderItemId();
+
+		shoppingOrderItemCacheModel.orderId = getOrderId();
+
+		shoppingOrderItemCacheModel.itemId = getItemId();
+
+		String itemId = shoppingOrderItemCacheModel.itemId;
+
+		if ((itemId != null) && (itemId.length() == 0)) {
+			shoppingOrderItemCacheModel.itemId = null;
+		}
+
+		shoppingOrderItemCacheModel.sku = getSku();
+
+		String sku = shoppingOrderItemCacheModel.sku;
+
+		if ((sku != null) && (sku.length() == 0)) {
+			shoppingOrderItemCacheModel.sku = null;
+		}
+
+		shoppingOrderItemCacheModel.name = getName();
+
+		String name = shoppingOrderItemCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			shoppingOrderItemCacheModel.name = null;
+		}
+
+		shoppingOrderItemCacheModel.description = getDescription();
+
+		String description = shoppingOrderItemCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			shoppingOrderItemCacheModel.description = null;
+		}
+
+		shoppingOrderItemCacheModel.properties = getProperties();
+
+		String properties = shoppingOrderItemCacheModel.properties;
+
+		if ((properties != null) && (properties.length() == 0)) {
+			shoppingOrderItemCacheModel.properties = null;
+		}
+
+		shoppingOrderItemCacheModel.price = getPrice();
+
+		shoppingOrderItemCacheModel.quantity = getQuantity();
+
+		Date shippedDate = getShippedDate();
+
+		if (shippedDate != null) {
+			shoppingOrderItemCacheModel.shippedDate = shippedDate.getTime();
+		}
+
+		return shoppingOrderItemCacheModel;
 	}
 
 	@Override

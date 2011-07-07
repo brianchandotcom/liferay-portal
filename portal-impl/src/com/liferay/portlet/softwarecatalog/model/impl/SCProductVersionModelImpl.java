@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -423,6 +424,75 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		SCProductVersionModelImpl scProductVersionModelImpl = this;
 
 		scProductVersionModelImpl._originalDirectDownloadURL = scProductVersionModelImpl._directDownloadURL;
+	}
+
+	@Override
+	public CacheModel<SCProductVersion> toCacheModel() {
+		SCProductVersionCacheModel scProductVersionCacheModel = new SCProductVersionCacheModel();
+
+		scProductVersionCacheModel.productVersionId = getProductVersionId();
+
+		scProductVersionCacheModel.companyId = getCompanyId();
+
+		scProductVersionCacheModel.userId = getUserId();
+
+		scProductVersionCacheModel.userName = getUserName();
+
+		String userName = scProductVersionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			scProductVersionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			scProductVersionCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			scProductVersionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		scProductVersionCacheModel.productEntryId = getProductEntryId();
+
+		scProductVersionCacheModel.version = getVersion();
+
+		String version = scProductVersionCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			scProductVersionCacheModel.version = null;
+		}
+
+		scProductVersionCacheModel.changeLog = getChangeLog();
+
+		String changeLog = scProductVersionCacheModel.changeLog;
+
+		if ((changeLog != null) && (changeLog.length() == 0)) {
+			scProductVersionCacheModel.changeLog = null;
+		}
+
+		scProductVersionCacheModel.downloadPageURL = getDownloadPageURL();
+
+		String downloadPageURL = scProductVersionCacheModel.downloadPageURL;
+
+		if ((downloadPageURL != null) && (downloadPageURL.length() == 0)) {
+			scProductVersionCacheModel.downloadPageURL = null;
+		}
+
+		scProductVersionCacheModel.directDownloadURL = getDirectDownloadURL();
+
+		String directDownloadURL = scProductVersionCacheModel.directDownloadURL;
+
+		if ((directDownloadURL != null) && (directDownloadURL.length() == 0)) {
+			scProductVersionCacheModel.directDownloadURL = null;
+		}
+
+		scProductVersionCacheModel.repoStoreArtifact = getRepoStoreArtifact();
+
+		return scProductVersionCacheModel;
 	}
 
 	@Override

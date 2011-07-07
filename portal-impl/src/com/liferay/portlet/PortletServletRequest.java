@@ -501,7 +501,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		Class<?> jettyHttpSessionWrapperClass = classLoader.loadClass(
-			"com.liferay.util.servlet.JettyHttpSessionWrapper");
+			"com.liferay.portal.servlet.JettyHttpSessionWrapper");
 
 		Constructor<?> constructor =
 			jettyHttpSessionWrapperClass.getConstructor(

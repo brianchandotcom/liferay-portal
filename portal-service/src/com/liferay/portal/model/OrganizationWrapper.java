@@ -334,6 +334,10 @@ public class OrganizationWrapper implements Organization {
 		return _organization.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Organization> toCacheModel() {
+		return _organization.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Organization toEscapedModel() {
 		return new OrganizationWrapper(_organization.toEscapedModel());
 	}
@@ -345,6 +349,11 @@ public class OrganizationWrapper implements Organization {
 
 	public java.lang.String toXmlString() {
 		return _organization.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_organization.save();
 	}
 
 	public com.liferay.portal.model.Address getAddress() {

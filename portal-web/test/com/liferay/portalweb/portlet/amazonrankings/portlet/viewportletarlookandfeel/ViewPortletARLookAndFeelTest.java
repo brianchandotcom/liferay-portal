@@ -45,6 +45,7 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			RuntimeVariables.replace("Amazon Rankings Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -105,7 +106,9 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals("", selenium.getValue("//input[@id='_113_custom-title']"));
+		Thread.sleep(5000);
+		assertEquals("Amazon Rankings",
+			selenium.getValue("//input[@id='_113_custom-title']"));
 		assertEquals("English (United States)",
 			selenium.getSelectedLabel(
 				"//select[@id='_113_lfr-portlet-language']"));
@@ -117,6 +120,9 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		assertTrue(selenium.isChecked(
 				"//input[@id='_113_show-bordersCheckbox']"));
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"-1em -0.95em -0.9em -0.85em -0.8em -0.75em -0.7em -0.65em -0.6em -0.55em -0.5em -0.45em -0.4em -0.35em -0.3em -0.25em -0.2em -0.15em -0.1em -0.05em Normal 0.05em 0.1em 0.15em 0.2em 0.25em 0.3em 0.35em 0.4em 0.45em 0.5em 0.55em 0.6em 0.65em 0.7em 0.75em 0.8em 0.85em 0.9em 0.95em"),
+			selenium.getText("//select[@id='_113_lfr-font-space']"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
 
@@ -140,9 +146,6 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Arial Georgia Times New Roman Tahoma Trebuchet MS Verdana"),
 			selenium.getText("//select[@id='_113_lfr-font-family']"));
-		assertEquals(RuntimeVariables.replace(
-				"-1em -0.95em -0.9em -0.85em -0.8em -0.75em -0.7em -0.65em -0.6em -0.55em -0.5em -0.45em -0.4em -0.35em -0.3em -0.25em -0.2em -0.15em -0.1em -0.05em Normal 0.05em 0.1em 0.15em 0.2em 0.25em 0.3em 0.35em 0.4em 0.45em 0.5em 0.55em 0.6em 0.65em 0.7em 0.75em 0.8em 0.85em 0.9em 0.95em"),
-			selenium.getText("//select[@id='_113_lfr-font-space']"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_113_lfr-font-boldCheckbox']"));
 		selenium.saveScreenShotAndSource();

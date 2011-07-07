@@ -35,6 +35,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -427,7 +429,7 @@ public class GroupFinderImpl
 
 		Long userId = (Long)params.get("usersGroups");
 		boolean inherit = GetterUtil.getBoolean(
-			String.valueOf(params.get("inherit")), true);
+			(Serializable)params.get("inherit"), true);
 
 		LinkedHashMap<String, Object> params1 = params;
 

@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the DLContent service. Represents a row in the &quot;DLContent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the DLContent service. Represents a row in the &quot;DLContent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DLContentModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl
  * @generated
  */
-public interface DLContent extends DLContentModel {
+public interface DLContent extends DLContentModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

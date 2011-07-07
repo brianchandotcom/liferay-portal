@@ -49,6 +49,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getIcon();
 
+	public String getMimeType();
+
 	public long getRepositoryId();
 
 	public long getSize();

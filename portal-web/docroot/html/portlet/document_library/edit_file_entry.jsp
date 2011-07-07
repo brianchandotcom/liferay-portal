@@ -85,12 +85,12 @@ else if (fileEntry != null) {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-Boolean isCheckedOut = Boolean.FALSE;
-Boolean hasLock = Boolean.FALSE;
+boolean checkedOut = false;
+boolean hasLock = false;
 Lock lock = null;
 
 if (fileEntry != null) {
-	isCheckedOut = fileEntry.isCheckedOut();
+	checkedOut = fileEntry.isCheckedOut();
 	hasLock = fileEntry.hasLock();
 	lock = fileEntry.getLock();
 }
@@ -109,7 +109,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 </c:if>
 
-<c:if test="<%= isCheckedOut %>">
+<c:if test="<%= checkedOut %>">
 	<c:choose>
 		<c:when test="<%= hasLock %>">
 			<div class="portlet-msg-success">
@@ -393,18 +393,18 @@ else if (fileEntryType != null) {
 				publishButtonLabel = "submit-for-publication";
 			}
 
-			if ((isCheckedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
+			if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 				publishButtonLabel = "save";
 			}
 			%>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED %>">
-				<aui:button disabled="<%= isCheckedOut && !hasLock %>" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' name="saveButton" value="<%= saveButtonLabel %>" />
+				<aui:button disabled="<%= checkedOut && !hasLock %>" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' name="saveButton" value="<%= saveButtonLabel %>" />
 			</c:if>
 
-			<aui:button disabled="<%= isCheckedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-			<c:if test="<%= (fileEntry != null) && ((isCheckedOut && hasLock) || !isCheckedOut) %>">
+			<c:if test="<%= (fileEntry != null) && ((checkedOut && hasLock) || !checkedOut) %>">
 				<c:choose>
 					<c:when test="<%= !hasLock %>">
 						<aui:button onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout" />

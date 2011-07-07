@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the ServiceComponent service. Represents a row in the &quot;ServiceComponent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ServiceComponent service. Represents a row in the &quot;ServiceComponent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ServiceComponentModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ServiceComponentModelImpl
  * @generated
  */
-public interface ServiceComponent extends ServiceComponentModel {
+public interface ServiceComponent extends ServiceComponentModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

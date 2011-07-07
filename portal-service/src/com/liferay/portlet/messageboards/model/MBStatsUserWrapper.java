@@ -240,6 +240,10 @@ public class MBStatsUserWrapper implements MBStatsUser {
 		return _mbStatsUser.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBStatsUser> toCacheModel() {
+		return _mbStatsUser.toCacheModel();
+	}
+
 	public com.liferay.portlet.messageboards.model.MBStatsUser toEscapedModel() {
 		return new MBStatsUserWrapper(_mbStatsUser.toEscapedModel());
 	}
@@ -251,6 +255,11 @@ public class MBStatsUserWrapper implements MBStatsUser {
 
 	public java.lang.String toXmlString() {
 		return _mbStatsUser.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbStatsUser.save();
 	}
 
 	public MBStatsUser getWrappedMBStatsUser() {

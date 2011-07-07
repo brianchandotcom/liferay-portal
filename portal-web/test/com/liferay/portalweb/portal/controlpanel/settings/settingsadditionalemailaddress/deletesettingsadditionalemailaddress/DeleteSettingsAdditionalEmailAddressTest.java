@@ -31,7 +31,7 @@ public class DeleteSettingsAdditionalEmailAddressTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,17 +42,37 @@ public class DeleteSettingsAdditionalEmailAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//a[@id='_130_additionalEmailAddressesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Additional Email Addresses"));
 		assertEquals("Admin@Liferay.com",
-			selenium.getValue("_130_emailAddressAddress0"));
+			selenium.getValue("//input[@id='_130_emailAddressAddress0']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,7 +91,7 @@ public class DeleteSettingsAdditionalEmailAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//button[2]", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete"));
 		assertFalse(selenium.isTextPresent("Admin@Liferay.com"));
 	}
 }

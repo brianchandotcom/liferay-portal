@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.impl.ResourceImpl;
@@ -70,8 +71,8 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_BY_CODEID = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findByCodeId",
+			ResourceModelImpl.FINDER_CACHE_ENABLED, ResourceImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByCodeId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -79,22 +80,23 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
 	public static final FinderPath FINDER_PATH_COUNT_BY_CODEID = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByCodeId", new String[] { Long.class.getName() });
+			ResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByCodeId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_P = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_P",
+			ResourceModelImpl.FINDER_CACHE_ENABLED, ResourceImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countByC_P",
+			ResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_P",
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			ResourceModelImpl.FINDER_CACHE_ENABLED, ResourceImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			ResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the resource in the entity cache if it is enabled.
@@ -1418,6 +1420,16 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	private static Resource _nullResource = new ResourceImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Resource> toCacheModel() {
+				return _nullResourceCacheModel;
+			}
+		};
+
+	private static CacheModel<Resource> _nullResourceCacheModel = new CacheModel<Resource>() {
+			public Resource toEntityModel() {
+				return _nullResource;
 			}
 		};
 }

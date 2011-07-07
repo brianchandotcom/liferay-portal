@@ -191,6 +191,10 @@ public class DDMStructureLinkWrapper implements DDMStructureLink {
 		return _ddmStructureLink.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> toCacheModel() {
+		return _ddmStructureLink.toCacheModel();
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink toEscapedModel() {
 		return new DDMStructureLinkWrapper(_ddmStructureLink.toEscapedModel());
 	}
@@ -202,6 +206,11 @@ public class DDMStructureLinkWrapper implements DDMStructureLink {
 
 	public java.lang.String toXmlString() {
 		return _ddmStructureLink.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructureLink.save();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()

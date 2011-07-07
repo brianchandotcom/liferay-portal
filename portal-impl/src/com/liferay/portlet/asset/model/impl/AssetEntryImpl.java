@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -33,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetEntryImpl extends AssetEntryModelImpl implements AssetEntry {
+public class AssetEntryImpl extends AssetEntryBaseImpl {
 
 	public AssetEntryImpl() {
 	}

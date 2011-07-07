@@ -594,6 +594,10 @@ public class AssetCategoryWrapper implements AssetCategory {
 		return _assetCategory.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetCategory> toCacheModel() {
+		return _assetCategory.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetCategory toEscapedModel() {
 		return new AssetCategoryWrapper(_assetCategory.toEscapedModel());
 	}
@@ -605,6 +609,11 @@ public class AssetCategoryWrapper implements AssetCategory {
 
 	public java.lang.String toXmlString() {
 		return _assetCategory.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetCategory.save();
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAncestors()

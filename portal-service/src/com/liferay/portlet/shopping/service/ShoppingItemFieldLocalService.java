@@ -187,7 +187,7 @@ public interface ShoppingItemFieldLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping item field in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping item field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItemField the shopping item field
 	* @return the shopping item field that was updated
@@ -198,7 +198,7 @@ public interface ShoppingItemFieldLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping item field in the database. Also notifies the appropriate model listeners.
+	* Updates the shopping item field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItemField the shopping item field
 	* @param merge whether to merge the shopping item field with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

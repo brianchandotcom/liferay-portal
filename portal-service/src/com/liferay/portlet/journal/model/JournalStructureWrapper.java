@@ -364,6 +364,10 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalStructure> toCacheModel() {
+		return _journalStructure.toCacheModel();
+	}
+
 	public com.liferay.portlet.journal.model.JournalStructure toEscapedModel() {
 		return new JournalStructureWrapper(_journalStructure.toEscapedModel());
 	}
@@ -375,6 +379,11 @@ public class JournalStructureWrapper implements JournalStructure {
 
 	public java.lang.String toXmlString() {
 		return _journalStructure.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalStructure.save();
 	}
 
 	public java.lang.String getMergedXsd() {

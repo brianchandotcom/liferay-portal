@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Layout service. Represents a row in the &quot;Layout&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Layout service. Represents a row in the &quot;Layout&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see LayoutModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LayoutModelImpl
  * @generated
  */
-public interface Layout extends LayoutModel {
+public interface Layout extends LayoutModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -500,6 +501,77 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderModelImpl._setOriginalParentFolderId = false;
 
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<DLFolder> toCacheModel() {
+		DLFolderCacheModel dlFolderCacheModel = new DLFolderCacheModel();
+
+		dlFolderCacheModel.uuid = getUuid();
+
+		String uuid = dlFolderCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			dlFolderCacheModel.uuid = null;
+		}
+
+		dlFolderCacheModel.folderId = getFolderId();
+
+		dlFolderCacheModel.groupId = getGroupId();
+
+		dlFolderCacheModel.companyId = getCompanyId();
+
+		dlFolderCacheModel.userId = getUserId();
+
+		dlFolderCacheModel.userName = getUserName();
+
+		String userName = dlFolderCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			dlFolderCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			dlFolderCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			dlFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		dlFolderCacheModel.repositoryId = getRepositoryId();
+
+		dlFolderCacheModel.mountPoint = getMountPoint();
+
+		dlFolderCacheModel.parentFolderId = getParentFolderId();
+
+		dlFolderCacheModel.name = getName();
+
+		String name = dlFolderCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			dlFolderCacheModel.name = null;
+		}
+
+		dlFolderCacheModel.description = getDescription();
+
+		String description = dlFolderCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			dlFolderCacheModel.description = null;
+		}
+
+		Date lastPostDate = getLastPostDate();
+
+		if (lastPostDate != null) {
+			dlFolderCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+
+		return dlFolderCacheModel;
 	}
 
 	@Override

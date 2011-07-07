@@ -268,7 +268,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the polls choice in the database. Also notifies the appropriate model listeners.
+	 * Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param pollsChoice the polls choice
 	 * @return the polls choice that was updated
@@ -280,7 +280,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the polls choice in the database. Also notifies the appropriate model listeners.
+	 * Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param pollsChoice the polls choice
 	 * @param merge whether to merge the polls choice with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

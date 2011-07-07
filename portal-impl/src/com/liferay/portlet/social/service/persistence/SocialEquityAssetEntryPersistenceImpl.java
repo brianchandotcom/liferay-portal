@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -74,17 +75,18 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 		".List";
 	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_ENTITY, "fetchByAssetEntryId",
-			new String[] { Long.class.getName() });
+			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByAssetEntryId", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByAssetEntryId",
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_LIST,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
@@ -873,6 +875,17 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	private static SocialEquityAssetEntry _nullSocialEquityAssetEntry = new SocialEquityAssetEntryImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<SocialEquityAssetEntry> toCacheModel() {
+				return _nullSocialEquityAssetEntryCacheModel;
+			}
+		};
+
+	private static CacheModel<SocialEquityAssetEntry> _nullSocialEquityAssetEntryCacheModel =
+		new CacheModel<SocialEquityAssetEntry>() {
+			public SocialEquityAssetEntry toEntityModel() {
+				return _nullSocialEquityAssetEntry;
 			}
 		};
 }

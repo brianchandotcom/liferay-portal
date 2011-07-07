@@ -34,7 +34,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class WikiPageImpl extends WikiPageModelImpl implements WikiPage {
+public class WikiPageImpl extends WikiPageBaseImpl {
 
 	public WikiPageImpl() {
 	}

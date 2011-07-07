@@ -228,6 +228,8 @@ public interface TeamModel extends BaseModel<Team>, GroupedModel {
 
 	public int hashCode();
 
+	public CacheModel<Team> toCacheModel();
+
 	public Team toEscapedModel();
 
 	public String toString();

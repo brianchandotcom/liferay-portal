@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the AssetCategoryProperty service. Represents a row in the &quot;AssetCategoryProperty&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AssetCategoryProperty service. Represents a row in the &quot;AssetCategoryProperty&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyModel
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.model;
  * @see com.liferay.portlet.asset.model.impl.AssetCategoryPropertyModelImpl
  * @generated
  */
-public interface AssetCategoryProperty extends AssetCategoryPropertyModel {
+public interface AssetCategoryProperty extends AssetCategoryPropertyModel,
+	SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

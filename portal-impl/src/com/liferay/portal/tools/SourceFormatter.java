@@ -723,9 +723,7 @@ public class SourceFormatter {
 				packagePath, File.separator, StringPool.PERIOD);
 
 			if (packagePath.endsWith(".model")) {
-				if (content.indexOf(
-						"extends " + className + "Model {") != -1) {
-
+				if (content.indexOf("extends " + className + "Model") != -1) {
 					continue;
 				}
 			}
@@ -1392,6 +1390,8 @@ public class SourceFormatter {
 
 		String[] excludes = {
 			"**\\bin\\**", "**\\model\\*Clp.java",
+			"**\\model\\impl\\*BaseImpl.java",
+			"**\\model\\impl\\*Model.java",
 			"**\\model\\impl\\*ModelImpl.java",
 			"**\\service\\**\\model\\*Model.java",
 			"**\\service\\**\\model\\*Soap.java",
@@ -1440,6 +1440,7 @@ public class SourceFormatter {
 			"**\\ServiceBuilder.java", "**\\SourceFormatter.java",
 			"**\\WebKeys.java", "**\\bin\\**", "**\\classes\\*",
 			"**\\counter\\service\\**", "**\\jsp\\*",
+			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
 			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
 			"**\\portal-client\\**",
 			"**\\portal-service\\**\\model\\*Model.java",

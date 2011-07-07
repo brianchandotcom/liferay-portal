@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portlet.social.model.SocialEquityHistory;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialEquityHistoryImpl
-	extends SocialEquityHistoryModelImpl implements SocialEquityHistory {
+public class SocialEquityHistoryImpl extends SocialEquityHistoryBaseImpl {
 
 	public SocialEquityHistoryImpl() {
 	}

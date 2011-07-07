@@ -196,7 +196,7 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the resource permission in the database. Also notifies the appropriate model listeners.
+	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
 	* @return the resource permission that was updated
@@ -209,7 +209,7 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the resource permission in the database. Also notifies the appropriate model listeners.
+	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermission the resource permission
 	* @param merge whether to merge the resource permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
@@ -327,6 +327,29 @@ public class ResourcePermissionLocalServiceWrapper
 			resourceAction);
 	}
 
+	/**
+	* Returns <code>true</code> if the role has permission to perform the
+	* action on the resource.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the resource's scope
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
+	* @throws PortalException if a resource action with the resource name and
+	action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public boolean hasResourcePermission(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
 		java.lang.String actionId)

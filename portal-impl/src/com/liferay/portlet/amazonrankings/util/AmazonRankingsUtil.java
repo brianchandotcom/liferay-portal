@@ -14,13 +14,19 @@
 
 package com.liferay.portlet.amazonrankings.util;
 
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
+
+import java.text.DateFormat;
+
+import java.util.Calendar;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,5 +51,22 @@ public class AmazonRankingsUtil {
 		return (AmazonRankings)WebCachePoolUtil.get(
 			AmazonRankingsUtil.class.getName() + StringPool.PERIOD + isbn, wci);
 	}
+
+	public static String getAmazonSecretAccessKey() {
+		return PropsUtil.get(PropsKeys.AMAZON_SECRET_ACCESS_KEY);
+	}
+
+	public static String getTimestamp() {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			_TIMESTAMP);
+
+		dateFormat.setTimeZone(TimeZoneUtil.getDefault());
+
+		Calendar calendar = Calendar.getInstance();
+
+		return dateFormat.format(calendar.getTime());
+	}
+
+	private static final String _TIMESTAMP = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 }

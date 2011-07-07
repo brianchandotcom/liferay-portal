@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see PasswordPolicyRelModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PasswordPolicyRelModelImpl
  * @generated
  */
-public interface PasswordPolicyRel extends PasswordPolicyRelModel {
+public interface PasswordPolicyRel extends PasswordPolicyRelModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

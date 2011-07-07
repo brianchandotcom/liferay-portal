@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceActionModel;
 import com.liferay.portal.service.ServiceContext;
@@ -268,6 +269,33 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 		resourceActionModelImpl._originalName = resourceActionModelImpl._name;
 
 		resourceActionModelImpl._originalActionId = resourceActionModelImpl._actionId;
+	}
+
+	@Override
+	public CacheModel<ResourceAction> toCacheModel() {
+		ResourceActionCacheModel resourceActionCacheModel = new ResourceActionCacheModel();
+
+		resourceActionCacheModel.resourceActionId = getResourceActionId();
+
+		resourceActionCacheModel.name = getName();
+
+		String name = resourceActionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			resourceActionCacheModel.name = null;
+		}
+
+		resourceActionCacheModel.actionId = getActionId();
+
+		String actionId = resourceActionCacheModel.actionId;
+
+		if ((actionId != null) && (actionId.length() == 0)) {
+			resourceActionCacheModel.actionId = null;
+		}
+
+		resourceActionCacheModel.bitwiseValue = getBitwiseValue();
+
+		return resourceActionCacheModel;
 	}
 
 	@Override

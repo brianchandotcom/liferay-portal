@@ -15,7 +15,7 @@
 package com.liferay.portal.model;
 
 /**
- * The model interface for the Ticket service. Represents a row in the &quot;Ticket&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Ticket service. Represents a row in the &quot;Ticket&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see TicketModel
@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.TicketModelImpl
  * @generated
  */
-public interface Ticket extends TicketModel {
+public interface Ticket extends TicketModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

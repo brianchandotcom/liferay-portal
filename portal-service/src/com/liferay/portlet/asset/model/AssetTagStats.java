@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.SaveableModel;
+
 /**
- * The model interface for the AssetTagStats service. Represents a row in the &quot;AssetTagStats&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AssetTagStats service. Represents a row in the &quot;AssetTagStats&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AssetTagStatsModel
@@ -23,7 +25,7 @@ package com.liferay.portlet.asset.model;
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl
  * @generated
  */
-public interface AssetTagStats extends AssetTagStatsModel {
+public interface AssetTagStats extends AssetTagStatsModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

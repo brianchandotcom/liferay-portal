@@ -15,6 +15,7 @@
 package com.liferay.portlet.expando.model;
 
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -134,6 +135,8 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 	public int compareTo(ExpandoRow expandoRow);
 
 	public int hashCode();
+
+	public CacheModel<ExpandoRow> toCacheModel();
 
 	public ExpandoRow toEscapedModel();
 

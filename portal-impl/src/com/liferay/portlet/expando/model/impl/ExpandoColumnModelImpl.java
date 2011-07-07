@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -325,6 +326,45 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		expandoColumnModelImpl._setOriginalTableId = false;
 
 		expandoColumnModelImpl._originalName = expandoColumnModelImpl._name;
+	}
+
+	@Override
+	public CacheModel<ExpandoColumn> toCacheModel() {
+		ExpandoColumnCacheModel expandoColumnCacheModel = new ExpandoColumnCacheModel();
+
+		expandoColumnCacheModel.columnId = getColumnId();
+
+		expandoColumnCacheModel.companyId = getCompanyId();
+
+		expandoColumnCacheModel.tableId = getTableId();
+
+		expandoColumnCacheModel.name = getName();
+
+		String name = expandoColumnCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			expandoColumnCacheModel.name = null;
+		}
+
+		expandoColumnCacheModel.type = getType();
+
+		expandoColumnCacheModel.defaultData = getDefaultData();
+
+		String defaultData = expandoColumnCacheModel.defaultData;
+
+		if ((defaultData != null) && (defaultData.length() == 0)) {
+			expandoColumnCacheModel.defaultData = null;
+		}
+
+		expandoColumnCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = expandoColumnCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			expandoColumnCacheModel.typeSettings = null;
+		}
+
+		return expandoColumnCacheModel;
 	}
 
 	@Override

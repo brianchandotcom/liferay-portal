@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.AccountModel;
 import com.liferay.portal.model.AccountSoap;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -471,6 +472,113 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<Account> toCacheModel() {
+		AccountCacheModel accountCacheModel = new AccountCacheModel();
+
+		accountCacheModel.accountId = getAccountId();
+
+		accountCacheModel.companyId = getCompanyId();
+
+		accountCacheModel.userId = getUserId();
+
+		accountCacheModel.userName = getUserName();
+
+		String userName = accountCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			accountCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			accountCacheModel.createDate = createDate.getTime();
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			accountCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+
+		accountCacheModel.parentAccountId = getParentAccountId();
+
+		accountCacheModel.name = getName();
+
+		String name = accountCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			accountCacheModel.name = null;
+		}
+
+		accountCacheModel.legalName = getLegalName();
+
+		String legalName = accountCacheModel.legalName;
+
+		if ((legalName != null) && (legalName.length() == 0)) {
+			accountCacheModel.legalName = null;
+		}
+
+		accountCacheModel.legalId = getLegalId();
+
+		String legalId = accountCacheModel.legalId;
+
+		if ((legalId != null) && (legalId.length() == 0)) {
+			accountCacheModel.legalId = null;
+		}
+
+		accountCacheModel.legalType = getLegalType();
+
+		String legalType = accountCacheModel.legalType;
+
+		if ((legalType != null) && (legalType.length() == 0)) {
+			accountCacheModel.legalType = null;
+		}
+
+		accountCacheModel.sicCode = getSicCode();
+
+		String sicCode = accountCacheModel.sicCode;
+
+		if ((sicCode != null) && (sicCode.length() == 0)) {
+			accountCacheModel.sicCode = null;
+		}
+
+		accountCacheModel.tickerSymbol = getTickerSymbol();
+
+		String tickerSymbol = accountCacheModel.tickerSymbol;
+
+		if ((tickerSymbol != null) && (tickerSymbol.length() == 0)) {
+			accountCacheModel.tickerSymbol = null;
+		}
+
+		accountCacheModel.industry = getIndustry();
+
+		String industry = accountCacheModel.industry;
+
+		if ((industry != null) && (industry.length() == 0)) {
+			accountCacheModel.industry = null;
+		}
+
+		accountCacheModel.type = getType();
+
+		String type = accountCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			accountCacheModel.type = null;
+		}
+
+		accountCacheModel.size = getSize();
+
+		String size = accountCacheModel.size;
+
+		if ((size != null) && (size.length() == 0)) {
+			accountCacheModel.size = null;
+		}
+
+		return accountCacheModel;
 	}
 
 	@Override

@@ -31,6 +31,6 @@ public class RSSThreadLocal {
 
 	private static ThreadLocal<Boolean> _exportRSS =
 		new AutoResetThreadLocal<Boolean>(
-			RSSThreadLocal.class + "._exportRSS", Boolean.FALSE);
+			RSSThreadLocal.class + "._exportRSS", false);
 
 }

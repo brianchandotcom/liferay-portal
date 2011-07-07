@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -168,6 +169,8 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
 	public int compareTo(AnnouncementsFlag announcementsFlag);
 
 	public int hashCode();
+
+	public CacheModel<AnnouncementsFlag> toCacheModel();
 
 	public AnnouncementsFlag toEscapedModel();
 

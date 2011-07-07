@@ -294,7 +294,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the journal content search in the database. Also notifies the appropriate model listeners.
+	 * Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalContentSearch the journal content search
 	 * @return the journal content search that was updated
@@ -306,7 +306,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the journal content search in the database. Also notifies the appropriate model listeners.
+	 * Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param journalContentSearch the journal content search
 	 * @param merge whether to merge the journal content search with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

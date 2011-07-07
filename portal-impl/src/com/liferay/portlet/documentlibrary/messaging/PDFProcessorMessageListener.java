@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 
 /**
@@ -26,9 +26,9 @@ public class PDFProcessorMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
-		FileEntry fileEntry = (FileEntry)message.getPayload();
+		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		PDFProcessor.generateImages(fileEntry);
+		PDFProcessor.generateImages(fileVersion);
 	}
 
 }

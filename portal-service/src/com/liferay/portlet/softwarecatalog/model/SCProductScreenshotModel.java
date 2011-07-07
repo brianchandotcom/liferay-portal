@@ -15,6 +15,7 @@
 package com.liferay.portlet.softwarecatalog.model;
 
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -178,6 +179,8 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	public int compareTo(SCProductScreenshot scProductScreenshot);
 
 	public int hashCode();
+
+	public CacheModel<SCProductScreenshot> toCacheModel();
 
 	public SCProductScreenshot toEscapedModel();
 

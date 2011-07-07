@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.cache.key;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.Serializable;
+
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
@@ -30,12 +32,12 @@ public interface CacheKeyGenerator extends Cloneable {
 
 	public CacheKeyGenerator clone();
 
-	public String finish();
+	public Serializable finish();
 
-	public String getCacheKey(String key);
+	public Serializable getCacheKey(String key);
 
-	public String getCacheKey(String[] keys);
+	public Serializable getCacheKey(String[] keys);
 
-	public String getCacheKey(StringBundler sb);
+	public Serializable getCacheKey(StringBundler sb);
 
 }

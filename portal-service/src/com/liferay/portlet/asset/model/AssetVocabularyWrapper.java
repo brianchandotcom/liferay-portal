@@ -540,6 +540,10 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		return _assetVocabulary.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetVocabulary> toCacheModel() {
+		return _assetVocabulary.toCacheModel();
+	}
+
 	public com.liferay.portlet.asset.model.AssetVocabulary toEscapedModel() {
 		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
 	}
@@ -551,6 +555,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 
 	public java.lang.String toXmlString() {
 		return _assetVocabulary.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetVocabulary.save();
 	}
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {

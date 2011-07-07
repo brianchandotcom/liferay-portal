@@ -30,7 +30,7 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,17 +41,20 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
+				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Addresses"));
 		assertEquals("123. Liferay Ln.",
-			selenium.getValue("_130_addressStreet1_0"));
+			selenium.getValue("//input[@id='_130_addressStreet1_0']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

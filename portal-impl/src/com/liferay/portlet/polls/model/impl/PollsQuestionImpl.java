@@ -17,7 +17,6 @@ package com.liferay.portlet.polls.model.impl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.model.PollsChoice;
-import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
@@ -27,8 +26,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsQuestionImpl
-	extends PollsQuestionModelImpl implements PollsQuestion {
+public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 
 	public PollsQuestionImpl() {
 	}

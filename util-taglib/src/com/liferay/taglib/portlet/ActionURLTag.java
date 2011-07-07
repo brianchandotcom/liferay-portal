@@ -51,7 +51,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
 			String resourceID, String cacheability, long plid,
 			String portletName, Boolean anchor, Boolean encrypt,
-			long doAsUserId, Boolean portletConfiguration,
+			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
 			Map<String, String[]> params, PageContext pageContext)
 		throws Exception {
 
@@ -121,6 +121,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			liferayPortletURL.setEncrypt(encrypt.booleanValue());
 		}
 
+		if (doAsGroupId > 0) {
+			liferayPortletURL.setDoAsGroupId(doAsGroupId);
+		}
+
 		if (doAsUserId > 0) {
 			liferayPortletURL.setDoAsUserId(doAsUserId);
 		}
@@ -170,8 +174,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 				getLifecycle(), _windowState, _portletMode, _var, _varImpl,
 				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
 				_resourceID, _cacheability, _plid, _portletName, _anchor,
-				_encrypt, _doAsUserId, _portletConfiguration, getParams(),
-				pageContext);
+				_encrypt, _doAsGroupId, _doAsUserId, _portletConfiguration,
+				getParams(), pageContext);
 
 			return EVAL_PAGE;
 		}
@@ -254,6 +258,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		_encrypt = Boolean.valueOf(encrypt);
 	}
 
+	public void setDoAsGroupId(long doAsGroupId) {
+		_doAsGroupId = doAsGroupId;
+	}
+
 	public void setDoAsUserId(long doAsUserId) {
 		_doAsUserId = doAsUserId;
 	}
@@ -314,6 +322,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 	private String _portletName;
 	private Boolean _anchor;
 	private Boolean _encrypt;
+	private long _doAsGroupId;
 	private long _doAsUserId;
 	private Boolean _portletConfiguration;
 

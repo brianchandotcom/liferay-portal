@@ -422,7 +422,7 @@ public abstract class PermissionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the permission in the database. Also notifies the appropriate model listeners.
+	 * Updates the permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param permission the permission
 	 * @return the permission that was updated
@@ -434,7 +434,7 @@ public abstract class PermissionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the permission in the database. Also notifies the appropriate model listeners.
+	 * Updates the permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param permission the permission
 	 * @param merge whether to merge the permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

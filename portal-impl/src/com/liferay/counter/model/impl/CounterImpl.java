@@ -14,12 +14,10 @@
 
 package com.liferay.counter.model.impl;
 
-import com.liferay.counter.model.Counter;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class CounterImpl extends CounterModelImpl implements Counter {
+public class CounterImpl extends CounterBaseImpl {
 
 	public CounterImpl() {
 	}

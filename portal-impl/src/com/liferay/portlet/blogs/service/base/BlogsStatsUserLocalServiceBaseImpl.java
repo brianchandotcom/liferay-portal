@@ -270,7 +270,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the blogs stats user in the database. Also notifies the appropriate model listeners.
+	 * Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param blogsStatsUser the blogs stats user
 	 * @return the blogs stats user that was updated
@@ -282,7 +282,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Updates the blogs stats user in the database. Also notifies the appropriate model listeners.
+	 * Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param blogsStatsUser the blogs stats user
 	 * @param merge whether to merge the blogs stats user with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.

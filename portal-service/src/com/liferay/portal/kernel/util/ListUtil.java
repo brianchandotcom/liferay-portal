@@ -122,6 +122,10 @@ public class ListUtil {
 	}
 
 	public static List<String> fromFile(File file) throws IOException {
+		if (!file.exists()) {
+			return new ArrayList<String>();
+		}
+
 		List<String> list = new ArrayList<String>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

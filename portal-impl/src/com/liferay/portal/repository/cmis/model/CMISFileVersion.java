@@ -112,6 +112,10 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
+	public String getMimeType() {
+		return _document.getContentStreamMimeType();
+	}
+
 	public Object getModel() {
 		return _document;
 	}

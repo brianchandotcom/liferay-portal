@@ -316,6 +316,10 @@ public class RepositoryWrapper implements Repository {
 		return _repository.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Repository> toCacheModel() {
+		return _repository.toCacheModel();
+	}
+
 	public com.liferay.portal.model.Repository toEscapedModel() {
 		return new RepositoryWrapper(_repository.toEscapedModel());
 	}

@@ -272,6 +272,10 @@ public class DLContentWrapper implements DLContent {
 		return _dlContent.hashCode();
 	}
 
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLContent> toCacheModel() {
+		return _dlContent.toCacheModel();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLContent toEscapedModel() {
 		return new DLContentWrapper(_dlContent.toEscapedModel());
 	}
@@ -283,6 +287,11 @@ public class DLContentWrapper implements DLContent {
 
 	public java.lang.String toXmlString() {
 		return _dlContent.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlContent.save();
 	}
 
 	public DLContent getWrappedDLContent() {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -71,11 +72,11 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(CounterModelImpl.ENTITY_CACHE_ENABLED,
-			CounterModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			CounterModelImpl.FINDER_CACHE_ENABLED, CounterImpl.class,
+			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CounterModelImpl.ENTITY_CACHE_ENABLED,
-			CounterModelImpl.FINDER_CACHE_ENABLED, FINDER_CLASS_NAME_LIST,
-			"countAll", new String[0]);
+			CounterModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
 
 	/**
 	 * Caches the counter in the entity cache if it is enabled.
@@ -588,6 +589,16 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static Counter _nullCounter = new CounterImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<Counter> toCacheModel() {
+				return _nullCounterCacheModel;
+			}
+		};
+
+	private static CacheModel<Counter> _nullCounterCacheModel = new CacheModel<Counter>() {
+			public Counter toEntityModel() {
+				return _nullCounter;
 			}
 		};
 }

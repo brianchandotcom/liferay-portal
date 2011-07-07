@@ -201,7 +201,7 @@ public class VideoProcessor extends DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileVersions.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -365,10 +365,10 @@ public class VideoProcessor extends DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+		if (!_fileVersions.contains(fileVersion.getFileVersionId()) &&
 			_isSupportedVideo(fileVersion)) {
 
-			_fileEntries.add(fileVersion.getFileVersionId());
+			_fileVersions.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
@@ -392,7 +392,7 @@ public class VideoProcessor extends DLProcessor {
 		"video/avi", "video/mp4", "video/mpeg", "video/quicktime",
 		"video/x-flv", "video/x-ms-wmv", "video/x-msvideo");
 
-	private List<Long> _fileEntries = new Vector<Long>();
+	private List<Long> _fileVersions = new Vector<Long>();
 
 	static {
 		FileUtil.mkdirs(_PREVIEW_PATH);

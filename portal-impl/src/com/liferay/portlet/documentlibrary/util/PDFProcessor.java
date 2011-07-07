@@ -118,15 +118,11 @@ public class PDFProcessor extends DLProcessor {
 		try {
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-			trigger(fileVersion);
+			_instance._queueGeneration(fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-	}
-
-	public void trigger(FileVersion fileVersion) {
-		_instance._queueGeneration(fileVersion);
 	}
 
 	private void _generateImages(FileVersion fileVersion) {
@@ -166,7 +162,7 @@ public class PDFProcessor extends DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileVersionId());
+			_fileVersions.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -517,7 +513,7 @@ public class PDFProcessor extends DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileVersionId())) {
+		if (!_fileVersions.contains(fileVersion.getFileVersionId())) {
 			boolean generateImages = false;
 
 			String extension = fileVersion.getExtension();
@@ -539,7 +535,7 @@ public class PDFProcessor extends DLProcessor {
 			}
 
 			if (generateImages) {
-				_fileEntries.add(fileVersion.getFileVersionId());
+				_fileVersions.add(fileVersion.getFileVersionId());
 
 				MessageBusUtil.sendMessage(
 					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR, fileVersion);
@@ -560,7 +556,7 @@ public class PDFProcessor extends DLProcessor {
 	private static PDFProcessor _instance = new PDFProcessor();
 
 	private static ConvertCmd _convertCmd;
-	private static List<Long> _fileEntries = new Vector<Long>();
+	private static List<Long> _fileVersions = new Vector<Long>();
 
 	static {
 		FileUtil.mkdirs(_PREVIEW_PATH);

@@ -42,6 +42,10 @@ int firstDayOfWeek = GetterUtil.getInteger((String)request.getAttribute("liferay
 String imageInputId = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:imageInputId"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:disabled"));
 
+boolean dayEmpty = false;
+boolean monthEmpty = false;
+boolean yearEmpty = false;
+
 if (Validator.isNull(imageInputId)) {
 	imageInputId = randomNamespace + "imageInputId";
 }
@@ -69,13 +73,22 @@ cal.setTime(selectedDate);
 if (dayValue > 0) {
 	cal.set(Calendar.DATE, dayValue);
 }
+else if (dayNullable) {
+	dayEmpty = true;
+}
 
 if (monthValue > -1) {
 	cal.set(Calendar.MONTH, monthValue);
+}	
+else if (monthNullable) {
+	monthEmpty = true;
 }
 
 if (yearValue > 0) {
 	cal.set(Calendar.YEAR, yearValue);
+}
+else if (yearNullable) {
+	yearEmpty = true;
 }
 %>
 
@@ -138,15 +151,15 @@ if (yearValue > 0) {
 						render: function(event) {
 							var instance = this;
 
-							<c:if test="<%= dayNullable %>">
+							<c:if test="<%= dayEmpty %>">
 								instance.get('dayNode').val('-1');
 							</c:if>
 
-							<c:if test="<%= monthNullable %>">
+							<c:if test="<%= monthEmpty %>">
 								instance.get('monthNode').val('-1');
 							</c:if>
 
-							<c:if test="<%= yearNullable %>">
+							<c:if test="<%= yearEmpty %>">
 								instance.get('yearNode').val('-1');
 							</c:if>
 						}
@@ -155,11 +168,15 @@ if (yearValue > 0) {
 					boundingBox: displayDateNode,
 					calendar: {
 						dates: [
-							new Date(
-								<%= cal.get(Calendar.YEAR) %>,
-								<%= cal.get(Calendar.MONTH) %>,
-								<%= cal.get(Calendar.DATE) %>
-							)
+
+							<c:if test="<%= !monthEmpty && !dayEmpty && !yearEmpty %>">
+								new Date(
+									<%= cal.get(Calendar.YEAR) %>,
+									<%= cal.get(Calendar.MONTH) %>,
+									<%= cal.get(Calendar.DATE) %>
+								)
+							</c:if>
+
 						],
 
 						<c:choose>

@@ -34,8 +34,8 @@
 	var basicForm = A.one("#<%= id %>basic");
 	var advancedForm = A.one("#<%= id %>advanced");
 
-	var basicControls = basicForm.all('input, select');
-	var advancedControls = advancedForm.all('input, select');
+	var basicControls = basicForm.all('input:not(:submit), select');
+	var advancedControls = advancedForm.all('input:not(:submit), select');
 
 	if (<%= id %>curClickValue == "basic") {
 		advancedControls.attr('disabled', 'disabled');

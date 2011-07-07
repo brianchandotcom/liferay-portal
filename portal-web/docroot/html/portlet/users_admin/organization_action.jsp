@@ -78,16 +78,14 @@ if (row == null) {
 	</c:if>--%>
 
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_STAGING) || OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editSettingsURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_settings" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
-		</portlet:renderURL>
+		<liferay-portlet:actionURL var="editSettingsURL" portletName="<%=PortletKeys.SITE_SETTINGS%>">
+			<portlet:param name="struts_action" value="/site_settings/edit_settings" />
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			image="configuration"
-			message="site-settings"
-			url="<%= editSettingsURL %>"
+			message="manage-site"
+			url='<%= HttpUtil.setParameter(editSettingsURL, "doAsGroupId", organizationGroupId) %>'
 		/>
 	</c:if>
 
@@ -131,24 +129,6 @@ if (row == null) {
 			image="add_user"
 			message="add-user"
 			url="<%= addUserURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= (organization != null) %>">
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="struts_action" value="/users_admin/view" />
-			<portlet:param name="tabs1" value="users" />
-			<portlet:param name="viewUsersRedirect" value="<%= redirect %>" />
-			<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="view_users"
-			message="view-users"
-			method="get"
-			url="<%= viewUsersURL %>"
 		/>
 	</c:if>
 

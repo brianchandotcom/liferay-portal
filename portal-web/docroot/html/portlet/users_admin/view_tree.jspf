@@ -23,7 +23,6 @@ if (organizationId != 0) {
 	organization = OrganizationServiceUtil.getOrganization(organizationId);
 }
 
-long organizationGroupId = 0;
 
 if (organization != null) {
 	Group organizationGroup = organization.getGroup();
@@ -280,7 +279,10 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			if (organization != null) {
 				usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId);
 
-				showOrganizations = true;
+				if (organizationsCount > 0) {
+					showOrganizations = true;
+				}
+
 				showUsers = true;
 			}
 			else {
@@ -305,6 +307,11 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 
 			<c:if test="<%= showUsers %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title='<%= (organization == null) ? "users" : (usersCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount)) %>'>
+
+					<%
+					boolean organizationContextView = true;
+					%>
+
 					<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
 				</liferay-ui:panel>
 			</c:if>

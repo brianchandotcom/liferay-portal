@@ -31,6 +31,8 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 pageContext.setAttribute("portletURL", portletURL);
 
 String portletURLString = portletURL.toString();
+
+long organizationGroupId = 0;
 %>
 
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
@@ -46,30 +48,27 @@ String portletURLString = portletURL.toString();
 	</liferay-util:include>
 
 	<%
-	String usersListView = request.getParameter("usersListView");
-
-	PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(renderRequest);
-
-	if (usersListView == null) {
-		usersListView = portalPreferences.getValue(PortletKeys.USERS_ADMIN, "users-list-view", PropsValues.USERS_LIST_VIEWS_DEFAULT);
-	}
-	else {
-		boolean saveUsersListView = ParamUtil.getBoolean(request, "saveUsersListView");
-
-		if (saveUsersListView && ArrayUtil.contains(PropsValues.USERS_LIST_VIEWS, usersListView)) {
-			portalPreferences.setValue(PortletKeys.USERS_ADMIN, "users-list-view", usersListView);
-		}
-	}
+	String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
 	%>
 
 	<c:choose>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+			<liferay-ui:header title="organizations" />
+
 			<%@ include file="/html/portlet/users_admin/view_flat_organizations.jspf" %>
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USER_GROUPS) %>">
+			<liferay-ui:header title="user-groups" />
+
 			<%@ include file="/html/portlet/users_admin/view_flat_user_groups.jspf" %>
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+			<liferay-ui:header title="users" />
+
+			<%
+			boolean organizationContextView = false;
+			%>
+
 			<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
 		</c:when>
 		<c:otherwise>

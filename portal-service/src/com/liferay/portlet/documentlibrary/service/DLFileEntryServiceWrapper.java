@@ -200,6 +200,13 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService {
 		return _dlFileEntryService.isFileEntryCheckedOut(fileEntryId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.getLatestFileVersion(fileEntryId);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
 		long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)

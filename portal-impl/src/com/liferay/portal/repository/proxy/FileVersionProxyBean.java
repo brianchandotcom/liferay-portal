@@ -96,6 +96,10 @@ public class FileVersionProxyBean
 		return _fileVersion.getIcon();
 	}
 
+	public String getMimeType() {
+		return _fileVersion.getMimeType();
+	}
+
 	public Object getModel() {
 		return _fileVersion.getModel();
 	}

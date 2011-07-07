@@ -226,14 +226,27 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			throw new IllegalArgumentException();
 		}
 
+		if (_portletRequestDispatcherRequest != null) {
+			return _portletRequestDispatcherRequest.getParameter(name);
+		}
+
 		return _request.getParameter(name);
 	}
 
 	public Map<String, String[]> getParameterMap() {
+		if (_portletRequestDispatcherRequest != null) {
+			return Collections.unmodifiableMap(
+				_portletRequestDispatcherRequest.getParameterMap());
+		}
+
 		return Collections.unmodifiableMap(_request.getParameterMap());
 	}
 
 	public Enumeration<String> getParameterNames() {
+		if (_portletRequestDispatcherRequest != null) {
+			return _portletRequestDispatcherRequest.getParameterNames();
+		}
+
 		return _request.getParameterNames();
 	}
 

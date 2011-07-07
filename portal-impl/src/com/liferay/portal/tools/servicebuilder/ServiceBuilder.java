@@ -192,6 +192,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.json_js=" + _TPL_ROOT + "json_js.ftl\n"+
 				"\t-Dservice.tpl.json_js_method=" + _TPL_ROOT + "json_js_method.ftl\n"+
 				"\t-Dservice.tpl.model=" + _TPL_ROOT + "model.ftl\n"+
+				"\t-Dservice.tpl.model_cache=" + _TPL_ROOT + "model_cache.ftl\n"+
 				"\t-Dservice.tpl.model_hints_xml=" + _TPL_ROOT + "model_hints_xml.ftl\n"+
 				"\t-Dservice.tpl.model_impl=" + _TPL_ROOT + "model_impl.ftl\n"+
 				"\t-Dservice.tpl.model_soap=" + _TPL_ROOT + "model_soap.ftl\n"+
@@ -461,6 +462,7 @@ public class ServiceBuilder {
 		_tplJsonJs = _getTplProperty("json_js", _tplJsonJs);
 		_tplJsonJsMethod = _getTplProperty("json_js_method", _tplJsonJsMethod);
 		_tplModel = _getTplProperty("model", _tplModel);
+		_tplModelCache = _getTplProperty("model_cache", _tplModelCache);
 		_tplModelClp = _getTplProperty("model", _tplModelClp);
 		_tplModelHintsXml = _getTplProperty(
 			"model_hints_xml", _tplModelHintsXml);
@@ -659,6 +661,7 @@ public class ServiceBuilder {
 							_createModel(entity);
 							_createExtendedModel(entity);
 
+							_createModelCache(entity);
 							_createModelClp(entity);
 							_createModelWrapper(entity);
 
@@ -2063,6 +2066,24 @@ public class ServiceBuilder {
 				modelFile.delete();
 			}
 		}
+	}
+
+	private void _createModelCache(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplModelCache, context);
+
+		// Write file
+
+		File modelFile = new File(
+			_outputPath + "/model/impl/" + entity.getName() + 
+				"CacheModel.java");
+
+		writeFile(modelFile, content, _author);
 	}
 
 	private void _createModelClp(Entity entity) throws Exception {
@@ -4774,6 +4795,7 @@ public class ServiceBuilder {
 	private String _tplJsonJs = _TPL_ROOT + "json_js.ftl";
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";
+	private String _tplModelCache = _TPL_ROOT + "model_cache.ftl";
 	private String _tplModelClp = _TPL_ROOT + "model_clp.ftl";
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";

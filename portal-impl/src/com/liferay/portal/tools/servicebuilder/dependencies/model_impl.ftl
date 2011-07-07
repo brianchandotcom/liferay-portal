@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -759,6 +760,31 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				_${column.name}BlobModel = null;
 			</#if>
 		</#list>
+	}
+
+	@Override
+	public CacheModel<${entity.name}> toCacheModel() {
+		${entity.name}CacheModel ${entity.varName}CacheModel = new ${entity.name}CacheModel();
+
+		<#list entity.regularColList as column>
+			<#if column.type != "Blob">
+				<#if column.type == "Date">
+					Date ${column.name} = get${column.methodName}();
+					if (${column.name} != null) {
+						${entity.varName}CacheModel.${column.name} = ${column.name}.getTime();
+					}
+				<#else>
+					${entity.varName}CacheModel.${column.name} = get${column.methodName}();
+					<#if column.type == "String">
+						if ((${entity.varName}CacheModel.${column.name} != null) && (${entity.varName}CacheModel.${column.name}.length() == 0)) {
+							${entity.varName}CacheModel.${column.name} = null;
+						}
+					</#if>
+				</#if>
+			</#if>
+		</#list>
+
+		return ${entity.varName}CacheModel;
 	}
 
 	@Override

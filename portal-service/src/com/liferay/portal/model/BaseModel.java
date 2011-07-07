@@ -132,6 +132,13 @@ public interface BaseModel<T>
 	public void resetOriginalValues();
 
 	/**
+	 * Returns a cache model object for this entity used by entity cache.
+	 *
+	 * @return the cache model object
+	 */
+	public CacheModel<T> toCacheModel();
+
+	/**
 	 * Returns a copy of this entity as an escaped model instance by wrapping it
 	 * with an {@link com.liferay.portal.kernel.bean.AutoEscapeBeanHandler}.
 	 *

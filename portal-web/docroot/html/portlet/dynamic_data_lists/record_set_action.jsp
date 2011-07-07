@@ -24,10 +24,36 @@ String redirect = searchContainer.getIteratorURL().toString();
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
+
+DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_action.jsp-selRecordSet");
+
+String chooseCallback = (String)request.getAttribute("record_set_action.jsp-chooseCallback");
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
+
+	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && Validator.isNotNull(chooseCallback) %>">
+
+		<%
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("javascript:");
+		sb.append(chooseCallback);
+		sb.append("('");
+		sb.append(recordSet.getRecordSetId());
+		sb.append("', '");
+		sb.append(HtmlUtil.escapeJS(recordSet.getName(locale)));
+		sb.append("');");
+		%>
+
+		<liferay-ui:icon
+			image="checked"
+			message="choose"
+			url="<%= sb.toString() %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
@@ -41,7 +67,7 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
+	<c:if test="<%= portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
@@ -58,12 +84,12 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editRecordSetURL">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			image="edit"
@@ -85,13 +111,13 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteRecordSetURL">
+	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.DELETE) %>">
+		<liferay-portlet:actionURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</portlet:actionURL>
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon-delete url="<%= deleteRecordSetURL %>" />
 	</c:if>

@@ -53,9 +53,31 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>, <%= editable %>);
 
+	var ignoreEmptyRecordsSort = function(recA, recB, field, desc) {
+		if (recB.getValue(field) === '') {
+			return -1;
+		}
+
+		var sorted = A.ArraySort.compare(recA.getValue(field), recB.getValue(field), desc);
+
+		if (sorted === 0) {
+			return A.ArraySort.compare(recA.get("id"), recB.get("id"), desc);
+		}
+		else {
+			return sorted;
+		}
+	};
+
 	var keys = A.Array.map(
 		columnset,
 		function(item, index, collection) {
+			A.mix(
+				item,
+				{
+					sortFn: ignoreEmptyRecordsSort
+				}
+			);
+
 			return item.key;
 		}
 	);

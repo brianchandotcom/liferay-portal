@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -155,8 +157,17 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public DLFileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
+		long userId = 0;
+
+		if (PrincipalThreadLocal.getName() != null) {
+			userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+		}
+		else {
+			userId = UserLocalServiceUtil.getDefaultUserId(getCompanyId());
+		}
+
 		return DLFileEntryLocalServiceUtil.getLatestFileVersion(
-			getFileEntryId());
+			userId, getFileEntryId());
 	}
 
 	public Lock getLock() {

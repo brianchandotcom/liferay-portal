@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -68,27 +69,45 @@ public class PDFProcessor extends DLProcessor {
 
 	public static final String THUMBNAIL_TYPE = ImageProcessor.TYPE_PNG;
 
-	public static void generateImages(FileEntry fileEntry) {
-		_instance._generateImages(fileEntry);
+	public static void generateImages(FileVersion fileVersion) {
+		_instance._generateImages(fileVersion);
 	}
 
 	public static File getPreviewFile(String id, int index) {
 		return _instance._getPreviewFile(id, index);
 	}
 
-	public static int getPreviewFileCount(FileEntry fileEntry) {
-		return _instance._getPreviewFileCount(fileEntry);
+	public static int getPreviewFileCount(FileEntry fileEntry, String version) {
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+			return _instance._getPreviewFileCount(fileVersion);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return 0;
 	}
 
 	public static File getThumbnailFile(String id) {
 		return _instance._getThumbnailFile(id);
 	}
 
-	public static boolean hasImages(FileEntry fileEntry) {
-		boolean hasImages = _instance._hasImages(fileEntry);
+	public static boolean hasImages(FileEntry fileEntry, String version) {
+		boolean hasImages = false;
 
-		if (!hasImages) {
-			_instance._queueGeneration(fileEntry);
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+			 hasImages = _instance._hasImages(fileVersion);
+
+			 if (!hasImages) {
+				 _instance._queueGeneration(fileVersion);
+			 }
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return hasImages;
@@ -96,38 +115,49 @@ public class PDFProcessor extends DLProcessor {
 
 	@Override
 	public void trigger(FileEntry fileEntry) {
-		_instance._queueGeneration(fileEntry);
+		try {
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			trigger(fileVersion);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
-	private void _generateImages(FileEntry fileEntry) {
+	public void trigger(FileVersion fileVersion) {
+		_instance._queueGeneration(fileVersion);
+	}
+
+	private void _generateImages(FileVersion fileVersion) {
 		try {
-			if (_hasImages(fileEntry)) {
+			if (_hasImages(fileVersion)) {
 				return;
 			}
 
-			String extension = fileEntry.getExtension();
+			String extension = fileVersion.getExtension();
 
 			if (extension.equals("pdf")) {
 				InputStream inputStream =
 					DLFileEntryLocalServiceUtil.getFileAsStream(
-						fileEntry.getUserId(), fileEntry.getFileEntryId(),
-						fileEntry.getVersion(), false);
+						fileVersion.getUserId(), fileVersion.getFileEntryId(),
+						fileVersion.getVersion(), false);
 
-				_generateImages(fileEntry, inputStream);
+				_generateImages(fileVersion, inputStream);
 			}
 			else if (DocumentConversionUtil.isEnabled()) {
 				InputStream inputStream =
 					DLFileEntryLocalServiceUtil.getFileAsStream(
-						fileEntry.getUserId(), fileEntry.getFileEntryId(),
-						fileEntry.getVersion(), false);
+						fileVersion.getUserId(), fileVersion.getFileEntryId(),
+						fileVersion.getVersion(), false);
 
 				String id = DLUtil.getTempFileId(
-					fileEntry.getFileEntryId(), fileEntry.getVersion());
+					fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 				File file = DocumentConversionUtil.convert(
-					id, inputStream, fileEntry.getExtension(), "pdf");
+					id, inputStream, fileVersion.getExtension(), "pdf");
 
-				_generateImages(fileEntry, file);
+				_generateImages(fileVersion, file);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -136,16 +166,16 @@ public class PDFProcessor extends DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileEntry.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileVersionId());
 		}
 	}
 
-	private void _generateImages(FileEntry fileEntry, File file)
+	private void _generateImages(FileVersion fileVersion, File file)
 		throws IOException, PortalException, SystemException {
 
 		if (PropsValues.IMAGEMAGICK_ENABLED) {
 			String id = DLUtil.getTempFileId(
-				fileEntry.getFileEntryId(), fileEntry.getVersion());
+				fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 			if (_isGeneratePreview(id)) {
 				_generateImagesIM(
@@ -166,7 +196,7 @@ public class PDFProcessor extends DLProcessor {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"ImageMagick generated " +
-							_getPreviewFileCount(fileEntry) +
+							_getPreviewFileCount(fileVersion) +
 								" preview pages for " + id);
 				}
 			}
@@ -184,19 +214,19 @@ public class PDFProcessor extends DLProcessor {
 			}
 		}
 		else {
-			_generateImages(fileEntry, new FileInputStream(file));
+			_generateImages(fileVersion, new FileInputStream(file));
 		}
 	}
 
 	private void _generateImages(
-			FileEntry fileEntry, InputStream inputStream)
+			FileVersion fileVersion, InputStream inputStream)
 		throws IOException, PortalException, SystemException {
 
 		String id = DLUtil.getTempFileId(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		if (PropsValues.IMAGEMAGICK_ENABLED) {
-			if (fileEntry.getExtension().equals("pdf")) {
+			if (fileVersion.getExtension().equals("pdf")) {
 				String filePath = DocumentConversionUtil.getFilePath(id, "pdf");
 
 				File file = new File(filePath);
@@ -204,7 +234,7 @@ public class PDFProcessor extends DLProcessor {
 				try {
 					FileUtil.write(file, inputStream);
 
-					_generateImages(fileEntry, file);
+					_generateImages(fileVersion, file);
 				}
 				finally {
 					file.delete();
@@ -212,9 +242,9 @@ public class PDFProcessor extends DLProcessor {
 			}
 			else {
 				File file = DocumentConversionUtil.convert(
-					id, inputStream, fileEntry.getExtension(), "pdf");
+					id, inputStream, fileVersion.getExtension(), "pdf");
 
-				_generateImages(fileEntry, file);
+				_generateImages(fileVersion, file);
 			}
 		}
 		else {
@@ -259,7 +289,7 @@ public class PDFProcessor extends DLProcessor {
 
 				if (_log.isInfoEnabled() && generatePreview) {
 					_log.info(
-						"PDFBox generated " + _getPreviewFileCount(fileEntry) +
+						"PDFBox generated " + _getPreviewFileCount(fileVersion) +
 							" preview pages for " + id);
 				}
 			}
@@ -374,9 +404,9 @@ public class PDFProcessor extends DLProcessor {
 		return sb.toString();
 	}
 
-	private int _getPreviewFileCount(FileEntry fileEntry) {
+	private int _getPreviewFileCount(FileVersion fileVersion) {
 		String id = DLUtil.getTempFileId(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		StringBundler sb = new StringBundler(5);
 
@@ -416,13 +446,28 @@ public class PDFProcessor extends DLProcessor {
 		return sb.toString();
 	}
 
-	private boolean _hasImages(FileEntry fileEntry) {
+	private boolean _hasImages(FileVersion fileVersion) {
 		String id = DLUtil.getTempFileId(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+		long fileVersionModified = fileVersion.getStatusDate().getTime();
 
 		File previewFile = _getPreviewFile(id, 1);
 
+		if (previewFile.lastModified() < fileVersionModified) {
+			int previewFileCount = _getPreviewFileCount(fileVersion);
+			for (int i = 0; i < previewFileCount; i++) {
+				File file = _getPreviewFile(id, i + 1);
+
+				file.delete();
+			}
+		}
+
 		File thumbnailFile = _getThumbnailFile(id);
+
+		if (thumbnailFile.lastModified() < fileVersionModified) {
+			thumbnailFile.delete();
+		}
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
 			PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
@@ -471,18 +516,18 @@ public class PDFProcessor extends DLProcessor {
 		}
 	}
 
-	private void _queueGeneration(FileEntry fileEntry) {
-		if (!_fileEntries.contains(fileEntry.getFileEntryId())) {
+	private void _queueGeneration(FileVersion fileVersion) {
+		if (!_fileEntries.contains(fileVersion.getFileVersionId())) {
 			boolean generateImages = false;
 
-			String extension = fileEntry.getExtension();
+			String extension = fileVersion.getExtension();
 
 			if (extension.equals("pdf")) {
 				generateImages = true;
 			}
 			else if (DocumentConversionUtil.isEnabled()) {
 				String[] conversions = DocumentConversionUtil.getConversions(
-					fileEntry.getExtension());
+					fileVersion.getExtension());
 
 				for (String conversion : conversions) {
 					if (conversion.equals("pdf")) {
@@ -494,10 +539,10 @@ public class PDFProcessor extends DLProcessor {
 			}
 
 			if (generateImages) {
-				_fileEntries.add(fileEntry.getFileEntryId());
+				_fileEntries.add(fileVersion.getFileVersionId());
 
 				MessageBusUtil.sendMessage(
-					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR, fileEntry);
+					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR, fileVersion);
 			}
 		}
 	}

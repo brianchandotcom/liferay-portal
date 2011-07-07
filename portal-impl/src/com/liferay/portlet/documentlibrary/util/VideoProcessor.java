@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -46,6 +47,7 @@ import java.util.Vector;
 /**
  * @author Juan González
  * @author Sergio González
+ * @author Mika Koivisto
  */
 public class VideoProcessor extends DLProcessor {
 
@@ -53,8 +55,8 @@ public class VideoProcessor extends DLProcessor {
 
 	public static final String THUMBNAIL_TYPE = "jpg";
 
-	public static void generateVideo(FileEntry fileEntry) {
-		_instance._generateVideo(fileEntry);
+	public static void generateVideo(FileVersion fileVersion) {
+		_instance._generateVideo(fileVersion);
 	}
 
 	public static File getPreviewFile(String id) {
@@ -65,23 +67,50 @@ public class VideoProcessor extends DLProcessor {
 		return _instance._getThumbnailFile(id);
 	}
 
-	public static boolean hasVideo(FileEntry fileEntry) {
-		boolean hasVideo = _instance._hasVideo(fileEntry);
+	public static boolean hasVideo(FileEntry fileEntry, String version) {
+		boolean hasVideo = false;
 
-		if (!hasVideo) {
-			_instance._queueGeneration(fileEntry);
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+			hasVideo = _instance._hasVideo(fileVersion);
+
+			if (!hasVideo) {
+				_instance._queueGeneration(fileVersion);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return hasVideo;
 	}
 
-	public static boolean isSupportedVideo(FileEntry fileEntry) {
-		return _instance._isSupportedVideo(fileEntry);
+	public static boolean isSupportedVideo(
+		FileEntry fileEntry, String version) {
+
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+			return _instance._isSupportedVideo(fileVersion);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
 	}
 
 	@Override
 	public void trigger(FileEntry fileEntry) {
-		_instance._queueGeneration(fileEntry);
+		try {
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			_instance._queueGeneration(fileVersion);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	private void _generateThumbnailXuggler(
@@ -109,35 +138,35 @@ public class VideoProcessor extends DLProcessor {
 		}
 	}
 
-	private void _generateVideo(FileEntry fileEntry) {
+	private void _generateVideo(FileVersion fileVersion) {
 		try {
 			if (!PrefsPropsUtil.getBoolean(
 					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
-				_hasVideo(fileEntry)) {
+				_hasVideo(fileVersion)) {
 
 				return;
 			}
 
 			String id = DLUtil.getTempFileId(
-				fileEntry.getFileEntryId(),	fileEntry.getVersion());
+				fileVersion.getFileEntryId(),	fileVersion.getVersion());
 
 			File previewFile = _getPreviewFile(id);
 
 			if (_isGeneratePreview(id)) {
 				previewFile.createNewFile();
 
-				File tmpFile = _getVideoTmpFile(id, fileEntry.getExtension());
+				File tmpFile = _getVideoTmpFile(id, fileVersion.getExtension());
 
 				try {
 					InputStream inputStream =
 						DLFileEntryLocalServiceUtil.getFileAsStream(
-							fileEntry.getUserId(), fileEntry.getFileEntryId(),
-							fileEntry.getVersion(), false);
+							fileVersion.getUserId(), fileVersion.getFileEntryId(),
+							fileVersion.getVersion(), false);
 
 					FileUtil.write(tmpFile, inputStream);
 
 					_generateVideoXuggler(
-						fileEntry, tmpFile, previewFile,
+						fileVersion, tmpFile, previewFile,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 
@@ -172,12 +201,12 @@ public class VideoProcessor extends DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileEntry.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileEntryId());
 		}
 	}
 
 	private void _generateVideoXuggler(
-			FileEntry fileEntry, File srcFile, File destFile, int height,
+			FileVersion fileVersion, File srcFile, File destFile, int height,
 			int width)
 		throws SystemException {
 
@@ -262,13 +291,23 @@ public class VideoProcessor extends DLProcessor {
 		return sb.toString();
 	}
 
-	private boolean _hasVideo(FileEntry fileEntry) {
+	private boolean _hasVideo(FileVersion fileVersion) {
 		String id = DLUtil.getTempFileId(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+		long fileVersionModified = fileVersion.getStatusDate().getTime();
 
 		File previewFile = _getPreviewFile(id);
 
+		if (previewFile.lastModified() < fileVersionModified) {
+			previewFile.delete();
+		}
+
 		File thumbnailFile = _getThumbnailFile(id);
+
+		if (thumbnailFile.lastModified() < fileVersionModified) {
+			thumbnailFile.delete();
+		}
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
 			PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
@@ -317,23 +356,23 @@ public class VideoProcessor extends DLProcessor {
 		}
 	}
 
-	private boolean _isSupportedVideo(FileEntry fileEntry) {
-		if (fileEntry == null) {
+	private boolean _isSupportedVideo(FileVersion fileVersion) {
+		if (fileVersion == null) {
 			return false;
 		}
 
-		return _videoMimeTypes.contains(fileEntry.getMimeType());
+		return _videoMimeTypes.contains(fileVersion.getMimeType());
 	}
 
-	private void _queueGeneration(FileEntry fileEntry) {
-		if (!_fileEntries.contains(fileEntry.getFileEntryId()) &&
-			_isSupportedVideo(fileEntry)) {
+	private void _queueGeneration(FileVersion fileVersion) {
+		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+			_isSupportedVideo(fileVersion)) {
 
-			_fileEntries.add(fileEntry.getFileEntryId());
+			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
-				fileEntry);
+				fileVersion);
 		}
 	}
 

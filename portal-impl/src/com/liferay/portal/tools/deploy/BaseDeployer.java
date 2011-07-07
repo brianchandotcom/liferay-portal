@@ -1049,6 +1049,13 @@ public class BaseDeployer implements Deployer {
 			sb.append("</jsp-config>");
 		}
 
+		// Add custom filters to handle session id issues in Weblogic and other
+		// application servers
+		String compoundSessionFiltersContent = FileUtil.read(
+			DeployUtil.getResourcePath("compound-session-filters-web.xml"));
+
+		sb.append(compoundSessionFiltersContent);
+
 		return sb.toString();
 	}
 

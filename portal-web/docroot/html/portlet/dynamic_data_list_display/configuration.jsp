@@ -30,6 +30,9 @@ try {
 }
 catch (NoSuchRecordSetException nsrse) {
 }
+
+request.setAttribute("record_set_action.jsp-chooseCallback", renderResponse.getNamespace().concat("selectRecordSet"));
+request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -144,22 +147,9 @@ catch (NoSuchRecordSetException nsrse) {
 
 				<%@ include file="/html/portlet/dynamic_data_lists/search_columns.jspf" %>
 
-				<%
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:");
-				sb.append(renderResponse.getNamespace());
-				sb.append("selectRecordSet('");
-				sb.append(recordSet.getRecordSetId());
-				sb.append("','");
-				sb.append(recordSet.getName(locale));
-				sb.append("');");
-				%>
-
-				<liferay-ui:search-container-column-button
+				<liferay-ui:search-container-column-jsp
 					align="right"
-					href="<%= sb.toString() %>"
-					name='<%= LanguageUtil.get(pageContext, "choose") %>'
+					path="/html/portlet/dynamic_data_lists/record_set_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

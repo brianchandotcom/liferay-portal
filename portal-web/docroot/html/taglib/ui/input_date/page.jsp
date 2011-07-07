@@ -139,15 +139,15 @@ if (yearValue > 0) {
 							var instance = this;
 
 							<c:if test="<%= dayNullable %>">
-								instance.get('dayNode').val('');
+								instance.get('dayNode').val('-1');
 							</c:if>
 
 							<c:if test="<%= monthNullable %>">
-								instance.get('monthNode').val('');
+								instance.get('monthNode').val('-1');
 							</c:if>
 
 							<c:if test="<%= yearNullable %>">
-								instance.get('yearNode').val('');
+								instance.get('yearNode').val('-1');
 							</c:if>
 						}
 					},
@@ -180,18 +180,9 @@ if (yearValue > 0) {
 					dayNode: '#<%= dayParam %>',
 					disabled: <%= disabled %>,
 					monthNode: '#<%= monthParam %>',
-					<c:if test="<%= dayNullable %>">
-						nullableDay: true,
-					</c:if>
-
-					<c:if test="<%= monthNullable %>">
-						nullableMonth: true,
-					</c:if>
-
-					<c:if test="<%= yearNullable %>">
-						nullableYear: true,
-					</c:if>
-
+					nullableDay: <%= dayNullable %>,
+					nullableMonth: <%= monthNullable %>,
+					nullableYear: <%= yearNullable %>,
 					on: {
 						'calendar:select': function(event) {
 							var formatted = event.date.formatted[0];

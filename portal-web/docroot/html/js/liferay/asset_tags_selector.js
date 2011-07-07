@@ -403,17 +403,17 @@ AUI().add(
 						var newList = String(list).split(',');
 
 						var set = {};
-						
+
 						for (var i = 0; i < newList.length; i++) { 
 							set[newList[i]] = true;
 						}
-						
+
 						newList = [];
-						
+
 						for(var tagName in set) {
 							newList.push(tagName);
 						}
-						
+
 						return newList;
 					},
 
@@ -518,7 +518,7 @@ AUI().add(
 							context = contentCallback();
 						}
 
-						while(context.length > start) {
+						while (context.length > start) {
 
 							if (end < context.length) {
 								var contextChunkEstimate = context.substring(start, end);

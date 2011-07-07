@@ -271,23 +271,24 @@ public class MessageListenerImpl implements MessageListener {
 
 		int pos = recipient.indexOf(CharPool.AT);
 
-		String target = recipient.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length(), pos);
+		if (pos >= 0) {
+			long parentMessageId = 0;
 
-		String[] parts = StringUtil.split(target, StringPool.PERIOD);
+			String target = recipient.substring(
+				MBUtil.MESSAGE_POP_PORTLET_PREFIX.length(), pos);
 
-		long parentMessageId = 0;
+			String[] parts = StringUtil.split(target, StringPool.PERIOD);
 
-		if (parts.length == 2) {
-			parentMessageId = GetterUtil.getLong(parts[1]);
+			if (parts.length == 2) {
+				parentMessageId = GetterUtil.getLong(parts[1]);
+			}
+
+			if (parentMessageId > 0) {
+				return parentMessageId;
+			}
 		}
 
-		if (parentMessageId > 0) {
-			return parentMessageId;
-		}
-		else {
-			return MBUtil.getParentMessageId(message);
-		}
+		return MBUtil.getParentMessageId(message);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MessageListenerImpl.class);

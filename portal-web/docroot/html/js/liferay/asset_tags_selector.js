@@ -222,16 +222,8 @@ AUI().add(
 						return instance._popup;
 					},
 
-					_getProxyData: function() {
+					_getProxyData: function(context) {
 						var instance = this;
-
-						var context = '';
-
-						var contentCallback = instance.get('contentCallback');
-
-						if (contentCallback) {
-							context = contentCallback();
-						}
 
 						var suggestionsURL = A.substitute(
 							TPL_URL_SUGGESTIONS,
@@ -407,6 +399,24 @@ AUI().add(
 						event.preventDefault();
 					},
 
+					_removeDuplicates: function(list) {
+						var newList = String(list).split(',');
+
+						var set = {};
+						
+						for (var i = 0; i < newList.length; i++) { 
+							set[newList[i]] = true;
+						}
+						
+						newList = [];
+						
+						for(var tagName in set) {
+							newList.push(tagName);
+						}
+						
+						return newList;
+					},
+
 					_renderIcons: function() {
 						var instance = this;
 
@@ -495,22 +505,57 @@ AUI().add(
 
 						instance._popup.set('title', Liferay.Language.get('suggestions'));
 
-						A.io.request(
-							themeDisplay.getPathMain() + '/portal/rest_proxy',
-							{
-								data: instance._getProxyData(),
-								dataType: 'json',
-								on: {
-									success: function(event, id, obj) {
-										var results = this.get('responseData');
+						var contentCallback = instance.get('contentCallback');
+						var context = '';
+						var data = [];
+						var lastSpaceIndex  = 0;
 
-										if (results && results.ResultSet) {
-											instance._updateSelectList(results.ResultSet.Result, instance._suggestionsIterator);
-										}
-									}
-								}
+						var URLSizeLimit = 4096;
+						var start = 0;
+						var end = start + URLSizeLimit;
+
+						if (contentCallback) {
+							context = contentCallback();
+						}
+
+						while(context.length > start) {
+
+							if (end < context.length) {
+								var contextChunkEstimate = context.substring(start, end);
+								var contextChunk = '';
+
+								lastSpaceIndex = contextChunkEstimate.lastIndexOf(' ');
+
+								contextChunk = context.substring(start, start + lastSpaceIndex);
 							}
-						);
+							else {
+								lastSpaceIndex = URLSizeLimit;
+								contextChunk = context.substring(start, end);
+							}
+
+							A.io.request(
+								themeDisplay.getPathMain() + '/portal/rest_proxy',
+								{
+									data: instance._getProxyData(contextChunk),
+									dataType: 'json',
+									on: {
+										success: function(event, id, obj) {
+											var results = this.get('responseData');
+
+											if (results && results.ResultSet) {
+												if (results.ResultSet.Result != '') {
+													data.push(results.ResultSet.Result);
+												}
+											}
+										}
+									}, sync:true
+								}
+							);
+						start = start + lastSpaceIndex;
+						end = start + URLSizeLimit;
+
+						}
+						instance._updateSelectList(instance._removeDuplicates(data), instance._suggestionsIterator);
 					},
 
 					_suggestionsIterator: function(item, index, collection) {

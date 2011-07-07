@@ -92,6 +92,14 @@ try {
 <%
 	PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
 }
+catch (NoSuchModelException nsme) {
+	SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+%>
+
+	<liferay-util:include page="/html/portlet/asset_publisher/error.jsp" />
+
+<%
+}
 catch (Exception e) {
 	_log.error(e);
 }

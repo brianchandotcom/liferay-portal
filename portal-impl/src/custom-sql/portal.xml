@@ -947,6 +947,20 @@
 				[$SCOPE$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByResource">
+		<![CDATA[
+			SELECT
+				{ResourcePermission.*}
+			FROM
+				ResourcePermission
+			WHERE
+				(ResourcePermission.name = ?) AND
+				(
+					(ResourcePermission.primKey = ?) OR
+					(ResourcePermission.scope != 4)
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByR_S">
 		<![CDATA[
 			SELECT

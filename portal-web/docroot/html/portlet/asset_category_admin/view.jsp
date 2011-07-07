@@ -18,42 +18,46 @@
 
 <aui:form name="fm">
 
-<div class="vocabulary-container">
-	<div class="vocabulary-toolbar">
-		<span class="vocabulary-search-bar">
-			<aui:input cssClass="vocabulary-search" label="" name="vocabularySearchInput" />
+<div class="categories-admin-container">
+	<div class="lfr-header-row">
+		<div class="lfr-header-row-content">
+			<div class="toolbar">
+				<aui:button-row cssClass="categories-admin-actions">
+					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
+						<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
+					</c:if>
 
-			<aui:select cssClass="vocabulary-select-search" label="" name="vocabularySelectSearch">
-				<aui:option label="categories" selected="<%= true %>" />
-				<aui:option label="vocabularies" />
-			</aui:select>
-		</span>
+					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
+						<aui:button cssClass="add-category-button" name="addCategoryButton" value="add-category" />
+					</c:if>
 
-		<aui:button-row cssClass="vocabulary-actions">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-				<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
-			</c:if>
+					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">
+						<liferay-security:permissionsURL
+							modelResource="com.liferay.portlet.asset"
+							modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
+							resourcePrimKey="<%= String.valueOf(themeDisplay.getParentGroupId()) %>"
+							var="permissionsURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						/>
 
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
-				<aui:button cssClass="add-category-button" name="addCategoryButton" value="add-category" />
-			</c:if>
+						<aui:button data-url="<%= permissionsURL %>" name="categoryPermissionsButton" value="permissions" />
+					</c:if>
+				</aui:button-row>
+			</div>
 
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.asset"
-					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-					resourcePrimKey="<%= String.valueOf(themeDisplay.getParentGroupId()) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
+			<div class="lfr-search-combobox search-button-container categories-search-combobox">
+				<aui:input cssClass="first keywords lfr-search-combobox-item categories-admin-search" label="" name="categoriesAdminSearchInput" type="text" />
 
-				<aui:button data-url="<%= permissionsURL %>" name="categoryPermissionsButton" value="permissions" />
-			</c:if>
-		</aui:button-row>
+				<aui:select cssClass="categories-admin-select-search" label="" name="categoriesAdminSelectSearch">
+					<aui:option label="categories"/>
+					<aui:option label="vocabularies" selected="<%= true %>"/>
+				</aui:select>
+			</div>
+		</div>
 	</div>
 
-	<div class="vocabulary-content-wrapper">
-		<aui:layout cssClass="vocabulary-content">
+	<div class="categories-admin-content-wrapper">
+		<aui:layout cssClass="categories-admin-content">
 			<aui:column columnWidth="25" cssClass="vocabulary-list-container">
 				<div class="results-header"><liferay-ui:message key="vocabularies" /></div>
 

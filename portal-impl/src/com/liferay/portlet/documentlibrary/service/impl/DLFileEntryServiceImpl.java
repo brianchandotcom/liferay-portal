@@ -346,6 +346,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId);
 	}
 
+	public DLFileVersion getLatestFileVersion(long fileEntryId)
+		throws PortalException, SystemException {
+
+		return dlFileEntryLocalService.getLatestFileVersion(
+			getGuestOrUserId(), fileEntryId);
+	}
+
 	public DLFileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {

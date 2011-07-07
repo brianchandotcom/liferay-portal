@@ -1572,7 +1572,7 @@
 
 		<!-- PK fields -->
 
-		<column name="actionId" type="long" primary="true" />
+		<column name="actionIds" type="long" primary="true" />
 		<column name="resourceBlockId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
@@ -1580,7 +1580,7 @@
 
 		<finder name="R_A" return-type="Collection">
 			<finder-column name="roleId" />
-			<finder-column name="actionId" />
+			<finder-column name="actionIds" />
 		</finder>
 	</entity>
 	<entity name="ResourceCode" local-service="true" remote-service="false">

@@ -56,18 +56,18 @@ public interface ResourceBlockRoleActionModel extends BaseModel<ResourceBlockRol
 	public void setPrimaryKey(ResourceBlockRoleActionPK primaryKey);
 
 	/**
-	 * Returns the action ID of this resource block role action.
+	 * Returns the action IDs of this resource block role action.
 	 *
-	 * @return the action ID of this resource block role action
+	 * @return the action IDs of this resource block role action
 	 */
-	public long getActionId();
+	public long getActionIds();
 
 	/**
-	 * Sets the action ID of this resource block role action.
+	 * Sets the action IDs of this resource block role action.
 	 *
-	 * @param actionId the action ID of this resource block role action
+	 * @param actionIds the action IDs of this resource block role action
 	 */
-	public void setActionId(long actionId);
+	public void setActionIds(long actionIds);
 
 	/**
 	 * Returns the resource block ID of this resource block role action.

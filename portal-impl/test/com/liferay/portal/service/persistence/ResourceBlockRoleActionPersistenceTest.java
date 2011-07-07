@@ -72,8 +72,8 @@ public class ResourceBlockRoleActionPersistenceTest
 
 		ResourceBlockRoleAction existingResourceBlockRoleAction = _persistence.findByPrimaryKey(newResourceBlockRoleAction.getPrimaryKey());
 
-		assertEquals(existingResourceBlockRoleAction.getActionId(),
-			newResourceBlockRoleAction.getActionId());
+		assertEquals(existingResourceBlockRoleAction.getActionIds(),
+			newResourceBlockRoleAction.getActionIds());
 		assertEquals(existingResourceBlockRoleAction.getResourceBlockId(),
 			newResourceBlockRoleAction.getResourceBlockId());
 		assertEquals(existingResourceBlockRoleAction.getRoleId(),
@@ -126,8 +126,8 @@ public class ResourceBlockRoleActionPersistenceTest
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockRoleAction.class,
 				ResourceBlockRoleAction.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionId",
-				newResourceBlockRoleAction.getActionId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionIds",
+				newResourceBlockRoleAction.getActionIds()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.resourceBlockId",
 				newResourceBlockRoleAction.getResourceBlockId()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
@@ -146,7 +146,7 @@ public class ResourceBlockRoleActionPersistenceTest
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockRoleAction.class,
 				ResourceBlockRoleAction.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionIds", nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.resourceBlockId",
 				nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId", nextLong()));
@@ -163,29 +163,31 @@ public class ResourceBlockRoleActionPersistenceTest
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockRoleAction.class,
 				ResourceBlockRoleAction.class.getClassLoader());
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.actionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"id.actionIds"));
 
-		Object newActionId = newResourceBlockRoleAction.getActionId();
+		Object newActionIds = newResourceBlockRoleAction.getActionIds();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.actionId",
-				new Object[] { newActionId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("id.actionIds",
+				new Object[] { newActionIds }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		assertEquals(1, result.size());
 
-		Object existingActionId = result.get(0);
+		Object existingActionIds = result.get(0);
 
-		assertEquals(existingActionId, newActionId);
+		assertEquals(existingActionIds, newActionIds);
 	}
 
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockRoleAction.class,
 				ResourceBlockRoleAction.class.getClassLoader());
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.actionId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"id.actionIds"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.actionId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("id.actionIds",
 				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

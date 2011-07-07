@@ -549,6 +549,7 @@ create unique index IX_EDB9986E on ResourceAction (name, actionId);
 create unique index IX_451AA5FD on ResourceBlock (permissionsHash);
 
 create index IX_ADE2313B on ResourceBlockRoleAction (roleId, actionId);
+create index IX_E6509FC on ResourceBlockRoleAction (roleId, actionIds);
 
 create index IX_717FDD47 on ResourceCode (companyId);
 create unique index IX_A32C097E on ResourceCode (companyId, name, scope);

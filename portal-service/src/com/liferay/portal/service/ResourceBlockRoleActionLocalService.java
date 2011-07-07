@@ -224,4 +224,9 @@ public interface ResourceBlockRoleActionLocalService {
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void addResourceBlockRoleActions(
+		com.liferay.portal.model.ResourceBlock resourceBlock,
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

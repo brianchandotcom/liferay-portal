@@ -795,7 +795,7 @@
 	<class name="com.liferay.portal.model.impl.ResourceBlockRoleActionImpl" table="ResourceBlockRoleAction">
 		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceBlockRoleActionPK">
-			<key-property name="actionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>

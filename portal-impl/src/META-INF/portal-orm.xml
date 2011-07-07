@@ -850,7 +850,7 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockRoleActionModelImpl">
 		<id-class class="com.liferay.portal.service.persistence.ResourceBlockRoleActionPK" />
 		<attributes>
-			<id name="actionId" />
+			<id name="actionIds" />
 			<id name="resourceBlockId" />
 			<id name="roleId" />
 			<transient name="primaryKey" />

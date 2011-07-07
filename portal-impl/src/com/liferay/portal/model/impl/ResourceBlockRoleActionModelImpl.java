@@ -49,11 +49,11 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 	 */
 	public static final String TABLE_NAME = "ResourceBlockRoleAction";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "actionId", Types.BIGINT },
+			{ "actionIds", Types.BIGINT },
 			{ "resourceBlockId", Types.BIGINT },
 			{ "roleId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlockRoleAction (actionId LONG not null,resourceBlockId LONG not null,roleId LONG not null,primary key (actionId, resourceBlockId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlockRoleAction (actionIds LONG not null,resourceBlockId LONG not null,roleId LONG not null,primary key (actionIds, resourceBlockId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockRoleAction";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -80,18 +80,18 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public ResourceBlockRoleActionPK getPrimaryKey() {
-		return new ResourceBlockRoleActionPK(_actionId, _resourceBlockId,
+		return new ResourceBlockRoleActionPK(_actionIds, _resourceBlockId,
 			_roleId);
 	}
 
 	public void setPrimaryKey(ResourceBlockRoleActionPK primaryKey) {
-		setActionId(primaryKey.actionId);
+		setActionIds(primaryKey.actionIds);
 		setResourceBlockId(primaryKey.resourceBlockId);
 		setRoleId(primaryKey.roleId);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new ResourceBlockRoleActionPK(_actionId, _resourceBlockId,
+		return new ResourceBlockRoleActionPK(_actionIds, _resourceBlockId,
 			_roleId);
 	}
 
@@ -99,12 +99,12 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 		setPrimaryKey((ResourceBlockRoleActionPK)primaryKeyObj);
 	}
 
-	public long getActionId() {
-		return _actionId;
+	public long getActionIds() {
+		return _actionIds;
 	}
 
-	public void setActionId(long actionId) {
-		_actionId = actionId;
+	public void setActionIds(long actionIds) {
+		_actionIds = actionIds;
 	}
 
 	public long getResourceBlockId() {
@@ -143,7 +143,7 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 	public Object clone() {
 		ResourceBlockRoleActionImpl resourceBlockRoleActionImpl = new ResourceBlockRoleActionImpl();
 
-		resourceBlockRoleActionImpl.setActionId(getActionId());
+		resourceBlockRoleActionImpl.setActionIds(getActionIds());
 		resourceBlockRoleActionImpl.setResourceBlockId(getResourceBlockId());
 		resourceBlockRoleActionImpl.setRoleId(getRoleId());
 
@@ -196,8 +196,8 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{actionId=");
-		sb.append(getActionId());
+		sb.append("{actionIds=");
+		sb.append(getActionIds());
 		sb.append(", resourceBlockId=");
 		sb.append(getResourceBlockId());
 		sb.append(", roleId=");
@@ -215,8 +215,8 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>actionId</column-name><column-value><![CDATA[");
-		sb.append(getActionId());
+			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
+		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>resourceBlockId</column-name><column-value><![CDATA[");
@@ -236,7 +236,7 @@ public class ResourceBlockRoleActionModelImpl extends BaseModelImpl<ResourceBloc
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceBlockRoleAction.class
 		};
-	private long _actionId;
+	private long _actionIds;
 	private long _resourceBlockId;
 	private long _roleId;
 	private ResourceBlockRoleAction _escapedModelProxy;

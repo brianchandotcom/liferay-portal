@@ -35,18 +35,17 @@ public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
 	/**
-	 * Adds a resource block for the resource and creates associations between
-	 * it and the roles with permission to access the resource.
+	 * Adds a resource block and creates associations between
+	 * it and the roles specified in the resource permissions.
 	 *
-	 * @param  permissionsHash the resource's permissions hash
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key of the resource
+	 * @param  permissionsHash the resource block's permissions hash
+	 * @param  resourcePermissions the resource permissions
 	 * @return the new resource block
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceBlock addResourceBlock(
-			String permissionsHash, String name, String primKey)
+			String permissionsHash,
+			List<ResourcePermission> resourcePermissions)
 		throws SystemException {
 
 		long resourceBlockId = counterLocalService.increment();
@@ -59,7 +58,8 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPersistence.update(resourceBlock, false);
 
-		resourceBlockRoleActionLocalService.addResourceBlockRoleActions(resourceBlock, name, primKey);
+		resourceBlockRoleActionLocalService.addResourceBlockRoleActions(
+			resourceBlock, resourcePermissions);
 
 		return resourceBlock;
 	}
@@ -158,7 +158,12 @@ public class ResourceBlockLocalServiceImpl
 			throw new SystemException(e);
 		}
 
-		String newPermissionsHash = getPermissionsHash(name, primKey);
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourceResourcePermissions(
+			name, primKey);
+
+		String newPermissionsHash = getPermissionsHash(resourcePermissions);
+
 		String currentPermissionsHash =
 			resourceBlock.getPermissionsHash();
 
@@ -176,7 +181,8 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPersistence.fetchByPermissionsHash(newPermissionsHash);
 
 		if (resourceBlock == null) {
-			resourceBlock = addResourceBlock(newPermissionsHash, name, primKey);
+			resourceBlock =
+				addResourceBlock(newPermissionsHash, resourcePermissions);
 		}
 		else {
 			retain(resourceBlock);

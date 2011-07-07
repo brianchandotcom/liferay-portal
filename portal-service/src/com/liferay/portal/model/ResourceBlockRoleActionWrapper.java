@@ -57,21 +57,21 @@ public class ResourceBlockRoleActionWrapper implements ResourceBlockRoleAction {
 	}
 
 	/**
-	* Returns the action ID of this resource block role action.
+	* Returns the action IDs of this resource block role action.
 	*
-	* @return the action ID of this resource block role action
+	* @return the action IDs of this resource block role action
 	*/
-	public long getActionId() {
-		return _resourceBlockRoleAction.getActionId();
+	public long getActionIds() {
+		return _resourceBlockRoleAction.getActionIds();
 	}
 
 	/**
-	* Sets the action ID of this resource block role action.
+	* Sets the action IDs of this resource block role action.
 	*
-	* @param actionId the action ID of this resource block role action
+	* @param actionIds the action IDs of this resource block role action
 	*/
-	public void setActionId(long actionId) {
-		_resourceBlockRoleAction.setActionId(actionId);
+	public void setActionIds(long actionIds) {
+		_resourceBlockRoleAction.setActionIds(actionIds);
 	}
 
 	/**

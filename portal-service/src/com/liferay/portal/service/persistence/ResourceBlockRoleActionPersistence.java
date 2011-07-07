@@ -104,44 +104,44 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the resource block role actions where roleId = &#63; and actionId = &#63;.
+	* Returns all the resource block role actions where roleId = &#63; and actionIds = &#63;.
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @return the matching resource block role actions
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockRoleAction> findByR_A(
-		long roleId, long actionId)
+		long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the resource block role actions where roleId = &#63; and actionId = &#63;.
+	* Returns a range of all the resource block role actions where roleId = &#63; and actionIds = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @param start the lower bound of the range of resource block role actions
 	* @param end the upper bound of the range of resource block role actions (not inclusive)
 	* @return the range of matching resource block role actions
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockRoleAction> findByR_A(
-		long roleId, long actionId, int start, int end)
+		long roleId, long actionIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the resource block role actions where roleId = &#63; and actionId = &#63;.
+	* Returns an ordered range of all the resource block role actions where roleId = &#63; and actionIds = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @param start the lower bound of the range of resource block role actions
 	* @param end the upper bound of the range of resource block role actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -149,52 +149,52 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockRoleAction> findByR_A(
-		long roleId, long actionId, int start, int end,
+		long roleId, long actionIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first resource block role action in the ordered set where roleId = &#63; and actionId = &#63;.
+	* Returns the first resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block role action
 	* @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a matching resource block role action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction findByR_A_First(
-		long roleId, long actionId,
+		long roleId, long actionIds,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last resource block role action in the ordered set where roleId = &#63; and actionId = &#63;.
+	* Returns the last resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource block role action
 	* @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a matching resource block role action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction findByR_A_Last(
-		long roleId, long actionId,
+		long roleId, long actionIds,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block role actions before and after the current resource block role action in the ordered set where roleId = &#63; and actionId = &#63;.
+	* Returns the resource block role actions before and after the current resource block role action in the ordered set where roleId = &#63; and actionIds = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -202,7 +202,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	*
 	* @param resourceBlockRoleActionPK the primary key of the current resource block role action
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource block role action
 	* @throws com.liferay.portal.NoSuchResourceBlockRoleActionException if a resource block role action with the primary key could not be found
@@ -210,7 +210,7 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockRoleAction[] findByR_A_PrevAndNext(
 		com.liferay.portal.service.persistence.ResourceBlockRoleActionPK resourceBlockRoleActionPK,
-		long roleId, long actionId,
+		long roleId, long actionIds,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockRoleActionException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -259,13 +259,13 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the resource block role actions where roleId = &#63; and actionId = &#63; from the database.
+	* Removes all the resource block role actions where roleId = &#63; and actionIds = &#63; from the database.
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_A(long roleId, long actionId)
+	public void removeByR_A(long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -277,14 +277,14 @@ public interface ResourceBlockRoleActionPersistence extends BasePersistence<Reso
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of resource block role actions where roleId = &#63; and actionId = &#63;.
+	* Returns the number of resource block role actions where roleId = &#63; and actionIds = &#63;.
 	*
 	* @param roleId the role ID
-	* @param actionId the action ID
+	* @param actionIds the action IDs
 	* @return the number of matching resource block role actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_A(long roleId, long actionId)
+	public int countByR_A(long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

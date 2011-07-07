@@ -680,7 +680,7 @@
 		<field name="referenceCount" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceBlockRoleAction">
-		<field name="actionId" type="long" />
+		<field name="actionIds" type="long" />
 		<field name="resourceBlockId" type="long" />
 		<field name="roleId" type="long" />
 	</model>

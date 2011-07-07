@@ -252,6 +252,14 @@ public class ResourceBlockRoleActionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void addResourceBlockRoleActions(
+		com.liferay.portal.model.ResourceBlock resourceBlock,
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResourceBlockRoleActions(resourceBlock, resourcePermissions);
+	}
+
 	public static ResourceBlockRoleActionLocalService getService() {
 		if (_service == null) {
 			_service = (ResourceBlockRoleActionLocalService)PortalBeanLocatorUtil.locate(ResourceBlockRoleActionLocalService.class.getName());

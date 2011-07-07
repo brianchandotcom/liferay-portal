@@ -244,6 +244,14 @@ public class ResourceBlockRoleActionLocalServiceWrapper
 		_resourceBlockRoleActionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void addResourceBlockRoleActions(
+		com.liferay.portal.model.ResourceBlock resourceBlock,
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockRoleActionLocalService.addResourceBlockRoleActions(resourceBlock,
+			resourcePermissions);
+	}
+
 	public ResourceBlockRoleActionLocalService getWrappedResourceBlockRoleActionLocalService() {
 		return _resourceBlockRoleActionLocalService;
 	}

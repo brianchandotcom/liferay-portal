@@ -1468,10 +1468,10 @@ create table ResourceBlock (
 );
 
 create table ResourceBlockRoleAction (
-	actionId LONG not null,
+	actionIds LONG not null,
 	resourceBlockId LONG not null,
 	roleId LONG not null,
-	primary key (actionId, resourceBlockId, roleId)
+	primary key (actionIds, resourceBlockId, roleId)
 );
 
 create table Resource_ (

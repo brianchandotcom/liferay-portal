@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface ResourceBlockRoleAction extends ResourceBlockRoleActionModel,
-	SaveableModel {
+	PermissionedModel, SaveableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

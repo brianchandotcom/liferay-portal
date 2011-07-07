@@ -24,26 +24,26 @@ import java.io.Serializable;
  */
 public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleActionPK>,
 	Serializable {
-	public long actionId;
+	public long actionIds;
 	public long resourceBlockId;
 	public long roleId;
 
 	public ResourceBlockRoleActionPK() {
 	}
 
-	public ResourceBlockRoleActionPK(long actionId, long resourceBlockId,
+	public ResourceBlockRoleActionPK(long actionIds, long resourceBlockId,
 		long roleId) {
-		this.actionId = actionId;
+		this.actionIds = actionIds;
 		this.resourceBlockId = resourceBlockId;
 		this.roleId = roleId;
 	}
 
-	public long getActionId() {
-		return actionId;
+	public long getActionIds() {
+		return actionIds;
 	}
 
-	public void setActionId(long actionId) {
-		this.actionId = actionId;
+	public void setActionIds(long actionIds) {
+		this.actionIds = actionIds;
 	}
 
 	public long getResourceBlockId() {
@@ -69,10 +69,10 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 
 		int value = 0;
 
-		if (actionId < pk.actionId) {
+		if (actionIds < pk.actionIds) {
 			value = -1;
 		}
-		else if (actionId > pk.actionId) {
+		else if (actionIds > pk.actionIds) {
 			value = 1;
 		}
 		else {
@@ -129,7 +129,7 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 			return false;
 		}
 
-		if ((actionId == pk.actionId) &&
+		if ((actionIds == pk.actionIds) &&
 				(resourceBlockId == pk.resourceBlockId) &&
 				(roleId == pk.roleId)) {
 			return true;
@@ -141,7 +141,7 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 
 	@Override
 	public int hashCode() {
-		return (String.valueOf(actionId) + String.valueOf(resourceBlockId) +
+		return (String.valueOf(actionIds) + String.valueOf(resourceBlockId) +
 		String.valueOf(roleId)).hashCode();
 	}
 
@@ -151,9 +151,9 @@ public class ResourceBlockRoleActionPK implements Comparable<ResourceBlockRoleAc
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
-		sb.append("actionId");
+		sb.append("actionIds");
 		sb.append(StringPool.EQUAL);
-		sb.append(actionId);
+		sb.append(actionIds);
 
 		sb.append(StringPool.COMMA);
 		sb.append(StringPool.SPACE);

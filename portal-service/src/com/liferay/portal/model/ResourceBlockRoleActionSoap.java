@@ -32,7 +32,7 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 		ResourceBlockRoleAction model) {
 		ResourceBlockRoleActionSoap soapModel = new ResourceBlockRoleActionSoap();
 
-		soapModel.setActionId(model.getActionId());
+		soapModel.setActionIds(model.getActionIds());
 		soapModel.setResourceBlockId(model.getResourceBlockId());
 		soapModel.setRoleId(model.getRoleId());
 
@@ -83,22 +83,22 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 	}
 
 	public ResourceBlockRoleActionPK getPrimaryKey() {
-		return new ResourceBlockRoleActionPK(_actionId, _resourceBlockId,
+		return new ResourceBlockRoleActionPK(_actionIds, _resourceBlockId,
 			_roleId);
 	}
 
 	public void setPrimaryKey(ResourceBlockRoleActionPK pk) {
-		setActionId(pk.actionId);
+		setActionIds(pk.actionIds);
 		setResourceBlockId(pk.resourceBlockId);
 		setRoleId(pk.roleId);
 	}
 
-	public long getActionId() {
-		return _actionId;
+	public long getActionIds() {
+		return _actionIds;
 	}
 
-	public void setActionId(long actionId) {
-		_actionId = actionId;
+	public void setActionIds(long actionIds) {
+		_actionIds = actionIds;
 	}
 
 	public long getResourceBlockId() {
@@ -117,7 +117,7 @@ public class ResourceBlockRoleActionSoap implements Serializable {
 		_roleId = roleId;
 	}
 
-	private long _actionId;
+	private long _actionIds;
 	private long _resourceBlockId;
 	private long _roleId;
 }

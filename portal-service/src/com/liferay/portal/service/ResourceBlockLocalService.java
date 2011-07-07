@@ -224,6 +224,20 @@ public interface ResourceBlockLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
+	* Adds a resource block and creates associations between
+	* it and the roles specified in the resource permissions.
+	*
+	* @param permissionsHash the resource block's permissions hash
+	* @param resourcePermissions the resource permissions
+	* @return the new resource block
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock addResourceBlock(
+		java.lang.String permissionsHash,
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the permissions hash for the resource. The permissions hash is a
 	* representation of all the roles with access to the resource along with
 	* the actions they can perform.
@@ -237,5 +251,46 @@ public interface ResourceBlockLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getPermissionsHash(java.lang.String name,
 		java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getPermissionsHash(
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions);
+
+	/**
+	* Increments the reference count of the resource block and updates it in
+	* the database.
+	*
+	* @param resourceBlock the resource block
+	* @throws SystemException if a system exception occurred
+	*/
+	public void retain(com.liferay.portal.model.ResourceBlock resourceBlock)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Decrements the reference count of the resource block and updates it in
+	* the database or deletes the resource block if the reference count reaches
+	* zero.
+	*
+	* @param resourceBlock the resource block
+	* @throws SystemException if a system exception occurred
+	*/
+	public void release(com.liferay.portal.model.ResourceBlock resourceBlock)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates which resource block the resource is a member of, and updates it
+	* in the database. Automatically retains, releases, and creates resource
+	* blocks as necessary.
+	*
+	* @param resource the resource block
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key of the resource
+	* @throws SystemException if a system exception occurred
+	*/
+	public void updateResourceBlockId(
+		com.liferay.portal.model.PermissionedModel resource,
+		java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -54,10 +54,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public static final String TABLE_NAME = "ResourceBlock";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "resourceBlockId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
 			{ "permissionsHash", Types.VARCHAR },
 			{ "referenceCount", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,companyId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlock";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -105,6 +107,27 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	public void setResourceBlockId(long resourceBlockId) {
 		_resourceBlockId = resourceBlockId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getPermissionsHash() {
@@ -155,7 +178,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		if (_expandoBridge == null) {
-			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 					ResourceBlock.class.getName(), getPrimaryKey());
 		}
 
@@ -172,6 +195,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		ResourceBlockImpl resourceBlockImpl = new ResourceBlockImpl();
 
 		resourceBlockImpl.setResourceBlockId(getResourceBlockId());
+		resourceBlockImpl.setCompanyId(getCompanyId());
+		resourceBlockImpl.setName(getName());
 		resourceBlockImpl.setPermissionsHash(getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(getReferenceCount());
 
@@ -233,10 +258,14 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{resourceBlockId=");
 		sb.append(getResourceBlockId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", permissionsHash=");
 		sb.append(getPermissionsHash());
 		sb.append(", referenceCount=");
@@ -247,7 +276,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlock");
@@ -256,6 +285,14 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		sb.append(
 			"<column><column-name>resourceBlockId</column-name><column-value><![CDATA[");
 		sb.append(getResourceBlockId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>permissionsHash</column-name><column-value><![CDATA[");
@@ -276,6 +313,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 			ResourceBlock.class
 		};
 	private long _resourceBlockId;
+	private long _companyId;
+	private String _name;
 	private String _permissionsHash;
 	private String _originalPermissionsHash;
 	private long _referenceCount;

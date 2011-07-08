@@ -35,8 +35,9 @@ public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
 	/**
-	 * Adds a resource block and creates associations between
-	 * it and the roles specified in the resource permissions.
+	 * Adds a resource block with a reference count of one and creates
+	 * associations between it and the roles specified in the resource
+	 * permissions.
 	 *
 	 * @param  permissionsHash the resource block's permissions hash
 	 * @param  resourcePermissions the resource permissions
@@ -44,7 +45,7 @@ public class ResourceBlockLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceBlock addResourceBlock(
-			String permissionsHash,
+			long companyId, String name, String permissionsHash,
 			List<ResourcePermission> resourcePermissions)
 		throws SystemException {
 
@@ -53,6 +54,8 @@ public class ResourceBlockLocalServiceImpl
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.create(resourceBlockId);
 
+		resourceBlock.setCompanyId(companyId);
+		resourceBlock.setName(name);
 		resourceBlock.setPermissionsHash(permissionsHash);
 		resourceBlock.setReferenceCount(1);
 
@@ -90,6 +93,8 @@ public class ResourceBlockLocalServiceImpl
 
 		ByteBuffer buffer =
 			ByteBuffer.allocate(resourcePermissions.size() * 16);
+
+
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			buffer.putLong(resourcePermission.getRoleId());

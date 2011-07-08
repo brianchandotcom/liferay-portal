@@ -50,10 +50,11 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public static final String TABLE_NAME = "ResourceBlockPermission";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "resourceBlockId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "roleId", Types.BIGINT },
 			{ "actionIds", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockId LONG not null,roleId LONG not null,actionIds LONG not null,primary key (resourceBlockId, roleId, actionIds))";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockId LONG not null,groupId LONG not null,roleId LONG not null,actionIds LONG not null,primary key (resourceBlockId, groupId, roleId, actionIds))";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockPermission";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -80,19 +81,20 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public ResourceBlockPermissionPK getPrimaryKey() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
-			_actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _groupId,
+			_roleId, _actionIds);
 	}
 
 	public void setPrimaryKey(ResourceBlockPermissionPK primaryKey) {
 		setResourceBlockId(primaryKey.resourceBlockId);
+		setGroupId(primaryKey.groupId);
 		setRoleId(primaryKey.roleId);
 		setActionIds(primaryKey.actionIds);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
-			_actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _groupId,
+			_roleId, _actionIds);
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
@@ -105,6 +107,14 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	public void setResourceBlockId(long resourceBlockId) {
 		_resourceBlockId = resourceBlockId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public long getRoleId() {
@@ -144,6 +154,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		ResourceBlockPermissionImpl resourceBlockPermissionImpl = new ResourceBlockPermissionImpl();
 
 		resourceBlockPermissionImpl.setResourceBlockId(getResourceBlockId());
+		resourceBlockPermissionImpl.setGroupId(getGroupId());
 		resourceBlockPermissionImpl.setRoleId(getRoleId());
 		resourceBlockPermissionImpl.setActionIds(getActionIds());
 
@@ -194,10 +205,12 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{resourceBlockId=");
 		sb.append(getResourceBlockId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
 		sb.append(", actionIds=");
@@ -208,7 +221,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlockPermission");
@@ -217,6 +230,10 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		sb.append(
 			"<column><column-name>resourceBlockId</column-name><column-value><![CDATA[");
 		sb.append(getResourceBlockId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
@@ -237,6 +254,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			ResourceBlockPermission.class
 		};
 	private long _resourceBlockId;
+	private long _groupId;
 	private long _roleId;
 	private long _actionIds;
 	private ResourceBlockPermission _escapedModelProxy;

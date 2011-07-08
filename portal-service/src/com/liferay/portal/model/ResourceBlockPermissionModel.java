@@ -70,6 +70,20 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 	public void setResourceBlockId(long resourceBlockId);
 
 	/**
+	 * Returns the group ID of this resource block permission.
+	 *
+	 * @return the group ID of this resource block permission
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this resource block permission.
+	 *
+	 * @param groupId the group ID of this resource block permission
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the role ID of this resource block permission.
 	 *
 	 * @return the role ID of this resource block permission

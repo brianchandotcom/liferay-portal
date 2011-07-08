@@ -327,6 +327,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlockImpl.setPrimaryKey(resourceBlock.getPrimaryKey());
 
 		resourceBlockImpl.setResourceBlockId(resourceBlock.getResourceBlockId());
+		resourceBlockImpl.setCompanyId(resourceBlock.getCompanyId());
+		resourceBlockImpl.setName(resourceBlock.getName());
 		resourceBlockImpl.setPermissionsHash(resourceBlock.getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(resourceBlock.getReferenceCount());
 

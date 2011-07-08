@@ -676,11 +676,14 @@
 	</model>
 	<model name="com.liferay.portal.model.ResourceBlock">
 		<field name="resourceBlockId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="name" type="String" />
 		<field name="permissionsHash" type="String" />
 		<field name="referenceCount" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceBlockPermission">
 		<field name="resourceBlockId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>

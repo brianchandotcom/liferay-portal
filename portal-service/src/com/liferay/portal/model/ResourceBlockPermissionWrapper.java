@@ -75,6 +75,24 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission {
 	}
 
 	/**
+	* Returns the group ID of this resource block permission.
+	*
+	* @return the group ID of this resource block permission
+	*/
+	public long getGroupId() {
+		return _resourceBlockPermission.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this resource block permission.
+	*
+	* @param groupId the group ID of this resource block permission
+	*/
+	public void setGroupId(long groupId) {
+		_resourceBlockPermission.setGroupId(groupId);
+	}
+
+	/**
 	* Returns the role ID of this resource block permission.
 	*
 	* @return the role ID of this resource block permission

@@ -73,6 +73,42 @@ public class ResourceBlockWrapper implements ResourceBlock {
 	}
 
 	/**
+	* Returns the company ID of this resource block.
+	*
+	* @return the company ID of this resource block
+	*/
+	public long getCompanyId() {
+		return _resourceBlock.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this resource block.
+	*
+	* @param companyId the company ID of this resource block
+	*/
+	public void setCompanyId(long companyId) {
+		_resourceBlock.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the name of this resource block.
+	*
+	* @return the name of this resource block
+	*/
+	public java.lang.String getName() {
+		return _resourceBlock.getName();
+	}
+
+	/**
+	* Sets the name of this resource block.
+	*
+	* @param name the name of this resource block
+	*/
+	public void setName(java.lang.String name) {
+		_resourceBlock.setName(name);
+	}
+
+	/**
 	* Returns the permissions hash of this resource block.
 	*
 	* @return the permissions hash of this resource block

@@ -70,6 +70,35 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
 	public void setResourceBlockId(long resourceBlockId);
 
 	/**
+	 * Returns the company ID of this resource block.
+	 *
+	 * @return the company ID of this resource block
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this resource block.
+	 *
+	 * @param companyId the company ID of this resource block
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the name of this resource block.
+	 *
+	 * @return the name of this resource block
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this resource block.
+	 *
+	 * @param name the name of this resource block
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the permissions hash of this resource block.
 	 *
 	 * @return the permissions hash of this resource block

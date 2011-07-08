@@ -1463,15 +1463,18 @@ create table RepositoryEntry (
 
 create table ResourceBlock (
 	resourceBlockId LONG not null primary key,
+	companyId LONG,
+	name VARCHAR(75) null,
 	permissionsHash VARCHAR(75) null,
 	referenceCount LONG
 );
 
 create table ResourceBlockPermission (
 	resourceBlockId LONG not null,
+	groupId LONG not null,
 	roleId LONG not null,
 	actionIds LONG not null,
-	primary key (resourceBlockId, roleId, actionIds)
+	primary key (resourceBlockId, groupId, roleId, actionIds)
 );
 
 create table ResourceBlockPermission (

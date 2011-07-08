@@ -68,6 +68,10 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		ResourceBlock newResourceBlock = _persistence.create(pk);
 
+		newResourceBlock.setCompanyId(nextLong());
+
+		newResourceBlock.setName(randomString());
+
 		newResourceBlock.setPermissionsHash(randomString());
 
 		newResourceBlock.setReferenceCount(nextLong());
@@ -78,6 +82,9 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		assertEquals(existingResourceBlock.getResourceBlockId(),
 			newResourceBlock.getResourceBlockId());
+		assertEquals(existingResourceBlock.getCompanyId(),
+			newResourceBlock.getCompanyId());
+		assertEquals(existingResourceBlock.getName(), newResourceBlock.getName());
 		assertEquals(existingResourceBlock.getPermissionsHash(),
 			newResourceBlock.getPermissionsHash());
 		assertEquals(existingResourceBlock.getReferenceCount(),
@@ -210,6 +217,10 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 		long pk = nextLong();
 
 		ResourceBlock resourceBlock = _persistence.create(pk);
+
+		resourceBlock.setCompanyId(nextLong());
+
+		resourceBlock.setName(randomString());
 
 		resourceBlock.setPermissionsHash(randomString());
 

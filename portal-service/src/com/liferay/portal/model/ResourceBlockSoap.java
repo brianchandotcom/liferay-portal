@@ -30,6 +30,8 @@ public class ResourceBlockSoap implements Serializable {
 		ResourceBlockSoap soapModel = new ResourceBlockSoap();
 
 		soapModel.setResourceBlockId(model.getResourceBlockId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setName(model.getName());
 		soapModel.setPermissionsHash(model.getPermissionsHash());
 		soapModel.setReferenceCount(model.getReferenceCount());
 
@@ -92,6 +94,22 @@ public class ResourceBlockSoap implements Serializable {
 		_resourceBlockId = resourceBlockId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public String getPermissionsHash() {
 		return _permissionsHash;
 	}
@@ -109,6 +127,8 @@ public class ResourceBlockSoap implements Serializable {
 	}
 
 	private long _resourceBlockId;
+	private long _companyId;
+	private String _name;
 	private String _permissionsHash;
 	private long _referenceCount;
 }

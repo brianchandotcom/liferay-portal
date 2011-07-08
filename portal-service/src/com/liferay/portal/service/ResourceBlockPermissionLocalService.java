@@ -226,7 +226,7 @@ public interface ResourceBlockPermissionLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIds)
+		long resourceBlockId, long groupId, long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void addResourceBlockPermissions(long resourceBlockId,

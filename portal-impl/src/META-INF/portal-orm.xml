@@ -841,6 +841,8 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockModelImpl">
 		<attributes>
 			<id name="resourceBlockId" />
+			<basic name="companyId" />
+			<basic name="name" />
 			<basic name="permissionsHash" />
 			<basic name="referenceCount" />
 			<transient name="primaryKey" />
@@ -851,6 +853,7 @@
 		<id-class class="com.liferay.portal.service.persistence.ResourceBlockPermissionPK" />
 		<attributes>
 			<id name="resourceBlockId" />
+			<id name="groupId" />
 			<id name="roleId" />
 			<id name="actionIds" />
 			<transient name="primaryKey" />

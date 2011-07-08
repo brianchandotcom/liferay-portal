@@ -253,11 +253,11 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIds)
+		long resourceBlockId, long groupId, long roleId, long actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addResourceBlockPermission(resourceBlockId, roleId,
-			actionIds);
+				   .addResourceBlockPermission(resourceBlockId, groupId,
+			roleId, actionIds);
 	}
 
 	public static void addResourceBlockPermissions(long resourceBlockId,

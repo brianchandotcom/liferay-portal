@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.memory;
 
-import com.liferay.portal.kernel.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
@@ -33,11 +33,18 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Edward Han
  * @author Shuyang Zhou
  */
-public class MemoryPortalCache extends BasePortalCache {
+public class MemoryPortalCache implements PortalCache {
 
 	public MemoryPortalCache(String name, int initialCapacity) {
  		_name = name;
 		_map = new ConcurrentHashMap<Serializable, Object>(initialCapacity);
+	}
+
+	public void destroy() {
+		removeAll();
+		_cacheListeners = null;
+		_map = null;
+		_name = null;
 	}
 
 	public Collection<Object> get(Collection<Serializable> keys) {

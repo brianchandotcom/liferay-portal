@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.keypool;
 
-import com.liferay.portal.kernel.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -29,13 +28,16 @@ import java.util.List;
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
-public class MultiVMKeyPoolPortalCache extends BasePortalCache {
+public class MultiVMKeyPoolPortalCache implements PortalCache {
 
 	public MultiVMKeyPoolPortalCache(
 		PortalCache clusterPortalCache, PortalCache localPortalCache) {
 
 		_clusterPortalCache = clusterPortalCache;
 		_localPortalCache = localPortalCache;
+	}
+
+	public void destroy() {
 	}
 
 	public Collection<Object> get(Collection<Serializable> keys) {

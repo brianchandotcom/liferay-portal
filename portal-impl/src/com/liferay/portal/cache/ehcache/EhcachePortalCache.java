@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache;
 
-import com.liferay.portal.kernel.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCache;
 
 import java.io.Serializable;
 
@@ -37,10 +37,13 @@ import net.sf.ehcache.event.RegisteredEventListeners;
  * @author Edward Han
  * @author Shuyang Zhou
  */
-public class EhcachePortalCache extends BasePortalCache {
+public class EhcachePortalCache implements PortalCache {
 
 	public EhcachePortalCache(Ehcache ehcache) {
 		_ehcache = ehcache;
+	}
+
+	public void destroy() {
 	}
 
 	public Object get(Serializable key) {

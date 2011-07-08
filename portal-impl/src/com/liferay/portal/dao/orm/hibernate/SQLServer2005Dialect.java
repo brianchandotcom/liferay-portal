@@ -17,8 +17,8 @@ package com.liferay.portal.dao.orm.hibernate;
 /**
  * @author Minhchau Dang
  */
-public class SQLServer2008Dialect
-	extends org.hibernate.dialect.SQLServer2008Dialect {
+public class SQLServer2005Dialect
+	extends org.hibernate.dialect.SQLServer2005Dialect {
 
 	@Override
 	public String getLimitString(String sql, int offset, int limit) {

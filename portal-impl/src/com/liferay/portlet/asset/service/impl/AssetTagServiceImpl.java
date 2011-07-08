@@ -30,12 +30,14 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.base.AssetTagServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
+import com.liferay.portlet.asset.util.comparator.AssetTagComparator;
 import com.liferay.util.Autocomplete;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -80,7 +82,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public List<AssetTag> getGroupsTags(long[] groupIds)
 		throws SystemException {
 
-		List<AssetTag> groupsTags = new ArrayList<AssetTag>();
+		TreeSet<AssetTag> groupsTags =
+			new TreeSet<AssetTag>(new AssetTagComparator());
 
 		for (long groupId : groupIds) {
 			List<AssetTag> groupTags = getGroupTags(groupId);
@@ -88,7 +91,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			groupsTags.addAll(groupTags);
 		}
 
-		return groupsTags;
+		return new ArrayList(groupsTags);
 	}
 
 	public List<AssetTag> getGroupTags(long groupId) throws SystemException {

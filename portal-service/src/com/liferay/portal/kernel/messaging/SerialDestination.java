@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 
 import java.util.Set;
 
@@ -49,12 +50,20 @@ public class SerialDestination extends BaseAsyncDestination {
 	protected void dispatch(
 		final Set<MessageListener> messageListeners, final Message message) {
 
+		if (!message.contains("companyId")) {
+			message.put("companyId", CompanyThreadLocal.getCompanyId());
+		}
+
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		Runnable runnable = new MessageRunnable(message) {
 
 			public void run() {
 				try {
+					Long companyId = message.getLong("companyId");
+
+					CompanyThreadLocal.setCompanyId(companyId);
+
 					for (MessageListener messageListener : messageListeners) {
 						try {
 							messageListener.receive(message);
@@ -66,6 +75,8 @@ public class SerialDestination extends BaseAsyncDestination {
 					}
 				}
 				finally {
+					CompanyThreadLocal.setCompanyId(0);
+
 					CentralizedThreadLocal.clearShortLivedThreadLocals();
 				}
 			}

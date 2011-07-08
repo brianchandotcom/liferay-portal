@@ -1715,15 +1715,23 @@ public class PortalImpl implements Portal {
 			friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
 		}
 
-		if (themeDisplay.isWidget()) {
-			friendlyURL = PropsValues.WIDGET_SERVLET_MAPPING + friendlyURL;
-		}
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(portalURL);
+		sb.append(_pathContext);
 
 		if (themeDisplay.isI18n()) {
-			friendlyURL = themeDisplay.getI18nPath() + friendlyURL;
+			sb.append(themeDisplay.getI18nPath());
 		}
 
-		return portalURL + _pathContext + friendlyURL + group.getFriendlyURL();
+		if (themeDisplay.isWidget()) {
+			sb.append(PropsValues.WIDGET_SERVLET_MAPPING);
+		}
+
+		sb.append(friendlyURL);
+		sb.append(group.getFriendlyURL());
+
+		return sb.toString();
 	}
 
 	public String[] getGroupPermissions(HttpServletRequest request) {

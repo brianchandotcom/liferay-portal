@@ -37,7 +37,11 @@ public class CompoundSessionIdServletRequest
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		HttpSession session = super.getSession();
+		HttpSession session = super.getSession(create);
+
+		if (session == null) {
+			return session;
+		}
 
 		return new CompoundSessionIdHttpSession(session);
 	}

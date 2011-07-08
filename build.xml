@@ -293,6 +293,13 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 					</then>
 				</if>
 
+				<copy tofile="${app.server.geronimo.dir}/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" overwrite="true">
+					<fileset
+						dir="lib/portal"
+						includes="commons-codec.jar"
+					/>
+				</copy>
+
 				<!--<copy todir="${app.server.lib.portal.dir}">
 					<fileset
 						dir="lib/development"

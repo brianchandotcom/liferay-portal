@@ -79,7 +79,7 @@ else if (dayNullable) {
 
 if (monthValue > -1) {
 	cal.set(Calendar.MONTH, monthValue);
-}	
+}
 else if (monthNullable) {
 	monthEmpty = true;
 }

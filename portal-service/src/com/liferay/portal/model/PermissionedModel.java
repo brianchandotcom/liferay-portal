@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 /**
  * @author Connor McKay
  */

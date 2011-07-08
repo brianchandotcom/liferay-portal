@@ -27,9 +27,10 @@ public class ResourcePermissionFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByResource(
-		java.lang.String name, java.lang.String primKey)
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByResource(name, primKey);
+		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(

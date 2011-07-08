@@ -1570,7 +1570,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="PermissionsHash" return-type="ResourceBlock" unique="true">
+		<finder name="G_P" return-type="ResourceBlock" unique="true">
+			<finder-column name="groupId" />
 			<finder-column name="permissionsHash" />
 		</finder>
 		<finder name="C_N" return-type="Collection">
@@ -1595,7 +1596,7 @@
 		<finder name="ResourceBlockId" return-type="Collection">
 			<finder-column name="resourceBlockId" />
 		</finder>
-		<finder name="R_A" return-type="Collection"><!-- I don't think this one is necessary -->
+		<finder name="R_A" return-type="Collection">
 			<finder-column name="roleId" />
 			<finder-column name="actionIds" />
 		</finder>

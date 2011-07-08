@@ -35,17 +35,19 @@ public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
 	/**
-	 * Adds a resource block with a reference count of one and creates
-	 * associations between it and the roles specified in the resource
-	 * permissions.
+	 * Adds a resource block and creates associations between it and the roles
+	 * specified in the resource permissions. The resource block will have an
+	 * initial reference count of one.
 	 *
+	 * @param  companyId the primary key of the resource block's company
+	 * @param  groupId the primary key of the resource block's group
 	 * @param  permissionsHash the resource block's permissions hash
 	 * @param  resourcePermissions the resource permissions
 	 * @return the new resource block
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceBlock addResourceBlock(
-			long companyId, String name, String permissionsHash,
+			long companyId, long groupId, String name, String permissionsHash,
 			List<ResourcePermission> resourcePermissions)
 		throws SystemException {
 
@@ -55,6 +57,7 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPersistence.create(resourceBlockId);
 
 		resourceBlock.setCompanyId(companyId);
+		resourceBlock.setGroupId(groupId);
 		resourceBlock.setName(name);
 		resourceBlock.setPermissionsHash(permissionsHash);
 		resourceBlock.setReferenceCount(1);
@@ -72,22 +75,33 @@ public class ResourceBlockLocalServiceImpl
 	 * representation of all the roles with access to the resource along with
 	 * the actions they can perform.
 	 *
+	 * @param  companyId the primary key of the resource's company
+	 * @param  groupId the primary key of the resource's group
 	 * @param  name the resource's name, which can be either a class name or a
 	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @return the permissions hash for the resource
 	 * @throws SystemException if a system exception occurred
 	 */
-	public String getPermissionsHash(String name, String primKey)
+	public String getPermissionsHash(
+			long companyId, long groupId, String name, String primKey)
 		throws SystemException {
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionLocalService.getResourceResourcePermissions(
-			name, primKey);
+			companyId, groupId, name, primKey);
 
 		return getPermissionsHash(resourcePermissions);
 	}
 
+	/**
+	 * Returns the permissions hash of the resource permissions. The permissions
+	 * hash is a representation of all the roles with access to the resource
+	 * along with the actions they can perform.
+	 *
+	 * @param  resourcePermissions the resource permissions
+	 * @return the permissions hash of the resource permissions
+	 */
 	public String getPermissionsHash(
 		List<ResourcePermission> resourcePermissions) {
 
@@ -159,16 +173,40 @@ public class ResourceBlockLocalServiceImpl
 	/**
 	 * Updates which resource block the resource is a member of, and updates it
 	 * in the database. Automatically retains, releases, and creates resource
-	 * blocks as necessary.
+	 * blocks as necessary. Only use this method for resources that do not
+	 * belong to a group, such as users.
 	 *
-	 * @param  resource the resource block
+	 * @param  companyId the primary key of the resource's company
+	 * @param  resource the resource
 	 * @param  name the resource's name, which can be either a class name or a
 	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateResourceBlockId(
-			PermissionedModel resource, String name, String primKey)
+			long companyId, PermissionedModel resource, String name,
+			String primKey)
+		throws SystemException {
+
+		updateResourceBlockId(companyId, 0, resource, name, primKey);
+	}
+
+	/**
+	 * Updates which resource block the resource is a member of, and updates it
+	 * in the database. Automatically retains, releases, and creates resource
+	 * blocks as necessary.
+	 *
+	 * @param  companyId the primary key of the resource's company
+	 * @param  groupId the primary key of the resource's group
+	 * @param  resource the resource
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
+	 * @param  primKey the primary key of the resource
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updateResourceBlockId(
+			long companyId, long groupId, PermissionedModel resource,
+			String name, String primKey)
 		throws SystemException {
 
 		ResourceBlock resourceBlock;
@@ -183,7 +221,7 @@ public class ResourceBlockLocalServiceImpl
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionLocalService.getResourceResourcePermissions(
-			name, primKey);
+			companyId, groupId, name, primKey);
 
 		String newPermissionsHash = getPermissionsHash(resourcePermissions);
 
@@ -200,11 +238,12 @@ public class ResourceBlockLocalServiceImpl
 		release(resourceBlock);
 
 		resourceBlock =
-			resourceBlockPersistence.fetchByPermissionsHash(newPermissionsHash);
+			resourceBlockPersistence.fetchByG_P(groupId, newPermissionsHash);
 
 		if (resourceBlock == null) {
 			resourceBlock =
-				addResourceBlock(newPermissionsHash, resourcePermissions);
+				addResourceBlock(companyId, groupId, name, newPermissionsHash,
+				resourcePermissions);
 		}
 		else {
 			retain(resourceBlock);

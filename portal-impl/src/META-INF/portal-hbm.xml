@@ -790,6 +790,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="permissionsHash" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referenceCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -798,7 +799,6 @@
 		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPK">
 			<key-property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>

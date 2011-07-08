@@ -101,40 +101,265 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block where permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
+	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
 	*
+	* @param groupId the group ID
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block
 	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlock findByPermissionsHash(
+	public com.liferay.portal.model.ResourceBlock findByG_P(long groupId,
 		java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block where permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param groupId the group ID
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlock fetchByPermissionsHash(
+	public com.liferay.portal.model.ResourceBlock fetchByG_P(long groupId,
 		java.lang.String permissionsHash)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource block where permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param groupId the group ID
 	* @param permissionsHash the permissions hash
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ResourceBlock fetchByPermissionsHash(
+	public com.liferay.portal.model.ResourceBlock fetchByG_P(long groupId,
 		java.lang.String permissionsHash, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the resource blocks where companyId = &#63; and name = &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the resource blocks where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @return the range of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
+		long companyId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
+		long companyId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock findByC_N_First(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock findByC_N_Last(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the primary key of the current resource block
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock[] findByC_N_PrevAndNext(
+		long resourceBlockId, long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the resource blocks where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByG_N(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the resource blocks where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @return the range of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByG_N(
+		long groupId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the resource blocks where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of resource blocks
+	* @param end the upper bound of the range of resource blocks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlock> findByG_N(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock findByG_N_First(
+		long groupId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock findByG_N_Last(long groupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource blocks before and after the current resource block in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the primary key of the current resource block
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next resource block
+	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlock[] findByG_N_PrevAndNext(
+		long resourceBlockId, long groupId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the resource blocks.
@@ -180,14 +405,35 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the resource block where permissionsHash = &#63; from the database.
+	* Removes the resource block where groupId = &#63; and permissionsHash = &#63; from the database.
 	*
+	* @param groupId the group ID
 	* @param permissionsHash the permissions hash
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByPermissionsHash(java.lang.String permissionsHash)
+	public void removeByG_P(long groupId, java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the resource blocks where companyId = &#63; and name = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_N(long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the resource blocks where groupId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_N(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Removes all the resource blocks from the database.
@@ -198,13 +444,36 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of resource blocks where permissionsHash = &#63;.
+	* Returns the number of resource blocks where groupId = &#63; and permissionsHash = &#63;.
 	*
+	* @param groupId the group ID
 	* @param permissionsHash the permissions hash
 	* @return the number of matching resource blocks
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByPermissionsHash(java.lang.String permissionsHash)
+	public int countByG_P(long groupId, java.lang.String permissionsHash)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of resource blocks where companyId = &#63; and name = &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the number of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_N(long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of resource blocks where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the number of matching resource blocks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_N(long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

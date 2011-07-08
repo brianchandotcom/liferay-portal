@@ -381,8 +381,10 @@ public interface ResourcePermissionLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the resource permissions associated with the resource.
+	* Returns the resource permissions that apply to the resource.
 	*
+	* @param companyId the primary key of the resource's company
+	* @param groupId the primary key of the resource's group
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key of the resource
@@ -391,7 +393,8 @@ public interface ResourcePermissionLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ResourcePermission> getResourceResourcePermissions(
-		java.lang.String name, java.lang.String primKey)
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

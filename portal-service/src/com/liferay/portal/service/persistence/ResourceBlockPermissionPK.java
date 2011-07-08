@@ -25,17 +25,15 @@ import java.io.Serializable;
 public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermissionPK>,
 	Serializable {
 	public long resourceBlockId;
-	public long groupId;
 	public long roleId;
 	public long actionIds;
 
 	public ResourceBlockPermissionPK() {
 	}
 
-	public ResourceBlockPermissionPK(long resourceBlockId, long groupId,
-		long roleId, long actionIds) {
+	public ResourceBlockPermissionPK(long resourceBlockId, long roleId,
+		long actionIds) {
 		this.resourceBlockId = resourceBlockId;
-		this.groupId = groupId;
 		this.roleId = roleId;
 		this.actionIds = actionIds;
 	}
@@ -46,14 +44,6 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 
 	public void setResourceBlockId(long resourceBlockId) {
 		this.resourceBlockId = resourceBlockId;
-	}
-
-	public long getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
 	}
 
 	public long getRoleId() {
@@ -83,20 +73,6 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 			value = -1;
 		}
 		else if (resourceBlockId > pk.resourceBlockId) {
-			value = 1;
-		}
-		else {
-			value = 0;
-		}
-
-		if (value != 0) {
-			return value;
-		}
-
-		if (groupId < pk.groupId) {
-			value = -1;
-		}
-		else if (groupId > pk.groupId) {
 			value = 1;
 		}
 		else {
@@ -153,8 +129,8 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 			return false;
 		}
 
-		if ((resourceBlockId == pk.resourceBlockId) && (groupId == pk.groupId) &&
-				(roleId == pk.roleId) && (actionIds == pk.actionIds)) {
+		if ((resourceBlockId == pk.resourceBlockId) && (roleId == pk.roleId) &&
+				(actionIds == pk.actionIds)) {
 			return true;
 		}
 		else {
@@ -164,25 +140,19 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 
 	@Override
 	public int hashCode() {
-		return (String.valueOf(resourceBlockId) + String.valueOf(groupId) +
-		String.valueOf(roleId) + String.valueOf(actionIds)).hashCode();
+		return (String.valueOf(resourceBlockId) + String.valueOf(roleId) +
+		String.valueOf(actionIds)).hashCode();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
 		sb.append("resourceBlockId");
 		sb.append(StringPool.EQUAL);
 		sb.append(resourceBlockId);
-
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
-		sb.append("groupId");
-		sb.append(StringPool.EQUAL);
-		sb.append(groupId);
 
 		sb.append(StringPool.COMMA);
 		sb.append(StringPool.SPACE);

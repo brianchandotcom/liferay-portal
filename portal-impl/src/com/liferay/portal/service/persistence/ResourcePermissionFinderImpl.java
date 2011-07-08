@@ -87,7 +87,8 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
-	public List<ResourcePermission> findByResource(String name, String primKey)
+	public List<ResourcePermission> findByResource(
+			long companyId, long groupId, String name, String primKey)
 		throws SystemException {
 
 		Session session = null;
@@ -103,8 +104,10 @@ public class ResourcePermissionFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(companyId);
 			qPos.add(name);
 			qPos.add(primKey);
+			qPos.add(groupId);
 
 			return (List<ResourcePermission>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

@@ -248,20 +248,25 @@ public class ResourceBlockLocalServiceUtil {
 	}
 
 	/**
-	* Adds a resource block and creates associations between
-	* it and the roles specified in the resource permissions.
+	* Adds a resource block and creates associations between it and the roles
+	* specified in the resource permissions. The resource block will have an
+	* initial reference count of one.
 	*
+	* @param companyId the primary key of the resource block's company
+	* @param groupId the primary key of the resource block's group
 	* @param permissionsHash the resource block's permissions hash
 	* @param resourcePermissions the resource permissions
 	* @return the new resource block
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlock addResourceBlock(
+		long companyId, long groupId, java.lang.String name,
 		java.lang.String permissionsHash,
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addResourceBlock(permissionsHash, resourcePermissions);
+				   .addResourceBlock(companyId, groupId, name, permissionsHash,
+			resourcePermissions);
 	}
 
 	/**
@@ -269,18 +274,28 @@ public class ResourceBlockLocalServiceUtil {
 	* representation of all the roles with access to the resource along with
 	* the actions they can perform.
 	*
+	* @param companyId the primary key of the resource's company
+	* @param groupId the primary key of the resource's group
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key of the resource
 	* @return the permissions hash for the resource
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.lang.String getPermissionsHash(java.lang.String name,
-		java.lang.String primKey)
+	public static java.lang.String getPermissionsHash(long companyId,
+		long groupId, java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPermissionsHash(name, primKey);
+		return getService().getPermissionsHash(companyId, groupId, name, primKey);
 	}
 
+	/**
+	* Returns the permissions hash of the resource permissions. The permissions
+	* hash is a representation of all the roles with access to the resource
+	* along with the actions they can perform.
+	*
+	* @param resourcePermissions the resource permissions
+	* @return the permissions hash of the resource permissions
+	*/
 	public static java.lang.String getPermissionsHash(
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions) {
 		return getService().getPermissionsHash(resourcePermissions);
@@ -316,19 +331,42 @@ public class ResourceBlockLocalServiceUtil {
 	/**
 	* Updates which resource block the resource is a member of, and updates it
 	* in the database. Automatically retains, releases, and creates resource
-	* blocks as necessary.
+	* blocks as necessary. Only use this method for resources that do not
+	* belong to a group, such as users.
 	*
-	* @param resource the resource block
+	* @param companyId the primary key of the resource's company
+	* @param resource the resource
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key of the resource
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateResourceBlockId(
+	public static void updateResourceBlockId(long companyId,
 		com.liferay.portal.model.PermissionedModel resource,
 		java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updateResourceBlockId(resource, name, primKey);
+		getService().updateResourceBlockId(companyId, resource, name, primKey);
+	}
+
+	/**
+	* Updates which resource block the resource is a member of, and updates it
+	* in the database. Automatically retains, releases, and creates resource
+	* blocks as necessary.
+	*
+	* @param companyId the primary key of the resource's company
+	* @param groupId the primary key of the resource's group
+	* @param resource the resource
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key of the resource
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void updateResourceBlockId(long companyId, long groupId,
+		com.liferay.portal.model.PermissionedModel resource,
+		java.lang.String name, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateResourceBlockId(companyId, groupId, resource, name, primKey);
 	}
 
 	public static ResourceBlockLocalService getService() {

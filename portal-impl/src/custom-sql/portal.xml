@@ -954,10 +954,13 @@
 			FROM
 				ResourcePermission
 			WHERE
+				(ResourcePermission.companyID = ?) AND
 				(ResourcePermission.name = ?) AND
 				(
 					(ResourcePermission.primKey = ?) OR
-					(ResourcePermission.scope != 4)
+					(ResourcePermission.primKey = ?) OR
+					(ResourcePermission.scope = 1) OR
+					(ResourcePermission.scope = 3)
 				)
 		]]>
 	</sql>

@@ -91,6 +91,24 @@ public class ResourceBlockWrapper implements ResourceBlock {
 	}
 
 	/**
+	* Returns the group ID of this resource block.
+	*
+	* @return the group ID of this resource block
+	*/
+	public long getGroupId() {
+		return _resourceBlock.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this resource block.
+	*
+	* @param groupId the group ID of this resource block
+	*/
+	public void setGroupId(long groupId) {
+		_resourceBlock.setGroupId(groupId);
+	}
+
+	/**
 	* Returns the name of this resource block.
 	*
 	* @return the name of this resource block

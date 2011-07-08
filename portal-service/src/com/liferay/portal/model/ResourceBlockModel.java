@@ -84,6 +84,20 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the group ID of this resource block.
+	 *
+	 * @return the group ID of this resource block
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this resource block.
+	 *
+	 * @param groupId the group ID of this resource block
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the name of this resource block.
 	 *
 	 * @return the name of this resource block

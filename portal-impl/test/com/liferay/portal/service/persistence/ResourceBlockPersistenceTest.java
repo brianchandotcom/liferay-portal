@@ -70,6 +70,8 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		newResourceBlock.setCompanyId(nextLong());
 
+		newResourceBlock.setGroupId(nextLong());
+
 		newResourceBlock.setName(randomString());
 
 		newResourceBlock.setPermissionsHash(randomString());
@@ -84,6 +86,8 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 			newResourceBlock.getResourceBlockId());
 		assertEquals(existingResourceBlock.getCompanyId(),
 			newResourceBlock.getCompanyId());
+		assertEquals(existingResourceBlock.getGroupId(),
+			newResourceBlock.getGroupId());
 		assertEquals(existingResourceBlock.getName(), newResourceBlock.getName());
 		assertEquals(existingResourceBlock.getPermissionsHash(),
 			newResourceBlock.getPermissionsHash());
@@ -208,6 +212,8 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		ResourceBlockModelImpl existingResourceBlockModelImpl = (ResourceBlockModelImpl)_persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
+		assertEquals(existingResourceBlockModelImpl.getGroupId(),
+			existingResourceBlockModelImpl.getOriginalGroupId());
 		assertTrue(Validator.equals(
 				existingResourceBlockModelImpl.getPermissionsHash(),
 				existingResourceBlockModelImpl.getOriginalPermissionsHash()));
@@ -219,6 +225,8 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 		ResourceBlock resourceBlock = _persistence.create(pk);
 
 		resourceBlock.setCompanyId(nextLong());
+
+		resourceBlock.setGroupId(nextLong());
 
 		resourceBlock.setName(randomString());
 

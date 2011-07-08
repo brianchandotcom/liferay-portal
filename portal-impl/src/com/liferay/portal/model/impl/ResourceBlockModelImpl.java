@@ -55,11 +55,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "resourceBlockId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "permissionsHash", Types.VARCHAR },
 			{ "referenceCount", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,companyId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlock";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -115,6 +116,24 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public String getName() {
@@ -196,6 +215,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 		resourceBlockImpl.setResourceBlockId(getResourceBlockId());
 		resourceBlockImpl.setCompanyId(getCompanyId());
+		resourceBlockImpl.setGroupId(getGroupId());
 		resourceBlockImpl.setName(getName());
 		resourceBlockImpl.setPermissionsHash(getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(getReferenceCount());
@@ -253,17 +273,23 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public void resetOriginalValues() {
 		ResourceBlockModelImpl resourceBlockModelImpl = this;
 
+		resourceBlockModelImpl._originalGroupId = resourceBlockModelImpl._groupId;
+
+		resourceBlockModelImpl._setOriginalGroupId = false;
+
 		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{resourceBlockId=");
 		sb.append(getResourceBlockId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", permissionsHash=");
@@ -276,7 +302,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlock");
@@ -289,6 +315,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -314,6 +344,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		};
 	private long _resourceBlockId;
 	private long _companyId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private String _name;
 	private String _permissionsHash;
 	private String _originalPermissionsHash;

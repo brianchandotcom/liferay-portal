@@ -33,7 +33,6 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		ResourceBlockPermissionSoap soapModel = new ResourceBlockPermissionSoap();
 
 		soapModel.setResourceBlockId(model.getResourceBlockId());
-		soapModel.setGroupId(model.getGroupId());
 		soapModel.setRoleId(model.getRoleId());
 		soapModel.setActionIds(model.getActionIds());
 
@@ -84,13 +83,12 @@ public class ResourceBlockPermissionSoap implements Serializable {
 	}
 
 	public ResourceBlockPermissionPK getPrimaryKey() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _groupId,
-			_roleId, _actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
+			_actionIds);
 	}
 
 	public void setPrimaryKey(ResourceBlockPermissionPK pk) {
 		setResourceBlockId(pk.resourceBlockId);
-		setGroupId(pk.groupId);
 		setRoleId(pk.roleId);
 		setActionIds(pk.actionIds);
 	}
@@ -101,14 +99,6 @@ public class ResourceBlockPermissionSoap implements Serializable {
 
 	public void setResourceBlockId(long resourceBlockId) {
 		_resourceBlockId = resourceBlockId;
-	}
-
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
 	}
 
 	public long getRoleId() {
@@ -128,7 +118,6 @@ public class ResourceBlockPermissionSoap implements Serializable {
 	}
 
 	private long _resourceBlockId;
-	private long _groupId;
 	private long _roleId;
 	private long _actionIds;
 }

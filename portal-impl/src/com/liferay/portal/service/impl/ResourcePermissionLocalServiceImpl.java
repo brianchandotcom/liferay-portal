@@ -317,8 +317,10 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * Returns the resource permissions associated with the resource.
+	 * Returns the resource permissions that apply to the resource.
 	 *
+	 * @param  companyId the primary key of the resource's company
+	 * @param  groupId the primary key of the resource's group
 	 * @param  name the resource's name, which can be either a class name or a
 	 *         portlet ID
 	 * @param  primKey the primary key of the resource
@@ -326,10 +328,11 @@ public class ResourcePermissionLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<ResourcePermission> getResourceResourcePermissions(
-			String name, String primKey)
+			long companyId, long groupId, String name, String primKey)
 		throws SystemException {
 
-		return resourcePermissionFinder.findByResource(name, primKey);
+		return resourcePermissionFinder.findByResource(
+			companyId, groupId, name, primKey);
 	}
 
 	public List<ResourcePermission> getRoleResourcePermissions(long roleId)

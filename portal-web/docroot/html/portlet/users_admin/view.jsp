@@ -35,6 +35,7 @@ String portletURLString = portletURL.toString();
 
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 <liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
+<liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="you-cannot-delete-user-groups-that-have-users" />
 
 <aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -104,7 +105,12 @@ String portletURLString = portletURL.toString();
 
 							if (count > 0) {
 								if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-									<portlet:namespace />doDeleteOrganizations(ids);
+									if (className == '<%= Organization.class.getName() %>') {
+										<portlet:namespace />doDeleteOrganizations(ids);
+									}
+									else {
+										<portlet:namespace />doDeleteUserGroups(ids);
+									}
 								}
 							}
 							else {

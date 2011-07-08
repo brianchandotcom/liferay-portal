@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.OrgGroupPermission;
 import com.liferay.portal.model.Organization;
@@ -490,6 +491,88 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	public void setContainerResourcePermissions(
+			String name, String roleName, String actionId)
+		throws PortalException, SystemException {
+
+		List<Company> companies = companyPersistence.findAll();
+
+		for (Company company : companies) {
+			long companyId = company.getCompanyId();
+
+			ResourceCode resourceCode =
+				resourceCodePersistence.fetchByC_N_S(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL);
+
+			if (resourceCode == null) {
+				long codeId = counterLocalService.increment(
+					ResourceCode.class.getName());
+
+				resourceCode = resourceCodePersistence.create(codeId);
+
+				resourceCode.setCompanyId(companyId);
+				resourceCode.setName(name);
+				resourceCode.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+
+				resourceCodePersistence.update(resourceCode, false);
+			}
+
+			List<Group> groups = groupPersistence.findByCompanyId(
+				companyId);
+
+			for (Group group : groups) {
+				String primKey = Long.toString(group.getGroupId());
+
+				Resource resource = resourcePersistence.fetchByC_P(
+					resourceCode.getCodeId(), primKey);
+
+				if (resource == null) {
+					long resourceId = counterLocalService.increment(
+						Resource.class.getName());
+
+					resource = resourcePersistence.create(resourceId);
+
+					resource.setCodeId(resourceCode.getCodeId());
+					resource.setPrimKey(primKey);
+
+					resourcePersistence.update(resource, false);
+				}
+
+				Permission permission = permissionPersistence.fetchByA_R(
+					actionId, resource.getResourceId());
+
+				if (permission == null) {
+					long permissionId = counterLocalService.increment(
+						Permission.class.getName());
+
+					permission = permissionPersistence.create(permissionId);
+
+					permission.setCompanyId(companyId);
+					permission.setActionId(actionId);
+					permission.setResourceId(resource.getResourceId());
+
+					permissionPersistence.update(permission, false);
+				}
+
+				if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+					roleName.equals(RoleConstants.SITE_MEMBER)) {
+
+					Role role = rolePersistence.findByC_N(companyId, roleName);
+
+					permissionPersistence.addRole(
+						permission.getPermissionId(), role);
+				}
+				else {
+					long defaultUserId = userLocalService.getDefaultUserId(
+						companyId);
+
+					permissionPersistence.addUser(
+						permission.getPermissionId(), defaultUserId);
+				}
+			}
+		}
 	}
 
 	public void setGroupPermissions(

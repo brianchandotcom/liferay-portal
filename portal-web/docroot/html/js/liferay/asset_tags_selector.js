@@ -3,6 +3,8 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var AArray = A.Array;
+
 		var	getClassName = A.ClassNameManager.getClassName;
 
 		var NAME = 'tagselector';
@@ -399,24 +401,6 @@ AUI().add(
 						event.preventDefault();
 					},
 
-					_removeDuplicates: function(list) {
-						var newList = String(list).split(',');
-
-						var set = {};
-
-						for (var i = 0; i < newList.length; i++) { 
-							set[newList[i]] = true;
-						}
-
-						newList = [];
-
-						for(var tagName in set) {
-							newList.push(tagName);
-						}
-
-						return newList;
-					},
-
 					_renderIcons: function() {
 						var instance = this;
 
@@ -506,56 +490,79 @@ AUI().add(
 						instance._popup.set('title', Liferay.Language.get('suggestions'));
 
 						var contentCallback = instance.get('contentCallback');
+
 						var context = '';
 						var data = [];
-						var lastSpaceIndex  = 0;
-
-						var URLSizeLimit = 4096;
-						var start = 0;
-						var end = start + URLSizeLimit;
 
 						if (contentCallback) {
 							context = contentCallback();
 						}
 
-						while (context.length > start) {
+						var length = context.length;
 
-							if (end < context.length) {
-								var contextChunkEstimate = context.substring(start, end);
-								var contextChunk = '';
+						var urlSizeLimit = 4096;
 
-								lastSpaceIndex = contextChunkEstimate.lastIndexOf(' ');
+						var end = urlSizeLimit;
+						var lastSpaceIndex = 0;
+						var start = 0;
 
-								contextChunk = context.substring(start, start + lastSpaceIndex);
-							}
-							else {
-								lastSpaceIndex = URLSizeLimit;
-								contextChunk = context.substring(start, end);
-							}
+						var suggestionsIO = A.io.request(
+							themeDisplay.getPathMain() + '/portal/rest_proxy',
+							{
+								autoLoad: false,
+								dataType: 'json',
+								on: {
+									success: function(event, id, obj) {
+										var results = this.get('responseData');
 
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/rest_proxy',
-								{
-									data: instance._getProxyData(contextChunk),
-									dataType: 'json',
-									on: {
-										success: function(event, id, obj) {
-											var results = this.get('responseData');
-
-											if (results && results.ResultSet) {
-												if (results.ResultSet.Result != '') {
-													data.push(results.ResultSet.Result);
-												}
-											}
+										if (results && results.ResultSet && results.ResultSet.Result) {
+											data = data.concat(results.ResultSet.Result);
 										}
-									}, sync:true
-								}
-							);
-						start = start + lastSpaceIndex;
-						end = start + URLSizeLimit;
 
-						}
-						instance._updateSelectList(instance._removeDuplicates(data), instance._suggestionsIterator);
+										queue.run();
+									}
+								}
+							}
+						);
+
+						var queue = new A.AsyncQueue(
+							{
+								fn: function() {
+									queue.pause();
+
+									var phrase = context.substr(start, end);
+
+									lastSpaceIndex = urlSizeLimit;
+
+									if (end < length) {
+										lastSpaceIndex = phrase.lastIndexOf(' ');
+
+										phrase = phrase.substr(0, lastSpaceIndex);
+
+										end = start + lastSpaceIndex;
+									}
+
+									start += lastSpaceIndex;
+									end = start + urlSizeLimit;
+
+									suggestionsIO.set('data', instance._getProxyData(phrase));
+
+									suggestionsIO.start();
+								},
+								until: function () {
+									return length <= start;
+								}
+							}
+						);
+
+						queue.after(
+							'complete',
+							function(event) {
+								instance._updateSelectList(AArray.unique(data), instance._suggestionsIterator);
+							}
+						);
+
+						queue.run();
 					},
 
 					_suggestionsIterator: function(item, index, collection) {
@@ -636,6 +643,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
 	}
 );

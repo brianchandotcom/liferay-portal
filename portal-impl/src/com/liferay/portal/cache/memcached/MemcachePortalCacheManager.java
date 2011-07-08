@@ -58,8 +58,6 @@ public class MemcachePortalCacheManager implements PortalCacheManager {
 				memcachePortalCache = new MemcachePortalCache(
 					name, memcachedClient, _timeout, _timeoutTimeUnit);
 
-				memcachePortalCache.setDebug(_debug);
-
 				_memcachePortalCaches.put(name, memcachePortalCache);
 			}
 			catch (Exception e) {

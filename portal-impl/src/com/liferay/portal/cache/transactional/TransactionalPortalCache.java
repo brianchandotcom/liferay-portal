@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.transactional;
 
-import com.liferay.portal.kernel.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -29,10 +28,13 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public class TransactionalPortalCache extends BasePortalCache {
+public class TransactionalPortalCache implements PortalCache {
 
 	public TransactionalPortalCache(PortalCache portalCache) {
 		_portalCache = portalCache;
+	}
+
+	public void destroy() {
 	}
 
 	public Collection<Object> get(Collection<Serializable> keys) {

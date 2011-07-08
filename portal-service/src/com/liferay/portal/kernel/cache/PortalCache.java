@@ -50,8 +50,6 @@ public interface PortalCache {
 
 	public void removeAll();
 
-	public void setDebug(boolean debug);
-
 	public void unregisterCacheListener(CacheListener cacheListener);
 
 	public void unregisterCacheListeners();

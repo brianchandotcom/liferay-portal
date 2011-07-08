@@ -177,10 +177,6 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 		_configPropertyKey = configPropertyKey;
 	}
 
-	public void setDebug(boolean debug) {
-		_debug = debug;
-	}
-
 	public void setMBeanServer(MBeanServer mBeanServer) {
 		_mBeanServer = mBeanServer;
 	}
@@ -238,8 +234,6 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 			if (ehcachePortalCache == null) {
 				ehcachePortalCache = new EhcachePortalCache(ehcache);
 
-				ehcachePortalCache.setDebug(_debug);
-
 				_ehcachePortalCaches.put(name, ehcachePortalCache);
 			}
 			else {
@@ -260,7 +254,6 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 	private String _configPropertyKey;
 	private CacheManager _cacheManager;
 	private boolean _clusterAware;
-	private boolean _debug;
 	private Map<String, EhcachePortalCache> _ehcachePortalCaches =
 		new HashMap<String, EhcachePortalCache>();
 	private ManagementService _managementService;

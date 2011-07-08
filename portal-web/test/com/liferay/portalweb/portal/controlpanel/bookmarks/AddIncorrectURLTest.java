@@ -30,7 +30,7 @@ public class AddIncorrectURLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,14 +41,15 @@ public class AddIncorrectURLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a/strong", "Test Folder"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -58,7 +59,7 @@ public class AddIncorrectURLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//div[3]/div/div[2]/ul/li[5]/a")) {
+				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[5]/a")) {
 					break;
 				}
 			}
@@ -70,13 +71,15 @@ public class AddIncorrectURLTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[3]/div/div[2]/ul/li[5]/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_28_url", RuntimeVariables.replace("www.movies.com"));
+		selenium.type("//input[@id='_28_url']",
+			RuntimeVariables.replace("www.movies.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		assertEquals(RuntimeVariables.replace("Please enter a valid URL."),
-			selenium.getText("//div[@class='aui-form-validator-message url']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("(Required)"),
+			selenium.getText("//label/span"));
 	}
 }

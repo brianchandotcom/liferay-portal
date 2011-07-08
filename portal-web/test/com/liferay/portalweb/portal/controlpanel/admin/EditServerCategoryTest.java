@@ -30,7 +30,7 @@ public class EditServerCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class EditServerCategoryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Server Administration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -55,7 +56,7 @@ public class EditServerCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//li[3]/span/a")) {
+				if (selenium.isVisible("link=Log Levels")) {
 					break;
 				}
 			}
@@ -66,23 +67,45 @@ public class EditServerCategoryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Log Levels", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Log Levels",
+			RuntimeVariables.replace("Log Levels"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Update Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Update Categories",
+			RuntimeVariables.replace("Update Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("CategoryTest!"),
 			selenium.getText("//tr[3]/td[1]"));
-		selenium.select("_137_logLevelCategoryTest!",
+		selenium.select("//select[@name='_137_logLevelCategoryTest!']",
 			RuntimeVariables.replace("label=ALL"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("ALL",
-			selenium.getSelectedLabel("_137_logLevelCategoryTest!"));
+			selenium.getSelectedLabel(
+				"//select[@name='_137_logLevelCategoryTest!']"));
 	}
 }

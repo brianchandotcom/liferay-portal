@@ -14,39 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks</td>
-	<td></td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_keywords1</td>
+	<td>//input[@id='_28_keywords1']</td>
 	<td>Test1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Bookmark</td>
-	<td></td>
+	<td>assertTextNotPresent</td>
+	<td>//td[3]/a</td>
+	<td>Test Bookmark</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Bookmark 2</td>
-	<td></td>
+	<td>assertTextNotPresent</td>
+	<td>//tr[4]/td[3]/a</td>
+	<td>Test Bookmark 2</td>
 </tr>
 
 </tbody></table>

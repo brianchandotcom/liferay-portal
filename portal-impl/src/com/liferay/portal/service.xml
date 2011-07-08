@@ -1563,6 +1563,7 @@
 
 		<!-- Other fields -->
 
+		<column name="groupId" type="long" />
 		<column name="name" type="String" />
 		<column name="permissionsHash" type="String" />
 		<column name="referenceCount" type="long" />
@@ -1572,13 +1573,20 @@
 		<finder name="PermissionsHash" return-type="ResourceBlock" unique="true">
 			<finder-column name="permissionsHash" />
 		</finder>
+		<finder name="C_N" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_N" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<entity name="ResourceBlockPermission" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
 		<column name="resourceBlockId" type="long" primary="true" />
-		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 		<column name="actionIds" type="long" primary="true" />
 
@@ -1587,7 +1595,7 @@
 		<finder name="ResourceBlockId" return-type="Collection">
 			<finder-column name="resourceBlockId" />
 		</finder>
-		<finder name="R_A" return-type="Collection">
+		<finder name="R_A" return-type="Collection"><!-- I don't think this one is necessary -->
 			<finder-column name="roleId" />
 			<finder-column name="actionIds" />
 		</finder>

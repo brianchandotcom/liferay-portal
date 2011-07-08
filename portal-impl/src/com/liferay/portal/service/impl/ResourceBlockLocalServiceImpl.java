@@ -94,8 +94,6 @@ public class ResourceBlockLocalServiceImpl
 		ByteBuffer buffer =
 			ByteBuffer.allocate(resourcePermissions.size() * 16);
 
-
-
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			buffer.putLong(resourcePermission.getRoleId());
 			buffer.putLong(resourcePermission.getActionIds());

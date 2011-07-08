@@ -29,11 +29,11 @@ public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
 
 	public ResourceBlockPermission addResourceBlockPermission(
-			long resourceBlockId, long groupId, long roleId, long actionIds)
+			long resourceBlockId, long roleId, long actionIds)
 		throws SystemException {
 
 		ResourceBlockPermissionPK pk =
-			new ResourceBlockPermissionPK(resourceBlockId, groupId, roleId,
+			new ResourceBlockPermissionPK(resourceBlockId, roleId,
 			actionIds);
 
 		ResourceBlockPermission resourceBlockPermission =

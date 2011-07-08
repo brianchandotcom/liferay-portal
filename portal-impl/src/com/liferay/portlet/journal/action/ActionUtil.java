@@ -27,7 +27,6 @@ import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
 import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -48,10 +47,6 @@ public class ActionUtil {
 		String articleId = ParamUtil.getString(request, "articleId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-		JournalStructure structure = null;
-
 		JournalArticle article = null;
 
 		if (Validator.isNotNull(articleId)) {
@@ -65,15 +60,20 @@ public class ActionUtil {
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {
-			try{
+			JournalStructure structure = null;
+
+			try {
 				structure = JournalStructureServiceUtil.getStructure(
 					groupId, structureId);
 			}
 			catch (NoSuchStructureException nsse1) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 				if (groupId != themeDisplay.getCompanyGroupId()) {
 					try {
 						structure =
-							JournalStructureLocalServiceUtil.getStructure(
+							JournalStructureServiceUtil.getStructure(
 								themeDisplay.getCompanyGroupId(), structureId);
 					}
 					catch (NoSuchStructureException nsse2) {

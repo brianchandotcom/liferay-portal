@@ -59,7 +59,7 @@ AUI().add(
 
 		var TPL_LOCALE_IMAGE = '<img src="' + themeDisplay.getPathThemeImages() + '/language/{locale}.png" />';
 
-		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <a class="' + CSS_DELETE_TRANSLATION + '" href="javascript:;">x</a></span>';
+		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <a class="' + CSS_DELETE_TRANSLATION + ' aui-icon aui-icon-close" href="javascript:;">x</a></span>';
 
 		var TPL_AVAILABLE_TRANSLATIONS_LINKS_NODE = '<span class="' + CSS_AVAILABLE_TRANSLATIONS_LINKS + '"></span>';
 
@@ -69,9 +69,9 @@ AUI().add(
 
 		var TPL_ICON_MENU_NODE = '<ul class="' + [CSS_ICON_MENU, CSS_COMPONENT, CSS_ACTIONS, CSS_DIRECTION_DOWN, 'max-display-items-15', CSS_EXTENDED, CSS_SHOW_ARROW].join(STR_SPACE) + '"><li class="lfr-trigger"><strong><a class="nobr" href="javascript:;"><img src="' + themeDisplay.getPathThemeImages() + '/common/add.png" /><span class="taglib-text">' + Liferay.Language.get('add-translation') + '</span></a></strong><ul>{menuItems}</ul></li></ul>';
 
-		var TPL_ICON_NODE = '<li class="' + CSS_TRANSLATION_ITEM + '"><a href="javascript:;" class="taglib-icon" lang="{locale}"><img src="' + themeDisplay.getPathThemeImages() + '/language/{locale}.png" class="icon">{displayName}</a></li>';
+		var TPL_ICON_NODE = '<li class="' + CSS_TRANSLATION_ITEM + '"><a href="javascript:;" class="taglib-icon" lang="{0}"><img src="' + themeDisplay.getPathThemeImages() + '/language/{0}.png" class="icon">{1}</a></li>';
 
-		var TPL_OPTION = '<option value="{locale}">{displayName}</option>';
+		var TPL_OPTION = '<option value="{0}">{1}</option>';
 
 		var TranslationManager = A.Component.create(
 			{
@@ -83,15 +83,43 @@ AUI().add(
 						valueFn: '_valueAvailableLocales'
 					},
 
+					availableTranslationsNode: {
+						valueFn: '_valueAvailableTranslationsNode'
+					},
+
+					availableTranslationsLinksNode: {
+						valueFn: '_valueAvailableTranslationsLinksNode'
+					},
+
+					changeDefaultLocaleNode: {
+						valueFn: '_valueChangeDefaultLocaleNode'
+					},
+
 					defaultLocale: {
 						validator: Lang.isString,
-						value: STR_BLANK
+						value: 'en_US'
+					},
+
+					defaultLocaleLabelNode: {
+						valueFn: '_valueDefaultLocaleLabelNode'
+					},
+
+					defaultLocaleNode: {
+						valueFn: '_valueDefaultLocaleNode'
+					},
+
+					defaultLocaleTextNode: {
+						valueFn: '_valueDefaultLocaleTextNode'
 					},
 
 					editingLocale: {
 						lazyAdd: false,
 						validator: Lang.isString,
 						valueFn: '_valueEditingLocale'
+					},
+
+					iconMenuNode: {
+						valueFn: '_valueIconMenuNode'
 					},
 
 					localesMap: {
@@ -103,64 +131,19 @@ AUI().add(
 
 					portletNamespace: {
 						value: STR_BLANK
-					},
-
-					/*
-					* HTML_PARSER attributes
-					*/
-					availableTranslationsNode: {
-						valueFn: '_valueAvailableTranslationsNode'
-					},
-					availableTranslationsLinksNode: {
-						valueFn: '_valueAvailableTranslationsLinksNode'
-					},
-					changeDefaultLocaleNode: {
-						valueFn: '_valueChangeDefaultLocaleNode'
-					},
-					defaultLocaleLabelNode: {
-						valueFn: '_valueDefaultLocaleLabelNode'
-					},
-					defaultLocaleNode: {
-						valueFn: '_valueDefaultLocaleNode'
-					},
-					defaultLocaleTextNode: {
-						valueFn: '_valueDefaultLocaleTextNode'
-					},
-					iconMenuNode: {
-						valueFn: '_valueIconMenuNode'
 					}
 				},
 
 				CSS_PREFIX: 'lfr-translation-manager',
 
 				HTML_PARSER: {
-					availableTranslationsNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_AVAILABLE_TRANSLATIONS);
-					},
-
-					availableTranslationsLinksNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_AVAILABLE_TRANSLATIONS_LINKS);
-					},
-
-					changeDefaultLocaleNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_CHANGE_DEFAULT_LOCALE);
-					},
-
-					defaultLocaleLabelNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_DEFAULT_LOCALE_LABEL);
-					},
-
-					defaultLocaleNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_DEFAULT_LOCALE);
-					},
-
-					defaultLocaleTextNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_DEFAULT_LOCALE_TEXT);
-					},
-
-					iconMenuNode: function(contentBox) {
-						return contentBox.one(STR_DOT + CSS_ICON_MENU);
-					}
+					availableTranslationsNode: STR_DOT + CSS_AVAILABLE_TRANSLATIONS,
+					availableTranslationsLinksNode: STR_DOT + CSS_AVAILABLE_TRANSLATIONS_LINKS,
+					changeDefaultLocaleNode: STR_DOT + CSS_CHANGE_DEFAULT_LOCALE,
+					defaultLocaleLabelNode: STR_DOT + CSS_DEFAULT_LOCALE_LABEL,
+					defaultLocaleNode: STR_DOT + CSS_DEFAULT_LOCALE,
+					defaultLocaleTextNode: STR_DOT + CSS_DEFAULT_LOCALE,
+					iconMenuNode: STR_DOT + CSS_ICON_MENU
 				},
 
 				UI_ATTRS: ['availableLocales', 'defaultLocale', 'editingLocale'],
@@ -170,32 +153,55 @@ AUI().add(
 						var instance = this;
 
 						var availableTranslationsNode = instance.get('availableTranslationsNode');
+						var availableTranslationsLinksNode = instance.get('availableTranslationsLinksNode');
+						var changeDefaultLocaleNode = instance.get('changeDefaultLocaleNode');
+						var defaultLocaleNode = instance.get('defaultLocaleNode');
+						var defaultLocaleLabelNode = instance.get('defaultLocaleLabelNode');
+						var defaultLocaleTextNode = instance.get('defaultLocaleTextNode');
+						var iconMenuNode = instance.get('iconMenuNode');
+
 						var contentBox = instance.get('contentBox');
 
-						availableTranslationsNode.append(instance.get('availableTranslationsLinksNode'));
-						contentBox.append(instance.get('defaultLocaleLabelNode'));
-						contentBox.append(instance.get('defaultLocaleTextNode'));
-						contentBox.append(instance.get('defaultLocaleNode'));
-						contentBox.append(instance.get('changeDefaultLocaleNode'));
-						contentBox.append(instance.get('iconMenuNode'));
-						contentBox.append(availableTranslationsNode);
+						availableTranslationsNode.append(availableTranslationsLinksNode);
 
-						instance.menuOverlayNode = instance.get('iconMenuNode').one('ul');
+						var nodeList = new A.NodeList(
+							[
+								defaultLocaleLabelNode,
+								defaultLocaleTextNode,
+								defaultLocaleNode,
+								changeDefaultLocaleNode,
+								iconMenuNode,
+								availableTranslationsNode
+							]
+						);
+
+						contentBox.append(nodeList);
+
+						instance._availableTranslationsNode = availableTranslationsNode;
+						instance._availableTranslationsLinksNode = availableTranslationsLinksNode;
+						instance._changeDefaultLocaleNode = changeDefaultLocaleNode;
+						instance._defaultLocaleNode = defaultLocaleNode;
+						instance._defaultLocaleTextNode = defaultLocaleTextNode;
+						instance._iconMenuNode = iconMenuNode;
+
+						instance._menuOverlayNode = iconMenuNode.one('ul');
 					},
 
 					bindUI: function() {
 						var instance = this;
 
+						instance.on('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.after('defaultLocaleChange', instance._afterDefaultLocaleChange, instance);
 
-						instance.get('availableTranslationsLinksNode').delegate('click', instance._onClickTranslation, STR_DOT + CSS_TRANSLATION, instance);
-						instance.get('changeDefaultLocaleNode').on('click', instance.toggleDefaultLocales, instance);
-						instance.get('defaultLocaleNode').on('change', instance._onDefaultLocaleNodeChange, instance);
-						instance.get('defaultLocaleTextNode').on('click', instance._onClickDefaultLocaleTextNode, instance);
+						instance._changeDefaultLocaleNode.on('click', instance.toggleDefaultLocales, instance);
+						instance._defaultLocaleNode.on('change', instance._onDefaultLocaleNodeChange, instance);
+						instance._defaultLocaleTextNode.on('click', instance._onClickDefaultLocaleTextNode, instance);
 
-						instance.menuOverlayNode.delegate('click', instance._onClickTranslationItem, STR_DOT + CSS_TRANSLATION_ITEM, instance);
+						instance._availableTranslationsLinksNode.delegate('click', instance._onClickTranslation, STR_DOT + CSS_TRANSLATION, instance);
 
-						Liferay.Menu.handleFocus(instance.get('iconMenuNode'));
+						instance._menuOverlayNode.delegate('click', instance._onClickTranslationItem, STR_DOT + CSS_TRANSLATION_ITEM, instance);
+
+						Liferay.Menu.handleFocus(instance._iconMenuNode);
 					},
 
 					addAvailableLocale: function(locale) {
@@ -223,54 +229,22 @@ AUI().add(
 					toggleDefaultLocales: function() {
 						var instance = this;
 
-						var defaultLocaleNode = instance.get('defaultLocaleNode');
-						var defaultLocaleTextNode = instance.get('defaultLocaleTextNode');
+						var defaultLocaleNode = instance._defaultLocaleNode;
+						var defaultLocaleTextNode = instance._defaultLocaleTextNode;
 
-						var state = defaultLocaleNode.test(':hidden') && confirm(MSG_CHANGE_DEFAULT_LANGUAGE);
+						defaultLocaleNode.toggle();
+						defaultLocaleTextNode.toggle();
 
-						defaultLocaleNode.toggleClass(CSS_HELPER_HIDDEN, !state);
-						defaultLocaleTextNode.toggleClass(CSS_HELPER_HIDDEN, state);
-					},
+						var text;
 
-					_onClickDefaultLocaleTextNode: function(event) {
-						var instance = this;
-
-						instance.set('editingLocale', instance.get('defaultLocale'));
-					},
-
-					_onClickTranslation: function(event) {
-						var instance = this;
-
-						var availableLocales = instance.get('availableLocales');
-						var locale = event.currentTarget.attr('locale');
-						var target = event.target;
-
-						if (target.hasClass(CSS_DELETE_TRANSLATION)) {
-							if (confirm(MSG_DEACTIVATE_LANGUAGE)) {
-								instance.deleteAvailableLocale(locale);
-
-								if (locale == instance.get('editingLocale')) {
-									instance.set('editingLocale', instance.get('defaultLocale'));
-								}
-							}
+						if (defaultLocaleNode.test(':hidden')) {
+							text = Liferay.Language.get('change');
 						}
 						else {
-							instance.set('editingLocale', locale);
+							text = Liferay.Language.get('cancel');
 						}
-					},
 
-					_onClickTranslationItem: function(event) {
-						var instance = this;
-
-						var target = event.currentTarget;
-						var link = target.one('a');
-						var locale = link.attr('lang');
-
-						instance.addAvailableLocale(locale);
-
-						instance.set('editingLocale', locale);
-
-						instance._getMenuOverlay().hide();
+						instance._changeDefaultLocaleNode.text(text);
 					},
 
 					_afterDefaultLocaleChange: function(event) {
@@ -282,37 +256,108 @@ AUI().add(
 						instance.set('editingLocale', defaultLocale);
 					},
 
+					_getFormattedBuffer: function(tpl) {
+						var instance = this;
+
+						var localesMap = instance.get('localesMap');
+
+						var buffer = [];
+						var tplBuffer = [];
+
+						var html;
+
+						A.each(
+							instance._locales,
+							function(item, index, collection) {
+								tplBuffer[0] = item;
+								tplBuffer[1] = localesMap[item];
+
+								html = Lang.sub(tpl, tplBuffer);
+
+								buffer.push(html);
+							}
+						);
+
+						return buffer;
+					},
+
 					_getMenuOverlay: function() {
 						var instance = this;
 
-						var iconMenuNode = instance.get('iconMenuNode');
+						return A.Widget.getByNode(instance._menuOverlayNode);
+					},
 
-						return A.Widget.getByNode(instance.menuOverlayNode);
+					_onClickDefaultLocaleTextNode: function(event) {
+						var instance = this;
+
+						instance._resetEditingLocale();
+					},
+
+					_onClickTranslation: function(event) {
+						var instance = this;
+
+						var availableLocales = instance.get('availableLocales');
+
+						var locale = event.currentTarget.attr('locale');
+
+						if (event.target.hasClass(CSS_DELETE_TRANSLATION)) {
+							if (confirm(MSG_DEACTIVATE_LANGUAGE)) {
+								instance.deleteAvailableLocale(locale);
+
+								if (locale == instance.get('editingLocale')) {
+									instance._resetEditingLocale();
+								}
+							}
+						}
+						else {
+							instance.set('editingLocale', locale);
+						}
+					},
+
+					_onClickTranslationItem: function(event) {
+						var instance = this;
+
+						var link = event.currentTarget.one('a');
+
+						var locale = link.attr('lang');
+
+						instance.addAvailableLocale(locale);
+
+						instance.set('editingLocale', locale);
+
+						instance._getMenuOverlay().hide();
+					},
+
+					_onDefaultLocaleChange: function(event) {
+						var instance = this;
+
+						if (!confirm(MSG_CHANGE_DEFAULT_LANGUAGE)) {
+							event.preventDefault();
+						}
 					},
 
 					_onDefaultLocaleNodeChange: function(event) {
 						var instance = this;
 
-						var defaultLocaleNode = event.target;
-
-						instance.set('defaultLocale', defaultLocaleNode.val());
+						instance.set('defaultLocale', event.target.val());
 
 						instance.toggleDefaultLocales();
+					},
+
+					_resetEditingLocale: function() {
+						var instance = this;
+
+						instance.set('editingLocale', instance.get('defaultLocale'));
 					},
 
 					_setLocalesMap: function(val) {
 						var instance = this;
 
-						instance._locales = [];
+						var locales = A.Object.keys(val);
 
-						A.each(
-							val,
-							function(item, index, collection) {
-								instance._locales.push(item);
-							}
-						);
+						locales.sort();
 
-						instance._locales.sort();
+						instance._locales = locales;
 
 						return val;
 					},
@@ -320,39 +365,46 @@ AUI().add(
 					_uiSetAvailableLocales: function(val) {
 						var instance = this;
 
-						var buffer = [];
 						var defaultLocale = instance.get('defaultLocale');
 						var editingLocale = instance.get('editingLocale');
 						var localesMap = instance.get('localesMap');
+
+						var buffer = [];
+
+						var tplBuffer = {
+							cssClass: STR_BLANK,
+							displayName: STR_BLANK,
+							locale: STR_BLANK
+						};
 
 						AArray.each(
 							val,
 							function(item, index, collection) {
 								if (defaultLocale !== item) {
-									buffer.push(
-										A.Lang.sub(
-											TPL_AVAILABLE_TRANSLATION_LINK,
-											{
-												cssClass: (editingLocale === item) ? CSS_TRANSLATION_EDITING : STR_BLANK,
-												displayName: localesMap[item],
-												locale: item
-											}
-										)
-									);
+									tplBuffer.cssClass = (editingLocale === item) ? CSS_TRANSLATION_EDITING : STR_BLANK;
+
+									tplBuffer.displayName = localesMap[item];
+									tplBuffer.locale = item;
+
+									html = Lang.sub(TPL_AVAILABLE_TRANSLATION_LINK, tplBuffer);
+
+									buffer.push(html);
 								}
 							}
 						);
 
-						instance.get('availableTranslationsLinksNode').setContent(buffer.join(STR_BLANK));
+						instance._availableTranslationsNode.toggle(!!buffer.length);
+
+						instance._availableTranslationsLinksNode.setContent(buffer.join(STR_BLANK));
 					},
 
 					_uiSetDefaultLocale: function(val) {
 						var instance = this;
 
-						var optionNode = instance.get('defaultLocaleNode').one('option[value=' + val + ']');
+						var optionNode = instance._defaultLocaleNode.one('option[value=' + val + ']');
 
 						if (optionNode) {
-							var content = A.Lang.sub(
+							var content = Lang.sub(
 								TPL_LOCALE_IMAGE,
 								{
 									locale: val
@@ -361,30 +413,32 @@ AUI().add(
 
 							content += optionNode.getContent();
 
-							instance.get('defaultLocaleTextNode').setContent(content);
+							instance._defaultLocaleTextNode.setContent(content);
 						}
 					},
 
 					_uiSetEditingLocale: function(val) {
 						var instance = this;
 
-						var availableLocales = instance.get('availableLocales');
-						var availableTranslationsLinksNode = instance.get('availableTranslationsLinksNode');
+						var availableTranslationsLinksNode = instance._availableTranslationsLinksNode;
 						var availableTranslationsLinksItems = availableTranslationsLinksNode.all(STR_DOT + CSS_TRANSLATION);
-						var defaultLocaleTextNode = instance.get('defaultLocaleTextNode');
+
+						var defaultLocaleTextNode = instance._defaultLocaleTextNode;
 
 						availableTranslationsLinksItems.removeClass(CSS_TRANSLATION_EDITING);
 						defaultLocaleTextNode.removeClass(CSS_TRANSLATION_EDITING);
 
+						var localeNode;
+
 						if (val == instance.get('defaultLocale')) {
-							defaultLocaleTextNode.addClass(CSS_TRANSLATION_EDITING);
+							localeNode = defaultLocaleTextNode;
 						}
 						else {
-							var editingLocaleNode = availableTranslationsLinksNode.one('span[locale=' + val + ']');
+							localeNode = availableTranslationsLinksNode.one('span[locale=' + val + ']');
+						}
 
-							if (editingLocaleNode) {
-								editingLocaleNode.addClass(CSS_TRANSLATION_EDITING);
-							}
+						if (localeNode) {
+							localeNode.addClass(CSS_TRANSLATION_EDITING);
 						}
 					},
 
@@ -421,23 +475,11 @@ AUI().add(
 					_valueDefaultLocaleNode: function() {
 						var instance = this;
 
-						var localesMap = instance.get('localesMap');
 						var node = Node.create(TPL_DEFAULT_LOCALE_NODE);
 
-						A.each(
-							instance._locales,
-							function(item, index, collection) {
-								node.append(
-									Lang.sub(
-										TPL_OPTION,
-										{
-											displayName: localesMap[item],
-											locale: item
-										}
-									)
-								);
-							}
-						);
+						var buffer = instance._getFormattedBuffer(TPL_OPTION);
+
+						node.append(buffer.join(''));
 
 						return node;
 					},
@@ -448,15 +490,15 @@ AUI().add(
 						var defaultLocale = instance.get('defaultLocale');
 						var localesMap = instance.get('localesMap');
 
-						return Node.create(
-							A.Lang.sub(
-								TPL_DEFAULT_LOCALE_TEXT_NODE,
-								{
-									displayName: localesMap[defaultLocale],
-									locale: defaultLocale
-								}
-							)
+						var html = Lang.sub(
+							TPL_DEFAULT_LOCALE_TEXT_NODE,
+							{
+								displayName: localesMap[defaultLocale],
+								locale: defaultLocale
+							}
 						);
+
+						return Node.create(html);
 					},
 
 					_valueEditingLocale: function() {
@@ -468,32 +510,16 @@ AUI().add(
 					_valueIconMenuNode: function() {
 						var instance = this;
 
-						var localesMap = instance.get('localesMap');
-						var buffer = [];
+						var buffer = instance._getFormattedBuffer(TPL_ICON_NODE);
 
-						A.each(
-							instance._locales,
-							function(item, index, collection) {
-								buffer.push(
-									A.Lang.sub(
-										TPL_ICON_NODE,
-										{
-											displayName: localesMap[item],
-											locale: item
-										}
-									)
-								);
+						var html = Lang.sub(
+							TPL_ICON_MENU_NODE,
+							{
+								menuItems: buffer.join(STR_BLANK)
 							}
 						);
 
-						return Node.create(
-							A.Lang.sub(
-								TPL_ICON_MENU_NODE,
-								{
-									menuItems: buffer.join(STR_BLANK)
-								}
-							)
-						);
+						return Node.create(html);
 					}
 
 				}

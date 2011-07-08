@@ -21,7 +21,7 @@ import java.util.Comparator;
 /**
  * @author Juan Fernández
  */
-public class AssetTagComparator implements Comparator<AssetTag> {
+public class AssetTagNameComparator implements Comparator<AssetTag> {
 
 	public int compare(AssetTag assetTag1, AssetTag assetTag2) {
 		return assetTag1.getName().compareTo(assetTag2.getName());

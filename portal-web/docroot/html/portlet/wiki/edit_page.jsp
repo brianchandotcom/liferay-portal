@@ -466,7 +466,7 @@ if (Validator.isNull(redirect)) {
 		var content = '';
 
 		content += document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ';
-		content += document.<portlet:namespace />fm.<portlet:namespace />content.value;
+		content += window.<portlet:namespace />editor.getHTML();
 
 		return content;
 	}

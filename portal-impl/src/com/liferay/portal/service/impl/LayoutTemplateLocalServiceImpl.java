@@ -576,7 +576,7 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	private Map<String, LayoutTemplate> _getThemesCustom(String themeId) {
-		String key = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR;
+		String key = themeId.concat(LayoutTemplateConstants.CUSTOM_SEPARATOR);
 
 		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
 

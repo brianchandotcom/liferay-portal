@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -406,6 +407,74 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	public void setContainerResourcePermissions(
+			String name, String roleName, long minimumBitwiseValue)
+		throws SystemException {
+
+		List<Role> roles = rolePersistence.findByName(roleName);
+
+		for (Role role : roles) {
+			long companyId = role.getCompanyId();
+			long roleId = role.getRoleId();
+
+			List<Group> groups = groupPersistence.findByCompanyId(companyId);
+
+			for (Group group : groups) {
+				String primKey = Long.toString(group.getGroupId());
+
+				long actionIdsLong = minimumBitwiseValue;
+
+				ResourcePermission resourcePermission =
+					resourcePermissionPersistence.fetchByC_N_S_P_R(
+						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+						primKey, roleId);
+
+				if (resourcePermission == null) {
+					long resourcePermissionId = counterLocalService.increment(
+						ResourcePermission.class.getName());
+
+					resourcePermission = resourcePermissionPersistence.create(
+						resourcePermissionId);
+
+					resourcePermission.setCompanyId(companyId);
+					resourcePermission.setName(name);
+					resourcePermission.setScope(
+						ResourceConstants.SCOPE_INDIVIDUAL);
+					resourcePermission.setPrimKey(primKey);
+					resourcePermission.setRoleId(roleId);
+
+					// Use default actions
+
+					List<String> defaultActionIds = null;
+
+					if (roleName.equals(RoleConstants.GUEST)) {
+						defaultActionIds = ResourceActionsUtil.
+							getModelResourceGuestDefaultActions(name);
+					}
+					else if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+						defaultActionIds = ResourceActionsUtil.
+							getModelResourceGroupDefaultActions(name);
+					}
+
+					List<ResourceAction> resourceActions =
+						resourceActionLocalService.getResourceActions(name);
+
+					for (ResourceAction resourceAction : resourceActions) {
+						if (defaultActionIds.contains(
+								resourceAction.getActionId())) {
+
+							actionIdsLong |= resourceAction.getBitwiseValue();
+						}
+					}
+				}
+
+				resourcePermission.setActionIds(actionIdsLong);
+
+				resourcePermissionPersistence.update(resourcePermission, false);
+			}
+		}
 	}
 
 	public void setOwnerResourcePermissions(

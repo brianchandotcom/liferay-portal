@@ -32,6 +32,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
@@ -49,11 +51,14 @@ public class LiferayLocalRepository
 		RepositoryService repositoryService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
+		DLFileVersionLocalService dlFileVersionLocalService,
+		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService, long repositoryId) {
 
 		super(
 			repositoryService, dlFileEntryLocalService, dlFileEntryService,
+			dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, repositoryId);
 	}
 
@@ -61,12 +66,15 @@ public class LiferayLocalRepository
 		RepositoryService repositoryService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
+		DLFileVersionLocalService dlFileVersionLocalService,
+		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService, long folderId, long fileEntryId,
 		long fileVersionId) {
 
 		super(
 			repositoryService, dlFileEntryLocalService, dlFileEntryService,
+			dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 	}
@@ -182,7 +190,7 @@ public class LiferayLocalRepository
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 
-		DLFileVersion dlFileVersion = dlFileEntryLocalService.getFileVersion(
+		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
 			fileVersionId);
 
 		return new LiferayFileVersion(dlFileVersion);

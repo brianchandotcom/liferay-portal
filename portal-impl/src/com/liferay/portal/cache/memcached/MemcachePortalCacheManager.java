@@ -58,8 +58,6 @@ public class MemcachePortalCacheManager implements PortalCacheManager {
 				memcachePortalCache = new MemcachePortalCache(
 					name, memcachedClient, _timeout, _timeoutTimeUnit);
 
-				memcachePortalCache.setDebug(_debug);
-
 				_memcachePortalCaches.put(name, memcachePortalCache);
 			}
 			catch (Exception e) {
@@ -78,10 +76,6 @@ public class MemcachePortalCacheManager implements PortalCacheManager {
 		_memcachePortalCaches.remove(name);
 	}
 
-	public void setDebug(boolean debug) {
-		_debug = debug;
-	}
-
 	public void setMemcachedClientPool(
 		MemcachedClientFactory memcachedClientFactory) {
 
@@ -96,7 +90,6 @@ public class MemcachePortalCacheManager implements PortalCacheManager {
 		_timeoutTimeUnit = TimeUnit.valueOf(timeoutTimeUnit);
 	}
 
-	private boolean _debug;
 	private MemcachedClientFactory _memcachedClientFactory;
 	private Map<String, MemcachePortalCache> _memcachePortalCaches =
 		new ConcurrentHashMap<String, MemcachePortalCache>();

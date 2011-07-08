@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.memcached;
 
-import com.liferay.portal.kernel.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -34,7 +34,7 @@ import net.spy.memcached.MemcachedClientIF;
 /**
  * @author Michael C. Han
  */
-public class PooledMemcachePortalCache extends BasePortalCache {
+public class PooledMemcachePortalCache implements PortalCache {
 
 	public PooledMemcachePortalCache(
 		String name, MemcachedClientFactory memcachedClientFactory, int timeout,
@@ -46,7 +46,6 @@ public class PooledMemcachePortalCache extends BasePortalCache {
 		_timeoutTimeUnit = timeoutTimeUnit;
 	}
 
-	@Override
 	public void destroy() {
 		try {
 			_memcachedClientFactory.close();

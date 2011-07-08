@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -28,6 +29,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileVersionModel;
+import com.liferay.portlet.documentlibrary.model.DLFileVersionSoap;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
@@ -37,7 +39,9 @@ import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The base model implementation for the DLFileVersion service. Represents a row in the &quot;DLFileVersion&quot; database table, with each column mapped to a property of this class.
@@ -52,6 +56,7 @@ import java.util.Date;
  * @see com.liferay.portlet.documentlibrary.model.DLFileVersionModel
  * @generated
  */
+@JSON(strict = true)
 public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	implements DLFileVersionModel {
 	/*
@@ -97,6 +102,56 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileVersion"),
 			true);
 
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static DLFileVersion toModel(DLFileVersionSoap soapModel) {
+		DLFileVersion model = new DLFileVersionImpl();
+
+		model.setFileVersionId(soapModel.getFileVersionId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setRepositoryId(soapModel.getRepositoryId());
+		model.setFileEntryId(soapModel.getFileEntryId());
+		model.setExtension(soapModel.getExtension());
+		model.setMimeType(soapModel.getMimeType());
+		model.setTitle(soapModel.getTitle());
+		model.setDescription(soapModel.getDescription());
+		model.setChangeLog(soapModel.getChangeLog());
+		model.setExtraSettings(soapModel.getExtraSettings());
+		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
+		model.setVersion(soapModel.getVersion());
+		model.setSize(soapModel.getSize());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<DLFileVersion> toModels(DLFileVersionSoap[] soapModels) {
+		List<DLFileVersion> models = new ArrayList<DLFileVersion>(soapModels.length);
+
+		for (DLFileVersionSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public Class<?> getModelClass() {
 		return DLFileVersion.class;
 	}
@@ -127,6 +182,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@JSON
 	public long getFileVersionId() {
 		return _fileVersionId;
 	}
@@ -135,6 +191,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_fileVersionId = fileVersionId;
 	}
 
+	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -143,6 +200,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_groupId = groupId;
 	}
 
+	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -151,6 +209,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_companyId = companyId;
 	}
 
+	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -167,6 +226,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_userUuid = userUuid;
 	}
 
+	@JSON
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -180,6 +240,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_userName = userName;
 	}
 
+	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -188,6 +249,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_createDate = createDate;
 	}
 
+	@JSON
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -196,6 +258,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_repositoryId = repositoryId;
 	}
 
+	@JSON
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -214,6 +277,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalFileEntryId;
 	}
 
+	@JSON
 	public String getExtension() {
 		if (_extension == null) {
 			return StringPool.BLANK;
@@ -227,6 +291,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_extension = extension;
 	}
 
+	@JSON
 	public String getMimeType() {
 		if (_mimeType == null) {
 			return StringPool.BLANK;
@@ -240,6 +305,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_mimeType = mimeType;
 	}
 
+	@JSON
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -253,6 +319,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_title = title;
 	}
 
+	@JSON
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -266,6 +333,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_description = description;
 	}
 
+	@JSON
 	public String getChangeLog() {
 		if (_changeLog == null) {
 			return StringPool.BLANK;
@@ -279,6 +347,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_changeLog = changeLog;
 	}
 
+	@JSON
 	public String getExtraSettings() {
 		if (_extraSettings == null) {
 			return StringPool.BLANK;
@@ -292,6 +361,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_extraSettings = extraSettings;
 	}
 
+	@JSON
 	public long getFileEntryTypeId() {
 		return _fileEntryTypeId;
 	}
@@ -300,6 +370,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_fileEntryTypeId = fileEntryTypeId;
 	}
 
+	@JSON
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -321,6 +392,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return GetterUtil.getString(_originalVersion);
 	}
 
+	@JSON
 	public long getSize() {
 		return _size;
 	}
@@ -329,6 +401,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_size = size;
 	}
 
+	@JSON
 	public int getStatus() {
 		return _status;
 	}
@@ -337,6 +410,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_status = status;
 	}
 
+	@JSON
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -354,6 +428,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
+	@JSON
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -367,6 +442,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusByUserName = statusByUserName;
 	}
 
+	@JSON
 	public Date getStatusDate() {
 		return _statusDate;
 	}

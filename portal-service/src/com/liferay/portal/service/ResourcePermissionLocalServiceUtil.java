@@ -407,6 +407,13 @@ public class ResourcePermissionLocalServiceUtil {
 			.removeResourcePermissions(companyId, name, scope, roleId, actionId);
 	}
 
+	public static void setContainerResourcePermissions(java.lang.String name,
+		java.lang.String roleName, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setContainerResourcePermissions(name, roleName, actionIdsLong);
+	}
+
 	public static void setOwnerResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		long roleId, long ownerId, java.lang.String[] actionIds)

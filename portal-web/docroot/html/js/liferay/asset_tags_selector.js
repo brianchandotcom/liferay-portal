@@ -3,6 +3,8 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var AArray = A.Array;
+
 		var	getClassName = A.ClassNameManager.getClassName;
 
 		var NAME = 'tagselector';
@@ -222,16 +224,8 @@ AUI().add(
 						return instance._popup;
 					},
 
-					_getProxyData: function() {
+					_getProxyData: function(context) {
 						var instance = this;
-
-						var context = '';
-
-						var contentCallback = instance.get('contentCallback');
-
-						if (contentCallback) {
-							context = contentCallback();
-						}
 
 						var suggestionsURL = A.substitute(
 							TPL_URL_SUGGESTIONS,
@@ -495,22 +489,80 @@ AUI().add(
 
 						instance._popup.set('title', Liferay.Language.get('suggestions'));
 
-						A.io.request(
+						var contentCallback = instance.get('contentCallback');
+
+						var context = '';
+						var data = [];
+
+						if (contentCallback) {
+							context = contentCallback();
+						}
+
+						var length = context.length;
+
+						var urlSizeLimit = 4096;
+
+						var end = urlSizeLimit;
+						var lastSpaceIndex = 0;
+						var start = 0;
+
+						var suggestionsIO = A.io.request(
 							themeDisplay.getPathMain() + '/portal/rest_proxy',
 							{
-								data: instance._getProxyData(),
+								autoLoad: false,
 								dataType: 'json',
 								on: {
 									success: function(event, id, obj) {
 										var results = this.get('responseData');
 
-										if (results && results.ResultSet) {
-											instance._updateSelectList(results.ResultSet.Result, instance._suggestionsIterator);
+										if (results && results.ResultSet && results.ResultSet.Result) {
+											data = data.concat(results.ResultSet.Result);
 										}
+
+										queue.run();
 									}
 								}
 							}
 						);
+
+						var queue = new A.AsyncQueue(
+							{
+								fn: function() {
+									queue.pause();
+
+									var phrase = context.substr(start, end);
+
+									lastSpaceIndex = urlSizeLimit;
+
+									if (end < length) {
+										lastSpaceIndex = phrase.lastIndexOf(' ');
+
+										phrase = phrase.substr(0, lastSpaceIndex);
+
+										end = start + lastSpaceIndex;
+									}
+
+									start += lastSpaceIndex;
+									end = start + urlSizeLimit;
+
+									suggestionsIO.set('data', instance._getProxyData(phrase));
+
+									suggestionsIO.start();
+								},
+								until: function () {
+									return length <= start;
+								}
+							}
+						);
+
+						queue.after(
+							'complete',
+							function(event) {
+								instance._updateSelectList(AArray.unique(data), instance._suggestionsIterator);
+							}
+						);
+
+						queue.run();
 					},
 
 					_suggestionsIterator: function(item, index, collection) {
@@ -591,6 +643,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
 	}
 );

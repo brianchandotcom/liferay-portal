@@ -65,13 +65,23 @@ public class ParallelDestination extends BaseAsyncDestination {
 			Runnable runnable = new MessageRunnable(message) {
 
 				public void run() {
+					long companyId = CompanyThreadLocal.getCompanyId();
+
 					try {
+						long messageCompanyId = message.getLong("companyId");
+
+						if (messageCompanyId > 0) {
+							CompanyThreadLocal.setCompanyId(messageCompanyId);
+						}
+
 						messageListener.receive(message);
 					}
 					catch (MessageListenerException mle) {
 						_log.error("Unable to process message " + message, mle);
 					}
 					finally {
+						CompanyThreadLocal.setCompanyId(companyId);
+
 						CentralizedThreadLocal.clearShortLivedThreadLocals();
 					}
 				}

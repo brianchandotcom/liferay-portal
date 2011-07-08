@@ -66,16 +66,31 @@ Calendar cal = new GregorianCalendar();
 
 cal.setTime(selectedDate);
 
+boolean dayEmpty = false;
+
 if (dayValue > 0) {
 	cal.set(Calendar.DATE, dayValue);
 }
+else if (dayNullable) {
+	dayEmpty = true;
+}
+
+boolean monthEmpty = false;
 
 if (monthValue > -1) {
 	cal.set(Calendar.MONTH, monthValue);
 }
+else if (monthNullable) {
+	monthEmpty = true;
+}
+
+boolean yearEmpty = false;
 
 if (yearValue > 0) {
 	cal.set(Calendar.YEAR, yearValue);
+}
+else if (yearNullable) {
+	yearEmpty = true;
 }
 %>
 
@@ -138,16 +153,16 @@ if (yearValue > 0) {
 						render: function(event) {
 							var instance = this;
 
-							<c:if test="<%= dayNullable %>">
-								instance.get('dayNode').val('');
+							<c:if test="<%= dayEmpty %>">
+								instance.get('dayNode').val('-1');
 							</c:if>
 
-							<c:if test="<%= monthNullable %>">
-								instance.get('monthNode').val('');
+							<c:if test="<%= monthEmpty %>">
+								instance.get('monthNode').val('-1');
 							</c:if>
 
-							<c:if test="<%= yearNullable %>">
-								instance.get('yearNode').val('');
+							<c:if test="<%= yearEmpty %>">
+								instance.get('yearNode').val('-1');
 							</c:if>
 						}
 					},
@@ -155,11 +170,13 @@ if (yearValue > 0) {
 					boundingBox: displayDateNode,
 					calendar: {
 						dates: [
-							new Date(
-								<%= cal.get(Calendar.YEAR) %>,
-								<%= cal.get(Calendar.MONTH) %>,
-								<%= cal.get(Calendar.DATE) %>
-							)
+							<c:if test="<%= !monthEmpty && !dayEmpty && !yearEmpty %>">
+								new Date(
+									<%= cal.get(Calendar.YEAR) %>,
+									<%= cal.get(Calendar.MONTH) %>,
+									<%= cal.get(Calendar.DATE) %>
+								)
+							</c:if>
 						],
 
 						<c:choose>
@@ -180,6 +197,9 @@ if (yearValue > 0) {
 					dayNode: '#<%= dayParam %>',
 					disabled: <%= disabled %>,
 					monthNode: '#<%= monthParam %>',
+					nullableDay: <%= dayNullable %>,
+					nullableMonth: <%= monthNullable %>,
+					nullableYear: <%= yearNullable %>,
 					on: {
 						'calendar:select': function(event) {
 							var formatted = event.date.formatted[0];
@@ -187,9 +207,6 @@ if (yearValue > 0) {
 							A.one('#<%= imageInputId %>Input').val(formatted);
 						}
 					},
-					populateDay: false,
-					populateMonth: false,
-					populateYear: false,
 					srcNode: '#<%= randomNamespace %>displayDateContent',
 					yearNode: '#<%= yearParam %>',
 					yearRange: [<%= yearRangeStart %>, <%= yearRangeEnd %>]

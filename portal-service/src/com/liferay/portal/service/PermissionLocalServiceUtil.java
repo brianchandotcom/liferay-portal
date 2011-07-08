@@ -401,6 +401,13 @@ public class PermissionLocalServiceUtil {
 			permissionCheckerBag);
 	}
 
+	public static void setContainerResourcePermissions(java.lang.String name,
+		java.lang.String roleName, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setContainerResourcePermissions(name, roleName, actionId);
+	}
+
 	public static void setGroupPermissions(long groupId,
 		java.lang.String[] actionIds, long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

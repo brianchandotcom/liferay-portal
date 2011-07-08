@@ -314,8 +314,6 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			if (previousPortalCache != null) {
 				portalCache = previousPortalCache;
 			}
-
-			portalCache.setDebug(true);
 		}
 
 		return portalCache;

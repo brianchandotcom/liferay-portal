@@ -694,11 +694,9 @@ Liferay.Service.registerClass(
 		getFileEntry: true,
 		getFileEntryByUuidAndGroupId: true,
 		getFileEntryLock: true,
-		getFileVersion: true,
 		getFoldersFileEntriesCount: true,
 		getGroupFileEntries: true,
 		getGroupFileEntriesCount: true,
-		getLatestFileVersion: true,
 		hasFileEntryLock: true,
 		isFileEntryCheckedOut: true,
 		moveFileEntry: true,
@@ -727,6 +725,14 @@ Liferay.Service.registerClass(
 		deleteFileShortcut: true,
 		getFileShortcut: true,
 		updateFileShortcut: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.DL, "DLFileVersion",
+	{
+		getFileVersion: true,
+		getLatestFileVersion: true
 	}
 );
 

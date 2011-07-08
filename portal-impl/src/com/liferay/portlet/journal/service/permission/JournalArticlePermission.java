@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
@@ -90,9 +89,9 @@ public class JournalArticlePermission {
 		String actionId) {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, article.getGroupId(), BlogsEntry.class.getName(),
-			article.getResourcePrimKey(), PortletKeys.JOURNAL,
-			actionId);
+			permissionChecker, article.getGroupId(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			PortletKeys.JOURNAL, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

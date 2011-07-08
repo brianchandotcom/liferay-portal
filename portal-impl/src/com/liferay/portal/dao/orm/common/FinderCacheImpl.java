@@ -208,8 +208,6 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 			if (previousPortalCache != null) {
 				portalCache = previousPortalCache;
 			}
-
-			portalCache.setDebug(true);
 		}
 
 		return portalCache;

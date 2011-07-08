@@ -1,7 +1,5 @@
 package ${packagePath}.model.impl;
 
-import ${packagePath}.model.${entity.name};
-
 /**
  * The extended model implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
  *
@@ -16,7 +14,7 @@ public class ${entity.name}Impl extends ${entity.name}BaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${entity.name}} interface instead.
+	 * Never reference this class directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${packagePath}.model.${entity.name}} interface instead.
 	 */
 
 	public ${entity.name}Impl() {

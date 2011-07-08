@@ -170,13 +170,6 @@ public class DLFileEntryServiceUtil {
 		return getService().getFileEntryLock(fileEntryId);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileVersion(fileVersionId);
-	}
-
 	public static int getFoldersFileEntriesCount(long groupId,
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -198,13 +191,6 @@ public class DLFileEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getGroupFileEntriesCount(groupId, userId, rootFolderId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLatestFileVersion(fileEntryId);
 	}
 
 	public static boolean hasFileEntryLock(long fileEntryId)

@@ -287,20 +287,6 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap getFileVersion(
-		long fileVersionId) throws RemoteException {
-		try {
-			com.liferay.portlet.documentlibrary.model.DLFileVersion returnValue = DLFileEntryServiceUtil.getFileVersion(fileVersionId);
-
-			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static int getFoldersFileEntriesCount(long groupId,
 		Long[] folderIds, int status) throws RemoteException {
 		try {
@@ -341,20 +327,6 @@ public class DLFileEntryServiceSoap {
 					userId, rootFolderId);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap getLatestFileVersion(
-		long fileEntryId) throws RemoteException {
-		try {
-			com.liferay.portlet.documentlibrary.model.DLFileVersion returnValue = DLFileEntryServiceUtil.getLatestFileVersion(fileEntryId);
-
-			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

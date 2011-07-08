@@ -14,13 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.http;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
-
-import java.rmi.RemoteException;
-
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -65,43 +58,4 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DDLRecordServiceSoap {
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap addRecord(
-		long groupId, long recordSetId, int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portlet.dynamicdatalists.model.DDLRecord returnValue = DDLRecordServiceUtil.addRecord(groupId,
-					recordSetId, displayIndex, fields, serviceContext);
-
-			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap updateRecord(
-		long recordId, boolean majorVersion, int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
-		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portlet.dynamicdatalists.model.DDLRecord returnValue = DDLRecordServiceUtil.updateRecord(recordId,
-					majorVersion, displayIndex, fields, mergeFields,
-					serviceContext);
-
-			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(DDLRecordServiceSoap.class);
 }

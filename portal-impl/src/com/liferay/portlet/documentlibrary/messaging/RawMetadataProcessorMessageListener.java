@@ -24,6 +24,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -43,7 +44,7 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 		DLFileEntry dlFileEntry = (DLFileEntry)message.getPayload();
 
 		DLFileVersion dlFileVersion =
-			DLFileEntryLocalServiceUtil.getLatestFileVersion(
+			DLFileVersionLocalServiceUtil.getLatestFileVersion(
 				dlFileEntry.getFileEntryId(), false);
 
 		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(

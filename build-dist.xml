@@ -803,8 +803,8 @@ release was successful.</echo>
 		>
 			<mapper
 				type="glob"
-				from="geronimo-tomcat6-minimal-2.2/*"
-				to="geronimo-2.2.0/*"
+				from="geronimo-tomcat6-minimal-2.2.1/*"
+				to="geronimo-2.2.1/*"
 			/>
 		</unzip>
 	</target>

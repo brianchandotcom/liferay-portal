@@ -17,8 +17,10 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -58,8 +60,25 @@ public class ActionUtil {
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {
-			JournalStructure structure =
-				JournalStructureServiceUtil.getStructure(groupId, structureId);
+			JournalStructure structure = null;
+
+			try {
+				structure = JournalStructureServiceUtil.getStructure(
+					groupId, structureId);
+			}
+			catch (NoSuchStructureException nsse1) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				if (groupId != themeDisplay.getCompanyGroupId()) {
+					try {
+						structure = JournalStructureServiceUtil.getStructure(
+							themeDisplay.getCompanyGroupId(), structureId);
+					}
+					catch (NoSuchStructureException nsse2) {
+					}
+				}
+			}
 
 			article = JournalArticleServiceUtil.getArticle(
 				groupId, JournalStructure.class.getName(), structure.getId());

@@ -29,8 +29,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -117,14 +118,14 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public DLFileVersion getFileVersion(String version)
 		throws PortalException, SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileVersion(
+		return DLFileVersionLocalServiceUtil.getFileVersion(
 			getFileEntryId(), version);
 	}
 
 	public List<DLFileVersion> getFileVersions(int status)
 		throws SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileVersions(
+		return DLFileVersionLocalServiceUtil.getFileVersions(
 			getFileEntryId(), status);
 	}
 
@@ -155,7 +156,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public DLFileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
-		return DLFileEntryServiceUtil.getLatestFileVersion(getFileEntryId());
+		return DLFileVersionServiceUtil.getLatestFileVersion(getFileEntryId());
 	}
 
 	public Lock getLock() {

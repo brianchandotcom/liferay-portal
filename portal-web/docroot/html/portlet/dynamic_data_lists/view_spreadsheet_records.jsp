@@ -54,29 +54,25 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>, <%= editable %>);
 
 	var ignoreEmptyRecordsSort = function(recA, recB, field, desc) {
-		if (recB.getValue(field) === '') {
-			return -1;
+		var sorted = -1;
+
+		if (recB.getValue(field) !== '') {
+			sorted = A.ArraySort.compare(recA.getValue(field), recB.getValue(field), desc);
+
+			if (sorted === 0) {
+				sorted = A.ArraySort.compare(recA.get("id"), recB.get("id"), desc);
+			}
 		}
 
-		var sorted = A.ArraySort.compare(recA.getValue(field), recB.getValue(field), desc);
-
-		if (sorted === 0) {
-			return A.ArraySort.compare(recA.get("id"), recB.get("id"), desc);
-		}
-		else {
-			return sorted;
-		}
+		return sorted;
 	};
 
 	var keys = A.Array.map(
 		columnset,
 		function(item, index, collection) {
-			A.mix(
-				item,
-				{
-					sortFn: ignoreEmptyRecordsSort
-				}
-			);
+			if (!item.sortFn) {
+				item.sortFn = ignoreEmptyRecordsSort;
+			}
 
 			return item.key;
 		}

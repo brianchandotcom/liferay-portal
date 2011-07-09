@@ -105,15 +105,8 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 		layoutImpl.setPlid(plid);
 		layoutImpl.setGroupId(groupId);
 		layoutImpl.setCompanyId(companyId);
-
-		if (createDate > 0) {
-			layoutImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			layoutImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		layoutImpl.setCreateDate(new Date(createDate));
+		layoutImpl.setModifiedDate(new Date(modifiedDate));
 		layoutImpl.setPrivateLayout(privateLayout);
 		layoutImpl.setLayoutId(layoutId);
 		layoutImpl.setParentLayoutId(parentLayoutId);

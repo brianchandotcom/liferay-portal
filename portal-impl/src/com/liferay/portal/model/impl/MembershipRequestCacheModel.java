@@ -65,10 +65,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		membershipRequestImpl.setGroupId(groupId);
 		membershipRequestImpl.setCompanyId(companyId);
 		membershipRequestImpl.setUserId(userId);
-
-		if (createDate > 0) {
-			membershipRequestImpl.setCreateDate(new Date(createDate));
-		}
+		membershipRequestImpl.setCreateDate(new Date(createDate));
 
 		if (comments == null) {
 			membershipRequestImpl.setComments(StringPool.BLANK);
@@ -84,10 +81,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 			membershipRequestImpl.setReplyComments(replyComments);
 		}
 
-		if (replyDate > 0) {
-			membershipRequestImpl.setReplyDate(new Date(replyDate));
-		}
-
+		membershipRequestImpl.setReplyDate(new Date(replyDate));
 		membershipRequestImpl.setReplierUserId(replierUserId);
 		membershipRequestImpl.setStatusId(statusId);
 

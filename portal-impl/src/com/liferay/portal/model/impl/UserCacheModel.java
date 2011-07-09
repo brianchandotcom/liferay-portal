@@ -128,15 +128,8 @@ public class UserCacheModel implements CacheModel<User> {
 
 		userImpl.setUserId(userId);
 		userImpl.setCompanyId(companyId);
-
-		if (createDate > 0) {
-			userImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			userImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		userImpl.setCreateDate(new Date(createDate));
+		userImpl.setModifiedDate(new Date(modifiedDate));
 		userImpl.setDefaultUser(defaultUser);
 		userImpl.setContactId(contactId);
 
@@ -149,10 +142,7 @@ public class UserCacheModel implements CacheModel<User> {
 
 		userImpl.setPasswordEncrypted(passwordEncrypted);
 		userImpl.setPasswordReset(passwordReset);
-
-		if (passwordModifiedDate > 0) {
-			userImpl.setPasswordModifiedDate(new Date(passwordModifiedDate));
-		}
+		userImpl.setPasswordModifiedDate(new Date(passwordModifiedDate));
 
 		if (digest == null) {
 			userImpl.setDigest(StringPool.BLANK);
@@ -258,9 +248,7 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setJobTitle(jobTitle);
 		}
 
-		if (loginDate > 0) {
-			userImpl.setLoginDate(new Date(loginDate));
-		}
+		userImpl.setLoginDate(new Date(loginDate));
 
 		if (loginIP == null) {
 			userImpl.setLoginIP(StringPool.BLANK);
@@ -269,9 +257,7 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLoginIP(loginIP);
 		}
 
-		if (lastLoginDate > 0) {
-			userImpl.setLastLoginDate(new Date(lastLoginDate));
-		}
+		userImpl.setLastLoginDate(new Date(lastLoginDate));
 
 		if (lastLoginIP == null) {
 			userImpl.setLastLoginIP(StringPool.BLANK);
@@ -280,17 +266,10 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLastLoginIP(lastLoginIP);
 		}
 
-		if (lastFailedLoginDate > 0) {
-			userImpl.setLastFailedLoginDate(new Date(lastFailedLoginDate));
-		}
-
+		userImpl.setLastFailedLoginDate(new Date(lastFailedLoginDate));
 		userImpl.setFailedLoginAttempts(failedLoginAttempts);
 		userImpl.setLockout(lockout);
-
-		if (lockoutDate > 0) {
-			userImpl.setLockoutDate(new Date(lockoutDate));
-		}
-
+		userImpl.setLockoutDate(new Date(lockoutDate));
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
 		userImpl.setStatus(status);

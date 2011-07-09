@@ -76,13 +76,8 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart> {
 			shoppingCartImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			shoppingCartImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			shoppingCartImpl.setModifiedDate(new Date(modifiedDate));
-		}
+		shoppingCartImpl.setCreateDate(new Date(createDate));
+		shoppingCartImpl.setModifiedDate(new Date(modifiedDate));
 
 		if (itemIds == null) {
 			shoppingCartImpl.setItemIds(StringPool.BLANK);

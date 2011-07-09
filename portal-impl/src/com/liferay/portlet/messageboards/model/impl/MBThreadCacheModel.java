@@ -81,11 +81,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 		mbThreadImpl.setMessageCount(messageCount);
 		mbThreadImpl.setViewCount(viewCount);
 		mbThreadImpl.setLastPostByUserId(lastPostByUserId);
-
-		if (lastPostDate > 0) {
-			mbThreadImpl.setLastPostDate(new Date(lastPostDate));
-		}
-
+		mbThreadImpl.setLastPostDate(new Date(lastPostDate));
 		mbThreadImpl.setPriority(priority);
 		mbThreadImpl.setStatus(status);
 		mbThreadImpl.setStatusByUserId(statusByUserId);
@@ -97,9 +93,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 			mbThreadImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
-			mbThreadImpl.setStatusDate(new Date(statusDate));
-		}
+		mbThreadImpl.setStatusDate(new Date(statusDate));
 
 		mbThreadImpl.resetOriginalValues();
 

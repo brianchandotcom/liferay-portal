@@ -71,10 +71,7 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink> {
 			assetLinkImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			assetLinkImpl.setCreateDate(new Date(createDate));
-		}
-
+		assetLinkImpl.setCreateDate(new Date(createDate));
 		assetLinkImpl.setEntryId1(entryId1);
 		assetLinkImpl.setEntryId2(entryId2);
 		assetLinkImpl.setType(type);

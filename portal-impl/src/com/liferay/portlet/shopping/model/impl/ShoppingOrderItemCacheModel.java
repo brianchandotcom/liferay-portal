@@ -102,10 +102,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 
 		shoppingOrderItemImpl.setPrice(price);
 		shoppingOrderItemImpl.setQuantity(quantity);
-
-		if (shippedDate > 0) {
-			shoppingOrderItemImpl.setShippedDate(new Date(shippedDate));
-		}
+		shoppingOrderItemImpl.setShippedDate(new Date(shippedDate));
 
 		shoppingOrderItemImpl.resetOriginalValues();
 

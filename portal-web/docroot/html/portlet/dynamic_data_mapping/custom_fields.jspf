@@ -14,9 +14,12 @@
  */
 --%>
 
-<aui:script use="aui-datepicker,liferay-portlet-dynamic-data-mapping,transition">
+<aui:script use="aui-datepicker,liferay-portlet-dynamic-data-mapping">
 	var FormBuilderTextField = A.FormBuilderTextField;
 	var FormBuilderTypes = A.FormBuilder.types;
+
+	var camelize = Liferay.Util.camelize;
+	var trim = A.Lang.trim;
 
 	var TPL_SEPARATOR = '<div class="separator"></div>';
 
@@ -206,8 +209,8 @@
 							var rule = item.split(':');
 
 							if (rule.length == 2) {
-								var key = A.Transition._toCamel(rule[0]);
-								var value = A.Lang.trim(rule[1]);
+								var key = camelize(rule[0]);
+								var value = trim(rule[1]);
 
 								templateNode.setStyle(key, value);
 							}

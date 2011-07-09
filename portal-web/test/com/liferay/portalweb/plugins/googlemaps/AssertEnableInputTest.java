@@ -42,10 +42,10 @@ public class AssertEnableInputTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//input[1]"));
-		assertTrue(selenium.isElementPresent("//input[3]"));
+		assertTrue(selenium.isElementPresent("//form/input[1]"));
+		assertTrue(selenium.isElementPresent("//form/input[3]"));
 	}
 }

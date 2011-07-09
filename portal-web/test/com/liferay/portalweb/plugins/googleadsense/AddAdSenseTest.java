@@ -42,7 +42,7 @@ public class AddAdSenseTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Adsense Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Adsense Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -87,7 +87,8 @@ public class AddAdSenseTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_adClient", RuntimeVariables.replace("pub-0000000000"));
+		selenium.type("_86_adClient",
+			RuntimeVariables.replace("ca-pub-7910614330042482"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("_86_adChannel", RuntimeVariables.replace("12345678"));
 		selenium.saveScreenShotAndSource();
@@ -104,7 +105,8 @@ public class AddAdSenseTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.type("_86_colorUrl", RuntimeVariables.replace("008000"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

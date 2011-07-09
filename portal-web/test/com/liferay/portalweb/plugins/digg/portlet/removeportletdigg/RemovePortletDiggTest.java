@@ -41,7 +41,8 @@ public class RemovePortletDiggTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Digg Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Digg Test Page",
+			RuntimeVariables.replace("Digg Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

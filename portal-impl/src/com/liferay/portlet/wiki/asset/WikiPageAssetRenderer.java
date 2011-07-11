@@ -34,6 +34,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Julio Camarero
@@ -120,6 +121,23 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 		exportPortletURL.setParameter("title", _page.getTitle());
 
 		return exportPortletURL;
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			PortletKeys.WIKI, PortletRequest.RENDER_PHASE);
+
+		portletURL.setWindowState(windowState);
+		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
+		portletURL.setParameter("title", _page.getTitle());
+
+		return portletURL;
 	}
 
 	@Override

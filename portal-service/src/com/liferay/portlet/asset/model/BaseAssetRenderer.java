@@ -28,6 +28,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +70,14 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	public String getUrlTitle() {
+		return null;
+	}
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
 		return null;
 	}
 

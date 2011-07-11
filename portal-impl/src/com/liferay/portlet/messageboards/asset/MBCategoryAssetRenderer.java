@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.calendar.asset;
+package com.liferay.portlet.messageboards.asset;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
-import com.liferay.portlet.calendar.model.CalEvent;
-import com.liferay.portlet.calendar.service.permission.CalEventPermission;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import java.util.Locale;
 
@@ -35,39 +37,31 @@ import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 /**
- * @author Juan Fern√°ndez
- * @author Sergio Gonz√°lez
+ * @author Julio Camarero
+ * @author Juan Fern·ndez
+ * @author Sergio Gonz·lez
+ * @author Jonathan Lee
  */
-public class CalEventAssetRenderer extends BaseAssetRenderer {
+public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 
-	public CalEventAssetRenderer(CalEvent event) {
-		_event = event;
+	public MBCategoryAssetRenderer(MBCategory category) {
+		_category = category;
 	}
 
 	public long getClassPK() {
-		return _event.getEventId();
-	}
-
-	@Override
-	public String getDiscussionPath() {
-		if (PropsValues.CALENDAR_EVENT_COMMENTS_ENABLED) {
-			return "edit_event_discussion";
-		}
-		else {
-			return null;
-		}
+		return _category.getCategoryId();
 	}
 
 	public long getGroupId() {
-		return _event.getGroupId();
+		return _category.getGroupId();
 	}
 
 	public String getSummary(Locale locale) {
-		return _event.getDescription();
+		return HtmlUtil.stripHtml(_category.getDescription());
 	}
 
 	public String getTitle(Locale locale) {
-		return _event.getTitle();
+		return _category.getName();
 	}
 
 	@Override
@@ -77,14 +71,17 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/calendar/edit_event");
-		portletURL.setParameter("eventId", String.valueOf(_event.getEventId()));
+		portletURL.setParameter(
+			"struts_action", "/message_boards/edit_category");
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 
 		return portletURL;
 	}
+
 
 	@Override
 	public PortletURL getURLView(
@@ -93,13 +90,13 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.CALENDAR, PortletRequest.RENDER_PHASE);
+			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(windowState);
 		portletURL.setParameter(
-			"struts_action", "/calendar/view_event");
+			"struts_action", "/message_boards/view");
 		portletURL.setParameter(
-			"eventId", String.valueOf(_event.getEventId()));
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 
 		return portletURL;
 	}
@@ -114,33 +111,34 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return themeDisplay.getPathMain() +
-			"/calendar/find_event?eventId=" + _event.getEventId();
+		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+			"/message_boards/find_category?mbCategoryId=" +
+			_category.getCategoryId();
 	}
 
 	public long getUserId() {
-		return _event.getUserId();
+		return _category.getUserId();
 	}
 
 	public String getUuid() {
-		return _event.getUuid();
+		return _category.getUuid();
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
-		return CalEventPermission.contains(
-			permissionChecker, _event, ActionKeys.UPDATE);
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		return MBCategoryPermission.contains(
+			permissionChecker, _category, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		return CalEventPermission.contains(
-			permissionChecker, _event, ActionKeys.VIEW);
-	}
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
 
-	@Override
-	public boolean isPrintable() {
-		return true;
+		return MBCategoryPermission.contains(
+			permissionChecker, _category, ActionKeys.VIEW);
+
 	}
 
 	public String render(
@@ -151,9 +149,10 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.CALENDAR_EVENT, _event);
+			renderRequest.setAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
 
-			return "/html/portlet/calendar/asset/" + template + ".jsp";
+			return "/html/portlet/message_boards/asset/" + template + ".jsp";
 		}
 		else {
 			return null;
@@ -162,9 +161,9 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/date.png";
+		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
-	private CalEvent _event;
+	private MBCategory _category;
 
 }

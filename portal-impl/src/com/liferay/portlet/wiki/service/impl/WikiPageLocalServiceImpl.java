@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -75,6 +76,8 @@ import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import com.liferay.util.UniqueList;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -243,12 +246,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			dirName + "/" + fileName, false, new ServiceContext(), inputStream);
 	}
 
-	public void addPageAttachments(
-			long userId, long nodeId, String title,
-			List<ObjectValuePair<String, byte[]>> files)
+	public void addPageAttachment(
+			long userId, long nodeId, String title, String fileName,
+			byte[] bytes)
 		throws PortalException, SystemException {
 
-		if (files.size() == 0) {
+		if (Validator.isNull(fileName)) {
 			return;
 		}
 
@@ -270,23 +273,31 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		catch (DuplicateDirectoryException dde) {
 		}
 
+		socialEquityLogLocalService.addEquityLogs(
+			userId, WikiPage.class.getName(), page.getResourcePrimKey(),
+			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
+
+		DLStoreUtil.addFile(
+			companyId, portletId, groupId, repositoryId,
+			dirName + "/" + fileName, new ServiceContext(), bytes);
+	}
+
+	public void addPageAttachments(
+			long userId, long nodeId, String title,
+			List<ObjectValuePair<String, byte[]>> files)
+		throws PortalException, SystemException {
+
+		if (files.size() == 0) {
+			return;
+		}
+
 		for (int i = 0; i < files.size(); i++) {
 			ObjectValuePair<String, byte[]> ovp = files.get(i);
 
 			String fileName = ovp.getKey();
 			byte[] bytes = ovp.getValue();
 
-			if (Validator.isNull(fileName)) {
-				continue;
-			}
-
-			socialEquityLogLocalService.addEquityLogs(
-				userId, WikiPage.class.getName(), page.getResourcePrimKey(),
-				ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
-
-			DLStoreUtil.addFile(
-				companyId, portletId, groupId, repositoryId,
-				dirName + "/" + fileName, new ServiceContext(), bytes);
+			addPageAttachment(userId, nodeId, title, fileName, bytes);
 		}
 	}
 
@@ -316,7 +327,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(
-			page.getCompanyId(), page.getGroupId(),	page.getUserId(),
+			page.getCompanyId(), page.getGroupId(), page.getUserId(),
 			WikiPage.class.getName(), page.getResourcePrimKey(), false,
 			addGroupPermissions, addGuestPermissions);
 	}
@@ -326,9 +337,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		resourceLocalService.addModelResources(
-			page.getCompanyId(), page.getGroupId(),	page.getUserId(),
+			page.getCompanyId(), page.getGroupId(), page.getUserId(),
 			WikiPage.class.getName(), page.getResourcePrimKey(),
 			groupPermissions, guestPermissions);
+	}
+
+	public String addTempPageAttachment(
+			long userId, String fileName, String tempFolderName, File file)
+		throws IOException, PortalException, SystemException {
+
+		return TempFileUtil.addTempFile(userId, fileName, tempFolderName, file);
 	}
 
 	public void changeParent(
@@ -546,6 +564,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage page : pages) {
 			deletePage(page);
 		}
+	}
+
+	public void deleteTempPageAttachment(
+			long userId, String fileName, String tempFolderName)
+		throws PortalException, SystemException {
+
+		TempFileUtil.deleteTempFile(userId, fileName, tempFolderName);
 	}
 
 	public List<WikiPage> getChildren(
@@ -918,6 +943,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
 		return wikiPageFinder.countByCreateDate(nodeId, cal.getTime(), false);
+	}
+
+	public String[] getTempPageAttachmentNames(
+			long userId, String tempFolderName)
+		throws PortalException, SystemException {
+
+		return TempFileUtil.getTempFileEntryNames(userId, tempFolderName);
 	}
 
 	public boolean hasDraftPage(long nodeId, String title)

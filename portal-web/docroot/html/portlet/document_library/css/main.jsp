@@ -678,6 +678,47 @@
 		padding-left: 20px;
 	}
 
+	.no-files-selected-info {
+		float: right;
+		width: 45%;
+	}
+
+	.common-file-metadata-container {
+		float: right;
+		padding: 0.5%;
+		width: 49%;
+
+		&.selected {
+			background-color: #D3E8F1;
+		}
+
+		.num-selected-files {
+			border-bottom: 1px solid #C8C9CA;
+			color: #555;
+			font-size: 1.8em;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.document-type .lfr-panel-content {
+			min-height: 35px;
+		}
+
+		.document-type-fields {
+			clear: left;
+			padding-top: 0.5em;
+		}
+
+		.categorization-panel {
+			clear: left;
+		}
+	}
+
+	.lfr-dynamic-uploader {
+		float: left;
+		width: 50%;
+	}
+
 	.taglib-ratings.stars {
 		border: 1px solid transparent;
 		display: inline-block;

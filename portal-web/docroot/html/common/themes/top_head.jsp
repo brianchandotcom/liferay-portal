@@ -23,23 +23,24 @@
 <%@ include file="/html/common/themes/top_meta.jspf" %>
 <%@ include file="/html/common/themes/top_meta-ext.jsp" %>
 
+<link rel="Shortcut Icon" href="<%= themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" />
+
+<%-- Available Translations --%>
+
 <%
 Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
-for(int localeCount=0; localeCount<availableLocales.length; localeCount++){
-	Locale localeArray = availableLocales[localeCount];
-	if(!localeArray.equals(locale)){
-		String languagePathAlternate = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay, availableLocales[localeCount]) ;	
-		String langIdW3c = LocaleUtil.toW3cLanguageId(localeArray);		
-	
+for(Locale curLocale : availableLocales) {
+	if(!curLocale.equals(locale)){
+		String alternateFriendlyURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay, curLocale) ;
 %>
-		<link rel="alternate" href="<%=languagePathAlternate %>" hreflang="<%=langIdW3c %>" title="<%=layout.getHTMLTitle(localeArray)%>" />
-<% 
+
+		<link rel="alternate" href="<%= alternateFriendlyURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" title="<%= layout.getHTMLTitle(curLocale) %>" />
+
+<%
 	}
 }
 %>
-
-<link rel="Shortcut Icon" href="<%= themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" />
 
 <%-- Portal CSS --%>
 

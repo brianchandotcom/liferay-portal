@@ -211,7 +211,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public List<DLFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return dlFolderPersistence.findByG_P(groupId, parentFolderId);
+		return getFolders(groupId, parentFolderId, true);
+	}
+
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.findByG_P(groupId, parentFolderId);
+		}
+		else {
+			return dlFolderPersistence.findByG_P_M(
+				groupId, parentFolderId, false);
+		}
 	}
 
 	public List<DLFolder> getFolders(
@@ -219,30 +232,60 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderPersistence.findByG_P(
-			groupId, parentFolderId, start, end, obc);
+		return getFolders(groupId, parentFolderId, true, start, end, obc);
+	}
+
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int start, int end,	OrderByComparator obc)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.findByG_P(
+				groupId, parentFolderId, start, end, obc);
+		}
+		else {
+			return dlFolderPersistence.findByG_P_M(
+				groupId, parentFolderId, false, start, end, obc);
+		}
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, int start, int end,
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return dlFolderFinder.findF_FE_FS_ByG_F_S(
-			groupId, folderId, status, start, end, obc);
+			groupId, folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long groupId, long folderId, int status)
+			long groupId, long folderId, int status,
+			boolean includeMountFolders)
 		throws SystemException {
 
-		return dlFolderFinder.countF_FE_FS_ByG_F_S(groupId, folderId, status);
+		return dlFolderFinder.countF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return dlFolderPersistence.countByG_P(groupId, parentFolderId);
+		return getFoldersCount(groupId, parentFolderId, true);
+	}
+
+	public int getFoldersCount(
+			long groupId, long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.countByG_P(groupId, parentFolderId);
+		}
+		else {
+			return dlFolderPersistence.countByG_P_M(
+				groupId, parentFolderId, false);
+		}
 	}
 
 	public int getFoldersFileEntriesCount(
@@ -272,6 +315,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return dlFolderPersistence.findByRepositoryId(repositoryId);
+	}
+
+	public List<DLFolder> getMountFolders(
+			long groupId, long parentFolderId, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return dlFolderPersistence.findByG_P_M(
+			groupId, parentFolderId, true, start, end, obc);
+	}
+
+	public int getMountFoldersCount(long groupId, long parentFolderId)
+		throws SystemException {
+
+		return dlFolderPersistence.countByG_P_M(groupId, parentFolderId, true);
 	}
 
 	public DLFolder moveFolder(

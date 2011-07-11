@@ -141,10 +141,12 @@ public class BaseLocalRepositoryImpl implements LocalRepository {
 	}
 
 	public List<Folder> getFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return _repository.getFolders(parentFolderId, start, end, obc);
+		return _repository.getFolders(
+			parentFolderId, includeMountfolders, start, end, obc);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -152,26 +154,58 @@ public class BaseLocalRepositoryImpl implements LocalRepository {
 			OrderByComparator obc)
 		throws SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, true, start, end, obc);
+	}
+
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
 		return _repository.getFoldersAndFileEntriesAndFileShortcuts(
-			folderId, status, start, end, obc);
+			folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status)
 		throws SystemException {
 
-		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status);
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, true);
 	}
 
-	public int getFoldersCount(long parentFolderId) throws SystemException {
-		return _repository.getFoldersCount(parentFolderId);
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, boolean includeMountFolders)
+		throws SystemException {
+
+		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
+		return _repository.getFoldersCount(parentFolderId, includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
 		throws SystemException {
 
 		return _repository.getFoldersFileEntriesCount(folderIds, status);
+	}
+
+	public List<Folder> getMountFolders(
+			long parentFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return _repository.getMountFolders(parentFolderId, start, end, obc);
+	}
+
+	public int getMountFoldersCount(long parentFolderId)
+		throws SystemException {
+
+		return _repository.getMountFoldersCount(parentFolderId);
 	}
 
 	public long getRepositoryId() {

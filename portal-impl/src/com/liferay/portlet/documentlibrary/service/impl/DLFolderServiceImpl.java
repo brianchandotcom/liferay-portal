@@ -150,31 +150,78 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderPersistence.filterFindByG_P(
-			groupId, parentFolderId, start, end, obc);
+		return getFolders(groupId, parentFolderId, true, start, end, obc);
+	}
+
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int start, int end,	OrderByComparator obc)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.filterFindByG_P(
+				groupId, parentFolderId, start, end, obc);
+		}
+		else {
+			return dlFolderPersistence.filterFindByG_P_M(
+				groupId, parentFolderId, false, start, end, obc);
+		}
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, int start, int end,
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return dlFolderFinder.filterFindF_FE_FS_ByG_F_S(
-			groupId, folderId, status, start, end, obc);
+			groupId, folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long groupId, long folderId, int status)
+			long groupId, long folderId, int status,
+			boolean includeMountFolders)
 		throws SystemException {
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_S(
-			groupId, folderId, status);
+			groupId, folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return dlFolderPersistence.filterCountByG_P(groupId, parentFolderId);
+		return getFoldersCount(groupId, parentFolderId, true);
+	}
+
+	public int getFoldersCount(
+			long groupId, long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.filterCountByG_P(
+				groupId, parentFolderId);
+		}
+		else {
+			return dlFolderPersistence.filterCountByG_P_M(
+				groupId, parentFolderId, false);
+		}
+
+	}
+
+	public List<DLFolder> getMountFolders(
+			long groupId, long parentFolderId, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return dlFolderPersistence.filterFindByG_P_M(
+			groupId, parentFolderId, true, start, end, obc);
+	}
+
+	public int getMountFoldersCount(long groupId, long parentFolderId)
+		throws SystemException {
+
+		return dlFolderPersistence.filterCountByG_P_M(
+			groupId, parentFolderId, true);
 	}
 
 	public List<Long> getSubfolderIds(

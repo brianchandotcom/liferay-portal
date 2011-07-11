@@ -184,10 +184,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	}
 
 	public List<Folder> getFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return _baseCmisRepository.getFolders(parentFolderId, start, end, obc);
+		return _baseCmisRepository.getFolders(
+			parentFolderId, includeMountfolders, start, end, obc);
 	}
 
 	@Override
@@ -206,8 +208,11 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		return _baseCmisRepository.getFoldersAndFileEntriesCount(folderId);
 	}
 
-	public int getFoldersCount(long parentFolderId) throws SystemException {
-		return _baseCmisRepository.getFoldersCount(parentFolderId);
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
+		return _baseCmisRepository.getFoldersCount(
+			parentFolderId, includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
@@ -244,6 +249,21 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		}
 
 		return login;
+	}
+
+	public List<Folder> getMountFolders(
+			long parentFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return _baseCmisRepository.getMountFolders(
+			parentFolderId, start, end, obc);
+	}
+
+	public int getMountFoldersCount(long parentFolderId)
+		throws SystemException {
+
+		return _baseCmisRepository.getMountFoldersCount(
+			parentFolderId);
 	}
 
 	public String getObjectName(String objectId)

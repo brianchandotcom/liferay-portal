@@ -34,7 +34,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +45,7 @@ import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author Mika Koivisto
  * @see    DLAppServiceImpl
  */
 public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
@@ -110,7 +111,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, folderId, mimeType, title, description, changeLog, is, size,
 			serviceContext);
 
-		DLProcessor.triggerAll(fileEntry);
+		DLProcessorRegistryUtil.trigger(fileEntry);
 
 		return fileEntry;
 	}
@@ -570,7 +571,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		DLProcessor.triggerAll(fileEntry);
+		DLProcessorRegistryUtil.trigger(fileEntry);
 
 		return fileEntry;
 	}

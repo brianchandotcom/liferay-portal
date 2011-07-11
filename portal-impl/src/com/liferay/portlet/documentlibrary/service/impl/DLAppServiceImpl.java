@@ -35,7 +35,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 
 import java.io.File;
@@ -71,6 +71,7 @@ import java.util.List;
  * </ul>
  *
  * @author Alexander Chow
+ * @author Mika Koivisto
  */
 public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
@@ -135,7 +136,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			folderId, mimeType, title, description, changeLog, is, size,
 			serviceContext);
 
-		DLProcessor.triggerAll(fileEntry);
+		DLProcessorRegistryUtil.trigger(fileEntry);
 
 		return fileEntry;
 	}
@@ -789,7 +790,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		DLProcessor.triggerAll(fileEntry);
+		DLProcessorRegistryUtil.trigger(fileEntry);
 
 		return fileEntry;
 	}
@@ -848,7 +849,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					destFolder.getGroupId(), srcFileEntry.getFileEntryId(),
 					destFolder.getFolderId(), serviceContext);
 
-				DLProcessor.triggerAll(fileEntry);
+				DLProcessorRegistryUtil.trigger(fileEntry);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

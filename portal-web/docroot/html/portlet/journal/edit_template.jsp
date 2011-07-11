@@ -45,7 +45,7 @@ if (Validator.isNotNull(structureId)) {
 	try {
 		JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 
-		structureName = structure.getName();
+		structureName = structure.getName(locale);
 	}
 	catch (NoSuchStructureException nsse) {
 	}

@@ -69,7 +69,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 		sb.append("selectStructure('");
 		sb.append(structure.getStructureId());
 		sb.append("', '");
-		sb.append(structure.getName());
+		sb.append(structure.getName(locale));
 		sb.append("', Liferay.Util.getWindow());");
 
 		String rowHREF = sb.toString();
@@ -80,11 +80,11 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		// Name and description
 
-		if (Validator.isNotNull(structure.getDescription())) {
-			row.addText(structure.getName().concat("<br />").concat(structure.getDescription()), rowHREF);
+		if (Validator.isNotNull(structure.getDescription(locale))) {
+			row.addText(structure.getName(locale).concat("<br />").concat(structure.getDescription(locale)), rowHREF);
 		}
 		else {
-			row.addText(structure.getName(), rowHREF);
+			row.addText(structure.getName(locale), rowHREF);
 		}
 
 		// Add result row

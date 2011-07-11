@@ -96,6 +96,29 @@ String chooseCallback = (String)request.getAttribute("record_set_action.jsp-choo
 		/>
 	</c:if>
 
+	<c:if test="<%= portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
+		<portlet:resourceURL var="exportRecordSetURL">
+			<portlet:param name="struts_action" value="/dynamic_data_lists/export" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</portlet:resourceURL>
+
+		<%
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("javascript:");
+		sb.append(renderResponse.getNamespace());
+		sb.append("exportRecordSet");
+		sb.append("('");
+		sb.append(exportRecordSetURL);
+		sb.append("');");
+		%>
+
+		<liferay-ui:icon
+			image="export"
+			url="<%= sb.toString() %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDLRecordSet.class.getName() %>"

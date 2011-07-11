@@ -72,3 +72,56 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<div class="aui-helper-hidden" id="<portlet:namespace />export-list">
+	<aui:select label="file-extension" name="fileExtension">
+		<aui:option value="csv">CSV</aui:option>
+	</aui:select>
+</div>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />exportRecordSet',
+		function(url) {
+			var A = AUI();
+
+			var form = A.Node.create('<form />');
+
+			form.setAttribute('method', 'POST');
+
+			var content = A.one('#<portlet:namespace />export-list');
+
+			if (content) {
+				form.append(content);
+				content.show();
+			}
+
+			var dialog = new A.Dialog(
+				{
+					bodyContent: form,
+					buttons: [
+						{
+							handler: function() {
+								submitForm(form, url, false);
+							},
+							text: Liferay.Language.get('ok')
+						},
+						{
+							handler: function() {
+								this.close();
+							},
+							text: Liferay.Language.get('cancel')
+						}
+					],
+					centered: true,
+					modal: true,
+					title: '<liferay-ui:message key="export" />',
+					width: 400
+				}
+			).render();
+
+		},
+		['aui-base']
+	);
+</aui:script>

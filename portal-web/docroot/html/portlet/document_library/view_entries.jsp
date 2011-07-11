@@ -147,8 +147,8 @@ else {
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 		}
 		else {
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, start, end, searchContainer.getOrderByComparator());
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, start, end, searchContainer.getOrderByComparator());
+			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
 		}
 	}
 	else if (navigation.equals("my-documents") || navigation.equals("recent-documents")) {

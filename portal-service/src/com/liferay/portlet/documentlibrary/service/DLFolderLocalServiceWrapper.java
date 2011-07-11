@@ -327,6 +327,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFolders(groupId, parentFolderId,
+			includeMountfolders);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -334,24 +341,39 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 			end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFolders(groupId, parentFolderId,
+			includeMountfolders, start, end, obc);
+	}
+
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
-			folderId, status, start, end, obc);
+			folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status)
+		long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getFoldersCount(groupId, parentFolderId);
+	}
+
+	public int getFoldersCount(long groupId, long parentFolderId,
+		boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFoldersCount(groupId, parentFolderId,
+			includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(long groupId,
@@ -366,6 +388,20 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getMountFolder(repositoryId);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
+		long groupId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getMountFolders(groupId, parentFolderId,
+			start, end, obc);
+	}
+
+	public int getMountFoldersCount(long groupId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getMountFoldersCount(groupId,
+			parentFolderId);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(

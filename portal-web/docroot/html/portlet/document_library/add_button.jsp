@@ -49,11 +49,10 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTy
 		<liferay-ui:icon image="add_instance" message="shortcut" url="<%= editFileShortcutURL %>" />
 	</c:if>
 
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER)) %>">
 		<portlet:renderURL var="addRepositoryURL">
 			<portlet:param name="struts_action" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon image="add_drive" message="repository" url="<%= addRepositoryURL %>" />

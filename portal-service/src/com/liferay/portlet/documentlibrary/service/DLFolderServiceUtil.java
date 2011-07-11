@@ -103,26 +103,55 @@ public class DLFolderServiceUtil {
 		return getService().getFolders(groupId, parentFolderId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolders(groupId, parentFolderId, includeMountfolders,
+			start, end, obc);
+	}
+
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
-			status, start, end, obc);
+			status, includeMountFolders, start, end, obc);
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status)
+		long groupId, long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(groupId, parentFolderId);
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersCount(groupId, parentFolderId, includeMountfolders);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
+		long groupId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getMountFolders(groupId, parentFolderId, start, end, obc);
+	}
+
+	public static int getMountFoldersCount(long groupId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMountFoldersCount(groupId, parentFolderId);
 	}
 
 	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,

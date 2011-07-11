@@ -42,8 +42,8 @@ import java.util.List;
 public class DLFolderFinderImpl
 	extends BasePersistenceImpl<DLFolder> implements DLFolderFinder {
 
-	public static String COUNT_F_BY_G_F_S =
-		DLFolderFinder.class.getName() + ".countF_ByG_F_S";
+	public static String COUNT_F_BY_G_M_F =
+		DLFolderFinder.class.getName() + ".countF_ByG_M_F";
 
 	public static String COUNT_FE_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".countFE_ByG_F_S";
@@ -51,8 +51,8 @@ public class DLFolderFinderImpl
 	public static String COUNT_FS_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".countFS_ByG_F_S";
 
-	public static String FIND_F_BY_G_F_S =
-		DLFolderFinder.class.getName() + ".findF_ByG_F_S";
+	public static String FIND_F_BY_G_M_F =
+		DLFolderFinder.class.getName() + ".findF_ByG_M_F";
 
 	public static String FIND_FE_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".findFE_ByG_F_S";
@@ -60,10 +60,12 @@ public class DLFolderFinderImpl
 	public static String FIND_FS_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".findFS_ByG_F_S";
 
-	public int countF_FE_FS_ByG_F_S(long groupId, long folderId, int status)
+	public int countF_FE_FS_ByG_F_S(long groupId, long folderId, int status,
+		boolean includeMountFolders)
 		throws SystemException {
 
-		return doCountF_FE_FS_ByG_F_S(groupId, folderId, status, false);
+		return doCountF_FE_FS_ByG_F_S(groupId, folderId, status,
+			includeMountFolders, false);
 	}
 
 	public int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
@@ -73,10 +75,12 @@ public class DLFolderFinderImpl
 	}
 
 	public int filterCountF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status)
+			long groupId, long folderId, int status,
+			boolean includeMountFolders)
 		throws SystemException {
 
-		return doCountF_FE_FS_ByG_F_S(groupId, folderId, status, true);
+		return doCountF_FE_FS_ByG_F_S(
+			groupId, folderId, status, includeMountFolders, true);
 	}
 
 	public int filterCountFE_FS_ByG_F_S(
@@ -87,12 +91,14 @@ public class DLFolderFinderImpl
 	}
 
 	public List<Object> filterFindF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status, int start, int end,
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return doFindF_FE_FS_ByG_F_S(
-			groupId, folderId, status, start, end, obc, true);
+			groupId, folderId, status, includeMountFolders, start, end, obc,
+			true);
 	}
 
 	public List<Object> filterFindFE_FS_ByG_F_S(
@@ -104,12 +110,14 @@ public class DLFolderFinderImpl
 	}
 
 	public List<Object> findF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status, int start, int end,
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return doFindF_FE_FS_ByG_F_S(
-			groupId, folderId, status, start, end, obc, false);
+			groupId, folderId, status, includeMountFolders, start, end, obc,
+			false);
 	}
 
 	public List<Object> findFE_FS_ByG_F_S(
@@ -122,7 +130,7 @@ public class DLFolderFinderImpl
 
 	protected int doCountF_FE_FS_ByG_F_S(
 			long groupId, long folderId, int status,
-			boolean inlineSQLHelper)
+			boolean includeMountFolders, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -134,7 +142,7 @@ public class DLFolderFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(COUNT_F_BY_G_F_S);
+			String sql = CustomSQLUtil.get(COUNT_F_BY_G_M_F);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -169,6 +177,11 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
+			if (includeMountFolders) {
+				sql = StringUtil.replace(
+					sql, "(DLFolder.mountPoint = ?) AND", "");
+			}
+
 			sql = StringUtil.replace(
 				sql, "[$FOLDER_PARENT_FOLDER_ID$]",
 				getFolderId(folderId, "DLFolder"));
@@ -191,6 +204,11 @@ public class DLFolderFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
+
+			if (!includeMountFolders) {
+				qPos.add(false);
+			}
+
 			qPos.add(folderId);
 			qPos.add(groupId);
 
@@ -312,7 +330,8 @@ public class DLFolderFinderImpl
 	}
 
 	protected List<Object> doFindF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status, int start, int end,
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -325,7 +344,7 @@ public class DLFolderFinderImpl
 
 			sb.append("SELECT * FROM ((");
 
-			String sql = CustomSQLUtil.get(FIND_F_BY_G_F_S);
+			String sql = CustomSQLUtil.get(FIND_F_BY_G_M_F);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -360,6 +379,11 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
+			if (includeMountFolders) {
+				sql = StringUtil.replace(
+					sql, "(DLFolder.mountPoint = ?) AND", "");
+			}
+
 			sql = StringUtil.replace(
 				sql, "[$FOLDER_PARENT_FOLDER_ID$]",
 				getFolderId(folderId, "DLFolder"));
@@ -388,6 +412,11 @@ public class DLFolderFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
+
+			if (!includeMountFolders) {
+				qPos.add(false);
+			}
+
 			qPos.add(folderId);
 			qPos.add(groupId);
 

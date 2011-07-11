@@ -353,17 +353,33 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public List<Folder> getFolders(long repositoryId, long parentFolderId)
 		throws PortalException, SystemException {
 
+		return getFolders(repositoryId, parentFolderId, true);
+	}
+
+	public List<Folder> getFolders(
+			long repositoryId, long parentFolderId, boolean includeMountFolders)
+		throws PortalException, SystemException {
+
 		return getFolders(
-			repositoryId, parentFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			repositoryId, parentFolderId, includeMountFolders,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	public List<Folder> getFolders(
 			long repositoryId, long parentFolderId, int start, int end)
 		throws PortalException, SystemException {
 
+		return getFolders(repositoryId, parentFolderId, true, start, end);
+	}
+
+	public List<Folder> getFolders(
+			long repositoryId, long parentFolderId, boolean includeMountFolders,
+			int start, int end)
+		throws PortalException, SystemException {
+
 		return getFolders(
-			repositoryId, parentFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			repositoryId, parentFolderId, includeMountFolders,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	public List<Folder> getFolders(
@@ -371,38 +387,57 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
+		return getFolders(repositoryId, parentFolderId, true, start, end, obc);
+	}
+
+	public List<Folder> getFolders(
+			long repositoryId, long parentFolderId, boolean includeMountFolders,
+			int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		return localRepository.getFolders(parentFolderId, start, end, obc);
+		return localRepository.getFolders(
+			parentFolderId, includeMountFolders, start, end, obc);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long repositoryId, long folderId, int status, int start,
-			int end, OrderByComparator obc)
+			long repositoryId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcuts(
-			folderId, status, start, end, obc);
+			folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long repositoryId, long folderId, int status)
+			long repositoryId, long folderId, int status,
+			boolean includeMountFolders)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersCount(long repositoryId, long parentFolderId)
 		throws PortalException, SystemException {
 
+		return getFoldersCount(repositoryId, parentFolderId, true);
+	}
+
+	public int getFoldersCount(
+			long repositoryId, long parentFolderId, boolean includeMountfolders)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		return localRepository.getFoldersCount(parentFolderId);
+		return localRepository.getFoldersCount(
+			parentFolderId, includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(
@@ -420,6 +455,39 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		DLFolder dlFolder = dlFolderLocalService.getMountFolder(repositoryId);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	public List<Folder> getMountFolders(long repositoryId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		return getMountFolders(
+			repositoryId, parentFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<Folder> getMountFolders(
+			long repositoryId, long parentFolderId, int start, int end)
+		throws PortalException, SystemException {
+
+		return getMountFolders(repositoryId, parentFolderId, start, end, null);
+	}
+
+	public List<Folder> getMountFolders(
+			long repositoryId, long parentFolderId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		return localRepository.getMountFolders(parentFolderId, start, end, obc);
+	}
+
+	public int getMountFoldersCount(
+			long repositoryId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(repositoryId);
+
+		return localRepository.getMountFoldersCount(parentFolderId);
 	}
 
 	public FileEntry moveFileEntry(

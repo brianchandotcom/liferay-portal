@@ -550,7 +550,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public List<Folder> getFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Folder> folders = getFolders(parentFolderId);
@@ -616,7 +617,9 @@ public class CMISRepository extends BaseCmisRepository {
 		return foldersAndFileEntries.size();
 	}
 
-	public int getFoldersCount(long parentFolderId) throws SystemException {
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
 		List<Folder> folders = getFolders(parentFolderId);
 
 		return folders.size();
@@ -634,6 +637,19 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 
 		return count;
+	}
+
+	public List<Folder> getMountFolders(
+			long parentFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return new ArrayList<Folder>();
+	}
+
+	public int getMountFoldersCount(long parentFolderId)
+		throws SystemException {
+
+		return 0;
 	}
 
 	@Override
@@ -708,7 +724,7 @@ public class CMISRepository extends BaseCmisRepository {
 			List<Long> subfolderIds = new ArrayList<Long>();
 
 			List<Folder> subfolders = getFolders(
-				folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				folderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			getSubfolderIds(subfolderIds, subfolders, recurse);
 
@@ -1524,7 +1540,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			if (recurse) {
 				List<Folder> subSubFolders = getFolders(
-					subfolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					subfolderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
 
 				getSubfolderIds(subfolderIds, subSubFolders, recurse);
 			}

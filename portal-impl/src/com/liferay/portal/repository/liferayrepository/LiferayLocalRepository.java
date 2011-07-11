@@ -214,40 +214,45 @@ public class LiferayLocalRepository
 	}
 
 	public List<Folder> getFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<DLFolder> dlFolders = dlFolderLocalService.getFolders(
-			getGroupId(), toFolderId(parentFolderId), start, end, obc);
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
+			start, end, obc);
 
 		return toFolders(dlFolders);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, int start, int end,
-			OrderByComparator obc)
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
 			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, start, end,
-				obc);
+				getGroupId(), toFolderId(folderId), status, includeMountFolders,
+				start, end,	obc);
 
 		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status)
+			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
 
 		return dlFolderLocalService.
 			getFoldersAndFileEntriesAndFileShortcutsCount(
-				getGroupId(), toFolderId(folderId), status);
+				getGroupId(), toFolderId(folderId), status,
+				includeMountFolders);
 	}
 
-	public int getFoldersCount(long parentFolderId) throws SystemException {
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws SystemException {
+
 		return dlFolderLocalService.getFoldersCount(
-			getGroupId(), toFolderId(parentFolderId));
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
@@ -255,6 +260,23 @@ public class LiferayLocalRepository
 
 		return dlFolderLocalService.getFoldersFileEntriesCount(
 			getGroupId(), toFolderIds(folderIds), status);
+	}
+
+	public List<Folder> getMountFolders(
+			long parentFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		List<DLFolder> dlFolders = dlFolderLocalService.getMountFolders(
+			getGroupId(), toFolderId(parentFolderId), start, end, obc);
+
+		return toFolders(dlFolders);
+	}
+
+	public int getMountFoldersCount(long parentFolderId)
+		throws SystemException {
+
+		return dlFolderLocalService.getMountFoldersCount(
+			getGroupId(), toFolderId(parentFolderId));
 	}
 
 	public FileEntry moveFileEntry(

@@ -245,10 +245,11 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status) throws RemoteException {
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders) throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
-					folderId, status);
+					folderId, status, includeMountFolders);
 
 			return returnValue;
 		}
@@ -264,6 +265,21 @@ public class DLAppServiceSoap {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersCount(repositoryId,
 					parentFolderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersCount(long repositoryId, long parentFolderId,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFoldersCount(repositoryId,
+					parentFolderId, includeMountFolders);
 
 			return returnValue;
 		}

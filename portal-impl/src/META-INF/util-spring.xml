@@ -499,6 +499,15 @@
 			<bean class="com.liferay.portlet.documentlibrary.store.StoreProxyImpl" />
 		</constructor-arg>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">
+		<property name="DDLExporters">
+			<map>
+				<entry key="csv">
+					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLCSVExporter" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl">
 		<property name="defaultStorageAdapter">
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />

@@ -1,0 +1,91 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.dynamicdatalists.util;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFieldConstants;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Marcellus Tavares
+ */
+public class DDLCSVExporter extends BaseDDLExporter {
+
+	@Override
+	protected byte[] doExport(
+			long recordSetId, int status, int start, int end,
+			OrderByComparator orderByComparator)
+		throws Exception {
+
+		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
+			recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		Map<String, Map<String, String>> fieldsMap =
+			ddmStructure.getFieldsMap();
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map<String, String> fieldMap : fieldsMap.values()) {
+			String label = fieldMap.get(DDMFieldConstants.LABEL);
+
+			sb.append(label);
+			sb.append(CharPool.COMMA);
+		}
+
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append(StringPool.NEW_LINE);
+
+		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
+			recordSetId, status, start, end, orderByComparator);
+
+		for (DDLRecord record : records) {
+			Fields fields = record.getFields();
+
+			for (Map<String, String> fieldMap : fieldsMap.values()) {
+				String name = fieldMap.get(DDMFieldConstants.NAME);
+
+				Field field = fields.get(name);
+
+				Serializable value = field.getValue();
+
+				sb.append(value);
+				sb.append(CharPool.COMMA);
+			}
+
+			sb.deleteCharAt(sb.length() - 1);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		String document = sb.toString();
+
+		return document.getBytes();
+	}
+
+}

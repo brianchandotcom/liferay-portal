@@ -391,6 +391,13 @@ public class OrganizationLocalServiceImpl
 			new String[] {String.valueOf(organization.getCompanyId())});
 	}
 
+	/**
+	 * Returns all the organizations belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the organizations belonging to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Organization> getGroupOrganizations(long groupId)
 		throws SystemException {
 
@@ -404,12 +411,30 @@ public class OrganizationLocalServiceImpl
 		return organizationPersistence.findByPrimaryKey(organizationId);
 	}
 
+	/**
+	 * Returns the primary key of the organization with the name.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  name the organization's name
+	 * @return the primary key of the organization with the name, or
+	 *         <code>0</code> if the organization could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Organization getOrganization(long companyId, String name)
 		throws PortalException, SystemException {
 
 		return organizationPersistence.findByC_N(companyId, name);
 	}
 
+	/**
+	 * Returns the primary key of the organization with the name.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  name the organization's name
+	 * @return the primary key of the organization with the name, or
+	 *         <code>0</code> if the organization could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long getOrganizationId(long companyId, String name)
 		throws SystemException {
 
@@ -482,7 +507,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns the organizations.
+	 * Returns the organizations with the primary keys.
 	 *
 	 * @param  organizationIds the primary keys of the organizations
 	 * @return the organizations with the primary keys
@@ -733,7 +758,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Determines if the organization belongs to the group.
+	 * Returns <code>true</code> if the organization belongs to the group.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  organizationId the primary key of the organization
@@ -748,7 +773,8 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Determines if the password policy has been assigned to the organization.
+	 * Returns <code>true</code> if the password policy has been assigned to
+	 * the organization.
 	 *
 	 * @param  passwordPolicyId the primary key of the password policy
 	 * @param  organizationId the primary key of the organization
@@ -765,9 +791,9 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Determines if the user is a member of the organization. This method is
-	 * usually called to determine if the user has view access to a resource
-	 * belonging to the organization.
+	 * Returns <code>true</code> if the user is a member of the organization.
+	 * This method is usually called to determine if the user has view access
+	 * to a resource belonging to the organization.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  organizationId the primary key of the organization
@@ -782,8 +808,8 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Determines if the user is a member of the organization, optionally
-	 * focusing on sub-organizations, user groups, or the specified
+	 * Returns <code>true</code> if the user is a member of the organization,
+	 * optionally focusing on sub-organizations, user groups, or the specified
 	 * organization. This method is usually called to determine if the user has
 	 * view access to a resource belonging to the organization.
 	 *

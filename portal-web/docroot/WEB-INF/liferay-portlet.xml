@@ -198,6 +198,7 @@
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
 		<pop-message-listener-class>com.liferay.portlet.messageboards.pop.MessageListenerImpl</pop-message-listener-class>
 		<social-activity-interpreter-class>com.liferay.portlet.messageboards.social.MBActivityInterpreter</social-activity-interpreter-class>
+		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBDiscussionAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.messageboards.MBCategoryCustomAttributesDisplay</custom-attributes-display>

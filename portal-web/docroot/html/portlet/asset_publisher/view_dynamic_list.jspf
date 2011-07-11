@@ -27,129 +27,132 @@ assetEntryQuery.setOrderByType1(orderByType1);
 assetEntryQuery.setOrderByType2(orderByType2);
 assetEntryQuery.setStart(start);
 
+List results = new ArrayList();
 int total = 0;
 
-if (assetVocabularyId > 0) {
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
+if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (mainJournalArticle != null)) {
+	if (assetVocabularyId > 0) {
+		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 
-	List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-	if (!anyAssetType) {
-		assetEntryQuery.setClassNameIds(classNameIds);
-	}
-
-	for (AssetCategory assetCategory : assetCategories) {
-		assetCategory = assetCategory.toEscapedModel();
-
-		long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-		long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
-
-		assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
-
-		int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-		total += groupTotal;
-
-		List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-
-		if (!results.isEmpty()) {
-			searchContainer.setResults(results);
-
-			request.setAttribute("view.jsp-results", results);
-%>
-
-			<h3 class="asset-entries-group-label"><%= assetCategory.getName() %></h3>
-
-			<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
-
-<%
+		if (!anyAssetType) {
+			assetEntryQuery.setClassNameIds(classNameIds);
 		}
 
-		if (groupTotal > 0) {
-			if ((end > 0) && (end > groupTotal)) {
-				end -= groupTotal;
-			}
-			else {
-				end = 0;
+		for (AssetCategory assetCategory : assetCategories) {
+			assetCategory = assetCategory.toEscapedModel();
+
+			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+			long[] newAllAssetCategoryIds = ArrayUtil.append(oldAllCategoryIds, assetCategory.getCategoryId());
+
+			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
+
+			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			total += groupTotal;
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+			if (!results.isEmpty()) {
+				searchContainer.setResults(results);
+
+				request.setAttribute("view.jsp-results", results);
+	%>
+
+				<h3 class="asset-entries-group-label"><%= assetCategory.getName() %></h3>
+
+				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+
+	<%
 			}
 
-			if ((start > 0) && (start > groupTotal)) {
-				start -= groupTotal;
+			if (groupTotal > 0) {
+				if ((end > 0) && (end > groupTotal)) {
+					end -= groupTotal;
+				}
+				else {
+					end = 0;
+				}
+
+				if ((start > 0) && (start > groupTotal)) {
+					start -= groupTotal;
+				}
+				else {
+					start = 0;
+				}
 			}
-			else {
-				start = 0;
-			}
+
+			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
 		}
 
-		assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
+		searchContainer.setTotal(total);
 	}
-
-	searchContainer.setTotal(total);
-}
-else if (!groupByClass) {
-	if (!anyAssetType) {
-		assetEntryQuery.setClassNameIds(classNameIds);
-	}
-
-	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-	searchContainer.setTotal(total);
-
-	List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-
-	searchContainer.setResults(results);
-
-	request.setAttribute("view.jsp-results", results);
-%>
-
-	<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
-
-<%
-}
-else {
-	int maxGroupTotal = 0;
-
-	for (long classNameId : classNameIds) {
-		long[] groupClassNameIds = {classNameId};
-
-		assetEntryQuery.setClassNameIds(groupClassNameIds);
-
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
-
-		String groupClassName = PortalUtil.getClassName(classNameId);
-
-		AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(groupClassName);
-
-		int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-		if (groupTotal > maxGroupTotal) {
-			maxGroupTotal = groupTotal;
+	else if (!groupByClass) {
+		if (!anyAssetType) {
+			assetEntryQuery.setClassNameIds(classNameIds);
 		}
 
-		total += groupTotal;
+		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-		List results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		searchContainer.setTotal(total);
+
+		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
 		searchContainer.setResults(results);
 
 		request.setAttribute("view.jsp-results", results);
+	%>
 
-		if (!results.isEmpty()) {
-%>
+		<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
 
-			<h3 class="asset-entries-group-label"><liferay-ui:message key="<%= groupAssetRendererFactory.getType() %>" /></h3>
-
-			<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
-
-<%
-		}
+	<%
 	}
+	else {
+		int maxGroupTotal = 0;
 
-	searchContainer.setTotal(maxGroupTotal);
+		for (long classNameId : classNameIds) {
+			long[] groupClassNameIds = {classNameId};
+
+			assetEntryQuery.setClassNameIds(groupClassNameIds);
+
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
+
+			String groupClassName = PortalUtil.getClassName(classNameId);
+
+			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(groupClassName);
+
+			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			if (groupTotal > maxGroupTotal) {
+				maxGroupTotal = groupTotal;
+			}
+
+			total += groupTotal;
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+			searchContainer.setResults(results);
+
+			request.setAttribute("view.jsp-results", results);
+
+			if (!results.isEmpty()) {
+	%>
+
+				<h3 class="asset-entries-group-label"><liferay-ui:message key="<%= groupAssetRendererFactory.getType() %>" /></h3>
+
+				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+
+	<%
+			}
+		}
+
+		searchContainer.setTotal(maxGroupTotal);
+	}
 }
 
 if (total == 0) {

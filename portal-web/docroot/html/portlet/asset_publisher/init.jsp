@@ -136,16 +136,17 @@ if (Validator.isNotNull(assetTagName)) {
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
+boolean showLinkedAssets = GetterUtil.getBoolean(preferences.getValue("showLinkedAssets", null), false);
 boolean showOnlyLayoutAssets = GetterUtil.getBoolean(preferences.getValue("showOnlyLayoutAssets", null));
 
 if (showOnlyLayoutAssets) {
 	assetEntryQuery.setLayout(layout);
 }
 
-boolean showLinkedAssets = GetterUtil.getBoolean(preferences.getValue("showLinkedAssets", null), false);
-
-if (showLinkedAssets) {
-	JournalArticle mainJournalArticle = themeDisplay.getMainJournalArticle();
+JournalArticle mainJournalArticle = null;
+	
+if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+	mainJournalArticle = themeDisplay.getMainJournalArticle();
 
 	if (mainJournalArticle != null) {
 		AssetEntry mainAssetEntry = AssetEntryLocalServiceUtil.getEntry(JournalArticle.class.getName(), mainJournalArticle.getResourcePrimKey());

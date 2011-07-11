@@ -174,6 +174,8 @@ public class PortletKeys {
 
 	public static final String RECENT_DOCUMENTS = "64";
 
+	public static final String RELATED_ASSETS = "175";
+
 	public static final String REQUESTS = "121";
 
 	public static final String ROLES_ADMIN = "128";

@@ -774,6 +774,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					if (${column.name} != null) {
 						${entity.varName}CacheModel.${column.name} = ${column.name}.getTime();
 					}
+					else {
+						${entity.varName}CacheModel.${column.name} = Long.MIN_VALUE;
+					}
 				<#else>
 					${entity.varName}CacheModel.${column.name} = get${column.methodName}();
 

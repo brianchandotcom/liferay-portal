@@ -91,14 +91,8 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory> {
 			assetCategoryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			assetCategoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			assetCategoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		assetCategoryImpl.setCreateDate(new Date(createDate));
+		assetCategoryImpl.setModifiedDate(new Date(modifiedDate));
 		assetCategoryImpl.setParentCategoryId(parentCategoryId);
 		assetCategoryImpl.setLeftCategoryId(leftCategoryId);
 		assetCategoryImpl.setRightCategoryId(rightCategoryId);

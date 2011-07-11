@@ -84,10 +84,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion> 
 			ddlRecordVersionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			ddlRecordVersionImpl.setCreateDate(new Date(createDate));
-		}
-
+		ddlRecordVersionImpl.setCreateDate(new Date(createDate));
 		ddlRecordVersionImpl.setDDMStorageId(DDMStorageId);
 		ddlRecordVersionImpl.setRecordSetId(recordSetId);
 		ddlRecordVersionImpl.setRecordId(recordId);
@@ -110,9 +107,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion> 
 			ddlRecordVersionImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
-			ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
-		}
+		ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
 
 		ddlRecordVersionImpl.resetOriginalValues();
 

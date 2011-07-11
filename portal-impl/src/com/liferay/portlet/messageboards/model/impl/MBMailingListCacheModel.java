@@ -113,14 +113,8 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList> {
 			mbMailingListImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			mbMailingListImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			mbMailingListImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		mbMailingListImpl.setCreateDate(new Date(createDate));
+		mbMailingListImpl.setModifiedDate(new Date(modifiedDate));
 		mbMailingListImpl.setCategoryId(categoryId);
 
 		if (emailAddress == null) {

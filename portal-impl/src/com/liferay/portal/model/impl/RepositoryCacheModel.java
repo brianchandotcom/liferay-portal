@@ -66,15 +66,8 @@ public class RepositoryCacheModel implements CacheModel<Repository> {
 		repositoryImpl.setRepositoryId(repositoryId);
 		repositoryImpl.setGroupId(groupId);
 		repositoryImpl.setCompanyId(companyId);
-
-		if (createDate > 0) {
-			repositoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			repositoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		repositoryImpl.setCreateDate(new Date(createDate));
+		repositoryImpl.setModifiedDate(new Date(modifiedDate));
 		repositoryImpl.setClassNameId(classNameId);
 
 		if (name == null) {

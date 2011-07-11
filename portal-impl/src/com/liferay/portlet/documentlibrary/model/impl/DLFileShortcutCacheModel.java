@@ -91,14 +91,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut> {
 			dlFileShortcutImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			dlFileShortcutImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			dlFileShortcutImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		dlFileShortcutImpl.setCreateDate(new Date(createDate));
+		dlFileShortcutImpl.setModifiedDate(new Date(modifiedDate));
 		dlFileShortcutImpl.setRepositoryId(repositoryId);
 		dlFileShortcutImpl.setFolderId(folderId);
 		dlFileShortcutImpl.setToFileEntryId(toFileEntryId);
@@ -112,9 +106,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut> {
 			dlFileShortcutImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
-			dlFileShortcutImpl.setStatusDate(new Date(statusDate));
-		}
+		dlFileShortcutImpl.setStatusDate(new Date(statusDate));
 
 		dlFileShortcutImpl.resetOriginalValues();
 

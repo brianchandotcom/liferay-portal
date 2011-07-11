@@ -90,13 +90,8 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon> {
 			shoppingCouponImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			shoppingCouponImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			shoppingCouponImpl.setModifiedDate(new Date(modifiedDate));
-		}
+		shoppingCouponImpl.setCreateDate(new Date(createDate));
+		shoppingCouponImpl.setModifiedDate(new Date(modifiedDate));
 
 		if (code == null) {
 			shoppingCouponImpl.setCode(StringPool.BLANK);
@@ -119,14 +114,8 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon> {
 			shoppingCouponImpl.setDescription(description);
 		}
 
-		if (startDate > 0) {
-			shoppingCouponImpl.setStartDate(new Date(startDate));
-		}
-
-		if (endDate > 0) {
-			shoppingCouponImpl.setEndDate(new Date(endDate));
-		}
-
+		shoppingCouponImpl.setStartDate(new Date(startDate));
+		shoppingCouponImpl.setEndDate(new Date(endDate));
 		shoppingCouponImpl.setActive(active);
 
 		if (limitCategories == null) {

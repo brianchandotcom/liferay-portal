@@ -71,14 +71,8 @@ public class AssetTagPropertyCacheModel implements CacheModel<AssetTagProperty> 
 			assetTagPropertyImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			assetTagPropertyImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			assetTagPropertyImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		assetTagPropertyImpl.setCreateDate(new Date(createDate));
+		assetTagPropertyImpl.setModifiedDate(new Date(modifiedDate));
 		assetTagPropertyImpl.setTagId(tagId);
 
 		if (key == null) {

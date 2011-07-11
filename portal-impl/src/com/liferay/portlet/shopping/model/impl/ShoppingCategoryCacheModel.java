@@ -74,14 +74,8 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory> 
 			shoppingCategoryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			shoppingCategoryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			shoppingCategoryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		shoppingCategoryImpl.setCreateDate(new Date(createDate));
+		shoppingCategoryImpl.setModifiedDate(new Date(modifiedDate));
 		shoppingCategoryImpl.setParentCategoryId(parentCategoryId);
 
 		if (name == null) {

@@ -81,9 +81,7 @@ public class LockCacheModel implements CacheModel<Lock> {
 			lockImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			lockImpl.setCreateDate(new Date(createDate));
-		}
+		lockImpl.setCreateDate(new Date(createDate));
 
 		if (className == null) {
 			lockImpl.setClassName(StringPool.BLANK);
@@ -107,10 +105,7 @@ public class LockCacheModel implements CacheModel<Lock> {
 		}
 
 		lockImpl.setInheritable(inheritable);
-
-		if (expirationDate > 0) {
-			lockImpl.setExpirationDate(new Date(expirationDate));
-		}
+		lockImpl.setExpirationDate(new Date(expirationDate));
 
 		lockImpl.resetOriginalValues();
 

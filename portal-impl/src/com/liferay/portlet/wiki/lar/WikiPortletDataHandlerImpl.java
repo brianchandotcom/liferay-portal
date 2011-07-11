@@ -386,13 +386,11 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			return name;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(node.getName());
 		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(count);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		name = sb.toString();
 

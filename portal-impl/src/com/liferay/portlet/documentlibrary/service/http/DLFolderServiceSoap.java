@@ -185,11 +185,30 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap[] getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> returnValue =
+				DLFolderServiceUtil.getFolders(groupId, parentFolderId,
+					includeMountfolders, start, end, obc);
+
+			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status) throws RemoteException {
+		long groupId, long folderId, int status, boolean includeMountFolders)
+		throws RemoteException {
 		try {
 			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-					folderId, status);
+					folderId, status, includeMountFolders);
 
 			return returnValue;
 		}
@@ -204,6 +223,54 @@ public class DLFolderServiceSoap {
 		throws RemoteException {
 		try {
 			int returnValue = DLFolderServiceUtil.getFoldersCount(groupId,
+					parentFolderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		boolean includeMountfolders) throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersCount(groupId,
+					parentFolderId, includeMountfolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap[] getMountFolders(
+		long groupId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> returnValue =
+				DLFolderServiceUtil.getMountFolders(groupId, parentFolderId,
+					start, end, obc);
+
+			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getMountFoldersCount(long groupId, long parentFolderId)
+		throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getMountFoldersCount(groupId,
 					parentFolderId);
 
 			return returnValue;

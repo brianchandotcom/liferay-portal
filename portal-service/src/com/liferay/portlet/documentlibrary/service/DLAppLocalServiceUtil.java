@@ -281,10 +281,28 @@ public class DLAppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolders(repositoryId, parentFolderId, includeMountFolders);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFolders(repositoryId, parentFolderId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolders(repositoryId, parentFolderId,
+			includeMountFolders, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
@@ -296,29 +314,50 @@ public class DLAppLocalServiceUtil {
 				   .getFolders(repositoryId, parentFolderId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolders(repositoryId, parentFolderId,
+			includeMountFolders, start, end, obc);
+	}
+
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status, int start, int end,
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
-			folderId, status, start, end, obc);
+			folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status)
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
 	public static int getFoldersCount(long repositoryId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(repositoryId, parentFolderId);
+	}
+
+	public static int getFoldersCount(long repositoryId, long parentFolderId,
+		boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersCount(repositoryId, parentFolderId,
+			includeMountfolders);
 	}
 
 	public static int getFoldersFileEntriesCount(long repositoryId,
@@ -334,6 +373,38 @@ public class DLAppLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getMountFolder(repositoryId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMountFolders(repositoryId, parentFolderId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getMountFolders(repositoryId, parentFolderId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getMountFolders(repositoryId, parentFolderId, start, end,
+			obc);
+	}
+
+	public static int getMountFoldersCount(long repositoryId,
+		long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMountFoldersCount(repositoryId, parentFolderId);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(

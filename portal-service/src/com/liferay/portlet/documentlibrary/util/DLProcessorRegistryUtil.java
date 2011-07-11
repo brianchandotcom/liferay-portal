@@ -17,11 +17,32 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
- * @author Alexander Chow
  * @author Mika Koivisto
  */
-public interface DLProcessor {
+public class DLProcessorRegistryUtil {
 
-	public void trigger(FileEntry fileEntry);
+	public static DLProcessorRegistry getDLProcessorRegistry() {
+		return _dlProcessorRegistry;
+	}
+
+	public static void register(DLProcessor dlProcessor) {
+		getDLProcessorRegistry().register(dlProcessor);
+	}
+
+	public void setDLProcessorRegistry(
+		DLProcessorRegistry dlProcessorRegistry) {
+
+		_dlProcessorRegistry = dlProcessorRegistry;
+	}
+
+	public static void trigger(FileEntry fileEntry) {
+		getDLProcessorRegistry().trigger(fileEntry);
+	}
+
+	public static void unregister(DLProcessor dlProcessor) {
+		getDLProcessorRegistry().unregister(dlProcessor);
+	}
+
+	private static DLProcessorRegistry _dlProcessorRegistry;
 
 }

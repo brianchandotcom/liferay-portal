@@ -122,6 +122,8 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.util.UniqueList;
 import com.liferay.util.log4j.Log4JUtil;
 
@@ -184,6 +186,7 @@ public class HookHotDeployListener
 		"convert.processes",
 		"default.landing.page.path",
 		"dl.file.entry.drafts.enabled",
+		"dl.file.entry.processors",
 		"dl.repository.impl",
 		"dl.store.impl",
 		"dl.webdav.hold.lock",
@@ -376,6 +379,13 @@ public class HookHotDeployListener
 				PropsKeys.CONTROL_PANEL_DEFAULT_ENTRY_CLASS)) {
 
 			DefaultControlPanelEntryFactory.setInstance(null);
+		}
+
+		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {
+			DLFileEntryProcessorContainer dlFileEntryProcessorContainer =
+				_dlFileEntryProcessorContainerMap.remove(servletContextName);
+
+			dlFileEntryProcessorContainer.unregisterDLProcessors();
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
@@ -1555,6 +1565,26 @@ public class HookHotDeployListener
 			DefaultControlPanelEntryFactory.setInstance(controlPanelEntry);
 		}
 
+		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {
+			String[] dlProcessorClassNames = StringUtil.split(
+				portalProperties.getProperty(
+					PropsKeys.DL_FILE_ENTRY_PROCESSORS));
+
+			DLFileEntryProcessorContainer dlFileEntryProcessorContainer =
+				new DLFileEntryProcessorContainer();
+
+			_dlFileEntryProcessorContainerMap.put(
+				servletContextName, dlFileEntryProcessorContainer);
+
+			for (String dlProcessorClassName : dlProcessorClassNames) {
+				DLProcessor dlProcessor = (DLProcessor)newInstance(
+					portletClassLoader, DLProcessor.class,
+					dlProcessorClassName);
+
+				dlFileEntryProcessorContainer.registerDLProcessor(dlProcessor);
+			}
+		}
+
 		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
 			String[] dlRepositoryClassNames = StringUtil.split(
 				portalProperties.getProperty(PropsKeys.DL_REPOSITORY_IMPL));
@@ -2158,6 +2188,9 @@ public class HookHotDeployListener
 		new HashMap<String, AutoLoginsContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
+	private Map<String, DLFileEntryProcessorContainer>
+		_dlFileEntryProcessorContainerMap =
+			new HashMap<String, DLFileEntryProcessorContainer>();
 	private Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
 		new HashMap<String, DLRepositoryContainer>();
 	private Map<String, EventsContainer> _eventsContainerMap =
@@ -2357,6 +2390,26 @@ public class HookHotDeployListener
 		private String _customJspDir;
 		private boolean _customJspGlobal;
 		private List<String> _customJsps;
+
+	}
+
+	private class DLFileEntryProcessorContainer {
+
+		public void registerDLProcessor(DLProcessor dlProcessor) {
+			DLProcessorRegistryUtil.register(dlProcessor);
+
+			_dlProcessors.add(dlProcessor);
+		}
+
+		public void unregisterDLProcessors() {
+			for (DLProcessor dlProcessor : _dlProcessors) {
+				DLProcessorRegistryUtil.unregister(dlProcessor);
+			}
+
+			_dlProcessors.clear();
+		}
+
+		private List<DLProcessor> _dlProcessors = new ArrayList<DLProcessor>();
 
 	}
 

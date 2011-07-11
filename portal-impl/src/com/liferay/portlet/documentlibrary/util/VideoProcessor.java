@@ -50,7 +50,7 @@ import java.util.Vector;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class VideoProcessor extends DLProcessor {
+public class VideoProcessor implements DLProcessor {
 
 	public static final String PREVIEW_TYPE = "flv";
 
@@ -102,7 +102,6 @@ public class VideoProcessor extends DLProcessor {
 		return false;
 	}
 
-	@Override
 	public void trigger(FileEntry fileEntry) {
 		try {
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();

@@ -108,7 +108,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 							String additionalText = StringPool.BLANK;
 
 							if (curLayoutRevision.isHead()) {
-								statusMessage = "published";
+								statusMessage = "ready-for-publication";
 							}
 							else {
 								int status = curLayoutRevision.getStatus();

@@ -154,8 +154,9 @@ html > .lfr-dockbar-pinned {
 
 	.taglib-workflow-status .workflow-status {
 		background: none;
+		padding-left: 0;
 
-		.workflow-status-published {
+		.workflow-status-ready-for-publication {
 			color: green;
 			font-weight: bold;
 		}
@@ -164,10 +165,6 @@ html > .lfr-dockbar-pinned {
 	.lfr-menu-list {
 		z-index: 1002;
 	}
-}
-
-.layout-revision-container {
-
 }
 
 .layout-revision-container-root {

@@ -309,7 +309,19 @@ if (layout != null) {
 									</c:if>
 
 									<div class="aui-tabview-content variations-tabview-content">
-										<aui:workflow-status status='<%= layoutRevision.getStatus() %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+
+										<%
+										String taglibHelpMessage = null;
+
+										if (layoutRevision.isHead()) {
+											taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", layoutSetBranch.getName());
+										}
+										else {
+											taglibHelpMessage = "a-new-version-will-be-created-automatically-if-this-page-is-modified";
+										}
+										%>
+
+										<aui:workflow-status helpMessage="<%= taglibHelpMessage  %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 
 										<div class="layout-actions">
 											<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
@@ -331,6 +343,49 @@ if (layout != null) {
 
 								<c:if test="<%= !layoutRevision.isMajor() && (!layoutRevision.hasChildren()) && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 									dockbar.backstageToolbar.add(dockbar.undoButton, 0);
+								</c:if>
+
+								<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+
+									<%
+									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+									%>
+
+									<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+
+										<%
+										boolean isWorfklowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
+										%>
+
+										<portlet:actionURL var="publishURL">
+											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+											<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+											<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+											<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+											<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+											<portlet:param name="major" value="true" />
+											<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+										</portlet:actionURL>
+
+										publishButton = new A.ButtonItem(
+											{
+												handler: function(event) {
+													submitForm(document.hrefFm, '<%= publishURL %>');
+												},
+												icon: '<%= isWorfklowEnabled ? "shuffle" : "circle-check"  %>',
+												label: Liferay.Language.get('<%= isWorfklowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication" %>')
+											}
+										);
+
+										dockbar.backstageToolbar.add(
+											{
+												type: 'ToolbarSpacer'
+											}
+										);
+
+										dockbar.backstageToolbar.add(publishButton);
+
+									</c:if>
 								</c:if>
 							</aui:script>
 						</div>

@@ -162,7 +162,7 @@
 					color: #FFF;
 				}
 
-				.workflow-status-approved {
+				.workflow-status-approved, .workflow-status-ready-for-publication {
 					color: #9F3;
 				}
 

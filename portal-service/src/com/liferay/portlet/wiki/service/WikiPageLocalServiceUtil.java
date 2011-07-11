@@ -304,6 +304,13 @@ public class WikiPageLocalServiceUtil {
 			inputStream);
 	}
 
+	public static void addPageAttachment(long userId, long nodeId,
+		java.lang.String title, java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addPageAttachment(userId, nodeId, title, fileName, bytes);
+	}
+
 	public static void addPageAttachments(long userId, long nodeId,
 		java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, byte[]>> files)
@@ -346,6 +353,16 @@ public class WikiPageLocalServiceUtil {
 		getService().addPageResources(page, groupPermissions, guestPermissions);
 	}
 
+	public static java.lang.String addTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		return getService()
+				   .addTempPageAttachment(userId, fileName, tempFolderName, file);
+	}
+
 	public static void changeParent(long userId, long nodeId,
 		java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -385,6 +402,13 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deletePages(nodeId);
+	}
+
+	public static void deleteTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTempPageAttachment(userId, fileName, tempFolderName);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildren(
@@ -595,6 +619,13 @@ public class WikiPageLocalServiceUtil {
 	public static int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRecentChangesCount(nodeId);
+	}
+
+	public static java.lang.String[] getTempPageAttachmentNames(long userId,
+		java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTempPageAttachmentNames(userId, tempFolderName);
 	}
 
 	public static boolean hasDraftPage(long nodeId, java.lang.String title)

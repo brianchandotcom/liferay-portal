@@ -80,6 +80,16 @@ public class DLAppServiceWrapper implements DLAppService {
 			description, serviceContext);
 	}
 
+	public java.lang.String addTempFileEntry(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		return _dlAppService.addTempFileEntry(groupId, folderId, fileName,
+			tempFolderName, file);
+	}
+
 	public void cancelCheckOut(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -155,6 +165,14 @@ public class DLAppServiceWrapper implements DLAppService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.deleteFolder(repositoryId, parentFolderId, name);
+	}
+
+	public void deleteTempFileEntry(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.deleteTempFileEntry(groupId, folderId, fileName,
+			tempFolderName);
 	}
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
@@ -461,6 +479,14 @@ public class DLAppServiceWrapper implements DLAppService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getSubfolderIds(repositoryId, folderId, recurse);
+	}
+
+	public java.lang.String[] getTempFileEntryNames(long groupId,
+		long folderId, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getTempFileEntryNames(groupId, folderId,
+			tempFolderName);
 	}
 
 	public com.liferay.portal.model.Lock lockFolder(long repositoryId,

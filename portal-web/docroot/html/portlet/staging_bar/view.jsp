@@ -353,6 +353,12 @@ if (layout != null) {
 
 									<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
 
+										dockbar.backstageToolbar.add(
+											{
+												type: 'ToolbarSpacer'
+											}
+										);
+
 										<%
 										boolean isWorfklowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 										%>
@@ -367,24 +373,15 @@ if (layout != null) {
 											<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 										</portlet:actionURL>
 
-										publishButton = new A.ButtonItem(
+										dockbar.backstageToolbar.add(
 											{
 												handler: function(event) {
 													submitForm(document.hrefFm, '<%= publishURL %>');
 												},
 												icon: '<%= isWorfklowEnabled ? "shuffle" : "circle-check"  %>',
-												label: Liferay.Language.get('<%= isWorfklowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication" %>')
+												label: '<%= UnicodeLanguageUtil.get(pageContext, isWorfklowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
 											}
 										);
-
-										dockbar.backstageToolbar.add(
-											{
-												type: 'ToolbarSpacer'
-											}
-										);
-
-										dockbar.backstageToolbar.add(publishButton);
-
 									</c:if>
 								</c:if>
 							</aui:script>

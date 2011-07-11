@@ -44,7 +44,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 		</aui:select>
 	</c:if>
 
-	<div class="layout-revision-container" id="<portlet:namespace/>LayoutRevisionsContainer">
+	<div class="layout-revision-container" id="<portlet:namespace/>layoutRevisionsContainer">
 
 		<%
 		for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
@@ -204,19 +204,19 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 
 <aui:script use="aui-base" position="inline">
 	var variationsSelector = A.one('#<portlet:namespace/>variationsSelector');
-	var LayoutRevisionsContainer = A.one('#<portlet:namespace/>LayoutRevisionsContainer');
+	var layoutRevisionsContainer = A.one('#<portlet:namespace/>layoutRevisionsContainer');
 
-	var layoutVariations = A.all('.layout-variation-container');
+	var layoutVariationsContainer = A.all('.layout-variation-container');
 
 	if (variationsSelector) {
 		variationsSelector.on(
 			'change',
 			function() {
 				if (variationsSelector.val() == 'all') {
-					layoutVariations.show();
+					layoutVariationsContainer.show();
 				}
 				else {
-					layoutVariations.hide();
+					layoutVariationsContainer.hide();
 
 					var layoutVariation = A.one('#<portlet:namespace/>' + variationsSelector.val());
 

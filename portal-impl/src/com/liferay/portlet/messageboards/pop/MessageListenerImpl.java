@@ -268,8 +268,10 @@ public class MessageListenerImpl implements MessageListener {
 		throws Exception {
 
 		int pos = recipient.indexOf(CharPool.AT);
+		boolean hasPrefix =
+			StringUtil.startsWith(recipient, MBUtil.MESSAGE_POP_PORTLET_PREFIX);
 
-		if (pos < 0) {
+		if (pos < 0 || !hasPrefix) {
 			return MBUtil.getParentMessageId(message);
 		}
 

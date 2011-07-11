@@ -22,7 +22,12 @@ public class SQLServer2005Dialect
 
 	@Override
 	public String getLimitString(String sql, int offset, int limit) {
-		return SQLServerLimitStringUtil.getLimitString(sql, offset, limit);
+		if (super.supportsLimitOffset()) {
+			return super.getLimitString(sql, offset, limit);
+		}
+		else {
+			return SQLServerLimitStringUtil.getLimitString(sql, offset, limit);
+		}
 	}
 
 	@Override

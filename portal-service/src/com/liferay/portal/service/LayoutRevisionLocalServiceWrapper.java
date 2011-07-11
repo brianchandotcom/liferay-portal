@@ -353,11 +353,27 @@ public class LayoutRevisionLocalServiceWrapper
 			parentLayoutRevision, plid, start, end, orderByComparator);
 	}
 
+	public java.util.List<com.liferay.portal.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, long plid, java.lang.String variationName,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutRevisionLocalService.getLayoutRevisions(layoutSetBranchId,
+			plid, variationName, start, end, orderByComparator);
+	}
+
 	public int getLayoutRevisionsCount(long layoutSetBranchId,
 		long parentLayoutRevision, long plid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutRevisionLocalService.getLayoutRevisionsCount(layoutSetBranchId,
 			parentLayoutRevision, plid);
+	}
+
+	public int getLayoutRevisionsCount(long layoutSetBranchId, long plid,
+		java.lang.String variationName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutRevisionLocalService.getLayoutRevisionsCount(layoutSetBranchId,
+			plid, variationName);
 	}
 
 	public com.liferay.portal.model.LayoutRevision updateLayoutRevision(

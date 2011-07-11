@@ -71,6 +71,7 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

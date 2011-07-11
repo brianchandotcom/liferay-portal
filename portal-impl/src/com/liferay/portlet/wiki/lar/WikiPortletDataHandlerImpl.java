@@ -118,9 +118,12 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			WikiNode existingNode = WikiNodeUtil.fetchByUUID_G(
 				node.getUuid(), portletDataContext.getScopeGroupId());
 
-			String nodeName = PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
+			String initialNodeName =
+				PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
 
-			if ((existingNode == null) && node.getName().equals(nodeName)) {
+			if ((existingNode == null) &&
+				(node.getName().equals(initialNodeName))) {
+
 				try {
 					WikiNodeUtil.removeByG_N(
 						portletDataContext.getScopeGroupId(), node.getName());
@@ -143,9 +146,10 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 		else {
-			String nodeName = PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
+			String initialNodeName =
+				PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
 
-			if (node.getName().equals(nodeName)) {
+			if (node.getName().equals(initialNodeName)) {
 				try {
 					WikiNodeUtil.removeByG_N(
 						portletDataContext.getScopeGroupId(), node.getName());
@@ -154,11 +158,11 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 				}
 			}
 
-			String newNodeName = getNodeName(
+			String nodeName = getNodeName(
 				portletDataContext, node, node.getName(), 2);
 
 			importedNode = WikiNodeLocalServiceUtil.addNode(
-				userId, newNodeName, node.getDescription(), serviceContext);
+				userId, nodeName, node.getDescription(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(node, importedNode, _NAMESPACE);
@@ -210,16 +214,15 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			importedPage = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, page.getTitle(), page.getVersion(),
-				page.getContent(), page.getSummary(), true,
-				page.getFormat(), page.getHead(), page.getParentTitle(),
-				page.getRedirectTitle(), serviceContext);
+				page.getContent(), page.getSummary(), true, page.getFormat(),
+				page.getHead(), page.getParentTitle(), page.getRedirectTitle(),
+				serviceContext);
 		}
 		else {
 			importedPage = WikiPageLocalServiceUtil.updatePage(
-				userId, nodeId, existingPage.getTitle(), 0,
-				page.getContent(), page.getSummary(), true,
-				page.getFormat(), page.getParentTitle(),
-				page.getRedirectTitle(), serviceContext);
+				userId, nodeId, existingPage.getTitle(), 0, page.getContent(),
+				page.getSummary(), true, page.getFormat(),
+				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "attachments") &&
@@ -371,27 +374,29 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 		exportNode(portletDataContext, nodesElement, page.getNodeId());
 	}
 
-		protected static String getNodeName(
-			PortletDataContext portletDataContext, WikiNode node,
-			String nodeName, int count)
+	protected static String getNodeName(
+			PortletDataContext portletDataContext, WikiNode node, String name,
+			int count)
 		throws Exception {
 
 		WikiNode existingNode = WikiNodeUtil.fetchByG_N(
-			portletDataContext.getScopeGroupId(), nodeName);
+			portletDataContext.getScopeGroupId(), name);
 
 		if (existingNode == null) {
-			return nodeName;
+			return name;
 		}
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(node.getName());
 		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(count);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		nodeName = sb.toString();
+		name = sb.toString();
 
-		return getNodeName(portletDataContext, node, nodeName, ++count);
+		return getNodeName(portletDataContext, node, name, ++count);
 	}
 
 	protected static String getNodePath(

@@ -767,8 +767,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			serviceContext.getScopeGroupId(), PortletKeys.BLOGS);
+		String layoutFullURL = serviceContext.getLayoutFullURL();
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

@@ -93,7 +93,6 @@
 	var getHistoryRequirements = function() {
 		var CONFIG = A.config;
 
-		var DOC = CONFIG.doc;
 		var WIN = CONFIG.win;
 
 		var HISTORY = WIN.history;

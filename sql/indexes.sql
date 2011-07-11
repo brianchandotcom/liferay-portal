@@ -657,6 +657,7 @@ create index IX_95135D1C on SocialRelation (companyId, type_);
 create index IX_C31A64C6 on SocialRelation (type_);
 create index IX_5A40CDCC on SocialRelation (userId1);
 create index IX_4B52BE89 on SocialRelation (userId1, type_);
+create index IX_B5C9C690 on SocialRelation (userId1, userId2);
 create unique index IX_12A92145 on SocialRelation (userId1, userId2, type_);
 create index IX_5A40D18D on SocialRelation (userId2);
 create index IX_3F9C2FA8 on SocialRelation (userId2, type_);

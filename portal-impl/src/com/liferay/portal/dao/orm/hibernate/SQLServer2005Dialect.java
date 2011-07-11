@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.dao.orm.hibernate;
 
 /**
- * @author Michael C. Han
+ * @author Minhchau Dang
  */
-public abstract class BasePortalCache implements PortalCache {
+public class SQLServer2005Dialect
+	extends org.hibernate.dialect.SQLServer2005Dialect {
 
-	public void destroy() {
+	@Override
+	public String getLimitString(String sql, int offset, int limit) {
+		return SQLServerLimitStringUtil.getLimitString(sql, offset, limit);
 	}
 
-	public boolean isDebug() {
-		return _debug;
+	@Override
+	public boolean supportsLimitOffset() {
+		return _SUPPORTS_LIMIT_OFFSET;
 	}
 
-	public void setDebug(boolean debug) {
-		_debug = debug;
-	}
-
-	private boolean _debug;
+	private static final boolean _SUPPORTS_LIMIT_OFFSET = true;
 
 }

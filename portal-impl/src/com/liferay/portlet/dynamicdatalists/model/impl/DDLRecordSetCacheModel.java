@@ -87,14 +87,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 			ddlRecordSetImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			ddlRecordSetImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			ddlRecordSetImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		ddlRecordSetImpl.setCreateDate(new Date(createDate));
+		ddlRecordSetImpl.setModifiedDate(new Date(modifiedDate));
 		ddlRecordSetImpl.setDDMStructureId(DDMStructureId);
 
 		if (recordSetKey == null) {

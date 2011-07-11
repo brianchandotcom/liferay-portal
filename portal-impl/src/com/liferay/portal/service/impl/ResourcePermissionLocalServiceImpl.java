@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -408,6 +409,23 @@ public class ResourcePermissionLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 	}
 
+	public void setContainerResourcePermissions(
+			String name, String roleName, long actionIdsLong)
+		throws SystemException {
+
+		List<Role> roles = rolePersistence.findByName(roleName);
+
+		for (Role role : roles) {
+			List<Group> groups = groupPersistence.findByCompanyId(
+				role.getCompanyId());
+
+			for (Group group : groups) {
+				setContainerResourcePermissions(
+					group, role, name, actionIdsLong);
+			}
+		}
+	}
+
 	public void setOwnerResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
 			long ownerId, String[] actionIds)
@@ -509,6 +527,62 @@ public class ResourcePermissionLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 
 		SearchEngineUtil.updatePermissionFields(name, primKey);
+	}
+
+	protected void setContainerResourcePermissions(
+			Group group, Role role, String name, long actionIdsLong)
+		throws SystemException {
+
+		String primKey = String.valueOf(group.getGroupId());
+
+		ResourcePermission resourcePermission =
+			resourcePermissionPersistence.fetchByC_N_S_P_R(
+				group.getCompanyId(), name, ResourceConstants.SCOPE_INDIVIDUAL,
+				primKey, role.getRoleId());
+
+		if (resourcePermission == null) {
+			long resourcePermissionId = counterLocalService.increment(
+				ResourcePermission.class.getName());
+
+			resourcePermission = resourcePermissionPersistence.create(
+				resourcePermissionId);
+
+			resourcePermission.setCompanyId(group.getCompanyId());
+			resourcePermission.setName(name);
+			resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+			resourcePermission.setPrimKey(primKey);
+			resourcePermission.setRoleId(role.getRoleId());
+
+			List<String> defaultActionIds = null;
+
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.GUEST)) {
+				defaultActionIds =
+					ResourceActionsUtil.getModelResourceGuestDefaultActions(
+						name);
+			}
+			else if (roleName.equals(RoleConstants.SITE_MEMBER) ||
+					 roleName.equals(RoleConstants.ORGANIZATION_USER)) {
+
+				defaultActionIds =
+					ResourceActionsUtil.getModelResourceGroupDefaultActions(
+						name);
+			}
+
+			List<ResourceAction> resourceActions =
+				resourceActionLocalService.getResourceActions(name);
+
+			for (ResourceAction resourceAction : resourceActions) {
+				if (defaultActionIds.contains(resourceAction.getActionId())) {
+					actionIdsLong |= resourceAction.getBitwiseValue();
+				}
+			}
+		}
+
+		resourcePermission.setActionIds(actionIdsLong);
+
+		resourcePermissionPersistence.update(resourcePermission, false);
 	}
 
 	protected void updateResourcePermission(

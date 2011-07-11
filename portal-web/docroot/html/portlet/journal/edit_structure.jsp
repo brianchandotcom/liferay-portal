@@ -57,7 +57,7 @@ if (Validator.isNotNull(parentStructureId)) {
 
 		parentStructureName = parentStructure.getName();
 	}
-	catch(NoSuchStructureException nsse) {
+	catch (NoSuchStructureException nsse) {
 	}
 }
 
@@ -74,7 +74,7 @@ if (Validator.isNull(xsd)) {
 // Bug with dom4j requires you to remove "\r\n" and "  " or else root.elements()
 // and root.content() will return different number of objects
 
-xsd = java.net.URLDecoder.decode(xsd);
+xsd = JS.decodeURIComponent(xsd);
 xsd = StringUtil.replace(xsd, StringPool.RETURN_NEW_LINE, StringPool.BLANK);
 xsd = StringUtil.replace(xsd, StringPool.DOUBLE_SPACE, StringPool.BLANK);
 
@@ -204,7 +204,7 @@ int tabIndex = 1;
 				<table class="taglib-search-iterator">
 
 				<%
-				Document doc = SAXReaderUtil.read(JS.decodeURIComponent(xsd));
+				Document doc = SAXReaderUtil.read(xsd);
 
 				Element root = doc.getRootElement();
 

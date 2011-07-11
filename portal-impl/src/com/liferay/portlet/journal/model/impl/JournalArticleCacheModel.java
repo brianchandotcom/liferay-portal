@@ -126,14 +126,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			journalArticleImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			journalArticleImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		journalArticleImpl.setCreateDate(new Date(createDate));
+		journalArticleImpl.setModifiedDate(new Date(modifiedDate));
 		journalArticleImpl.setClassNameId(classNameId);
 		journalArticleImpl.setClassPK(classPK);
 
@@ -202,18 +196,9 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setLayoutUuid(layoutUuid);
 		}
 
-		if (displayDate > 0) {
-			journalArticleImpl.setDisplayDate(new Date(displayDate));
-		}
-
-		if (expirationDate > 0) {
-			journalArticleImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		if (reviewDate > 0) {
-			journalArticleImpl.setReviewDate(new Date(reviewDate));
-		}
-
+		journalArticleImpl.setDisplayDate(new Date(displayDate));
+		journalArticleImpl.setExpirationDate(new Date(expirationDate));
+		journalArticleImpl.setReviewDate(new Date(reviewDate));
 		journalArticleImpl.setIndexable(indexable);
 		journalArticleImpl.setSmallImage(smallImage);
 		journalArticleImpl.setSmallImageId(smallImageId);
@@ -235,9 +220,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
-			journalArticleImpl.setStatusDate(new Date(statusDate));
-		}
+		journalArticleImpl.setStatusDate(new Date(statusDate));
 
 		journalArticleImpl.resetOriginalValues();
 

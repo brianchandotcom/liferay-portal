@@ -198,10 +198,13 @@ import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
@@ -3531,6 +3534,63 @@ public abstract class RepositoryServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the document library file version local service.
+	 *
+	 * @return the document library file version local service
+	 */
+	public DLFileVersionLocalService getDLFileVersionLocalService() {
+		return dlFileVersionLocalService;
+	}
+
+	/**
+	 * Sets the document library file version local service.
+	 *
+	 * @param dlFileVersionLocalService the document library file version local service
+	 */
+	public void setDLFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+		this.dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	/**
+	 * Returns the document library file version remote service.
+	 *
+	 * @return the document library file version remote service
+	 */
+	public DLFileVersionService getDLFileVersionService() {
+		return dlFileVersionService;
+	}
+
+	/**
+	 * Sets the document library file version remote service.
+	 *
+	 * @param dlFileVersionService the document library file version remote service
+	 */
+	public void setDLFileVersionService(
+		DLFileVersionService dlFileVersionService) {
+		this.dlFileVersionService = dlFileVersionService;
+	}
+
+	/**
+	 * Returns the document library file version persistence.
+	 *
+	 * @return the document library file version persistence
+	 */
+	public DLFileVersionPersistence getDLFileVersionPersistence() {
+		return dlFileVersionPersistence;
+	}
+
+	/**
+	 * Sets the document library file version persistence.
+	 *
+	 * @param dlFileVersionPersistence the document library file version persistence
+	 */
+	public void setDLFileVersionPersistence(
+		DLFileVersionPersistence dlFileVersionPersistence) {
+		this.dlFileVersionPersistence = dlFileVersionPersistence;
+	}
+
+	/**
 	 * Returns the document library folder local service.
 	 *
 	 * @return the document library folder local service
@@ -4060,6 +4120,12 @@ public abstract class RepositoryServiceBaseImpl extends PrincipalBean
 	protected DLFileEntryPersistence dlFileEntryPersistence;
 	@BeanReference(type = DLFileEntryFinder.class)
 	protected DLFileEntryFinder dlFileEntryFinder;
+	@BeanReference(type = DLFileVersionLocalService.class)
+	protected DLFileVersionLocalService dlFileVersionLocalService;
+	@BeanReference(type = DLFileVersionService.class)
+	protected DLFileVersionService dlFileVersionService;
+	@BeanReference(type = DLFileVersionPersistence.class)
+	protected DLFileVersionPersistence dlFileVersionPersistence;
 	@BeanReference(type = DLFolderLocalService.class)
 	protected DLFolderLocalService dlFolderLocalService;
 	@BeanReference(type = DLFolderService.class)

@@ -97,13 +97,8 @@ public class JournalTemplateCacheModel implements CacheModel<JournalTemplate> {
 			journalTemplateImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			journalTemplateImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			journalTemplateImpl.setModifiedDate(new Date(modifiedDate));
-		}
+		journalTemplateImpl.setCreateDate(new Date(createDate));
+		journalTemplateImpl.setModifiedDate(new Date(modifiedDate));
 
 		if (templateId == null) {
 			journalTemplateImpl.setTemplateId(StringPool.BLANK);

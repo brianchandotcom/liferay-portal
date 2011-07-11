@@ -77,14 +77,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion> 
 			scProductVersionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			scProductVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			scProductVersionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		scProductVersionImpl.setCreateDate(new Date(createDate));
+		scProductVersionImpl.setModifiedDate(new Date(modifiedDate));
 		scProductVersionImpl.setProductEntryId(productEntryId);
 
 		if (version == null) {

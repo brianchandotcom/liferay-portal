@@ -89,14 +89,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder> {
 			dlFolderImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			dlFolderImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			dlFolderImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		dlFolderImpl.setCreateDate(new Date(createDate));
+		dlFolderImpl.setModifiedDate(new Date(modifiedDate));
 		dlFolderImpl.setRepositoryId(repositoryId);
 		dlFolderImpl.setMountPoint(mountPoint);
 		dlFolderImpl.setParentFolderId(parentFolderId);
@@ -115,9 +109,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder> {
 			dlFolderImpl.setDescription(description);
 		}
 
-		if (lastPostDate > 0) {
-			dlFolderImpl.setLastPostDate(new Date(lastPostDate));
-		}
+		dlFolderImpl.setLastPostDate(new Date(lastPostDate));
 
 		dlFolderImpl.resetOriginalValues();
 

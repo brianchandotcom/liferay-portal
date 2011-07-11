@@ -70,14 +70,8 @@ public class TeamCacheModel implements CacheModel<Team> {
 			teamImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			teamImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			teamImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		teamImpl.setCreateDate(new Date(createDate));
+		teamImpl.setModifiedDate(new Date(modifiedDate));
 		teamImpl.setGroupId(groupId);
 
 		if (name == null) {

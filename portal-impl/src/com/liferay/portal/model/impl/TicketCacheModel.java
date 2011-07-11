@@ -61,11 +61,7 @@ public class TicketCacheModel implements CacheModel<Ticket> {
 
 		ticketImpl.setTicketId(ticketId);
 		ticketImpl.setCompanyId(companyId);
-
-		if (createDate > 0) {
-			ticketImpl.setCreateDate(new Date(createDate));
-		}
-
+		ticketImpl.setCreateDate(new Date(createDate));
 		ticketImpl.setClassNameId(classNameId);
 		ticketImpl.setClassPK(classPK);
 
@@ -85,9 +81,7 @@ public class TicketCacheModel implements CacheModel<Ticket> {
 			ticketImpl.setExtraInfo(extraInfo);
 		}
 
-		if (expirationDate > 0) {
-			ticketImpl.setExpirationDate(new Date(expirationDate));
-		}
+		ticketImpl.setExpirationDate(new Date(expirationDate));
 
 		ticketImpl.resetOriginalValues();
 

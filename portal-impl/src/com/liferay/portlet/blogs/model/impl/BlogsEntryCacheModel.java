@@ -107,13 +107,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			blogsEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			blogsEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
+		blogsEntryImpl.setCreateDate(new Date(createDate));
+		blogsEntryImpl.setModifiedDate(new Date(modifiedDate));
 
 		if (title == null) {
 			blogsEntryImpl.setTitle(StringPool.BLANK);
@@ -143,10 +138,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setContent(content);
 		}
 
-		if (displayDate > 0) {
-			blogsEntryImpl.setDisplayDate(new Date(displayDate));
-		}
-
+		blogsEntryImpl.setDisplayDate(new Date(displayDate));
 		blogsEntryImpl.setAllowPingbacks(allowPingbacks);
 		blogsEntryImpl.setAllowTrackbacks(allowTrackbacks);
 
@@ -177,9 +169,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
-			blogsEntryImpl.setStatusDate(new Date(statusDate));
-		}
+		blogsEntryImpl.setStatusDate(new Date(statusDate));
 
 		blogsEntryImpl.resetOriginalValues();
 

@@ -341,6 +341,11 @@ public interface PermissionLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void setContainerResourcePermissions(java.lang.String name,
+		java.lang.String roleName, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void setGroupPermissions(long groupId, java.lang.String[] actionIds,
 		long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

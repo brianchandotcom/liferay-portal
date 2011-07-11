@@ -67,7 +67,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -78,7 +77,6 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -235,7 +233,8 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		dlFileVersionPersistence.remove(dlFileVersion);
 
@@ -275,7 +274,8 @@ public class DLFileEntryLocalServiceImpl
 		String version = getNextVersion(
 			dlFileEntry, majorVersion, serviceContext.getWorkflowAction());
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setChangeLog(changeLog);
@@ -387,7 +387,8 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		long dlFileVersionId = dlFileVersion.getFileVersionId();
 
@@ -587,29 +588,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
-	public DLFileVersion getFileVersion(long fileVersionId)
-		throws PortalException, SystemException {
-
-		return dlFileVersionPersistence.findByPrimaryKey(fileVersionId);
-	}
-
-	public DLFileVersion getFileVersion(long fileEntryId, String version)
-		throws PortalException, SystemException {
-
-		return dlFileVersionPersistence.findByF_V(fileEntryId, version);
-	}
-
-	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
-		throws SystemException {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return dlFileVersionPersistence.findByFileEntryId(fileEntryId);
-		}
-		else {
-			return dlFileVersionPersistence.findByF_S(fileEntryId, status);
-		}
-	}
-
 	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -664,47 +642,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
-		throws PortalException, SystemException {
-
-		boolean excludeWorkingCopy = true;
-
-		if (isFileEntryCheckedOut(fileEntryId)) {
-			excludeWorkingCopy = !hasFileEntryLock(userId, fileEntryId);
-		}
-
-		return getLatestFileVersion(fileEntryId, excludeWorkingCopy);
-	}
-
-	public DLFileVersion getLatestFileVersion(
-			long fileEntryId, boolean excludeWorkingCopy)
-		throws PortalException, SystemException {
-
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
-
-		if (dlFileVersions.isEmpty()) {
-			throw new NoSuchFileVersionException(
-				"No file versions found for fileEntryId " + fileEntryId);
-		}
-
-		dlFileVersions = ListUtil.copy(dlFileVersions);
-
-		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
-
-		DLFileVersion dlFileVersion = dlFileVersions.get(0);
-
-		String version = dlFileVersion.getVersion();
-
-		if (excludeWorkingCopy &&
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-			return dlFileVersions.get(1);
-		}
-
-		return dlFileVersion;
-	}
-
 	public List<DLFileEntry> getNoAssetFileEntries() throws SystemException {
 		return dlFileEntryFinder.findByNoAssets();
 	}
@@ -744,7 +681,8 @@ public class DLFileEntryLocalServiceImpl
 	public boolean isFileEntryCheckedOut(long fileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(fileEntryId, false);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		String version = dlFileVersion.getVersion();
 
@@ -785,7 +723,7 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLFileVersion dlFileVersion = dlFileEntryLocalService.getFileVersion(
+		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
 			fileEntryId, version);
 
 		if (!dlFileVersion.isApproved()) {
@@ -1127,8 +1065,9 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
-		List<DLFileVersion> dlFileVersions = getFileVersions(
-			dlFileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				dlFileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			convertExtraSettings(dlFileEntry, dlFileVersion, keys);
@@ -1313,8 +1252,9 @@ public class DLFileEntryLocalServiceImpl
 		String version = dlFileEntry.getVersion();
 
 		try {
-			DLFileVersion dlFileVersion = getLatestFileVersion(
-				dlFileEntry.getFileEntryId(), true);
+			DLFileVersion dlFileVersion =
+				dlFileVersionLocalService.getLatestFileVersion(
+					dlFileEntry.getFileEntryId(), true);
 
 			version = dlFileVersion.getVersion();
 		}
@@ -1477,8 +1417,9 @@ public class DLFileEntryLocalServiceImpl
 
 		boolean checkedOut = dlFileEntry.isCheckedOut();
 
-		DLFileVersion dlFileVersion = getLatestFileVersion(
-			fileEntryId, !checkedOut);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(
+				fileEntryId, !checkedOut);
 
 		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
 
@@ -1490,7 +1431,8 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if (checkedOut || autoCheckIn) {
-			dlFileVersion = getLatestFileVersion(fileEntryId, false);
+			dlFileVersion = dlFileVersionLocalService.getLatestFileVersion(
+				fileEntryId, false);
 		}
 
 		try {

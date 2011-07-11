@@ -57,11 +57,7 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank> {
 		dlFileRankImpl.setGroupId(groupId);
 		dlFileRankImpl.setCompanyId(companyId);
 		dlFileRankImpl.setUserId(userId);
-
-		if (createDate > 0) {
-			dlFileRankImpl.setCreateDate(new Date(createDate));
-		}
-
+		dlFileRankImpl.setCreateDate(new Date(createDate));
 		dlFileRankImpl.setFileEntryId(fileEntryId);
 
 		dlFileRankImpl.resetOriginalValues();

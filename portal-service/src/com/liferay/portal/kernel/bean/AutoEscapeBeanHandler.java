@@ -64,7 +64,7 @@ public class AutoEscapeBeanHandler implements InvocationHandler {
 		try {
 			result = method.invoke(_bean, args);
 		}
-		catch(InvocationTargetException ite) {
+		catch (InvocationTargetException ite) {
 			throw ite.getTargetException();
 		}
 

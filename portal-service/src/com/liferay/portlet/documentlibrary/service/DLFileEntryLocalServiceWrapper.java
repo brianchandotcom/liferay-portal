@@ -407,26 +407,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 			groupId);
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.getFileVersion(fileVersionId);
-	}
-
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileEntryId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.getFileVersion(fileEntryId, version);
-	}
-
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
-		long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.getFileVersions(fileEntryId, status);
-	}
-
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -464,21 +444,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 	public int getGroupFileEntriesCount(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getGroupFileEntriesCount(groupId, userId);
-	}
-
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.getLatestFileVersion(userId, fileEntryId);
-	}
-
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.getLatestFileVersion(fileEntryId,
-			excludeWorkingCopy);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries()

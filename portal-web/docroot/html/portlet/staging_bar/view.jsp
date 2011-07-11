@@ -360,7 +360,7 @@ if (layout != null) {
 
 										lastImportLayoutSetBranchName = lastImportLayoutSetBranch.getName();
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 
@@ -386,7 +386,7 @@ if (layout != null) {
 
 										layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(lastImportLayoutRevision.getLayoutSetBranchId(), 0, lastImportLayoutRevision.getPlid());
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 
@@ -404,7 +404,7 @@ if (layout != null) {
 
 										publisherName = publisher.getFullName();
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 

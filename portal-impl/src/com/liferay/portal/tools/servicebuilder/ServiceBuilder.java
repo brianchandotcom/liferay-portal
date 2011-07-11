@@ -1455,9 +1455,9 @@ public class ServiceBuilder {
 			method.getReturns());
 		String returnValueName = method.getReturns().getValue();
 
-		if (returnTypeGenericsName.equals("java.util.List<java.lang.Object>") ||
-			returnValueName.startsWith(
+		if (returnTypeGenericsName.contains(
 				"com.liferay.portal.kernel.repository.") ||
+			returnTypeGenericsName.equals("java.util.List<java.lang.Object>") ||
 			returnValueName.equals("com.liferay.portal.model.Lock") ||
 			returnValueName.equals(
 				"com.liferay.portlet.messageboards.model.MBMessageDisplay") ||
@@ -1482,6 +1482,8 @@ public class ServiceBuilder {
 					"com.liferay.portal.theme.ThemeDisplay") ||
 				parameterTypeName.equals(
 					"com.liferay.portlet.PortletPreferencesImpl") ||
+				parameterTypeName.equals(
+					"com.liferay.portlet.dynamicdatamapping.storage.Fields") ||
 				parameterTypeName.startsWith("java.io") ||
 				//parameterTypeName.startsWith("java.util.List") ||
 				//parameterTypeName.startsWith("java.util.Locale") ||

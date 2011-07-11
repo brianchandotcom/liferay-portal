@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -47,7 +47,7 @@ public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
 	public DLFileVersion getFileVersion()
 		throws PortalException, SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileVersion(getFileVersionId());
+		return DLFileVersionLocalServiceUtil.getFileVersion(getFileVersionId());
 	}
 
 }

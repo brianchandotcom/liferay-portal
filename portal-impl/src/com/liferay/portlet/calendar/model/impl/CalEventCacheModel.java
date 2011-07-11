@@ -107,13 +107,8 @@ public class CalEventCacheModel implements CacheModel<CalEvent> {
 			calEventImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			calEventImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			calEventImpl.setModifiedDate(new Date(modifiedDate));
-		}
+		calEventImpl.setCreateDate(new Date(createDate));
+		calEventImpl.setModifiedDate(new Date(modifiedDate));
 
 		if (title == null) {
 			calEventImpl.setTitle(StringPool.BLANK);
@@ -136,14 +131,8 @@ public class CalEventCacheModel implements CacheModel<CalEvent> {
 			calEventImpl.setLocation(location);
 		}
 
-		if (startDate > 0) {
-			calEventImpl.setStartDate(new Date(startDate));
-		}
-
-		if (endDate > 0) {
-			calEventImpl.setEndDate(new Date(endDate));
-		}
-
+		calEventImpl.setStartDate(new Date(startDate));
+		calEventImpl.setEndDate(new Date(endDate));
 		calEventImpl.setDurationHour(durationHour);
 		calEventImpl.setDurationMinute(durationMinute);
 		calEventImpl.setAllDay(allDay);

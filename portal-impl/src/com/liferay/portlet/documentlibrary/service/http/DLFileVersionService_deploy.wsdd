@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Portlet_DL_DLFileVersionService" provider="java:RPC" style="rpc" use="encoded">
+		<typeMapping xmlns:ns="http://model.documentlibrary.portlet.liferay.com" qname="ns:DLFileVersionSoap" type="java:com.liferay.portlet.documentlibrary.model.DLFileVersionSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="getFileVersion" qname="operNS:getFileVersion" returnQName="getFileVersionReturn" returnType="rtns:DLFileVersionSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileVersionId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="getLatestFileVersion" qname="operNS:getLatestFileVersion" returnQName="getLatestFileVersionReturn" returnType="rtns:DLFileVersionSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileEntryId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getFileVersion getLatestFileVersion" />
+		<parameter name="className" value="com.liferay.portlet.documentlibrary.service.http.DLFileVersionServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.documentlibrary.portlet.liferay.com" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="DLFileVersionServiceSoap" />
+		<parameter name="wsdlServiceElement" value="DLFileVersionServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Portlet_DL_DLFileVersionService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.documentlibrary.portlet.liferay.com" />
+	</service>
+</deployment>

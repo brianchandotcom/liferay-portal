@@ -661,6 +661,18 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
 	</bean>
+	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+	</bean>
+	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+	</bean>
+	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileVersionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
+	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />

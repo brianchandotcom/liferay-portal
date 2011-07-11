@@ -35,6 +35,7 @@ String portletURLString = portletURL.toString();
 
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 <liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
+<liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="you-cannot-delete-user-groups-that-have-users" />
 
 <aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -89,22 +90,31 @@ String portletURLString = portletURL.toString();
 	function <portlet:namespace />doDeleteOrganizationOrUserGroup(className, id) {
 		var ids = id;
 
+		var status = <%= WorkflowConstants.STATUS_INACTIVE %>
+
 		<portlet:namespace />getUsersCount(
-			className, ids, false,
+			className, ids, status,
 			function(event, id, obj) {
 				var responseData = this.get('responseData');
 				var count = parseInt(responseData);
 
 				if (count > 0) {
+					status = <%= WorkflowConstants.STATUS_APPROVED %>
+
 					<portlet:namespace />getUsersCount(
-						className, ids, true,
+						className, ids, status,
 						function(event, id, obj) {
 							responseData = this.get('responseData')
 							count = parseInt(responseData);
 
 							if (count > 0) {
 								if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-									<portlet:namespace />doDeleteOrganizations(ids);
+									if (className == '<%= Organization.class.getName() %>') {
+										<portlet:namespace />doDeleteOrganizations(ids);
+									}
+									else {
+										<portlet:namespace />doDeleteUserGroups(ids);
+									}
 								}
 							}
 							else {
@@ -235,16 +245,16 @@ String portletURLString = portletURL.toString();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />getUsersCount',
-		function(className, ids, active, callback) {
+		function(className, ids, status, callback) {
 			var A = AUI();
 
 			A.io.request(
 				'<%= themeDisplay.getPathMain() %>/users_admin/get_users_count',
 				{
 					data: {
-						active: active,
 						className: className,
-						ids: ids
+						ids: ids,
+						status: status
 					},
 					on: {
 						success: callback

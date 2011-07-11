@@ -23,7 +23,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
@@ -245,19 +244,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 	}
 
-	public DLFileVersion getFileVersion(long fileVersionId)
-		throws PortalException, SystemException {
-
-		DLFileVersion fileVersion = dlFileEntryLocalService.getFileVersion(
-			fileVersionId);
-
-		DLFileEntryPermission.check(
-			getPermissionChecker(), fileVersion.getFileEntryId(),
-			ActionKeys.VIEW);
-
-		return fileVersion;
-	}
-
 	public int getFoldersFileEntriesCount(
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
@@ -318,13 +304,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return dlFileEntryPersistence.filterCountByG_U_F(
 				groupId, userId, folderIds);
 		}
-	}
-
-	public DLFileVersion getLatestFileVersion(long fileEntryId)
-		throws PortalException, SystemException {
-
-		return dlFileEntryLocalService.getLatestFileVersion(
-			getGuestOrUserId(), fileEntryId);
 	}
 
 	public boolean hasFileEntryLock(long fileEntryId)

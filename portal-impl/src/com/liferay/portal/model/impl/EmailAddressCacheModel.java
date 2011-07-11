@@ -74,14 +74,8 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress> {
 			emailAddressImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			emailAddressImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			emailAddressImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		emailAddressImpl.setCreateDate(new Date(createDate));
+		emailAddressImpl.setModifiedDate(new Date(modifiedDate));
 		emailAddressImpl.setClassNameId(classNameId);
 		emailAddressImpl.setClassPK(classPK);
 

@@ -104,14 +104,8 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 			assetEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
-			assetEntryImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate > 0) {
-			assetEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		assetEntryImpl.setCreateDate(new Date(createDate));
+		assetEntryImpl.setModifiedDate(new Date(modifiedDate));
 		assetEntryImpl.setClassNameId(classNameId);
 		assetEntryImpl.setClassPK(classPK);
 
@@ -123,22 +117,10 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 		}
 
 		assetEntryImpl.setVisible(visible);
-
-		if (startDate > 0) {
-			assetEntryImpl.setStartDate(new Date(startDate));
-		}
-
-		if (endDate > 0) {
-			assetEntryImpl.setEndDate(new Date(endDate));
-		}
-
-		if (publishDate > 0) {
-			assetEntryImpl.setPublishDate(new Date(publishDate));
-		}
-
-		if (expirationDate > 0) {
-			assetEntryImpl.setExpirationDate(new Date(expirationDate));
-		}
+		assetEntryImpl.setStartDate(new Date(startDate));
+		assetEntryImpl.setEndDate(new Date(endDate));
+		assetEntryImpl.setPublishDate(new Date(publishDate));
+		assetEntryImpl.setExpirationDate(new Date(expirationDate));
 
 		if (mimeType == null) {
 			assetEntryImpl.setMimeType(StringPool.BLANK);

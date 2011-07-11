@@ -411,26 +411,6 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileVersion(fileVersionId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileEntryId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileVersion(fileEntryId, version);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
-		long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileVersions(fileEntryId, status);
-	}
-
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -465,20 +445,6 @@ public class DLFileEntryLocalServiceUtil {
 	public static int getGroupFileEntriesCount(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupFileEntriesCount(groupId, userId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLatestFileVersion(userId, fileEntryId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLatestFileVersion(fileEntryId, excludeWorkingCopy);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries()

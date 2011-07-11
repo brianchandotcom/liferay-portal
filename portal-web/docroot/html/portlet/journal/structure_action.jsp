@@ -58,7 +58,7 @@ JournalStructure structure = (JournalStructure)row.getObject();
 	<c:if test="<%= JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= JournalStructure.class.getName() %>"
-			modelResourceDescription="<%= structure.getName() %>"
+			modelResourceDescription="<%= structure.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(structure.getId()) %>"
 			var="permissionsURL"
 		/>

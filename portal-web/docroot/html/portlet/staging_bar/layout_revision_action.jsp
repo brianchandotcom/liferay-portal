@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
-LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("layout_revisions.jsp-layoutRevision");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+LayoutRevision	layoutRevision = (LayoutRevision)row.getObject();
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid());
 

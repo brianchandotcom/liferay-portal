@@ -210,7 +210,7 @@ AUI().add(
 							draggable: true,
 							modal: true,
 							title: Liferay.Language.get('history'),
-							width: 400
+							width: 600
 						}
 					).plug(
 						A.Plugin.IO,

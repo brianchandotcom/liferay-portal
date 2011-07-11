@@ -19,128 +19,210 @@
 <%
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
-long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
+long currentLayoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
 
-List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
+LayoutRevision recentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(currentLayoutRevisionId);
+
+List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 %>
 
-<div id="<portlet:namespace />revisionsToolbar"></div>
+<c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
+	<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
+		<aui:select cssClass="variation-selector" inlineLabel="left" label="page-variation" name="variationsSelector">
 
-<aui:script use="aui-toolbar,liferay-staging" position="inline">
-	Liferay.Staging.Branching.init(
-		{
-			namespace: '<portlet:namespace />'
+			<%
+			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
+			%>
+
+				<aui:option label="<%= rootLayoutRevision.getVariationName() %>" selected="<%= recentLayoutRevision.getVariationName().equals(rootLayoutRevision.getVariationName()) %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
+
+			<%
+			}
+			%>
+
+			<aui:option label="all-page-variations" value="all" />
+		</aui:select>
+	</c:if>
+
+	<div class="layout-revision-container" id="<portlet:namespace/>LayoutRevisionsContainer">
+
+		<%
+		for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
+		%>
+
+			<div class="layout-variation-container <%= recentLayoutRevision.getVariationName().equals(rootLayoutRevision.getVariationName()) ? StringPool.BLANK : "aui-helper-hidden" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
+				<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
+					<h3 class="layout-variation-name"><%= rootLayoutRevision.getVariationName() %></h3>
+				</c:if>
+
+				<liferay-ui:search-container>
+					<liferay-ui:search-container-results
+						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getVariationName(), searchContainer.getStart(), searchContainer.getEnd(), new LayoutRevisionIdComparator(false)) %>"
+						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getVariationName()) %>"
+					/>
+
+					<liferay-ui:search-container-row
+						className="com.liferay.portal.model.LayoutRevision"
+						escapedModel="<%= true %>"
+						keyProperty="layoutRevisionId"
+						modelVar="curLayoutRevision"
+					>
+
+						<liferay-ui:search-container-column-text
+							buffer="buffer"
+							cssClass='<%= (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) ? "layout-revision-current" : StringPool.BLANK %>'
+							name="date"
+						>
+
+						<%
+						Date now = new Date();
+
+						long timeAgo = now.getTime() - curLayoutRevision.getCreateDate().getTime();
+
+						if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
+							buffer.append("<div class=\"current-version-pointer\"><img alt=\"");
+							buffer.append(LanguageUtil.get(pageContext, "current-version"));
+							buffer.append("\" src=\"");
+							buffer.append(themeDisplay.getPathThemeImages());
+							buffer.append("/arrows/01_right.png\" title=\"");
+							buffer.append(LanguageUtil.get(pageContext, "current-version"));
+							buffer.append("\" /></div>");
+						}
+
+						buffer.append("<span class=\"aproximate-date\">");
+						buffer.append(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, timeAgo, true)));
+						buffer.append("</span><span class=\"real-date\">");
+						buffer.append(dateFormatDateTime.format(curLayoutRevision.getCreateDate()));
+						buffer.append("</span>");
+						%>
+
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							buffer="buffer"
+							name="status"
+						>
+
+							<%
+							String statusMessage = null;
+							String additionalText = StringPool.BLANK;
+
+							if (curLayoutRevision.isHead()) {
+								statusMessage = "published";
+							}
+							else {
+								int status = curLayoutRevision.getStatus();
+
+								statusMessage = WorkflowConstants.toLabel(status);
+
+								if (status == WorkflowConstants.STATUS_PENDING) {
+
+									StringBundler sb = new StringBundler(4);
+
+									try {
+										String workflowStatus = WorkflowInstanceLinkLocalServiceUtil.getState(curLayoutRevision.getCompanyId(), curLayoutRevision.getGroupId(), LayoutRevision.class.getName(), curLayoutRevision.getLayoutRevisionId());
+
+										sb.append(StringPool.SPACE);
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(LanguageUtil.get(pageContext, workflowStatus));
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+
+										additionalText = sb.toString();
+									}
+									catch (NoSuchWorkflowInstanceLinkException nswile) {
+									}
+								}
+							}
+
+							buffer.append("<span class=\"taglib-workflow-status\"><span class=\"workflow-status\"><span class=\"workflow-status-");
+							buffer.append(statusMessage);
+							buffer.append("\">");
+							buffer.append(LanguageUtil.get(pageContext, statusMessage));
+							buffer.append(additionalText);
+							buffer.append("</span></span></span>");
+							%>
+
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							buffer="buffer"
+							name="version"
+						>
+
+							<%
+
+							if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
+								buffer.append("<span class=\"layout-revision-current\">");
+								buffer.append(curLayoutRevision.getLayoutRevisionId());
+								buffer.append("</span><span class=\"current-version\">");
+								buffer.append(LanguageUtil.get(pageContext, "current-version"));
+								buffer.append("</span>");
+							}
+							else {
+								buffer.append("<a class=\"layout-revision\" href=\"#\">");
+								buffer.append(curLayoutRevision.getLayoutRevisionId());
+								buffer.append("</a>");
+							}
+
+							%>
+
+						</liferay-ui:search-container-column-text>
+
+
+						<liferay-ui:search-container-column-text
+							buffer="buffer"
+							name="user"
+						>
+
+							<%
+							User curUser = UserLocalServiceUtil.getUserById(curLayoutRevision.getUserId());
+
+							buffer.append("<a class=\"user-handle\" href=\"");
+							buffer.append(curUser.getDisplayURL(themeDisplay));
+							buffer.append("\">");
+							buffer.append(curUser.getFullName());
+							buffer.append("</a>");
+							%>
+
+						</liferay-ui:search-container-column-text>
+
+
+						<liferay-ui:search-container-column-jsp
+							path="/html/portlet/staging_bar/layout_revision_action.jsp"
+						/>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+				</liferay-ui:search-container>
+			</div>
+
+		<%
 		}
-	);
-
-	new A.Toolbar(
-		{
-			activeState: false,
-			boundingBox: '#<portlet:namespace />revisionsToolbar',
-			children: [
-				{
-					handler: function (event) {
-					},
-					icon: 'trash',
-					label: '<liferay-ui:message key="clear-history" />'
-				}
-			]
-		}
-	).render();
-</aui:script>
-
-<c:if test="<%= !layoutRevisions.isEmpty() %>">
-	<ul class="layout-revision-container layout-revision-container-root">
-		<%= _getGraph(pageContext, layoutRevisionId, layoutRevisions) %>
-	</ul>
+		%>
+	</div>
 </c:if>
 
-<%!
-public String _getGraph(PageContext pageContext, long layoutRevisionId, List<LayoutRevision> layoutRevisions) throws PortalException, SystemException {
-	ServletContext servletContext = pageContext.getServletContext();
-	HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-	HttpServletResponse response = (HttpServletResponse)pageContext.getResponse();
+<aui:script use="aui-base" position="inline">
+	var variationsSelector = A.one('#<portlet:namespace/>variationsSelector');
+	var LayoutRevisionsContainer = A.one('#<portlet:namespace/>LayoutRevisionsContainer');
 
-	ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+	var layoutVariations = A.all('.layout-variation-container');
 
-	StringBundler sb = new StringBundler();
+	if (variationsSelector) {
+		variationsSelector.on(
+			'change',
+			function() {
+				if (variationsSelector.val() == 'all') {
+					layoutVariations.show();
+				}
+				else {
+					layoutVariations.hide();
 
-	for (LayoutRevision layoutRevision : layoutRevisions) {
-		sb.append("<li class=\"layout-revision\"><div class=\"layout-revision-details");
+					var layoutVariation = A.one('#<portlet:namespace/>' + variationsSelector.val());
 
-		if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
-			sb.append(" layout-revision-current");
-		}
-
-		if (layoutRevision.isHead()) {
-			sb.append(" layout-revision-head");
-		}
-
-		sb.append("\"><span class=\"selection-details\">");
-		sb.append("<a class=\"selection-handle\" href=\"#\" data-layoutRevisionId=\"");
-		sb.append(layoutRevision.getLayoutRevisionId());
-		sb.append("\" data-layoutSetBranchId=\"");
-		sb.append(layoutRevision.getLayoutSetBranchId());
-		sb.append("\">");
-
-		if (layoutRevision.isMajor()) {
-			sb.append("<strong>");
-			sb.append(layoutRevision.getLayoutRevisionId());
-			sb.append("</strong>");
-		}
-		else {
-			sb.append(layoutRevision.getLayoutRevisionId());
-		}
-
-		sb.append("</a>");
-
-		User curUser = UserLocalServiceUtil.getUserById(layoutRevision.getUserId());
-
-		sb.append(" - <a class=\"user-handle\" href=\"");
-		sb.append(curUser.getDisplayURL(themeDisplay));
-		sb.append("\">");
-		sb.append(curUser.getFullName());
-		sb.append("</a>");
-
-		if (layoutRevision.isPending()) {
-			sb.append(" - <span class=\"status\">");
-			sb.append(themeDisplay.translate("pending"));
-			sb.append("</span>");
-		}
-
-		sb.append("</span>");
-
-		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/html/portlet/staging_bar/layout_revision_action.jsp");
-
-		request.setAttribute("layout_revisions.jsp-layoutRevision", layoutRevision);
-
-		StringServletResponse stringResponse = new StringServletResponse(response);
-
-		if (requestDispatcher != null) {
-			try {
-				requestDispatcher.include(request, stringResponse);
+					layoutVariation.show();
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		sb.append(stringResponse.getString());
-		sb.append("</div>");
-
-		List<LayoutRevision> curLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getLayoutRevisionId(), layoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
-
-		if (!layoutRevisions.isEmpty()) {
-			sb.append("<ul class=\"layout-revision-container\">");
-
-			sb.append(_getGraph(pageContext, layoutRevisionId, curLayoutRevisions));
-
-			sb.append("</ul>");
-		}
-
-		sb.append("</li>");
+		);
 	}
-
-	return sb.toString();
-}
-%>
+</aui:script>

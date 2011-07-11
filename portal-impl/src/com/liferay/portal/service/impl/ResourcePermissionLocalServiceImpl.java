@@ -425,7 +425,7 @@ public class ResourcePermissionLocalServiceImpl
 			}
 		}
 	}
-	
+
 	public void setOwnerResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
 			long ownerId, String[] actionIds)
@@ -562,7 +562,9 @@ public class ResourcePermissionLocalServiceImpl
 					ResourceActionsUtil.getModelResourceGuestDefaultActions(
 						name);
 			}
-			else if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+			else if (roleName.equals(RoleConstants.SITE_MEMBER) ||
+					 roleName.equals(RoleConstants.ORGANIZATION_USER)) {
+
 				defaultActionIds =
 					ResourceActionsUtil.getModelResourceGroupDefaultActions(
 						name);

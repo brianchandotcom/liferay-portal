@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.taglib.aui.base.BaseButtonRowTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,26 +25,7 @@ import javax.servlet.jsp.JspWriter;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class ButtonRowTag extends IncludeTag {
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
-
-	@Override
-	protected void cleanUp() {
-		_cssClass = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
+public class ButtonRowTag extends BaseButtonRowTag {
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {
@@ -59,21 +41,6 @@ public class ButtonRowTag extends IncludeTag {
 		return EVAL_PAGE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:button-row:cssClass", _cssClass);
-		request.setAttribute(
-			"aui:button-row:dynamicAttributes", getDynamicAttributes());
-	}
-
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final String _END_PAGE =
-		"/html/taglib/aui/button_row/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/button_row/start.jsp";
-
-	private String _cssClass;
 
 }

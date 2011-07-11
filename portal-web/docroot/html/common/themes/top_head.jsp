@@ -25,6 +25,23 @@
 
 <link rel="Shortcut Icon" href="<%= themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" />
 
+<%-- Available Translations --%>
+
+<%
+Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+for(Locale curLocale : availableLocales) {
+	if(!curLocale.equals(locale)){
+		String alternateFriendlyURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay, curLocale) ;
+%>
+
+		<link rel="alternate" href="<%= alternateFriendlyURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" title="<%= layout.getHTMLTitle(curLocale) %>" />
+
+<%
+	}
+}
+%>
+
 <%-- Portal CSS --%>
 
 <link href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathContext() + "/html/portal/css.jsp")) %>" rel="stylesheet" type="text/css" />

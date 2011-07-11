@@ -50,7 +50,8 @@ public interface UserGroupService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserGroup addUserGroup(
-		java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -82,7 +83,8 @@ public interface UserGroupService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserGroup updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
+		long userGroupId, java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

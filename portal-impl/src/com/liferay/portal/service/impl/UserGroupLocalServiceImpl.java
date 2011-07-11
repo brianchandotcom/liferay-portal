@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
@@ -48,6 +49,7 @@ import java.util.Map;
 
 /**
  * @author Charles May
+ * @author Miguel Pastor
  */
 public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
@@ -68,7 +70,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description)
+			long userId, long companyId, String name, String description,
+			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws PortalException, SystemException {
 
 		// User Group
@@ -86,6 +89,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setDescription(description);
 		userGroup.setAddedByLDAPImport(
 			LDAPUserGroupTransactionThreadLocal.isOriginatesFromLDAP());
+		userGroup.setPublicLayoutSetPrototypeId(publicLayoutSetPrototypeId);
+		userGroup.setPrivateLayoutSetPrototypeId(privateLayoutSetPrototypeId);
 
 		userGroupPersistence.update(userGroup, false);
 
@@ -328,7 +333,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description)
+			long companyId, long userGroupId, String name, String description,
+			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws PortalException, SystemException {
 
 		validate(userGroupId, companyId, name);
@@ -338,6 +344,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userGroup.setName(name);
 		userGroup.setDescription(description);
+		userGroup.setPublicLayoutSetPrototypeId(publicLayoutSetPrototypeId);
+		userGroup.setPrivateLayoutSetPrototypeId(privateLayoutSetPrototypeId);
 
 		userGroupPersistence.update(userGroup, false);
 
@@ -352,16 +360,30 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		UserGroup userGroup = userGroupLocalService.getUserGroup(userGroupId);
 
-		long groupId = userGroup.getGroup().getGroupId();
+		LayoutSetPrototype layoutSetPrototype = null;
 
-		if (userGroup.hasPrivateLayouts()) {
+		long groupId = 0;
+
+		if (userGroup.getPrivateLayoutSetPrototypeId() > 0) {
+			layoutSetPrototype =
+				layoutSetPrototypeLocalService.getLayoutSetPrototype(
+					userGroup.getPrivateLayoutSetPrototypeId());
+
+			groupId = layoutSetPrototype.getGroup().getGroupId();
+
 			files[0] = layoutLocalService.exportLayoutsAsFile(
 				groupId, true, null, parameterMap, null, null);
 		}
 
-		if (userGroup.hasPublicLayouts()) {
+		if (userGroup.getPublicLayoutSetPrototypeId() > 0) {
+			layoutSetPrototype =
+				layoutSetPrototypeLocalService.getLayoutSetPrototype(
+					userGroup.getPublicLayoutSetPrototypeId());
+
+			groupId = layoutSetPrototype.getGroup().getGroupId();
+
 			files[1] = layoutLocalService.exportLayoutsAsFile(
-				groupId, false, null, parameterMap, null, null);
+				groupId, true, null, parameterMap, null, null);
 		}
 
 		return files;

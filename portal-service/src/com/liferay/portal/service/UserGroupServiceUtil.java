@@ -50,10 +50,13 @@ public class UserGroupServiceUtil {
 	}
 
 	public static com.liferay.portal.model.UserGroup addUserGroup(
-		java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addUserGroup(name, description);
+		return getService()
+				   .addUserGroup(name, description, publicLayoutSetPrototypeId,
+			privateLayoutSetPrototypeId);
 	}
 
 	public static void deleteUserGroup(long userGroupId)
@@ -94,10 +97,13 @@ public class UserGroupServiceUtil {
 	}
 
 	public static com.liferay.portal.model.UserGroup updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
+		long userGroupId, java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateUserGroup(userGroupId, name, description);
+		return getService()
+				   .updateUserGroup(userGroupId, name, description,
+			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
 	public static UserGroupService getService() {

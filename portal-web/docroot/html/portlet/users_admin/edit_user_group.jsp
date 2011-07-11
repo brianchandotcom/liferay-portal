@@ -60,94 +60,149 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 		%>
 
+		<%
+		LayoutSetPrototype publicLayoutSetPrototype = null;
+		LayoutSetPrototype privateLayoutSetPrototype = null;
+
+		long userGroupUserCount = 0;
+
+		if (userGroup != null) {
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+			params.put("usersUserGroups", userGroup.getPrimaryKey());
+
+			userGroupUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, params);
+
+			if (userGroup.getPublicLayoutSetPrototypeId() > 0) {
+				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(userGroup.getPublicLayoutSetPrototypeId());
+			}
+
+			if (userGroup.getPrivateLayoutSetPrototypeId() > 0) {
+				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(userGroup.getPrivateLayoutSetPrototypeId());
+			}
+		}
+		%>
+
 		<c:if test="<%= (userGroup != null) || !layoutSetPrototypes.isEmpty() %>">
-			<c:choose>
-				<c:when test="<%= ((userGroup == null) || (userGroup.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
-						<aui:option label="none" selected="<%= true %>" value="" />
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" helpMessage="personal-site-template-help" id="userGroupSiteTemplatePanel" persistState="<%= true %>" title="personal-site-template">
+				<aui:field-wrapper label="public-pages">
+					<c:choose>
+						<c:when test="<%= (publicLayoutSetPrototype == null) || ((userGroup == null) || (userGroupUserCount == 0)) && !layoutSetPrototypes.isEmpty() %>">
+							<aui:select inlineField="<%= true %>" name="publicLayoutSetPrototypeId" label="">
+								<aui:option label="none" selected="<%= true %>" value="" />
 
-						<%
-						for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-						%>
+								<%
+								for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+								%>
 
-							<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= layoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
+									<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= layoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
 
-						<%
-						}
-						%>
+								<%
+								}
+								%>
 
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<aui:field-wrapper label="public-pages">
-						<c:choose>
-							<c:when test="<%= (userGroup != null) && (userGroup.getPublicLayoutsPageCount() > 0) %>">
-								<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-									<portlet:param name="struts_action" value="/my_places/view" />
-									<portlet:param name="groupId" value="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>" />
-									<portlet:param name="publicLayout" value="<%= Boolean.TRUE.toString() %>" />
-								</liferay-portlet:actionURL>
+							</aui:select>
+
+							<c:if test="<%= (publicLayoutSetPrototype != null) && LayoutSetPrototypePermissionUtil.contains(permissionChecker, publicLayoutSetPrototype.getPrimaryKey(), ActionKeys.UPDATE) %>">
+								<liferay-portlet:renderURL var="editLayoutSetPrototype" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+									<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+									<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPublicLayoutSetPrototypeId()) %>" />
+								</liferay-portlet:renderURL>
 
 								<liferay-ui:icon
-									image="view"
+									image="edit"
 									label="<%= true %>"
-									message="open-pages"
 									method="get"
-									target="_blank"
-									url="<%= publicPagesURL.toString() %>"
+									url="<%= editLayoutSetPrototype %>"
 								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
-							</c:otherwise>
-						</c:choose>
-					</aui:field-wrapper>
-				</c:otherwise>
-			</c:choose>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<aui:input type="hidden" name="privateLayoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPublicLayoutSetPrototypeId()) %>" />
 
-			<c:choose>
-				<c:when test="<%= ((userGroup == null) || (userGroup.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
-						<aui:option label="none" selected="<%= true %>" value="" />
+							<c:choose>
+								<c:when test="<%= (userGroup != null) && (userGroupUserCount > 0) && (publicLayoutSetPrototype != null) && LayoutSetPrototypePermissionUtil.contains(permissionChecker, publicLayoutSetPrototype.getPrimaryKey(), ActionKeys.UPDATE) %>">
+									<liferay-portlet:renderURL var="editLayoutSetPrototype" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+										<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+										<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPublicLayoutSetPrototypeId()) %>" />
+									</liferay-portlet:renderURL>
 
-						<%
-						for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-						%>
+									<%
+									String title = LanguageUtil.format(pageContext, "edit-x-site-template", publicLayoutSetPrototype.getName(locale));
+									%>
 
-							<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= layoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
+									<aui:a href="<%= editLayoutSetPrototype %>" label="<%= publicLayoutSetPrototype.getName(locale) %>" title="<%= title %>" />
+								</c:when>
+								<c:when test="<%= (userGroup != null) && (userGroupUserCount > 0) %>">
+									<%= publicLayoutSetPrototype.getName() %>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</aui:field-wrapper>
 
-						<%
-						}
-						%>
+				<aui:field-wrapper label="private-pages">
+					<c:choose>
+						<c:when test="<%= (privateLayoutSetPrototype == null) || ((userGroup == null) || (userGroupUserCount == 0)) && !layoutSetPrototypes.isEmpty() %>">
+							<aui:select inlineField="<%= true %>" name="privateLayoutSetPrototypeId" label="">
+								<aui:option label="none" selected="<%= true %>" value="" />
 
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<aui:field-wrapper label="private-pages">
-						<c:choose>
-							<c:when test="<%= (userGroup != null) && (userGroup.getPrivateLayoutsPageCount() > 0) %>">
-								<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-									<portlet:param name="struts_action" value="/my_places/view" />
-									<portlet:param name="groupId" value="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>" />
-									<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-								</liferay-portlet:actionURL>
+								<%
+								for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+								%>
+
+									<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= layoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
+
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<c:if test="<%= (privateLayoutSetPrototype != null) && LayoutSetPrototypePermissionUtil.contains(permissionChecker, privateLayoutSetPrototype.getPrimaryKey(), ActionKeys.UPDATE) %>">
+								<liferay-portlet:renderURL var="editLayoutSetPrototype" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+									<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+									<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPrivateLayoutSetPrototypeId()) %>" />
+								</liferay-portlet:renderURL>
 
 								<liferay-ui:icon
-									image="view"
+									image="edit"
 									label="<%= true %>"
-									message="open-pages"
 									method="get"
-									target="_blank"
-									url="<%= privatePagesURL.toString() %>"
+									url="<%= editLayoutSetPrototype %>"
 								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
-							</c:otherwise>
-						</c:choose>
-					</aui:field-wrapper>
-				</c:otherwise>
-			</c:choose>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<aui:input type="hidden" name="privateLayoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPrivateLayoutSetPrototypeId()) %>" />
+
+							<c:choose>
+								<c:when test="<%= (userGroup != null) && (userGroupUserCount > 0) && (privateLayoutSetPrototype != null) && LayoutSetPrototypePermissionUtil.contains(permissionChecker, privateLayoutSetPrototype.getPrimaryKey(), ActionKeys.UPDATE) %>">
+									<liferay-portlet:renderURL var="editLayoutSetPrototype" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+										<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+										<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(userGroup.getPrivateLayoutSetPrototypeId()) %>" />
+									</liferay-portlet:renderURL>
+
+									<%
+									String title = LanguageUtil.format(pageContext, "edit-x-site-template", privateLayoutSetPrototype.getName(locale));
+									%>
+
+									<aui:a href="<%= editLayoutSetPrototype %>" label="<%= privateLayoutSetPrototype.getName(locale) %>" title="<%= title %>" />
+								</c:when>
+								<c:when test="<%= (userGroup != null) && (userGroupUserCount > 0) %>">
+									<%= privateLayoutSetPrototype.getName() %>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</aui:field-wrapper>
+			</liferay-ui:panel>
 		</c:if>
 	</aui:fieldset>
 

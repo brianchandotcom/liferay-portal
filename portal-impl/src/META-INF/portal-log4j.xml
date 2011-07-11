@@ -485,7 +485,7 @@
 	</category>
 
 	<category name="com.liferay.portal.servlet.MainServlet">
-		<priority value="ERROR" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.servlet.PortalSessionCreator">

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -867,6 +868,25 @@ public class MainServlet extends ActionServlet {
 
 	protected void initResourceActions(List<Portlet> portlets)
 		throws Exception {
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("Liferay is configured to use permission algorithm ");
+				sb.append(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM);
+				sb.append(". As of version 6.2, only permission algorithm 6 ");
+				sb.append("will be supported. Please log in as an ");
+				sb.append("administrator, go to the \"Server ");
+				sb.append("Administration\" control panel, select the \"Data ");
+				sb.append("Migration\" tab, and convert from this legacy ");
+				sb.append("permission algorithm as soon as possible.");
+
+				_log.warn(sb.toString());
+			}
+
+			return;
+		}
 
 		Iterator<Portlet> itr = portlets.iterator();
 

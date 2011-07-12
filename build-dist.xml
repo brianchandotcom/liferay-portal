@@ -1056,6 +1056,58 @@ release was successful.</echo>
 		<mkdir dir="${app.server.tomcat.dir}/webapps" />
 	</target>
 
+	<target name="unzip-weblogic">
+		<delete dir="${app.server.weblogic.server.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
+			</not>
+			<then>
+				<if>
+					<equals arg1="${app.server.weblogic.zip.url}" arg2=""/>
+					<then>
+						<echo message="Please login to the Oracle website to download the weblogic zip file (${app.server.weblogic.zip.name}) and place it in the ${app.server.parent.dir} directory. Then re-run this task."/>
+					</then>
+					<else>
+						<get
+							dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+							src="${app.server.weblogic.zip.url}"
+							verbose="true"
+						/>
+					</else>
+				</if>
+			</then>
+			<else>
+				<unzip
+					dest="${app.server.weblogic.server.dir}"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+
+				<exec executable="sh">
+					<env key="MW_HOME" value="${app.server.weblogic.server.dir}"/>
+					<arg value="${app.server.weblogic.server.dir}/configure.sh" />
+				</exec>
+				
+				<exec executable="sh">
+					<arg value="tools/servers/weblogic/create-weblogic-domain.sh" />
+					<arg value="${app.server.weblogic.server.dir}" />
+					<arg value="${app.server.weblogic.domains.dir}" />
+					<arg value="${app.server.weblogic.domain.name}" />
+				</exec>
+				
+				<echo file="${app.server.weblogic.dir}/run.sh">#!/bin/sh
+
+export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+export MW_HOME="${app.server.weblogic.server.dir}"
+
+sh startWebLogic.sh</echo>
+				
+				<chmod file="${app.server.weblogic.dir}/run.sh" perm="750"/>
+			</else>
+		</if>
+	</target>
+
 	<target name="zip-api">
 		<delete file="dist/liferay-portal-doc-${lp.version}.zip" failonerror="false" />
 

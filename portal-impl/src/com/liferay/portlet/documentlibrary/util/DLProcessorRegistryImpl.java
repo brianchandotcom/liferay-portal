@@ -32,6 +32,10 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	public void trigger(FileEntry fileEntry) {
+		if (!DLProcessorThreadLocal.isEnabled()) {
+			return;
+		}
+
 		if (fileEntry == null) {
 			return;
 		}

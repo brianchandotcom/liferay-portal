@@ -31,7 +31,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 	updateRecentLayoutRevisionId = true;
 }
 
-boolean isWorfklowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
+boolean isWorkflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 %>
 
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
@@ -52,8 +52,8 @@ boolean isWorfklowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDe
 			%>
 
 			<liferay-ui:icon
-				image='<%= isWorfklowEnabled ? "../aui/shuffle" : "../aui/circle-check"  %>'
-				message='<%= isWorfklowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication"  %>'
+				image='<%= isWorkflowEnabled ? "../aui/shuffle" : "../aui/circle-check"  %>'
+				message='<%= isWorkflowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication"  %>'
 				url="<%= taglibURL %>"
 			/>
 		</c:if>

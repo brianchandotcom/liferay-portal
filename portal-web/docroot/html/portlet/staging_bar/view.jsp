@@ -360,7 +360,7 @@ if (layout != null) {
 										);
 
 										<%
-										boolean isWorfklowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
+										boolean isWorkflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 										%>
 
 										<portlet:actionURL var="publishURL">
@@ -378,8 +378,8 @@ if (layout != null) {
 												handler: function(event) {
 													submitForm(document.hrefFm, '<%= publishURL %>');
 												},
-												icon: '<%= isWorfklowEnabled ? "shuffle" : "circle-check"  %>',
-												label: '<%= UnicodeLanguageUtil.get(pageContext, isWorfklowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
+												icon: '<%= isWorkflowEnabled ? "shuffle" : "circle-check"  %>',
+												label: '<%= UnicodeLanguageUtil.get(pageContext, isWorkflowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
 											}
 										);
 									</c:if>

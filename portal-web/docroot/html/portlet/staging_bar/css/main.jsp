@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.manage-backstages-tab, .manage-page-variations-tab {
+	.manage-backstages-tab, .manage-page-variations {
 		margin-left: 1em;
 	}
 
@@ -133,6 +133,12 @@
 				}
 			}
 
+			.layout-actions {
+				.manage-page-variations a {
+					color: #EEE;
+				}
+			}
+
 			.layout-revision-id {
 				font-size: 0.6em;
 			}
@@ -163,11 +169,11 @@
 				}
 
 				.workflow-status-approved, .workflow-status-ready-for-publication {
-					color: #9F3;
+					color: #8BEC59;
 				}
 
 				.workflow-status-draft {
-					color: #B8E9FF;
+					color: #CAD8F3;
 				}
 
 				.workflow-status-expired {

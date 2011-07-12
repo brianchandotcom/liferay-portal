@@ -122,12 +122,12 @@ html > .lfr-dockbar-pinned {
 	padding: 0;
 
 	.aproximate-date {
-		color: #999999;
+		color: #999;
     	font-weight: bold;
 	}
 
 	.current-version {
-		color: green;
+		color: #41801d;
 		display: block;
 	}
 
@@ -138,8 +138,9 @@ html > .lfr-dockbar-pinned {
 
 	.layout-variation-name {
 		color: #666;
-		font-variant: small-caps;
+		font-size: 1.15em;
 		margin-bottom: 0.1em;
+		text-transform: uppercase;
 	}
 
 	.layout-revision-current {
@@ -147,7 +148,7 @@ html > .lfr-dockbar-pinned {
 	}
 
 	.real-date {
-		color: #999999;
+		color: #999;
     	display: block;
     	text-align: right;
 	}
@@ -157,22 +158,14 @@ html > .lfr-dockbar-pinned {
 		padding-left: 0;
 
 		.workflow-status-ready-for-publication {
-			color: green;
+			color: #41801d;
 			font-weight: bold;
 		}
-	}
-
-	.lfr-menu-list {
-		z-index: 1002;
 	}
 }
 
 .layout-revision-container-root {
 	margin: 0;
-}
-
-.layout-revision-container .lfr-menu-list {
-	z-index: 1002;
 }
 
 .staging-details {

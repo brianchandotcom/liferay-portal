@@ -168,7 +168,6 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 
 						</liferay-ui:search-container-column-text>
 
-
 						<liferay-ui:search-container-column-text
 							buffer="buffer"
 							name="user"
@@ -186,7 +185,6 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 
 						</liferay-ui:search-container-column-text>
 
-
 						<liferay-ui:search-container-column-jsp
 							path="/html/portlet/staging_bar/layout_revision_action.jsp"
 						/>
@@ -202,7 +200,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 	</div>
 </c:if>
 
-<aui:script use="aui-base" position="inline">
+<aui:script use="aui-base">
 	var variationsSelector = A.one('#<portlet:namespace/>variationsSelector');
 	var layoutRevisionsContainer = A.one('#<portlet:namespace/>layoutRevisionsContainer');
 

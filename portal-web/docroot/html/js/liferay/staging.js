@@ -219,6 +219,7 @@ AUI().add(
 							data: {
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 								p_l_id: themeDisplay.getPlid(),
+								p_p_isolated: true,
 								redirect: Liferay.currentURL
 							},
 							uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'

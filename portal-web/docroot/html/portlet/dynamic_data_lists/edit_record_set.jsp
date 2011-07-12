@@ -81,10 +81,26 @@ if (Validator.isNotNull(ddmStructureId)) {
 
 		<aui:field-wrapper label="data-definition" required="<%= true %>">
 			<span id="<portlet:namespace />ddmStructureNameDisplay">
-				 <%= ddmStructureName %>
+
+				<%
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("javascript:");
+				sb.append(renderResponse.getNamespace());
+				sb.append("openDDMStructureSelector('/dynamic_data_mapping/edit_structure', '");
+				sb.append(ddmStructureId);
+				sb.append("');");
+				%>
+
+				<a href="<%= sb.toString() %>"><%= ddmStructureName %></a>
 			</span>
 
-			<aui:button name="selectDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "openDDMPortlet();" %>' value="select" />
+			<liferay-ui:icon
+				image="add"
+				label="<%= true %>"
+				message="select"
+				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+			/>
 		</aui:field-wrapper>
 
 		<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) %>">
@@ -131,17 +147,20 @@ if (Validator.isNotNull(ddmStructureId)) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />openDDMPortlet() {
+	function <portlet:namespace />openDDMStructureSelector(strutsAction, ddmStructureId) {
 		Liferay.Util.openDDMPortlet(
 			{
 				chooseCallback: '<portlet:namespace />selectDDMStructure',
+				saveCallback: '<portlet:namespace />selectDDMStructure',
 				dialog: {
 					stack: false,
 					width:820
 				},
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+				structureId: ddmStructureId,
 				structureName: 'data-definition',
 				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+				struts_action: strutsAction,
 				title: '<liferay-ui:message key="data-definitions" />'
 			}
 		);
@@ -160,7 +179,20 @@ if (Validator.isNotNull(ddmStructureId)) {
 			var A = AUI();
 
 			A.one('#<portlet:namespace />ddmStructureId').val(ddmStructureId);
-			A.one('#<portlet:namespace />ddmStructureNameDisplay').html(ddmStructureName)
+
+			var href = [];
+
+			href.push('javascript:<portlet:namespace />openDDMStructureSelector("/dynamic_data_mapping/edit_structure", "');
+			href.push(ddmStructureId);
+			href.push('");');
+
+			var a = A.Node.create('<a />');
+
+			a.setAttribute('href', href.join(''));
+
+			a.append(ddmStructureName);
+
+			A.one('#<portlet:namespace />ddmStructureNameDisplay').setContent(a);
 
 			if (dialog) {
 				dialog.close();

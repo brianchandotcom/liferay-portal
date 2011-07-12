@@ -304,8 +304,20 @@ public interface LayoutRevisionLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, long plid, java.lang.String variationName,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutRevisionsCount(long layoutSetBranchId,
 		long parentLayoutRevision, long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutRevisionsCount(long layoutSetBranchId, long plid,
+		java.lang.String variationName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutRevision updateLayoutRevision(

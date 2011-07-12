@@ -20,9 +20,11 @@
 
 <%
 Object bean = request.getAttribute("aui:workflow-status:bean");
+String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:help-message"), "a-new-version-will-be-created-automatically-if-this-content-is-modified");
 String id = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:id"));
 Class<?> model = (Class<?>)request.getAttribute("aui:workflow-status:model");
 int status = GetterUtil.getInteger((String)request.getAttribute("aui:workflow-status:status"));
+String statusMessage = ((String)request.getAttribute("aui:workflow-status:status-message"));
 String version = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:version"));
 %>
 
@@ -36,27 +38,30 @@ String version = GetterUtil.getString((String)request.getAttribute("aui:workflow
 	</c:if>
 
 	<%
-	String statusMessage = WorkflowConstants.toLabel(status);
 	String additionalText = StringPool.BLANK;
 
-	if (status == WorkflowConstants.STATUS_PENDING) {
-		long companyId = BeanPropertiesUtil.getLong(bean, "companyId");
-		long groupId = BeanPropertiesUtil.getLong(bean, "groupId");
-		long classPK = BeanPropertiesUtil.getLong(bean, "primaryKey");
+	if (Validator.isNull(statusMessage)) {
+		statusMessage = WorkflowConstants.toLabel(status);
 
-		StringBundler sb = new StringBundler(4);
+		if (status == WorkflowConstants.STATUS_PENDING) {
+			long companyId = BeanPropertiesUtil.getLong(bean, "companyId");
+			long groupId = BeanPropertiesUtil.getLong(bean, "groupId");
+			long classPK = BeanPropertiesUtil.getLong(bean, "primaryKey");
 
-		try {
-			String workflowStatus = WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, model.getName(), classPK);
+			StringBundler sb = new StringBundler(4);
 
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(LanguageUtil.get(pageContext, workflowStatus));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			try {
+				String workflowStatus = WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, model.getName(), classPK);
 
-			additionalText = sb.toString();
-		}
-		catch (NoSuchWorkflowInstanceLinkException nswile) {
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(LanguageUtil.get(pageContext, workflowStatus));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				additionalText = sb.toString();
+			}
+			catch (NoSuchWorkflowInstanceLinkException nswile) {
+			}
 		}
 	}
 	%>
@@ -64,6 +69,6 @@ String version = GetterUtil.getString((String)request.getAttribute("aui:workflow
 	<span class="workflow-status"><liferay-ui:message key="status" />: <strong class="workflow-status-<%= statusMessage %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
 
 	<c:if test="<%= (status == WorkflowConstants.STATUS_APPROVED) && Validator.isNotNull(version) %>">
-		<liferay-ui:icon-help message="a-new-version-will-be-created-automatically-if-this-content-is-modified" />
+		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
 </div>

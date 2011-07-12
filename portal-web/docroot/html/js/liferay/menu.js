@@ -225,14 +225,13 @@ AUI().add(
 							cssClass: 'lfr-menu-list',
 							hideClass: false,
 							preventOverlap: true,
-							zIndex: 999
+							zIndex: Liferay.zIndex.MENU
 						}
 					).render();
 
 					var boundingBox = overlay.get('boundingBox');
 
 					boundingBox.addClass('lfr-component');
-					boundingBox.swallowEvent('click');
 
 					instance._overlay = overlay;
 				}

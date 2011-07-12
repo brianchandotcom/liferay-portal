@@ -304,12 +304,30 @@ public class LayoutRevisionLocalServiceImpl
 			orderByComparator);
 	}
 
+	public List<LayoutRevision> getLayoutRevisions(
+			long layoutSetBranchId, long plid, String variationName, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return layoutRevisionPersistence.findByL_P_V(
+			layoutSetBranchId, plid, variationName, start, end,
+			orderByComparator);
+	}
+
 	public int getLayoutRevisionsCount(
 			long layoutSetBranchId, long parentLayoutRevision, long plid)
 		throws SystemException {
 
 		return layoutRevisionPersistence.countByL_P_P(
 			layoutSetBranchId, parentLayoutRevision, plid);
+	}
+
+	public int getLayoutRevisionsCount(
+			long layoutSetBranchId, long plid, String variationName)
+		throws SystemException {
+
+		return layoutRevisionPersistence.countByL_P_V(
+			layoutSetBranchId, plid, variationName);
 	}
 
 	public LayoutRevision updateLayoutRevision(

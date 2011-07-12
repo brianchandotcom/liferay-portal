@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
-LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("layout_revisions.jsp-layoutRevision");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+LayoutRevision	layoutRevision = (LayoutRevision)row.getObject();
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid());
 
@@ -28,11 +30,13 @@ boolean updateRecentLayoutRevisionId = false;
 if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 	updateRecentLayoutRevisionId = true;
 }
+
+boolean isWorkflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 %>
 
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-		<c:if test="<%= pendingLayoutRevisions.isEmpty() && layoutRevision.isMajor() && !layoutRevision.isHead() %>">
+		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
 			<portlet:actionURL var="publishURL">
 				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
@@ -48,8 +52,8 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				image="submit"
-				message="publish"
+				image='<%= isWorkflowEnabled ? "../aui/shuffle" : "../aui/circle-check"  %>'
+				message='<%= isWorkflowEnabled ? "submit-for-publication" : "mark-as-ready-for-publication"  %>'
 				url="<%= taglibURL %>"
 			/>
 		</c:if>
@@ -70,7 +74,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				image="checked"
+				image="export"
 				message="save"
 				url="<%= taglibURL %>"
 			/>

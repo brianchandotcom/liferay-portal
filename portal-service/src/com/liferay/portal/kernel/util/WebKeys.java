@@ -33,6 +33,8 @@ public interface WebKeys {
 
 	public static final String CTX = "CTX";
 
+	public static final String CTX_PATH = "CTX_PATH";
+
 	public static final String CURRENT_COMPLETE_URL = "CURRENT_COMPLETE_URL";
 
 	public static final String CURRENT_URL = "CURRENT_URL";

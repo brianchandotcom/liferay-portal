@@ -29,8 +29,6 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -52,7 +50,7 @@ public class JSONWebServiceConfigurator extends FindClass {
 	}
 
 	public void configure(ClassLoader classLoader) throws PortalException {
-		URL[] classPathURLs = null;
+		File[] classPathFiles = null;
 
 		if (classLoader != null) {
 			URL servicePropertiesURL = classLoader.getResource(
@@ -78,16 +76,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 				classPathFile = webInfDir;
 			}
 
-			classPathURLs = new URL[1];
+			classPathFiles = new File[1];
 
-			try {
-				URI classPathURI = classPathFile.toURI();
-
-				classPathURLs[0] = classPathURI.toURL();
-			}
-			catch (MalformedURLException murle) {
-				_log.error(murle, murle);
-			}
+			classPathFiles[0] = classPathFile;
 		}
 		else {
 			Thread currentThread = Thread.currentThread();
@@ -98,28 +89,22 @@ public class JSONWebServiceConfigurator extends FindClass {
 				PortalUtil.getPortalLibDir(), "portal-impl.jar");
 
 			if (portalImplJarFile.exists()) {
-				classPathURLs = new URL[1];
+				classPathFiles = new File[1];
 
-				try {
-					URI portalImplJarURI = portalImplJarFile.toURI();
-
-					classPathURLs[0] = portalImplJarURI.toURL();
-				}
-				catch (MalformedURLException murle) {
-					_log.error(murle, murle);
-				}
+				classPathFiles[0] = portalImplJarFile;
 			}
 			else {
-				classPathURLs = ClassLoaderUtil.getFullClassPath(classLoader);
+				classPathFiles =
+					ClassLoaderUtil.getDefaultClasspath(classLoader);
 			}
 		}
 
 		_classLoader = classLoader;
 
-		configure(classPathURLs);
+		configure(classPathFiles);
 	}
 
-	public void configure(URL... classPathURLs) throws PortalException {
+	public void configure(File... classPathFiles) throws PortalException {
 		StopWatch stopWatch = null;
 
 		if (_log.isDebugEnabled()) {
@@ -131,7 +116,7 @@ public class JSONWebServiceConfigurator extends FindClass {
 		}
 
 		try {
-			scanUrls(classPathURLs);
+			scanPaths(classPathFiles);
 		}
 		catch (Exception e) {
 			throw new PortalException(e.getMessage(), e);

@@ -405,6 +405,7 @@ public class MainServlet extends ActionServlet {
 		}
 
 		checkServletContext(request);
+		checkContextPath(request);
 		checkPortletSessionTracker(request);
 		checkPortletRequestProcessor(request);
 		checkTilesDefinitionsFactory();
@@ -558,6 +559,20 @@ public class MainServlet extends ActionServlet {
 		ServletContext servletContext = getServletContext();
 
 		request.setAttribute(WebKeys.CTX, servletContext);
+	}
+
+	protected void checkContextPath(HttpServletRequest request) {
+		ServletContext servletContext =
+			request.getSession().getServletContext();
+
+		String contextPath =
+			(String)servletContext.getAttribute(WebKeys.CTX_PATH);
+
+		if (contextPath == null) {
+			contextPath = request.getContextPath();
+
+			servletContext.setAttribute(WebKeys.CTX_PATH, contextPath);
+		}
 	}
 
 	protected void checkTilesDefinitionsFactory() {

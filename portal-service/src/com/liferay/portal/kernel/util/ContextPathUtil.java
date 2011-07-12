@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.servlet.ServletVersionDetector;
+
 import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
@@ -34,7 +36,16 @@ public class ContextPathUtil {
 	}
 
 	public static String getContextPath(ServletContext servletContext) {
-		return getContextPath(servletContext.getContextPath());
+		String contextPath;
+
+		if (ServletVersionDetector.is2_5()) {
+			contextPath = servletContext.getContextPath();
+		}
+		else {
+			contextPath = (String)servletContext.getAttribute(WebKeys.CTX_PATH);
+		}
+
+		return getContextPath(contextPath);
 	}
 
 	public static String getContextPath(String contextPath) {

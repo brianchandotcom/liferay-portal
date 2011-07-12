@@ -44,7 +44,6 @@ public class AssertAdSensePresentTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Google Adsense Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Public Service Ads by Google"),
-			selenium.getText("//td/font"));
+		assertTrue(selenium.isElementPresent("//img[@alt='AdChoices']"));
 	}
 }

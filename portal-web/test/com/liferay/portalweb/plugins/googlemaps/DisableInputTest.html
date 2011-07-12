@@ -16,16 +16,16 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Google Maps Test Page</td>
-	<td></td>
+	<td>Google Maps Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Google Maps Test Page</td>
-	<td></td>
+	<td>Google Maps Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -45,8 +45,8 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_mapInputEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_mapInputEnabledCheckbox']</td>
+	<td>Map Input Enabled</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -60,8 +60,8 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>_86_mapInputEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_mapInputEnabledCheckbox']</td>
+	<td>Map Input Enabled</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -85,8 +85,8 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>_86_directionsInputEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_directionsInputEnabledCheckbox']</td>
+	<td>Directions Input Enabled</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -96,11 +96,11 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 

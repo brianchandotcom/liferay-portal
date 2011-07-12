@@ -31,6 +31,7 @@ import java.security.SecureRandom;
 
 import java.util.Random;
 
+import jodd.util.BCrypt;
 import org.vps.crypt.Crypt;
 
 /**
@@ -43,7 +44,7 @@ public class PwdEncryptor {
 		GetterUtil.getString(PropsUtil.get(
 			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
 
-	public static final String TYPE_CRYPT = "CRYPT";
+	public static final String TYPE_BCRYPT = "BCRYPT";
 
 	public static final String TYPE_MD2 = "MD2";
 
@@ -58,6 +59,8 @@ public class PwdEncryptor {
 	public static final String TYPE_SHA_384 = "SHA-384";
 
 	public static final String TYPE_SSHA = "SSHA";
+
+	public static final String TYPE_UFC_CRYPT = "UFC-CRYPT";
 
 	public static final char[] saltChars =
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
@@ -83,7 +86,12 @@ public class PwdEncryptor {
 			String currentEncryptedPassword)
 		throws PwdEncryptorException {
 
-		if (algorithm.equals(TYPE_CRYPT)) {
+		if (algorithm.equals(TYPE_BCRYPT)) {
+			byte[] saltBytes = _getSaltFromBCrypt(currentEncryptedPassword);
+
+			return encodePassword(algorithm, clearTextPassword, saltBytes);
+		}
+		else if (algorithm.equals(TYPE_UFC_CRYPT)) {
 			byte[] saltBytes = _getSaltFromCrypt(currentEncryptedPassword);
 
 			return encodePassword(algorithm, clearTextPassword, saltBytes);
@@ -106,7 +114,11 @@ public class PwdEncryptor {
 		throws PwdEncryptorException {
 
 		try {
-			if (algorithm.equals(TYPE_CRYPT)) {
+			if (algorithm.equals(TYPE_BCRYPT)) {
+				String salt = new String(saltBytes);
+
+				return BCrypt.hashpw(clearTextPassword, salt);
+			} else if (algorithm.equals(TYPE_UFC_CRYPT)) {
 				return Crypt.crypt(
 					saltBytes, clearTextPassword.getBytes(Digester.ENCODING));
 			}
@@ -114,7 +126,7 @@ public class PwdEncryptor {
 				byte[] clearTextPasswordBytes =
 					clearTextPassword.getBytes(Digester.ENCODING);
 
-				// Create a byte array of salt bytes appeneded to password bytes
+				// Create a byte array of salt bytes appended to password bytes
 
 				byte[] pwdPlusSalt =
 					new byte[clearTextPasswordBytes.length + saltBytes.length];
@@ -160,6 +172,32 @@ public class PwdEncryptor {
 		catch (UnsupportedEncodingException uee) {
 			throw new PwdEncryptorException(uee.getMessage());
 		}
+	}
+
+	private static byte[] _getSaltFromBCrypt(String bcryptString)
+		throws PwdEncryptorException {
+
+		byte[] saltBytes = null;
+
+		try {
+			if (Validator.isNull(bcryptString)) {
+				String salt = BCrypt.gensalt();
+
+				saltBytes = salt.getBytes("UTF-8");
+			}
+			else {
+				String salt = bcryptString.substring(0, 29);
+
+				saltBytes = salt.getBytes("UTF-8");
+			}
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new PwdEncryptorException(
+				"Unable to extract salt from encrypted password: " +
+					uee.getMessage());
+		}
+
+		return saltBytes;
 	}
 
 	private static byte[] _getSaltFromCrypt(String cryptString)

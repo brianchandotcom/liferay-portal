@@ -12,7 +12,7 @@ table {
 fieldset, img {
 }
 
-address, caption, cite, code, dfn, em, strong, th, var {
+address, caption, cite, code, dfn, th, var {
 }
 
 caption, th {
@@ -114,6 +114,9 @@ body.html-editor {
 .html-editor.portlet-message-boards blockquote:after {
 }
 
+.html-editor.portlet-message-boards blockquote cite {
+}
+
 .html-editor.portlet-message-boards pre {
 }
 
@@ -129,17 +132,6 @@ code, pre {
 }
 
 .important {
-}
-
-/* ---------- Staging area ---------- */
-
-body.staging, body.live-view {
-}
-
-body.live-view {
-}
-
-.portal-iframe.staging {
 }
 
 /* ---------- Main content body ---------- */

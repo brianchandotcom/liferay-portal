@@ -16,16 +16,16 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Google Maps Test Page</td>
-	<td></td>
+	<td>Google Maps Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Google Maps Test Page</td>
-	<td></td>
+	<td>Google Maps Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -45,22 +45,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_license</td>
-	<td></td>
+	<td>//input[@id='_86_license']</td>
+	<td>Google License</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_license</td>
+	<td>//input[@id='_86_license']</td>
 	<td>ABQIAAAA3nrHjKy73DtxJL8D67iR6hSqd3WNkXftHeaSLroSolGIoU-u5BTriDnzHVQc9TudabxQnFqk-gNe8A</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_mapAddress</td>
+	<td>//input[@id='_86_mapAddress']</td>
 	<td>17730 Antonio Ave, Cerritos, CA, 90703</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_directionsAddress</td>
+	<td>//input[@id='_86_directionsAddress']</td>
 	<td>11947 Del Amo Blvd, Cerritos, CA, 90703</td>
 </tr>
 <tr>
@@ -75,8 +75,8 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>_86_directionsInputEnabledCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_directionsInputEnabledCheckbox']</td>
+	<td>Directions Input Enabled</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -85,12 +85,12 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//form/input[2]</td>
-	<td></td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 

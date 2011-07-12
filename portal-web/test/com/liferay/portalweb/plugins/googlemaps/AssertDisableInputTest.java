@@ -42,10 +42,10 @@ public class AssertDisableInputTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("//input[1]"));
-		assertFalse(selenium.isElementPresent("//input[3]"));
+		assertFalse(selenium.isElementPresent("//form/input[1]"));
+		assertFalse(selenium.isElementPresent("//form/input[3]"));
 	}
 }

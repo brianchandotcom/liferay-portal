@@ -42,7 +42,7 @@ public class AssertGoogleMapWithMapTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);

@@ -42,16 +42,16 @@ public class GetMapTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[1]",
+		selenium.type("//form/input[1]",
 			RuntimeVariables.replace("17730 Antonio Ave, Cerritos, CA, 90703"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[3]", RuntimeVariables.replace(""));
+		selenium.type("//form/input[3]", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Get Map']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Get Map"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"17730 Antonio Ave, Cerritos, CA, 90703"),

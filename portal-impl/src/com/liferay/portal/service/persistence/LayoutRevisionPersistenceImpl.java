@@ -4732,9 +4732,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_H_P_PLID_2 = "layoutRevision.plid = ?";
 	private static final String _FINDER_COLUMN_L_P_V_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_V_PLID_2 = "layoutRevision.plid = ? AND ";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_1 = "layoutRevision.variationName IS NULL";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_2 = "layoutRevision.variationName = ?";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_3 = "(layoutRevision.variationName IS NULL OR layoutRevision.variationName = ?)";
+	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_1 = "layoutRevision.variationName IS NULL AND layoutRevision.status != 5";
+	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_2 = "layoutRevision.variationName = ? AND layoutRevision.status != 5";
+	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_3 = "(layoutRevision.variationName IS NULL OR layoutRevision.variationName = ?) AND layoutRevision.status != 5";
 	private static final String _FINDER_COLUMN_L_P_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 = "layoutRevision.status = ?";

@@ -22,8 +22,8 @@
 							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(templateId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(
@@ -101,8 +101,8 @@
 							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(templateId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(
@@ -200,7 +200,7 @@
 				[$GROUP_ID$]
 				(
 					(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -217,7 +217,7 @@
 				[$GROUP_ID$]
 				(
 					(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)

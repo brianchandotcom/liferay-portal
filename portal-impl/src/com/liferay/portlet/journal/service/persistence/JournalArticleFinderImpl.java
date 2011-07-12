@@ -35,7 +35,6 @@ import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -593,9 +592,9 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.EQUAL, false, structureIds);
+				sql, "structureId", StringPool.LIKE, false, structureIds);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.EQUAL, false, templateIds);
+				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(sql, "(status = ?) AND", "");
@@ -731,9 +730,9 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.EQUAL, false, structureIds);
+				sql, "structureId", StringPool.LIKE, false, structureIds);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.EQUAL, false, templateIds);
+				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(sql, "(status = ?) AND", "");

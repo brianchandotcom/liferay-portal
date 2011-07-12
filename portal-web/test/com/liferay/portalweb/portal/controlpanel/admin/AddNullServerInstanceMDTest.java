@@ -30,7 +30,7 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Instances", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Instances",
+			RuntimeVariables.replace("Portal Instances"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,22 +67,24 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Add']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add']",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_135_webId", RuntimeVariables.replace("lifera1.com"));
+		selenium.typeKeys("//input[@id='_135_webId']",
+			RuntimeVariables.replace("lifera1.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_webId", RuntimeVariables.replace("liferay1.com"));
+		selenium.type("//input[@id='_135_webId']",
+			RuntimeVariables.replace("liferay1.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_virtualHostname",
+		selenium.type("//input[@id='_135_virtualHostname']",
 			RuntimeVariables.replace("localhost1"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_mx", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_135_mx']", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("This field is required."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//label/div"));
 	}
 }

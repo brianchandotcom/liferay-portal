@@ -30,7 +30,7 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Plugins Installation",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Plugins Installation"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -68,17 +69,19 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Install More Portlets']"));
-		selenium.select("_136_page", RuntimeVariables.replace("label=4"));
+		selenium.select("//select[@id='_136_page']",
+			RuntimeVariables.replace("label=4"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Wiki"));
-		selenium.clickAt("link=Theme Plugins", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Theme Plugins",
+			RuntimeVariables.replace("Theme Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Install More Themes']"));
 		selenium.clickAt("link=Layout Template Plugins",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Layout Template Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(

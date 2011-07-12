@@ -35,7 +35,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,10 +47,11 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Bookmarks", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Bookmarks",
+					RuntimeVariables.replace("Bookmarks"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -64,7 +65,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -103,7 +104,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -142,7 +143,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -181,7 +182,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -220,7 +221,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

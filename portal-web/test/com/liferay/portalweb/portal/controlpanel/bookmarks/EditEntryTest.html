@@ -14,39 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//a/strong</td>
-	<td>Test Subfolder</td>
+	<td>Edited Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Edited Test Subfolder</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -54,7 +49,12 @@
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
@@ -65,28 +65,33 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_name</td>
+	<td>//input[@id='_28_name']</td>
 	<td>Edited Test Bookmark</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_url</td>
+	<td>//input[@id='_28_url']</td>
 	<td>http://www.narutofan.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_description</td>
+	<td>//textarea[@id='_28_description']</td>
 	<td>This is an edited test bookmark!</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>

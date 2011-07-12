@@ -14,27 +14,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Bookmarks</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks</td>
-	<td></td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//div[2]/div/div[2]/div/div[2]/ul/li[2]/a</td>
 	<td>Add Folder</td>
 </tr>
@@ -45,23 +40,28 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_name</td>
+	<td>//input[@id='_28_name']</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_description</td>
+	<td>//textarea[@id='_28_description']</td>
 	<td>This is a test folder!</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

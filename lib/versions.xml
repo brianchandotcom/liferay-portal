@@ -2124,7 +2124,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd.jar</file-name>
-		<version>3.2.6</version>
+		<version>3.2.7 beta</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>
@@ -2135,7 +2135,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd-wot.jar</file-name>
-		<version>3.2.6</version>
+		<version>3.2.7 beta</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>
@@ -3239,10 +3239,10 @@
 		<version>3.4.1012</version>
 		<project-name>Xuggler</project-name>
 		<project-url>http://www.xuggle.com</project-url>
-		<licenses>			
+		<licenses>
 			<license>
 				<license-name>LGPL 3</license-name>
-			</license>			
+			</license>
 		</licenses>
 	</library>
 </libraries>

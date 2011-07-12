@@ -63,6 +63,45 @@ public class JournalStructureServiceWrapper implements JournalStructureService {
 		return _journalStructureService.getStructure(groupId, structureId);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> getStructures(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.getStructures(groupId);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> search(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.search(companyId, groupIds, keywords,
+			start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> search(
+		long companyId, long[] groupIds, java.lang.String structureId,
+		java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.search(companyId, groupIds,
+			structureId, name, description, andOperator, start, end, obc);
+	}
+
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String structureId, java.lang.String name,
+		java.lang.String description, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.searchCount(companyId, groupIds,
+			structureId, name, description, andOperator);
+	}
+
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.searchCount(companyId, groupIds,
+			keywords);
+	}
+
 	public com.liferay.portlet.journal.model.JournalStructure updateStructure(
 		long groupId, java.lang.String structureId,
 		java.lang.String parentStructureId, java.lang.String name,

@@ -55,7 +55,7 @@
 <%@ page import="com.liferay.portlet.imagegallery.service.IGImageLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalStructure" %>
-<%@ page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.journal.service.JournalStructureServiceUtil" %>
 <%@ page import="com.liferay.util.RSSUtil" %>
 <%@ page import="com.liferay.util.xml.DocUtil" %>
 

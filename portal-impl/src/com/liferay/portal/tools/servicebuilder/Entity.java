@@ -272,6 +272,17 @@ public class Entity {
 		}
 	}
 
+	public String getPKVarDBName() {
+		if (hasCompoundPK()) {
+			return getVarName() + "PK";
+		}
+		else {
+			EntityColumn col = _getPKColumn();
+
+			return col.getDBName();
+		}
+	}
+
 	public String getPortletName() {
 		return _portletName;
 	}

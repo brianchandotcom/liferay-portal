@@ -129,6 +129,91 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalStructureSoap[] getStructures(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
+				JournalStructureServiceUtil.getStructures(groupId);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalStructureSoap[] search(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
+				JournalStructureServiceUtil.search(companyId, groupIds,
+					keywords, start, end, obc);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalStructureSoap[] search(
+		long companyId, long[] groupIds, java.lang.String structureId,
+		java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
+				JournalStructureServiceUtil.search(companyId, groupIds,
+					structureId, name, description, andOperator, start, end, obc);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String structureId, java.lang.String name,
+		java.lang.String description, boolean andOperator)
+		throws RemoteException {
+		try {
+			int returnValue = JournalStructureServiceUtil.searchCount(companyId,
+					groupIds, structureId, name, description, andOperator);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords) throws RemoteException {
+		try {
+			int returnValue = JournalStructureServiceUtil.searchCount(companyId,
+					groupIds, keywords);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalStructureSoap updateStructure(
 		long groupId, java.lang.String structureId,
 		java.lang.String parentStructureId, java.lang.String name,

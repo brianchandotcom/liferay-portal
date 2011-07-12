@@ -16,12 +16,15 @@ package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.base.JournalStructureServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -73,6 +76,48 @@ public class JournalStructureServiceImpl
 			getPermissionChecker(), groupId, structureId, ActionKeys.VIEW);
 
 		return journalStructureLocalService.getStructure(groupId, structureId);
+	}
+
+	public List<JournalStructure> getStructures(long groupId)
+		throws SystemException {
+
+		return journalStructurePersistence.filterFindByGroupId(groupId);
+	}
+
+	public List<JournalStructure> search(
+			long companyId, long[] groupIds, String keywords, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		return journalStructureFinder.filterFindByKeywords(
+			companyId, groupIds, keywords, start, end, obc);
+	}
+
+	public List<JournalStructure> search(
+			long companyId, long[] groupIds, String structureId, String name,
+			String description, boolean andOperator, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return journalStructureFinder.filterFindByC_G_S_N_D(
+			companyId, groupIds, structureId, name, description, andOperator,
+			start, end, obc);
+	}
+
+	public int searchCount(
+			long companyId, long[] groupIds, String structureId, String name,
+			String description, boolean andOperator)
+		throws SystemException {
+
+		return journalStructureFinder.filterCountByC_G_S_N_D(
+			companyId, groupIds, structureId, name, description, andOperator);
+	}
+
+	public int searchCount(long companyId, long[] groupIds, String keywords)
+		throws SystemException {
+
+		return journalStructureFinder.filterCountByKeywords(
+			companyId, groupIds, keywords);
 	}
 
 	public JournalStructure updateStructure(

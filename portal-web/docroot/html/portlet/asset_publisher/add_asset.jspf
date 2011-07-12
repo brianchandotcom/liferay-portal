@@ -131,7 +131,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 
 	ClassName className = ClassNameServiceUtil.getClassName(JournalArticle.class.getName());
 
-	List<JournalStructure> journalStructures = JournalStructureLocalServiceUtil.getStructures(themeDisplay.getScopeGroupId());
+	List<JournalStructure> journalStructures = JournalStructureServiceUtil.getStructures(themeDisplay.getScopeGroupId());
 
 	for (JournalStructure journalStructure : journalStructures) {
 		PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className.getValue(), allAssetCategoryIds, allAssetTagNames, journalStructure.getStructureId());

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.impl.JournalStructureImpl;
@@ -66,7 +67,7 @@ public class JournalStructureFinderImpl
 
 		return countByC_G_S_N_D(
 			companyId, groupIds, structureIds, names, descriptions,
-			andOperator);
+			andOperator, false);
 	}
 
 	public int countByC_G_S_N_D(
@@ -80,12 +81,13 @@ public class JournalStructureFinderImpl
 
 		return countByC_G_S_N_D(
 			companyId, groupIds, structureIds, names, descriptions,
-			andOperator);
+			andOperator, false);
 	}
 
 	public int countByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
-			String[] names, String[] descriptions, boolean andOperator)
+			String[] names, String[] descriptions, boolean andOperator,
+			boolean inlineSQLHelper)
 		throws SystemException {
 
 		structureIds = CustomSQLUtil.keywords(structureIds, false);
@@ -109,6 +111,18 @@ public class JournalStructureFinderImpl
 				sql, "lower(description)", StringPool.LIKE, true, descriptions);
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalStructure.class.getName(),
+					"JournalStructure.id_", groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalStructure.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalStructure.name");
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -142,6 +156,82 @@ public class JournalStructureFinderImpl
 		}
 	}
 
+	public int filterCountByC_G_S_N_D(
+			long companyId, long[] groupIds, String structureId, String name,
+			String description, boolean andOperator)
+		throws SystemException {
+
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
+
+		return countByC_G_S_N_D(
+			companyId, groupIds, structureIds, names, descriptions,
+			andOperator, true);
+	}
+
+	public int filterCountByKeywords(
+			long companyId, long[] groupIds, String keywords)
+		throws SystemException {
+
+		String[] structureIds = null;
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			structureIds = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return countByC_G_S_N_D(
+			companyId, groupIds, structureIds, names, descriptions,
+			andOperator, true);
+	}
+
+	public List<JournalStructure> filterFindByC_G_S_N_D(
+			long companyId, long[] groupIds, String structureId, String name,
+			String description, boolean andOperator, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
+
+		return findByC_G_S_N_D(
+			companyId, groupIds, structureIds, names, descriptions, andOperator,
+			start, end, obc, true);
+	}
+
+	public List<JournalStructure> filterFindByKeywords(
+			long companyId, long[] groupIds, String keywords, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		String[] structureIds = null;
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			structureIds = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return findByC_G_S_N_D(
+			companyId, groupIds, structureIds, names, descriptions, andOperator,
+			start, end, obc, true);
+	}
+
 	public List<JournalStructure> findByKeywords(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator obc)
@@ -163,7 +253,7 @@ public class JournalStructureFinderImpl
 
 		return findByC_G_S_N_D(
 			companyId, groupIds, structureIds, names, descriptions, andOperator,
-			start, end, obc);
+			start, end, obc, false);
 	}
 
 	public List<JournalStructure> findByC_G_S_N_D(
@@ -172,19 +262,19 @@ public class JournalStructureFinderImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-	String[] structureIds = CustomSQLUtil.keywords(structureId, false);
-	String[] names = CustomSQLUtil.keywords(name);
-	String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
 
 		return findByC_G_S_N_D(
 			companyId, groupIds, structureIds, names, descriptions, andOperator,
-			start, end, obc);
+			start, end, obc, false);
 	}
 
 	public List<JournalStructure> findByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
 			String[] names, String[] descriptions, boolean andOperator,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
 
 		structureIds = CustomSQLUtil.keywords(structureIds, false);
@@ -209,6 +299,18 @@ public class JournalStructureFinderImpl
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalStructure.class.getName(),
+					"JournalStructure.id_", groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalStructure.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalStructure.name");
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 

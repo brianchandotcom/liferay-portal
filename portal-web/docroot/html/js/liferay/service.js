@@ -918,6 +918,9 @@ Liferay.Service.registerClass(
 		copyStructure: true,
 		deleteStructure: true,
 		getStructure: true,
+		getStructures: true,
+		search: true,
+		searchCount: true,
 		updateStructure: true
 	}
 );

@@ -69,6 +69,9 @@ public class UpgradePermission extends UpgradeProcess {
 			PermissionLocalServiceUtil.setContainerResourcePermissions(
 				name, RoleConstants.GUEST, ActionKeys.VIEW);
 		}
+
+		PermissionLocalServiceUtil.setContainerResourcePermissions(
+			name, RoleConstants.OWNER, ActionKeys.VIEW);
 	}
 
 	protected void updatePermissions_6(
@@ -93,6 +96,9 @@ public class UpgradePermission extends UpgradeProcess {
 			ResourcePermissionLocalServiceUtil.setContainerResourcePermissions(
 				name, RoleConstants.GUEST, actionIdsLong);
 		}
+
+		ResourcePermissionLocalServiceUtil.setContainerResourcePermissions(
+			name, RoleConstants.OWNER, actionIdsLong);
 	}
 
 }

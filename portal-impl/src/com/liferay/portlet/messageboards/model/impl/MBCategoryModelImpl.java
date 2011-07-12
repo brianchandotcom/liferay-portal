@@ -511,11 +511,17 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		if (createDate != null) {
 			mbCategoryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			mbCategoryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			mbCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbCategoryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		mbCategoryCacheModel.parentCategoryId = getParentCategoryId();
@@ -552,6 +558,9 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		if (lastPostDate != null) {
 			mbCategoryCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+		else {
+			mbCategoryCacheModel.lastPostDate = Long.MIN_VALUE;
 		}
 
 		return mbCategoryCacheModel;

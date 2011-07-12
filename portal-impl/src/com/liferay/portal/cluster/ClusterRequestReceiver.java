@@ -128,7 +128,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				return methodHandler.invoke(bean);
 			}
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			throw e;
 		}
 		finally {

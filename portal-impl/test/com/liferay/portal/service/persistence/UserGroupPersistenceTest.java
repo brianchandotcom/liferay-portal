@@ -76,6 +76,10 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 
 		newUserGroup.setDescription(randomString());
 
+		newUserGroup.setPublicLayoutSetPrototypeId(nextLong());
+
+		newUserGroup.setPrivateLayoutSetPrototypeId(nextLong());
+
 		newUserGroup.setAddedByLDAPImport(randomBoolean());
 
 		_persistence.update(newUserGroup, false);
@@ -91,6 +95,10 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingUserGroup.getName(), newUserGroup.getName());
 		assertEquals(existingUserGroup.getDescription(),
 			newUserGroup.getDescription());
+		assertEquals(existingUserGroup.getPublicLayoutSetPrototypeId(),
+			newUserGroup.getPublicLayoutSetPrototypeId());
+		assertEquals(existingUserGroup.getPrivateLayoutSetPrototypeId(),
+			newUserGroup.getPrivateLayoutSetPrototypeId());
 		assertEquals(existingUserGroup.getAddedByLDAPImport(),
 			newUserGroup.getAddedByLDAPImport());
 	}
@@ -227,6 +235,10 @@ public class UserGroupPersistenceTest extends BasePersistenceTestCase {
 		userGroup.setName(randomString());
 
 		userGroup.setDescription(randomString());
+
+		userGroup.setPublicLayoutSetPrototypeId(nextLong());
+
+		userGroup.setPrivateLayoutSetPrototypeId(nextLong());
 
 		userGroup.setAddedByLDAPImport(randomBoolean());
 

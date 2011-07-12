@@ -382,11 +382,17 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		if (createDate != null) {
 			shoppingCartCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			shoppingCartCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			shoppingCartCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			shoppingCartCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		shoppingCartCacheModel.itemIds = getItemIds();

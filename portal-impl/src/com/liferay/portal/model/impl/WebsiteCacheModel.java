@@ -74,11 +74,17 @@ public class WebsiteCacheModel implements CacheModel<Website> {
 			websiteImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			websiteImpl.setCreateDate(null);
+		}
+		else {
 			websiteImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			websiteImpl.setModifiedDate(null);
+		}
+		else {
 			websiteImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

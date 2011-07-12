@@ -1209,11 +1209,17 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		if (createDate != null) {
 			layoutRevisionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			layoutRevisionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			layoutRevisionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			layoutRevisionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		layoutRevisionCacheModel.layoutSetBranchId = getLayoutSetBranchId();
@@ -1344,6 +1350,9 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		if (statusDate != null) {
 			layoutRevisionCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			layoutRevisionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return layoutRevisionCacheModel;

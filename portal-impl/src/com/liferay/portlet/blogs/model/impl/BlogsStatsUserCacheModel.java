@@ -65,7 +65,10 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser> {
 		blogsStatsUserImpl.setUserId(userId);
 		blogsStatsUserImpl.setEntryCount(entryCount);
 
-		if (lastPostDate > 0) {
+		if (lastPostDate == Long.MIN_VALUE) {
+			blogsStatsUserImpl.setLastPostDate(null);
+		}
+		else {
 			blogsStatsUserImpl.setLastPostDate(new Date(lastPostDate));
 		}
 

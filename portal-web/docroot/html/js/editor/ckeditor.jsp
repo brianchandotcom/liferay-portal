@@ -214,7 +214,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 							try {
 								window['<%= name %>'].onChangeCallback();
 							}
-							catch(e) {
+							catch (e) {
 							}
 						},
 						300

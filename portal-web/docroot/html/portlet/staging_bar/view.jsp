@@ -62,7 +62,7 @@ if (layout != null) {
 
 	<div class="staging-bar">
 		<ul class="aui-tabview-list staging-tabview-list">
-			<li class="aui-state-default aui-tab first <%= (!group.isStagingGroup() ? " aui-state-active  aui-tab-active" : StringPool.BLANK) %>">
+			<li class="aui-state-default aui-tab first <%= (!group.isStagingGroup() ? " aui-state-active aui-tab-active" : StringPool.BLANK) %>">
 				<span class="aui-tab-content">
 					<span class="aui-tab-label">
 						<aui:a href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
@@ -93,7 +93,7 @@ if (layout != null) {
 							}
 
 							if (selected) {
-								cssClass += " aui-state-active  aui-tab-active";
+								cssClass += " aui-state-active aui-tab-active";
 							}
 						%>
 
@@ -164,7 +164,7 @@ if (layout != null) {
 						boolean selected = group.isStagingGroup() || group.isStagedRemotely();
 						%>
 
-						<li class="aui-state-default aui-tab last <%= (selected ? " aui-state-active  aui-tab-active" : StringPool.BLANK) %>">
+						<li class="aui-state-default aui-tab last <%= (selected ? " aui-state-active aui-tab-active" : StringPool.BLANK) %>">
 							<span class="aui-tab-content">
 								<span class="aui-tab-label">
 									<aui:a href="<%= selected ? null : stagingFriendlyURL %>" label="backstage" />
@@ -273,7 +273,7 @@ if (layout != null) {
 												}
 
 												if (selected) {
-													cssClass += " aui-state-active  aui-tab-active";
+													cssClass += " aui-state-active aui-tab-active";
 												}
 											%>
 
@@ -309,7 +309,19 @@ if (layout != null) {
 									</c:if>
 
 									<div class="aui-tabview-content variations-tabview-content">
-										<aui:workflow-status status='<%= layoutRevision.getStatus() %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+
+										<%
+										String taglibHelpMessage = null;
+
+										if (layoutRevision.isHead()) {
+											taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", layoutSetBranch.getName());
+										}
+										else {
+											taglibHelpMessage = "a-new-version-will-be-created-automatically-if-this-page-is-modified";
+										}
+										%>
+
+										<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 
 										<div class="layout-actions">
 											<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
@@ -331,6 +343,41 @@ if (layout != null) {
 
 								<c:if test="<%= !layoutRevision.isMajor() && (!layoutRevision.hasChildren()) && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 									dockbar.backstageToolbar.add(dockbar.undoButton, 0);
+								</c:if>
+
+								<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+
+									<%
+									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+									%>
+
+									<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+										dockbar.backstageToolbar.add(
+											{
+												type: 'ToolbarSpacer'
+											}
+										);
+
+										<portlet:actionURL var="publishURL">
+											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+											<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+											<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+											<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+											<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+											<portlet:param name="major" value="true" />
+											<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+										</portlet:actionURL>
+
+										dockbar.backstageToolbar.add(
+											{
+												handler: function(event) {
+													submitForm(document.hrefFm, '<%= publishURL %>');
+												},
+												icon: '<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "shuffle" : "circle-check" %>',
+												label: '<%= UnicodeLanguageUtil.get(pageContext, WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
+											}
+										);
+									</c:if>
 								</c:if>
 							</aui:script>
 						</div>
@@ -360,7 +407,7 @@ if (layout != null) {
 
 										lastImportLayoutSetBranchName = lastImportLayoutSetBranch.getName();
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 
@@ -386,7 +433,7 @@ if (layout != null) {
 
 										layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(lastImportLayoutRevision.getLayoutSetBranchId(), 0, lastImportLayoutRevision.getPlid());
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 
@@ -404,7 +451,7 @@ if (layout != null) {
 
 										publisherName = publisher.getFullName();
 									}
-									catch(Exception e) {
+									catch (Exception e) {
 									}
 								}
 

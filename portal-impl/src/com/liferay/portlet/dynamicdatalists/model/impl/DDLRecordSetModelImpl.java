@@ -643,11 +643,17 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		if (createDate != null) {
 			ddlRecordSetCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ddlRecordSetCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			ddlRecordSetCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ddlRecordSetCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ddlRecordSetCacheModel.DDMStructureId = getDDMStructureId();

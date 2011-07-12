@@ -216,7 +216,7 @@ else if (tabs2.equals("site-roles")) {
 
 				<aui:button cssClass="next" disabled="<%= roleIdsPos + 1 >= roleIdsArray.length %>" onClick='<%= taglibNextOnClick %>' value="next" />
 
-				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished"  />
+				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished" />
 			</aui:button-row>
 		</div>
 	</c:otherwise>

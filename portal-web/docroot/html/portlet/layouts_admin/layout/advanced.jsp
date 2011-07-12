@@ -20,7 +20,7 @@
 Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
-UnicodeProperties layoutTypeSettings =  selLayout.getTypeSettingsProperties();
+UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="advanced" />
@@ -70,8 +70,8 @@ UnicodeProperties layoutTypeSettings =  selLayout.getTypeSettingsProperties();
 
 <aui:script use="aui-base">
 	var deleteLogoLink = A.one('#<portlet:namespace />deleteIconLink');
-	var iconImageInput =  A.one('#<portlet:namespace />iconImage');
-	var layoutIconContainer =  A.one('#<portlet:namespace />layoutIconContainer');
+	var iconImageInput = A.one('#<portlet:namespace />iconImage');
+	var layoutIconContainer = A.one('#<portlet:namespace />layoutIconContainer');
 	var iconFileNameInput = A.one('#<portlet:namespace />iconFileName');
 
 	var changeLogo = function(event) {

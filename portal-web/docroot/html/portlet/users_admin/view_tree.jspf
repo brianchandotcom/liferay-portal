@@ -299,7 +299,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			%>
 
 			<c:if test="<%= showOrganizations %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title='<%= (organization == null) ? "organizations" : (organizationsCount == 1) ?  LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount)) %>'>
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title='<%= (organization == null) ? "organizations" : (organizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount)) %>'>
 					<%= organizationsTree %>
 				</liferay-ui:panel>
 			</c:if>

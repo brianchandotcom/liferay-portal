@@ -73,11 +73,17 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 			workflowInstanceLinkImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			workflowInstanceLinkImpl.setCreateDate(null);
+		}
+		else {
 			workflowInstanceLinkImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			workflowInstanceLinkImpl.setModifiedDate(null);
+		}
+		else {
 			workflowInstanceLinkImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

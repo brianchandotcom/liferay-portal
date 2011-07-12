@@ -84,7 +84,10 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion> 
 			ddlRecordVersionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ddlRecordVersionImpl.setCreateDate(null);
+		}
+		else {
 			ddlRecordVersionImpl.setCreateDate(new Date(createDate));
 		}
 
@@ -110,7 +113,10 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion> 
 			ddlRecordVersionImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			ddlRecordVersionImpl.setStatusDate(null);
+		}
+		else {
 			ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
 		}
 

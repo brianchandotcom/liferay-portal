@@ -53,7 +53,7 @@
 		<portlet-data-handler-class>com.liferay.portlet.calendar.lar.CalendarPortletDataHandlerImpl</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.calendar.social.CalendarActivityInterpreter</social-activity-interpreter-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>5.0</control-panel-entry-weight>
+		<control-panel-entry-weight>14.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.calendar.asset.CalEventAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.calendar.CalEventCustomAttributesDisplay</custom-attributes-display>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
@@ -149,7 +149,7 @@
 		<webdav-storage-token>journal</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>1.0</control-panel-entry-weight>
+		<control-panel-entry-weight>11.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider</atom-collection-adapter>
 		<workflow-handler>com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler</workflow-handler>
@@ -198,6 +198,7 @@
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
 		<pop-message-listener-class>com.liferay.portlet.messageboards.pop.MessageListenerImpl</pop-message-listener-class>
 		<social-activity-interpreter-class>com.liferay.portlet.messageboards.social.MBActivityInterpreter</social-activity-interpreter-class>
+		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBDiscussionAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.messageboards.MBCategoryCustomAttributesDisplay</custom-attributes-display>
@@ -234,7 +235,7 @@
 		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
+		<control-panel-entry-weight>12.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFolderCustomAttributesDisplay</custom-attributes-display>
@@ -265,7 +266,7 @@
 		<struts-path>polls</struts-path>
 		<portlet-data-handler-class>com.liferay.portlet.polls.lar.PollsPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>9.0</control-panel-entry-weight>
+		<control-panel-entry-weight>18.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.polls.PollsControlPanelEntry</control-panel-entry-class>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -305,7 +306,7 @@
 		<open-search-class>com.liferay.portlet.bookmarks.util.BookmarksOpenSearchImpl</open-search-class>
 		<portlet-data-handler-class>com.liferay.portlet.bookmarks.lar.BookmarksPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>4.0</control-panel-entry-weight>
+		<control-panel-entry-weight>13.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.bookmarks.BookmarksEntryCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.bookmarks.BookmarksFolderCustomAttributesDisplay</custom-attributes-display>
@@ -357,7 +358,7 @@
 		<webdav-storage-token>image_gallery</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.imagegallery.webdav.IGWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
+		<control-panel-entry-weight>12.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.imagegallery.asset.IGImageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.imagegallery.IGImageCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.imagegallery.IGFolderCustomAttributesDisplay</custom-attributes-display>
@@ -850,7 +851,7 @@
 		<friendly-url-mapping>software_catalog</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/softwarecatalog/software-catalog-friendly-url-routes.xml</friendly-url-routes>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>10.0</control-panel-entry-weight>
+		<control-panel-entry-weight>19.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>
@@ -864,7 +865,7 @@
 		<icon>/html/icons/asset_tag_admin.png</icon>
 		<struts-path>asset_tag_admin</struts-path>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>11.0</control-panel-entry-weight>
+		<control-panel-entry-weight>20.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1411,7 +1412,7 @@
 		<icon>/html/icons/asset_category_admin.png</icon>
 		<struts-path>asset_category_admin</struts-path>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>12.0</control-panel-entry-weight>
+		<control-panel-entry-weight>21.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1490,7 +1491,7 @@
 		<struts-path>workflow_definition_links</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>13.0</control-panel-entry-weight>
+		<control-panel-entry-weight>24.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portal.workflow.WorkflowControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1526,7 +1527,7 @@
 		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>8.0</control-panel-entry-weight>
+		<control-panel-entry-weight>17.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1542,7 +1543,7 @@
 		<struts-path>social_equity_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>14.0</control-panel-entry-weight>
+		<control-panel-entry-weight>22.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.socialequityadmin.SocialEquityAdminControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1558,7 +1559,7 @@
 		<struts-path>group_pages</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>0.0</control-panel-entry-weight>
+		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1630,7 +1631,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.blogs.lar.BlogsPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>7.0</control-panel-entry-weight>
+		<control-panel-entry-weight>16.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>
@@ -1647,7 +1648,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.messageboards.lar.MBPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>6.0</control-panel-entry-weight>
+		<control-panel-entry-weight>15.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>
@@ -1678,7 +1679,7 @@
 		<struts-path>site_settings</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>0.5</control-panel-entry-weight>
+		<control-panel-entry-weight>1</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1710,7 +1711,7 @@
 		<struts-path>dynamic_data_lists</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>15.0</control-panel-entry-weight>
+		<control-panel-entry-weight>23.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory</asset-renderer-factory>
 		<workflow-handler>com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1775,7 +1776,7 @@
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>0.0</control-panel-entry-weight>
+		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1787,10 +1788,12 @@
 	</portlet>
     <portlet>
         <portlet-name>174</portlet-name>
-        <icon>/html/icons/default.png</icon>
+        <icon>/html/icons/site_memberships_admin.png</icon>
         <struts-path>site_memberships_admin</struts-path>
         <parent-struts-path>sites_admin</parent-struts-path>
-        <portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>content</control-panel-entry-category>
+		<control-panel-entry-weight>2.0</control-panel-entry-weight>
         <preferences-owned-by-group>true</preferences-owned-by-group>
         <use-default-template>false</use-default-template>
         <private-request-attributes>false</private-request-attributes>

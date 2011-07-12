@@ -37,7 +37,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 </style>
 
 <div class="portlet-flags" id="<portlet:namespace />flagsPopup">
-	<aui:form method="post" name="flagsForm"  onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "flag();" %>'>
+	<aui:form method="post" name="flagsForm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "flag();" %>'>
 		<p>
 			<%= LanguageUtil.format(pageContext, "you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential", themeDisplay.getPathMain() + "/portal/terms_of_use") %>
 		</p>

@@ -360,6 +360,9 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		if (modifiedDate != null) {
 			mbMessageFlagCacheModel.modifiedDate = modifiedDate.getTime();
 		}
+		else {
+			mbMessageFlagCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		mbMessageFlagCacheModel.threadId = getThreadId();
 

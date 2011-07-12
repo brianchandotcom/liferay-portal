@@ -83,11 +83,17 @@ public class IGFolderCacheModel implements CacheModel<IGFolder> {
 			igFolderImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			igFolderImpl.setCreateDate(null);
+		}
+		else {
 			igFolderImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			igFolderImpl.setModifiedDate(null);
+		}
+		else {
 			igFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

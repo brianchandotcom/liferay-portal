@@ -34,7 +34,7 @@ MBMessage message = (MBMessage)objArray[0];
 </div>
 
 <div class="summary">
-	<%= StringUtil.shorten(message.getBody(), 250)  %>
+	<%= StringUtil.shorten(message.getBody(), 250) %>
 </div>
 
 <div class="tags">

@@ -276,6 +276,9 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		if (createDate != null) {
 			passwordTrackerCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			passwordTrackerCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		passwordTrackerCacheModel.password = getPassword();
 

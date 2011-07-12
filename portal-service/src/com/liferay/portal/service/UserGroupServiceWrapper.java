@@ -41,10 +41,12 @@ public class UserGroupServiceWrapper implements UserGroupService {
 	}
 
 	public com.liferay.portal.model.UserGroup addUserGroup(
-		java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupService.addUserGroup(name, description);
+		return _userGroupService.addUserGroup(name, description,
+			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
 	public void deleteUserGroup(long userGroupId)
@@ -84,10 +86,12 @@ public class UserGroupServiceWrapper implements UserGroupService {
 	}
 
 	public com.liferay.portal.model.UserGroup updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
+		long userGroupId, java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupService.updateUserGroup(userGroupId, name, description);
+		return _userGroupService.updateUserGroup(userGroupId, name,
+			description, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
 	public UserGroupService getWrappedUserGroupService() {

@@ -45,8 +45,9 @@ import java.util.Vector;
 /**
  * @author Juan González
  * @author Sergio González
+ * @author Mika Koivisto
  */
-public class AudioProcessor extends DLProcessor {
+public class AudioProcessor implements DLProcessor {
 
 	public static final String PREVIEW_TYPE = "mp3";
 
@@ -72,7 +73,6 @@ public class AudioProcessor extends DLProcessor {
 		return _instance._isSupportedAudio(fileEntry);
 	}
 
-	@Override
 	public void trigger(FileEntry fileEntry) {
 		_instance._queueGeneration(fileEntry);
 	}

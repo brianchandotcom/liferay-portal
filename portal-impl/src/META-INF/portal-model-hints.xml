@@ -827,6 +827,8 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="publicLayoutSetPrototypeId" type="long" />
+		<field name="privateLayoutSetPrototypeId" type="long" />
 		<field name="addedByLDAPImport" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroupGroupRole">

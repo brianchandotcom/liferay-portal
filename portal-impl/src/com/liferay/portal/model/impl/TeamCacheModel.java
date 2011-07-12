@@ -70,11 +70,17 @@ public class TeamCacheModel implements CacheModel<Team> {
 			teamImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			teamImpl.setCreateDate(null);
+		}
+		else {
 			teamImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			teamImpl.setModifiedDate(null);
+		}
+		else {
 			teamImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

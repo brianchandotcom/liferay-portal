@@ -762,11 +762,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		if (createDate != null) {
 			wikiPageCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			wikiPageCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			wikiPageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			wikiPageCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		wikiPageCacheModel.nodeId = getNodeId();
@@ -841,6 +847,9 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 		if (statusDate != null) {
 			wikiPageCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			wikiPageCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return wikiPageCacheModel;

@@ -120,7 +120,8 @@ public class UserGroupServiceHttp {
 
 	public static com.liferay.portal.model.UserGroup addUserGroup(
 		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description, long publicLayoutSetPrototypeId,
+		long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -128,7 +129,8 @@ public class UserGroupServiceHttp {
 					"addUserGroup", _addUserGroupParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description);
+					description, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId);
 
 			Object returnObj = null;
 
@@ -361,7 +363,8 @@ public class UserGroupServiceHttp {
 
 	public static com.liferay.portal.model.UserGroup updateUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description, long publicLayoutSetPrototypeId,
+		long privateLayoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -369,7 +372,8 @@ public class UserGroupServiceHttp {
 					"updateUserGroup", _updateUserGroupParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					userGroupId, name, description);
+					userGroupId, name, description, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId);
 
 			Object returnObj = null;
 
@@ -405,7 +409,8 @@ public class UserGroupServiceHttp {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _addUserGroupParameterTypes2 = new Class[] {
-			java.lang.String.class, java.lang.String.class
+			java.lang.String.class, java.lang.String.class, long.class,
+			long.class
 		};
 	private static final Class<?>[] _deleteUserGroupParameterTypes3 = new Class[] {
 			long.class
@@ -426,6 +431,7 @@ public class UserGroupServiceHttp {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _updateUserGroupParameterTypes9 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, long.class
 		};
 }

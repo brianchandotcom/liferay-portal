@@ -144,19 +144,6 @@ public class LayoutRevisionLocalServiceImpl
 		}
 	}
 
-	public void deleteLayoutRevisions(
-			long layoutSetBranchId, long plid, String variationName)
-		throws PortalException, SystemException {
-
-		List<LayoutRevision> layoutRevisions =
-			layoutRevisionPersistence.findByL_P_V(
-				layoutSetBranchId, plid, variationName);
-
-		for (LayoutRevision layoutRevision : layoutRevisions) {
-			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
-		}
-	}
-
 	@Override
 	public void deleteLayoutRevision(LayoutRevision layoutRevision)
 		throws PortalException, SystemException {
@@ -204,6 +191,19 @@ public class LayoutRevisionLocalServiceImpl
 		for (LayoutRevision layoutRevision : getLayoutRevisions(
 				layoutSetBranchId, plid)) {
 
+			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+		}
+	}
+
+	public void deleteLayoutRevisions(
+			long layoutSetBranchId, long plid, String variationName)
+		throws PortalException, SystemException {
+
+		List<LayoutRevision> layoutRevisions =
+			layoutRevisionPersistence.findByL_P_V(
+				layoutSetBranchId, plid, variationName);
+
+		for (LayoutRevision layoutRevision : layoutRevisions) {
 			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
 		}
 	}
@@ -304,12 +304,30 @@ public class LayoutRevisionLocalServiceImpl
 			orderByComparator);
 	}
 
+	public List<LayoutRevision> getLayoutRevisions(
+			long layoutSetBranchId, long plid, String variationName, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return layoutRevisionPersistence.findByL_P_V(
+			layoutSetBranchId, plid, variationName, start, end,
+			orderByComparator);
+	}
+
 	public int getLayoutRevisionsCount(
 			long layoutSetBranchId, long parentLayoutRevision, long plid)
 		throws SystemException {
 
 		return layoutRevisionPersistence.countByL_P_P(
 			layoutSetBranchId, parentLayoutRevision, plid);
+	}
+
+	public int getLayoutRevisionsCount(
+			long layoutSetBranchId, long plid, String variationName)
+		throws SystemException {
+
+		return layoutRevisionPersistence.countByL_P_V(
+			layoutSetBranchId, plid, variationName);
 	}
 
 	public LayoutRevision updateLayoutRevision(

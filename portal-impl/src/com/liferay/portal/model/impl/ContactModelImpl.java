@@ -714,11 +714,17 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		if (createDate != null) {
 			contactCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			contactCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			contactCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			contactCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		contactCacheModel.accountId = getAccountId();
@@ -759,6 +765,9 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if (birthday != null) {
 			contactCacheModel.birthday = birthday.getTime();
+		}
+		else {
+			contactCacheModel.birthday = Long.MIN_VALUE;
 		}
 
 		contactCacheModel.smsSn = getSmsSn();

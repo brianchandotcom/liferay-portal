@@ -426,11 +426,17 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		if (createDate != null) {
 			phoneCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			phoneCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			phoneCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			phoneCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		phoneCacheModel.classNameId = getClassNameId();

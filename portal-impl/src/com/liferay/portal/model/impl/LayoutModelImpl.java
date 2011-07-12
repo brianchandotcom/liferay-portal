@@ -1138,11 +1138,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		if (createDate != null) {
 			layoutCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			layoutCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			layoutCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			layoutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		layoutCacheModel.privateLayout = getPrivateLayout();

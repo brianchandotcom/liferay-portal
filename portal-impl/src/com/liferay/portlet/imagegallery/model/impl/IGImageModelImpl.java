@@ -555,11 +555,17 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		if (createDate != null) {
 			igImageCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			igImageCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			igImageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			igImageCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		igImageCacheModel.folderId = getFolderId();

@@ -620,11 +620,17 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		if (createDate != null) {
 			pollsQuestionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			pollsQuestionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			pollsQuestionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			pollsQuestionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		pollsQuestionCacheModel.title = getTitle();
@@ -648,11 +654,17 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		if (expirationDate != null) {
 			pollsQuestionCacheModel.expirationDate = expirationDate.getTime();
 		}
+		else {
+			pollsQuestionCacheModel.expirationDate = Long.MIN_VALUE;
+		}
 
 		Date lastVoteDate = getLastVoteDate();
 
 		if (lastVoteDate != null) {
 			pollsQuestionCacheModel.lastVoteDate = lastVoteDate.getTime();
+		}
+		else {
+			pollsQuestionCacheModel.lastVoteDate = Long.MIN_VALUE;
 		}
 
 		return pollsQuestionCacheModel;

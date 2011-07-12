@@ -85,10 +85,13 @@ public class DLAppServiceSoap {
 		}
 	}
 
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid) throws RemoteException {
+	public static void checkInFileEntry(long fileEntryId, boolean major,
+		java.lang.String changeLog,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
+			DLAppServiceUtil.checkInFileEntry(fileEntryId, major, changeLog,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -97,13 +100,10 @@ public class DLAppServiceSoap {
 		}
 	}
 
-	public static void checkInFileEntry(long fileEntryId, boolean major,
-		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
+	public static void checkInFileEntry(long fileEntryId,
+		java.lang.String lockUuid) throws RemoteException {
 		try {
-			DLAppServiceUtil.checkInFileEntry(fileEntryId, major, changeLog,
-				serviceContext);
+			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -245,10 +245,11 @@ public class DLAppServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status) throws RemoteException {
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders) throws RemoteException {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
-					folderId, status);
+					folderId, status, includeMountFolders);
 
 			return returnValue;
 		}
@@ -264,6 +265,21 @@ public class DLAppServiceSoap {
 		try {
 			int returnValue = DLAppServiceUtil.getFoldersCount(repositoryId,
 					parentFolderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersCount(long repositoryId, long parentFolderId,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFoldersCount(repositoryId,
+					parentFolderId, includeMountFolders);
 
 			return returnValue;
 		}

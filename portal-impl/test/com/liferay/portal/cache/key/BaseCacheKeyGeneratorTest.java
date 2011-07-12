@@ -17,10 +17,9 @@ package com.liferay.portal.cache.key;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
-
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

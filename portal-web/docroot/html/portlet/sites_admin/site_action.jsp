@@ -45,7 +45,7 @@ Group group = (Group)row.getObject();
 		/>
 
 		<liferay-ui:icon
-	   		image="permissions"
+			image="permissions"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>--%>

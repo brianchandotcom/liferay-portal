@@ -21,10 +21,10 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 /**
  * @author Alexander Chow
+ * @author Mika Koivisto
  */
-public class RawMetadataProcessor extends DLProcessor {
+public class RawMetadataProcessor implements DLProcessor {
 
-	@Override
 	public void trigger(FileEntry fileEntry) {
 		if (fileEntry instanceof LiferayFileEntry) {
 			MessageBusUtil.sendMessage(

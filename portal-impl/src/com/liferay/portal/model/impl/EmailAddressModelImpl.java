@@ -410,11 +410,17 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		if (createDate != null) {
 			emailAddressCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			emailAddressCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			emailAddressCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			emailAddressCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		emailAddressCacheModel.classNameId = getClassNameId();

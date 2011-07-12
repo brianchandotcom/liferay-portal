@@ -56,7 +56,10 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote> {
 		pollsVoteImpl.setQuestionId(questionId);
 		pollsVoteImpl.setChoiceId(choiceId);
 
-		if (voteDate > 0) {
+		if (voteDate == Long.MIN_VALUE) {
+			pollsVoteImpl.setVoteDate(null);
+		}
+		else {
 			pollsVoteImpl.setVoteDate(new Date(voteDate));
 		}
 

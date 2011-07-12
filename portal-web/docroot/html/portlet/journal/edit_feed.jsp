@@ -76,7 +76,7 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 		}
 	}
 
-	if (template != null)  {
+	if (template != null) {
 		structureId = template.getStructureId();
 
 		try {

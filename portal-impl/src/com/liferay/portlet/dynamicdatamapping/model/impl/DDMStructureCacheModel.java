@@ -89,11 +89,17 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure> {
 			ddmStructureImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ddmStructureImpl.setCreateDate(null);
+		}
+		else {
 			ddmStructureImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddmStructureImpl.setModifiedDate(null);
+		}
+		else {
 			ddmStructureImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

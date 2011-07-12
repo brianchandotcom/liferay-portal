@@ -673,11 +673,17 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		if (createDate != null) {
 			ddmStructureCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ddmStructureCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			ddmStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ddmStructureCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ddmStructureCacheModel.classNameId = getClassNameId();

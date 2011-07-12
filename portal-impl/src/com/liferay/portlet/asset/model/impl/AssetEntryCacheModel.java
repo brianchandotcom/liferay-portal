@@ -104,11 +104,17 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 			assetEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			assetEntryImpl.setCreateDate(null);
+		}
+		else {
 			assetEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetEntryImpl.setModifiedDate(null);
+		}
+		else {
 			assetEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -124,19 +130,31 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 
 		assetEntryImpl.setVisible(visible);
 
-		if (startDate > 0) {
+		if (startDate == Long.MIN_VALUE) {
+			assetEntryImpl.setStartDate(null);
+		}
+		else {
 			assetEntryImpl.setStartDate(new Date(startDate));
 		}
 
-		if (endDate > 0) {
+		if (endDate == Long.MIN_VALUE) {
+			assetEntryImpl.setEndDate(null);
+		}
+		else {
 			assetEntryImpl.setEndDate(new Date(endDate));
 		}
 
-		if (publishDate > 0) {
+		if (publishDate == Long.MIN_VALUE) {
+			assetEntryImpl.setPublishDate(null);
+		}
+		else {
 			assetEntryImpl.setPublishDate(new Date(publishDate));
 		}
 
-		if (expirationDate > 0) {
+		if (expirationDate == Long.MIN_VALUE) {
+			assetEntryImpl.setExpirationDate(null);
+		}
+		else {
 			assetEntryImpl.setExpirationDate(new Date(expirationDate));
 		}
 

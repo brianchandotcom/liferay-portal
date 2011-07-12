@@ -459,11 +459,17 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		if (createDate != null) {
 			bookmarksFolderCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			bookmarksFolderCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			bookmarksFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			bookmarksFolderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		bookmarksFolderCacheModel.parentFolderId = getParentFolderId();

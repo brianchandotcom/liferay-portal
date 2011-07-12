@@ -15,31 +15,13 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * @author Alexander Chow
+ * @author Mika Koivisto
  */
-public abstract class DLProcessor {
+public interface DLProcessor {
 
-	public static void triggerAll(FileEntry fileEntry) {
-		if (fileEntry == null) {
-			return;
-		}
-
-		for (String processorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor =
-				(DLProcessor)InstancePool.get(processorClassName);
-
-			dlProcessor.trigger(fileEntry);
-		}
-	}
-
-	public abstract void trigger(FileEntry fileEntry);
-
-	private static final String[] _DL_FILE_ENTRY_PROCESSORS =
-		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PROCESSORS);
+	public void trigger(FileEntry fileEntry);
 
 }

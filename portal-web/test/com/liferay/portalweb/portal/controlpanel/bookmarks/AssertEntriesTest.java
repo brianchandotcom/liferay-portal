@@ -30,7 +30,7 @@ public class AssertEntriesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,21 +41,28 @@ public class AssertEntriesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Entries", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Entries",
+			RuntimeVariables.replace("My Entries"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=http://www.digg.com"));
-		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));
-		selenium.clickAt("link=Recent Entries", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),
+			selenium.getText("//tr[4]/td[2]/a"));
+		selenium.clickAt("link=Recent Entries",
+			RuntimeVariables.replace("Recent Entries"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=http://www.digg.com"));
-		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),
+			selenium.getText("//tr[4]/td[2]/a"));
 	}
 }

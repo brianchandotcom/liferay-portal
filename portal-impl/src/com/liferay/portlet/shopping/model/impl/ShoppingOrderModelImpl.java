@@ -1080,11 +1080,17 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		if (createDate != null) {
 			shoppingOrderCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			shoppingOrderCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			shoppingOrderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			shoppingOrderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		shoppingOrderCacheModel.number = getNumber();

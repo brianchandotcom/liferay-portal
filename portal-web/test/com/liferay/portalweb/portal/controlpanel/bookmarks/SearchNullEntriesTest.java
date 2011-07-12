@@ -30,7 +30,7 @@ public class SearchNullEntriesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,19 +41,21 @@ public class SearchNullEntriesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_28_keywords1", RuntimeVariables.replace("Test1"));
+		selenium.type("//input[@id='_28_keywords1']",
+			RuntimeVariables.replace("Test1"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("link=Test Bookmark"));
-		assertFalse(selenium.isElementPresent("link=Test Bookmark 2"));
+		assertFalse(selenium.isTextPresent("//td[3]/a"));
+		assertFalse(selenium.isTextPresent("//tr[4]/td[3]/a"));
 	}
 }

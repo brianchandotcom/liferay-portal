@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./resin.sh
+./resin.sh $@

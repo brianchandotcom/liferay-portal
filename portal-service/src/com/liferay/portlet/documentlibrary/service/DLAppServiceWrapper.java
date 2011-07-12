@@ -86,12 +86,6 @@ public class DLAppServiceWrapper implements DLAppService {
 		_dlAppService.cancelCheckOut(fileEntryId);
 	}
 
-	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppService.checkInFileEntry(fileEntryId, lockUuid);
-	}
-
 	public void checkInFileEntry(long fileEntryId, boolean major,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -99,6 +93,12 @@ public class DLAppServiceWrapper implements DLAppService {
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.checkInFileEntry(fileEntryId, major, changeLog,
 			serviceContext);
+	}
+
+	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.checkInFileEntry(fileEntryId, lockUuid);
 	}
 
 	public void checkOutFileEntry(long fileEntryId)
@@ -286,6 +286,32 @@ public class DLAppServiceWrapper implements DLAppService {
 	}
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFolders(repositoryId, parentFolderId,
+			includeMountFolders);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFolders(repositoryId, parentFolderId,
+			includeMountFolders, start, end);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFolders(repositoryId, parentFolderId,
+			includeMountFolders, start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -302,34 +328,45 @@ public class DLAppServiceWrapper implements DLAppService {
 	}
 
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status, int start, int end)
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
-			folderId, status, start, end);
+			folderId, status, includeMountFolders, start, end);
 	}
 
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long repositoryId, long folderId, int status, int start, int end,
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
-			folderId, status, start, end, obc);
+			folderId, status, includeMountFolders, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long repositoryId, long folderId, int status)
+		long repositoryId, long folderId, int status,
+		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersCount(long repositoryId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getFoldersCount(repositoryId, parentFolderId);
+	}
+
+	public int getFoldersCount(long repositoryId, long parentFolderId,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFoldersCount(repositoryId, parentFolderId,
+			includeMountFolders);
 	}
 
 	public int getFoldersFileEntriesCount(long repositoryId,
@@ -386,6 +423,30 @@ public class DLAppServiceWrapper implements DLAppService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getGroupFileEntriesCount(repositoryId, userId,
 			rootFolderId);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getMountFolders(repositoryId, parentFolderId);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getMountFolders(repositoryId, parentFolderId,
+			start, end);
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
+		long repositoryId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getMountFolders(repositoryId, parentFolderId,
+			start, end, obc);
 	}
 
 	public java.util.List<java.lang.Long> getSubfolderIds(long repositoryId,

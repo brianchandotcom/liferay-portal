@@ -74,11 +74,17 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress> {
 			emailAddressImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			emailAddressImpl.setCreateDate(null);
+		}
+		else {
 			emailAddressImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			emailAddressImpl.setModifiedDate(null);
+		}
+		else {
 			emailAddressImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

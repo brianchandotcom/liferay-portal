@@ -76,15 +76,15 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		throws SystemException;
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, int start, int end,
-			OrderByComparator obc)
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		return getFoldersAndFileEntries(folderId, start, end, obc);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status)
+			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
 
 		return getFoldersAndFileEntriesCount(folderId);

@@ -585,11 +585,17 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 		if (createDate != null) {
 			journalTemplateCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			journalTemplateCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			journalTemplateCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			journalTemplateCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		journalTemplateCacheModel.templateId = getTemplateId();

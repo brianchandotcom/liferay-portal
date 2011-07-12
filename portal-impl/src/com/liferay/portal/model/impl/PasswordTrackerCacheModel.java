@@ -52,7 +52,10 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker> {
 		passwordTrackerImpl.setPasswordTrackerId(passwordTrackerId);
 		passwordTrackerImpl.setUserId(userId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			passwordTrackerImpl.setCreateDate(null);
+		}
+		else {
 			passwordTrackerImpl.setCreateDate(new Date(createDate));
 		}
 

@@ -132,7 +132,7 @@ public class WorkflowHandlerRegistryUtil {
 					companyId, groupId, userId, classPK, model,
 					workflowContext);
 			}
-			catch(NoSuchWorkflowDefinitionLinkException nswdle) {
+			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 				workflowHandler.updateStatus(
 					WorkflowConstants.STATUS_APPROVED, workflowContext);
 			}

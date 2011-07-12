@@ -167,7 +167,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	}
 
 	function <portlet:namespace />removeFolder() {
-		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = "<%=  BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID %>";
+		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = "<%= BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID %>";
 
 		var nameEl = document.getElementById("<portlet:namespace />rootFolderName");
 

@@ -56,7 +56,10 @@ public class MBMessageFlagCacheModel implements CacheModel<MBMessageFlag> {
 		mbMessageFlagImpl.setMessageFlagId(messageFlagId);
 		mbMessageFlagImpl.setUserId(userId);
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			mbMessageFlagImpl.setModifiedDate(null);
+		}
+		else {
 			mbMessageFlagImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

@@ -58,11 +58,17 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps> {
 		webDAVPropsImpl.setWebDavPropsId(webDavPropsId);
 		webDAVPropsImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			webDAVPropsImpl.setCreateDate(null);
+		}
+		else {
 			webDAVPropsImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			webDAVPropsImpl.setModifiedDate(null);
+		}
+		else {
 			webDAVPropsImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

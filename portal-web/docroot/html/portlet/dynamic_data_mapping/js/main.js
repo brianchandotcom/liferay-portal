@@ -39,6 +39,10 @@ AUI().add(
 			name: 'showLabel'
 		};
 
+		var MAP_ATTR_STYLE = {
+			name: 'style'
+		};
+
 		var MAP_ATTR_TIP = {
 			name: 'tip'
 		};
@@ -267,6 +271,8 @@ AUI().add(
 
 						var showLabel = instance._createDynamicNode('entry', MAP_ATTR_SHOW_LABEL);
 
+						var style = instance._createDynamicNode('entry', MAP_ATTR_STYLE);
+
 						var tip = instance._createDynamicNode('entry', MAP_ATTR_TIP);
 
 						var width = instance._createDynamicNode('entry', MAP_ATTR_WIDTH);
@@ -325,6 +331,14 @@ AUI().add(
 							showLabel.openTag,
 							STR_CDATA_OPEN + showLabelVal + STR_CDATA_CLOSE,
 							showLabel.closeTag
+						);
+
+						var styleVal = instance.normalizeValue(field.get('style'));
+
+						buffer.push(
+							style.openTag,
+							STR_CDATA_OPEN + styleVal + STR_CDATA_CLOSE,
+							style.closeTag
 						);
 
 						var tipVal = instance.normalizeValue(field.get('tip'));

@@ -120,7 +120,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<!--<component name="ButtonRow" bodyContent="true" alloyComponent="false">
+	<component name="ButtonRow" bodyContent="true" alloyComponent="false">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>
@@ -130,7 +130,7 @@
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 	<component name="Column" bodyContent="true">
 		<attributes>
 			<attribute>

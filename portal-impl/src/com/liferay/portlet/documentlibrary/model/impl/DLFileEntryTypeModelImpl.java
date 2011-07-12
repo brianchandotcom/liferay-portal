@@ -394,11 +394,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		if (createDate != null) {
 			dlFileEntryTypeCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			dlFileEntryTypeCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			dlFileEntryTypeCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			dlFileEntryTypeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		dlFileEntryTypeCacheModel.name = getName();

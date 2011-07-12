@@ -482,11 +482,17 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		if (createDate != null) {
 			igFolderCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			igFolderCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			igFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			igFolderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		igFolderCacheModel.parentFolderId = getParentFolderId();

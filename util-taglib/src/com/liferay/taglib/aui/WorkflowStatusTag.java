@@ -29,6 +29,10 @@ public class WorkflowStatusTag extends IncludeTag {
 		_bean = bean;
 	}
 
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -41,6 +45,10 @@ public class WorkflowStatusTag extends IncludeTag {
 		_status = status;
 	}
 
+	public void setStatusMessage(String statusMessage) {
+		_statusMessage = statusMessage;
+	}
+
 	public void setVersion(String version) {
 		_version = version;
 	}
@@ -48,9 +56,11 @@ public class WorkflowStatusTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_bean = null;
+		_helpMessage = null;
 		_id = null;
 		_model = null;
 		_status = 0;
+		_statusMessage = null;
 		_version = null;
 	}
 
@@ -80,10 +90,14 @@ public class WorkflowStatusTag extends IncludeTag {
 		}
 
 		request.setAttribute("aui:workflow-status:bean", bean);
+		request.setAttribute(
+			"aui:workflow-status:help-message", _helpMessage);
 		request.setAttribute("aui:workflow-status:id", _id);
 		request.setAttribute("aui:workflow-status:model", model);
 		request.setAttribute(
 			"aui:workflow-status:status", String.valueOf(_status));
+		request.setAttribute(
+			"aui:workflow-status:status-message", _statusMessage);
 		request.setAttribute("aui:workflow-status:version", _version);
 	}
 
@@ -93,9 +107,11 @@ public class WorkflowStatusTag extends IncludeTag {
 		"/html/taglib/aui/workflow_status/page.jsp";
 
 	private Object _bean;
+	private String _helpMessage;
 	private String _id;
 	private Class<?> _model;
 	private int _status;
+	private String _statusMessage;
 	private String _version;
 
 }

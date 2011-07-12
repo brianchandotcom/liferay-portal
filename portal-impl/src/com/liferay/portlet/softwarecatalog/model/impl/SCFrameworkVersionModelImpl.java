@@ -425,11 +425,17 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		if (createDate != null) {
 			scFrameworkVersionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			scFrameworkVersionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			scFrameworkVersionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			scFrameworkVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		scFrameworkVersionCacheModel.name = getName();

@@ -354,6 +354,9 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		if (lastPostDate != null) {
 			blogsStatsUserCacheModel.lastPostDate = lastPostDate.getTime();
 		}
+		else {
+			blogsStatsUserCacheModel.lastPostDate = Long.MIN_VALUE;
+		}
 
 		blogsStatsUserCacheModel.ratingsTotalEntries = getRatingsTotalEntries();
 

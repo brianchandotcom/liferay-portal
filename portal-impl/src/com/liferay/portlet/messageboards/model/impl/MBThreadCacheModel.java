@@ -82,7 +82,10 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 		mbThreadImpl.setViewCount(viewCount);
 		mbThreadImpl.setLastPostByUserId(lastPostByUserId);
 
-		if (lastPostDate > 0) {
+		if (lastPostDate == Long.MIN_VALUE) {
+			mbThreadImpl.setLastPostDate(null);
+		}
+		else {
 			mbThreadImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
@@ -97,7 +100,10 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 			mbThreadImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			mbThreadImpl.setStatusDate(null);
+		}
+		else {
 			mbThreadImpl.setStatusDate(new Date(statusDate));
 		}
 

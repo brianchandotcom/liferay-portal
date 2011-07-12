@@ -395,11 +395,17 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		if (createDate != null) {
 			portletItemCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			portletItemCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			portletItemCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			portletItemCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		portletItemCacheModel.name = getName();

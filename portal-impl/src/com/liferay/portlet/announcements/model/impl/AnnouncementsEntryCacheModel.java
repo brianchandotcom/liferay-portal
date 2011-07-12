@@ -94,11 +94,17 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 			announcementsEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setCreateDate(null);
+		}
+		else {
 			announcementsEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setModifiedDate(null);
+		}
+		else {
 			announcementsEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -133,11 +139,17 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 			announcementsEntryImpl.setType(type);
 		}
 
-		if (displayDate > 0) {
+		if (displayDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setDisplayDate(null);
+		}
+		else {
 			announcementsEntryImpl.setDisplayDate(new Date(displayDate));
 		}
 
-		if (expirationDate > 0) {
+		if (expirationDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setExpirationDate(null);
+		}
+		else {
 			announcementsEntryImpl.setExpirationDate(new Date(expirationDate));
 		}
 

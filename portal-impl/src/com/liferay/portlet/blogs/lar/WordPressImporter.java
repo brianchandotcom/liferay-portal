@@ -123,7 +123,7 @@ public class WordPressImporter {
 		try {
 			doc = SAXReaderUtil.read(fileData);
 		}
-		catch(DocumentException de) {
+		catch (DocumentException de) {
 			_log.error(de.getMessage(), de);
 
 			return userMap;

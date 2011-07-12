@@ -653,6 +653,9 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		if (createDate != null) {
 			dlFileVersionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			dlFileVersionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		dlFileVersionCacheModel.repositoryId = getRepositoryId();
 
@@ -734,6 +737,9 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		if (statusDate != null) {
 			dlFileVersionCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			dlFileVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return dlFileVersionCacheModel;

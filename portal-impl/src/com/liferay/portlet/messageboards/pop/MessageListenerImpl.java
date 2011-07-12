@@ -267,6 +267,12 @@ public class MessageListenerImpl implements MessageListener {
 	protected long getParentMessageId(String recipient, Message message)
 		throws Exception {
 
+		if (!StringUtil.startsWith(
+				recipient, MBUtil.MESSAGE_POP_PORTLET_PREFIX)) {
+
+			return MBUtil.getParentMessageId(message);
+		}
+
 		int pos = recipient.indexOf(CharPool.AT);
 
 		if (pos < 0) {

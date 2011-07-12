@@ -30,6 +30,13 @@ public class SQLServer2005Dialect
 		return _SUPPORTS_LIMIT_OFFSET;
 	}
 
+	@Override
+	public boolean supportsVariableLimit() {
+		return _SUPPORTS_VARIABLE_LIMIT;
+	}
+
 	private static final boolean _SUPPORTS_LIMIT_OFFSET = true;
+
+	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
 
 }

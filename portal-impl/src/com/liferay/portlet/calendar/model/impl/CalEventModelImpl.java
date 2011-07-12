@@ -622,11 +622,17 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		if (createDate != null) {
 			calEventCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			calEventCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			calEventCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			calEventCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		calEventCacheModel.title = getTitle();
@@ -658,11 +664,17 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		if (startDate != null) {
 			calEventCacheModel.startDate = startDate.getTime();
 		}
+		else {
+			calEventCacheModel.startDate = Long.MIN_VALUE;
+		}
 
 		Date endDate = getEndDate();
 
 		if (endDate != null) {
 			calEventCacheModel.endDate = endDate.getTime();
+		}
+		else {
+			calEventCacheModel.endDate = Long.MIN_VALUE;
 		}
 
 		calEventCacheModel.durationHour = getDurationHour();

@@ -46,7 +46,10 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}> {
 		<#list entity.regularColList as column>
 			<#if column.type != "Blob">
 				<#if column.type == "Date">
-					if (${column.name} > 0) {
+					if (${column.name} == Long.MIN_VALUE) {
+						${entity.varName}Impl.set${column.methodName}(null);
+					}
+					else {
 						${entity.varName}Impl.set${column.methodName}(new Date(${column.name}));
 					}
 				<#else>

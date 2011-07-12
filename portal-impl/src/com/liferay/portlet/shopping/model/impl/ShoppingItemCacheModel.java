@@ -122,11 +122,17 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem> {
 			shoppingItemImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			shoppingItemImpl.setCreateDate(null);
+		}
+		else {
 			shoppingItemImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			shoppingItemImpl.setModifiedDate(null);
+		}
+		else {
 			shoppingItemImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

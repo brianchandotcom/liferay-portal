@@ -140,27 +140,27 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
-								<li class="sitemap use-dialog">
-									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
-								</li>
-							</c:if>
-
-							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
-								<li class="manage-site-content use-dialog">
-									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
-								</li>
-							</c:if>
-
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() %>">
 								<li class="settings use-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="manage-site-settings" />
 								</li>
 							</c:if>
 
+							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
+								<li class="sitemap use-dialog">
+									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
+								</li>
+							</c:if>
+
 							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() && !group.isLayoutPrototype() %>">
 								<li class="manage-site-memberships use-dialog">
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
+								</li>
+							</c:if>
+
+							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
+								<li class="manage-site-content use-dialog">
+									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
 								</li>
 							</c:if>
 						</ul>

@@ -67,11 +67,17 @@ public class RepositoryCacheModel implements CacheModel<Repository> {
 		repositoryImpl.setGroupId(groupId);
 		repositoryImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			repositoryImpl.setCreateDate(null);
+		}
+		else {
 			repositoryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			repositoryImpl.setModifiedDate(null);
+		}
+		else {
 			repositoryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

@@ -32,6 +32,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Juan Fernández
@@ -80,6 +81,23 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/calendar/edit_event");
+		portletURL.setParameter("eventId", String.valueOf(_event.getEventId()));
+
+		return portletURL;
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			PortletKeys.CALENDAR, PortletRequest.RENDER_PHASE);
+
+		portletURL.setWindowState(windowState);
+
+		portletURL.setParameter("struts_action", "/calendar/view_event");
 		portletURL.setParameter("eventId", String.valueOf(_event.getEventId()));
 
 		return portletURL;

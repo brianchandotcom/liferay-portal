@@ -36,7 +36,7 @@ String connectorURL = HttpUtil.encodeURL(mainPath + "/portal/fckeditor?p_l_id=" 
 
 String languageId = ParamUtil.getString(request, "languageId");
 
-Locale locale =  LocaleUtil.fromLanguageId(languageId);
+Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 languageId = locale.getLanguage();
 

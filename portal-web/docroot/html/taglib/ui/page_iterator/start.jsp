@@ -141,7 +141,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									}
 								%>
 
-									<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>"  />
+									<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
 
 								<%
 								}

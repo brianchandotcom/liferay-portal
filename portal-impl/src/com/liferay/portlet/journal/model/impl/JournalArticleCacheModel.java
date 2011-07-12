@@ -126,11 +126,17 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			journalArticleImpl.setCreateDate(null);
+		}
+		else {
 			journalArticleImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			journalArticleImpl.setModifiedDate(null);
+		}
+		else {
 			journalArticleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -202,15 +208,24 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setLayoutUuid(layoutUuid);
 		}
 
-		if (displayDate > 0) {
+		if (displayDate == Long.MIN_VALUE) {
+			journalArticleImpl.setDisplayDate(null);
+		}
+		else {
 			journalArticleImpl.setDisplayDate(new Date(displayDate));
 		}
 
-		if (expirationDate > 0) {
+		if (expirationDate == Long.MIN_VALUE) {
+			journalArticleImpl.setExpirationDate(null);
+		}
+		else {
 			journalArticleImpl.setExpirationDate(new Date(expirationDate));
 		}
 
-		if (reviewDate > 0) {
+		if (reviewDate == Long.MIN_VALUE) {
+			journalArticleImpl.setReviewDate(null);
+		}
+		else {
 			journalArticleImpl.setReviewDate(new Date(reviewDate));
 		}
 
@@ -235,7 +250,10 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			journalArticleImpl.setStatusDate(null);
+		}
+		else {
 			journalArticleImpl.setStatusDate(new Date(statusDate));
 		}
 

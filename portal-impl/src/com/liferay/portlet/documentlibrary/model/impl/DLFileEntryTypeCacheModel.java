@@ -72,11 +72,17 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType> {
 			dlFileEntryTypeImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			dlFileEntryTypeImpl.setCreateDate(null);
+		}
+		else {
 			dlFileEntryTypeImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			dlFileEntryTypeImpl.setModifiedDate(null);
+		}
+		else {
 			dlFileEntryTypeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

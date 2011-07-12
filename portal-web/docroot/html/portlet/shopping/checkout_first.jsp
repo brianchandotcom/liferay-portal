@@ -110,7 +110,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 				<aui:column>
 					<aui:input label="first-name" name="billingFirstName" />
 
-					<aui:input label="last-name"  name="billingLastName" />
+					<aui:input label="last-name" name="billingLastName" />
 
 					<aui:input label="email-address" name="billingEmailAddress" />
 

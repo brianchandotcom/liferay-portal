@@ -89,11 +89,17 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate> {
 			ddmTemplateImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ddmTemplateImpl.setCreateDate(null);
+		}
+		else {
 			ddmTemplateImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddmTemplateImpl.setModifiedDate(null);
+		}
+		else {
 			ddmTemplateImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

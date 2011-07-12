@@ -73,11 +73,17 @@ public class PortletItemCacheModel implements CacheModel<PortletItem> {
 			portletItemImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			portletItemImpl.setCreateDate(null);
+		}
+		else {
 			portletItemImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			portletItemImpl.setModifiedDate(null);
+		}
+		else {
 			portletItemImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

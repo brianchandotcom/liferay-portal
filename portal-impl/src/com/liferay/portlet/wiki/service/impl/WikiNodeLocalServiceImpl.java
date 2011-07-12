@@ -30,6 +30,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.DuplicateNodeNameException;
 import com.liferay.portlet.wiki.NodeNameException;
 import com.liferay.portlet.wiki.importers.WikiImporter;
@@ -56,10 +57,9 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String nodeName = PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
-
 		return addNode(
-			userId, nodeName, StringPool.BLANK, serviceContext);
+			userId, PropsValues.WIKI_INITIAL_NODE_NAME, StringPool.BLANK,
+			serviceContext);
 	}
 
 	public WikiNode addNode(

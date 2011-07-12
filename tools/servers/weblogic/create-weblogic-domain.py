@@ -16,8 +16,6 @@ def main ():
 	templatePath = wlsDirectory + '/common/templates/domains/wls.jar'
 	domainPath = domainsDirectory + '/' + domainName
 	
-	print "Template path: %s" % templatePath
-	
 	readTemplate(templatePath)
 	
 	set('Name', domainName)

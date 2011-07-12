@@ -645,7 +645,7 @@
 			<finder-column name="head" />
 			<finder-column name="plid" />
 		</finder>
-		<finder name="L_P_V" return-type="Collection">
+		<finder name="L_P_V" return-type="Collection" where="status != 5">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
 			<finder-column name="variationName" />

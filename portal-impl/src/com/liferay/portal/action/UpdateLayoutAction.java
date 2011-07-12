@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
@@ -35,9 +37,12 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
@@ -206,6 +211,44 @@ public class UpdateLayoutAction extends JSONAction {
 					request, "TypeSettingsProperties--");
 
 			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
+		}
+		else if (cmd.equals("redo_layout_revision")) {
+			long layoutRevisionId = ParamUtil.getLong(
+				request, "layoutRevisionId");
+			long layoutSetBranchId = ParamUtil.getLong(
+				request, "layoutSetBranchId");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				request);
+
+			LayoutRevisionLocalServiceUtil.updateStatus(
+				userId, layoutRevisionId, WorkflowConstants.STATUS_DRAFT,
+				serviceContext);
+
+			StagingUtil.setRecentLayoutRevisionId(
+				request, layoutSetBranchId, layout.getPlid(), layoutRevisionId);
+
+			updateLayout = false;
+		}
+		else if (cmd.equals("undo_layout_revision")) {
+			long layoutRevisionId = ParamUtil.getLong(
+				request, "layoutRevisionId");
+			long layoutSetBranchId = ParamUtil.getLong(
+				request, "layoutSetBranchId");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				request);
+
+			LayoutRevision layoutRevision =
+				LayoutRevisionLocalServiceUtil.updateStatus(
+				userId, layoutRevisionId, WorkflowConstants.STATUS_INACTIVE,
+				serviceContext);
+
+			StagingUtil.setRecentLayoutRevisionId(
+				request, layoutSetBranchId, layout.getPlid(),
+				layoutRevision.getParentLayoutRevisionId());
+
+			updateLayout = false;
 		}
 
 		if (updateLayout) {

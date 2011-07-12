@@ -252,6 +252,10 @@
 	<#assign the_title = languageUtil.get(locale, tilesTitle) />
 </#if>
 
+<#if page_group.isLayoutPrototype()>
+	<#assign the_title = page_group.getDescriptiveName() />
+</#if>
+
 <#assign the_title = htmlUtil.escape(the_title) />
 
 <#if layouts??>

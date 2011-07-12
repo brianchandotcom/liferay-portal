@@ -113,7 +113,7 @@ portletURL.setParameter("struts_action", "/workflow_definition_links/view");
 							defaultOptionMessage = LanguageUtil.get(pageContext, "default") + StringPool.COLON + StringPool.SPACE + defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
 						}
 						catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							defaultOptionMessage = LanguageUtil.get(pageContext, "default") + StringPool.COLON + StringPool.SPACE  + LanguageUtil.get(pageContext, "no-workflow");
+							defaultOptionMessage = LanguageUtil.get(pageContext, "default") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "no-workflow");
 						}
 					}
 					else {

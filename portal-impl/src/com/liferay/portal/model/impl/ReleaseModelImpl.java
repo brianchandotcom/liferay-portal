@@ -304,11 +304,17 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		if (createDate != null) {
 			releaseCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			releaseCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			releaseCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			releaseCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		releaseCacheModel.servletContextName = getServletContextName();
@@ -325,6 +331,9 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		if (buildDate != null) {
 			releaseCacheModel.buildDate = buildDate.getTime();
+		}
+		else {
+			releaseCacheModel.buildDate = Long.MIN_VALUE;
 		}
 
 		releaseCacheModel.verified = getVerified();

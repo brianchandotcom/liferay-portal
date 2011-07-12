@@ -63,7 +63,7 @@ if (Validator.isNotNull(historyKey)) {
 		%>
 
 		<div class="lfr-component form-navigator">
-			<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK  %>
+			<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
 			<%
 			String[] modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
@@ -159,7 +159,7 @@ if (Validator.isNotNull(historyKey)) {
 				</aui:button-row>
 			</c:if>
 
-			<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK  %>
+			<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 		</div>
 	</div>
 </div>

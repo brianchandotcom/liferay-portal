@@ -85,8 +85,19 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary> {
 			assetVocabularyImpl.setUserName(userName);
 		}
 
-		assetVocabularyImpl.setCreateDate(new Date(createDate));
-		assetVocabularyImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			assetVocabularyImpl.setCreateDate(null);
+		}
+		else {
+			assetVocabularyImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetVocabularyImpl.setModifiedDate(null);
+		}
+		else {
+			assetVocabularyImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			assetVocabularyImpl.setName(StringPool.BLANK);

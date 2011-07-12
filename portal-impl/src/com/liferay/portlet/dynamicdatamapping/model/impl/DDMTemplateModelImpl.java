@@ -655,11 +655,17 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		if (createDate != null) {
 			ddmTemplateCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ddmTemplateCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			ddmTemplateCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ddmTemplateCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ddmTemplateCacheModel.structureId = getStructureId();

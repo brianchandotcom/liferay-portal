@@ -76,8 +76,20 @@ public class PhoneCacheModel implements CacheModel<Phone> {
 			phoneImpl.setUserName(userName);
 		}
 
-		phoneImpl.setCreateDate(new Date(createDate));
-		phoneImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			phoneImpl.setCreateDate(null);
+		}
+		else {
+			phoneImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			phoneImpl.setModifiedDate(null);
+		}
+		else {
+			phoneImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		phoneImpl.setClassNameId(classNameId);
 		phoneImpl.setClassPK(classPK);
 

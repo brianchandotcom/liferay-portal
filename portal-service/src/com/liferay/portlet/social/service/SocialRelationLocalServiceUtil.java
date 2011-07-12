@@ -310,9 +310,20 @@ public class SocialRelationLocalServiceUtil {
 		return getService().getRelations(userId, type, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.social.model.SocialRelation> getRelations(
+		long userId1, long userId2, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRelations(userId1, userId2, start, end);
+	}
+
 	public static int getRelationsCount(long userId, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRelationsCount(userId, type);
+	}
+
+	public static int getRelationsCount(long userId1, long userId2)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRelationsCount(userId1, userId2);
 	}
 
 	public static boolean hasRelation(long userId1, long userId2, int type)

@@ -220,7 +220,7 @@ int organizationIdsPos = ParamUtil.getInteger(request, "organizationIdsPos");
 
 				<aui:button cssClass="next" disabled="<%= organizationIdsPos + 1 >= organizationIdsArray.length %>" onClick='<%= taglibNextOnClick %>' value="next" />
 
-				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished"  />
+				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished" />
 			</aui:button-row>
 		</div>
 

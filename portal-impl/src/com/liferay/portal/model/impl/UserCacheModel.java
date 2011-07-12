@@ -128,8 +128,21 @@ public class UserCacheModel implements CacheModel<User> {
 
 		userImpl.setUserId(userId);
 		userImpl.setCompanyId(companyId);
-		userImpl.setCreateDate(new Date(createDate));
-		userImpl.setModifiedDate(new Date(modifiedDate));
+
+		if (createDate == Long.MIN_VALUE) {
+			userImpl.setCreateDate(null);
+		}
+		else {
+			userImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			userImpl.setModifiedDate(null);
+		}
+		else {
+			userImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		userImpl.setDefaultUser(defaultUser);
 		userImpl.setContactId(contactId);
 
@@ -142,7 +155,13 @@ public class UserCacheModel implements CacheModel<User> {
 
 		userImpl.setPasswordEncrypted(passwordEncrypted);
 		userImpl.setPasswordReset(passwordReset);
-		userImpl.setPasswordModifiedDate(new Date(passwordModifiedDate));
+
+		if (passwordModifiedDate == Long.MIN_VALUE) {
+			userImpl.setPasswordModifiedDate(null);
+		}
+		else {
+			userImpl.setPasswordModifiedDate(new Date(passwordModifiedDate));
+		}
 
 		if (digest == null) {
 			userImpl.setDigest(StringPool.BLANK);
@@ -248,7 +267,12 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setJobTitle(jobTitle);
 		}
 
-		userImpl.setLoginDate(new Date(loginDate));
+		if (loginDate == Long.MIN_VALUE) {
+			userImpl.setLoginDate(null);
+		}
+		else {
+			userImpl.setLoginDate(new Date(loginDate));
+		}
 
 		if (loginIP == null) {
 			userImpl.setLoginIP(StringPool.BLANK);
@@ -257,7 +281,12 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLoginIP(loginIP);
 		}
 
-		userImpl.setLastLoginDate(new Date(lastLoginDate));
+		if (lastLoginDate == Long.MIN_VALUE) {
+			userImpl.setLastLoginDate(null);
+		}
+		else {
+			userImpl.setLastLoginDate(new Date(lastLoginDate));
+		}
 
 		if (lastLoginIP == null) {
 			userImpl.setLastLoginIP(StringPool.BLANK);
@@ -266,10 +295,23 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLastLoginIP(lastLoginIP);
 		}
 
-		userImpl.setLastFailedLoginDate(new Date(lastFailedLoginDate));
+		if (lastFailedLoginDate == Long.MIN_VALUE) {
+			userImpl.setLastFailedLoginDate(null);
+		}
+		else {
+			userImpl.setLastFailedLoginDate(new Date(lastFailedLoginDate));
+		}
+
 		userImpl.setFailedLoginAttempts(failedLoginAttempts);
 		userImpl.setLockout(lockout);
-		userImpl.setLockoutDate(new Date(lockoutDate));
+
+		if (lockoutDate == Long.MIN_VALUE) {
+			userImpl.setLockoutDate(null);
+		}
+		else {
+			userImpl.setLockoutDate(new Date(lockoutDate));
+		}
+
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
 		userImpl.setStatus(status);

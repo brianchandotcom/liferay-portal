@@ -637,11 +637,17 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		if (createDate != null) {
 			assetVocabularyCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetVocabularyCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			assetVocabularyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetVocabularyCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		assetVocabularyCacheModel.name = getName();

@@ -86,8 +86,19 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry> {
 			scProductEntryImpl.setUserName(userName);
 		}
 
-		scProductEntryImpl.setCreateDate(new Date(createDate));
-		scProductEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			scProductEntryImpl.setCreateDate(null);
+		}
+		else {
+			scProductEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			scProductEntryImpl.setModifiedDate(null);
+		}
+		else {
+			scProductEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			scProductEntryImpl.setName(StringPool.BLANK);

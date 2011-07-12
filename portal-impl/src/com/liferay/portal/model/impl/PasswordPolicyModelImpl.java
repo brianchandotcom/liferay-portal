@@ -729,11 +729,17 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		if (createDate != null) {
 			passwordPolicyCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			passwordPolicyCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			passwordPolicyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			passwordPolicyCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		passwordPolicyCacheModel.defaultPolicy = getDefaultPolicy();

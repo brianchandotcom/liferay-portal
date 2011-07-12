@@ -83,8 +83,19 @@ public class DDMContentCacheModel implements CacheModel<DDMContent> {
 			ddmContentImpl.setUserName(userName);
 		}
 
-		ddmContentImpl.setCreateDate(new Date(createDate));
-		ddmContentImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			ddmContentImpl.setCreateDate(null);
+		}
+		else {
+			ddmContentImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddmContentImpl.setModifiedDate(null);
+		}
+		else {
+			ddmContentImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			ddmContentImpl.setName(StringPool.BLANK);

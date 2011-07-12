@@ -334,6 +334,9 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		if (modifiedDate != null) {
 			imageCacheModel.modifiedDate = modifiedDate.getTime();
 		}
+		else {
+			imageCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		imageCacheModel.text = getText();
 

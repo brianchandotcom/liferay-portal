@@ -26,6 +26,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Jorge Ferrer
@@ -62,6 +63,11 @@ public interface AssetRenderer {
 		throws Exception;
 
 	public String getUrlTitle();
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception;
 
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,

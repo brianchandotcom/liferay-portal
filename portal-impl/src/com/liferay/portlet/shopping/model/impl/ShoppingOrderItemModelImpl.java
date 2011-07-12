@@ -377,6 +377,9 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		if (shippedDate != null) {
 			shoppingOrderItemCacheModel.shippedDate = shippedDate.getTime();
 		}
+		else {
+			shoppingOrderItemCacheModel.shippedDate = Long.MIN_VALUE;
+		}
 
 		return shoppingOrderItemCacheModel;
 	}

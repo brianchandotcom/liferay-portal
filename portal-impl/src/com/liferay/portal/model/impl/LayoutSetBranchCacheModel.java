@@ -73,8 +73,20 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 			layoutSetBranchImpl.setUserName(userName);
 		}
 
-		layoutSetBranchImpl.setCreateDate(new Date(createDate));
-		layoutSetBranchImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			layoutSetBranchImpl.setCreateDate(null);
+		}
+		else {
+			layoutSetBranchImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			layoutSetBranchImpl.setModifiedDate(null);
+		}
+		else {
+			layoutSetBranchImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		layoutSetBranchImpl.setPrivateLayout(privateLayout);
 
 		if (name == null) {

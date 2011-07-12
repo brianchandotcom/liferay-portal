@@ -340,11 +340,17 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		if (createDate != null) {
 			workflowInstanceLinkCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			workflowInstanceLinkCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			workflowInstanceLinkCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			workflowInstanceLinkCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		workflowInstanceLinkCacheModel.classNameId = getClassNameId();

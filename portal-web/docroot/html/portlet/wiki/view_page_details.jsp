@@ -353,7 +353,7 @@ int count = 0;
 					/>
 				</c:if>
 
-				<c:if test="<%= WikiPagePermission.contains(permissionChecker,  wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
+				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
 
 					<%
 					PortletURL frontPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);

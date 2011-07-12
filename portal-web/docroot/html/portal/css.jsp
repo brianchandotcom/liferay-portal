@@ -48,6 +48,7 @@
 <%@ include file="/html/portal/css/portal/search_combobox.jspf" %>
 <%@ include file="/html/portal/css/portal/separator.jspf" %>
 <%@ include file="/html/portal/css/portal/top_links.jspf" %>
+<%@ include file="/html/portal/css/portal/translation_manager.jspf" %>
 
 <%@ include file="/html/portal/css/taglib/asset_categories_summary.jspf" %>
 <%@ include file="/html/portal/css/taglib/asset_links.jspf" %>

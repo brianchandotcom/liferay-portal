@@ -175,7 +175,7 @@ int userGroupIdsPos = ParamUtil.getInteger(request, "userGroupIdsPos");
 
 				<aui:button cssClass="next" disabled="<%= userGroupIdsPos + 1 >= userGroupIdsArray.length %>" onClick='<%= taglibNextOnClick %>' value="next" />
 
-				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished"  />
+				<aui:button cssClass="finished" onClick="<%= taglibFinishedOnClick %>" value="finished" />
 			</aui:button-row>
 		</div>
 	</c:otherwise>

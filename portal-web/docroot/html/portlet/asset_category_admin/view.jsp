@@ -75,11 +75,11 @@
 					<liferay-ui:message key="category-details" />
 
 					<div class="category-view-close">
-					   <span>
-						   <liferay-ui:icon
+						<span>
+							<liferay-ui:icon
 								id="category-view-close"
 								image="close"
-						   />
+							/>
 						</span>
 					</div>
 				</div>

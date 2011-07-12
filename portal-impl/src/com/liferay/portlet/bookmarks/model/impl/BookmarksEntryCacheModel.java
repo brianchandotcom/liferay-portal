@@ -89,8 +89,20 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry> {
 			bookmarksEntryImpl.setUserName(userName);
 		}
 
-		bookmarksEntryImpl.setCreateDate(new Date(createDate));
-		bookmarksEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			bookmarksEntryImpl.setCreateDate(null);
+		}
+		else {
+			bookmarksEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			bookmarksEntryImpl.setModifiedDate(null);
+		}
+		else {
+			bookmarksEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		bookmarksEntryImpl.setFolderId(folderId);
 
 		if (name == null) {

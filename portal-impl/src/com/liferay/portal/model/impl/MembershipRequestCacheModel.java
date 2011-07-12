@@ -65,7 +65,13 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		membershipRequestImpl.setGroupId(groupId);
 		membershipRequestImpl.setCompanyId(companyId);
 		membershipRequestImpl.setUserId(userId);
-		membershipRequestImpl.setCreateDate(new Date(createDate));
+
+		if (createDate == Long.MIN_VALUE) {
+			membershipRequestImpl.setCreateDate(null);
+		}
+		else {
+			membershipRequestImpl.setCreateDate(new Date(createDate));
+		}
 
 		if (comments == null) {
 			membershipRequestImpl.setComments(StringPool.BLANK);
@@ -81,7 +87,13 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 			membershipRequestImpl.setReplyComments(replyComments);
 		}
 
-		membershipRequestImpl.setReplyDate(new Date(replyDate));
+		if (replyDate == Long.MIN_VALUE) {
+			membershipRequestImpl.setReplyDate(null);
+		}
+		else {
+			membershipRequestImpl.setReplyDate(new Date(replyDate));
+		}
+
 		membershipRequestImpl.setReplierUserId(replierUserId);
 		membershipRequestImpl.setStatusId(statusId);
 

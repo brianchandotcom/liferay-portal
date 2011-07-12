@@ -542,6 +542,9 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		if (lastPostDate != null) {
 			mbThreadCacheModel.lastPostDate = lastPostDate.getTime();
 		}
+		else {
+			mbThreadCacheModel.lastPostDate = Long.MIN_VALUE;
+		}
 
 		mbThreadCacheModel.priority = getPriority();
 
@@ -561,6 +564,9 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		if (statusDate != null) {
 			mbThreadCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			mbThreadCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return mbThreadCacheModel;

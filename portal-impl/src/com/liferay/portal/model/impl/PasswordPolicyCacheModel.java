@@ -116,8 +116,20 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy> {
 			passwordPolicyImpl.setUserName(userName);
 		}
 
-		passwordPolicyImpl.setCreateDate(new Date(createDate));
-		passwordPolicyImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			passwordPolicyImpl.setCreateDate(null);
+		}
+		else {
+			passwordPolicyImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			passwordPolicyImpl.setModifiedDate(null);
+		}
+		else {
+			passwordPolicyImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		passwordPolicyImpl.setDefaultPolicy(defaultPolicy);
 
 		if (name == null) {

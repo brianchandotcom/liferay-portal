@@ -1128,6 +1128,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 			if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
 				roleName.equals(RoleConstants.ORGANIZATION_USER) ||
+				roleName.equals(RoleConstants.OWNER) ||
 				roleName.equals(RoleConstants.SITE_MEMBER)) {
 
 				Role role = rolePersistence.findByC_N(companyId, roleName);

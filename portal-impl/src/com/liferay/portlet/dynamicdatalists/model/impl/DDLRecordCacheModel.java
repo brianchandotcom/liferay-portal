@@ -98,8 +98,20 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord> {
 			ddlRecordImpl.setVersionUserName(versionUserName);
 		}
 
-		ddlRecordImpl.setCreateDate(new Date(createDate));
-		ddlRecordImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			ddlRecordImpl.setCreateDate(null);
+		}
+		else {
+			ddlRecordImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddlRecordImpl.setModifiedDate(null);
+		}
+		else {
+			ddlRecordImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		ddlRecordImpl.setDDMStorageId(DDMStorageId);
 		ddlRecordImpl.setRecordSetId(recordSetId);
 

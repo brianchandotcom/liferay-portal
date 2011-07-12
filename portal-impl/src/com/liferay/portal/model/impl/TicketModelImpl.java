@@ -329,6 +329,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		if (createDate != null) {
 			ticketCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ticketCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		ticketCacheModel.classNameId = getClassNameId();
 
@@ -356,6 +359,9 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		if (expirationDate != null) {
 			ticketCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			ticketCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
 		return ticketCacheModel;

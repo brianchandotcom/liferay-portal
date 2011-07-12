@@ -74,8 +74,20 @@ public class WebsiteCacheModel implements CacheModel<Website> {
 			websiteImpl.setUserName(userName);
 		}
 
-		websiteImpl.setCreateDate(new Date(createDate));
-		websiteImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			websiteImpl.setCreateDate(null);
+		}
+		else {
+			websiteImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			websiteImpl.setModifiedDate(null);
+		}
+		else {
+			websiteImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		websiteImpl.setClassNameId(classNameId);
 		websiteImpl.setClassPK(classPK);
 

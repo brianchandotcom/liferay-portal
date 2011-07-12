@@ -30,7 +30,7 @@ public class BrowseServerTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class BrowseServerTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Server Administration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -55,7 +56,7 @@ public class BrowseServerTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//li[3]/span/a")) {
+				if (selenium.isElementPresent("link=Resources")) {
 					break;
 				}
 			}
@@ -67,70 +68,80 @@ public class BrowseServerTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Execute']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Execute"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Log Levels", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Log Levels",
+			RuntimeVariables.replace("Log Levels"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Update Categories"));
 		assertTrue(selenium.isElementPresent("link=Add Category"));
-		selenium.clickAt("link=Update Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Update Categories",
+			RuntimeVariables.replace("Update Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 1 - 20"));
 		assertTrue(selenium.isTextPresent("com.ecyrd.jspwiki"));
-		selenium.clickAt("link=Next", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Next", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 21 - 40"));
-		assertTrue(selenium.isTextPresent("com.liferay.portal.editor"));
-		selenium.clickAt("link=Properties", RuntimeVariables.replace(""));
+		assertTrue(selenium.isTextPresent("com.liferay.portal.cluster"));
+		selenium.clickAt("link=Properties",
+			RuntimeVariables.replace("Properties"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=System Properties"));
 		assertTrue(selenium.isElementPresent("link=Portal Properties"));
-		selenium.clickAt("link=System Properties", RuntimeVariables.replace(""));
+		selenium.clickAt("link=System Properties",
+			RuntimeVariables.replace("System Properties"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 1 - 20"));
-		assertTrue(selenium.isTextPresent("catalina.home"));
-		selenium.clickAt("link=Next", RuntimeVariables.replace(""));
+		assertTrue(selenium.isTextPresent(
+				"com.liferay.portal.kernel.util.StreamUtil.buffer.size"));
+		selenium.clickAt("link=Next", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 21 - 40"));
-		assertTrue(selenium.isTextPresent("env.BASEDIR"));
-		selenium.clickAt("link=Portal Properties", RuntimeVariables.replace(""));
+		assertTrue(selenium.isTextPresent("env.COMPUTERNAME"));
+		selenium.clickAt("link=Portal Properties",
+			RuntimeVariables.replace("Portal Properties"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 1 - 20"));
 		assertTrue(selenium.isTextPresent("admin.email.from.address"));
-		selenium.clickAt("link=Next", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Next", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Showing 21 - 40"));
-		assertTrue(selenium.isTextPresent("auth.failure"));
-		selenium.clickAt("link=Data Migration", RuntimeVariables.replace(""));
+		assertTrue(selenium.isTextPresent("aim.password"));
+		selenium.clickAt("link=Data Migration",
+			RuntimeVariables.replace("Data Migration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=File Uploads", RuntimeVariables.replace(""));
+		selenium.clickAt("link=File Uploads",
+			RuntimeVariables.replace("File Uploads"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Configure the file upload settings."));
 		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
-		selenium.clickAt("link=Mail", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Mail", RuntimeVariables.replace("Mail"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Configure the mail server settings."));
 		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
-		selenium.clickAt("link=OpenOffice", RuntimeVariables.replace(""));
+		selenium.clickAt("link=External Services",
+			RuntimeVariables.replace("External Services"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Enabling OpenOffice integration provides document conversion functionality."));
-		assertTrue(selenium.isElementPresent("_137_enabledCheckbox"));
+		assertTrue(selenium.isElementPresent(
+				"//input[@id='_137_openOfficeEnabledCheckbox']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
-		selenium.clickAt("link=Shutdown", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shutdown", RuntimeVariables.replace("Shutdown"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Shutdown']"));

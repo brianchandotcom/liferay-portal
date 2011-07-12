@@ -108,8 +108,20 @@ public class WikiPageCacheModel implements CacheModel<WikiPage> {
 			wikiPageImpl.setUserName(userName);
 		}
 
-		wikiPageImpl.setCreateDate(new Date(createDate));
-		wikiPageImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			wikiPageImpl.setCreateDate(null);
+		}
+		else {
+			wikiPageImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			wikiPageImpl.setModifiedDate(null);
+		}
+		else {
+			wikiPageImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		wikiPageImpl.setNodeId(nodeId);
 
 		if (title == null) {
@@ -169,7 +181,12 @@ public class WikiPageCacheModel implements CacheModel<WikiPage> {
 			wikiPageImpl.setStatusByUserName(statusByUserName);
 		}
 
-		wikiPageImpl.setStatusDate(new Date(statusDate));
+		if (statusDate == Long.MIN_VALUE) {
+			wikiPageImpl.setStatusDate(null);
+		}
+		else {
+			wikiPageImpl.setStatusDate(new Date(statusDate));
+		}
 
 		wikiPageImpl.resetOriginalValues();
 

@@ -536,11 +536,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		if (createDate != null) {
 			dlFolderCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			dlFolderCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			dlFolderCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			dlFolderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		dlFolderCacheModel.repositoryId = getRepositoryId();
@@ -569,6 +575,9 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (lastPostDate != null) {
 			dlFolderCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+		else {
+			dlFolderCacheModel.lastPostDate = Long.MIN_VALUE;
 		}
 
 		return dlFolderCacheModel;

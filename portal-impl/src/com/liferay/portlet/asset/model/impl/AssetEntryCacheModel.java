@@ -104,8 +104,20 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 			assetEntryImpl.setUserName(userName);
 		}
 
-		assetEntryImpl.setCreateDate(new Date(createDate));
-		assetEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			assetEntryImpl.setCreateDate(null);
+		}
+		else {
+			assetEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetEntryImpl.setModifiedDate(null);
+		}
+		else {
+			assetEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		assetEntryImpl.setClassNameId(classNameId);
 		assetEntryImpl.setClassPK(classPK);
 
@@ -117,10 +129,34 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry> {
 		}
 
 		assetEntryImpl.setVisible(visible);
-		assetEntryImpl.setStartDate(new Date(startDate));
-		assetEntryImpl.setEndDate(new Date(endDate));
-		assetEntryImpl.setPublishDate(new Date(publishDate));
-		assetEntryImpl.setExpirationDate(new Date(expirationDate));
+
+		if (startDate == Long.MIN_VALUE) {
+			assetEntryImpl.setStartDate(null);
+		}
+		else {
+			assetEntryImpl.setStartDate(new Date(startDate));
+		}
+
+		if (endDate == Long.MIN_VALUE) {
+			assetEntryImpl.setEndDate(null);
+		}
+		else {
+			assetEntryImpl.setEndDate(new Date(endDate));
+		}
+
+		if (publishDate == Long.MIN_VALUE) {
+			assetEntryImpl.setPublishDate(null);
+		}
+		else {
+			assetEntryImpl.setPublishDate(new Date(publishDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			assetEntryImpl.setExpirationDate(null);
+		}
+		else {
+			assetEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
 
 		if (mimeType == null) {
 			assetEntryImpl.setMimeType(StringPool.BLANK);

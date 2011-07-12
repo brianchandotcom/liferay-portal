@@ -449,11 +449,17 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		if (createDate != null) {
 			scProductVersionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			scProductVersionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			scProductVersionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			scProductVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		scProductVersionCacheModel.productEntryId = getProductEntryId();

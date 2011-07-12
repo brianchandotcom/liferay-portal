@@ -126,8 +126,20 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setUserName(userName);
 		}
 
-		journalArticleImpl.setCreateDate(new Date(createDate));
-		journalArticleImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			journalArticleImpl.setCreateDate(null);
+		}
+		else {
+			journalArticleImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			journalArticleImpl.setModifiedDate(null);
+		}
+		else {
+			journalArticleImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		journalArticleImpl.setClassNameId(classNameId);
 		journalArticleImpl.setClassPK(classPK);
 
@@ -196,9 +208,27 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setLayoutUuid(layoutUuid);
 		}
 
-		journalArticleImpl.setDisplayDate(new Date(displayDate));
-		journalArticleImpl.setExpirationDate(new Date(expirationDate));
-		journalArticleImpl.setReviewDate(new Date(reviewDate));
+		if (displayDate == Long.MIN_VALUE) {
+			journalArticleImpl.setDisplayDate(null);
+		}
+		else {
+			journalArticleImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			journalArticleImpl.setExpirationDate(null);
+		}
+		else {
+			journalArticleImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (reviewDate == Long.MIN_VALUE) {
+			journalArticleImpl.setReviewDate(null);
+		}
+		else {
+			journalArticleImpl.setReviewDate(new Date(reviewDate));
+		}
+
 		journalArticleImpl.setIndexable(indexable);
 		journalArticleImpl.setSmallImage(smallImage);
 		journalArticleImpl.setSmallImageId(smallImageId);
@@ -220,7 +250,12 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
 			journalArticleImpl.setStatusByUserName(statusByUserName);
 		}
 
-		journalArticleImpl.setStatusDate(new Date(statusDate));
+		if (statusDate == Long.MIN_VALUE) {
+			journalArticleImpl.setStatusDate(null);
+		}
+		else {
+			journalArticleImpl.setStatusDate(new Date(statusDate));
+		}
 
 		journalArticleImpl.resetOriginalValues();
 

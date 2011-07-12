@@ -30,7 +30,7 @@ public class EditServerInstanceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class EditServerInstanceTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Instances", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Instances",
+			RuntimeVariables.replace("Portal Instances"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,21 +67,43 @@ public class EditServerInstanceTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=test.com", RuntimeVariables.replace(""));
+		selenium.clickAt("link=test.com", RuntimeVariables.replace("test.com"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_135_virtualHostname",
+		selenium.typeKeys("//input[@id='_135_virtualHostname']",
 			RuntimeVariables.replace("edited"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_virtualHostname", RuntimeVariables.replace("edited"));
+		selenium.type("//input[@id='_135_virtualHostname']",
+			RuntimeVariables.replace("edited"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_mx", RuntimeVariables.replace("Edited.com"));
+		selenium.type("//input[@id='_135_mx']",
+			RuntimeVariables.replace("Edited.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Edited.com"));
 	}
 }

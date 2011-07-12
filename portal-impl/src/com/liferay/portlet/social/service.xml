@@ -357,6 +357,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="U1_U2" return-type="Collection">
+			<finder-column name="userId1" />
+			<finder-column name="userId2" />
+		</finder>
 		<finder name="U1_T" return-type="Collection">
 			<finder-column name="userId1" />
 			<finder-column name="type" />

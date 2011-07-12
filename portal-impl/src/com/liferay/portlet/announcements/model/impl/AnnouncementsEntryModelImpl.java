@@ -527,11 +527,17 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		if (createDate != null) {
 			announcementsEntryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			announcementsEntryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			announcementsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			announcementsEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		announcementsEntryCacheModel.classNameId = getClassNameId();
@@ -575,11 +581,17 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		if (displayDate != null) {
 			announcementsEntryCacheModel.displayDate = displayDate.getTime();
 		}
+		else {
+			announcementsEntryCacheModel.displayDate = Long.MIN_VALUE;
+		}
 
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
 			announcementsEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			announcementsEntryCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
 		announcementsEntryCacheModel.priority = getPriority();

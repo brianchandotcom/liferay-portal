@@ -30,7 +30,7 @@ public class BrowseServerInstanceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class BrowseServerInstanceTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Instances", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Instances",
+			RuntimeVariables.replace("Portal Instances"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 

@@ -107,8 +107,19 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setUserName(userName);
 		}
 
-		blogsEntryImpl.setCreateDate(new Date(createDate));
-		blogsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setCreateDate(null);
+		}
+		else {
+			blogsEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setModifiedDate(null);
+		}
+		else {
+			blogsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (title == null) {
 			blogsEntryImpl.setTitle(StringPool.BLANK);
@@ -138,7 +149,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setContent(content);
 		}
 
-		blogsEntryImpl.setDisplayDate(new Date(displayDate));
+		if (displayDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setDisplayDate(null);
+		}
+		else {
+			blogsEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		blogsEntryImpl.setAllowPingbacks(allowPingbacks);
 		blogsEntryImpl.setAllowTrackbacks(allowTrackbacks);
 
@@ -169,7 +186,12 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setStatusByUserName(statusByUserName);
 		}
 
-		blogsEntryImpl.setStatusDate(new Date(statusDate));
+		if (statusDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setStatusDate(null);
+		}
+		else {
+			blogsEntryImpl.setStatusDate(new Date(statusDate));
+		}
 
 		blogsEntryImpl.resetOriginalValues();
 

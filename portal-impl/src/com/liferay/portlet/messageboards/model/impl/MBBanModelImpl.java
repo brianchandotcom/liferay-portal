@@ -395,11 +395,17 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		if (createDate != null) {
 			mbBanCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			mbBanCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			mbBanCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbBanCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		mbBanCacheModel.banUserId = getBanUserId();

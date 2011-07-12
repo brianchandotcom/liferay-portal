@@ -91,8 +91,20 @@ public class IGImageCacheModel implements CacheModel<IGImage> {
 			igImageImpl.setUserName(userName);
 		}
 
-		igImageImpl.setCreateDate(new Date(createDate));
-		igImageImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			igImageImpl.setCreateDate(null);
+		}
+		else {
+			igImageImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			igImageImpl.setModifiedDate(null);
+		}
+		else {
+			igImageImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		igImageImpl.setFolderId(folderId);
 
 		if (name == null) {

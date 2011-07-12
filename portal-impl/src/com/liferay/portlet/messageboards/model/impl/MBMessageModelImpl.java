@@ -709,11 +709,17 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		if (createDate != null) {
 			mbMessageCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			mbMessageCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			mbMessageCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbMessageCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		mbMessageCacheModel.classNameId = getClassNameId();
@@ -776,6 +782,9 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 		if (statusDate != null) {
 			mbMessageCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			mbMessageCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return mbMessageCacheModel;

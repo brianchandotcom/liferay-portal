@@ -30,7 +30,7 @@ public class AddNullServerInstanceWebIDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,12 @@ public class AddNullServerInstanceWebIDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portal Instances", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portal Instances",
+			RuntimeVariables.replace("Portal Instances"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,23 +67,29 @@ public class AddNullServerInstanceWebIDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Add']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add']",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_webId", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_135_webId']", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_135_virtualHostname",
+		selenium.typeKeys("//input[@id='_135_virtualHostname']",
 			RuntimeVariables.replace("localhost1"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_virtualHostname",
+		selenium.type("//input[@id='_135_virtualHostname']",
 			RuntimeVariables.replace("localhost1"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_135_mx", RuntimeVariables.replace("liferay1.com"));
+		selenium.type("//input[@id='_135_mx']",
+			RuntimeVariables.replace("liferay1.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid web ID."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid web ID."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

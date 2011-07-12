@@ -254,6 +254,9 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		if (pathDate != null) {
 			userTrackerPathCacheModel.pathDate = pathDate.getTime();
 		}
+		else {
+			userTrackerPathCacheModel.pathDate = Long.MIN_VALUE;
+		}
 
 		return userTrackerPathCacheModel;
 	}

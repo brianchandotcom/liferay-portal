@@ -60,7 +60,13 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker> {
 		userTrackerImpl.setUserTrackerId(userTrackerId);
 		userTrackerImpl.setCompanyId(companyId);
 		userTrackerImpl.setUserId(userId);
-		userTrackerImpl.setModifiedDate(new Date(modifiedDate));
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			userTrackerImpl.setModifiedDate(null);
+		}
+		else {
+			userTrackerImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (sessionId == null) {
 			userTrackerImpl.setSessionId(StringPool.BLANK);

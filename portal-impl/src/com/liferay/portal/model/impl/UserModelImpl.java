@@ -997,11 +997,17 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		if (createDate != null) {
 			userCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			userCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			userCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			userCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		userCacheModel.defaultUser = getDefaultUser();
@@ -1024,6 +1030,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (passwordModifiedDate != null) {
 			userCacheModel.passwordModifiedDate = passwordModifiedDate.getTime();
+		}
+		else {
+			userCacheModel.passwordModifiedDate = Long.MIN_VALUE;
 		}
 
 		userCacheModel.digest = getDigest();
@@ -1151,6 +1160,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		if (loginDate != null) {
 			userCacheModel.loginDate = loginDate.getTime();
 		}
+		else {
+			userCacheModel.loginDate = Long.MIN_VALUE;
+		}
 
 		userCacheModel.loginIP = getLoginIP();
 
@@ -1164,6 +1176,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (lastLoginDate != null) {
 			userCacheModel.lastLoginDate = lastLoginDate.getTime();
+		}
+		else {
+			userCacheModel.lastLoginDate = Long.MIN_VALUE;
 		}
 
 		userCacheModel.lastLoginIP = getLastLoginIP();
@@ -1179,6 +1194,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		if (lastFailedLoginDate != null) {
 			userCacheModel.lastFailedLoginDate = lastFailedLoginDate.getTime();
 		}
+		else {
+			userCacheModel.lastFailedLoginDate = Long.MIN_VALUE;
+		}
 
 		userCacheModel.failedLoginAttempts = getFailedLoginAttempts();
 
@@ -1188,6 +1206,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (lockoutDate != null) {
 			userCacheModel.lockoutDate = lockoutDate.getTime();
+		}
+		else {
+			userCacheModel.lockoutDate = Long.MIN_VALUE;
 		}
 
 		userCacheModel.agreedToTermsOfUse = getAgreedToTermsOfUse();

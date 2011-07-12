@@ -406,11 +406,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		if (createDate != null) {
 			teamCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			teamCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			teamCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			teamCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		teamCacheModel.groupId = getGroupId();

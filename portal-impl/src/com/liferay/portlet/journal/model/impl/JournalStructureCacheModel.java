@@ -87,8 +87,19 @@ public class JournalStructureCacheModel implements CacheModel<JournalStructure> 
 			journalStructureImpl.setUserName(userName);
 		}
 
-		journalStructureImpl.setCreateDate(new Date(createDate));
-		journalStructureImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			journalStructureImpl.setCreateDate(null);
+		}
+		else {
+			journalStructureImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			journalStructureImpl.setModifiedDate(null);
+		}
+		else {
+			journalStructureImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (structureId == null) {
 			journalStructureImpl.setStructureId(StringPool.BLANK);

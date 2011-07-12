@@ -63,8 +63,9 @@ import org.im4java.process.ProcessStarter;
 
 /**
  * @author Alexander Chow
+ * @author Mika Koivisto
  */
-public class PDFProcessor extends DLProcessor {
+public class PDFProcessor implements DLProcessor {
 
 	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
 
@@ -114,7 +115,6 @@ public class PDFProcessor extends DLProcessor {
 		return hasImages;
 	}
 
-	@Override
 	public void trigger(FileEntry fileEntry) {
 		try {
 			FileVersion fileVersion = fileEntry.getLatestFileVersion();

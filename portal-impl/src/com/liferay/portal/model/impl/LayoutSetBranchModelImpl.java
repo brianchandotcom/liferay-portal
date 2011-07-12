@@ -436,11 +436,17 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		if (createDate != null) {
 			layoutSetBranchCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			layoutSetBranchCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			layoutSetBranchCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			layoutSetBranchCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		layoutSetBranchCacheModel.privateLayout = getPrivateLayout();

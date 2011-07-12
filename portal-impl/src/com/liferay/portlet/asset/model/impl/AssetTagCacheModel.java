@@ -72,8 +72,19 @@ public class AssetTagCacheModel implements CacheModel<AssetTag> {
 			assetTagImpl.setUserName(userName);
 		}
 
-		assetTagImpl.setCreateDate(new Date(createDate));
-		assetTagImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			assetTagImpl.setCreateDate(null);
+		}
+		else {
+			assetTagImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetTagImpl.setModifiedDate(null);
+		}
+		else {
+			assetTagImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			assetTagImpl.setName(StringPool.BLANK);

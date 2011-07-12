@@ -71,8 +71,20 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 			assetCategoryPropertyImpl.setUserName(userName);
 		}
 
-		assetCategoryPropertyImpl.setCreateDate(new Date(createDate));
-		assetCategoryPropertyImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			assetCategoryPropertyImpl.setCreateDate(null);
+		}
+		else {
+			assetCategoryPropertyImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetCategoryPropertyImpl.setModifiedDate(null);
+		}
+		else {
+			assetCategoryPropertyImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		assetCategoryPropertyImpl.setCategoryId(categoryId);
 
 		if (key == null) {

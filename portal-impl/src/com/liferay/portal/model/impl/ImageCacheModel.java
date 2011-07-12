@@ -56,7 +56,13 @@ public class ImageCacheModel implements CacheModel<Image> {
 		ImageImpl imageImpl = new ImageImpl();
 
 		imageImpl.setImageId(imageId);
-		imageImpl.setModifiedDate(new Date(modifiedDate));
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			imageImpl.setModifiedDate(null);
+		}
+		else {
+			imageImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (text == null) {
 			imageImpl.setText(StringPool.BLANK);

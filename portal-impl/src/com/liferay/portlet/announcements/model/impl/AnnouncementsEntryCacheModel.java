@@ -94,8 +94,20 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 			announcementsEntryImpl.setUserName(userName);
 		}
 
-		announcementsEntryImpl.setCreateDate(new Date(createDate));
-		announcementsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setCreateDate(null);
+		}
+		else {
+			announcementsEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setModifiedDate(null);
+		}
+		else {
+			announcementsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		announcementsEntryImpl.setClassNameId(classNameId);
 		announcementsEntryImpl.setClassPK(classPK);
 
@@ -127,8 +139,20 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 			announcementsEntryImpl.setType(type);
 		}
 
-		announcementsEntryImpl.setDisplayDate(new Date(displayDate));
-		announcementsEntryImpl.setExpirationDate(new Date(expirationDate));
+		if (displayDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setDisplayDate(null);
+		}
+		else {
+			announcementsEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setExpirationDate(null);
+		}
+		else {
+			announcementsEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
 		announcementsEntryImpl.setPriority(priority);
 		announcementsEntryImpl.setAlert(alert);
 

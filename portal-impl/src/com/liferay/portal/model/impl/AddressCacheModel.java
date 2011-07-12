@@ -88,8 +88,20 @@ public class AddressCacheModel implements CacheModel<Address> {
 			addressImpl.setUserName(userName);
 		}
 
-		addressImpl.setCreateDate(new Date(createDate));
-		addressImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			addressImpl.setCreateDate(null);
+		}
+		else {
+			addressImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			addressImpl.setModifiedDate(null);
+		}
+		else {
+			addressImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		addressImpl.setClassNameId(classNameId);
 		addressImpl.setClassPK(classPK);
 

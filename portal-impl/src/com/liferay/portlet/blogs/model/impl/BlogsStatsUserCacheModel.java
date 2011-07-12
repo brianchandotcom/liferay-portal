@@ -64,7 +64,14 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser> {
 		blogsStatsUserImpl.setCompanyId(companyId);
 		blogsStatsUserImpl.setUserId(userId);
 		blogsStatsUserImpl.setEntryCount(entryCount);
-		blogsStatsUserImpl.setLastPostDate(new Date(lastPostDate));
+
+		if (lastPostDate == Long.MIN_VALUE) {
+			blogsStatsUserImpl.setLastPostDate(null);
+		}
+		else {
+			blogsStatsUserImpl.setLastPostDate(new Date(lastPostDate));
+		}
+
 		blogsStatsUserImpl.setRatingsTotalEntries(ratingsTotalEntries);
 		blogsStatsUserImpl.setRatingsTotalScore(ratingsTotalScore);
 		blogsStatsUserImpl.setRatingsAverageScore(ratingsAverageScore);

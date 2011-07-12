@@ -30,7 +30,7 @@ public class AddServerCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class AddServerCategoryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Server Administration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -55,7 +56,7 @@ public class AddServerCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//li[3]/span/a")) {
+				if (selenium.isVisible("link=Log Levels")) {
 					break;
 				}
 			}
@@ -66,22 +67,44 @@ public class AddServerCategoryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Log Levels", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Log Levels",
+			RuntimeVariables.replace("Log Levels"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Category", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add Category",
+			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_137_loggerName",
+		selenium.typeKeys("//input[@id='_137_loggerName']",
 			RuntimeVariables.replace("CategorTest!"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_137_loggerName",
+		selenium.type("//input[@id='_137_loggerName']",
 			RuntimeVariables.replace("CategoryTest!"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

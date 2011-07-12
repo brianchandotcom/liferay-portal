@@ -41,8 +41,8 @@ else if (type.equals("assigned-to-my-roles")) {
 	searchContainer.setEmptyResultsMessage("there-are-no-pending-tasks-assigned-to-your-roles");
 
 	if (searchTerms.isAdvancedSearch()){
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(),  user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(),  user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator());
+		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator());
 	}
 	else {
 		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), false, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
@@ -62,7 +62,7 @@ else {
 	}
 
 	if (searchTerms.isAdvancedSearch()){
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(),  user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator());
 	}
 	else {

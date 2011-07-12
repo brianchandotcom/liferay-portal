@@ -91,8 +91,20 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory> {
 			mbCategoryImpl.setUserName(userName);
 		}
 
-		mbCategoryImpl.setCreateDate(new Date(createDate));
-		mbCategoryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			mbCategoryImpl.setCreateDate(null);
+		}
+		else {
+			mbCategoryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			mbCategoryImpl.setModifiedDate(null);
+		}
+		else {
+			mbCategoryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		mbCategoryImpl.setParentCategoryId(parentCategoryId);
 
 		if (name == null) {
@@ -118,7 +130,13 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory> {
 
 		mbCategoryImpl.setThreadCount(threadCount);
 		mbCategoryImpl.setMessageCount(messageCount);
-		mbCategoryImpl.setLastPostDate(new Date(lastPostDate));
+
+		if (lastPostDate == Long.MIN_VALUE) {
+			mbCategoryImpl.setLastPostDate(null);
+		}
+		else {
+			mbCategoryImpl.setLastPostDate(new Date(lastPostDate));
+		}
 
 		mbCategoryImpl.resetOriginalValues();
 

@@ -83,8 +83,19 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode> {
 			wikiNodeImpl.setUserName(userName);
 		}
 
-		wikiNodeImpl.setCreateDate(new Date(createDate));
-		wikiNodeImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			wikiNodeImpl.setCreateDate(null);
+		}
+		else {
+			wikiNodeImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			wikiNodeImpl.setModifiedDate(null);
+		}
+		else {
+			wikiNodeImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			wikiNodeImpl.setName(StringPool.BLANK);
@@ -100,7 +111,12 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode> {
 			wikiNodeImpl.setDescription(description);
 		}
 
-		wikiNodeImpl.setLastPostDate(new Date(lastPostDate));
+		if (lastPostDate == Long.MIN_VALUE) {
+			wikiNodeImpl.setLastPostDate(null);
+		}
+		else {
+			wikiNodeImpl.setLastPostDate(new Date(lastPostDate));
+		}
 
 		wikiNodeImpl.resetOriginalValues();
 

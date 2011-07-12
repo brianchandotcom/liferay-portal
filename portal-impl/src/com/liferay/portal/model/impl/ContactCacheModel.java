@@ -112,8 +112,20 @@ public class ContactCacheModel implements CacheModel<Contact> {
 			contactImpl.setUserName(userName);
 		}
 
-		contactImpl.setCreateDate(new Date(createDate));
-		contactImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			contactImpl.setCreateDate(null);
+		}
+		else {
+			contactImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			contactImpl.setModifiedDate(null);
+		}
+		else {
+			contactImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		contactImpl.setAccountId(accountId);
 		contactImpl.setParentContactId(parentContactId);
 
@@ -141,7 +153,13 @@ public class ContactCacheModel implements CacheModel<Contact> {
 		contactImpl.setPrefixId(prefixId);
 		contactImpl.setSuffixId(suffixId);
 		contactImpl.setMale(male);
-		contactImpl.setBirthday(new Date(birthday));
+
+		if (birthday == Long.MIN_VALUE) {
+			contactImpl.setBirthday(null);
+		}
+		else {
+			contactImpl.setBirthday(new Date(birthday));
+		}
 
 		if (smsSn == null) {
 			contactImpl.setSmsSn(StringPool.BLANK);

@@ -156,8 +156,19 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder> {
 			shoppingOrderImpl.setUserName(userName);
 		}
 
-		shoppingOrderImpl.setCreateDate(new Date(createDate));
-		shoppingOrderImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			shoppingOrderImpl.setCreateDate(null);
+		}
+		else {
+			shoppingOrderImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			shoppingOrderImpl.setModifiedDate(null);
+		}
+		else {
+			shoppingOrderImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (number == null) {
 			shoppingOrderImpl.setNumber(StringPool.BLANK);

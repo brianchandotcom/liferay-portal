@@ -70,8 +70,20 @@ public class MBBanCacheModel implements CacheModel<MBBan> {
 			mbBanImpl.setUserName(userName);
 		}
 
-		mbBanImpl.setCreateDate(new Date(createDate));
-		mbBanImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			mbBanImpl.setCreateDate(null);
+		}
+		else {
+			mbBanImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			mbBanImpl.setModifiedDate(null);
+		}
+		else {
+			mbBanImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		mbBanImpl.setBanUserId(banUserId);
 
 		mbBanImpl.resetOriginalValues();

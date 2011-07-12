@@ -405,11 +405,17 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		if (createDate != null) {
 			assetTagPropertyCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetTagPropertyCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			assetTagPropertyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetTagPropertyCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		assetTagPropertyCacheModel.tagId = getTagId();

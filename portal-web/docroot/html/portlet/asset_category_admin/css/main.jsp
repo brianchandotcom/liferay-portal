@@ -64,7 +64,7 @@
 		position: relative;
 	}
 
-	.vocabulary-content-wrapper, .header-title, .aui-tree-node-content .aui-tree-label  {
+	.vocabulary-content-wrapper, .header-title, .aui-tree-node-content .aui-tree-label {
 		word-wrap: break-word;
 	}
 

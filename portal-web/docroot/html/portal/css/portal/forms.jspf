@@ -78,7 +78,7 @@
 	margin-left: 10px;
 }
 
-.lfr-dynamic-form .aui-field-text, .lfr-dynamic-form .aui-field-text  .aui-field-element {
+.lfr-dynamic-form .aui-field-text, .lfr-dynamic-form .aui-field-text .aui-field-element {
 	display: block;
 }
 

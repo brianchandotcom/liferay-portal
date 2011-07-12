@@ -55,7 +55,13 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser> {
 		mbStatsUserImpl.setGroupId(groupId);
 		mbStatsUserImpl.setUserId(userId);
 		mbStatsUserImpl.setMessageCount(messageCount);
-		mbStatsUserImpl.setLastPostDate(new Date(lastPostDate));
+
+		if (lastPostDate == Long.MIN_VALUE) {
+			mbStatsUserImpl.setLastPostDate(null);
+		}
+		else {
+			mbStatsUserImpl.setLastPostDate(new Date(lastPostDate));
+		}
 
 		mbStatsUserImpl.resetOriginalValues();
 

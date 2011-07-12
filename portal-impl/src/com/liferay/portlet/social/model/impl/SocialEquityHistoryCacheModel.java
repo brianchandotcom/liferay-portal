@@ -57,7 +57,14 @@ public class SocialEquityHistoryCacheModel implements CacheModel<SocialEquityHis
 		socialEquityHistoryImpl.setGroupId(groupId);
 		socialEquityHistoryImpl.setCompanyId(companyId);
 		socialEquityHistoryImpl.setUserId(userId);
-		socialEquityHistoryImpl.setCreateDate(new Date(createDate));
+
+		if (createDate == Long.MIN_VALUE) {
+			socialEquityHistoryImpl.setCreateDate(null);
+		}
+		else {
+			socialEquityHistoryImpl.setCreateDate(new Date(createDate));
+		}
+
 		socialEquityHistoryImpl.setPersonalEquity(personalEquity);
 
 		socialEquityHistoryImpl.resetOriginalValues();

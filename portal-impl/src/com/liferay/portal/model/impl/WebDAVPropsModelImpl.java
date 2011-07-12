@@ -314,11 +314,17 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		if (createDate != null) {
 			webDAVPropsCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			webDAVPropsCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			webDAVPropsCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			webDAVPropsCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		webDAVPropsCacheModel.classNameId = getClassNameId();

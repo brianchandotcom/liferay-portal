@@ -96,7 +96,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 			dlFileVersionImpl.setUserName(userName);
 		}
 
-		dlFileVersionImpl.setCreateDate(new Date(createDate));
+		if (createDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setCreateDate(null);
+		}
+		else {
+			dlFileVersionImpl.setCreateDate(new Date(createDate));
+		}
+
 		dlFileVersionImpl.setRepositoryId(repositoryId);
 		dlFileVersionImpl.setFileEntryId(fileEntryId);
 
@@ -162,7 +168,12 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 			dlFileVersionImpl.setStatusByUserName(statusByUserName);
 		}
 
-		dlFileVersionImpl.setStatusDate(new Date(statusDate));
+		if (statusDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setStatusDate(null);
+		}
+		else {
+			dlFileVersionImpl.setStatusDate(new Date(statusDate));
+		}
 
 		dlFileVersionImpl.resetOriginalValues();
 

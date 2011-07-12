@@ -181,7 +181,7 @@
 								value: instance.get('style')
 							}
 						],
-					   formNode
+						formNode
 					);
 
 					var labelNode = settingsNodesMap.labelSettingNode;

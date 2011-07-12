@@ -398,11 +398,17 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		if (createDate != null) {
 			repositoryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			repositoryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			repositoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			repositoryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		repositoryCacheModel.classNameId = getClassNameId();

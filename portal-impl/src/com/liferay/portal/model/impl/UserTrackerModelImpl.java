@@ -313,6 +313,9 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		if (modifiedDate != null) {
 			userTrackerCacheModel.modifiedDate = modifiedDate.getTime();
 		}
+		else {
+			userTrackerCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		userTrackerCacheModel.sessionId = getSessionId();
 

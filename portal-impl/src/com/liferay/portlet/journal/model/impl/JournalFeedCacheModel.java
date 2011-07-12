@@ -107,8 +107,19 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed> {
 			journalFeedImpl.setUserName(userName);
 		}
 
-		journalFeedImpl.setCreateDate(new Date(createDate));
-		journalFeedImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			journalFeedImpl.setCreateDate(null);
+		}
+		else {
+			journalFeedImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			journalFeedImpl.setModifiedDate(null);
+		}
+		else {
+			journalFeedImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (feedId == null) {
 			journalFeedImpl.setFeedId(StringPool.BLANK);

@@ -70,8 +70,20 @@ public class SubscriptionCacheModel implements CacheModel<Subscription> {
 			subscriptionImpl.setUserName(userName);
 		}
 
-		subscriptionImpl.setCreateDate(new Date(createDate));
-		subscriptionImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			subscriptionImpl.setCreateDate(null);
+		}
+		else {
+			subscriptionImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			subscriptionImpl.setModifiedDate(null);
+		}
+		else {
+			subscriptionImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		subscriptionImpl.setClassNameId(classNameId);
 		subscriptionImpl.setClassPK(classPK);
 

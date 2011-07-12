@@ -71,8 +71,20 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry> {
 			ratingsEntryImpl.setUserName(userName);
 		}
 
-		ratingsEntryImpl.setCreateDate(new Date(createDate));
-		ratingsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			ratingsEntryImpl.setCreateDate(null);
+		}
+		else {
+			ratingsEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			ratingsEntryImpl.setModifiedDate(null);
+		}
+		else {
+			ratingsEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		ratingsEntryImpl.setClassNameId(classNameId);
 		ratingsEntryImpl.setClassPK(classPK);
 		ratingsEntryImpl.setScore(score);

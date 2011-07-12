@@ -85,7 +85,7 @@ String[][] categorySections = {mainSections};
 String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout(" + (incomplete ? "'enable'" : StringPool.BLANK) + ");";
 %>
 
-<aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form"  enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= taglibOnSubmit %>'>
+<aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= taglibOnSubmit %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>' />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

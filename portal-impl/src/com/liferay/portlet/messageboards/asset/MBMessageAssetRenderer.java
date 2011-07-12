@@ -35,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Julio Camarero
@@ -75,6 +76,25 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 
 		portletURL.setParameter(
 			"struts_action", "/message_boards/edit_message");
+		portletURL.setParameter(
+			"messageId", String.valueOf(_message.getMessageId()));
+
+		return portletURL;
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+
+		portletURL.setWindowState(windowState);
+
+		portletURL.setParameter(
+			"struts_action", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(_message.getMessageId()));
 

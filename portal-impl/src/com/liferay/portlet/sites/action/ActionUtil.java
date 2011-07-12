@@ -35,6 +35,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
@@ -251,6 +252,12 @@ public class ActionUtil
 
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);
+		}
+		else {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			group = themeDisplay.getScopeGroup();
 		}
 
 		request.setAttribute(WebKeys.GROUP, group);

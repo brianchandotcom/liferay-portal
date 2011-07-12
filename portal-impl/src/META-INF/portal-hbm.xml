@@ -97,6 +97,7 @@
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileShortcut" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
+	<import class="com.liferay.portlet.documentlibrary.model.DLSync" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecord" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" />

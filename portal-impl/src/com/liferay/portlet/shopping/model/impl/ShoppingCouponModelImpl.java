@@ -526,11 +526,17 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		if (createDate != null) {
 			shoppingCouponCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			shoppingCouponCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			shoppingCouponCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			shoppingCouponCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		shoppingCouponCacheModel.code = getCode();
@@ -562,11 +568,17 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		if (startDate != null) {
 			shoppingCouponCacheModel.startDate = startDate.getTime();
 		}
+		else {
+			shoppingCouponCacheModel.startDate = Long.MIN_VALUE;
+		}
 
 		Date endDate = getEndDate();
 
 		if (endDate != null) {
 			shoppingCouponCacheModel.endDate = endDate.getTime();
+		}
+		else {
+			shoppingCouponCacheModel.endDate = Long.MIN_VALUE;
 		}
 
 		shoppingCouponCacheModel.active = getActive();

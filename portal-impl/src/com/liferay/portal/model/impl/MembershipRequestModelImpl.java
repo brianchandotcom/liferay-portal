@@ -393,6 +393,9 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		if (createDate != null) {
 			membershipRequestCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			membershipRequestCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		membershipRequestCacheModel.comments = getComments();
 
@@ -414,6 +417,9 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		if (replyDate != null) {
 			membershipRequestCacheModel.replyDate = replyDate.getTime();
+		}
+		else {
+			membershipRequestCacheModel.replyDate = Long.MIN_VALUE;
 		}
 
 		membershipRequestCacheModel.replierUserId = getReplierUserId();

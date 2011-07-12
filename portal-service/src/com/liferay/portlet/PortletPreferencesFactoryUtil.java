@@ -183,6 +183,14 @@ public class PortletPreferencesFactoryUtil {
 		return getPortletPreferencesFactory().getPreferencesValidator(portlet);
 	}
 
+	public static PortletPreferences getStrictLayoutPortletSetup(
+			Layout layout, String portletId)
+		throws SystemException {
+
+		return getPortletPreferencesFactory().getStrictLayoutPortletSetup(
+			layout, portletId);
+	}
+
 	public static String toXML(PortalPreferences portalPreferences) {
 		return getPortletPreferencesFactory().toXML(portalPreferences);
 	}

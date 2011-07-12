@@ -75,8 +75,20 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 			workflowDefinitionLinkImpl.setUserName(userName);
 		}
 
-		workflowDefinitionLinkImpl.setCreateDate(new Date(createDate));
-		workflowDefinitionLinkImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			workflowDefinitionLinkImpl.setCreateDate(null);
+		}
+		else {
+			workflowDefinitionLinkImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			workflowDefinitionLinkImpl.setModifiedDate(null);
+		}
+		else {
+			workflowDefinitionLinkImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		workflowDefinitionLinkImpl.setClassNameId(classNameId);
 		workflowDefinitionLinkImpl.setClassPK(classPK);
 

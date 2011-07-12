@@ -111,8 +111,20 @@ public class MBMessageCacheModel implements CacheModel<MBMessage> {
 			mbMessageImpl.setUserName(userName);
 		}
 
-		mbMessageImpl.setCreateDate(new Date(createDate));
-		mbMessageImpl.setModifiedDate(new Date(modifiedDate));
+		if (createDate == Long.MIN_VALUE) {
+			mbMessageImpl.setCreateDate(null);
+		}
+		else {
+			mbMessageImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			mbMessageImpl.setModifiedDate(null);
+		}
+		else {
+			mbMessageImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		mbMessageImpl.setClassNameId(classNameId);
 		mbMessageImpl.setClassPK(classPK);
 		mbMessageImpl.setCategoryId(categoryId);
@@ -155,7 +167,12 @@ public class MBMessageCacheModel implements CacheModel<MBMessage> {
 			mbMessageImpl.setStatusByUserName(statusByUserName);
 		}
 
-		mbMessageImpl.setStatusDate(new Date(statusDate));
+		if (statusDate == Long.MIN_VALUE) {
+			mbMessageImpl.setStatusDate(null);
+		}
+		else {
+			mbMessageImpl.setStatusDate(new Date(statusDate));
+		}
 
 		mbMessageImpl.resetOriginalValues();
 

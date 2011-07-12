@@ -53,6 +53,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.documentlibrary.service.DLSyncLocalService;
+import com.liferay.portlet.documentlibrary.service.DLSyncService;
 import com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
@@ -632,6 +634,42 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the d l sync local service.
+	 *
+	 * @return the d l sync local service
+	 */
+	public DLSyncLocalService getDLSyncLocalService() {
+		return dlSyncLocalService;
+	}
+
+	/**
+	 * Sets the d l sync local service.
+	 *
+	 * @param dlSyncLocalService the d l sync local service
+	 */
+	public void setDLSyncLocalService(DLSyncLocalService dlSyncLocalService) {
+		this.dlSyncLocalService = dlSyncLocalService;
+	}
+
+	/**
+	 * Returns the d l sync remote service.
+	 *
+	 * @return the d l sync remote service
+	 */
+	public DLSyncService getDLSyncService() {
+		return dlSyncService;
+	}
+
+	/**
+	 * Sets the d l sync remote service.
+	 *
+	 * @param dlSyncService the d l sync remote service
+	 */
+	public void setDLSyncService(DLSyncService dlSyncService) {
+		this.dlSyncService = dlSyncService;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -981,6 +1019,10 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)
 	protected DLFolderFinder dlFolderFinder;
+	@BeanReference(type = DLSyncLocalService.class)
+	protected DLSyncLocalService dlSyncLocalService;
+	@BeanReference(type = DLSyncService.class)
+	protected DLSyncService dlSyncService;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = LockLocalService.class)

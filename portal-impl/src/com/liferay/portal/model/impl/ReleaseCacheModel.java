@@ -58,8 +58,20 @@ public class ReleaseCacheModel implements CacheModel<Release> {
 		ReleaseImpl releaseImpl = new ReleaseImpl();
 
 		releaseImpl.setReleaseId(releaseId);
-		releaseImpl.setCreateDate(new Date(createDate));
-		releaseImpl.setModifiedDate(new Date(modifiedDate));
+
+		if (createDate == Long.MIN_VALUE) {
+			releaseImpl.setCreateDate(null);
+		}
+		else {
+			releaseImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			releaseImpl.setModifiedDate(null);
+		}
+		else {
+			releaseImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (servletContextName == null) {
 			releaseImpl.setServletContextName(StringPool.BLANK);
@@ -69,7 +81,14 @@ public class ReleaseCacheModel implements CacheModel<Release> {
 		}
 
 		releaseImpl.setBuildNumber(buildNumber);
-		releaseImpl.setBuildDate(new Date(buildDate));
+
+		if (buildDate == Long.MIN_VALUE) {
+			releaseImpl.setBuildDate(null);
+		}
+		else {
+			releaseImpl.setBuildDate(new Date(buildDate));
+		}
+
 		releaseImpl.setVerified(verified);
 
 		if (testString == null) {

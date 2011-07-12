@@ -121,13 +121,13 @@ public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		try {
 			node = WikiNodeUtil.findByPrimaryKey(nodeId);
-
-			return StringPool.BLANK;
 		}
 		catch (NoSuchNodeException nsne) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(nsne, nsne);
 			}
+
+			return StringPool.BLANK;
 		}
 
 		portletDataContext.addPermissions(

@@ -79,7 +79,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 
 		<aui:input name="description" />
 
-		<aui:field-wrapper label="data-definition">
+		<aui:field-wrapper label="data-definition" required="true">
 			<span id="<portlet:namespace />ddmStructureNameDisplay">
 				 <%= ddmStructureName %>
 			</span>

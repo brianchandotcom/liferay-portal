@@ -22,12 +22,7 @@ public class SQLServer2008Dialect
 
 	@Override
 	public String getLimitString(String sql, int offset, int limit) {
-		if (super.supportsLimitOffset()) {
-			return super.getLimitString(sql, offset, limit);
-		}
-		else {
-			return SQLServerLimitStringUtil.getLimitString(sql, offset, limit);
-		}
+		return SQLServerLimitStringUtil.getLimitString(sql, offset, limit);
 	}
 
 	@Override
@@ -35,6 +30,13 @@ public class SQLServer2008Dialect
 		return _SUPPORTS_LIMIT_OFFSET;
 	}
 
+	@Override
+	public boolean supportsVariableLimit() {
+		return _SUPPORTS_VARIABLE_LIMIT;
+	}
+
 	private static final boolean _SUPPORTS_LIMIT_OFFSET = true;
+
+	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
 
 }

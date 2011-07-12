@@ -351,12 +351,16 @@ if (layout != null) {
 									if (firstChildRevision.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
 									%>
 
-										dockbar.backstageToolbar.add(dockbar.redoButton, 0);
+										var redoButton = dockbar.redoButton;
 
-										redoButtonContentBox = dockbar.redoButton.get('contentBox');
+										dockbar.backstageToolbar.add(redoButton, 0);
 
-										redoButtonContentBox.attr('data-layoutRevisionId', '<%= firstChildRevision.getLayoutRevisionId() %>');
-										redoButtonContentBox.attr('data-layoutSetBranchId', '<%= firstChildRevision.getLayoutSetBranchId() %>');
+										redoButton.get('contentBox').attr(
+											{
+												'data-layoutRevisionId': '<%= firstChildRevision.getLayoutRevisionId() %>',
+												'data-layoutSetBranchId': '<%= firstChildRevision.getLayoutSetBranchId() %>'
+											}
+										);
 
 									<%
 									}
@@ -365,12 +369,16 @@ if (layout != null) {
 								</c:if>
 
 								<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-									dockbar.backstageToolbar.add(dockbar.undoButton, 0);
+									var undoButton = dockbar.undoButton;
 
-									undoButtonContentBox = dockbar.undoButton.get('contentBox');
+									dockbar.backstageToolbar.add(undoButton, 0);
 
-									undoButtonContentBox.attr('data-layoutRevisionId', '<%= layoutRevision.getLayoutRevisionId() %>');
-									undoButtonContentBox.attr('data-layoutSetBranchId', '<%= layoutRevision.getLayoutSetBranchId() %>');
+									undoButton.get('contentBox').attr(
+										{
+											'data-layoutRevisionId': '<%= layoutRevision.getLayoutRevisionId() %>',
+											'data-layoutSetBranchId': '<%= layoutRevision.getLayoutSetBranchId() %>'
+										}
+									);
 								</c:if>
 
 								<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">

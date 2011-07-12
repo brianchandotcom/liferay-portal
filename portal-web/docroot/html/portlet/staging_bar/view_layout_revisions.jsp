@@ -149,7 +149,6 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 						>
 
 							<%
-
 							if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
 								buffer.append("<span class=\"layout-revision-current\">");
 								buffer.append(curLayoutRevision.getLayoutRevisionId());

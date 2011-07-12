@@ -5,6 +5,16 @@ AUI().add(
 
 		var Staging = {};
 
+		var MAP_TEXT_REVISION = {
+			redo: Liferay.Language.get('are-you-sure-you-want-to-redo-your-last-changes'),
+			undo: Liferay.Language.get('are-you-sure-you-want-to-undo-your-last-changes')
+		};
+
+		var MAP_CMD_REVISION = {
+			redo: 'redo_layout_revision',
+			undo: 'undo_layout_revision'
+		};
+
 		var Branching = {
 			init: function(options) {
 				var instance = this;
@@ -131,7 +141,7 @@ AUI().add(
 						function(event) {
 							var node = event.currentTarget;
 
-							instance._onMergeBranch(node)
+							instance._onMergeBranch(node);
 						},
 						'a.layout-set-branch'
 					);
@@ -189,20 +199,24 @@ AUI().add(
 
 				Dockbar.backstageToolbar = backstageToolbar;
 
+				var redoText = Liferay.Language.get('redo');
+				var undoText = Liferay.Language.get('undo');
+
 				Dockbar.redoButton = new A.ButtonItem(
 					{
-						handler: A.bind(instance._onRedoRevision, instance),
+						handler: A.bind(instance._onRevisionChange, instance, 'redo'),
 						icon: 'arrowreturnthick-1-r',
-						title: Liferay.Language.get('redo')
+						label: redoText,
+						title: redoText
 					}
 				);
 
 				Dockbar.undoButton = new A.ButtonItem(
 					{
-						handler: A.bind(instance._onUndoRevision, instance),
+						handler: A.bind(instance._onRevisionChange, instance, 'undo'),
 						icon: 'arrowreturnthick-1-b',
-						label: Liferay.Language.get('undo'),
-						title: Liferay.Language.get('undo')
+						label: undoText,
+						title: undoText
 					}
 				);
 			},
@@ -253,30 +267,19 @@ AUI().add(
 				return graphDialog;
 			},
 
-			_onRedoRevision: function(event) {
+			_onRevisionChange: function(type, event) {
 				var instance = this;
 
-				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-redo-your-last-changes'))) {
-					var redoButton = event.currentTarget.get('contentBox');
+				var confirmText = MAP_TEXT_REVISION[type];
+				var cmd = MAP_CMD_REVISION[type];
+
+				if (confirm(confirmText)) {
+					var button = event.currentTarget.get('contentBox');
 
 					instance._updateRevision(
-						'redo_layout_revision',
-						redoButton.attr('data-layoutRevisionId'),
-						redoButton.attr('data-layoutSetBranchId')
-					);
-				}
-			},
-
-			_onUndoRevision: function(event) {
-				var instance = this;
-
-				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-undo-your-last-changes'))) {
-					var undoButton = event.currentTarget.get('contentBox');
-
-					instance._updateRevision(
-						'undo_layout_revision',
-						undoButton.attr('data-layoutRevisionId'),
-						undoButton.attr('data-layoutSetBranchId')
+						cmd,
+						button.attr('data-layoutRevisionId'),
+						button.attr('data-layoutSetBranchId')
 					);
 				}
 			},
@@ -316,28 +319,16 @@ AUI().add(
 				);
 			},
 
-			_updateMajor: function() {
-				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-save-your-changes-all-the-undo-steps-will-be-lost'))) {
-					var namespace = instance._namespace;
-
-					var form = A.one('#' + namespace + 'fm');
-
-					form.one('#' + namespace + 'cmd').val('update_major');
-
-					submitForm(form);
-				}
-			},
-
 			_updateRevision: function(cmd, layoutRevisionId, layoutSetBranchId) {
 				A.io.request(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
 						data: {
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							p_l_id: themeDisplay.getPlid(),
 							cmd: cmd,
+							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 							layoutRevisionId: layoutRevisionId,
-							layoutSetBranchId: layoutSetBranchId
+							layoutSetBranchId: layoutSetBranchId,
+							p_l_id: themeDisplay.getPlid()
 						},
 						on: {
 							success: function(event, id, obj) {
@@ -355,6 +346,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-button', 'aui-dialog', 'aui-io-plugin', 'aui-toolbar', 'liferay-portlet-url']
+		requires: ['aui-button-item', 'aui-dialog', 'aui-io-plugin', 'aui-toolbar', 'liferay-portlet-url']
 	}
 );

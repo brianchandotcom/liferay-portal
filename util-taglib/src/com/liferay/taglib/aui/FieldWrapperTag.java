@@ -58,6 +58,10 @@ public class FieldWrapperTag extends IncludeTag {
 		_name = name;
 	}
 
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
@@ -68,6 +72,7 @@ public class FieldWrapperTag extends IncludeTag {
 		_label = null;
 		_last = false;
 		_name = null;
+		_required = false;
 	}
 
 	@Override
@@ -104,6 +109,7 @@ public class FieldWrapperTag extends IncludeTag {
 		request.setAttribute("aui:field-wrapper:label", label);
 		request.setAttribute("aui:field-wrapper:last", String.valueOf(_last));
 		request.setAttribute("aui:field-wrapper:name", _name);
+		request.setAttribute("aui:field-wrapper:required", String.valueOf(_required));
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -122,5 +128,6 @@ public class FieldWrapperTag extends IncludeTag {
 	private String _label;
 	private boolean _last;
 	private String _name;
+	private boolean _required;
 
 }

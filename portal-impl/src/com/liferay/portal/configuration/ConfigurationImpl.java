@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -179,24 +180,51 @@ public class ConfigurationImpl
 	}
 
 	public boolean contains(String key) {
-		ComponentProperties componentProperties = getComponentProperties();
+		Object value = _cache.get(key);
+		if (value == null) {
+			ComponentProperties componentProperties = getComponentProperties();
 
-		return componentProperties.containsKey(key);
+			value = componentProperties.getProperty(key);
+
+			if (value == null) {
+				value = _nullValue;
+			}
+
+			_cache.put(key, value);
+		}
+
+		if (value == _nullValue) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public String get(String key) {
-		if (_PRINT_DUPLICATE_CALLS_TO_GET) {
-			if (_keys.contains(key)) {
-				System.out.println("Duplicate call to get " + key);
+		Object value = _cache.get(key);
+
+		if (value == null) {
+			ComponentProperties componentProperties = getComponentProperties();
+
+			value = componentProperties.getString(key);
+
+			if (value == null) {
+				value = _nullValue;
 			}
-			else {
-				_keys.add(key);
-			}
+
+			_cache.put(key, value);
+		}
+		else if (_PRINT_DUPLICATE_CALLS_TO_GET) {
+			System.out.println("Duplicate call to get " + key);
 		}
 
-		ComponentProperties componentProperties = getComponentProperties();
-
-		return componentProperties.getString(key);
+		if (value instanceof String) {
+			return (String)value;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public String get(String key, Filter filter) {
@@ -206,30 +234,43 @@ public class ConfigurationImpl
 	}
 
 	public String[] getArray(String key) {
-		ComponentProperties componentProperties = getComponentProperties();
+		Object value = _cache.get(key);
 
-		String[] array = componentProperties.getStringArray(key);
+		if (value == null) {
+			ComponentProperties componentProperties = getComponentProperties();
 
-		if (array == null) {
-			return new String[0];
-		}
-		else if (array.length > 0) {
+			String[] array = componentProperties.getStringArray(key);
 
-			// Commons Configuration parses an empty property into a String
-			// array with one String containing one space. It also leaves a
-			// trailing array member if you set a property in more than one
-			// line.
-
-			if (Validator.isNull(array[array.length - 1])) {
-				String[] subArray = new String[array.length - 1];
-
-				System.arraycopy(array, 0, subArray, 0, subArray.length);
-
-				array = subArray;
+			if ((array == null) || (array.length == 0)) {
+				value = _nullValue;
 			}
+			else if (array.length > 0) {
+
+				// Commons Configuration parses an empty property into a String
+				// array with one String containing one space. It also leaves a
+				// trailing array member if you set a property in more than one
+				// line.
+
+				if (Validator.isNull(array[array.length - 1])) {
+					String[] subArray = new String[array.length - 1];
+
+					System.arraycopy(array, 0, subArray, 0, subArray.length);
+
+					array = subArray;
+				}
+
+				value = array;
+			}
+
+			_cache.put(key, value);
 		}
 
-		return array;
+		if (value instanceof String[]) {
+			return (String[])value;
+		}
+		else {
+			return _emptyArray;
+		}
 	}
 
 	public String[] getArray(String key, Filter filter) {
@@ -327,6 +368,8 @@ public class ConfigurationImpl
 		ComponentProperties componentProperties = getComponentProperties();
 
 		componentProperties.setProperty(key, value);
+
+		_cache.put(key, value);
 	}
 
 	protected ComponentProperties getComponentProperties() {
@@ -410,8 +453,13 @@ public class ConfigurationImpl
 
 	private static Log _log = LogFactoryUtil.getLog(ConfigurationImpl.class);
 
+	private static String[] _emptyArray = new String[0];
+
+	private static Object _nullValue = new Object();
+
+	private Map<String, Object> _cache =
+		new ConcurrentHashMap<String, Object>();
 	private ComponentConfiguration _componentConfiguration;
-	private Set<String> _keys = new HashSet<String>();
 	private Set<String> _printedSources = new HashSet<String>();
 
 }

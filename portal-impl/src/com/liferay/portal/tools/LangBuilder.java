@@ -48,7 +48,11 @@ public class LangBuilder {
 	public static final String AUTOMATIC_TRANSLATION =
 		" (Automatic Translation)";
 
+	public static final String UNIX_EOL = "\n";
+
 	public static void main(String[] args) {
+		System.setProperty("line.separator", UNIX_EOL);
+
 		InitUtil.initWithSpring();
 
 		if (args.length == 2) {
@@ -76,6 +80,11 @@ public class LangBuilder {
 
 			String content = _orderProperties(
 				new File(_langDir + "/" + _langFile + ".properties"));
+
+			// locales for which _createProperties is not invoked should be
+			// rewritten too using rignt line separator
+			_orderProperties(
+				new File(_langDir + "/" + _langFile + "_en_GB.properties"));
 
 			if (Validator.isNotNull(langCode) && !langCode.startsWith("$")) {
 				_createProperties(content, langCode);

@@ -55,16 +55,30 @@ String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
 
 if (Validator.isNull(src)) {
 	if (auiImage) {
-		src = themeDisplay.getPathThemeImages() + "/spacer.png";
+		src = themeDisplay.getPathThemeImages().concat("/spacer.png");
 	}
 	else {
-		src = themeDisplay.getPathThemeImages() + "/common/" + image + ".png";
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(themeDisplay.getPathThemeImages());
+		sb.append("/common/");
+		sb.append(image);
+		sb.append(".png");
+
+		src = sb.toString();
 		src = StringUtil.replace(src, "common/../", "");
 	}
 }
 
 if (Validator.isNull(srcHover) && Validator.isNotNull(imageHover)) {
-	srcHover = themeDisplay.getPathThemeImages() + "/common/" + imageHover + ".png";
+	StringBundler sb = new StringBundler(4);
+
+	sb.append(themeDisplay.getPathThemeImages());
+	sb.append("/common/");
+	sb.append(imageHover);
+	sb.append(".png");
+
+	srcHover = sb.toString();
 }
 
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
@@ -95,14 +109,24 @@ if (label) {
 	details = " alt=\"\"";
 }
 else {
-	details = " alt=\"" + LanguageUtil.get(pageContext, message) + "\"";
+	StringBundler sb = new StringBundler(6);
+
+	sb.append(" alt=\"");
+	sb.append(LanguageUtil.get(pageContext, message));
+	sb.append("\"");
 
 	if (toolTip) {
-		details += " onmouseover=\"Liferay.Portal.ToolTip.show(this, '" + UnicodeLanguageUtil.get(pageContext, message) + "')\"";
+		sb.append(" onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
+		sb.append(UnicodeLanguageUtil.get(pageContext, message));
+		sb.append("')\"");
 	}
 	else {
-		details += " title=\"" + LanguageUtil.get(pageContext, message) + "\"";
+		sb.append(" title=\"");
+		sb.append(LanguageUtil.get(pageContext, message));
+		sb.append("\"");
 	}
+
+	details = sb.toString();
 }
 %>
 

@@ -115,11 +115,17 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision> {
 			layoutRevisionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			layoutRevisionImpl.setCreateDate(null);
+		}
+		else {
 			layoutRevisionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			layoutRevisionImpl.setModifiedDate(null);
+		}
+		else {
 			layoutRevisionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -228,7 +234,10 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision> {
 			layoutRevisionImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			layoutRevisionImpl.setStatusDate(null);
+		}
+		else {
 			layoutRevisionImpl.setStatusDate(new Date(statusDate));
 		}
 

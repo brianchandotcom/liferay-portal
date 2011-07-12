@@ -61,7 +61,10 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker> {
 		userTrackerImpl.setCompanyId(companyId);
 		userTrackerImpl.setUserId(userId);
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			userTrackerImpl.setModifiedDate(null);
+		}
+		else {
 			userTrackerImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

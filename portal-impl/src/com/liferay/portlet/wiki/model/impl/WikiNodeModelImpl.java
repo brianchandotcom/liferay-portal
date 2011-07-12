@@ -454,11 +454,17 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		if (createDate != null) {
 			wikiNodeCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			wikiNodeCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			wikiNodeCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			wikiNodeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		wikiNodeCacheModel.name = getName();
@@ -481,6 +487,9 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 		if (lastPostDate != null) {
 			wikiNodeCacheModel.lastPostDate = lastPostDate.getTime();
+		}
+		else {
+			wikiNodeCacheModel.lastPostDate = Long.MIN_VALUE;
 		}
 
 		return wikiNodeCacheModel;

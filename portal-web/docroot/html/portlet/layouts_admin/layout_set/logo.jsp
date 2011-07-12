@@ -19,7 +19,7 @@
 <%
 Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
-UnicodeProperties groupTypeSettings =  (UnicodeProperties)request.getAttribute("edit_pages.jsp-groupTypeSettings");
+UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("edit_pages.jsp-groupTypeSettings");
 LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
 %>
 
@@ -53,8 +53,8 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 
 <aui:script use="aui-base">
 	var deleteLogoLink = A.one('#<portlet:namespace />deleteLogoLink');
-	var useLogoInput =  A.one('#<portlet:namespace />useLogo');
-	var logoContainer =  A.one('#<portlet:namespace />logoContainer');
+	var useLogoInput = A.one('#<portlet:namespace />useLogo');
+	var logoContainer = A.one('#<portlet:namespace />logoContainer');
 	var logoFileNameInput = A.one('#<portlet:namespace />logoFileName');
 
 	var changeLogo = function(event) {

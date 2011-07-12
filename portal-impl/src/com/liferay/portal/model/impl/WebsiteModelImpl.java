@@ -410,11 +410,17 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		if (createDate != null) {
 			websiteCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			websiteCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			websiteCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			websiteCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		websiteCacheModel.classNameId = getClassNameId();

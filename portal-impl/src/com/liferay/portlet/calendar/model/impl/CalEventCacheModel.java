@@ -107,11 +107,17 @@ public class CalEventCacheModel implements CacheModel<CalEvent> {
 			calEventImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			calEventImpl.setCreateDate(null);
+		}
+		else {
 			calEventImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			calEventImpl.setModifiedDate(null);
+		}
+		else {
 			calEventImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -136,11 +142,17 @@ public class CalEventCacheModel implements CacheModel<CalEvent> {
 			calEventImpl.setLocation(location);
 		}
 
-		if (startDate > 0) {
+		if (startDate == Long.MIN_VALUE) {
+			calEventImpl.setStartDate(null);
+		}
+		else {
 			calEventImpl.setStartDate(new Date(startDate));
 		}
 
-		if (endDate > 0) {
+		if (endDate == Long.MIN_VALUE) {
+			calEventImpl.setEndDate(null);
+		}
+		else {
 			calEventImpl.setEndDate(new Date(endDate));
 		}
 

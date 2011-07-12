@@ -493,11 +493,17 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		if (createDate != null) {
 			journalStructureCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			journalStructureCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			journalStructureCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			journalStructureCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		journalStructureCacheModel.structureId = getStructureId();

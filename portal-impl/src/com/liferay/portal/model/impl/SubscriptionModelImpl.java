@@ -386,11 +386,17 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		if (createDate != null) {
 			subscriptionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			subscriptionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			subscriptionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			subscriptionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		subscriptionCacheModel.classNameId = getClassNameId();

@@ -83,11 +83,17 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder> {
 			bookmarksFolderImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			bookmarksFolderImpl.setCreateDate(null);
+		}
+		else {
 			bookmarksFolderImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			bookmarksFolderImpl.setModifiedDate(null);
+		}
+		else {
 			bookmarksFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

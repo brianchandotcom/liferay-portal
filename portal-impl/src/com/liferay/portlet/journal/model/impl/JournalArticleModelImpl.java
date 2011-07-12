@@ -1054,11 +1054,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		if (createDate != null) {
 			journalArticleCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			journalArticleCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			journalArticleCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			journalArticleCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		journalArticleCacheModel.classNameId = getClassNameId();
@@ -1144,17 +1150,26 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		if (displayDate != null) {
 			journalArticleCacheModel.displayDate = displayDate.getTime();
 		}
+		else {
+			journalArticleCacheModel.displayDate = Long.MIN_VALUE;
+		}
 
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
 			journalArticleCacheModel.expirationDate = expirationDate.getTime();
 		}
+		else {
+			journalArticleCacheModel.expirationDate = Long.MIN_VALUE;
+		}
 
 		Date reviewDate = getReviewDate();
 
 		if (reviewDate != null) {
 			journalArticleCacheModel.reviewDate = reviewDate.getTime();
+		}
+		else {
+			journalArticleCacheModel.reviewDate = Long.MIN_VALUE;
 		}
 
 		journalArticleCacheModel.indexable = getIndexable();
@@ -1187,6 +1202,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		if (statusDate != null) {
 			journalArticleCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			journalArticleCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return journalArticleCacheModel;

@@ -32,6 +32,8 @@
 		}
 	}
 
+	var REGEX_DASH = /-([a-z])/gi;
+
 	var REGEX_HTML_ESCAPE = new RegExp('[' + htmlUnescapedValues.join('') + ']', 'g');
 
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
@@ -188,6 +190,23 @@
 					return finalUrl;
 				}
 			}
+		},
+
+		camelize: function(value, separator) {
+			var regex = REGEX_DASH;
+
+			if (separator) {
+				regex = new RegExp(separator + '([a-z])', 'gi');
+			}
+
+			value = value.replace(
+				regex,
+				function(match0, match1) {
+					return match1.toUpperCase();
+				}
+			);
+
+			return value;
 		},
 
 		checkTab: function(box) {
@@ -1599,6 +1618,7 @@
 		DROP_POSITION: 450,
 		DRAG_ITEM: 460,
 		TOOLTIP: 470,
-		WINDOW: 1000
+		WINDOW: 1000,
+		MENU: 5000
 	};
 })(AUI(), Liferay);

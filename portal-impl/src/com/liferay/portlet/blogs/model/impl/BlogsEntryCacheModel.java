@@ -107,11 +107,17 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setCreateDate(null);
+		}
+		else {
 			blogsEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setModifiedDate(null);
+		}
+		else {
 			blogsEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -143,7 +149,10 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setContent(content);
 		}
 
-		if (displayDate > 0) {
+		if (displayDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setDisplayDate(null);
+		}
+		else {
 			blogsEntryImpl.setDisplayDate(new Date(displayDate));
 		}
 
@@ -177,7 +186,10 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry> {
 			blogsEntryImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setStatusDate(null);
+		}
+		else {
 			blogsEntryImpl.setStatusDate(new Date(statusDate));
 		}
 

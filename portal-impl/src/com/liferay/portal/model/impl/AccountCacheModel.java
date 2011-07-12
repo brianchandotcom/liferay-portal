@@ -84,11 +84,17 @@ public class AccountCacheModel implements CacheModel<Account> {
 			accountImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			accountImpl.setCreateDate(null);
+		}
+		else {
 			accountImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			accountImpl.setModifiedDate(null);
+		}
+		else {
 			accountImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

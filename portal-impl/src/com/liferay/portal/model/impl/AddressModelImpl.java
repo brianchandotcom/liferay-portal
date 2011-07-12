@@ -518,11 +518,17 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		if (createDate != null) {
 			addressCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			addressCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			addressCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			addressCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		addressCacheModel.classNameId = getClassNameId();

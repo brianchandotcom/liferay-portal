@@ -87,11 +87,17 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 			ddlRecordSetImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ddlRecordSetImpl.setCreateDate(null);
+		}
+		else {
 			ddlRecordSetImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			ddlRecordSetImpl.setModifiedDate(null);
+		}
+		else {
 			ddlRecordSetImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

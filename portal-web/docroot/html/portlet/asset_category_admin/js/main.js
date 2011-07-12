@@ -68,8 +68,7 @@ AUI().add(
 
 						instance._prefixedPortletId = '_' + config.portletId + '_';
 
-						instance._container = A.one('.vocabulary-container');
-						instance._vocabularyContent = A.one('.vocabulary-content');
+						instance._container = A.one('.categories-admin-container');
 						instance._categoryViewContainer = A.one('.category-view');
 
 						instance._portletMessageContainer = Node.create(TPL_MESSAGES_VOCABULARY);
@@ -79,18 +78,18 @@ AUI().add(
 						childrenContainer.placeBefore(instance._categoryMessageContainer);
 
 						instance._dialogAlignConfig = {
-							node: instance._vocabularyContent,
-							points: ['tc', 'tc']
+							node: '.vocabulary-list-container',
+							points: ['tl', 'tc']
 						};
 
 						var namespace = instance._prefixedPortletId;
 
 						A.one('.category-view-close').on('click', instance._closeEditSection, instance);
 
-						A.one('#' + namespace + 'vocabularySelectSearch').on(
+						A.one('#' + namespace + 'categoriesAdminSelectSearch').on(
 							'change',
 							function(event) {
-								var searchInput = A.one('#' + instance._prefixedPortletId + 'vocabularySearchInput');
+								var searchInput = A.one('#' + instance._prefixedPortletId + 'categoriesAdminSearchInput');
 
 								if (searchInput) {
 									searchInput.focus();
@@ -1482,11 +1481,11 @@ AUI().add(
 						var namespace = instance._prefixedPortletId;
 
 						var options = {
-							input: '#' + namespace + 'vocabularySearchInput'
+							input: '#' + namespace + 'categoriesAdminSearchInput'
 						};
 
-						var vocabularySelectSearchNode = A.one('#' + namespace + 'vocabularySelectSearch');
-						var selected = (vocabularySelectSearchNode && vocabularySelectSearchNode.val()) || '';
+						var categoriesAdminSelectSearchNode = A.one('#' + namespace + 'categoriesAdminSelectSearch');
+						var selected = (categoriesAdminSelectSearchNode && categoriesAdminSelectSearchNode.val()) || '';
 
 						if (/vocabularies/.test(selected)) {
 							A.mix(

@@ -62,7 +62,10 @@ public class TicketCacheModel implements CacheModel<Ticket> {
 		ticketImpl.setTicketId(ticketId);
 		ticketImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ticketImpl.setCreateDate(null);
+		}
+		else {
 			ticketImpl.setCreateDate(new Date(createDate));
 		}
 
@@ -85,7 +88,10 @@ public class TicketCacheModel implements CacheModel<Ticket> {
 			ticketImpl.setExtraInfo(extraInfo);
 		}
 
-		if (expirationDate > 0) {
+		if (expirationDate == Long.MIN_VALUE) {
+			ticketImpl.setExpirationDate(null);
+		}
+		else {
 			ticketImpl.setExpirationDate(new Date(expirationDate));
 		}
 

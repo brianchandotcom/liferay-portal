@@ -71,11 +71,17 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 			assetCategoryPropertyImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			assetCategoryPropertyImpl.setCreateDate(null);
+		}
+		else {
 			assetCategoryPropertyImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetCategoryPropertyImpl.setModifiedDate(null);
+		}
+		else {
 			assetCategoryPropertyImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

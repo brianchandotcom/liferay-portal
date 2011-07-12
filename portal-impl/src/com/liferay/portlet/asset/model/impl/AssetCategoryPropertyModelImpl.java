@@ -406,11 +406,17 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		if (createDate != null) {
 			assetCategoryPropertyCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetCategoryPropertyCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			assetCategoryPropertyCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetCategoryPropertyCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		assetCategoryPropertyCacheModel.categoryId = getCategoryId();

@@ -86,11 +86,17 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry> {
 			scProductEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			scProductEntryImpl.setCreateDate(null);
+		}
+		else {
 			scProductEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			scProductEntryImpl.setModifiedDate(null);
+		}
+		else {
 			scProductEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

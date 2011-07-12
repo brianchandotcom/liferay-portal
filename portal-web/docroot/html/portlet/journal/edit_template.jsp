@@ -219,7 +219,7 @@ if (template == null) {
 
 		<aui:input cssClass="lfr-input-text-container" label="small-image" name="smallFile" type="file" />
 
-		<aui:input inlineLabel="right" name="smallImage"  />
+		<aui:input inlineLabel="right" name="smallImage" />
 
 		<c:if test="<%= template == null %>">
 			<aui:field-wrapper label="permissions">

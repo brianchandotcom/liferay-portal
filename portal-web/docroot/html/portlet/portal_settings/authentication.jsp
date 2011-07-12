@@ -227,7 +227,7 @@ String siteminderUserHeader = PrefsPropsUtil.getString(company.getCompanyId(), P
 			var url = null;
 
 			if (type == 'casConfiguration') {
-			  	title = 'CAS';
+				title = 'CAS';
 
 				data.<portlet:namespace />casLoginURL = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.CAS_LOGIN_URL %>--'].value;
 				data.<portlet:namespace />casLogoutURL = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.CAS_LOGOUT_URL %>--'].value;

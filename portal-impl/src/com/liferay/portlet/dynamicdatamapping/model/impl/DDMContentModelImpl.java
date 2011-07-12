@@ -474,11 +474,17 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		if (createDate != null) {
 			ddmContentCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ddmContentCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			ddmContentCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ddmContentCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ddmContentCacheModel.name = getName();

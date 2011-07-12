@@ -698,11 +698,17 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		if (createDate != null) {
 			assetCategoryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetCategoryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			assetCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetCategoryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		assetCategoryCacheModel.parentCategoryId = getParentCategoryId();

@@ -76,11 +76,17 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 			scFrameworkVersionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			scFrameworkVersionImpl.setCreateDate(null);
+		}
+		else {
 			scFrameworkVersionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			scFrameworkVersionImpl.setModifiedDate(null);
+		}
+		else {
 			scFrameworkVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

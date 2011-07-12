@@ -365,6 +365,9 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		if (createDate != null) {
 			announcementsFlagCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			announcementsFlagCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		announcementsFlagCacheModel.entryId = getEntryId();
 

@@ -85,11 +85,17 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion> {
 			pollsQuestionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			pollsQuestionImpl.setCreateDate(null);
+		}
+		else {
 			pollsQuestionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			pollsQuestionImpl.setModifiedDate(null);
+		}
+		else {
 			pollsQuestionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -107,11 +113,17 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion> {
 			pollsQuestionImpl.setDescription(description);
 		}
 
-		if (expirationDate > 0) {
+		if (expirationDate == Long.MIN_VALUE) {
+			pollsQuestionImpl.setExpirationDate(null);
+		}
+		else {
 			pollsQuestionImpl.setExpirationDate(new Date(expirationDate));
 		}
 
-		if (lastVoteDate > 0) {
+		if (lastVoteDate == Long.MIN_VALUE) {
+			pollsQuestionImpl.setLastVoteDate(null);
+		}
+		else {
 			pollsQuestionImpl.setLastVoteDate(new Date(lastVoteDate));
 		}
 

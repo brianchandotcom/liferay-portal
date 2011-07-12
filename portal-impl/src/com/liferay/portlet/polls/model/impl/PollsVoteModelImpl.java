@@ -338,6 +338,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		if (voteDate != null) {
 			pollsVoteCacheModel.voteDate = voteDate.getTime();
 		}
+		else {
+			pollsVoteCacheModel.voteDate = Long.MIN_VALUE;
+		}
 
 		return pollsVoteCacheModel;
 	}

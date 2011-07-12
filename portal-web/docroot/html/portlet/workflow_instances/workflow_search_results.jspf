@@ -32,7 +32,7 @@ if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(P
 	allInstances = true;
 
 	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, null, null, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
-	totalInstances =  WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, null, null, completedInstances);
+	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, null, null, completedInstances);
 }
 else {
 	if (completedInstances) {
@@ -43,6 +43,6 @@ else {
 	}
 
 	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), null, null, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
-	totalInstances =  WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), null, null, completedInstances);
+	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), null, null, completedInstances);
 }
 %>

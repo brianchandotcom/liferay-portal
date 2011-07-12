@@ -420,11 +420,17 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		if (createDate != null) {
 			ratingsEntryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ratingsEntryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			ratingsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			ratingsEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ratingsEntryCacheModel.classNameId = getClassNameId();

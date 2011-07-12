@@ -59,11 +59,17 @@ public class ReleaseCacheModel implements CacheModel<Release> {
 
 		releaseImpl.setReleaseId(releaseId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			releaseImpl.setCreateDate(null);
+		}
+		else {
 			releaseImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			releaseImpl.setModifiedDate(null);
+		}
+		else {
 			releaseImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -76,7 +82,10 @@ public class ReleaseCacheModel implements CacheModel<Release> {
 
 		releaseImpl.setBuildNumber(buildNumber);
 
-		if (buildDate > 0) {
+		if (buildDate == Long.MIN_VALUE) {
+			releaseImpl.setBuildDate(null);
+		}
+		else {
 			releaseImpl.setBuildDate(new Date(buildDate));
 		}
 

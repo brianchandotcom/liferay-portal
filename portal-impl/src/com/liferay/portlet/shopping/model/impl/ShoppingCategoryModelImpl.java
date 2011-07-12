@@ -409,11 +409,17 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		if (createDate != null) {
 			shoppingCategoryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			shoppingCategoryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			shoppingCategoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			shoppingCategoryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		shoppingCategoryCacheModel.parentCategoryId = getParentCategoryId();

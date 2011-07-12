@@ -77,7 +77,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						</dd>
 					</c:if>
 
-					<c:if test="<%= !editable && !configurableSettings.isEmpty()  %>">
+					<c:if test="<%= !editable && !configurableSettings.isEmpty() %>">
 
 						<%
 						for (String name : configurableSettings.keySet()) {
@@ -156,7 +156,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 									<c:choose>
 										<c:when test='<%= type.equals("checkbox") || type.equals("text") || type.equals("textarea") %>'>
-											<aui:input label="<%= name %>"  name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
+											<aui:input label="<%= name %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
 										</c:when>
 										<c:when test='<%= type.equals("select") %>'>
 											<aui:select label="<%= name %>" name="<%= propertyName %>">

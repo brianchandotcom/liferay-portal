@@ -409,11 +409,17 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		if (createDate != null) {
 			workflowDefinitionLinkCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			workflowDefinitionLinkCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			workflowDefinitionLinkCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			workflowDefinitionLinkCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		workflowDefinitionLinkCacheModel.classNameId = getClassNameId();

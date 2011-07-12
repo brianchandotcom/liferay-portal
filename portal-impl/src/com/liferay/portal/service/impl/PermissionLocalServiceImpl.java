@@ -504,7 +504,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 				company.getCompanyId(), name, roleName, actionId);
 		}
 	}
-	
+
 	public void setGroupPermissions(
 			long groupId, String[] actionIds, long resourceId)
 		throws PortalException, SystemException {
@@ -1127,19 +1127,20 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			}
 
 			if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+				roleName.equals(RoleConstants.ORGANIZATION_USER) ||
 				roleName.equals(RoleConstants.SITE_MEMBER)) {
 
 				Role role = rolePersistence.findByC_N(companyId, roleName);
 
 				permissionPersistence.addRole(
-				permission.getPermissionId(), role);
+					permission.getPermissionId(), role);
 			}
 			else {
 				long defaultUserId = userLocalService.getDefaultUserId(
-				companyId);
+					companyId);
 
 				permissionPersistence.addUser(
-				permission.getPermissionId(), defaultUserId);
+					permission.getPermissionId(), defaultUserId);
 			}
 		}
 	}

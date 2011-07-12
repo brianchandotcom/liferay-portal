@@ -368,6 +368,9 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		if (createDate != null) {
 			assetLinkCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetLinkCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		assetLinkCacheModel.entryId1 = getEntryId1();
 

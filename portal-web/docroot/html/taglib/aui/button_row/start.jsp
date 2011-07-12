@@ -14,11 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-String cssClass = GetterUtil.getString((String)request.getAttribute("aui:button-row:cssClass"));
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:dynamicAttributes");
-%>
+<%@ include file="/html/taglib/aui/button_row/init.jsp" %>
 
 <div class="aui-button-holder <%= cssClass %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>

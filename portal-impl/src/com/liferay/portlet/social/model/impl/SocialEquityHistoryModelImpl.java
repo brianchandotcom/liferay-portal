@@ -275,6 +275,9 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 		if (createDate != null) {
 			socialEquityHistoryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			socialEquityHistoryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		socialEquityHistoryCacheModel.personalEquity = getPersonalEquity();
 

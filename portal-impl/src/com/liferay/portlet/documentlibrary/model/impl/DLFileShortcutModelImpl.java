@@ -539,11 +539,17 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		if (createDate != null) {
 			dlFileShortcutCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			dlFileShortcutCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			dlFileShortcutCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			dlFileShortcutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		dlFileShortcutCacheModel.repositoryId = getRepositoryId();
@@ -568,6 +574,9 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		if (statusDate != null) {
 			dlFileShortcutCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			dlFileShortcutCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return dlFileShortcutCacheModel;

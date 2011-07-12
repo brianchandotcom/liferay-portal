@@ -14,24 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -39,17 +34,12 @@
 	<td>Test Folder</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Subfolder</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//tr[4]/td[5]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
@@ -59,7 +49,7 @@
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
@@ -75,13 +65,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_28_folderName</td>
+	<td>//a[@id='_28_folderName']</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -96,17 +86,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Bookmarks Home</td>
-	<td></td>
+	<td>Bookmarks Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Home</td>
-	<td></td>
+	<td>Bookmarks Home</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -114,13 +104,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>_28_folderName</td>
+	<td>waitForVisible</td>
+	<td>//a[@id='_28_folderName']</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_28_folderName</td>
+	<td>//a[@id='_28_folderName']</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
@@ -131,12 +121,17 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
@@ -149,24 +144,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -176,7 +166,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>Test Subfolder</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>

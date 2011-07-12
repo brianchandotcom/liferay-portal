@@ -91,7 +91,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 		try {
 			_indexWriter.close();
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			_log.error(
 				"Closing Lucene writer failed for " + _companyId, e);
 		}

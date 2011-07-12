@@ -27,6 +27,12 @@ boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 String treeId = ParamUtil.getString(request, "treeId");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portletURL");
+
+String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml";
+
+if (!selectableTree) {
+	modules += ",liferay-history";
+}
 %>
 
 <div class="lfr-tree-loading" id="<portlet:namespace />treeLoading">
@@ -35,7 +41,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 
 <div class="lfr-tree" id="<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output"></div>
 
-<aui:script use="aui-io-request,aui-tree-view,dataschema-xml,datatype-xml">
+<aui:script use="<%= modules %>">
+	var Lang = A.Lang;
+
+	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid=" %>';
+
 	var TreeUtil = {
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 		OPEN_NODES: '<%= SessionTreeJSClicks.getOpenNodes(request, treeId) %>'.split(','),
@@ -47,6 +57,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 			var treeInstance = event.target;
 
 			var rootNode = treeInstance.item(0);
+
 			var loadingEl = A.one('#<portlet:namespace />treeLoading');
 
 			loadingEl.hide();
@@ -59,7 +70,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 		},
 
 		createLink: function(label, plid) {
-			return '<a class="layout-tree" href="<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid=" %>'+ plid +'">'+ Liferay.Util.escapeHTML(label) +'</a>';
+			return '<a class="layout-tree" href="' + LAYOUT_URL + plid + '">' + Liferay.Util.escapeHTML(label) + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -97,10 +108,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 					newNode.label = node.name;
 
 					if (node.layoutRevisionId) {
-						newNode.label = [newNode.label, " [", node.layoutSetBranchName, " ", node.layoutRevisionId, "]"].join('');
+						newNode.label = Lang.sub(' [{layoutSetBranchName} {layoutRevisionId}]', node);
 
 						if (node.incomplete) {
-							newNode.label = [newNode.label, "incomplete"].join('');
+							newNode.label = [newNode.label, 'incomplete'].join('');
 						}
 					}
 
@@ -270,4 +281,105 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 			type: 'pages'
 		}
 	).render();
+
+	<c:if test="<%= !selectableTree %>">
+		var History = Liferay.HistoryManager;
+
+		var DEFAULT_PLID = '0';
+
+		var HISTORY_SELECTED_PLID = '<portlet:namespace />selPlid';
+
+		var layoutsContainer = A.one('#<portlet:namespace />layoutsContainer');
+
+		treeview.after(
+			'lastSelectedChange',
+			function(event) {
+				var node = event.newVal;
+
+				var plid = TreeUtil.extractPlid(node);
+
+				var currentValue = History.get(HISTORY_SELECTED_PLID);
+
+				if (plid != currentValue) {
+					if (plid == DEFAULT_PLID && Lang.isValue(currentValue)) {
+						plid = null;
+					}
+
+					History.add(
+						{
+							'<portlet:namespace />selPlid': plid
+						}
+					);
+				}
+			}
+		);
+
+		function compareItemId(item, id) {
+			return (TreeUtil.extractPlid(item) == id);
+		}
+
+		function findNodeByPlid(node, plid) {
+			var foundItem = null;
+
+			if (node) {
+				if (compareItemId(node, plid)) {
+					foundItem = node;
+				}
+			}
+
+			if (!foundItem) {
+				var children = (node || treeview).get('children');
+
+				var length = children.length;
+
+				for (var i = 0; i < length; i++) {
+					var item = children[i];
+
+					if (item.isLeaf()) {
+						if (compareItemId(item, plid)) {
+							foundItem = item;
+						}
+					}
+					else {
+						foundItem = findNodeByPlid(item, plid);
+					}
+
+					if (foundItem) {
+						break;
+					}
+				}
+			}
+
+			return foundItem;
+		}
+
+		History.after(
+			'change',
+			function(event) {
+				if (event.src == History.SRC_HASH || event.src == History.SRC_POPSTATE) {
+					var nodePlid = event.newVal[HISTORY_SELECTED_PLID];
+
+					if (Lang.isValue(nodePlid)) {
+						var node = findNodeByPlid(null, nodePlid);
+
+						if (node) {
+							var lastSelected = treeview.get('lastSelected');
+
+							if (lastSelected) {
+								lastSelected.unselect();
+							}
+
+							node.select();
+
+							var io = layoutsContainer.io;
+
+							io.set('uri', LAYOUT_URL + nodePlid);
+
+							io.start();
+						}
+					}
+				}
+			}
+		);
+	</c:if>
 </aui:script>

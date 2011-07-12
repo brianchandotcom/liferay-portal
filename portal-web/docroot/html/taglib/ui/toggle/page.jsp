@@ -100,7 +100,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 						themeDisplay.getPathMain() + '/portal/session_click',
 						{
 							data: {
-								'<%= id %>': ''
+								'<%= id %>': 'block'
 							}
 						}
 					);

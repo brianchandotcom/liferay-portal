@@ -146,7 +146,7 @@
 			HAVING COUNT(*) > ?
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countF_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countF_ByG_M_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT folderId) AS COUNT_VALUE
@@ -154,6 +154,7 @@
 				DLFolder
 			WHERE
 				(DLFolder.groupId = ?) AND
+				(DLFolder.mountPoint = ?) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -187,7 +188,7 @@
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT
 				DISTINCT folderId AS modelFolderId, DLFolder.createDate as createDate, DLFolder.modifiedDate as modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
@@ -195,6 +196,7 @@
 				DLFolder
 			WHERE
 				(DLFolder.groupId = ?) AND
+				(DLFolder.mountPoint = ?) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>

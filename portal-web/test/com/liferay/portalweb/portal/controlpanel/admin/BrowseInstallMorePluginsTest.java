@@ -30,7 +30,7 @@ public class BrowseInstallMorePluginsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,39 +41,48 @@ public class BrowseInstallMorePluginsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Plugins Installation",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Plugins Installation"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Install More Portlets']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Install More Portlets"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portlet Plugins", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Portlet Plugins",
+			RuntimeVariables.replace("Portlet Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//form/div[2]"));
-		selenium.clickAt("link=Theme Plugins", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("No portlet plugins were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.clickAt("link=Theme Plugins",
+			RuntimeVariables.replace("Theme Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//form/div[2]"));
+		assertEquals(RuntimeVariables.replace("No theme plugins were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Layout Template Plugins",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Layout Template Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"No layout template plugins were found."),
-			selenium.getText("//form/div[2]"));
-		selenium.clickAt("link=Hook Plugins", RuntimeVariables.replace(""));
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.clickAt("link=Hook Plugins",
+			RuntimeVariables.replace("Hook Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//form/div[2]"));
-		selenium.clickAt("link=Web Plugins", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("No hook plugins were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.clickAt("link=Web Plugins",
+			RuntimeVariables.replace("Web Plugins"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//form/div[2]"));
+		assertEquals(RuntimeVariables.replace("No web plugins were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

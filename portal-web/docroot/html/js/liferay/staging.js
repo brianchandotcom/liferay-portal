@@ -210,7 +210,7 @@ AUI().add(
 							draggable: true,
 							modal: true,
 							title: Liferay.Language.get('history'),
-							width: 400
+							width: 600
 						}
 					).plug(
 						A.Plugin.IO,
@@ -219,6 +219,7 @@ AUI().add(
 							data: {
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 								p_l_id: themeDisplay.getPlid(),
+								p_p_isolated: true,
 								redirect: Liferay.currentURL
 							},
 							uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'

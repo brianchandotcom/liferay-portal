@@ -536,11 +536,17 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		if (createDate != null) {
 			scProductEntryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			scProductEntryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			scProductEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			scProductEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		scProductEntryCacheModel.name = getName();

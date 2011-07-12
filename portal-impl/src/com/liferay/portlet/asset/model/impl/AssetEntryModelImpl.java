@@ -766,11 +766,17 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		if (createDate != null) {
 			assetEntryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			assetEntryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			assetEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			assetEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		assetEntryCacheModel.classNameId = getClassNameId();
@@ -792,11 +798,17 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		if (startDate != null) {
 			assetEntryCacheModel.startDate = startDate.getTime();
 		}
+		else {
+			assetEntryCacheModel.startDate = Long.MIN_VALUE;
+		}
 
 		Date endDate = getEndDate();
 
 		if (endDate != null) {
 			assetEntryCacheModel.endDate = endDate.getTime();
+		}
+		else {
+			assetEntryCacheModel.endDate = Long.MIN_VALUE;
 		}
 
 		Date publishDate = getPublishDate();
@@ -804,11 +816,17 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		if (publishDate != null) {
 			assetEntryCacheModel.publishDate = publishDate.getTime();
 		}
+		else {
+			assetEntryCacheModel.publishDate = Long.MIN_VALUE;
+		}
 
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
 			assetEntryCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			assetEntryCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
 		assetEntryCacheModel.mimeType = getMimeType();

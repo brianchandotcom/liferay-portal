@@ -606,11 +606,17 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		if (createDate != null) {
 			mbMailingListCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			mbMailingListCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			mbMailingListCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbMailingListCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		mbMailingListCacheModel.categoryId = getCategoryId();

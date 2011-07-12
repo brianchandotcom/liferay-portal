@@ -388,6 +388,9 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		if (createDate != null) {
 			lockCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			lockCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		lockCacheModel.className = getClassName();
 
@@ -419,6 +422,9 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		if (expirationDate != null) {
 			lockCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			lockCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
 		return lockCacheModel;

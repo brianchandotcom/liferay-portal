@@ -59,7 +59,10 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath> {
 			userTrackerPathImpl.setPath(path);
 		}
 
-		if (pathDate > 0) {
+		if (pathDate == Long.MIN_VALUE) {
+			userTrackerPathImpl.setPathDate(null);
+		}
+		else {
 			userTrackerPathImpl.setPathDate(new Date(pathDate));
 		}
 

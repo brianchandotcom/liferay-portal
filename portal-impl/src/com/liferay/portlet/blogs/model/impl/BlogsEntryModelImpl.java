@@ -690,11 +690,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		if (createDate != null) {
 			blogsEntryCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			blogsEntryCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			blogsEntryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			blogsEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		blogsEntryCacheModel.title = getTitle();
@@ -733,6 +739,9 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (displayDate != null) {
 			blogsEntryCacheModel.displayDate = displayDate.getTime();
+		}
+		else {
+			blogsEntryCacheModel.displayDate = Long.MIN_VALUE;
 		}
 
 		blogsEntryCacheModel.allowPingbacks = getAllowPingbacks();
@@ -775,6 +784,9 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (statusDate != null) {
 			blogsEntryCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			blogsEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return blogsEntryCacheModel;

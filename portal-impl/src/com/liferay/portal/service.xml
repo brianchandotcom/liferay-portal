@@ -1973,6 +1973,8 @@
 		<column name="parentUserGroupId" type="long" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+        <column name="publicLayoutSetPrototypeId" type="long" />
+        <column name="privateLayoutSetPrototypeId" type="long" />
 		<column name="addedByLDAPImport" type="boolean" />
 
 		<!-- Relationships -->

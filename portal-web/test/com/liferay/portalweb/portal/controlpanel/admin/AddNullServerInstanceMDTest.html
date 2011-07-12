@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Instances</td>
-	<td></td>
+	<td>Portal Instances</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -36,41 +36,36 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add']</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>_135_webId</td>
+	<td>//input[@id='_135_webId']</td>
 	<td>lifera1.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_webId</td>
+	<td>//input[@id='_135_webId']</td>
 	<td>liferay1.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_virtualHostname</td>
+	<td>//input[@id='_135_virtualHostname']</td>
 	<td>localhost1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_mx</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This field is required.</td>
+	<td>//input[@id='_135_mx']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-form-validator-message required']</td>
+	<td>//label/div</td>
 	<td>This field is required.</td>
 </tr>
 

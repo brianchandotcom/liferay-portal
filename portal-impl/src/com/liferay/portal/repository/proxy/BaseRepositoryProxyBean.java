@@ -243,39 +243,41 @@ public class BaseRepositoryProxyBean
 	}
 
 	public List<Folder> getFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Folder> folders = _baseRepository.getFolders(
-			parentFolderId, start, end, obc);
+			parentFolderId, includeMountfolders, start, end, obc);
 
 		return toFolderProxyBeans(folders);
 	}
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long folderId, int status, int start, int end,
-			OrderByComparator obc)
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Object> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
-				folderId, status, start, end, obc);
+				folderId, status, includeMountFolders, start, end, obc);
 
 		return toObjectProxyBeans(objects);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status)
+			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
 
 		return _baseRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status);
+			folderId, status, includeMountFolders);
 	}
 
-	public int getFoldersCount(long parentFolderId)
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws SystemException {
 
-		return _baseRepository.getFoldersCount(parentFolderId);
+		return _baseRepository.getFoldersCount(
+			parentFolderId, includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
@@ -288,6 +290,22 @@ public class BaseRepositoryProxyBean
 		LocalRepository localRepository = _baseRepository.getLocalRepository();
 
 		return newLocalRepositoryProxyBean(localRepository);
+	}
+
+	public List<Folder> getMountFolders(
+			long parentFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		List<Folder> folders = _baseRepository.getMountFolders(
+			parentFolderId, start, end, obc);
+
+		return toFolderProxyBeans(folders);
+	}
+
+	public int getMountFoldersCount(long parentFolderId)
+		throws SystemException {
+
+		return _baseRepository.getMountFoldersCount(parentFolderId);
 	}
 
 	public BaseRepository getProxyBean() {

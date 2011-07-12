@@ -73,11 +73,17 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 			layoutSetBranchImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			layoutSetBranchImpl.setCreateDate(null);
+		}
+		else {
 			layoutSetBranchImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			layoutSetBranchImpl.setModifiedDate(null);
+		}
+		else {
 			layoutSetBranchImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

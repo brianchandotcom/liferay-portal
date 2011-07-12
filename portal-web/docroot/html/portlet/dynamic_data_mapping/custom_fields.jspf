@@ -18,6 +18,9 @@
 	var FormBuilderTextField = A.FormBuilderTextField;
 	var FormBuilderTypes = A.FormBuilder.types;
 
+	var camelize = Liferay.Util.camelize;
+	var trim = A.Lang.trim;
+
 	var TPL_SEPARATOR = '<div class="separator"></div>';
 
 	var TPL_TEMPLATE_NODE = '<p></p>';
@@ -136,6 +139,9 @@
 				fieldNamespace: {
 					value: 'ddm'
 				},
+				style: {
+					value: ''
+				},
 				templateNode: {
 					valueFn: function() {
 						return A.Node.create(TPL_TEMPLATE_NODE);
@@ -143,7 +149,7 @@
 				}
 			},
 
-			UI_ATTRS: ['label'],
+			UI_ATTRS: ['label', 'style'],
 
 			EXTENDS: A.FormBuilderField,
 
@@ -167,9 +173,15 @@
 								name: 'label',
 								type: 'textarea',
 								value: instance.get('label')
+							},
+							{
+								labelText: Liferay.Language.get('style'),
+								name: 'style',
+								type: 'textarea',
+								value: instance.get('style')
 							}
 						],
-					   formNode
+						formNode
 					);
 
 					var labelNode = settingsNodesMap.labelSettingNode;
@@ -181,6 +193,29 @@
 					var instance = this;
 
 					instance.get('templateNode').setContent(val);
+				},
+
+				_uiSetStyle: function(val) {
+					var instance = this;
+
+					var styles = val.replace(/\n/g, '').split(';');
+					var templateNode = instance.get('templateNode');
+
+					templateNode.setStyle('');
+
+					A.Array.each(
+						styles,
+						function(item, index, collection) {
+							var rule = item.split(':');
+
+							if (rule.length == 2) {
+								var key = camelize(rule[0]);
+								var value = trim(rule[1]);
+
+								templateNode.setStyle(key, value);
+							}
+						}
+					);
 				}
 			}
 		}

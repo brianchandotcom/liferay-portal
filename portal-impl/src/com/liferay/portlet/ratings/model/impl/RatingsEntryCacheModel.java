@@ -71,11 +71,17 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry> {
 			ratingsEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			ratingsEntryImpl.setCreateDate(null);
+		}
+		else {
 			ratingsEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			ratingsEntryImpl.setModifiedDate(null);
+		}
+		else {
 			ratingsEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

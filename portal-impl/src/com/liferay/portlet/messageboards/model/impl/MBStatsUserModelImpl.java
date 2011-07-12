@@ -312,6 +312,9 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		if (lastPostDate != null) {
 			mbStatsUserCacheModel.lastPostDate = lastPostDate.getTime();
 		}
+		else {
+			mbStatsUserCacheModel.lastPostDate = Long.MIN_VALUE;
+		}
 
 		return mbStatsUserCacheModel;
 	}

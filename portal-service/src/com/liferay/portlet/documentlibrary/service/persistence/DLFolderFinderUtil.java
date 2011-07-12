@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class DLFolderFinderUtil {
 	public static int countF_FE_FS_ByG_F_S(long groupId, long folderId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countF_FE_FS_ByG_F_S(groupId, folderId, status);
+		int status, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countF_FE_FS_ByG_F_S(groupId, folderId, status,
+			includeMountFolders);
 	}
 
 	public static int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
@@ -32,8 +35,11 @@ public class DLFolderFinderUtil {
 	}
 
 	public static int filterCountF_FE_FS_ByG_F_S(long groupId, long folderId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().filterCountF_FE_FS_ByG_F_S(groupId, folderId, status);
+		int status, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountF_FE_FS_ByG_F_S(groupId, folderId, status,
+			includeMountFolders);
 	}
 
 	public static int filterCountFE_FS_ByG_F_S(long groupId, long folderId,
@@ -42,12 +48,12 @@ public class DLFolderFinderUtil {
 	}
 
 	public static java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_S(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .filterFindF_FE_FS_ByG_F_S(groupId, folderId, status, start,
-			end, obc);
+				   .filterFindF_FE_FS_ByG_F_S(groupId, folderId, status,
+			includeMountFolders, start, end, obc);
 	}
 
 	public static java.util.List<java.lang.Object> filterFindFE_FS_ByG_F_S(
@@ -59,12 +65,12 @@ public class DLFolderFinderUtil {
 	}
 
 	public static java.util.List<java.lang.Object> findF_FE_FS_ByG_F_S(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long folderId, int status, boolean includeMountFolders,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findF_FE_FS_ByG_F_S(groupId, folderId, status, start, end,
-			obc);
+				   .findF_FE_FS_ByG_F_S(groupId, folderId, status,
+			includeMountFolders, start, end, obc);
 	}
 
 	public static java.util.List<java.lang.Object> findFE_FS_ByG_F_S(

@@ -54,7 +54,10 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 		announcementsFlagImpl.setFlagId(flagId);
 		announcementsFlagImpl.setUserId(userId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			announcementsFlagImpl.setCreateDate(null);
+		}
+		else {
 			announcementsFlagImpl.setCreateDate(new Date(createDate));
 		}
 

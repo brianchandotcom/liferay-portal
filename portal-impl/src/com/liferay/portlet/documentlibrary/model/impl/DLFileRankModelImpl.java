@@ -321,6 +321,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		if (createDate != null) {
 			dlFileRankCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			dlFileRankCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		dlFileRankCacheModel.fileEntryId = getFileEntryId();
 

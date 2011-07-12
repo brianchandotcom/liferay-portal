@@ -66,7 +66,10 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		membershipRequestImpl.setCompanyId(companyId);
 		membershipRequestImpl.setUserId(userId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			membershipRequestImpl.setCreateDate(null);
+		}
+		else {
 			membershipRequestImpl.setCreateDate(new Date(createDate));
 		}
 
@@ -84,7 +87,10 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 			membershipRequestImpl.setReplyComments(replyComments);
 		}
 
-		if (replyDate > 0) {
+		if (replyDate == Long.MIN_VALUE) {
+			membershipRequestImpl.setReplyDate(null);
+		}
+		else {
 			membershipRequestImpl.setReplyDate(new Date(replyDate));
 		}
 

@@ -50,7 +50,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.addTeamUserGroups(teamId, userGroupIds);
 	}
 
-	public UserGroup addUserGroup(String name, String description)
+	public UserGroup addUserGroup(
+			String name, String description, long publicLayoutSetPrototypeId,
+			long privateLayoutSetPrototypeId)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(
@@ -59,7 +61,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.addUserGroup(
-			user.getUserId(), user.getCompanyId(), name, description);
+			user.getUserId(), user.getCompanyId(), name, description,
+			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
 	public void deleteUserGroup(long userGroupId)
@@ -121,7 +124,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	}
 
 	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description)
+			long userGroupId, String name, String description,
+			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws PortalException, SystemException {
 
 		UserGroupPermissionUtil.check(
@@ -130,7 +134,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.updateUserGroup(
-			user.getCompanyId(), userGroupId, name, description);
+			user.getCompanyId(), userGroupId, name, description,
+			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
 }

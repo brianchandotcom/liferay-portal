@@ -467,6 +467,9 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		if (createDate != null) {
 			ddlRecordVersionCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			ddlRecordVersionCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		ddlRecordVersionCacheModel.DDMStorageId = getDDMStorageId();
 
@@ -500,6 +503,9 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		if (statusDate != null) {
 			ddlRecordVersionCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			ddlRecordVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return ddlRecordVersionCacheModel;

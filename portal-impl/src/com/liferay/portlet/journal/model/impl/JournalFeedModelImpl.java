@@ -652,11 +652,17 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		if (createDate != null) {
 			journalFeedCacheModel.createDate = createDate.getTime();
 		}
+		else {
+			journalFeedCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
 			journalFeedCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			journalFeedCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		journalFeedCacheModel.feedId = getFeedId();

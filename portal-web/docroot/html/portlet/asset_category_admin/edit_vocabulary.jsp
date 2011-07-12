@@ -30,7 +30,7 @@ long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 
 <aui:form action="<%= editVocabularyURL %>" cssClass="update-vocabulary-form" method="get" name='<%= randomNamespace + "fm" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= vocabulary == null ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId  %>" />
+	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
 
 	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 

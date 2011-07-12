@@ -304,9 +304,21 @@ public class SocialRelationLocalServiceWrapper
 		return _socialRelationLocalService.getRelations(userId, type, start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.social.model.SocialRelation> getRelations(
+		long userId1, long userId2, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialRelationLocalService.getRelations(userId1, userId2,
+			start, end);
+	}
+
 	public int getRelationsCount(long userId, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _socialRelationLocalService.getRelationsCount(userId, type);
+	}
+
+	public int getRelationsCount(long userId1, long userId2)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialRelationLocalService.getRelationsCount(userId1, userId2);
 	}
 
 	public boolean hasRelation(long userId1, long userId2, int type)

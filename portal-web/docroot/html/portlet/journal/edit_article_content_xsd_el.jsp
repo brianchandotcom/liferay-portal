@@ -137,7 +137,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				</c:if>
 
 				<c:if test='<%= elType.equals("image") %>'>
-					<aui:input cssClass="journal-image-field lfr-input-text-container flexible" label="" name="image"  size="40" type="file" />
+					<aui:input cssClass="journal-image-field lfr-input-text-container flexible" label="" name="image" size="40" type="file" />
 
 					<br />
 

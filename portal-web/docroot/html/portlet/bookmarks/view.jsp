@@ -57,7 +57,7 @@ if (categoryId != 0) {
 	vocabularyName = assetVocabulary.getName();
 }
 
-boolean useAssetEntryQuery = (categoryId > 0)  || Validator.isNotNull(tagName);
+boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

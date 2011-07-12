@@ -89,11 +89,17 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry> {
 			bookmarksEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			bookmarksEntryImpl.setCreateDate(null);
+		}
+		else {
 			bookmarksEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			bookmarksEntryImpl.setModifiedDate(null);
+		}
+		else {
 			bookmarksEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

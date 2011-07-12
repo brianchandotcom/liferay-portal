@@ -70,7 +70,7 @@ String editorContent = emailMessageBody;
 				<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>
 			</dd>
 			<dt>
-				  [$PORTAL_URL$]
+				[$PORTAL_URL$]
 			</dt>
 			<dd>
 				<%= company.getVirtualHostname() %>

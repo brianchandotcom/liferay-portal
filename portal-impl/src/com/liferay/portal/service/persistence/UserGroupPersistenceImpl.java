@@ -411,6 +411,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setParentUserGroupId(userGroup.getParentUserGroupId());
 		userGroupImpl.setName(userGroup.getName());
 		userGroupImpl.setDescription(userGroup.getDescription());
+		userGroupImpl.setPublicLayoutSetPrototypeId(userGroup.getPublicLayoutSetPrototypeId());
+		userGroupImpl.setPrivateLayoutSetPrototypeId(userGroup.getPrivateLayoutSetPrototypeId());
 		userGroupImpl.setAddedByLDAPImport(userGroup.isAddedByLDAPImport());
 
 		return userGroupImpl;

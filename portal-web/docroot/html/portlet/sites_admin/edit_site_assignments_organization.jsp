@@ -98,7 +98,7 @@ if (group.isOrganization()) {
 				String name = role.getName();
 
 				if (name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR)) {
-					Role siteAdministratorRole  = RoleLocalServiceUtil.getRole(group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
+					Role siteAdministratorRole = RoleLocalServiceUtil.getRole(group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 					buffer.append(StringPool.COMMA_AND_SPACE);
 					buffer.append(siteAdministratorRole.getTitle(user.getLocale()));

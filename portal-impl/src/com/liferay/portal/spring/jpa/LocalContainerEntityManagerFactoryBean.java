@@ -49,7 +49,7 @@ public class LocalContainerEntityManagerFactoryBean extends
 				setLoadTimeWeaver(loadTimeWeaver);
 			}
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			_log.error(e, e);
 
 			throw new RuntimeException(e);
@@ -81,7 +81,7 @@ public class LocalContainerEntityManagerFactoryBean extends
 			jpaVendorAdapter =
 				(AbstractJpaVendorAdapter)providerClass.newInstance();
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			_log.error(e, e);
 
 			return;

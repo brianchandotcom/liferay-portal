@@ -43,14 +43,16 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletContextIncludeFilter extends BasePortalFilter {
 
 	@Override
+	public boolean isFilterEnabled() {
+		return super.isFilterEnabled() &&
+			PropsValues.THEME_JSP_OVERRIDE_ENABLED;
+	}
+
+	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			if (!PropsValues.THEME_JSP_OVERRIDE_ENABLED) {
-				return false;
-			}
-
 			Theme theme = getTheme(request);
 
 			if (theme == null) {

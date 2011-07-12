@@ -275,18 +275,18 @@ public class LayoutRevisionLocalServiceUtil {
 		getService().deleteLayoutLayoutRevisions(plid);
 	}
 
+	public static void deleteLayoutRevisions(long layoutSetBranchId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayoutRevisions(layoutSetBranchId, plid);
+	}
+
 	public static void deleteLayoutRevisions(long layoutSetBranchId, long plid,
 		java.lang.String variationName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.deleteLayoutRevisions(layoutSetBranchId, plid, variationName);
-	}
-
-	public static void deleteLayoutRevisions(long layoutSetBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayoutRevisions(layoutSetBranchId, plid);
 	}
 
 	public static void deleteLayoutSetBranchLayoutRevisions(
@@ -358,12 +358,30 @@ public class LayoutRevisionLocalServiceUtil {
 			plid, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, long plid, java.lang.String variationName,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLayoutRevisions(layoutSetBranchId, plid, variationName,
+			start, end, orderByComparator);
+	}
+
 	public static int getLayoutRevisionsCount(long layoutSetBranchId,
 		long parentLayoutRevision, long plid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getLayoutRevisionsCount(layoutSetBranchId,
 			parentLayoutRevision, plid);
+	}
+
+	public static int getLayoutRevisionsCount(long layoutSetBranchId,
+		long plid, java.lang.String variationName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLayoutRevisionsCount(layoutSetBranchId, plid,
+			variationName);
 	}
 
 	public static com.liferay.portal.model.LayoutRevision updateLayoutRevision(

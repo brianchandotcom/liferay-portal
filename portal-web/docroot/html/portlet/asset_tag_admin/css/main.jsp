@@ -56,7 +56,7 @@
 		position: relative;
 	}
 
-	.tags-admin-content-wrapper, .header-title, .aui-tree-node-content .aui-tree-label  {
+	.tags-admin-content-wrapper, .header-title, .aui-tree-node-content .aui-tree-label {
 		word-wrap: break-word;
 	}
 

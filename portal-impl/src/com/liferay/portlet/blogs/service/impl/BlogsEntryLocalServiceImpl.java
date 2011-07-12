@@ -761,14 +761,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected void notifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		if (!entry.isApproved()) {
 			return;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			serviceContext.getScopeGroupId(), PortletKeys.BLOGS);
+		String layoutFullURL = serviceContext.getLayoutFullURL();
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

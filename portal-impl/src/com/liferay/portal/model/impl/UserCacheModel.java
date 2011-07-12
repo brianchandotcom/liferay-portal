@@ -129,11 +129,17 @@ public class UserCacheModel implements CacheModel<User> {
 		userImpl.setUserId(userId);
 		userImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			userImpl.setCreateDate(null);
+		}
+		else {
 			userImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			userImpl.setModifiedDate(null);
+		}
+		else {
 			userImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -150,7 +156,10 @@ public class UserCacheModel implements CacheModel<User> {
 		userImpl.setPasswordEncrypted(passwordEncrypted);
 		userImpl.setPasswordReset(passwordReset);
 
-		if (passwordModifiedDate > 0) {
+		if (passwordModifiedDate == Long.MIN_VALUE) {
+			userImpl.setPasswordModifiedDate(null);
+		}
+		else {
 			userImpl.setPasswordModifiedDate(new Date(passwordModifiedDate));
 		}
 
@@ -258,7 +267,10 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setJobTitle(jobTitle);
 		}
 
-		if (loginDate > 0) {
+		if (loginDate == Long.MIN_VALUE) {
+			userImpl.setLoginDate(null);
+		}
+		else {
 			userImpl.setLoginDate(new Date(loginDate));
 		}
 
@@ -269,7 +281,10 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLoginIP(loginIP);
 		}
 
-		if (lastLoginDate > 0) {
+		if (lastLoginDate == Long.MIN_VALUE) {
+			userImpl.setLastLoginDate(null);
+		}
+		else {
 			userImpl.setLastLoginDate(new Date(lastLoginDate));
 		}
 
@@ -280,14 +295,20 @@ public class UserCacheModel implements CacheModel<User> {
 			userImpl.setLastLoginIP(lastLoginIP);
 		}
 
-		if (lastFailedLoginDate > 0) {
+		if (lastFailedLoginDate == Long.MIN_VALUE) {
+			userImpl.setLastFailedLoginDate(null);
+		}
+		else {
 			userImpl.setLastFailedLoginDate(new Date(lastFailedLoginDate));
 		}
 
 		userImpl.setFailedLoginAttempts(failedLoginAttempts);
 		userImpl.setLockout(lockout);
 
-		if (lockoutDate > 0) {
+		if (lockoutDate == Long.MIN_VALUE) {
+			userImpl.setLockoutDate(null);
+		}
+		else {
 			userImpl.setLockoutDate(new Date(lockoutDate));
 		}
 

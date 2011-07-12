@@ -89,11 +89,13 @@ public class UserGroupServiceSoap {
 	}
 
 	public static com.liferay.portal.model.UserGroupSoap addUserGroup(
-		java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.UserGroup returnValue = UserGroupServiceUtil.addUserGroup(name,
-					description);
+					description, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId);
 
 			return com.liferay.portal.model.UserGroupSoap.toSoapModel(returnValue);
 		}
@@ -183,11 +185,13 @@ public class UserGroupServiceSoap {
 	}
 
 	public static com.liferay.portal.model.UserGroupSoap updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
+		long userGroupId, java.lang.String name, java.lang.String description,
+		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.UserGroup returnValue = UserGroupServiceUtil.updateUserGroup(userGroupId,
-					name, description);
+					name, description, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId);
 
 			return com.liferay.portal.model.UserGroupSoap.toSoapModel(returnValue);
 		}

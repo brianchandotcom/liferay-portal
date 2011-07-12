@@ -176,11 +176,6 @@ AUI().add(
 						boundingBox: '#' + namespace + 'backstageToolbar',
 						children: [
 							{
-								handler: A.bind(instance._onUndoRevision, instance),
-								icon: 'arrowreturnthick-1-b',
-								title: Liferay.Language.get('undo')
-							},
-							{
 							type: 'ToolbarSpacer'
 							},
 							{
@@ -193,7 +188,23 @@ AUI().add(
 				).render();
 
 				Dockbar.backstageToolbar = backstageToolbar;
-				Dockbar.undoButton = backstageToolbar.item(0);
+
+				Dockbar.redoButton = new A.ButtonItem(
+					{
+						handler: A.bind(instance._onRedoRevision, instance),
+						icon: 'arrowreturnthick-1-r',
+						title: Liferay.Language.get('redo')
+					}
+				);
+
+				Dockbar.undoButton = new A.ButtonItem(
+					{
+						handler: A.bind(instance._onUndoRevision, instance),
+						icon: 'arrowreturnthick-1-b',
+						label: Liferay.Language.get('undo'),
+						title: Liferay.Language.get('undo')
+					}
+				);
 			},
 
 			_getGraphDialog: function() {
@@ -230,8 +241,10 @@ AUI().add(
 
 					graphDialog.bodyNode.delegate(
 						'click',
-						instance._selectRevision,
-						'li.layout-revision a.selection-handle'
+						function(event) {
+							instance._selectRevision(event.currentTarget);
+						},
+						'a.layout-revision.selection-handle'
 					);
 
 					instance._graphDialog = graphDialog;
@@ -240,18 +253,31 @@ AUI().add(
 				return graphDialog;
 			},
 
+			_onRedoRevision: function(event) {
+				var instance = this;
+
+				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-redo-your-last-changes'))) {
+					var redoButton = event.currentTarget.get('contentBox');
+
+					instance._updateRevision(
+						'redo_layout_revision',
+						redoButton.attr('data-layoutRevisionId'),
+						redoButton.attr('data-layoutSetBranchId')
+					);
+				}
+			},
+
 			_onUndoRevision: function(event) {
 				var instance = this;
 
 				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-undo-your-last-changes'))) {
-					var namespace = instance._namespace;
+					var undoButton = event.currentTarget.get('contentBox');
 
-					var form = A.one('#' + namespace + 'fm');
-
-					form.one('#' + namespace + 'cmd').val('delete_layout_revision');
-					form.one('#' + namespace + 'updateRecentLayoutRevisionId').val(true);
-
-					submitForm(form);
+					instance._updateRevision(
+						'undo_layout_revision',
+						undoButton.attr('data-layoutRevisionId'),
+						undoButton.attr('data-layoutSetBranchId')
+					);
 				}
 			},
 
@@ -280,25 +306,13 @@ AUI().add(
 				graphDialog.show();
 			},
 
-			_selectRevision: function(event) {
-				var node = event.currentTarget;
+			_selectRevision: function(node) {
+				var instance = this;
 
-				A.io.request(
-					themeDisplay.getPathMain() + '/portal/update_layout',
-					{
-						data: {
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							p_l_id: themeDisplay.getPlid(),
-							cmd: 'select_layout_revision',
-							layoutRevisionId: node.attr('data-layoutRevisionId'),
-							layoutSetBranchId: node.attr('data-layoutSetBranchId')
-						},
-						on: {
-							success: function(event, id, obj) {
-								window.location.reload();
-							}
-						}
-					}
+				instance._updateRevision(
+					node,
+					node.attr('data-layoutRevisionId'),
+					node.attr('data-layoutSetBranchId')
 				);
 			},
 
@@ -312,6 +326,26 @@ AUI().add(
 
 					submitForm(form);
 				}
+			},
+
+			_updateRevision: function(cmd, layoutRevisionId, layoutSetBranchId) {
+				A.io.request(
+					themeDisplay.getPathMain() + '/portal/update_layout',
+					{
+						data: {
+							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+							p_l_id: themeDisplay.getPlid(),
+							cmd: cmd,
+							layoutRevisionId: layoutRevisionId,
+							layoutSetBranchId: layoutSetBranchId
+						},
+						on: {
+							success: function(event, id, obj) {
+								window.location.reload();
+							}
+						}
+					}
+				);
 			}
 		};
 
@@ -321,6 +355,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-plugin', 'aui-toolbar', 'liferay-portlet-url']
+		requires: ['aui-button', 'aui-dialog', 'aui-io-plugin', 'aui-toolbar', 'liferay-portlet-url']
 	}
 );

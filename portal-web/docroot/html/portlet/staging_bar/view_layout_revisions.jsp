@@ -158,11 +158,16 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 								buffer.append("</span>");
 							}
 							else {
-								buffer.append("<a class=\"layout-revision\" href=\"#\">");
+								buffer.append("<a class=\"layout-revision selection-handle\" data-layoutRevisionId=\"");
+								buffer.append(curLayoutRevision.getLayoutRevisionId());
+								buffer.append("\" data-layoutSetBranchId=\"");
+								buffer.append(curLayoutRevision.getLayoutSetBranchId());
+								buffer.append("\" href=\"#\" title=\"");
+								buffer.append(LanguageUtil.get(pageContext, "go-to-this-version"));
+								buffer.append("\">");
 								buffer.append(curLayoutRevision.getLayoutRevisionId());
 								buffer.append("</a>");
 							}
-
 							%>
 
 						</liferay-ui:search-container-column-text>

@@ -730,6 +730,7 @@ if (Validator.isNotNull(content)) {
 		<portlet:param name="name" value="LIFERAY_NAME" />
 		<portlet:param name="toolbarSet" value="liferay-article" />
 		<portlet:param name="struts_action" value="/journal/edit_article" />
+		<portlet:param name="skipEditorLoading" value="LIFERAY_SKIP_EDITOR" />
 	</portlet:resourceURL>
 
 	Liferay.Portlet.Journal.PROXY = {};

@@ -17,6 +17,7 @@ package com.liferay.portal.security.ldap;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -62,9 +64,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.naming.Binding;
 import javax.naming.NameNotFoundException;
@@ -467,14 +471,14 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		return UserLocalServiceUtil.addUser(
 			ldapUser.getCreatorUserId(), companyId, autoPassword, password,
 			password, ldapUser.isAutoScreenName(), ldapUser.getScreenName(),
-			ldapUser.getEmailAddress(), ldapUser.getFacebookId(),
-			ldapUser.getOpenId(), ldapUser.getLocale(), ldapUser.getFirstName(),
-			ldapUser.getMiddleName(), ldapUser.getLastName(),
-			ldapUser.getPrefixId(), ldapUser.getSuffixId(), ldapUser.isMale(),
-			birthdayMonth, birthdayDay, birthdayYear, ldapUser.getJobTitle(),
-			ldapUser.getGroupIds(), ldapUser.getOrganizationIds(),
-			ldapUser.getRoleIds(), ldapUser.getUserGroupIds(),
-			ldapUser.isSendEmail(), ldapUser.getServiceContext());
+			ldapUser.getEmailAddress(), 0, StringPool.BLANK,
+			ldapUser.getLocale(), ldapUser.getFirstName(),
+			ldapUser.getMiddleName(), ldapUser.getLastName(), 0, 0,
+			ldapUser.isMale(), birthdayMonth, birthdayDay, birthdayYear,
+			StringPool.BLANK, ldapUser.getGroupIds(),
+			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
+			ldapUser.getUserGroupIds(), ldapUser.isSendEmail(),
+			ldapUser.getServiceContext());
 	}
 
 	protected void addUserGroupsNotAddedByLDAPImport(
@@ -853,22 +857,15 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				return user;
 			}
 
-			if (user != null) {
-
-				// User already exists in the Liferay database. Skip import if
-				// user fields have been already synced, if import is part of a
-				// scheduled import, or if the LDAP entry has never been
-				// modified.
-
-				String modifiedDate = LDAPUtil.getAttributeValue(
-					attributes, "modifyTimestamp");
-
-				user = updateUser(
-					companyId, ldapUser, user, password, modifiedDate);
-			}
-			else {
+			if (user == null) {
 				user = addUser(companyId, ldapUser, password);
 			}
+
+			String modifiedDate = LDAPUtil.getAttributeValue(
+				attributes, "modifyTimestamp");
+
+			user = updateUser(
+				companyId, ldapUser, user, password, modifiedDate);
 
 			updateExpandoAttributes(user, ldapUser);
 
@@ -1109,6 +1106,25 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		if (PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
 			UserLocalServiceUtil.updatePassword(
 				user.getUserId(), password, password, passwordReset, true);
+		}
+
+		Set<String> ldapAttributesIgnore = new HashSet<String>();
+
+		ldapAttributesIgnore.addAll(
+			ListUtil.fromArray(PropsValues.LDAP_USER_IGNORE_ATTRIBUTES));
+
+		Contact contact = user.getContact();
+
+		for (String attribute : ldapAttributesIgnore) {
+			Object obj = BeanPropertiesUtil.getObjectSilent(user, attribute);
+
+			if (obj == null) {
+				obj = BeanPropertiesUtil.getObjectSilent(contact, attribute);
+			}
+
+			if (obj != null) {
+				BeanPropertiesUtil.setProperty(ldapUser, attribute, obj);
+			}
 		}
 
 		user = UserLocalServiceUtil.updateUser(

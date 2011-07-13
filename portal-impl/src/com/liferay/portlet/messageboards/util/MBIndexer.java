@@ -41,12 +41,14 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.service.persistence.MBDiscussionUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -98,6 +100,11 @@ public class MBIndexer extends BaseIndexer {
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
+
+		boolean discussion = GetterUtil.getBoolean(
+			searchContext.getAttribute("discussion"), false);
+
+		contextQuery.addRequiredTerm("discussion", discussion);
 
 		long threadId = GetterUtil.getLong(
 			(String)searchContext.getAttribute("threadId"));
@@ -207,6 +214,16 @@ public class MBIndexer extends BaseIndexer {
 		}
 
 		document.addKeyword("threadId", message.getThreadId());
+
+		MBDiscussion discussion = MBDiscussionUtil.fetchByThreadId(
+			message.getThreadId());
+
+		if (discussion != null) {
+			document.addKeyword("discussion", true);
+		}
+		else {
+			document.addKeyword("discussion", false);
+		}
 
 		return document;
 	}

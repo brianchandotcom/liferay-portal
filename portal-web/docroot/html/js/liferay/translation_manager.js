@@ -142,7 +142,7 @@ AUI().add(
 					changeDefaultLocaleNode: STR_DOT + CSS_CHANGE_DEFAULT_LOCALE,
 					defaultLocaleLabelNode: STR_DOT + CSS_DEFAULT_LOCALE_LABEL,
 					defaultLocaleNode: STR_DOT + CSS_DEFAULT_LOCALE,
-					defaultLocaleTextNode: STR_DOT + CSS_DEFAULT_LOCALE,
+					defaultLocaleTextNode: STR_DOT + CSS_DEFAULT_LOCALE_TEXT,
 					iconMenuNode: STR_DOT + CSS_ICON_MENU
 				},
 

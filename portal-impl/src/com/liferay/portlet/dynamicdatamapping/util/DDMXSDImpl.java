@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +47,7 @@ import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.GenericServlet;
@@ -58,45 +62,50 @@ import javax.servlet.jsp.PageContext;
  */
 public class DDMXSDImpl implements DDMXSD {
 
-	public String getHTML(PageContext pageContext, Document document)
-		throws Exception {
-
-		return getHTML(pageContext, document.getRootElement());
-	}
-
 	public String getHTML(
-			PageContext pageContext, Document document, Fields fields)
+			PageContext pageContext, Document document, Locale locale)
 		throws Exception {
 
-		return getHTML(pageContext, document.getRootElement(), fields);
+		return getHTML(pageContext, document.getRootElement(), locale);
 	}
 
 	public String getHTML(
 			PageContext pageContext, Document document, Fields fields,
-			String namespace, boolean readOnly)
+			Locale locale)
+		throws Exception {
+
+		return getHTML(pageContext, document.getRootElement(), fields, locale);
+	}
+
+	public String getHTML(
+			PageContext pageContext, Document document, Fields fields,
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception {
 
 		return getHTML(
 			pageContext, document.getRootElement(), fields, namespace,
-			readOnly);
-	}
-
-	public String getHTML(PageContext pageContext, Element element)
-		throws Exception {
-
-		return getHTML(pageContext, element, null);
+			readOnly, locale);
 	}
 
 	public String getHTML(
-			PageContext pageContext, Element element, Fields fields)
+			PageContext pageContext, Element element, Locale locale)
 		throws Exception {
 
-		return getHTML(pageContext, element, fields, StringPool.BLANK, false);
+		return getHTML(pageContext, element, null, locale);
 	}
 
 	public String getHTML(
 			PageContext pageContext, Element element, Fields fields,
-			String namespace, boolean readOnly)
+			Locale locale)
+		throws Exception {
+
+		return getHTML(
+			pageContext, element, fields, StringPool.BLANK, false, locale);
+	}
+
+	public String getHTML(
+			PageContext pageContext, Element element, Fields fields,
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -113,7 +122,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			FreeMarkerContext freeMarkerContext = getFreeMarkerContext(
-				dynamicElementElement);
+				dynamicElementElement, locale);
 
 			freeMarkerContext.put("portletNamespace", portletNamespace);
 			freeMarkerContext.put("namespace", namespace);
@@ -127,7 +136,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String childrenHTML = getHTML(
 				pageContext, dynamicElementElement, fields, namespace,
-				readOnly);
+				readOnly, locale);
 
 			field.put("children", childrenHTML);
 
@@ -160,34 +169,37 @@ public class DDMXSDImpl implements DDMXSD {
 		return sb.toString();
 	}
 
-	public String getHTML(PageContext pageContext, String xml)
+	public String getHTML(PageContext pageContext, String xml, Locale locale)
 		throws Exception {
 
-		return getHTML(pageContext, xml, null);
+		return getHTML(pageContext, xml, null, locale);
 	}
 
-	public String getHTML(PageContext pageContext, String xml, Fields fields)
+	public String getHTML(
+			PageContext pageContext, String xml, Fields fields, Locale locale)
 		throws Exception {
 
-		return getHTML(pageContext, SAXReaderUtil.read(xml), fields);
+		return getHTML(pageContext, SAXReaderUtil.read(xml), fields, locale);
 	}
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace)
+			String namespace, Locale locale)
 		throws Exception {
 
 		return getHTML(
-			pageContext, SAXReaderUtil.read(xml), fields, namespace, false);
+			pageContext, SAXReaderUtil.read(xml), fields, namespace, false,
+			locale);
 	}
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, boolean readOnly)
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception {
 
 		return getHTML(
-			pageContext, SAXReaderUtil.read(xml), fields, namespace, readOnly);
+			pageContext, SAXReaderUtil.read(xml), fields, namespace, readOnly,
+			locale);
 	}
 
 	public JSONArray getJSONArray(Document document) throws JSONException {
@@ -197,22 +209,44 @@ public class DDMXSDImpl implements DDMXSD {
 	public JSONArray getJSONArray(Element element) throws JSONException {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		Document document = element.getDocument();
+
+		String defaultLocale = LocalizationUtil.getDefaultLocale(
+			document.asXML());
+
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject localizationMap = JSONFactoryUtil.createJSONObject();
 
-			Element metadataElement = dynamicElementElement.element(
+			List<Element> metadataElements = dynamicElementElement.elements(
 				"meta-data");
 
-			if (metadataElement != null) {
-				for (Element metadataEntry : metadataElement.elements()) {
-					jsonObject.put(
-						metadataEntry.attributeValue("name"),
-						metadataEntry.getText());
+			for (Element metadataElement : metadataElements) {
+				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
+
+				String locale = metadataElement.attributeValue("locale");
+
+				if (metadataElement != null) {
+					for (Element metadataEntry : metadataElement.elements()) {
+						String attributeName = metadataEntry.attributeValue(
+							"name");
+						String attributeValue = metadataEntry.getText();
+
+						localeMap.put(attributeName, attributeValue);
+
+						if (defaultLocale.equals(locale)) {
+							jsonObject.put(attributeName, attributeValue);
+						}
+					}
 				}
+
+				localizationMap.put(locale, localeMap);
 			}
+
+			jsonObject.put("localizationMap", localizationMap);
 
 			for (Attribute attribute : dynamicElementElement.attributes()) {
 				jsonObject.put(attribute.getName(), attribute.getValue());
@@ -244,11 +278,27 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected Map<String, Object> getFieldContext(
-		Element dynamicElementElement) {
+		Element dynamicElementElement, Locale locale) {
+
+		Document document = dynamicElementElement.getDocument();
+
+		String[] availableLocales = LocalizationUtil.getAvailableLocales(
+			document.asXML());
+
+		String defaultLocale = LocalizationUtil.getDefaultLocale(
+			document.asXML());
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		if (!ArrayUtil.contains(availableLocales, languageId)) {
+			languageId = defaultLocale;
+		}
+
+		Element metadataElement =
+			(Element)dynamicElementElement.selectSingleNode(
+				"meta-data[@locale='" + languageId  + "']");
 
 		Map<String, Object> field = new HashMap<String, Object>();
-
-		Element metadataElement = dynamicElementElement.element("meta-data");
 
 		if (metadataElement != null) {
 			for (Element metadataEntry : metadataElement.elements()) {
@@ -266,20 +316,20 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected FreeMarkerContext getFreeMarkerContext(
-		Element dynamicElementElement) {
+		Element dynamicElementElement, Locale locale) {
 
 		FreeMarkerContext freeMarkerContext =
 			FreeMarkerEngineUtil.getWrappedRestrictedToolsContext();
 
 		Map<String, Object> fieldContext = getFieldContext(
-			dynamicElementElement);
+			dynamicElementElement, locale);
 
 		Map<String, Object> parentFieldContext = new HashMap<String, Object>();
 
 		Element parentElement = dynamicElementElement.getParent();
 
 		if (parentElement != null) {
-			parentFieldContext = getFieldContext(parentElement);
+			parentFieldContext = getFieldContext(parentElement, locale);
 		}
 
 		freeMarkerContext.put("field", fieldContext);

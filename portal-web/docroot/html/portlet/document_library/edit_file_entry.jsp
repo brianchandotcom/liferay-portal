@@ -306,7 +306,7 @@ else if (dlFileEntryType != null) {
 						}
 			%>
 
-						<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey())) %>
+						<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
 
 			<%
 					}

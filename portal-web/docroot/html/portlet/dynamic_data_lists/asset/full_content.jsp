@@ -28,4 +28,4 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 Fields fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 %>
 
-<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true) %>
+<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true, locale) %>

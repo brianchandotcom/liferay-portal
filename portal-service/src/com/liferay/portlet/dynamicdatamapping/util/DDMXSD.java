@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.util.Locale;
+
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -29,34 +31,39 @@ import javax.servlet.jsp.PageContext;
  */
 public interface DDMXSD {
 
-	public String getHTML(PageContext pageContext, Document document)
-		throws Exception;
-
 	public String getHTML(
-			PageContext pageContext, Document document, Fields fields)
+			PageContext pageContext, Document document, Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, Document document, Fields fields,
-			String namespace, boolean readOnly)
+			Locale locale)
 		throws Exception;
 
-	public String getHTML(PageContext pageContext, Element element)
+	public String getHTML(
+			PageContext pageContext, Document document, Fields fields,
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception;
 
-	public String getHTML(PageContext pageContext, String xml) throws Exception;
+	public String getHTML(
+			PageContext pageContext, Element element, Locale locale)
+		throws Exception;
 
-	public String getHTML(PageContext pageContext, String xml, Fields fields)
+	public String getHTML(PageContext pageContext, String xml, Locale locale)
+		throws Exception;
+
+	public String getHTML(
+			PageContext pageContext, String xml, Fields fields, Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace)
+			String namespace, Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, boolean readOnly)
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception;
 
 	public JSONArray getJSONArray(Document document) throws JSONException;

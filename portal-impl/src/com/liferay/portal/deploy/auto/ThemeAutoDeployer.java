@@ -14,7 +14,7 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.DeployImpl;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,10 +39,10 @@ public class ThemeAutoDeployer extends ThemeDeployer implements AutoDeployer {
 			baseDir = PrefsPropsUtil.getString(
 				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
 				PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
-			destDir = DeployUtil.getAutoDeployDestDir();
+			destDir = DeployImpl.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
-			themeTaglibDTD = DeployUtil.getResourcePath("liferay-theme.tld");
-			utilTaglibDTD = DeployUtil.getResourcePath("liferay-util.tld");
+			themeTaglibDTD = DeployImpl.getResourcePath("liferay-theme.tld");
+			utilTaglibDTD = DeployImpl.getResourcePath("liferay-util.tld");
 			unpackWar = PrefsPropsUtil.getBoolean(
 				PropsKeys.AUTO_DEPLOY_UNPACK_WAR,
 				PropsValues.AUTO_DEPLOY_UNPACK_WAR);

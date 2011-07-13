@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.plugininstaller.action;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.DeployImpl;
 import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
@@ -549,9 +549,9 @@ public class InstallPluginAction extends PortletAction {
 		}
 
 		File deployDir = new File(
-			DeployUtil.getAutoDeployDestDir() + "/" + deploymentContext);
+			DeployImpl.getAutoDeployDestDir() + "/" + deploymentContext);
 
-		DeployUtil.undeploy(appServerType, deployDir);
+		DeployImpl.undeploy(appServerType, deployDir);
 	}
 
 	private static final String _DOWNLOAD_DIR = "download";

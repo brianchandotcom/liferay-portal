@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.DeployImpl;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter;
+import com.liferay.portal.kernel.util.DeployUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -56,7 +57,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +138,7 @@ public class BaseDeployer implements Deployer {
 			String extResource =
 				"ext-" + servletContextName + resource.substring(3);
 
-			String path = DeployUtil.getResourcePath(extResource);
+			String path = DeployImpl.getResourcePath(extResource);
 
 			if (_log.isDebugEnabled()) {
 				if (path == null) {
@@ -159,7 +159,7 @@ public class BaseDeployer implements Deployer {
 	public void addRequiredJar(List<String> jars, String resource)
 		throws Exception {
 
-		String path = DeployUtil.getResourcePath(resource);
+		String path = DeployImpl.getResourcePath(resource);
 
 		if (path == null) {
 			throw new RuntimeException(
@@ -235,7 +235,7 @@ public class BaseDeployer implements Deployer {
 			boolean overwrite)
 		throws Exception {
 
-		File file = new File(DeployUtil.getResourcePath(fileName));
+		File file = new File(DeployImpl.getResourcePath(fileName));
 		File targetFile = new File(targetDir + "/" + fileName);
 
 		if (!targetFile.exists()) {
@@ -314,7 +314,7 @@ public class BaseDeployer implements Deployer {
 			}
 
 			try {
-				String portalTldPath = DeployUtil.getResourcePath(portalTld);
+				String portalTldPath = DeployImpl.getResourcePath(portalTld);
 
 				FileUtil.copyFile(
 					portalTldPath, srcFile + "/WEB-INF/tld/" + portalTld, true);
@@ -673,9 +673,17 @@ public class BaseDeployer implements Deployer {
 					System.currentTimeMillis() + (Time.SECOND * 6));
 			}
 		}
+
+		if (appServerType.equals(ServerDetector.JETTY_ID)) {
+			DeployUtil.hotDeployJetty(displayName);
+		}
 	}
 
 	public void deployFile(File srcFile) throws Exception {
+		deployFile(srcFile, null);
+	}
+
+	public void deployFile(File srcFile, String specifiedContext) throws Exception {
 		PluginPackage pluginPackage = readPluginPackage(srcFile);
 
 		if (_log.isInfoEnabled()) {
@@ -683,14 +691,14 @@ public class BaseDeployer implements Deployer {
 		}
 
 		String deployDir = null;
-		String displayName = null;
+		String displayName = specifiedContext;
 		boolean overwrite = false;
-		String preliminaryContext = null;
+		String preliminaryContext = specifiedContext;
 
 		// File names starting with DEPLOY_TO_PREFIX should use the filename
 		// after the prefix as the deployment context
 
-		if (srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
+		if (displayName != null && srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
 			displayName = srcFile.getName().substring(
 				DEPLOY_TO_PREFIX.length(), srcFile.getName().length() - 4);
 
@@ -827,7 +835,7 @@ public class BaseDeployer implements Deployer {
 		}
 
 		if (undeployOnRedeploy) {
-			DeployUtil.undeploy(appServerType, deployDir);
+			DeployImpl.undeploy(appServerType, deployDir);
 		}
 
 		if (!overwrite && UpToDateTask.isUpToDate(srcFile, deployDir)) {
@@ -954,7 +962,7 @@ public class BaseDeployer implements Deployer {
 
 			if (!content.contains("axis.servicesPath")) {
 				String remotingContent = FileUtil.read(
-					DeployUtil.getResourcePath("remoting-web.xml"));
+					DeployImpl.getResourcePath("remoting-web.xml"));
 
 				sb.append(remotingContent);
 			}
@@ -1066,7 +1074,7 @@ public class BaseDeployer implements Deployer {
 
 		if (ignoreFiltersEnabled) {
 			String ignoreFiltersContent = FileUtil.read(
-				DeployUtil.getResourcePath("ignore-filters-web.xml"));
+				DeployImpl.getResourcePath("ignore-filters-web.xml"));
 
 			return ignoreFiltersContent;
 		}
@@ -1230,7 +1238,7 @@ public class BaseDeployer implements Deployer {
 
 		if (servletContextIncludeFiltersEnabled) {
 			String servletContextIncludeFiltersContent = FileUtil.read(
-				DeployUtil.getResourcePath(
+				DeployImpl.getResourcePath(
 					"servlet-context-include-filters-web.xml"));
 
 			if (webXmlVersion < 2.4) {
@@ -1259,7 +1267,7 @@ public class BaseDeployer implements Deployer {
 
 	public String getSessionFiltersContent() throws Exception {
 		String sessionFiltersContent = FileUtil.read(
-			DeployUtil.getResourcePath("session-filters-web.xml"));
+			DeployImpl.getResourcePath("session-filters-web.xml"));
 
 		return sessionFiltersContent;
 	}
@@ -1276,7 +1284,7 @@ public class BaseDeployer implements Deployer {
 
 		if (speedFiltersEnabled) {
 			String speedFiltersContent = FileUtil.read(
-				DeployUtil.getResourcePath("speed-filters-web.xml"));
+				DeployImpl.getResourcePath("speed-filters-web.xml"));
 
 			return speedFiltersContent;
 		}
@@ -1487,6 +1495,70 @@ public class BaseDeployer implements Deployer {
 		}
 	}
 
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
+	}
+
+	public void setDestDir(String destDir) {
+		this.destDir = destDir;
+	}
+
+	public void setAppServerType(String appServerType) {
+		this.appServerType = appServerType;
+	}
+
+	public void setUnpackWar(boolean unpackWar) {
+		this.unpackWar = unpackWar;
+	}
+
+	public void setFilePattern(String filePattern) {
+		this.filePattern = filePattern;
+	}
+
+	public void setJbossPrefix(String jbossPrefix) {
+		this.jbossPrefix = jbossPrefix;
+	}
+
+	public void setTomcatLibDir(String tomcatLibDir) {
+		this.tomcatLibDir = tomcatLibDir;
+	}
+
+	public void setJars(List<String> jars) {
+		this.jars = jars;
+	}
+
+	public void setWars(List<String> wars) {
+		this.wars = wars;
+	}
+
+	public void setAuiTaglibDTD(String auiTaglibDTD) {
+		this.auiTaglibDTD = auiTaglibDTD;
+	}
+
+	public void setPortletTaglibDTD(String portletTaglibDTD) {
+		this.portletTaglibDTD = portletTaglibDTD;
+	}
+
+	public void setPortletExtTaglibDTD(String portletExtTaglibDTD) {
+		this.portletExtTaglibDTD = portletExtTaglibDTD;
+	}
+
+	public void setSecurityTaglibDTD(String securityTaglibDTD) {
+		this.securityTaglibDTD = securityTaglibDTD;
+	}
+
+	public void setThemeTaglibDTD(String themeTaglibDTD) {
+		this.themeTaglibDTD = themeTaglibDTD;
+	}
+
+	public void setUiTaglibDTD(String uiTaglibDTD) {
+		this.uiTaglibDTD = uiTaglibDTD;
+	}
+
+	public void setUtilTaglibDTD(String utilTaglibDTD) {
+		this.utilTaglibDTD = utilTaglibDTD;
+	}
+
 	public void updateDeployDirectory(File srcFile) throws Exception {
 	}
 
@@ -1540,7 +1612,7 @@ public class BaseDeployer implements Deployer {
 		String filterContent = webXmlContent.substring(x, y + 17);
 
 		String liferayWebXmlContent = FileUtil.read(
-			DeployUtil.getResourcePath("web.xml"));
+			DeployImpl.getResourcePath("web.xml"));
 
 		int z = liferayWebXmlContent.indexOf("</web-app>");
 

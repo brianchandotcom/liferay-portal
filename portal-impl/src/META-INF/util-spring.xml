@@ -248,6 +248,11 @@
 			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.DeployUtil" class="com.liferay.portal.kernel.util.DeployUtil">
+		<property name="deploy">
+			<bean class="com.liferay.portal.deploy.DeployImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.DiffHtmlUtil" class="com.liferay.portal.kernel.util.DiffHtmlUtil">
 		<property name="diffHtml">
 			<bean class="com.liferay.portal.util.DiffHtmlImpl" />

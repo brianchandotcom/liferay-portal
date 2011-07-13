@@ -14,7 +14,7 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.DeployImpl;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,18 +40,18 @@ public class PortletAutoDeployer
 			baseDir = PrefsPropsUtil.getString(
 				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
 				PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
-			destDir = DeployUtil.getAutoDeployDestDir();
+			destDir = DeployImpl.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
-			auiTaglibDTD = DeployUtil.getResourcePath("liferay-aui.tld");
-			portletTaglibDTD = DeployUtil.getResourcePath(
+			auiTaglibDTD = DeployImpl.getResourcePath("liferay-aui.tld");
+			portletTaglibDTD = DeployImpl.getResourcePath(
 				"liferay-portlet.tld");
-			portletExtTaglibDTD = DeployUtil.getResourcePath(
+			portletExtTaglibDTD = DeployImpl.getResourcePath(
 				"liferay-portlet-ext.tld");
-			securityTaglibDTD = DeployUtil.getResourcePath(
+			securityTaglibDTD = DeployImpl.getResourcePath(
 				"liferay-security.tld");
-			themeTaglibDTD = DeployUtil.getResourcePath("liferay-theme.tld");
-			uiTaglibDTD = DeployUtil.getResourcePath("liferay-ui.tld");
-			utilTaglibDTD = DeployUtil.getResourcePath("liferay-util.tld");
+			themeTaglibDTD = DeployImpl.getResourcePath("liferay-theme.tld");
+			uiTaglibDTD = DeployImpl.getResourcePath("liferay-ui.tld");
+			utilTaglibDTD = DeployImpl.getResourcePath("liferay-util.tld");
 			unpackWar = PrefsPropsUtil.getBoolean(
 				PropsKeys.AUTO_DEPLOY_UNPACK_WAR,
 				PropsValues.AUTO_DEPLOY_UNPACK_WAR);

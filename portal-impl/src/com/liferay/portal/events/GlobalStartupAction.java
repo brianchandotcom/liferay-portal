@@ -14,7 +14,7 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.DeployImpl;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
@@ -167,7 +167,7 @@ public class GlobalStartupAction extends SimpleAction {
 					PrefsPropsUtil.getString(
 						PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
 						PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
-				File destDir = new File(DeployUtil.getAutoDeployDestDir());
+				File destDir = new File(DeployImpl.getAutoDeployDestDir());
 				long interval = PrefsPropsUtil.getLong(
 					PropsKeys.AUTO_DEPLOY_INTERVAL,
 					PropsValues.AUTO_DEPLOY_INTERVAL);

@@ -642,6 +642,13 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 			</sequential>
 		</for>
 
+		<if>
+			<available file="${patching.tool.source.dir}" type="dir"/>
+			<then>
+				<ant dir="${patching.tool.source.dir}" target="all" inheritAll="false" />
+			</then>
+		</if>
+
 		<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}">
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update -r ${svn.revision}" />
 		</exec>
@@ -700,6 +707,13 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 		<antcall target="zip-src" />
 		<antcall target="zip-tcat" />
 		<antcall target="zip-tomcat" />
+
+		<if>
+			<available file="${patching.tool.source.dir}" type="dir"/>
+			<then>
+				<antcall target="zip-patching-tool" />
+			</then>
+		</if>
 
 		<copy file="tunnel-web/tunnel-web.war" tofile="dist/liferay-portal-tunnel-web-${lp.version}.war" />
 
@@ -1188,6 +1202,64 @@ release was successful.</echo>
 				</zip>
 			</else>
 		</if>
+
+		<if>
+			<available file="${patching.tool.source.dir}" type="dir"/>
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<unzip src="${project.dir}/dist/${zip.executable.file}-${lp.version}.zip" dest="${tstamp.value}" />
+
+				<mkdir dir="${tstamp.value}/liferay-portal-${lp.version}/lib" />
+				<mkdir dir="${tstamp.value}/liferay-portal-${lp.version}/log" />
+				<mkdir dir="${tstamp.value}/liferay-portal-${lp.version}/patches" />
+
+				<copy todir="${tstamp.value}/liferay-portal-${lp.version}/lib">
+					<fileset
+						dir="${patching.tool.source.dir}/lib"
+					/>
+					<fileset
+						dir="${patching.tool.source.dir}"
+						includes="patching-tool.jar"
+					/>
+				</copy>
+
+				<copy todir="${tstamp.value}/liferay-portal-${lp.version}/">
+					<fileset
+						dir="${patching.tool.source.dir}/scripts"
+					/>
+				</copy>
+
+				<zip destfile="dist/${zip.executable.file}-${lp.version}.zip">
+					<zipfileset
+						dir="${tstamp.value}"
+						excludes="**/*.sh"
+						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+					/>
+					<zipfileset
+						dir="${tstamp.value}"
+						filemode="744"
+						includes="**/*.sh"
+						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+					/>
+					<zipfileset
+						dir="${tstamp.value}"
+						excludes="patching-tool"
+						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+					/>
+					<zipfileset
+						dir="${tstamp.value}"
+						filemode="744"
+						includes="patching-tool"
+						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+					/>
+				</zip>
+
+				<delete dir="${tstamp.value}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="zip-geronimo">
@@ -1223,6 +1295,48 @@ release was successful.</echo>
 			<param name="zip.executable.file" value="liferay-portal-jonas" />
 			<param name="zip.executable.dir" value="${app.server.jonas.dir}" />
 		</antcall>
+	</target>
+
+	<target name="zip-patching-tool">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}/lib" />
+		<mkdir dir="${tstamp.value}/log" />
+		<mkdir dir="${tstamp.value}/patches" />
+
+		<copy todir="${tstamp.value}/lib">
+			<fileset
+				dir="${patching.tool.source.dir}/lib"
+			/>
+			<fileset
+				dir="${patching.tool.source.dir}"
+				includes="patching-tool.jar"
+			/>
+		</copy>
+
+		<copy todir="${tstamp.value}/">
+			<fileset
+				dir="${patching.tool.source.dir}/scripts"
+			/>
+		</copy>
+
+		<zip destfile="dist/liferay-portal-patching-tool-${lp.version}.zip">
+			<zipfileset
+				dir="${tstamp.value}"
+				excludes="patching-tool"
+				prefix="liferay-portal-patching-tool-${lp.version}"
+			/>
+			<zipfileset
+				dir="${tstamp.value}"
+				filemode="744"
+				includes="patching-tool"
+				prefix="liferay-portal-patching-tool-${lp.version}"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-portal-client">

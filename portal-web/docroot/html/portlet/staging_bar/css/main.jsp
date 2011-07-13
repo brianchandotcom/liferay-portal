@@ -68,6 +68,10 @@
 			background-color: #DDD;
 		}
 
+		.variations-tabview-content {
+			float: left;
+		}
+
 		.staging-tabview-content {
 			border-bottom: 1px solid #636364;
 			color: #EEE;
@@ -91,6 +95,10 @@
 				.backstage-pages {
 					padding-left: 0.5em;
 				}
+			}
+
+			.layout-actions {
+				min-height: 20px;
 			}
 
 			.layout-info {

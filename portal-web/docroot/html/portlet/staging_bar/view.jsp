@@ -308,114 +308,21 @@ if (layout != null) {
 										</ul>
 									</c:if>
 
-									<div class="aui-tabview-content variations-tabview-content">
+									<div class="aui-tabview-content variations-tabview-content" id="<portlet:namespace />LayoutRevisionDetails">
 
 										<%
-										String taglibHelpMessage = null;
-
-										if (layoutRevision.isHead()) {
-											taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", layoutSetBranch.getName());
-										}
-										else {
-											taglibHelpMessage = "a-new-version-will-be-created-automatically-if-this-page-is-modified";
-										}
+										request.setAttribute("view.jsp-layoutRevision", layoutRevision);
+										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
 										%>
 
-										<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+										<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
+									</div>
 
-										<div class="layout-actions">
-											<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
-
-											<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
-										</div>
+									<div class="layout-actions">
+										<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
 									</div>
 								</div>
 							</aui:form>
-
-							<aui:script use="liferay-staging">
-								var dockbar = Liferay.Staging.Dockbar;
-
-								dockbar.init(
-									{
-										namespace: '<portlet:namespace />'
-									}
-								);
-
-								<c:if test="<%= layoutRevision.hasChildren() %>">
-
-									<%
-									List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
-
-									LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
-
-									if (firstChildLayoutRevision.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
-									%>
-
-										var redoButton = dockbar.redoButton;
-
-										dockbar.backstageToolbar.add(redoButton, 0);
-
-										redoButton.get('contentBox').attr(
-											{
-												'data-layoutRevisionId': '<%= firstChildLayoutRevision.getLayoutRevisionId() %>',
-												'data-layoutSetBranchId': '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'
-											}
-										);
-
-									<%
-									}
-									%>
-
-								</c:if>
-
-								<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-									var undoButton = dockbar.undoButton;
-
-									dockbar.backstageToolbar.add(undoButton, 0);
-
-									undoButton.get('contentBox').attr(
-										{
-											'data-layoutRevisionId': '<%= layoutRevision.getLayoutRevisionId() %>',
-											'data-layoutSetBranchId': '<%= layoutRevision.getLayoutSetBranchId() %>'
-										}
-									);
-								</c:if>
-
-								<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-
-									<%
-									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
-									%>
-
-									<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
-										dockbar.backstageToolbar.add(
-											{
-												type: 'ToolbarSpacer'
-											}
-										);
-
-										<portlet:actionURL var="publishURL">
-											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-											<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
-											<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-											<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-											<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-											<portlet:param name="major" value="true" />
-											<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
-										</portlet:actionURL>
-
-										dockbar.backstageToolbar.add(
-											{
-												handler: function(event) {
-													submitForm(document.hrefFm, '<%= publishURL %>');
-												},
-												icon: '<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "shuffle" : "circle-check" %>',
-												label: '<%= UnicodeLanguageUtil.get(pageContext, WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
-											}
-										);
-									</c:if>
-								</c:if>
-							</aui:script>
 						</div>
 					</c:if>
 				</c:when>
@@ -528,3 +435,33 @@ if (layout != null) {
 		</div>
 	</div>
 </c:if>
+
+<aui:script use="aui-base,aui-io-request">
+	var layoutRevisionDetails = A.one('#<portlet:namespace />LayoutRevisionDetails');
+
+	if (layoutRevisionDetails){
+		Liferay.after(
+			'updatedLayout',
+			function(event) {
+				A.io.request(
+					themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
+					{
+						data: {
+							p_l_id: '<%= plid %>'
+						},
+						method: 'GET',
+						on: {
+							success: function(event, id, obj) {
+								var response = this.get('responseData');
+
+								layoutRevisionDetails.plug(A.Plugin.ParseContent);
+
+								layoutRevisionDetails.setContent(response);
+							}
+						}
+					}
+				);
+			}
+		);
+	}
+</aui:script>

@@ -1476,6 +1476,8 @@
 
 	<definition name="portlet.staging_bar.view" path="/portlet/staging_bar/view.jsp" />
 
+	<definition name="portlet.staging_bar.view_layout_revision_details" path="/portlet/staging_bar/view_layout_revision_details.jsp" />
+
 	<definition name="portlet.staging_bar.view_layout_revisions" path="/portlet/staging_bar/view_layout_revisions.jsp" />
 
 	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />

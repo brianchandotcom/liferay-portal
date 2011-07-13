@@ -173,10 +173,16 @@ public class ConfigurationImpl
 				compositeConfiguration);
 
 			configurations.add(0, newConfiguration);
+
+			clearCache();
 		}
 		catch (Exception e) {
 			_log.error("The properties could not be added", e);
 		}
+	}
+
+	public void clearCache() {
+		_values.clear();
 	}
 
 	public boolean contains(String key) {
@@ -361,6 +367,8 @@ public class ConfigurationImpl
 					aggregatedProperties.removeConfiguration(configuration);
 				}
 			}
+
+			clearCache();
 		}
 		catch (Exception e) {
 			_log.error("The properties could not be removed", e);

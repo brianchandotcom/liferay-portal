@@ -1267,7 +1267,7 @@ public class BaseDeployer implements Deployer {
 
 	public String getSessionFiltersContent() throws Exception {
 		String sessionFiltersContent = FileUtil.read(
-			DeployUtil.getResourcePath("session-filters-web.xml"));
+			DeployImpl.getResourcePath("session-filters-web.xml"));
 
 		return sessionFiltersContent;
 	}

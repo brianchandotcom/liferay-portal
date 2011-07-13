@@ -129,7 +129,7 @@ public abstract class BaseIndexer implements Indexer {
 			String className, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		facetQuery.addExactTerm(Field.ENTRY_CLASS_NAME, className);
 
@@ -139,8 +139,7 @@ public abstract class BaseIndexer implements Indexer {
 
 			facetQuery =
 				(BooleanQuery)searchPermissionChecker.getPermissionQuery(
-					searchContext.getCompanyId(), searchContext.getGroupIds(),
-					searchContext.getUserId(), className, facetQuery);
+					searchContext, className, facetQuery);
 		}
 
 		return facetQuery;
@@ -282,7 +281,8 @@ public abstract class BaseIndexer implements Indexer {
 			searchContext.setEntryClassNames(
 				new String[] {getClassName(searchContext)});
 
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			addSearchAssetCategoryIds(contextQuery, searchContext);
 			addSearchAssetTagNames(contextQuery, searchContext);
@@ -497,7 +497,8 @@ public abstract class BaseIndexer implements Indexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
 
 		addSearchKeywords(searchQuery, searchContext);
 		postProcessSearchQuery(searchQuery, searchContext);
@@ -521,7 +522,7 @@ public abstract class BaseIndexer implements Indexer {
 			}
 		}
 
-		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 

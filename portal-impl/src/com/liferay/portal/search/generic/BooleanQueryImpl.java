@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
@@ -251,7 +250,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 			values = new String[] {value};
 		}
 
-		BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		for (String curValue : values) {
 			QueryTerm queryTerm = new QueryTermImpl(

@@ -115,7 +115,8 @@ public class MBIndexer extends BaseIndexer {
 				return;
 			}
 
-			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			for (long categoryId : categoryIds) {
 				try {
@@ -137,16 +138,21 @@ public class MBIndexer extends BaseIndexer {
 		if (obj instanceof MBCategory) {
 			MBCategory category = (MBCategory)obj;
 
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+			SearchContext searchContext = new SearchContext();
+			searchContext.setCompanyId(category.getCompanyId());
+			searchContext.setEnd(QueryUtil.ALL_POS);
+			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+			searchContext.setStart(QueryUtil.ALL_POS);
+
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
 
 			booleanQuery.addRequiredTerm(
 				"categoryId", category.getCategoryId());
 
-			Hits hits = SearchEngineUtil.search(
-				category.getCompanyId(), booleanQuery, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			Hits hits = SearchEngineUtil.search(searchContext, booleanQuery);
 
 			for (int i = 0; i < hits.getLength(); i++) {
 				Document document = hits.doc(i);
@@ -171,15 +177,20 @@ public class MBIndexer extends BaseIndexer {
 			MBMessage message = MBMessageLocalServiceUtil.getMessage(
 				thread.getRootMessageId());
 
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+			SearchContext searchContext = new SearchContext();
+			searchContext.setCompanyId(message.getCompanyId());
+			searchContext.setEnd(QueryUtil.ALL_POS);
+			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+			searchContext.setStart(QueryUtil.ALL_POS);
+
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
 
 			booleanQuery.addRequiredTerm("threadId", thread.getThreadId());
 
-			Hits hits = SearchEngineUtil.search(
-				message.getCompanyId(), booleanQuery, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			Hits hits = SearchEngineUtil.search(searchContext, booleanQuery);
 
 			for (int i = 0; i < hits.getLength(); i++) {
 				Document document = hits.doc(i);

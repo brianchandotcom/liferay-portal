@@ -134,7 +134,11 @@ public class SearchContext implements Serializable {
 	}
 
 	public String getSearchEngineId() {
-		return _searchEngineId;
+		if (_searchEngineId != null) {
+			return _searchEngineId;
+		}
+
+		return SearchEngineUtil.SYSTEM_ENGINE_ID;
 	}
 
 	public Sort[] getSorts() {

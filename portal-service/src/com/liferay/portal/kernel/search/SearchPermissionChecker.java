@@ -18,14 +18,14 @@ package com.liferay.portal.kernel.search;
  * @author Allen Chiang
  * @author Bruno Farache
  * @author Raymond Augé
+ * @author Michael C. Han
  */
 public interface SearchPermissionChecker {
 
 	public void addPermissionFields(long companyId, Document doc);
 
 	public Query getPermissionQuery(
-		long companyId, long[] groupIds, long userId, String className,
-		Query query);
+		SearchContext searchContext, String className, Query query);
 
 	public void updatePermissionFields(long resourceId);
 

@@ -13,66 +13,39 @@
 	<!-- Advice -->
 
 	<aop:config>
-		<aop:aspect ref="messagingProxyAdvice">
-			<aop:around pointcut="bean(com.liferay.portal.search.*ProxyBean)" method="invoke" />
+		<aop:aspect ref="multiDestinationMessagingProxyAdvice">
+			<aop:around pointcut="bean(com.liferay.portal.kernel.search.*ProxyBean)" method="invoke" />
 		</aop:aspect>
 	</aop:config>
 
-	<!-- Proxy -->
+	<!-- Index Reader and Writer Proxies -->
 
-	<bean id="com.liferay.portal.search.IndexSearcherProxyBean" class="com.liferay.portal.search.IndexSearcherProxyBean">
-		<property name="singleDestinationSynchronousMessageSender">
-			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationSynchronousMessageSender">
-				<property name="destinationName" value="liferay/search_reader" />
-				<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
-			</bean>
-		</property>
+	<bean id="com.liferay.portal.kernel.search.IndexSearcherProxyBean" class="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
+		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
-	<bean id="com.liferay.portal.search.IndexWriterProxyBean" class="com.liferay.portal.search.IndexWriterProxyBean">
-		<property name="singleDestinationMessageSender">
-			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
-				<property name="destinationName" value="liferay/search_writer" />
-				<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
-			</bean>
-		</property>
+	<bean id="com.liferay.portal.kernel.search.IndexWriterProxyBean" class="com.liferay.portal.kernel.search.IndexWriterProxyBean">
+		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 
-	<!-- Portal search engine -->
+	<!-- Search Query Configurations -->
 
-	<bean id="com.liferay.portal.kernel.search.PortalSearchEngine" class="com.liferay.portal.search.PortalSearchEngineImpl" />
-	<bean id="com.liferay.portal.kernel.search.SearchEngine" class="com.liferay.portal.search.SearchEngineImpl">
-		<property name="searcher" ref="com.liferay.portal.search.IndexSearcherProxyBean" />
-		<property name="writer" ref="com.liferay.portal.search.IndexWriterProxyBean" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchPermissionChecker" class="com.liferay.portal.search.SearchPermissionCheckerImpl" />
 	<bean id="com.liferay.portal.kernel.search.SearchEngineUtil" class="com.liferay.portal.kernel.search.SearchEngineUtil">
-		<property name="portalSearchEngine" ref="com.liferay.portal.kernel.search.PortalSearchEngine" />
-		<property name="searchEngine" ref="com.liferay.portal.kernel.search.SearchEngine" />
 		<property name="searchPermissionChecker" ref="com.liferay.portal.kernel.search.SearchPermissionChecker" />
-	</bean>
-
-	<!-- Lucene search engine -->
-
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" class="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" class="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
-	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.search.lucene.LuceneSearchEngineImpl">
-		<property name="searcher" ref="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
-		<property name="writer" ref="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
-	</bean>
-	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
-		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzerWrapper" />
-		<property name="version" ref="org.apache.lucene.util.Version" />
-	</bean>
-	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">
-		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.BooleanClauseFactory" class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.BooleanClauseFactoryUtil" class="com.liferay.portal.kernel.search.BooleanClauseFactoryUtil">
 		<property name="booleanClauseFactory" ref="com.liferay.portal.kernel.search.BooleanClauseFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.BooleanQueryFactory" class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.BooleanQueryFactoryUtil" class="com.liferay.portal.kernel.search.BooleanQueryFactoryUtil">
-		<property name="booleanQueryFactory" ref= "com.liferay.portal.kernel.search.BooleanQueryFactory" />
+		<property name="genericQueryFactory">
+			<bean class="com.liferay.portal.search.generic.BooleanQueryFactoryImpl" />
+		</property>
+		<property name="luceneBasedQueryFactory">
+			<bean class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.QueryTranslator" class="com.liferay.portal.search.lucene.QueryTranslatorImpl" />
 	<bean id="com.liferay.portal.kernel.search.QueryTranslatorUtil" class="com.liferay.portal.kernel.search.QueryTranslatorUtil">
@@ -86,13 +59,43 @@
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.TermQueryFactory" class="com.liferay.portal.search.lucene.TermQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.TermQueryFactoryUtil" class="com.liferay.portal.kernel.search.TermQueryFactoryUtil">
-		<property name="termQueryFactory" ref="com.liferay.portal.kernel.search.TermQueryFactory" />
+		<property name="genericQueryFactory">
+			<bean class="com.liferay.portal.search.generic.TermQueryFactoryImpl" />
+		</property>
+		<property name="luceneBasedQueryFactory">
+			<bean class="com.liferay.portal.search.lucene.TermQueryFactoryImpl" />
+		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.TermRangeQueryFactory" class="com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil" class="com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil">
-		<property name="termRangeQueryFactory" ref="com.liferay.portal.kernel.search.TermRangeQueryFactory" />
+		<property name="genericQueryFactory">
+			<bean class="com.liferay.portal.search.generic.TermRangeQueryFactoryImpl" />
+		</property>
+		<property name="luceneBasedQueryFactory">
+			<bean class="com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl" />
+		</property>
+	</bean>
+
+	<!-- Lucene search engine -->
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" class="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" class="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
+	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
+		<property name="name" value="SYSTEM_ENGINE" />
+		<property name="clusteredWrite" value="true" />
+		<property name="clusteredWritePriority">
+			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
+		</property>
+		<property name="luceneBased" value="true" />
+		<property name="searcher" ref="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
+		<property name="vendor" value="Lucene"/>
+		<property name="writer" ref="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
+		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzerWrapper" />
+		<property name="version" ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">
+		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
 	</bean>
 
 	<!-- Lucene analyzers -->
@@ -187,62 +190,15 @@
 		<constructor-arg value="LUCENE_30" />
 	</bean>
 
-	<!-- Messaging -->
-
-	<bean id="destination.search_reader" class="com.liferay.portal.kernel.messaging.SynchronousDestination">
-		<property name="name" value="liferay/search_reader" />
-	</bean>
-	<bean id="destination.search_writer" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<property name="name" value="liferay/search_writer" />
-	</bean>
-	<bean id="messageListener.search_reader" class="com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener">
-		<property name="searchEngine" ref="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" />
-	</bean>
-	<bean id="messageListener.search_writer" class="com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener">
-		<property name="searchEngine" ref="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" />
-	</bean>
-	<bean id="messageListener.search_writer_cluster" class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener">
-		<property name="priority">
-			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
-		</property>
-	</bean>
-	<bean id="messagingConfigurator.search" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
-		<property name="specificDestinationEventListener">
-			<map>
-				<entry key="liferay/search_reader">
-					<list>
-						<bean class="com.liferay.portal.search.lucene.messaging.SearchEngineDestinationEventListener">
-							<property name="clusterSearchWriterMessageListener" ref="messageListener.search_writer_cluster" />
-							<property name="searchReaderMessageListener" ref="messageListener.search_reader" />
-							<property name="searchWriterMessageListener" ref="messageListener.search_writer" />
-						</bean>
-					</list>
-				</entry>
-			</map>
-		</property>
-		<property name="destinations">
+	<!-- Portal Search Engine Configurations -->
+	<bean id="searchEngineConfigurator.portal" class="com.liferay.portal.kernel.search.DefaultSearchEngineConfigurator">
+		<property name="indexSearcher" ref="com.liferay.portal.kernel.search.IndexSearcherProxyBean" />
+		<property name="indexWriter" ref="com.liferay.portal.kernel.search.IndexWriterProxyBean" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
+		<property name="searchEngines">
 			<list>
-				<ref bean="destination.search_reader" />
-				<ref bean="destination.search_writer" />
+				<ref bean="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" />
 			</list>
-		</property>
-		<property name="messageBus">
-			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
-		</property>
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/search_reader">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.search_reader" />
-					</list>
-				</entry>
-				<entry key="liferay/search_writer">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.search_writer" />
-						<ref bean="messageListener.search_writer_cluster" />
-					</list>
-				</entry>
-			</map>
 		</property>
 	</bean>
 </beans>

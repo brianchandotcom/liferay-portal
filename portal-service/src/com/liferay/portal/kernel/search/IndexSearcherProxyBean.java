@@ -12,31 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcher;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
+import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 
 /**
  * @author Bruno Farache
  * @author Tina Tian
  * @author Raymond Augé
+ * @author Michael C. Han
  */
 public class IndexSearcherProxyBean
-	extends BaseProxyBean implements IndexSearcher {
-
-	public Hits search(
-		long companyId, Query query, Sort[] sorts, int start, int end) {
-
-		throw new UnsupportedOperationException();
-	}
+	extends BaseMultiDestinationProxyBean implements IndexSearcher {
 
 	public Hits search(SearchContext searchContext, Query query) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getDestinationName(ProxyRequest proxyRequest) {
+		Object[] arguments = proxyRequest.getArguments();
+
+		SearchContext searchContext = (SearchContext)arguments[0];
+
+		String searchEngineId = searchContext.getSearchEngineId();
+
+		return SearchEngineUtil.getSearchReaderDestinationName(searchEngineId);
 	}
 
 }

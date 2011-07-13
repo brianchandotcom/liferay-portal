@@ -65,7 +65,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 
 		String[] entryClassNames = searchContext.getEntryClassNames();
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		for (String entryClassName : entryClassNames) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
@@ -84,7 +84,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 					continue;
 				}
 
-				BooleanQuery entityQuery = BooleanQueryFactoryUtil.create();
+				BooleanQuery entityQuery = BooleanQueryFactoryUtil.create(
+					searchContext);
 
 				entityQuery.add(indexerBooleanQuery, BooleanClauseOccur.MUST);
 

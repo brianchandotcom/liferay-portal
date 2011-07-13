@@ -1076,11 +1076,11 @@ release was successful.</echo>
 			dest="${app.server.weblogic.server.dir}"
 			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
 		/>
-		
+
 		<condition property="isWindows">
 			<os family="windows" />
 		</condition>
-		
+
 		<if>
 			<isset property="isWindows"/>
 			<then>

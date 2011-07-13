@@ -41,7 +41,7 @@ import java.nio.channels.WritableByteChannel;
  */
 public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 
-	public InputStream getFileEntryDeltaAsStream(
+	public InputStream getFileDeltaAsStream(
 			long fileEntryId, String sourceVersion, String destinationVersion)
 		throws PortalException, SystemException {
 

@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -491,8 +492,11 @@ public class ChannelImpl extends BaseChannelImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
 
+	private static Comparator<NotificationEvent> _comparator =
+		new NotificationEventComparator();
+
 	private TreeSet<NotificationEvent> _notificationEvents =
-		new TreeSet<NotificationEvent>(new NotificationEventComparator());
+		new TreeSet<NotificationEvent>(_comparator);
 	private ReentrantLock _reentrantLock = new ReentrantLock();
 	private Map<String, NotificationEvent> _unconfirmedNotificationEvents =
 		new LinkedHashMap<String, NotificationEvent>();

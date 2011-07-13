@@ -348,18 +348,16 @@ public class StagingImpl implements Staging {
 	}
 
 	public void disableStaging(
-			long scopeGroupId, long liveGroupId, ServiceContext serviceContext)
+			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
 		throws Exception {
 
-		disableStaging(null, scopeGroupId, liveGroupId, serviceContext);
+		disableStaging(null, scopeGroup, liveGroup, serviceContext);
 	}
 
 	public void disableStaging(
-			PortletRequest portletRequest, long scopeGroupId, long liveGroupId,
+			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
 			ServiceContext serviceContext)
 		throws Exception {
-
-		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
 
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
@@ -390,7 +388,7 @@ public class StagingImpl implements Staging {
 
 		if (liveGroup.hasStagingGroup()) {
 			if ((portletRequest != null) &&
-				(scopeGroupId != liveGroup.getGroupId())) {
+				(scopeGroup.getGroupId() != liveGroup.getGroupId())) {
 
 				String redirect = ParamUtil.getString(
 					portletRequest, "pagesRedirect");
@@ -398,7 +396,7 @@ public class StagingImpl implements Staging {
 				redirect = HttpUtil.removeParameter(redirect, "refererPlid");
 
 				redirect = StringUtil.replace(
-					redirect, String.valueOf(scopeGroupId),
+					redirect, String.valueOf(scopeGroup.getGroupId()),
 					String.valueOf(liveGroup.getGroupId()));
 
 				portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
@@ -425,15 +423,13 @@ public class StagingImpl implements Staging {
 	}
 
 	public void enableLocalStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
-
 		if (liveGroup.isStagedRemotely()) {
-			disableStaging(scopeGroupId, liveGroupId, serviceContext);
+			disableStaging(scopeGroup, liveGroup, serviceContext);
 		}
 
 		UnicodeProperties typeSettingsProperties =
@@ -505,18 +501,16 @@ public class StagingImpl implements Staging {
 	}
 
 	public void enableRemoteStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			String remoteAddress, long remoteGroupId, int remotePort,
 			boolean secureConnection, ServiceContext serviceContext)
 		throws Exception {
 
-		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
-
 		validate(remoteAddress, remoteGroupId, remotePort, secureConnection);
 
 		if (liveGroup.hasStagingGroup()) {
-			disableStaging(scopeGroupId, liveGroupId, serviceContext);
+			disableStaging(scopeGroup, liveGroup, serviceContext);
 		}
 
 		UnicodeProperties typeSettingsProperties =
@@ -1194,7 +1188,10 @@ public class StagingImpl implements Staging {
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
-	public void updateStaging(PortletRequest portletRequest) throws Exception {
+	public void updateStaging(
+			PortletRequest portletRequest, Group liveGroup)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -1203,12 +1200,11 @@ public class StagingImpl implements Staging {
 
 		long userId = permissionChecker.getUserId();
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (!GroupPermissionUtil.contains(
-				permissionChecker, liveGroupId, ActionKeys.MANAGE_STAGING)) {
+				permissionChecker, liveGroup.getGroupId(),
+				ActionKeys.MANAGE_STAGING)) {
 
 			throw new PrincipalException();
 		}
@@ -1225,11 +1221,11 @@ public class StagingImpl implements Staging {
 
 		if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			disableStaging(
-				portletRequest, scopeGroupId, liveGroupId, serviceContext);
+				portletRequest, scopeGroup, liveGroup, serviceContext);
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
 			enableLocalStaging(
-				userId, scopeGroupId, liveGroupId, branchingPublic,
+				userId, scopeGroup, liveGroup, branchingPublic,
 				branchingPrivate, serviceContext);
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
@@ -1242,7 +1238,7 @@ public class StagingImpl implements Staging {
 				portletRequest, "secureConnection");
 
 			enableRemoteStaging(
-				userId, scopeGroupId, liveGroupId, branchingPublic,
+				userId, scopeGroup, liveGroup, branchingPublic,
 				branchingPrivate, remoteAddress, remoteGroupId, remotePort,
 				secureConnection, serviceContext);
 		}

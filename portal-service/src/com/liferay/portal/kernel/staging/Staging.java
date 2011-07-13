@@ -67,22 +67,22 @@ public interface Staging {
 		throws SystemException;
 
 	public void disableStaging(
-			long scopeGroupId, long liveGroupId, ServiceContext serviceContext)
+			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
 		throws Exception;
 
 	public void disableStaging(
-			PortletRequest portletRequest, long scopeGroupId, long liveGroupId,
+			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
 			ServiceContext serviceContext)
 		throws Exception;
 
 	public void enableLocalStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			ServiceContext serviceContext)
 		throws Exception;
 
 	public void enableRemoteStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			String remoteAddress, long remoteGroupId, int remotePort,
 			boolean secureConnection, ServiceContext serviceContext)
@@ -188,6 +188,7 @@ public interface Staging {
 			PortletDataContext portletDataContext)
 		throws Exception;
 
-	public void updateStaging(PortletRequest PortletRequest) throws Exception;
+	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
+		throws Exception;
 
 }

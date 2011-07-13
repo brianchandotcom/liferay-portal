@@ -23,6 +23,40 @@ Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
 long groupId = BeanParamUtil.getLong(group, request, "groupId");
 
+Group liveGroup = null;
+Group stagingGroup = null;
+long liveGroupId = 0;
+long stagingGroupId = 0;
+
+UnicodeProperties liveGroupTypeSettings = null;
+
+if (group != null) {
+	if (group.isStagingGroup()) {
+		liveGroup = group.getLiveGroup();
+		stagingGroup = group;
+	}
+	else {
+		liveGroup = group;
+
+		if (group.hasStagingGroup()) {
+			stagingGroup = group.getStagingGroup();
+		}
+	}
+
+	liveGroupId = liveGroup.getGroupId();
+	stagingGroupId = 0;
+
+	if (stagingGroup != null) {
+		stagingGroupId = stagingGroup.getGroupId();
+	}
+
+	liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+}
+else {
+	liveGroupTypeSettings = new UnicodeProperties();
+}
+
+
 String friendlyURL = BeanParamUtil.getString(group, request, "friendlyURL");
 
 LayoutSetPrototype layoutSetPrototype = null;
@@ -32,10 +66,22 @@ long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
 if (layoutSetPrototypeId > 0) {
 	layoutSetPrototype = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
 }
+
+String[] mainSections = PropsValues.SITES_FORM_ADD_MAIN;
+String[] seoSections = PropsValues.SITES_FORM_ADD_SEO;
+String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
+
+if (group != null) {
+	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
+	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
+	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
+}
+
+String[][] categorySections = {mainSections, seoSections, advancedSections};
 %>
 
 <c:if test="<%= !portletName.equals(PortletKeys.COMMUNITIES) %>">
-	<liferay-util:include page="/html/portlet//sites_admin/toolbar.jsp">
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "view-all" %>' />
 	</liferay-util:include>
 </c:if>
@@ -56,231 +102,88 @@ else if (layoutSetPrototype != null) {
 	title="<%= title %>"
 />
 
-<portlet:actionURL var="editCommunityURL">
+<portlet:actionURL var="editSiteURL">
 	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCommunityURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
+<aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
+	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 	<aui:input name="friendlyURL" type="hidden" value="<%= friendlyURL %>" />
 
-	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= RequiredGroupException.class %>" message="old-group-name-is-a-required-system-group" />
+	<%
+	request.setAttribute("site.group", group);
+	request.setAttribute("site.liveGroup", liveGroup);
+	request.setAttribute("site.liveGroupId", new Long(liveGroupId));
+	request.setAttribute("site.stagingGroup", stagingGroup);
+	request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
+	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
+	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
+	%>
 
-	<liferay-ui:asset-categories-error />
+	<liferay-util:buffer var="htmlBottom">
+		<aui:button-row>
+			<aui:button type="submit" />
 
-	<liferay-ui:asset-tags-error />
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</liferay-util:buffer>
 
-	<aui:model-context bean="<%= group %>" model="<%= Group.class %>" />
-
-	<aui:fieldset>
-		<c:if test="<%= group != null %>">
-			<aui:field-wrapper label="site-id">
-				<%= groupId %>
-			</aui:field-wrapper>
-		</c:if>
-
-		<c:choose>
-			<c:when test="<%= (group != null) && PortalUtil.isSystemGroup(group.getName()) %>">
-				<aui:input name="name" type="hidden" />
-			</c:when>
-			<c:when test="<%= (group != null) && group.isOrganization() %>">
-				<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-					<%= group.getDescriptiveName() %>
-				</aui:field-wrapper>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="name" />
-			</c:otherwise>
-		</c:choose>
-
-		<aui:input name="description" />
-
-		<aui:select label="membership-type" name="type">
-			<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
-			<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
-			<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
-		</aui:select>
-
-		<aui:input inlineLabel="left" name="active" value="<%= true %>" />
-
-		<aui:input name="categories" type="assetCategories" />
-
-		<aui:input name="tags" type="assetTags" />
-
-		<%
-		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
-		%>
-
-		<c:choose>
-			<c:when test="<%= (group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null)) %>">
-				<br />
-
-				<aui:fieldset label="pages">
-
-					<%
-					Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
-
-					String customJspServletContextName = StringPool.BLANK;
-
-					if (group != null) {
-						UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
-
-						customJspServletContextName = GetterUtil.getString(typeSettingsProperties.get("customJspServletContextName"));
-					}
-					%>
-
-					<aui:select helpMessage="changing-the-application-adapter-may-cause-this-site-to-appear-and-behave-differently" label="application-adapter" name="customJspServletContextName">
-						<aui:option label="none" value="" />
-
-						<%
-						for (String servletContextName : servletContextNames) {
-						%>
-
-							<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-					<c:choose>
-						<c:when test="<%= ((group == null) || (group.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
-							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="public-pages" name="publicLayoutSetPrototypeId">
-								<aui:option label="none" selected="<%= true %>" value="" />
-
-								<%
-								for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
-									UnicodeProperties settingsProperties = curLayoutSetPrototype.getSettingsProperties();
-
-									String servletContextName = settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK);
-								%>
-
-									<aui:option data-servletContextName="<%= servletContextName %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= curLayoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:when>
-						<c:otherwise>
-							<aui:field-wrapper label="public-pages">
-								<c:choose>
-									<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
-										<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-											<portlet:param name="struts_action" value="/my_places/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-										</liferay-portlet:actionURL>
-
-										<liferay-ui:icon
-											image="view"
-											label="<%= true %>"
-											message="open-public-pages"
-											method="get"
-											target="_blank"
-											url="<%= publicPagesURL.toString() %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
-									</c:otherwise>
-								</c:choose>
-							</aui:field-wrapper>
-						</c:otherwise>
-					</c:choose>
-
-					<c:choose>
-						<c:when test="<%= ((group == null) || (group.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
-							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="private-pages" name="privateLayoutSetPrototypeId">
-								<aui:option label="none" selected="<%= true %>" value="" />
-
-								<%
-								for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
-									UnicodeProperties settingsProperties = curLayoutSetPrototype.getSettingsProperties();
-
-									String servletContextName = settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK);
-								%>
-
-									<aui:option data-servletContextName="<%= servletContextName %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= curLayoutSetPrototype.getName(user.getLanguageId()) %></aui:option>
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:when>
-						<c:otherwise>
-							<aui:field-wrapper label="private-pages">
-								<c:choose>
-									<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
-										<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-											<portlet:param name="struts_action" value="/my_places/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-										</liferay-portlet:actionURL>
-
-										<liferay-ui:icon
-											image="view"
-											label="<%= true %>"
-											message="open-private-pages"
-											method="get"
-											target="_blank"
-											url="<%= privatePagesURL.toString() %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
-									</c:otherwise>
-								</c:choose>
-							</aui:field-wrapper>
-						</c:otherwise>
-					</c:choose>
-
-					<aui:field-wrapper name="site-template-relationship">
-						<aui:input checked="<%= true %>" inlineLabel="right" label="cloned" name="siteTemplateRelationship" type="radio" value="cloned" />
-
-						<aui:input inlineLabel="right" label="inherited" name="siteTemplateRelationship" type="radio" value="inherited" />
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</c:when>
-			<c:when test="<%= layoutSetPrototype != null %>">
-				<aui:fieldset label="pages">
-					<br />
-
-					<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
-
-					<aui:select label="visibility" name="privateLayoutSetPrototype">
-						<aui:option label="public" value="0" />
-						<aui:option label="private" value="1" />
-					</aui:select>
-
-					<aui:field-wrapper name="site-template-relationship">
-						<aui:input checked="<%= true %>" inlineLabel="right" label="cloned" name="siteTemplateRelationship" type="radio" value="cloned" />
-
-						<aui:input inlineLabel="right" label="inherited" name="siteTemplateRelationship" type="radio" value="inherited" />
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</c:when>
-		</c:choose>
-	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
+	<liferay-ui:form-navigator
+		categoryNames="<%= _CATEGORY_NAMES %>"
+		categorySections="<%= categorySections %>"
+		htmlBottom="<%= htmlBottom %>"
+		jspPath="/html/portlet/sites_admin/site/"
+		showButtons="<%= false %>"
+	/>
 </aui:form>
 
 <aui:script>
 	function <portlet:namespace />saveGroup() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (group == null) ? Constants.ADD : Constants.UPDATE %>";
-		submitForm(document.<portlet:namespace />fm);
+
+		var ok = true;
+
+		<c:if test="<%= liveGroup != null %>">
+			A = AUI();
+
+			var selectEl = A.one('#<portlet:namespace />stagingType');
+
+			<c:choose>
+				<c:when test="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>">
+					var oldValue = 1;
+				</c:when>
+				<c:when test="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
+					var oldValue = 2;
+				</c:when>
+				<c:otherwise>
+					var oldValue = 0;
+				</c:otherwise>
+			</c:choose>
+
+			if (selectEl && (selectEl.val() != oldValue)) {
+				var currentValue = selectEl.val();
+
+				ok = false;
+
+				if (0 == currentValue) {
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName()) %>');
+				}
+				else if (1 == currentValue) {
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName()) %>');
+				}
+				else if (2 == currentValue) {
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName()) %>');
+				}
+			}
+		</c:if>
+
+		if (ok) {
+			submitForm(document.<portlet:namespace />fm);
+		}
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
@@ -327,4 +230,8 @@ if (group != null) {
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-site"), currentURL);
 }
+%>
+
+<%!
+private static String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced"};
 %>

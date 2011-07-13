@@ -1729,6 +1729,18 @@ public interface PropsKeys {
 
 	public static final String SITES_CONTROL_PANEL_MEMBERS_VISIBLE = "sites.control.panel.members.visible";
 
+	public static final String SITES_FORM_ADD_ADVANCED = "sites.form.add.advanced";
+
+	public static final String SITES_FORM_ADD_MAIN = "sites.form.add.main";
+
+	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
+
+	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
+
+	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
+
+	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
+
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 
 	public static final String SOCIAL_BOOKMARK_POST_URL = "social.bookmark.post.url";

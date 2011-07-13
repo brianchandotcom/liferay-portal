@@ -98,43 +98,43 @@ public class StagingUtil {
 	}
 
 	public static void disableStaging(
-			long scopeGroupId, long liveGroupId, ServiceContext serviceContext)
+			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
 		throws Exception {
 
-		getStaging().disableStaging(scopeGroupId, liveGroupId, serviceContext);
+		getStaging().disableStaging(scopeGroup, liveGroup, serviceContext);
 	}
 
 	public static void disableStaging(
-			PortletRequest portletRequest, long scopeGroupId, long liveGroupId,
+			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		getStaging().disableStaging(
-			portletRequest, scopeGroupId, liveGroupId, serviceContext);
+			portletRequest, scopeGroup, liveGroup, serviceContext);
 	}
 
 	public static void enableLocalStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		getStaging().enableLocalStaging(
-			userId, scopeGroupId, liveGroupId, branchingPublic,
-			branchingPrivate, serviceContext);
+			userId, scopeGroup, liveGroup, branchingPublic, branchingPrivate,
+			serviceContext);
 	}
 
 	public static void enableRemoteStaging(
-			long userId, long scopeGroupId, long liveGroupId,
+			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			String remoteAddress, long remoteGroupId, int remotePort,
 			boolean secureConnection, ServiceContext serviceContext)
 		throws Exception {
 
 		getStaging().enableRemoteStaging(
-			userId, scopeGroupId, liveGroupId, branchingPublic,
-			branchingPrivate, remoteAddress, remoteGroupId, remotePort,
-			secureConnection, serviceContext);
+			userId, scopeGroup, liveGroup, branchingPublic, branchingPrivate,
+			remoteAddress, remoteGroupId, remotePort, secureConnection,
+			serviceContext);
 	}
 
 	public static List<Layout> getMissingParentLayouts(
@@ -345,10 +345,11 @@ public class StagingUtil {
 			layoutElement, layout, portletDataContext);
 	}
 
-	public static void updateStaging(PortletRequest PortletRequest)
+	public static void updateStaging(
+			PortletRequest PortletRequest, Group liveGroup)
 		throws Exception {
 
-		getStaging().updateStaging(PortletRequest);
+		getStaging().updateStaging(PortletRequest, liveGroup);
 	}
 
 	public void setStaging(Staging staging) {

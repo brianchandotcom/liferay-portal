@@ -1676,7 +1676,7 @@
 	<portlet>
 		<portlet-name>165</portlet-name>
 		<icon>/html/icons/site_settings.png</icon>
-		<struts-path>site_settings</struts-path>
+		<struts-path>sites_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>1</control-panel-entry-weight>

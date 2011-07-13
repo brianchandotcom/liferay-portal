@@ -204,24 +204,16 @@ public class DeployImpl implements Deploy {
 		}
 	}
 
-	public void undeploy(String context) throws Exception {
+	public void undeploy(String context)
+		throws Exception {
+
 		File deployDirectory = new File(getAutoDeployDestDir(), context);
 
 		undeploy(ServerDetector.getServerId(), deployDirectory);
-
-		if (ServerDetector.isJetty()) {
-			File contextDirectory = new File(System.getProperty("jetty.home"), "contexts");
-			File contextXml = new File(contextDirectory, context + ".xml");
-
-			FileUtils.deleteQuietly(contextXml);
-		}
-
 	}
 
 	public static void undeploy(String appServerType, File deployDir)
 		throws Exception {
-
-		// TODO cleanup context file if it's jetty
 
 		boolean undeployEnabled = PrefsPropsUtil.getBoolean(
 			PropsKeys.HOT_UNDEPLOY_ENABLED, PropsValues.HOT_UNDEPLOY_ENABLED);
@@ -251,6 +243,14 @@ public class DeployImpl implements Deploy {
 
 		DeleteTask.deleteDirectory(deployDir);
 
+		if (ServerDetector.isJetty()) {
+			String context = deployDir.getName();
+			File contextDirectory = new File(System.getProperty("jetty.home"), "contexts");
+			File contextXml = new File(contextDirectory, context + ".xml");
+
+			FileUtils.deleteQuietly(contextXml);
+		}
+
 		int undeployInterval = PrefsPropsUtil.getInteger(
 			PropsKeys.HOT_UNDEPLOY_INTERVAL,
 			PropsValues.HOT_UNDEPLOY_INTERVAL);
@@ -266,25 +266,44 @@ public class DeployImpl implements Deploy {
 		}
 	}
 
-	public void hotDeployJetty(String context) throws IOException {
-		File contextDirectory = new File(System.getProperty("jetty.home"), "contexts");
+	public void hotDeployJetty(String context)
+		throws IOException {
+
+		File contextDirectory =
+			new File(System.getProperty("jetty.home"), "contexts");
 		File contextXml = new File(contextDirectory, context + ".xml");
 
 		if (contextXml.exists()) {
 			FileUtils.touch(contextXml);
 		} else {
-			Writer writer = new FileWriter(contextXml);
+			try {
+				Writer writer = new FileWriter(contextXml);
 
-			String lineSeparator = System.getProperty("line.separator");
+				String lineSeparator = System.getProperty("line.separator");
 
-			writer.write("<?xml version=\"1.0\"  encoding=\"UTF-8\"?>" + lineSeparator);
-			writer.append("<!DOCTYPE Configure PUBLIC \"-//Mort Bay Consulting//DTD Configure//EN\" \"http://jetty.mortbay.org/configure.dtd\">" + lineSeparator);
-			writer.append("<Configure class=\"org.mortbay.jetty.webapp.WebAppContext\">" + lineSeparator);
-			writer.append("\t<Set name=\"contextPath\">/" + context + "</Set>" + lineSeparator);
-			writer.append("\t<Set name=\"war\"><SystemProperty name=\"jetty.home\" default=\".\"/>/webapps/" + context + "</Set>" + lineSeparator);
-			writer.append("</Configure>" + lineSeparator);
+				writer.write("<?xml version=\"1.0\"  encoding=\"UTF-8\"?>" +
+					lineSeparator);
+				writer.append("<!DOCTYPE Configure PUBLIC \"-//Mort Bay" +
+					" Consulting//DTD Configure//EN\" \"http://jetty.mortbay" +
+					".org/configure.dtd\">" + lineSeparator);
+				writer.append("<Configure class=\"org.mortbay.jetty.webapp." +
+					"WebAppContext\">" + lineSeparator);
+				writer.append("\t<Set name=\"contextPath\">/" + context +
+					"</Set>" + lineSeparator);
+				writer.append("\t<Set name=\"war\"><SystemProperty" +
+					" name=\"jetty.home\" default=\".\"/>/webapps/" + context +
+					"</Set>" + lineSeparator);
+				writer.append("</Configure>" + lineSeparator);
 
-			writer.flush();
+				writer.flush();
+			} catch (IOException e) {
+				_log.warn(
+					"Could not write the Jetty context file (" +
+						contextXml.getAbsolutePath() + ") so " +
+						context + " will not be automatically deployed." +
+						" Restart Jetty in order to deploy " +
+						context + ".", e);
+			}
 		}
 	}
 

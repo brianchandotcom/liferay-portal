@@ -295,6 +295,16 @@ public class OrganizationLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Deletes the organization. The organization's associated resources and
+	 * assets are also deleted.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @throws PortalException if an organization with the primary key could
+	 *         not be found, if the organization had a workflow in approved
+	 *         status, or if the organization was a parent organization
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public void deleteOrganization(long organizationId)
 		throws PortalException, SystemException {
@@ -305,6 +315,15 @@ public class OrganizationLocalServiceImpl
 		deleteOrganization(organization);
 	}
 
+	/**
+	 * Deletes the organization. The organization's associated resources and
+	 * assets are also deleted.
+	 *
+	 * @param  organization the organization
+	 * @throws PortalException if the organization had a workflow in approved
+	 *         status or if the organization was a parent organization.
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public void deleteOrganization(Organization organization)
 		throws PortalException, SystemException {
@@ -404,6 +423,15 @@ public class OrganizationLocalServiceImpl
 		return groupPersistence.getOrganizations(groupId);
 	}
 
+	/**
+	 * Returns the organization with the primary key.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @return the organization with the primary key
+	 * @throws PortalException if an organization with the primary key could
+	 *         not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Organization getOrganization(long organizationId)
 		throws PortalException, SystemException {

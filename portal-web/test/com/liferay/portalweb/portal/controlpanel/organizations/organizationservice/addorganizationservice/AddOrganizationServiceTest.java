@@ -22,151 +22,161 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationServiceTest extends BaseTestCase {
 	public void testAddOrganizationService() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basicVisible) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
-
-			case 2:
-				selenium.type("_126_keywords",
-					RuntimeVariables.replace("Selenium"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//td[2]/a/strong"));
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//a[@id='_126_servicesLink']",
-					RuntimeVariables.replace("Services"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("_126_orgLaborTypeId0")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.select("_126_orgLaborTypeId0",
-					RuntimeVariables.replace("label=Training"));
-				selenium.select("_126_sunOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_sunClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_monOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_monClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_tueOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_tueClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_wedOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_wedClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_thuOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_thuClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_friOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_friClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.select("_126_satOpen0",
-					RuntimeVariables.replace("label=09:00"));
-				selenium.select("_126_satClose0",
-					RuntimeVariables.replace("label=05:00"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//section/div/div/div/div[1]"));
-				assertEquals("Training",
-					selenium.getSelectedLabel("_126_orgLaborTypeId0"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Selenium"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Selenium"),
+			selenium.getText("//a[2]/strong"));
+		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div[3]/div/div[2]/ul/li[1]/a",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_125_servicesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//a[@id='_125_servicesLink']",
+			RuntimeVariables.replace("Services"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_125_orgLaborTypeId0']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_125_orgLaborTypeId0']",
+			RuntimeVariables.replace("label=Training"));
+		selenium.select("//select[@id='_125_sunOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_sunClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_monOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_monClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_tueOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_tueClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_wedOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_wedClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_thuOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_thuClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_friOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_friClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.select("//select[@id='_125_satOpen0']",
+			RuntimeVariables.replace("label=09:00"));
+		selenium.select("//select[@id='_125_satClose0']",
+			RuntimeVariables.replace("label=05:00"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Training",
+			selenium.getSelectedLabel("//select[@id='_125_orgLaborTypeId0']"));
 	}
 }

@@ -48,10 +48,10 @@ public class DisableInputTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Google Maps Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Google Maps Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
@@ -84,7 +84,8 @@ public class DisableInputTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_86_mapInputEnabledCheckbox")) {
+						if (selenium.isVisible(
+									"//input[@id='_86_mapInputEnabledCheckbox']")) {
 							break;
 						}
 					}
@@ -105,7 +106,7 @@ public class DisableInputTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("_86_mapInputEnabledCheckbox");
+				selenium.click("//input[@id='_86_mapInputEnabledCheckbox']");
 
 			case 2:
 				Thread.sleep(500);
@@ -119,16 +120,17 @@ public class DisableInputTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("_86_directionsInputEnabledCheckbox");
+				selenium.click(
+					"//input[@id='_86_directionsInputEnabledCheckbox']");
 
 			case 3:
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
-					selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 100:
 				label = -1;

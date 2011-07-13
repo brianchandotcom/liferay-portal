@@ -55,6 +55,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tika.Tika;
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -667,6 +668,14 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		catch (IOException ioe) {
 			return new Properties();
 		}
+	}
+
+	public void touch(File file) throws IOException {
+		FileUtils.touch(file);
+	}
+
+	public void touch(String fileName) throws IOException {
+		touch(new File(fileName));
 	}
 
 	public void write(String fileName, String s) throws IOException {

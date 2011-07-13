@@ -22,169 +22,237 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationAddress2Test extends BaseTestCase {
 	public void testAddOrganizationAddress2() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basicVisible) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
-
-			case 2:
-				selenium.type("_126_keywords",
-					RuntimeVariables.replace("Selenium"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//td[2]/a/strong"));
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//a[@id='_126_addressesLink']",
-					RuntimeVariables.replace("Addresses"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[2]/div/span/span/button[1]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/div/span/span/button[1]",
-					RuntimeVariables.replace("Add Row"));
-				Thread.sleep(5000);
-				selenium.type("_126_addressStreet1_2",
-					RuntimeVariables.replace("12345 Selenium St"));
-				selenium.saveScreenShotAndSource();
-				selenium.type("_126_addressCity2",
-					RuntimeVariables.replace("Diamond Bar"));
-				selenium.saveScreenShotAndSource();
-				selenium.type("_126_addressZip2",
-					RuntimeVariables.replace("41111"));
-				selenium.saveScreenShotAndSource();
-				selenium.select("_126_addressCountryId2",
-					RuntimeVariables.replace("label=United States"));
-				Thread.sleep(5000);
-				selenium.select("_126_addressRegionId2",
-					RuntimeVariables.replace("label=California"));
-				selenium.select("_126_addressTypeId2",
-					RuntimeVariables.replace("label=Billing"));
-				Thread.sleep(5000);
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//section/div/div/div/div[1]"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("_126_addressStreet1_1")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals("12345 Selenium St",
-					selenium.getValue("_126_addressStreet1_1"));
-				assertEquals("Diamond Bar",
-					selenium.getValue("_126_addressCity1"));
-				assertEquals("41111", selenium.getValue("_126_addressZip1"));
-				assertEquals("United States",
-					selenium.getSelectedLabel("_126_addressCountryId1"));
-				assertEquals("California",
-					selenium.getSelectedLabel("_126_addressRegionId1"));
-				assertEquals("Billing",
-					selenium.getSelectedLabel("_126_addressTypeId1"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Selenium"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Selenium"),
+			selenium.getText("//a[2]/strong"));
+		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div[3]/div/div[2]/ul/li[1]/a",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_125_addressesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//a[@id='_125_addressesLink']",
+			RuntimeVariables.replace("Addresses"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[2]/div/span/span/button[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div[2]/div/span/span/button[1]",
+			RuntimeVariables.replace("Add Row"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_addressStreet1_2']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_addressStreet1_2']",
+			RuntimeVariables.replace("12345 Selenium St"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_addressCity2']",
+			RuntimeVariables.replace("Diamond Bar"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_addressZip2']",
+			RuntimeVariables.replace("41111"));
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isPartialText(
+							"//select[@id='_125_addressCountryId2']",
+							"United States")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_125_addressCountryId2']",
+			RuntimeVariables.replace("label=United States"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isPartialText(
+							"//select[@id='_125_addressRegionId2']",
+							"California")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_125_addressRegionId2']",
+			RuntimeVariables.replace("label=California"));
+		selenium.select("//select[@id='_125_addressTypeId2']",
+			RuntimeVariables.replace("label=Billing"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//input[@id='_125_addressStreet1_1']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals("12345 Selenium St",
+			selenium.getValue("//input[@id='_125_addressStreet1_1']"));
+		assertEquals("Diamond Bar",
+			selenium.getValue("//input[@id='_125_addressCity1']"));
+		assertEquals("41111",
+			selenium.getValue("//input[@id='_125_addressZip1']"));
+		assertEquals("United States",
+			selenium.getSelectedLabel("//select[@id='_125_addressCountryId1']"));
+		assertEquals("California",
+			selenium.getSelectedLabel("//select[@id='_125_addressRegionId1']"));
+		assertEquals("Billing",
+			selenium.getSelectedLabel("//select[@id='_125_addressTypeId1']"));
 	}
 }

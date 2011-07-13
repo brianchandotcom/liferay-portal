@@ -30,6 +30,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BasePreferencesImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -254,7 +255,7 @@ public class PortletPreferencesLocalServiceImpl
 
 		boolean strict = PortletPreferencesThreadLocal.isStrict();
 
-		PortletPreferencesThreadLocal.setStrict(true);
+		PortletPreferencesThreadLocal.setStrict(!PropsValues.TCK_URL);
 
 		try {
 			return getPreferences(
@@ -357,7 +358,9 @@ public class PortletPreferencesLocalServiceImpl
 					companyId, ownerId, ownerType, plid, portletId,
 					portletPreferences.getPreferences());
 
-			preferencesPool.put(key, portletPreferencesImpl);
+			synchronized (preferencesPool) {
+				preferencesPool.put(key, portletPreferencesImpl);
+			}
 		}
 
 		return (PortletPreferencesImpl)portletPreferencesImpl.clone();

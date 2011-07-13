@@ -1804,6 +1804,22 @@
         <add-default-resource>true</add-default-resource>
         <system>true</system>
     </portlet>
+    <portlet>
+		<portlet-name>175</portlet-name>
+		<icon>/html/icons/asset_publisher.png</icon>
+		<parent-struts-path>asset_publisher</parent-struts-path>
+		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+        <instanceable>true</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/asset_publisher/css/main.jsp</header-portlet-css>
+		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

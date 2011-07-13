@@ -18,12 +18,21 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public interface Deployer {
+
+	public void addExtJar(List<String> jars, String resource)
+		throws Exception;
+
+	public void addRequiredJar(List<String> jars, String resource)
+		throws Exception;
+
+	public void checkArguments();
 
 	public void copyDependencyXml(String fileName, String targetDir)
 		throws Exception;
@@ -50,11 +59,46 @@ public interface Deployer {
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;
 
+	public void deployFile(File srcFile, String specifiedContext)
+		throws Exception;
+
 	public void processPluginPackageProperties(
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;
 
 	public PluginPackage readPluginPackage(File file);
+
+	public void setAppServerType(String appServerType);
+
+	public void setAuiTaglibDTD(String auiTaglibDTD);
+
+	public void setBaseDir(String baseDir);
+
+	public void setDestDir(String destDir);
+
+	public void setFilePattern(String filePattern);
+
+	public void setJars(List<String> jars);
+
+	public void setJbossPrefix(String jbossPrefix);
+
+	public void setPortletExtTaglibDTD(String portletExtTaglibDTD);
+
+	public void setPortletTaglibDTD(String portletTaglibDTD);
+
+	public void setSecurityTaglibDTD(String securityTaglibDTD);
+
+	public void setThemeTaglibDTD(String themeTaglibDTD);
+
+	public void setTomcatLibDir(String tomcatLibDir);
+
+	public void setUiTaglibDTD(String uiTaglibDTD);
+
+	public void setUnpackWar(boolean unpackWar);
+
+	public void setUtilTaglibDTD(String utilTaglibDTD);
+
+	public void setWars(List<String> wars);
 
 	public void updateWebXml(
 			File webXml, File srcFile, String displayName,

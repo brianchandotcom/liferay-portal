@@ -1068,6 +1068,7 @@
 				ddmURL.setParameter('showToolbar', config.showToolbar);
 			}
 
+			ddmURL.setParameter('structureId', config.structureId);
 			ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
 
 			if (config.struts_action) {

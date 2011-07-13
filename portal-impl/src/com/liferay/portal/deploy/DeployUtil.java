@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.SystemProperties;
+import com.liferay.util.ant.CopyTask;
 import com.liferay.util.ant.DeleteTask;
 
 import java.io.File;
@@ -34,10 +36,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class DeployUtil {
+
+	public static void copyDependencyXml(
+			String fileName, String targetDir, Map<String, String> filterMap,
+			boolean overwrite)
+		throws Exception {
+
+		File file = new File(getResourcePath(fileName));
+		File targetFile = new File(targetDir + StringPool.SLASH + fileName);
+
+		if (!targetFile.exists()) {
+			CopyTask.copyFile(
+				file, new File(targetDir), filterMap, overwrite, true);
+		}
+	}
 
 	public static String getAutoDeployDestDir() throws Exception {
 		String destDir = PrefsPropsUtil.getString(
@@ -112,6 +130,12 @@ public class DeployUtil {
 		FileUtil.delete(deployDir + "/WEB-INF/web.xml");
 
 		DeleteTask.deleteDirectory(deployDir);
+
+		if (ServerDetector.isJetty()) {
+			FileUtil.delete(
+				System.getProperty("jetty.home") + "/contexts/" +
+					deployDir.getName() + ".xml");
+		}
 
 		int undeployInterval = PrefsPropsUtil.getInteger(
 			PropsKeys.HOT_UNDEPLOY_INTERVAL,

@@ -122,6 +122,10 @@ public interface File {
 
 	public Properties toProperties(String fileName);
 
+	public void touch(java.io.File file) throws IOException;
+
+	public void touch(String fileName) throws IOException;
+
 	public void write(String fileName, String s) throws IOException;
 
 	public void write(String fileName, String s, boolean lazy)

@@ -58,6 +58,10 @@ public class WorkflowConstants {
 
 	public static final String LABEL_EXPIRED = "expired";
 
+	public static final String LABEL_INACTIVE = "inactive";
+
+	public static final String LABEL_INCOMPLETE = "incomplete";
+
 	public static final String LABEL_PENDING = "pending";
 
 	public static final int STATUS_ANY = -1;
@@ -92,6 +96,12 @@ public class WorkflowConstants {
 		else if (status == STATUS_EXPIRED) {
 			return LABEL_EXPIRED;
 		}
+		else if (status == STATUS_INACTIVE) {
+			return LABEL_INACTIVE;
+		}
+		else if (status == STATUS_INCOMPLETE) {
+			return LABEL_INCOMPLETE;
+		}
 		else if (status == STATUS_PENDING) {
 			return LABEL_PENDING;
 		}
@@ -115,6 +125,12 @@ public class WorkflowConstants {
 		}
 		else if (label.equals(LABEL_EXPIRED)) {
 			return STATUS_EXPIRED;
+		}
+		else if (label.equals(LABEL_INACTIVE)) {
+			return STATUS_INACTIVE;
+		}
+		else if (label.equals(LABEL_INCOMPLETE)) {
+			return STATUS_INCOMPLETE;
 		}
 		else if (label.equals(LABEL_PENDING)) {
 			return STATUS_PENDING;

@@ -30,7 +30,7 @@ public class AddOrganizationNameNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,25 +41,48 @@ public class AddOrganizationNameNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.type("_126_name", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
-		selenium.select("_126_type",
-			RuntimeVariables.replace("label=Regular Organization"));
-		selenium.select("_126_countryId",
-			RuntimeVariables.replace("label=United States"));
-		assertFalse(selenium.isTextPresent("This field is required."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		assertEquals(RuntimeVariables.replace("This field is required."),
+		assertEquals(RuntimeVariables.replace("Regular Organization"),
 			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_name']", RuntimeVariables.replace(""));
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_125_type']",
+			RuntimeVariables.replace("label=Regular Organization"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText("//label/div"));
 	}
 }

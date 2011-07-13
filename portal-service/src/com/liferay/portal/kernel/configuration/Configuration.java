@@ -23,6 +23,8 @@ public interface Configuration {
 
 	public void addProperties(Properties properties);
 
+	public void clearCache();
+
 	public boolean contains(String key);
 
 	public String get(String key);

@@ -48,10 +48,10 @@ public class AddGoogleMapWithDirectionsTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Google Maps Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Google Maps Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
@@ -84,7 +84,7 @@ public class AddGoogleMapWithDirectionsTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_86_license")) {
+						if (selenium.isVisible("//input[@id='_86_license']")) {
 							break;
 						}
 					}
@@ -95,15 +95,15 @@ public class AddGoogleMapWithDirectionsTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_86_license",
+				selenium.type("//input[@id='_86_license']",
 					RuntimeVariables.replace(
 						"ABQIAAAA3nrHjKy73DtxJL8D67iR6hSqd3WNkXftHeaSLroSolGIoU-u5BTriDnzHVQc9TudabxQnFqk-gNe8A"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_86_mapAddress",
+				selenium.type("//input[@id='_86_mapAddress']",
 					RuntimeVariables.replace(
 						"17730 Antonio Ave, Cerritos, CA, 90703"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_86_directionsAddress",
+				selenium.type("//input[@id='_86_directionsAddress']",
 					RuntimeVariables.replace(
 						"11947 Del Amo Blvd, Cerritos, CA, 90703"));
 				selenium.saveScreenShotAndSource();
@@ -117,15 +117,17 @@ public class AddGoogleMapWithDirectionsTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("_86_directionsInputEnabledCheckbox");
+				selenium.click(
+					"//input[@id='_86_directionsInputEnabledCheckbox']");
 
 			case 2:
-				selenium.clickAt("//form/input[2]", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
-					selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 100:
 				label = -1;

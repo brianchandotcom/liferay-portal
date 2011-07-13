@@ -18,10 +18,10 @@
 int total = 0;
 
 if (searchTerms.isAdvancedSearch()) {
-	total = JournalStructureLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
 }
 else {
-	total = JournalStructureLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords());
+	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords());
 }
 
 searchContainer.setTotal(total);
@@ -29,10 +29,10 @@ searchContainer.setTotal(total);
 List results = null;
 
 if (searchTerms.isAdvancedSearch()) {
-	results = JournalStructureLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+	results = JournalStructureServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
 }
 else {
-	results = JournalStructureLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), null);
+	results = JournalStructureServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), null);
 }
 
 searchContainer.setResults(results);

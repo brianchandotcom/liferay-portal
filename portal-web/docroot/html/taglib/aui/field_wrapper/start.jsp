@@ -25,6 +25,7 @@ String inlineLabel = GetterUtil.getString((String)request.getAttribute("aui:fiel
 String label = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:label"));
 String name = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:name"));
 boolean last = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:last"));
+boolean required = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:required"));
 
 boolean showForLabel = false;
 
@@ -42,6 +43,10 @@ String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "wrapper", inlineField,
 		<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name) %>>
 				<liferay-ui:message key="<%= label %>" />
+
+				<c:if test="<%= required %>">
+					<span class="aui-label-required">(<liferay-ui:message key="required" />)</span>
+				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 					<liferay-ui:icon-help message="<%= helpMessage %>" />

@@ -24,12 +24,13 @@ import com.liferay.portlet.BasePreferencesImpl;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Young
+ * @author Shuyang Zhou
  */
 public class PortletPreferencesLocalUtil {
 
@@ -55,8 +56,7 @@ public class PortletPreferencesLocalUtil {
 			(Map<String, BasePreferencesImpl>)_portalCache.get(key);
 
 		if (preferencesPool == null) {
-			preferencesPool =
-				new ConcurrentHashMap<String, BasePreferencesImpl>();
+			preferencesPool = new HashMap<String, BasePreferencesImpl>();
 
 			_portalCache.put(key, preferencesPool);
 		}

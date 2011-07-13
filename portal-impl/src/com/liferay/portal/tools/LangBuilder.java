@@ -49,6 +49,8 @@ public class LangBuilder {
 		" (Automatic Translation)";
 
 	public static void main(String[] args) {
+		System.setProperty("line.separator", StringPool.NEW_LINE);
+
 		InitUtil.initWithSpring();
 
 		if (args.length == 2) {
@@ -76,6 +78,12 @@ public class LangBuilder {
 
 			String content = _orderProperties(
 				new File(_langDir + "/" + _langFile + ".properties"));
+
+			// Locales that are not invoked by _createProperties should still be
+			// rewritten to use the rignt line separator
+
+			_orderProperties(
+				new File(_langDir + "/" + _langFile + "_en_GB.properties"));
 
 			if (Validator.isNotNull(langCode) && !langCode.startsWith("$")) {
 				_createProperties(content, langCode);
@@ -291,6 +299,10 @@ public class LangBuilder {
 	}
 
 	private String _orderProperties(File propertiesFile) throws IOException {
+		if (!propertiesFile.exists()) {
+			return null;
+		}
+
 		String content = FileUtil.read(propertiesFile);
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

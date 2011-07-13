@@ -235,13 +235,7 @@ public class BaseDeployer implements Deployer {
 			boolean overwrite)
 		throws Exception {
 
-		File file = new File(DeployUtil.getResourcePath(fileName));
-		File targetFile = new File(targetDir + "/" + fileName);
-
-		if (!targetFile.exists()) {
-			CopyTask.copyFile(
-				file, new File(targetDir), filterMap, overwrite, true);
-		}
+		DeployUtil.copyDependencyXml(fileName, targetDir, filterMap, overwrite);
 	}
 
 	public void copyJars(File srcFile, PluginPackage pluginPackage)
@@ -480,15 +474,6 @@ public class BaseDeployer implements Deployer {
 	}
 
 	public void deployDirectory(
-			File srcFile, String displayName, boolean override,
-			PluginPackage pluginPackage)
-		throws Exception {
-
-		deployDirectory(
-			srcFile, null, null, displayName, override, pluginPackage);
-	}
-
-	public void deployDirectory(
 			File srcFile, File mergeDir, File deployDir, String displayName,
 			boolean overwrite, PluginPackage pluginPackage)
 		throws Exception {
@@ -675,7 +660,22 @@ public class BaseDeployer implements Deployer {
 		}
 	}
 
+	public void deployDirectory(
+			File srcFile, String displayName, boolean override,
+			PluginPackage pluginPackage)
+		throws Exception {
+
+		deployDirectory(
+			srcFile, null, null, displayName, override, pluginPackage);
+	}
+
 	public void deployFile(File srcFile) throws Exception {
+		deployFile(srcFile, null);
+	}
+
+	public void deployFile(File srcFile, String specifiedContext)
+		throws Exception {
+
 		PluginPackage pluginPackage = readPluginPackage(srcFile);
 
 		if (_log.isInfoEnabled()) {
@@ -683,14 +683,18 @@ public class BaseDeployer implements Deployer {
 		}
 
 		String deployDir = null;
-		String displayName = null;
+		String displayName = specifiedContext;
 		boolean overwrite = false;
-		String preliminaryContext = null;
+		String preliminaryContext = specifiedContext;
 
-		// File names starting with DEPLOY_TO_PREFIX should use the filename
-		// after the prefix as the deployment context
+		// The order of priority of the context is: 1.) the specified context,
+		// 2.) if the file name starts with DEPLOY_TO_PREFIX, use the file name
+		// after the prefix, or 3.) the recommended deployment context as
+		// specified in liferay-plugin-package.properties, or 4.) the file name.
 
-		if (srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
+		if ((specifiedContext != null) &&
+			srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
+
 			displayName = srcFile.getName().substring(
 				DEPLOY_TO_PREFIX.length(), srcFile.getName().length() - 4);
 
@@ -765,9 +769,7 @@ public class BaseDeployer implements Deployer {
 							previousVersion + " to version " + version);
 				}
 
-				if (pluginPackage.isLaterVersionThan(
-					previousPluginPackage)) {
-
+				if (pluginPackage.isLaterVersionThan(previousPluginPackage)) {
 					overwrite = true;
 				}
 			}
@@ -886,6 +888,17 @@ public class BaseDeployer implements Deployer {
 		return portalJar;
 	}
 
+	public DeploymentHandler getDeploymentHandler() {
+		String prefix = "auto.deploy." + ServerDetector.getServerId() + ".jee.";
+
+		String dmId = PropsUtil.get(prefix + "dm.id");
+		String dmUser =  PropsUtil.get(prefix + "dm.user");
+		String dmPassword =  PropsUtil.get(prefix + "dm.passwd");
+		String dfClassName = PropsUtil.get(prefix + "df.classname");
+
+		return new DeploymentHandler(dmId, dmUser, dmPassword, dfClassName);
+	}
+
 	public String getDisplayName(File srcFile) {
 		String displayName = srcFile.getName();
 
@@ -903,17 +916,6 @@ public class BaseDeployer implements Deployer {
 		}
 
 		return displayName;
-	}
-
-	public DeploymentHandler getDeploymentHandler() {
-		String prefix = "auto.deploy." + ServerDetector.getServerId() + ".jee.";
-
-		String dmId = PropsUtil.get(prefix + "dm.id");
-		String dmUser =  PropsUtil.get(prefix + "dm.user");
-		String dmPassword =  PropsUtil.get(prefix + "dm.passwd");
-		String dfClassName = PropsUtil.get(prefix + "df.classname");
-
-		return new DeploymentHandler(dmId, dmUser, dmPassword, dfClassName);
 	}
 
 	public String getExtraContent(
@@ -1487,6 +1489,70 @@ public class BaseDeployer implements Deployer {
 		}
 	}
 
+	public void setAppServerType(String appServerType) {
+		this.appServerType = appServerType;
+	}
+
+	public void setAuiTaglibDTD(String auiTaglibDTD) {
+		this.auiTaglibDTD = auiTaglibDTD;
+	}
+
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
+	}
+
+	public void setDestDir(String destDir) {
+		this.destDir = destDir;
+	}
+
+	public void setFilePattern(String filePattern) {
+		this.filePattern = filePattern;
+	}
+
+	public void setJars(List<String> jars) {
+		this.jars = jars;
+	}
+
+	public void setJbossPrefix(String jbossPrefix) {
+		this.jbossPrefix = jbossPrefix;
+	}
+
+	public void setPortletExtTaglibDTD(String portletExtTaglibDTD) {
+		this.portletExtTaglibDTD = portletExtTaglibDTD;
+	}
+
+	public void setPortletTaglibDTD(String portletTaglibDTD) {
+		this.portletTaglibDTD = portletTaglibDTD;
+	}
+
+	public void setSecurityTaglibDTD(String securityTaglibDTD) {
+		this.securityTaglibDTD = securityTaglibDTD;
+	}
+
+	public void setThemeTaglibDTD(String themeTaglibDTD) {
+		this.themeTaglibDTD = themeTaglibDTD;
+	}
+
+	public void setTomcatLibDir(String tomcatLibDir) {
+		this.tomcatLibDir = tomcatLibDir;
+	}
+
+	public void setUiTaglibDTD(String uiTaglibDTD) {
+		this.uiTaglibDTD = uiTaglibDTD;
+	}
+
+	public void setUnpackWar(boolean unpackWar) {
+		this.unpackWar = unpackWar;
+	}
+
+	public void setUtilTaglibDTD(String utilTaglibDTD) {
+		this.utilTaglibDTD = utilTaglibDTD;
+	}
+
+	public void setWars(List<String> wars) {
+		this.wars = wars;
+	}
+
 	public void updateDeployDirectory(File srcFile) throws Exception {
 	}
 
@@ -1621,22 +1687,22 @@ public class BaseDeployer implements Deployer {
 		}
 	}
 
-	protected String baseDir;
-	protected String destDir;
 	protected String appServerType;
 	protected String auiTaglibDTD;
-	protected String portletTaglibDTD;
+	protected String baseDir;
+	protected String destDir;
+	protected String filePattern;
+	protected List<String> jars;
+	protected String jbossPrefix;
 	protected String portletExtTaglibDTD;
+	protected String portletTaglibDTD;
 	protected String securityTaglibDTD;
 	protected String themeTaglibDTD;
-	protected String uiTaglibDTD;
-	protected String utilTaglibDTD;
-	protected boolean unpackWar;
-	protected String filePattern;
-	protected String jbossPrefix;
 	protected String tomcatLibDir;
+	protected String uiTaglibDTD;
+	protected boolean unpackWar;
+	protected String utilTaglibDTD;
 	protected List<String> wars;
-	protected List<String> jars;
 
 	private static final String _PORTAL_CLASS_LOADER =
 		"com.liferay.support.tomcat.loader.PortalClassLoader";

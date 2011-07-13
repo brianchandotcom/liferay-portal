@@ -201,7 +201,9 @@ public class PortalPreferencesLocalServiceImpl
 					companyId, ownerId, ownerType,
 					portalPreferences.getPreferences());
 
-			preferencesPool.put(key, portalPreferencesImpl);
+			synchronized (preferencesPool) {
+				preferencesPool.put(key, portalPreferencesImpl);
+			}
 		}
 
 		return new PortalPreferencesWrapper(

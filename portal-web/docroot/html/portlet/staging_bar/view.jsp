@@ -341,8 +341,44 @@ if (layout != null) {
 									}
 								);
 
-								<c:if test="<%= !layoutRevision.isMajor() && (!layoutRevision.hasChildren()) && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-									dockbar.backstageToolbar.add(dockbar.undoButton, 0);
+								<c:if test="<%= layoutRevision.hasChildren() %>">
+
+									<%
+									List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
+
+									LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
+
+									if (firstChildLayoutRevision.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+									%>
+
+										var redoButton = dockbar.redoButton;
+
+										dockbar.backstageToolbar.add(redoButton, 0);
+
+										redoButton.get('contentBox').attr(
+											{
+												'data-layoutRevisionId': '<%= firstChildLayoutRevision.getLayoutRevisionId() %>',
+												'data-layoutSetBranchId': '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'
+											}
+										);
+
+									<%
+									}
+									%>
+
+								</c:if>
+
+								<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
+									var undoButton = dockbar.undoButton;
+
+									dockbar.backstageToolbar.add(undoButton, 0);
+
+									undoButton.get('contentBox').attr(
+										{
+											'data-layoutRevisionId': '<%= layoutRevision.getLayoutRevisionId() %>',
+											'data-layoutSetBranchId': '<%= layoutRevision.getLayoutSetBranchId() %>'
+										}
+									);
 								</c:if>
 
 								<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">

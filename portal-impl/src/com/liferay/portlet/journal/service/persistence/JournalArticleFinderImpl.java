@@ -76,8 +76,8 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] structureIds = null;
-		String[] templateIds = null;
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
@@ -85,8 +85,6 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 			contents = CustomSQLUtil.keywords(keywords, false);
-			structureIds = CustomSQLUtil.keywords(keywords, false);
-			templateIds = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -107,8 +105,8 @@ public class JournalArticleFinderImpl
 			boolean andOperator)
 		throws SystemException {
 
-		String[] structureIds = CustomSQLUtil.keywords(structureId);
-		String[] templateIds = CustomSQLUtil.keywords(templateId);
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
 
 		return countByC_G_C_A_V_T_D_C_T_S_T_D_S_R(
 			companyId, groupId, classNameId, articleId, version, title,
@@ -160,8 +158,8 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] structureIds = null;
-		String[] templateIds = null;
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
@@ -169,8 +167,6 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 			contents = CustomSQLUtil.keywords(keywords, false);
-			structureIds = CustomSQLUtil.keywords(keywords, false);
-			templateIds = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -245,8 +241,8 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] structureIds = null;
-		String[] templateIds = null;
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
@@ -254,8 +250,6 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 			contents = CustomSQLUtil.keywords(keywords, false);
-			structureIds = CustomSQLUtil.keywords(keywords, false);
-			templateIds = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -381,8 +375,8 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] structureIds = null;
-		String[] templateIds = null;
+		String[] structureIds = CustomSQLUtil.keywords(structureId, false);
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
@@ -390,8 +384,6 @@ public class JournalArticleFinderImpl
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
 			contents = CustomSQLUtil.keywords(keywords, false);
-			structureIds = CustomSQLUtil.keywords(keywords, false);
-			templateIds = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -593,9 +585,9 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.EQUAL, false, structureIds);
+				sql, "structureId", StringPool.LIKE, false, structureIds);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.EQUAL, false, templateIds);
+				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(sql, "(status = ?) AND", "");
@@ -731,9 +723,9 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.EQUAL, false, structureIds);
+				sql, "structureId", StringPool.LIKE, false, structureIds);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.EQUAL, false, templateIds);
+				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(sql, "(status = ?) AND", "");

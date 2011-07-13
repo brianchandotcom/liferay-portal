@@ -14,154 +14,159 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a/strong</td>
+	<td>//a[2]/strong</td>
 	<td>Selenium</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td>Actions</td>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Selenium</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[3]/div/div[2]/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[3]/div/div[2]/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[@id='_126_addressesLink']</td>
+	<td>waitForVisible</td>
+	<td>//a[@id='_125_addressesLink']</td>
 	<td>Addresses</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td>Street 1</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_126_addressStreet1_0</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
 	<td>12345 Selenium St</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_addressCity0</td>
+	<td>//input[@id='_125_addressCity0']</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_addressZip0</td>
+	<td>//input[@id='_125_addressZip0']</td>
 	<td>41111</td>
 </tr>
 <tr>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>United States</td>
+</tr>
+<tr>
 	<td>select</td>
-	<td>_126_addressCountryId0</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
 	<td>label=United States</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>_126_addressRegionId0</td>
-	<td>AlabamaAlaskaArizonaArkansasCaliforniaColoradoConnecticutDelawareDistrict of ColumbiaFloridaGeorgiaHawaiiIdahoIllinoisIndianaIowaKansasKentucky Louisiana MaineMarylandMassachusettsMichiganMinnesotaMississippiMissouriMontanaNebraskaNevadaNew HampshireNew JerseyNew MexicoNew YorkNorth CarolinaNorth DakotaOhioOklahoma OregonPennsylvaniaPuerto RicoRhode IslandSouth CarolinaSouth DakotaTennesseeTexasUtahVermontVirginiaWashingtonWest VirginiaWisconsinWyoming</td>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_126_addressRegionId0</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
 	<td>label=California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_126_addressTypeId0</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
 	<td>label=Billing</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_126_addressMailing0Checkbox</td>
-	<td></td>
+	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>Mailing Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_126_addressPrimary0</td>
-	<td></td>
+	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_126_addressStreet1_0</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
 	<td>12345 Selenium St</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_126_addressCity0</td>
+	<td>//input[@id='_125_addressCity0']</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_126_addressZip0</td>
+	<td>//input[@id='_125_addressZip0']</td>
 	<td>41111</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_126_addressTypeId0</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
 	<td>Billing</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>California</td>
 </tr>
 
 </tbody></table>

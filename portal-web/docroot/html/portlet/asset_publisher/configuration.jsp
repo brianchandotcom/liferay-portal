@@ -43,10 +43,22 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 
 	<c:if test="<%= typeSelection.equals(StringPool.BLANK) %>">
-		<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
-			<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
-			<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
-		</aui:select>
+
+		<%
+		String rootPortletId = PortletConstants.getRootPortletId(portletResource);
+		%>
+
+		<c:choose>
+			<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+				<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
+			</c:when>
+			<c:otherwise>
+				<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
+					<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
+					<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
+				</aui:select>
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-util:buffer var="selectAssetTypeInput">
 			<aui:select label='<%= selectionStyle.equals("manual") ? "asset-type" : StringPool.BLANK %>' name="preferences--anyAssetType--">

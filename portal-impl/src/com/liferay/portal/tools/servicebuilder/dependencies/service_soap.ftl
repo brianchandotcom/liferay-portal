@@ -70,6 +70,7 @@ public class ${entity.name}ServiceSoap {
 			<#assign extendedModelName = packagePath + ".model." + entity.name>
 			<#assign soapModelName = packagePath + ".model." + entity.name + "Soap">
 
+			${serviceBuilder.getJavadocComment(method)}
 			public static
 
 			<#if returnValueName == extendedModelName>

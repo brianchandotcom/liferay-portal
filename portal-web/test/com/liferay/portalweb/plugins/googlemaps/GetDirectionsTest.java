@@ -42,23 +42,41 @@ public class GetDirectionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[1]",
+		selenium.type("//form/input[1]",
 			RuntimeVariables.replace("17730 Antonio Ave, Cerritos, CA, 90703"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[3]",
+		selenium.type("//form/input[3]",
 			RuntimeVariables.replace("11947 Del Amo Blvd, Cerritos, CA, 90703"));
 		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Get Directions']");
 		Thread.sleep(5000);
 		selenium.selectWindow("name=undefined");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[2]/div/input[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals("11947 Del Amo Blvd, Cerritos, CA, 90703",
-			selenium.getValue("d_d"));
+			selenium.getValue("//div[2]/div/input[1]"));
 		assertEquals("17730 Antonio Ave, Cerritos, CA, 90703",
-			selenium.getValue("d_daddr"));
+			selenium.getValue("//div[3]/div[1]/div[2]/div/input[1]"));
 		selenium.close();
 		selenium.selectWindow("null");
 		selenium.saveScreenShotAndSource();

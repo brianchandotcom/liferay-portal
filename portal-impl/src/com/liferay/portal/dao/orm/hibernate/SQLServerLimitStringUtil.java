@@ -102,6 +102,12 @@ public class SQLServerLimitStringUtil {
 				orderByColumnName = matcher.group(1);
 			}
 
+			int pos = orderByColumnName.lastIndexOf(CharPool.PERIOD);
+
+			if (pos != -1) {
+				orderByColumnName = orderByColumnName.substring(pos + 1);
+			}
+
 			orderByColumns[i] = orderByColumnName.concat(
 				StringPool.SPACE).concat(orderByType);
 		}

@@ -45,6 +45,61 @@ public class JournalStructureFinderUtil {
 			descriptions, andOperator);
 	}
 
+	public static int filterCountByKeywords(long companyId, long[] groupIds,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().filterCountByKeywords(companyId, groupIds, keywords);
+	}
+
+	public static int filterCountByC_G_S_N_D(long companyId, long[] groupIds,
+		java.lang.String structureId, java.lang.String name,
+		java.lang.String description, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByC_G_S_N_D(companyId, groupIds, structureId,
+			name, description, andOperator);
+	}
+
+	public static int filterCountByC_G_S_N_D(long companyId, long[] groupIds,
+		java.lang.String[] structureIds, java.lang.String[] names,
+		java.lang.String[] descriptions, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByC_G_S_N_D(companyId, groupIds, structureIds,
+			names, descriptions, andOperator);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByKeywords(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByKeywords(companyId, groupIds, keywords, start,
+			end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByC_G_S_N_D(
+		long companyId, long[] groupIds, java.lang.String structureId,
+		java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByC_G_S_N_D(companyId, groupIds, structureId,
+			name, description, andOperator, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByC_G_S_N_D(
+		long companyId, long[] groupIds, java.lang.String[] structureIds,
+		java.lang.String[] names, java.lang.String[] descriptions,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByC_G_S_N_D(companyId, groupIds, structureIds,
+			names, descriptions, andOperator, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> findByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

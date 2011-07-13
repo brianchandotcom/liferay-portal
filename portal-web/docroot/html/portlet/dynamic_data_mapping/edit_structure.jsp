@@ -136,4 +136,8 @@ String script = BeanParamUtil.getString(structure, request, "xsd");
 		},
 		['aui-base']
 	);
+
+	<c:if test="<%= Validator.isNotNull(saveCallback) && (structureId != 0) %>">
+		window.parent.<%= HtmlUtil.escapeJS(saveCallback) %>('<%= structureId %>', '<%= structure.getName(locale) %>');
+	</c:if>
 </aui:script>

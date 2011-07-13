@@ -23,27 +23,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 %>
 
 <liferay-ui:icon-menu showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
-	<c:if test="<%= Validator.isNotNull(chooseCallback) %>">
-
-		<%
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("javascript:Liferay.Util.getOpener().");
-		sb.append(chooseCallback);
-		sb.append("('");
-		sb.append(structure.getStructureId());
-		sb.append("', '");
-		sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
-		sb.append("', Liferay.Util.getWindow());");
-		%>
-
-		<liferay-ui:icon
-			image="checked"
-			message="choose"
-			url="<%= sb.toString() %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />

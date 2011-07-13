@@ -28,6 +28,10 @@
 			<name>view-action</name>
 			<value>/search/view</value>
 		</init-param>
+		<init-param>
+			<name>config-jsp</name>
+			<value>/html/portlet/search/configuration.jsp</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

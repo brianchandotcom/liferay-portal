@@ -734,7 +734,7 @@ if (Validator.isNotNull(content)) {
 
 	Liferay.Portlet.Journal.PROXY = {};
 	Liferay.Portlet.Journal.PROXY.doAsUserId = '<%= HttpUtil.encodeURL(doAsUserId) %>';
-	Liferay.Portlet.Journal.PROXY.editorImpl = '<%= EDITOR_WYSIWYG_IMPL_KEY %>';
+	Liferay.Portlet.Journal.PROXY.editorImpl = '<%= EditorUtil.getEditorValue(request, EDITOR_WYSIWYG_IMPL_KEY) %>';
 	Liferay.Portlet.Journal.PROXY.instanceIdKey = '<%= instanceIdKey %>';
 	Liferay.Portlet.Journal.PROXY.pathThemeCss = '<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>';
 	Liferay.Portlet.Journal.PROXY.portletNamespace = '<portlet:namespace />';

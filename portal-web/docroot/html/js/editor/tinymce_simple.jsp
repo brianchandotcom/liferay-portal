@@ -26,16 +26,20 @@ String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:on
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
+
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 
-<liferay-util:html-top outputKey="js_editor_tinymce">
+<c:if test="<%= !skipEditorLoading %>">
+	<liferay-util:html-top outputKey="js_editor_tinymce">
 
-	<%
-	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
-	%>
+		<%
+		long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
+		%>
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/editor/tiny_mce/tiny_mce.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-</liferay-util:html-top>
+		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/editor/tiny_mce/tiny_mce.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+	</liferay-util:html-top>
+</c:if>
 
 <div class="<%= cssClass %>">
 	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; width: 100%;"></textarea>

@@ -118,6 +118,15 @@ public class ResourceBlockLocalServiceImpl
 		return DigesterUtil.digestHex("SHA-1", buffer);
 	}
 
+	public List<ResourceBlock> getResourceBlocks(
+			long companyId, long groupId, String name, long[] roleIds,
+			long actionId)
+		throws SystemException {
+
+		return resourceBlockFinder.findByC_G_N_R_A(
+			companyId, groupId, name, roleIds, actionId);
+	}
+
 	@Override
 	public void deleteResourceBlock(long resourceBlockId)
 		throws PortalException, SystemException {

@@ -895,6 +895,23 @@
 				portletId LIKE ?
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourceBlockFinder.findByC_G_N_R_A">
+		<![CDATA[
+			SELECT
+				{ResourceBlock.*}
+			FROM
+				ResourceBlock
+			INNER JOIN
+				ResourceBlockPermission ON
+					(ResourceBlock.resourceBlockId = ResourceBlockPermission.resourceBlockId)
+			WHERE
+				(ResourceBlock.companyId = ?) AND
+				(ResourceBlock.groupId = ?) AND
+				(ResourceBlock.name = ?) AND
+				(ResourceBlockPermission.roleId IN ([$ROLE_IDS$])) AND
+				(ResourceBlockPermission.actionIds & [$ACTION_ID$])
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourceFinder.findByName">
 		<![CDATA[
 			SELECT

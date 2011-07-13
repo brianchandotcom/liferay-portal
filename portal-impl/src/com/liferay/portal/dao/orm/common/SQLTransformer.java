@@ -100,6 +100,18 @@ public class SQLTransformer {
 		return sql;
 	}
 
+	private String _replaceBitwiseAnd(String sql) {
+		Matcher matcher = _bitwiseAndPattern.matcher(sql);
+
+		return matcher.replaceAll("BITAND($1, $2)");
+	}
+
+	private String _replaceBitwiseAndDerby(String sql) {
+		Matcher matcher = _bitwiseAndPattern.matcher(sql);
+
+		return matcher.replaceALL("($1 % (2 * $2) >= $2)")
+	}
+
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
@@ -167,6 +179,7 @@ public class SQLTransformer {
 
 		if (_vendorDerby) {
 			newSQL = _replaceUnion(newSQL);
+			newSQL = _replaceBitwiseAndDerby(newSQL);
 		}
 		else if (_vendorMySQL) {
 			DB db = DBFactoryUtil.getDB();
@@ -174,6 +187,9 @@ public class SQLTransformer {
 			if (!db.isSupportsStringCaseSensitiveQuery()) {
 				newSQL = _removeLower(newSQL);
 			}
+		}
+		else if (_vendorDB2 || _vendorOracle) {
+			newSQL = _replaceBitwiseAnd(newSQL);
 		}
 		else if (_vendorPostgreSQL) {
 			newSQL = _replaceNegativeComparison(newSQL);
@@ -197,6 +213,8 @@ public class SQLTransformer {
 
 	private static SQLTransformer _instance = new SQLTransformer();
 
+	private static Pattern _bitwiseAndPattern = Pattern.compile(
+		"\\((.+?) & (.+?)\\)");
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(

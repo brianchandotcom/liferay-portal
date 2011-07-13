@@ -175,6 +175,12 @@ public class EditArticleAction extends PortletAction {
 
 				WindowState windowState = actionRequest.getWindowState();
 
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Layout layout = themeDisplay.getLayout();
+
 				if (cmd.equals(Constants.DELETE_TRANSLATION) ||
 					cmd.equals(Constants.TRANSLATE)) {
 
@@ -182,7 +188,9 @@ public class EditArticleAction extends PortletAction {
 						actionRequest,
 						"portlet.journal.update_translation_redirect");
 				}
-				else if (!windowState.equals(LiferayWindowState.POP_UP)) {
+				else if (!windowState.equals(LiferayWindowState.POP_UP) &&
+					layout.isTypeControlPanel()) {
+
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {

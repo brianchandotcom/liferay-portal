@@ -220,9 +220,7 @@ public class DLIndexer extends BaseIndexer {
 		catch (WindowStateException wse) {
 		}
 
-		String fileName = document.get("path");
-
-		String title = fileName;
+		String title = document.get(Field.TITLE);
 
 		String content = snippet;
 

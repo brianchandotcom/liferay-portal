@@ -65,6 +65,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.lucene.document.NumericField;
@@ -467,10 +468,17 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 	}
 
 	protected String getSnippet(
-			org.apache.lucene.document.Document doc, Query query, String field)
+			org.apache.lucene.document.Document doc, Query query, String field,
+			Locale locale)
 		throws IOException {
 
-		String[] values = doc.getValues(field);
+		String localizedName = DocumentImpl.getLocalizedName(locale, field);
+
+		String[] values = doc.getValues(localizedName);
+
+		if (Validator.isNull(values)) {
+			values = doc.getValues(field);
+		}
 
 		String snippet = null;
 
@@ -557,17 +565,17 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 
 				Document subsetDocument = getDocument(document);
 
-				subsetDocs.add(subsetDocument);
+				String subsetSnippet = StringPool.BLANK;
 
 				if (highlightEnabled) {
-					String subsetSnippet = getSnippet(
-						document, query, Field.CONTENT);
+					subsetSnippet = getSnippet(
+						document, query, Field.CONTENT,
+						queryConfig.getLocale());
+				}
 
-					subsetSnippets.add(subsetSnippet);
-				}
-				else {
-					subsetSnippets.add(StringPool.BLANK);
-				}
+				subsetDocument.addText(Field.SNIPPET, subsetSnippet);
+				subsetSnippets.add(subsetSnippet);
+				subsetDocs.add(subsetDocument);
 
 				Float subsetScore = hitDocs.getScore(i) / scoredFieldNamesCount;
 

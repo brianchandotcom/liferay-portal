@@ -358,7 +358,9 @@ public class PortletPreferencesLocalServiceImpl
 					companyId, ownerId, ownerType, plid, portletId,
 					portletPreferences.getPreferences());
 
-			preferencesPool.put(key, portletPreferencesImpl);
+			synchronized (preferencesPool) {
+				preferencesPool.put(key, portletPreferencesImpl);
+			}
 		}
 
 		return (PortletPreferencesImpl)portletPreferencesImpl.clone();

@@ -1474,12 +1474,18 @@ public class LayoutTypePortletImpl
 			columnValue = getTypeSettingsProperties().getProperty(columnId);
 		}
 
-		if (StringUtil.contains(columnValue, portletId)) {
-			return true;
+		String[] columnValues = StringUtil.split(columnValue);
+
+		for (String nonstaticPortletId : columnValues) {
+			if (nonstaticPortletId.equals(portletId) ||
+				nonstaticPortletId.startsWith(
+					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean hasStaticPortletId(String columnId, String portletId)
@@ -1492,13 +1498,19 @@ public class LayoutTypePortletImpl
 			PropsKeys.LAYOUT_STATIC_PORTLETS_END + columnId);
 
 		for (String staticPortletId : staticPortletIdsStart) {
-			if (staticPortletId.equals(portletId)) {
+			if (staticPortletId.equals(portletId) ||
+				staticPortletId.startsWith(
+					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+
 				return true;
 			}
 		}
 
 		for (String staticPortletId : staticPortletIdsEnd) {
-			if (staticPortletId.equals(portletId)) {
+			if (staticPortletId.equals(portletId) ||
+				staticPortletId.startsWith(
+					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+
 				return true;
 			}
 		}

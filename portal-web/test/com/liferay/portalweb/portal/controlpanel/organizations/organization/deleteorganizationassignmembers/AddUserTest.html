@@ -14,354 +14,134 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_prefixId</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td>label=Mr.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test01@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium01</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_suffixId</td>
+	<td>//select[@id='_125_suffixId']</td>
 	<td>label=Phd.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayMonth</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
 	<td>label=April</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayDay</td>
+	<td>//select[@id='_125_birthdayDay']</td>
 	<td>label=10</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayYear</td>
+	<td>//select[@id='_125_birthdayYear']</td>
 	<td>label=1986</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_male</td>
+	<td>//select[@id='_125_male']</td>
 	<td>label=Male</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test01@selenium.com</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium01</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[@id='_125_passwordLink']</td>
-	<td>Password Link</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_125_password1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_125_password1</td>
-	<td>password</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_125_password2</td>
-	<td>password</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Sign In']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_58_login</td>
-	<td>email address</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_58_login</td>
-	<td>test01@selenium.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_58_password</td>
-	<td>password</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_58_rememberMeCheckbox'))</td>
-	<td>rememberMeCheckboxChecked1</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${rememberMeCheckboxChecked1}</td>
-	<td>RememberMeCheckboxChecked1</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>RememberMeCheckboxChecked1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Sign In']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span/input'))</td>
-	<td>iAgreeVisible1</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${iAgreeVisible1}</td>
-	<td>IAgreeNotVisible1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='I Agree']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>IAgreeNotVisible1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span/input'))</td>
-	<td>newPasswordVisible1</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${newPasswordVisible1}</td>
-	<td>NewPasswordVisible1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>password1</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>password2</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>NewPasswordVisible1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('reminderQueryAnswer'))</td>
-	<td>passwordReminderVisible1</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${passwordReminderVisible1}</td>
-	<td>PasswordReminderNotVisible1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//form/div[1]</td>
-	<td>Please choose a reminder query.</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>reminderQueryAnswer</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>PasswordReminderNotVisible1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Sign In']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_58_login</td>
-	<td>email address</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_58_login</td>
-	<td>test@liferay.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_58_password</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_58_rememberMeCheckbox'))</td>
-	<td>rememberMeCheckboxChecked2</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${rememberMeCheckboxChecked2}</td>
-	<td>RememberMeCheckboxChecked2</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>RememberMeCheckboxChecked2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Sign In']</td>
-	<td></td>
 </tr>
 
 </tbody></table>

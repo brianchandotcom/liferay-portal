@@ -10,88 +10,78 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/selenium/home</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Merge Pages</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//a[@id='_134_advancedLink']</td>
+	<td>Advanced</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_126_mergeGuestPublicPagesCheckbox</td>
-	<td></td>
+	<td>//a[@id='_134_advancedLink']</td>
+	<td>Advanced</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_134_mergeGuestPublicPagesCheckbox']</td>
+	<td>Merge Liferay public pages</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_134_mergeGuestPublicPagesCheckbox']</td>
+	<td>Merge Liferay public pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -99,8 +89,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 

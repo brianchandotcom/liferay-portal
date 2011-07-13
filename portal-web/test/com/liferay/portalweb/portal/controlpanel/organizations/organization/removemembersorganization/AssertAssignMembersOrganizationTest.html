@@ -14,74 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic1Visible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basic1Visible}</td>
-	<td>Basic1NotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Basic1NotVisible</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Assign Members</td>
+	<td>//a[2]/strong</td>
+	<td>Selenium</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Assign Members</td>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Selenium</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Assign Members</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>selen01 lenn nium01</td>
+	<td>assertElementPresent</td>
+	<td>link=selen01</td>
+	<td>selen01</td>
 </tr>
 
 </tbody></table>

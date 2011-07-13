@@ -80,7 +80,14 @@ PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutP
 
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
-PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
+PortletPreferences portletPreferences = null;
+
+if (PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
+	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+}
+else {
+	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
+}
 
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
 

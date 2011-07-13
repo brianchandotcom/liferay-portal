@@ -188,7 +188,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<!--<component name="FieldWrapper">
+	<component name="FieldWrapper" bodyContent="true">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>
@@ -199,8 +199,8 @@
 			</attribute>
 			<attribute>
 				<name>first</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -213,8 +213,8 @@
 			</attribute>
 			<attribute>
 				<name>inlineField</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -234,8 +234,8 @@
 			</attribute>
 			<attribute>
 				<name>last</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -246,8 +246,15 @@
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
+			<attribute>
+				<name>required</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 	<component name="Form" bodyContent="true">
 		<attributes>
 			<attribute>

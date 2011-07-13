@@ -14,27 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/aui/field_wrapper/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:cssClass"));
-boolean first = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:first"));
-String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:helpMessage"));
-boolean inlineField = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:inlineField"));
-String inlineLabel = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:inlineLabel"));
-String label = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:label"));
-String name = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:name"));
-boolean last = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:last"));
-boolean required = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:required"));
-
-boolean showForLabel = false;
-
-if (Validator.isNotNull(name)) {
-	showForLabel = true;
-
-	name = namespace + name;
-}
-
 String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "wrapper", inlineField, false, false, first, last, cssClass);
 %>
 

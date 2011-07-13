@@ -1056,6 +1056,80 @@ release was successful.</echo>
 		<mkdir dir="${app.server.tomcat.dir}/webapps" />
 	</target>
 
+	<target name="unzip-weblogic">
+		<delete dir="${app.server.weblogic.server.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
+			</not>
+			<then>
+				<get
+					dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+					src="${app.server.weblogic.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="${app.server.weblogic.server.dir}"
+			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+		/>
+
+		<condition property="isWindows">
+			<os family="windows" />
+		</condition>
+
+		<if>
+			<isset property="isWindows"/>
+			<then>
+				<exec dir="${app.server.weblogic.server.dir}" executable="cmd">
+					<env key="MW_HOME" value="${app.server.weblogic.server.dir}"/>
+					<arg value="/c" />
+					<arg value="configure.cmd" />
+				</exec>
+
+				<exec dir="tools/servers/weblogic" executable="cmd">
+					<arg value="/c" />
+					<arg value="create-weblogic-domain.bat" />
+					<arg value="${app.server.weblogic.server.dir}" />
+					<arg value="${app.server.weblogic.domains.dir}" />
+					<arg value="${app.server.weblogic.domain.name}" />
+				</exec>
+
+				<echo file="${app.server.weblogic.dir}/run.bat">@echo off
+
+set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+set "MW_HOME=${app.server.weblogic.server.dir}"
+
+call startWebLogic.cmd</echo>
+			</then>
+			<else>
+				<exec dir="${app.server.weblogic.server.dir}" executable="sh">
+					<env key="MW_HOME" value="${app.server.weblogic.server.dir}"/>
+					<arg value="configure.sh" />
+				</exec>
+
+				<exec dir="tools/servers/weblogic" executable="sh">
+					<arg value="create-weblogic-domain${file.suffix.bat}" />
+					<arg value="${app.server.weblogic.server.dir}" />
+					<arg value="${app.server.weblogic.domains.dir}" />
+					<arg value="${app.server.weblogic.domain.name}" />
+				</exec>
+
+				<echo file="${app.server.weblogic.dir}/run.sh">#!/bin/sh
+
+export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+export MW_HOME="${app.server.weblogic.server.dir}"
+
+sh startWebLogic.sh</echo>
+
+				<chmod file="${app.server.weblogic.dir}/run.sh" perm="750"/>
+			</else>
+		</if>
+	</target>
+
 	<target name="zip-api">
 		<delete file="dist/liferay-portal-doc-${lp.version}.zip" failonerror="false" />
 

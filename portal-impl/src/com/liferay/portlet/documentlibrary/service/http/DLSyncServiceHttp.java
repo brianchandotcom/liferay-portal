@@ -54,15 +54,14 @@ import com.liferay.portlet.documentlibrary.service.DLSyncServiceUtil;
  * @generated
  */
 public class DLSyncServiceHttp {
-	public static java.io.InputStream getFileEntryDeltaAsStream(
+	public static java.io.InputStream getFileDeltaAsStream(
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
-					"getFileEntryDeltaAsStream",
-					_getFileEntryDeltaAsStreamParameterTypes0);
+					"getFileDeltaAsStream", _getFileDeltaAsStreamParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceVersion, destinationVersion);
@@ -138,7 +137,7 @@ public class DLSyncServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLSyncServiceHttp.class);
-	private static final Class<?>[] _getFileEntryDeltaAsStreamParameterTypes0 = new Class[] {
+	private static final Class<?>[] _getFileDeltaAsStreamParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateFileEntryParameterTypes1 = new Class[] {

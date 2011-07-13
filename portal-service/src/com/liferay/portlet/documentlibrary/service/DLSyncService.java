@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
@@ -41,8 +40,7 @@ public interface DLSyncService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLSyncServiceUtil} to access the d l sync remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLSyncServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.InputStream getFileEntryDeltaAsStream(long fileEntryId,
+	public java.io.InputStream getFileDeltaAsStream(long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

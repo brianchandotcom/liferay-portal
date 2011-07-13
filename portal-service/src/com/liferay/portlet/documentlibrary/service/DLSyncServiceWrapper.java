@@ -28,12 +28,12 @@ public class DLSyncServiceWrapper implements DLSyncService {
 		_dlSyncService = dlSyncService;
 	}
 
-	public java.io.InputStream getFileEntryDeltaAsStream(long fileEntryId,
+	public java.io.InputStream getFileDeltaAsStream(long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlSyncService.getFileEntryDeltaAsStream(fileEntryId,
-			sourceVersion, destinationVersion);
+		return _dlSyncService.getFileDeltaAsStream(fileEntryId, sourceVersion,
+			destinationVersion);
 	}
 
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(

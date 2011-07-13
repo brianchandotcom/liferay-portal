@@ -109,7 +109,7 @@ public class SQLTransformer {
 	private String _replaceBitwiseAndDerby(String sql) {
 		Matcher matcher = _bitwiseAndPattern.matcher(sql);
 
-		return matcher.replaceALL("($1 % (2 * $2) >= $2)")
+		return matcher.replaceAll("($1 % (2 * $2) >= $2)");
 	}
 
 	private String _replaceCastText(String sql) {

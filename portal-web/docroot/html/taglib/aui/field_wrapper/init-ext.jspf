@@ -14,20 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/field_wrapper/init.jsp" %>
+<%
+boolean showForLabel = false;
 
-		<c:if test='<%= inlineLabel.equals("right") %>'>
-			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name) %>>
-				<liferay-ui:message key="<%= label %>" />
+if (Validator.isNotNull(name)) {
+	showForLabel = true;
 
-				<c:if test="<%= required %>">
-					<span class="aui-label-required">(<liferay-ui:message key="required" />)</span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</label>
-		</c:if>
-	</div>
-</div>
+	name = namespace + name;
+}
+%>

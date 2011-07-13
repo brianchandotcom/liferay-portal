@@ -29,7 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ENTRY) %>">
+	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_RECORD_SET) %>">
 		<portlet:renderURL var="addRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -37,5 +37,24 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>"><a href="<%= addRecordSetURL %>"><liferay-ui:message key="add" /></a></span>
+
+		<span class="lfr-toolbar-button view-structures <%= toolbarItem.equals("manage-data-definitions") ? "current" : StringPool.BLANK %>"><a href="javascript:void(0);" id="<portlet:namespace />manageDDMStructuresLink"><liferay-ui:message key="manage-data-definitions" /></a></span>
 	</c:if>
 </div>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
+		Liferay.Util.openDDMPortlet(
+			{
+				dialog: {
+					stack: false,
+					width:820
+				},
+				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+				structureName: 'data-definition',
+				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+				title: '<liferay-ui:message key="data-definitions" />'
+			}
+		);
+	});
+</aui:script>

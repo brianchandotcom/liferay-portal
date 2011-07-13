@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourceBlockPermissionModel;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
@@ -190,6 +191,19 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public void resetOriginalValues() {
+	}
+
+	@Override
+	public CacheModel<ResourceBlockPermission> toCacheModel() {
+		ResourceBlockPermissionCacheModel resourceBlockPermissionCacheModel = new ResourceBlockPermissionCacheModel();
+
+		resourceBlockPermissionCacheModel.resourceBlockId = getResourceBlockId();
+
+		resourceBlockPermissionCacheModel.roleId = getRoleId();
+
+		resourceBlockPermissionCacheModel.actionIds = getActionIds();
+
+		return resourceBlockPermissionCacheModel;
 	}
 
 	@Override

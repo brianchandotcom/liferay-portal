@@ -59,7 +59,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @return the new resource block permission
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission create(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK);
+		ResourceBlockPermissionPK resourceBlockPermissionPK);
 
 	/**
 	* Removes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
@@ -70,7 +70,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission remove(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -88,7 +88,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission findByPrimaryKey(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -100,7 +100,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission fetchByPrimaryKey(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK)
+		ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -203,7 +203,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK,
+		ResourceBlockPermissionPK resourceBlockPermissionPK,
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
@@ -315,8 +315,8 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission[] findByR_A_PrevAndNext(
-		com.liferay.portal.service.persistence.ResourceBlockPermissionPK resourceBlockPermissionPK,
-		long roleId, long actionIds,
+		ResourceBlockPermissionPK resourceBlockPermissionPK, long roleId,
+		long actionIds,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
 			com.liferay.portal.kernel.exception.SystemException;

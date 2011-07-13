@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockModel;
 import com.liferay.portal.service.ServiceContext;
@@ -278,6 +279,37 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		resourceBlockModelImpl._setOriginalGroupId = false;
 
 		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
+	}
+
+	@Override
+	public CacheModel<ResourceBlock> toCacheModel() {
+		ResourceBlockCacheModel resourceBlockCacheModel = new ResourceBlockCacheModel();
+
+		resourceBlockCacheModel.resourceBlockId = getResourceBlockId();
+
+		resourceBlockCacheModel.companyId = getCompanyId();
+
+		resourceBlockCacheModel.groupId = getGroupId();
+
+		resourceBlockCacheModel.name = getName();
+
+		String name = resourceBlockCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			resourceBlockCacheModel.name = null;
+		}
+
+		resourceBlockCacheModel.permissionsHash = getPermissionsHash();
+
+		String permissionsHash = resourceBlockCacheModel.permissionsHash;
+
+		if ((permissionsHash != null) && (permissionsHash.length() == 0)) {
+			resourceBlockCacheModel.permissionsHash = null;
+		}
+
+		resourceBlockCacheModel.referenceCount = getReferenceCount();
+
+		return resourceBlockCacheModel;
 	}
 
 	@Override

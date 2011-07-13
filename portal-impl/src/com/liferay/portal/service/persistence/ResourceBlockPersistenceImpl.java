@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockImpl;
@@ -1986,6 +1987,16 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static ResourceBlock _nullResourceBlock = new ResourceBlockImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ResourceBlock> toCacheModel() {
+				return _nullResourceBlockCacheModel;
+			}
+		};
+
+	private static CacheModel<ResourceBlock> _nullResourceBlockCacheModel = new CacheModel<ResourceBlock>() {
+			public ResourceBlock toEntityModel() {
+				return _nullResourceBlock;
 			}
 		};
 }

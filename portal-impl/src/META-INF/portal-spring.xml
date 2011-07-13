@@ -120,6 +120,7 @@
 	<bean id="com.liferay.portal.service.persistence.ResourceActionPersistence" class="com.liferay.portal.service.persistence.ResourceActionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockLocalService" class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.ResourceBlockFinder" class="com.liferay.portal.service.persistence.ResourceBlockFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockPermissionLocalService" class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceCodeLocalService" class="com.liferay.portal.service.impl.ResourceCodeLocalServiceImpl" />

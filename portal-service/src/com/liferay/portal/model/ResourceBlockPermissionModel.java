@@ -123,6 +123,8 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 
 	public int hashCode();
 
+	public CacheModel<ResourceBlockPermission> toCacheModel();
+
 	public ResourceBlockPermission toEscapedModel();
 
 	public String toString();

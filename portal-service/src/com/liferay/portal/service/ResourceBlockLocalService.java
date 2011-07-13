@@ -271,6 +271,12 @@ public interface ResourceBlockLocalService {
 	public java.lang.String getPermissionsHash(
 		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ResourceBlock> getResourceBlocks(
+		long companyId, long groupId, java.lang.String name, long[] roleIds,
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Increments the reference count of the resource block and updates it in
 	* the database.

@@ -175,6 +175,7 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
@@ -2627,6 +2628,24 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the resource block finder.
+	 *
+	 * @return the resource block finder
+	 */
+	public ResourceBlockFinder getResourceBlockFinder() {
+		return resourceBlockFinder;
+	}
+
+	/**
+	 * Sets the resource block finder.
+	 *
+	 * @param resourceBlockFinder the resource block finder
+	 */
+	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+		this.resourceBlockFinder = resourceBlockFinder;
+	}
+
+	/**
 	 * Returns the resource block permission local service.
 	 *
 	 * @return the resource block permission local service
@@ -4037,6 +4056,8 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockFinder.class)
+	protected ResourceBlockFinder resourceBlockFinder;
 	@BeanReference(type = ResourceBlockPermissionLocalService.class)
 	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)

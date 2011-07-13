@@ -170,6 +170,7 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
@@ -2498,6 +2499,24 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	public void setResourceBlockPersistence(
 		ResourceBlockPersistence resourceBlockPersistence) {
 		this.resourceBlockPersistence = resourceBlockPersistence;
+	}
+
+	/**
+	 * Returns the resource block finder.
+	 *
+	 * @return the resource block finder
+	 */
+	public ResourceBlockFinder getResourceBlockFinder() {
+		return resourceBlockFinder;
+	}
+
+	/**
+	 * Sets the resource block finder.
+	 *
+	 * @param resourceBlockFinder the resource block finder
+	 */
+	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+		this.resourceBlockFinder = resourceBlockFinder;
 	}
 
 	/**
@@ -5215,6 +5234,8 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockFinder.class)
+	protected ResourceBlockFinder resourceBlockFinder;
 	@BeanReference(type = ResourceBlockPermissionLocalService.class)
 	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)

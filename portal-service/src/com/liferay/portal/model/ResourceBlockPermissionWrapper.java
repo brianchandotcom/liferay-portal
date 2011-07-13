@@ -156,8 +156,7 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission {
 		return new ResourceBlockPermissionWrapper((ResourceBlockPermission)_resourceBlockPermission.clone());
 	}
 
-	public int compareTo(
-		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission) {
+	public int compareTo(ResourceBlockPermission resourceBlockPermission) {
 		return _resourceBlockPermission.compareTo(resourceBlockPermission);
 	}
 
@@ -166,7 +165,11 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission {
 		return _resourceBlockPermission.hashCode();
 	}
 
-	public com.liferay.portal.model.ResourceBlockPermission toEscapedModel() {
+	public com.liferay.portal.model.CacheModel<ResourceBlockPermission> toCacheModel() {
+		return _resourceBlockPermission.toCacheModel();
+	}
+
+	public ResourceBlockPermission toEscapedModel() {
 		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toEscapedModel());
 	}
 

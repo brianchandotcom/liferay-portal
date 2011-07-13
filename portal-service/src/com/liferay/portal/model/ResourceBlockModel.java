@@ -167,6 +167,8 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
 
 	public int hashCode();
 
+	public CacheModel<ResourceBlock> toCacheModel();
+
 	public ResourceBlock toEscapedModel();
 
 	public String toString();

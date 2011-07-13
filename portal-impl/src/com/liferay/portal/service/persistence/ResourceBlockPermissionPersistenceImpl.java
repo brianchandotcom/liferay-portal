@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
@@ -1602,6 +1603,17 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	private static ResourceBlockPermission _nullResourceBlockPermission = new ResourceBlockPermissionImpl() {
 			public Object clone() {
 				return this;
+			}
+
+			public CacheModel<ResourceBlockPermission> toCacheModel() {
+				return _nullResourceBlockPermissionCacheModel;
+			}
+		};
+
+	private static CacheModel<ResourceBlockPermission> _nullResourceBlockPermissionCacheModel =
+		new CacheModel<ResourceBlockPermission>() {
+			public ResourceBlockPermission toEntityModel() {
+				return _nullResourceBlockPermission;
 			}
 		};
 }

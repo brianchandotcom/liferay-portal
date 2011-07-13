@@ -301,6 +301,15 @@ public class ResourceBlockLocalServiceUtil {
 		return getService().getPermissionsHash(resourcePermissions);
 	}
 
+	public static java.util.List<com.liferay.portal.model.ResourceBlock> getResourceBlocks(
+		long companyId, long groupId, java.lang.String name, long[] roleIds,
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourceBlocks(companyId, groupId, name, roleIds,
+			actionId);
+	}
+
 	/**
 	* Increments the reference count of the resource block and updates it in
 	* the database.

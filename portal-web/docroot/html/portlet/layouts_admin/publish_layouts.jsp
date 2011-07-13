@@ -182,8 +182,8 @@ selectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 selectURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 selectURL.setParameter(Constants.CMD, cmd);
 selectURL.setParameter("pagesRedirect", pagesRedirect);
-selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("groupId", String.valueOf(stagingGroupId));
+selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setParameter("schedule", String.valueOf(schedule));
 

@@ -50,7 +50,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 	TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
 	searchTerms.setStructureId(StringPool.BLANK);
-	searchTerms.setStructureIdComparator(StringPool.NOT_EQUAL);
+	searchTerms.setStructureIdComparator(StringPool.NOT_LIKE);
 	%>
 
 	<%@ include file="/html/portlet/journal/template_search_results.jspf" %>

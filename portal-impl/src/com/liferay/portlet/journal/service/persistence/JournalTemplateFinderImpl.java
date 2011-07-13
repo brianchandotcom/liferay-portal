@@ -110,7 +110,7 @@ public class JournalTemplateFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "templateId", StringPool.LIKE, false, templateIds);
 
-			if (structureIdComparator.equals(StringPool.NOT_EQUAL)) {
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
 				sql = replaceStructureIdComparator(sql);
 			}
 
@@ -131,7 +131,7 @@ public class JournalTemplateFinderImpl
 			qPos.add(groupIds);
 			qPos.add(templateIds, 2);
 
-			if (structureIdComparator.equals(StringPool.EQUAL)) {
+			if (structureIdComparator.equals(StringPool.LIKE)) {
 				qPos.add(structureId);
 				qPos.add(structureId);
 			}
@@ -139,7 +139,7 @@ public class JournalTemplateFinderImpl
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
-			if (structureIdComparator.equals(StringPool.NOT_EQUAL)) {
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
 				if (CustomSQLUtil.isVendorOracle()) {
 				}
 				else {
@@ -233,7 +233,7 @@ public class JournalTemplateFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "templateId", StringPool.LIKE, false, templateIds);
 
-			if (structureIdComparator.equals(StringPool.NOT_EQUAL)) {
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
 				sql = replaceStructureIdComparator(sql);
 			}
 
@@ -255,7 +255,7 @@ public class JournalTemplateFinderImpl
 			qPos.add(groupIds);
 			qPos.add(templateIds, 2);
 
-			if (structureIdComparator.equals(StringPool.EQUAL)) {
+			if (structureIdComparator.equals(StringPool.LIKE)) {
 				qPos.add(structureId);
 				qPos.add(structureId);
 			}
@@ -263,7 +263,7 @@ public class JournalTemplateFinderImpl
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
-			if (structureIdComparator.equals(StringPool.NOT_EQUAL)) {
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
 				if (CustomSQLUtil.isVendorOracle()) {
 				}
 				else {
@@ -301,7 +301,7 @@ public class JournalTemplateFinderImpl
 	}
 
 	protected String replaceStructureIdComparator(String sql) {
-		String insertSQL = "structureId != ? AND structureId IS NOT NULL";
+		String insertSQL = "structureId NOT LIKE ? AND structureId IS NOT NULL";
 
 		if (CustomSQLUtil.isVendorOracle()) {
 			insertSQL = "structureId IS NOT NULL";
@@ -310,7 +310,7 @@ public class JournalTemplateFinderImpl
 		insertSQL = " AND (" + insertSQL + ") ";
 
 		String removeSQL =
-			"(structureId = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";
+			"(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";
 
 		sql = StringUtil.replace(sql, removeSQL, StringPool.BLANK);
 

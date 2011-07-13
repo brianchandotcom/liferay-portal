@@ -218,7 +218,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<%
 			TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
-			searchTerms.setStructureIdComparator(StringPool.EQUAL);
+			searchTerms.setStructureIdComparator(StringPool.LIKE);
 			%>
 
 			<%@ include file="/html/portlet/journal/template_search_results.jspf" %>

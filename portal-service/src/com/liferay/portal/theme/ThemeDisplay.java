@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.mobile.model.DeviceProfile;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Company;
@@ -124,6 +125,10 @@ public class ThemeDisplay implements Serializable {
 
 	public Device getDevice() {
 		return _device;
+	}
+
+	public DeviceProfile getDeviceProfile() {
+		return _deviceProfile;
 	}
 
 	public long getDoAsGroupId() {
@@ -740,6 +745,10 @@ public class ThemeDisplay implements Serializable {
 		_device = device;
 	}
 
+	public void setDeviceProfile(DeviceProfile deviceProfile) {
+		_deviceProfile = deviceProfile;
+	}
+
 	public void setDoAsGroupId(long doAsGroupId) {
 		_doAsGroupId = doAsGroupId;
 	}
@@ -1263,6 +1272,7 @@ public class ThemeDisplay implements Serializable {
 	private String _controlPanelCategory = StringPool.BLANK;
 	private User _defaultUser;
 	private Device _device;
+	private DeviceProfile _deviceProfile;
 	private long _doAsGroupId = 0;
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;

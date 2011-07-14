@@ -29,7 +29,7 @@ import com.liferay.portal.model.LayoutSet;
 public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{layoutSetId=");
 		sb.append(layoutSetId);
@@ -51,6 +51,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 		sb.append(wapThemeId);
 		sb.append(", wapColorSchemeId=");
 		sb.append(wapColorSchemeId);
+		sb.append(", deviceProfileId=");
+		sb.append(deviceProfileId);
 		sb.append(", css=");
 		sb.append(css);
 		sb.append(", pageCount=");
@@ -102,6 +104,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 			layoutSetImpl.setWapColorSchemeId(wapColorSchemeId);
 		}
 
+		layoutSetImpl.setDeviceProfileId(deviceProfileId);
+
 		if (css == null) {
 			layoutSetImpl.setCss(StringPool.BLANK);
 		}
@@ -135,6 +139,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 	public String colorSchemeId;
 	public String wapThemeId;
 	public String wapColorSchemeId;
+	public long deviceProfileId;
 	public String css;
 	public int pageCount;
 	public String settings;

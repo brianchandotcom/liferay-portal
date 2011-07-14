@@ -230,6 +230,11 @@ public interface LayoutSetLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
+		long layoutSetId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -240,6 +245,15 @@ public interface LayoutSetLocalService {
 		java.lang.String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.LayoutSet updateDeviceProfile(
+		long layoutSetId,
+		com.liferay.portal.mobile.model.DeviceProfile deviceProfile)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.LayoutSet updateDeviceProfile(
+		long layoutSetId, long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
 		java.io.File file)

@@ -248,6 +248,12 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService {
 		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout);
 	}
 
+	public com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
+		long layoutSetId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.fetchByPrimaryKey(layoutSetId);
+	}
+
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -260,6 +266,21 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSetLocalService.getLayoutSet(virtualHostname);
+	}
+
+	public com.liferay.portal.model.LayoutSet updateDeviceProfile(
+		long layoutSetId,
+		com.liferay.portal.mobile.model.DeviceProfile deviceProfile)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.updateDeviceProfile(layoutSetId,
+			deviceProfile);
+	}
+
+	public com.liferay.portal.model.LayoutSet updateDeviceProfile(
+		long layoutSetId, long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.updateDeviceProfile(layoutSetId,
+			deviceProfileId);
 	}
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,

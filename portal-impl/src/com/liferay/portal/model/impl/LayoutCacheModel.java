@@ -31,7 +31,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -77,6 +77,8 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 		sb.append(themeId);
 		sb.append(", colorSchemeId=");
 		sb.append(colorSchemeId);
+		sb.append(", deviceProfileId=");
+		sb.append(deviceProfileId);
 		sb.append(", wapThemeId=");
 		sb.append(wapThemeId);
 		sb.append(", wapColorSchemeId=");
@@ -199,6 +201,8 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 			layoutImpl.setColorSchemeId(colorSchemeId);
 		}
 
+		layoutImpl.setDeviceProfileId(deviceProfileId);
+
 		if (wapThemeId == null) {
 			layoutImpl.setWapThemeId(StringPool.BLANK);
 		}
@@ -250,6 +254,7 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 	public long iconImageId;
 	public String themeId;
 	public String colorSchemeId;
+	public long deviceProfileId;
 	public String wapThemeId;
 	public String wapColorSchemeId;
 	public String css;

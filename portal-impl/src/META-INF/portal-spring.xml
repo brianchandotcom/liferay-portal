@@ -430,4 +430,10 @@
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder" class="com.liferay.portlet.wiki.service.persistence.WikiPageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.wiki.service.WikiPageResourceLocalService" class="com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.mobile.service.DeviceProfileLocalService" class="com.liferay.portal.mobile.service.impl.DeviceProfileLocalServiceImpl" />
+	<bean id="com.liferay.portal.mobile.service.persistence.DeviceProfilePersistence" class="com.liferay.portal.mobile.service.persistence.DeviceProfilePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.mobile.service.DeviceProfileActionLocalService" class="com.liferay.portal.mobile.service.impl.DeviceProfileActionLocalServiceImpl" />
+	<bean id="com.liferay.portal.mobile.service.persistence.DeviceProfileActionPersistence" class="com.liferay.portal.mobile.service.persistence.DeviceProfileActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.mobile.service.DeviceProfileRuleLocalService" class="com.liferay.portal.mobile.service.impl.DeviceProfileRuleLocalServiceImpl" />
+	<bean id="com.liferay.portal.mobile.service.persistence.DeviceProfileRulePersistence" class="com.liferay.portal.mobile.service.persistence.DeviceProfileRulePersistenceImpl" parent="basePersistence" />
 </beans>

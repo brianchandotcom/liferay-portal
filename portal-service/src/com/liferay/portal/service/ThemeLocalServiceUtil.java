@@ -56,6 +56,18 @@ public class ThemeLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.model.ColorScheme findColorScheme(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findColorScheme(companyId, themeId, colorSchemeId);
+	}
+
+	public static com.liferay.portal.model.Theme findTheme(long companyId,
+		java.lang.String themeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findTheme(companyId, themeId);
+	}
+
 	public static com.liferay.portal.model.ColorScheme getColorScheme(
 		long companyId, java.lang.String themeId,
 		java.lang.String colorSchemeId, boolean wapTheme)

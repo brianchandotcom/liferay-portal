@@ -85,6 +85,8 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 
 		newLayoutSet.setWapColorSchemeId(randomString());
 
+		newLayoutSet.setDeviceProfileId(nextLong());
+
 		newLayoutSet.setCss(randomString());
 
 		newLayoutSet.setPageCount(nextInt());
@@ -113,6 +115,8 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 			newLayoutSet.getWapThemeId());
 		assertEquals(existingLayoutSet.getWapColorSchemeId(),
 			newLayoutSet.getWapColorSchemeId());
+		assertEquals(existingLayoutSet.getDeviceProfileId(),
+			newLayoutSet.getDeviceProfileId());
 		assertEquals(existingLayoutSet.getCss(), newLayoutSet.getCss());
 		assertEquals(existingLayoutSet.getPageCount(),
 			newLayoutSet.getPageCount());
@@ -263,6 +267,8 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 		layoutSet.setWapThemeId(randomString());
 
 		layoutSet.setWapColorSchemeId(randomString());
+
+		layoutSet.setDeviceProfileId(nextLong());
 
 		layoutSet.setCss(randomString());
 

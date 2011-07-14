@@ -1,0 +1,417 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.mobile.service.persistence;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.mobile.model.DeviceProfileRule;
+import com.liferay.portal.service.persistence.BasePersistence;
+
+/**
+ * The persistence interface for the device profile rule service.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Edward C. Han
+ * @see DeviceProfileRulePersistenceImpl
+ * @see DeviceProfileRuleUtil
+ * @generated
+ */
+public interface DeviceProfileRulePersistence extends BasePersistence<DeviceProfileRule> {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link DeviceProfileRuleUtil} to access the device profile rule persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
+	 */
+
+	/**
+	* Caches the device profile rule in the entity cache if it is enabled.
+	*
+	* @param deviceProfileRule the device profile rule
+	*/
+	public void cacheResult(
+		com.liferay.portal.mobile.model.DeviceProfileRule deviceProfileRule);
+
+	/**
+	* Caches the device profile rules in the entity cache if it is enabled.
+	*
+	* @param deviceProfileRules the device profile rules
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> deviceProfileRules);
+
+	/**
+	* Creates a new device profile rule with the primary key. Does not add the device profile rule to the database.
+	*
+	* @param deviceProfileRuleId the primary key for the new device profile rule
+	* @return the new device profile rule
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule create(
+		long deviceProfileRuleId);
+
+	/**
+	* Removes the device profile rule with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param deviceProfileRuleId the primary key of the device profile rule
+	* @return the device profile rule that was removed
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a device profile rule with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule remove(
+		long deviceProfileRuleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	public com.liferay.portal.mobile.model.DeviceProfileRule updateImpl(
+		com.liferay.portal.mobile.model.DeviceProfileRule deviceProfileRule,
+		boolean merge)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the device profile rule with the primary key or throws a {@link com.liferay.portal.mobile.NoSuchProfileRuleException} if it could not be found.
+	*
+	* @param deviceProfileRuleId the primary key of the device profile rule
+	* @return the device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a device profile rule with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule findByPrimaryKey(
+		long deviceProfileRuleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns the device profile rule with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param deviceProfileRuleId the primary key of the device profile rule
+	* @return the device profile rule, or <code>null</code> if a device profile rule with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule fetchByPrimaryKey(
+		long deviceProfileRuleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the device profile rules where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the device profile rules where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @return the range of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByUuid(
+		java.lang.String uuid, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the device profile rules where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first device profile rule in the ordered set where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a matching device profile rule could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns the last device profile rule in the ordered set where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a matching device profile rule could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns the device profile rules before and after the current device profile rule in the ordered set where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileRuleId the primary key of the current device profile rule
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a device profile rule with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule[] findByUuid_PrevAndNext(
+		long deviceProfileRuleId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns all the device profile rules where deviceProfileId = &#63;.
+	*
+	* @param deviceProfileId the device profile ID
+	* @return the matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByDeviceProfileId(
+		long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the device profile rules where deviceProfileId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileId the device profile ID
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @return the range of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByDeviceProfileId(
+		long deviceProfileId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the device profile rules where deviceProfileId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileId the device profile ID
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findByDeviceProfileId(
+		long deviceProfileId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first device profile rule in the ordered set where deviceProfileId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileId the device profile ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a matching device profile rule could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule findByDeviceProfileId_First(
+		long deviceProfileId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns the last device profile rule in the ordered set where deviceProfileId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileId the device profile ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a matching device profile rule could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule findByDeviceProfileId_Last(
+		long deviceProfileId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns the device profile rules before and after the current device profile rule in the ordered set where deviceProfileId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deviceProfileRuleId the primary key of the current device profile rule
+	* @param deviceProfileId the device profile ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next device profile rule
+	* @throws com.liferay.portal.mobile.NoSuchProfileRuleException if a device profile rule with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.mobile.model.DeviceProfileRule[] findByDeviceProfileId_PrevAndNext(
+		long deviceProfileRuleId, long deviceProfileId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.mobile.NoSuchProfileRuleException;
+
+	/**
+	* Returns all the device profile rules.
+	*
+	* @return the device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the device profile rules.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @return the range of device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the device profile rules.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param start the lower bound of the range of device profile rules
+	* @param end the upper bound of the range of device profile rules (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.mobile.model.DeviceProfileRule> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the device profile rules where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the device profile rules where deviceProfileId = &#63; from the database.
+	*
+	* @param deviceProfileId the device profile ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByDeviceProfileId(long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the device profile rules from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of device profile rules where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of device profile rules where deviceProfileId = &#63;.
+	*
+	* @param deviceProfileId the device profile ID
+	* @return the number of matching device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByDeviceProfileId(long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of device profile rules.
+	*
+	* @return the number of device profile rules
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public DeviceProfileRule remove(DeviceProfileRule deviceProfileRule)
+		throws SystemException;
+}

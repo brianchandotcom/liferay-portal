@@ -160,6 +160,9 @@
 	<import class="com.liferay.portlet.wiki.model.WikiNode" />
 	<import class="com.liferay.portlet.wiki.model.WikiPage" />
 	<import class="com.liferay.portlet.wiki.model.WikiPageResource" />
+	<import class="com.liferay.portal.mobile.model.DeviceProfile" />
+	<import class="com.liferay.portal.mobile.model.DeviceProfileAction" />
+	<import class="com.liferay.portal.mobile.model.DeviceProfileRule" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
 		<id name="name" type="java.lang.String">
 			<generator class="assigned" />
@@ -369,6 +372,7 @@
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="deviceProfileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -436,6 +440,7 @@
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="wapThemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="wapColorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="deviceProfileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="pageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
@@ -2481,5 +2486,39 @@
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.mobile.model.impl.DeviceProfileImpl" table="DeviceProfile">
+		<cache usage="read-write" />
+		<id name="deviceProfileId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.mobile.model.impl.DeviceProfileActionImpl" table="DeviceProfileAction">
+		<cache usage="read-write" />
+		<id name="deviceProfileActionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="deviceProfileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="deviceProfileRuleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl" table="DeviceProfileRule">
+		<cache usage="read-write" />
+		<id name="deviceProfileRuleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="deviceProfileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ruleType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ruleTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

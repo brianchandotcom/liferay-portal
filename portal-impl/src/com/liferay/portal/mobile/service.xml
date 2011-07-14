@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+<service-builder package-path="com.liferay.portal.mobile">
+    <author>Edward C. Han</author>
+	<namespace>Device</namespace>
+
+    <entity name="DeviceProfile" local-service="true" remote-service="false" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceProfileId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+    </entity>
+    <entity name="DeviceProfileRule" local-service="true" remote-service="false" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceProfileRuleId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="deviceProfileId" type="long" />
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+        <column name="ruleType" type="String" />
+        <column name="ruleTypeSettings" type="String" />
+
+        <finder name="DeviceProfileId" return-type="Collection">
+            <finder-column name="deviceProfileId" />
+        </finder>
+    </entity>
+    <entity name="DeviceProfileAction" local-service="true" remote-service="false" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceProfileActionId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="deviceProfileId" type="long" />
+        <column name="deviceProfileRuleId" type="long" />
+        <column name="name" type="String"  localized="true" />
+        <column name="description" type="String" localized="true"/>
+        <column name="type" type="String" />
+        <column name="typeSettings" type="String" />
+
+        <finder name="DeviceProfileRuleId" return-type="Collection">
+            <finder-column name="deviceProfileRuleId" />
+        </finder>
+    </entity>
+</service-builder>

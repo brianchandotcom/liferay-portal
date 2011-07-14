@@ -111,6 +111,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		newLayout.setColorSchemeId(randomString());
 
+		newLayout.setDeviceProfileId(nextLong());
+
 		newLayout.setWapThemeId(randomString());
 
 		newLayout.setWapColorSchemeId(randomString());
@@ -153,6 +155,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingLayout.getThemeId(), newLayout.getThemeId());
 		assertEquals(existingLayout.getColorSchemeId(),
 			newLayout.getColorSchemeId());
+		assertEquals(existingLayout.getDeviceProfileId(),
+			newLayout.getDeviceProfileId());
 		assertEquals(existingLayout.getWapThemeId(), newLayout.getWapThemeId());
 		assertEquals(existingLayout.getWapColorSchemeId(),
 			newLayout.getWapColorSchemeId());
@@ -344,6 +348,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 		layout.setThemeId(randomString());
 
 		layout.setColorSchemeId(randomString());
+
+		layout.setDeviceProfileId(nextLong());
 
 		layout.setWapThemeId(randomString());
 

@@ -962,6 +962,24 @@ public class LayoutWrapper implements Layout {
 	}
 
 	/**
+	* Returns the device profile ID of this layout.
+	*
+	* @return the device profile ID of this layout
+	*/
+	public long getDeviceProfileId() {
+		return _layout.getDeviceProfileId();
+	}
+
+	/**
+	* Sets the device profile ID of this layout.
+	*
+	* @param deviceProfileId the device profile ID of this layout
+	*/
+	public void setDeviceProfileId(long deviceProfileId) {
+		_layout.setDeviceProfileId(deviceProfileId);
+	}
+
+	/**
 	* Returns the wap theme ID of this layout.
 	*
 	* @return the wap theme ID of this layout

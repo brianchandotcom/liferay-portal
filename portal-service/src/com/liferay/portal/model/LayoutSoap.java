@@ -53,6 +53,7 @@ public class LayoutSoap implements Serializable {
 		soapModel.setIconImageId(model.getIconImageId());
 		soapModel.setThemeId(model.getThemeId());
 		soapModel.setColorSchemeId(model.getColorSchemeId());
+		soapModel.setDeviceProfileId(model.getDeviceProfileId());
 		soapModel.setWapThemeId(model.getWapThemeId());
 		soapModel.setWapColorSchemeId(model.getWapColorSchemeId());
 		soapModel.setCss(model.getCss());
@@ -298,6 +299,14 @@ public class LayoutSoap implements Serializable {
 		_colorSchemeId = colorSchemeId;
 	}
 
+	public long getDeviceProfileId() {
+		return _deviceProfileId;
+	}
+
+	public void setDeviceProfileId(long deviceProfileId) {
+		_deviceProfileId = deviceProfileId;
+	}
+
 	public String getWapThemeId() {
 		return _wapThemeId;
 	}
@@ -360,6 +369,7 @@ public class LayoutSoap implements Serializable {
 	private long _iconImageId;
 	private String _themeId;
 	private String _colorSchemeId;
+	private long _deviceProfileId;
 	private String _wapThemeId;
 	private String _wapColorSchemeId;
 	private String _css;

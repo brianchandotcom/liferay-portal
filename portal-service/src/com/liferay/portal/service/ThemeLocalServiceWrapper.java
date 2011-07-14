@@ -46,6 +46,19 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService {
 		_themeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.liferay.portal.model.ColorScheme findColorScheme(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.findColorScheme(companyId, themeId,
+			colorSchemeId);
+	}
+
+	public com.liferay.portal.model.Theme findTheme(long companyId,
+		java.lang.String themeId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.findTheme(companyId, themeId);
+	}
+
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
 		boolean wapTheme)

@@ -14,13 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_settings/init.jsp" %>
+<%
+boolean showForLabel = false;
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+if (Validator.isNotNull(name)) {
+	showForLabel = true;
 
-<liferay-ui:error exception="<%= NoSuchGroupException.class %>" message="the-site-could-not-be-found" />
-<liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+	name = namespace + name;
+}
+%>

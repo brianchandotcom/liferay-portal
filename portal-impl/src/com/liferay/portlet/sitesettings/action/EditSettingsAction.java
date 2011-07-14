@@ -75,7 +75,12 @@ public class EditSettingsAction extends EditLayoutsAction {
 				updateRobots(actionRequest);
 			}
 			else if (cmd.equals("staging")) {
-				StagingUtil.updateStaging(actionRequest);
+				long liveGroupId = ParamUtil.getLong(
+					actionRequest, "liveGroupId");
+
+				Group liveGroup = GroupServiceUtil.getGroup(liveGroupId);
+
+				StagingUtil.updateStaging(actionRequest, liveGroup);
 			}
 			else if (cmd.equals("virtual_host")) {
 				updateVirtualHost(actionRequest);

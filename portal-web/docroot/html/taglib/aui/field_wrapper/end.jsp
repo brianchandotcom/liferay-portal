@@ -14,23 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:helpMessage"));
-String inlineLabel = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:inlineLabel"));
-String label = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:label"));
-String name = GetterUtil.getString((String)request.getAttribute("aui:field-wrapper:name"));
-boolean required = GetterUtil.getBoolean((String)request.getAttribute("aui:field-wrapper:required"));
-
-boolean showForLabel = false;
-
-if (Validator.isNotNull(name)) {
-	showForLabel = true;
-
-	name = namespace + name;
-}
-%>
+<%@ include file="/html/taglib/aui/field_wrapper/init.jsp" %>
 
 		<c:if test='<%= inlineLabel.equals("right") %>'>
 			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name) %>>

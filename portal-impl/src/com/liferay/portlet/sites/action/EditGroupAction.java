@@ -22,6 +22,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -273,16 +275,61 @@ public class EditGroupAction extends PortletAction {
 			}
 		}
 
-		// Custom JSPs
-
-		String customJspServletContextName = ParamUtil.getString(
-			actionRequest, "customJspServletContextName");
+		// Settings
 
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
+		String customJspServletContextName = ParamUtil.getString(
+			actionRequest, "customJspServletContextName");
+
 		typeSettingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
+
+		String googleAnalyticsId = ParamUtil.getString(
+			actionRequest, "googleAnalyticsId");
+
+		typeSettingsProperties.setProperty(
+			"googleAnalyticsId", googleAnalyticsId);
+
+		String publicRobots = ParamUtil.getString(
+			actionRequest, "publicRobots");
+		String privateRobots = ParamUtil.getString(
+			actionRequest, "privateRobots");
+
+		typeSettingsProperties.setProperty("false-robots.txt", publicRobots);
+		typeSettingsProperties.setProperty("true-robots.txt", privateRobots);
+
+		String publicVirtualHost = ParamUtil.getString(
+			actionRequest, "publicVirtualHost");
+		String privateVirtualHost = ParamUtil.getString(
+			actionRequest, "privateVirtualHost");
+
+		LayoutSetServiceUtil.updateVirtualHost(
+			group.getGroupId(), false, publicVirtualHost);
+
+		LayoutSetServiceUtil.updateVirtualHost(
+			group.getGroupId(), true, privateVirtualHost);
+
+		if (group.hasStagingGroup()) {
+			Group stagingGroup = group.getStagingGroup();
+
+			publicVirtualHost = ParamUtil.getString(
+				actionRequest, "stagingPublicVirtualHost");
+			privateVirtualHost = ParamUtil.getString(
+				actionRequest, "stagingPrivateVirtualHost");
+			friendlyURL = ParamUtil.getString(
+				actionRequest, "stagingFriendlyURL");
+
+			LayoutSetServiceUtil.updateVirtualHost(
+				stagingGroup.getGroupId(), false, publicVirtualHost);
+
+			LayoutSetServiceUtil.updateVirtualHost(
+				stagingGroup.getGroupId(), true, privateVirtualHost);
+
+			GroupServiceUtil.updateFriendlyURL(
+				stagingGroup.getGroupId(), friendlyURL);
+		}
 
 		group = GroupServiceUtil.updateGroup(
 			group.getGroupId(), typeSettingsProperties.toString());
@@ -317,6 +364,10 @@ public class EditGroupAction extends PortletAction {
 				group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
 				serviceContext);
 		}
+
+		// Staging
+
+		StagingUtil.updateStaging(actionRequest, group);
 	}
 
 }

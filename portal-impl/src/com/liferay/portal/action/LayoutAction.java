@@ -769,18 +769,9 @@ public class LayoutAction extends Action {
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				request, portletId);
 
-		PortletPreferences portletPreferences = null;
-
-		if (PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
-			portletPreferences =
-				PortletPreferencesLocalServiceUtil.getPreferences(
-					portletPreferencesIds);
-		}
-		else {
-			portletPreferences =
-				PortletPreferencesLocalServiceUtil.getStrictPreferences(
-					portletPreferencesIds);
-		}
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				portletPreferencesIds);
 
 		processPublicRenderParameters(request, layout, portlet);
 

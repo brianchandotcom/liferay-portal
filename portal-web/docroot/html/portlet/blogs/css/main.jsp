@@ -30,6 +30,10 @@
 		margin: 1.5em 0;
 	}
 
+	.entry {
+		clear: both;
+	}
+
 	.entry-author {
 		background: url(<%= themeImagesPath %>/portlet/edit_guest.png) no-repeat 0 50%;
 		border-right: 1px solid #999;

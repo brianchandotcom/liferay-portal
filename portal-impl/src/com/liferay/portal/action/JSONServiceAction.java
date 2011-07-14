@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,7 +41,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -62,8 +61,8 @@ import org.apache.struts.action.ActionMapping;
 public class JSONServiceAction extends JSONAction {
 
 	public JSONServiceAction() {
-		_invalidClassNames.addAll(
-			ListUtil.fromArray(PropsValues.JSON_SERVICE_INVALID_CLASS_NAMES));
+		_invalidClassNames = SetUtil.fromArray(
+			PropsValues.JSON_SERVICE_INVALID_CLASS_NAMES);
 
 		if (_log.isDebugEnabled()) {
 			for (String invalidClassName : _invalidClassNames) {
@@ -586,7 +585,7 @@ public class JSONServiceAction extends JSONAction {
 	private static Pattern _fieldDescriptorPattern = Pattern.compile(
 		"^(.*?)((\\[\\])*)$", Pattern.DOTALL);
 
-	private Set<String> _invalidClassNames = new HashSet<String>();
+	private Set<String> _invalidClassNames;
 	private Map<String, Object[]> _methodCache =
 		new HashMap<String, Object[]>();
 

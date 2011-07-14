@@ -102,10 +102,6 @@ public interface PortletPreferencesFactory {
 
 	public PreferencesValidator getPreferencesValidator(Portlet portlet);
 
-	public PortletPreferences getStrictLayoutPortletSetup(
-			Layout layout, String portletId)
-		throws SystemException;
-
 	public String toXML(PortalPreferences portalPreferences);
 
 	public String toXML(PortletPreferences portletPreferences);

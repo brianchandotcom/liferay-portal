@@ -1121,6 +1121,8 @@ public interface PropsKeys {
 
 	public static final String LDAP_USER_DEFAULT_OBJECT_CLASSES = "ldap.user.default.object.classes";
 
+	public static final String LDAP_USER_IGNORE_ATTRIBUTES = "ldap.user.ignore.attributes";
+
 	public static final String LDAP_USER_IMPL = "ldap.user.impl";
 
 	public static final String LDAP_USER_MAPPINGS = "ldap.user.mappings";
@@ -1728,6 +1730,18 @@ public interface PropsKeys {
 	public static final String SITEMINDER_USER_HEADER = "siteminder.user.header";
 
 	public static final String SITES_CONTROL_PANEL_MEMBERS_VISIBLE = "sites.control.panel.members.visible";
+
+	public static final String SITES_FORM_ADD_ADVANCED = "sites.form.add.advanced";
+
+	public static final String SITES_FORM_ADD_MAIN = "sites.form.add.main";
+
+	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
+
+	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
+
+	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
+
+	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 

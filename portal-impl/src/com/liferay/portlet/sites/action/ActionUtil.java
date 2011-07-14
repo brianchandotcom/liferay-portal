@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sites.action;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -246,6 +247,11 @@ public class ActionUtil
 	}
 
 	public static Group getGroup(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
 		long groupId = ParamUtil.getLong(request, "groupId");
 
 		Group group = null;
@@ -253,10 +259,7 @@ public class ActionUtil
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
-		else {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
+		else if (!cmd.equals(Constants.ADD)) {
 			group = themeDisplay.getScopeGroup();
 		}
 

@@ -78,6 +78,10 @@
 	background-image: url(<%= themeImagesPath %>/common/export.png);
 }
 
+.lfr-portlet-toolbar .lfr-toolbar-button.view-structures a {
+	background-image: url(<%= themeImagesPath %>/common/view_structures.png);
+}
+
 .lfr-portlet-toolbar .lfr-toolbar-button.view-templates a {
 	background-image: url(<%= themeImagesPath %>/common/view_templates.png);
 }

@@ -331,21 +331,6 @@ public class PortletPreferencesLocalServiceUtil {
 		return getService().getPreferences(portletPreferencesIds);
 	}
 
-	public static javax.portlet.PortletPreferences getStrictPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getStrictPreferences(companyId, ownerId, ownerType, plid,
-			portletId);
-	}
-
-	public static javax.portlet.PortletPreferences getStrictPreferences(
-		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getStrictPreferences(portletPreferencesIds);
-	}
-
 	public static com.liferay.portal.model.PortletPreferences updatePreferences(
 		long ownerId, int ownerType, long plid, java.lang.String portletId,
 		javax.portlet.PortletPreferences portletPreferences)

@@ -19,10 +19,12 @@
 }
 
 .lfr-upload-container .upload-target {
-	background-color: #6f9e00;
+	background-color: #8FBE31;
+	border: 1px solid #729A22;
 	height: 30px;
 	margin-right: 1.5em;
 	text-align: center;
+	text-shadow: 1px 1px #656565;
 }
 
 .lfr-upload-container .manage-upload-target {
@@ -57,14 +59,15 @@
 }
 
 .lfr-upload-container .upload-file {
-	background: #f0faf0 url(<%= themeImagesPath %>/file_system/small/jpg.png) no-repeat 5px 50%;
-	border-bottom: 1px solid #ccc;
+	background: url(<%= themeImagesPath %>/file_system/small/jpg.png) no-repeat 5px 50%;
+	border: 1px solid #CCC;
 	display: block;
 	font-weight: bold;
 	margin: 0.3em 1.5em 0.3em 0;
 	padding: 5px;
 	padding-left: 25px;
 	position: relative;
+	text-shadow: 1px 1px #FFF;
 }
 
 .lfr-upload-container .upload-file.upload-complete {
@@ -75,12 +78,14 @@
 	background-position: 5px 50%;
 }
 
-.lfr-upload-container .upload-list .upload-file.upload-complete.selected, .lfr-upload-container .upload-list .upload-file.upload-complete.temp-file.selected {
+.lfr-upload-container .upload-list .upload-file.upload-complete.selected, .lfr-upload-container .upload-list .upload-file.upload-complete.pending-file.selected {
 	background-color: #D3E8F1;
-	margin-right: -1px;
+	border-color: #38F;
+	color: #047;
+	text-shadow: 1px 1px #FFF;
 }
 
-.lfr-upload-container .temp-files-info {
+.lfr-upload-container .pending-files-info {
 	margin-right: 1.5em;
 }
 
@@ -100,16 +105,15 @@
 }
 
 .select-files {
-	border-color: #5F5F5F;
+	border: 1px solid #FFF;
+	border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
 	float: left;
 	line-height: 0;
 	margin-right: 2px;
 	padding: 0;
 
-	.aui-field-element {
+	.aui-field-content {
 		padding: 5px 4px 4px;
-		border: 1px solid #FFF;
-		border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
 
 		.aui-field-input-choice {
 			margin: 0;
@@ -118,10 +122,17 @@
 }
 
 .lfr-upload-container .delete-button {
-	background-image: url(<%= themeImagesPath %>/common/delete.png);
+	background-image: url(<%= themeImagesPath %>/portlet/close.png);
 	background-repeat: no-repeat;
 	position: absolute;
 	right: 5px;
+	text-indent: -9999em;
+	font-size: 0;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	top: 50%;
+	margin-top: -8px;
 }
 
 .lfr-upload-container .upload-complete {
@@ -140,8 +151,10 @@
 	padding-left: 25px;
 }
 
-.lfr-upload-container .temp-file {
-	background-color: #ffffe9
+.lfr-upload-container .pending-file {
+	background-color: #E0E0E0;
+	color: #777;
+	text-shadow: -1px -1px #FFF;
 }
 
 .lfr-upload-container .file-added .success-message {

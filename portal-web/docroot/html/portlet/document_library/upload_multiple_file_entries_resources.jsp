@@ -72,7 +72,7 @@ long assetClassPK = 0;
 <aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 <liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
-	<div class="num-selected-files">
+	<div class="selected-files-count">
 		<liferay-ui:message key="no-files-selected" />
 	</div>
 
@@ -92,7 +92,7 @@ long assetClassPK = 0;
 						<portlet:param name="fileEntryTypeId" value="0" />
 					</liferay-portlet:resourceURL>
 
-					<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="basic-document" url="<%= viewBasicFileEntryTypeURL %>" />
+					<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="basic-document" method="get" url="<%= viewBasicFileEntryTypeURL %>" />
 
 					<%
 					for (DLFileEntryType curFileEntryType : fileEntryTypes) {
@@ -105,7 +105,7 @@ long assetClassPK = 0;
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />
 						</liferay-portlet:resourceURL>
 
-						<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="<%= curFileEntryType.getName() %>" url="<%= viewFileEntryTypeURL %>" />
+						<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="<%= curFileEntryType.getName() %>" method="get" url="<%= viewFileEntryTypeURL %>" />
 
 					<%
 					}
@@ -132,7 +132,7 @@ long assetClassPK = 0;
 			%>
 
 							<div class="document-type-fields">
-								<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey())) %>
+								<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
 							</div>
 
 			<%
@@ -146,47 +146,32 @@ long assetClassPK = 0;
 			<aui:script use="aui-base">
 				var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
 
-				var uploadMultipleDocumentTypes = A.all('.upload-multiple-document-types a');
+				commonFileMetadataContainer.delegate(
+					'click',
+					function(event) {
+						event.preventDefault();
 
-				if (uploadMultipleDocumentTypes) {
-					uploadMultipleDocumentTypes.detach('click');
+						commonFileMetadataContainer.plug(A.LoadingMask);
 
-					uploadMultipleDocumentTypes.on(
-						'click',
-						function(event) {
-							event.preventDefault();
+						commonFileMetadataContainer.loadingmask.show();
 
-							commonFileMetadataContainer.plug(A.LoadingMask);
+						var documentTypePanel = A.one('#documentTypePanel');
 
-							commonFileMetadataContainer.loadingmask.toggle();
-
-							A.io.request(
-								event.target.attr('href'),
-								{
-									on: {
-										success: function(event, id, obj) {
-											commonFileMetadataContainer.loadingmask.toggle();
-
-											var responseData = this.get('responseData');
-
-											var content = A.Node.create(responseData);
-
-											var documentTypePanelContainer = A.one('#documentTypePanel');
-
-											var documentTypePanel = content.one('#documentTypePanel');
-
-											documentTypePanelContainer.plug(A.Plugin.ParseContent);
-											documentTypePanelContainer.setContent(documentTypePanel);
-										},
-										failure: function(event, id, obj) {
-											commonFileMetadataContainer.loadingmask.toggle();
-										}
+						documentTypePanel.load(
+							event.currentTarget.attr('href') + ' #documentTypePanel',
+							{
+								after: {
+									complete: function(event, id, obj) {
+										commonFileMetadataContainer.loadingmask.hide();
 									}
-								}
-							);
-						}
-					);
-				}
+								},
+								showLoading: false,
+								where: 'outer'
+							}
+						);
+					},
+					'.upload-multiple-document-types a'
+				);
 			</aui:script>
 		</liferay-ui:panel>
 

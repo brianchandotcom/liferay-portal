@@ -76,7 +76,7 @@
 	border-radius: 4px;
 }
 
-.lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .select-files, .portlet-document-library .document-display-style, .portlet-document-library .upload-target, .portlet-document-library-display .upload-target, .portlet-wiki .upload-target {
+.lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .select-files, .portlet-document-library .document-display-style, .lfr-upload-container .upload-target, .lfr-upload-container .upload-file, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -119,6 +119,16 @@
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
+}
+
+.lfr-upload-container .upload-target {
+	-moz-box-shadow: inset 0 0 1px #FFF;
+	-webkit-box-shadow: inset 0 0 1px #FFF;
+	box-shadow: inset 0 0 1px #FFF;
+	background-image: -moz-linear-gradient(50% 0, #8FBE31 0%, #729A22 85%);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #8FBE31), color-stop(0.85, #729A22));
+	background-image: linear-gradient(50%, #8FBE31 0%, #729A22 85%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8FBE31', endColorstr='#729A22', GradientType=0);
 }
 
 .staging-tabview-list {

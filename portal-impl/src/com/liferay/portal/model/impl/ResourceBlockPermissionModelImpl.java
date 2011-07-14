@@ -105,7 +105,17 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setResourceBlockId(long resourceBlockId) {
+		if (!_setOriginalResourceBlockId) {
+			_setOriginalResourceBlockId = true;
+
+			_originalResourceBlockId = _resourceBlockId;
+		}
+
 		_resourceBlockId = resourceBlockId;
+	}
+
+	public long getOriginalResourceBlockId() {
+		return _originalResourceBlockId;
 	}
 
 	public long getRoleId() {
@@ -113,7 +123,17 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setRoleId(long roleId) {
+		if (!_setOriginalRoleId) {
+			_setOriginalRoleId = true;
+
+			_originalRoleId = _roleId;
+		}
+
 		_roleId = roleId;
+	}
+
+	public long getOriginalRoleId() {
+		return _originalRoleId;
 	}
 
 	public long getActionIds() {
@@ -191,6 +211,15 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public void resetOriginalValues() {
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = this;
+
+		resourceBlockPermissionModelImpl._originalResourceBlockId = resourceBlockPermissionModelImpl._resourceBlockId;
+
+		resourceBlockPermissionModelImpl._setOriginalResourceBlockId = false;
+
+		resourceBlockPermissionModelImpl._originalRoleId = resourceBlockPermissionModelImpl._roleId;
+
+		resourceBlockPermissionModelImpl._setOriginalRoleId = false;
 	}
 
 	@Override
@@ -251,7 +280,11 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			ResourceBlockPermission.class
 		};
 	private long _resourceBlockId;
+	private long _originalResourceBlockId;
+	private boolean _setOriginalResourceBlockId;
 	private long _roleId;
+	private long _originalRoleId;
+	private boolean _setOriginalRoleId;
 	private long _actionIds;
 	private ResourceBlockPermission _escapedModelProxy;
 }

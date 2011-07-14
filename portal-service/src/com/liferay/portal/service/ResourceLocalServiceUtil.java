@@ -264,6 +264,18 @@ public class ResourceLocalServiceUtil {
 	}
 
 	public static void addModelResources(long companyId, long groupId,
+		long userId, java.lang.String name, long primKey,
+		java.lang.String[] groupPermissions,
+		java.lang.String[] guestPermissions,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addModelResources(companyId, groupId, userId, name, primKey,
+			groupPermissions, guestPermissions, model);
+	}
+
+	public static void addModelResources(long companyId, long groupId,
 		long userId, java.lang.String name, java.lang.String primKey,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -271,6 +283,18 @@ public class ResourceLocalServiceUtil {
 		getService()
 			.addModelResources(companyId, groupId, userId, name, primKey,
 			groupPermissions, guestPermissions);
+	}
+
+	public static void addModelResources(long companyId, long groupId,
+		long userId, java.lang.String name, java.lang.String primKey,
+		java.lang.String[] groupPermissions,
+		java.lang.String[] guestPermissions,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addModelResources(companyId, groupId, userId, name, primKey,
+			groupPermissions, guestPermissions, model);
 	}
 
 	public static com.liferay.portal.model.Resource addResource(
@@ -298,6 +322,17 @@ public class ResourceLocalServiceUtil {
 	}
 
 	public static void addResources(long companyId, long groupId, long userId,
+		java.lang.String name, long primKey, boolean portletActions,
+		boolean addGroupPermissions, boolean addGuestPermissions,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResources(companyId, groupId, userId, name, primKey,
+			portletActions, addGroupPermissions, addGuestPermissions, model);
+	}
+
+	public static void addResources(long companyId, long groupId, long userId,
 		java.lang.String name, java.lang.String primKey,
 		boolean portletActions, boolean addGroupPermissions,
 		boolean addGuestPermissions)
@@ -308,6 +343,18 @@ public class ResourceLocalServiceUtil {
 			portletActions, addGroupPermissions, addGuestPermissions);
 	}
 
+	public static void addResources(long companyId, long groupId, long userId,
+		java.lang.String name, java.lang.String primKey,
+		boolean portletActions, boolean addGroupPermissions,
+		boolean addGuestPermissions,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResources(companyId, groupId, userId, name, primKey,
+			portletActions, addGroupPermissions, addGuestPermissions, model);
+	}
+
 	public static void deleteResource(long companyId, java.lang.String name,
 		int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -316,10 +363,26 @@ public class ResourceLocalServiceUtil {
 	}
 
 	public static void deleteResource(long companyId, java.lang.String name,
+		int scope, long primKey,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResource(companyId, name, scope, primKey, model);
+	}
+
+	public static void deleteResource(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteResource(companyId, name, scope, primKey);
+	}
+
+	public static void deleteResource(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey,
+		com.liferay.portal.model.PermissionedModel model)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResource(companyId, name, scope, primKey, model);
 	}
 
 	public static void deleteResources(java.lang.String name)

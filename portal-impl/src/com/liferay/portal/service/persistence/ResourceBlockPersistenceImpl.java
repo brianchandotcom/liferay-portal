@@ -70,14 +70,21 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public static final String FINDER_CLASS_NAME_ENTITY = ResourceBlockImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
-			ResourceBlockImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
-			new String[] { Long.class.getName(), String.class.getName() });
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_G_N_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByG_P",
-			new String[] { Long.class.getName(), String.class.getName() });
+			FINDER_CLASS_NAME_LIST, "countByC_G_N_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST, "findByC_N",
@@ -122,9 +129,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
 			resourceBlock);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
+				Long.valueOf(resourceBlock.getCompanyId()),
 				Long.valueOf(resourceBlock.getGroupId()),
+				
+			resourceBlock.getName(),
 				
 			resourceBlock.getPermissionsHash()
 			}, resourceBlock);
@@ -178,9 +188,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
+				Long.valueOf(resourceBlock.getCompanyId()),
 				Long.valueOf(resourceBlock.getGroupId()),
+				
+			resourceBlock.getName(),
 				
 			resourceBlock.getPermissionsHash()
 			});
@@ -292,9 +305,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		ResourceBlockModelImpl resourceBlockModelImpl = (ResourceBlockModelImpl)resourceBlock;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
+				Long.valueOf(resourceBlockModelImpl.getCompanyId()),
 				Long.valueOf(resourceBlockModelImpl.getGroupId()),
+				
+			resourceBlockModelImpl.getName(),
 				
 			resourceBlockModelImpl.getPermissionsHash()
 			});
@@ -338,24 +354,36 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			resourceBlock);
 
 		if (!isNew &&
-				((resourceBlock.getGroupId() != resourceBlockModelImpl.getOriginalGroupId()) ||
+				((resourceBlock.getCompanyId() != resourceBlockModelImpl.getOriginalCompanyId()) ||
+				(resourceBlock.getGroupId() != resourceBlockModelImpl.getOriginalGroupId()) ||
+				!Validator.equals(resourceBlock.getName(),
+					resourceBlockModelImpl.getOriginalName()) ||
 				!Validator.equals(resourceBlock.getPermissionsHash(),
 					resourceBlockModelImpl.getOriginalPermissionsHash()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 				new Object[] {
+					Long.valueOf(resourceBlockModelImpl.getOriginalCompanyId()),
 					Long.valueOf(resourceBlockModelImpl.getOriginalGroupId()),
+					
+				resourceBlockModelImpl.getOriginalName(),
 					
 				resourceBlockModelImpl.getOriginalPermissionsHash()
 				});
 		}
 
 		if (isNew ||
-				((resourceBlock.getGroupId() != resourceBlockModelImpl.getOriginalGroupId()) ||
+				((resourceBlock.getCompanyId() != resourceBlockModelImpl.getOriginalCompanyId()) ||
+				(resourceBlock.getGroupId() != resourceBlockModelImpl.getOriginalGroupId()) ||
+				!Validator.equals(resourceBlock.getName(),
+					resourceBlockModelImpl.getOriginalName()) ||
 				!Validator.equals(resourceBlock.getPermissionsHash(),
 					resourceBlockModelImpl.getOriginalPermissionsHash()))) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 				new Object[] {
+					Long.valueOf(resourceBlock.getCompanyId()),
 					Long.valueOf(resourceBlock.getGroupId()),
+					
+				resourceBlock.getName(),
 					
 				resourceBlock.getPermissionsHash()
 				}, resourceBlock);
@@ -485,25 +513,35 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	/**
-	 * Returns the resource block where groupId = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlock findByG_P(long groupId, String permissionsHash)
+	public ResourceBlock findByC_G_N_P(long companyId, long groupId,
+		String name, String permissionsHash)
 		throws NoSuchResourceBlockException, SystemException {
-		ResourceBlock resourceBlock = fetchByG_P(groupId, permissionsHash);
+		ResourceBlock resourceBlock = fetchByC_G_N_P(companyId, groupId, name,
+				permissionsHash);
 
 		if (resourceBlock == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(10);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
 			msg.append(groupId);
+
+			msg.append(", name=");
+			msg.append(name);
 
 			msg.append(", permissionsHash=");
 			msg.append(permissionsHash);
@@ -521,54 +559,75 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	/**
-	 * Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlock fetchByG_P(long groupId, String permissionsHash)
-		throws SystemException {
-		return fetchByG_P(groupId, permissionsHash, true);
+	public ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
+		String name, String permissionsHash) throws SystemException {
+		return fetchByC_G_N_P(companyId, groupId, name, permissionsHash, true);
 	}
 
 	/**
-	 * Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceBlock fetchByG_P(long groupId, String permissionsHash,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, permissionsHash };
+	public ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
+		String name, String permissionsHash, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, name, permissionsHash
+			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_P,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 					finderArgs, this);
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_RESOURCEBLOCK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_N_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_G_N_P_GROUPID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_G_N_P_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_G_N_P_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_G_N_P_NAME_2);
+				}
+			}
 
 			if (permissionsHash == null) {
-				query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_1);
+				query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_1);
 			}
 			else {
 				if (permissionsHash.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_3);
+					query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_2);
+					query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2);
 				}
 			}
 
@@ -583,7 +642,13 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
 				qPos.add(groupId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
 
 				if (permissionsHash != null) {
 					qPos.add(permissionsHash);
@@ -596,7 +661,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				ResourceBlock resourceBlock = null;
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 						finderArgs, list);
 				}
 				else {
@@ -604,11 +669,14 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 					cacheResult(resourceBlock);
 
-					if ((resourceBlock.getGroupId() != groupId) ||
+					if ((resourceBlock.getCompanyId() != companyId) ||
+							(resourceBlock.getGroupId() != groupId) ||
+							(resourceBlock.getName() == null) ||
+							!resourceBlock.getName().equals(name) ||
 							(resourceBlock.getPermissionsHash() == null) ||
 							!resourceBlock.getPermissionsHash()
 											  .equals(permissionsHash)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 							finderArgs, resourceBlock);
 					}
 				}
@@ -620,7 +688,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			}
 			finally {
 				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 						finderArgs);
 				}
 
@@ -1502,15 +1570,19 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	/**
-	 * Removes the resource block where groupId = &#63; and permissionsHash = &#63; from the database.
+	 * Removes the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_P(long groupId, String permissionsHash)
+	public void removeByC_G_N_P(long companyId, long groupId, String name,
+		String permissionsHash)
 		throws NoSuchResourceBlockException, SystemException {
-		ResourceBlock resourceBlock = findByG_P(groupId, permissionsHash);
+		ResourceBlock resourceBlock = findByC_G_N_P(companyId, groupId, name,
+				permissionsHash);
 
 		resourceBlockPersistence.remove(resourceBlock);
 	}
@@ -1555,36 +1627,54 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	/**
-	 * Returns the number of resource blocks where groupId = &#63; and permissionsHash = &#63;.
+	 * Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the number of matching resource blocks
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByG_P(long groupId, String permissionsHash)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, permissionsHash };
+	public int countByC_G_N_P(long companyId, long groupId, String name,
+		String permissionsHash) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, groupId, name, permissionsHash
+			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_P,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_G_N_P,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_COUNT_RESOURCEBLOCK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_N_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_G_N_P_GROUPID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_G_N_P_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_G_N_P_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_G_N_P_NAME_2);
+				}
+			}
 
 			if (permissionsHash == null) {
-				query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_1);
+				query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_1);
 			}
 			else {
 				if (permissionsHash.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_3);
+					query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_P_PERMISSIONSHASH_2);
+					query.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2);
 				}
 			}
 
@@ -1599,7 +1689,13 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
 				qPos.add(groupId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
 
 				if (permissionsHash != null) {
 					qPos.add(permissionsHash);
@@ -1615,8 +1711,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_P,
+					finderArgs, count);
 
 				closeSession(session);
 			}
@@ -1967,10 +2063,14 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _SQL_SELECT_RESOURCEBLOCK_WHERE = "SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE ";
 	private static final String _SQL_COUNT_RESOURCEBLOCK = "SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock";
 	private static final String _SQL_COUNT_RESOURCEBLOCK_WHERE = "SELECT COUNT(resourceBlock) FROM ResourceBlock resourceBlock WHERE ";
-	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "resourceBlock.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_PERMISSIONSHASH_1 = "resourceBlock.permissionsHash IS NULL";
-	private static final String _FINDER_COLUMN_G_P_PERMISSIONSHASH_2 = "resourceBlock.permissionsHash = ?";
-	private static final String _FINDER_COLUMN_G_P_PERMISSIONSHASH_3 = "(resourceBlock.permissionsHash IS NULL OR resourceBlock.permissionsHash = ?)";
+	private static final String _FINDER_COLUMN_C_G_N_P_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_N_P_GROUPID_2 = "resourceBlock.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_N_P_NAME_1 = "resourceBlock.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_G_N_P_NAME_2 = "resourceBlock.name = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_N_P_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = ?) AND ";
+	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_1 = "resourceBlock.permissionsHash IS NULL";
+	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2 = "resourceBlock.permissionsHash = ?";
+	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3 = "(resourceBlock.permissionsHash IS NULL OR resourceBlock.permissionsHash = ?)";
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "resourceBlock.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "resourceBlock.name = ?";

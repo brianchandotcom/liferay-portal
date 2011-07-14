@@ -116,7 +116,17 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setCompanyId(long companyId) {
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getGroupId() {
@@ -147,7 +157,15 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setName(String name) {
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	public String getPermissionsHash() {
@@ -274,9 +292,15 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public void resetOriginalValues() {
 		ResourceBlockModelImpl resourceBlockModelImpl = this;
 
+		resourceBlockModelImpl._originalCompanyId = resourceBlockModelImpl._companyId;
+
+		resourceBlockModelImpl._setOriginalCompanyId = false;
+
 		resourceBlockModelImpl._originalGroupId = resourceBlockModelImpl._groupId;
 
 		resourceBlockModelImpl._setOriginalGroupId = false;
+
+		resourceBlockModelImpl._originalName = resourceBlockModelImpl._name;
 
 		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
 	}
@@ -376,10 +400,13 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		};
 	private long _resourceBlockId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private String _name;
+	private String _originalName;
 	private String _permissionsHash;
 	private String _originalPermissionsHash;
 	private long _referenceCount;

@@ -281,11 +281,34 @@ public interface ResourceBlockLocalService {
 	* Increments the reference count of the resource block and updates it in
 	* the database.
 	*
+	* @param resourceBlockId the primary key of the resource block
+	* @throws SystemException if a system exception occurred
+	*/
+	public void retain(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Increments the reference count of the resource block and updates it in
+	* the database.
+	*
 	* @param resourceBlock the resource block
 	* @throws SystemException if a system exception occurred
 	*/
 	public void retain(com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Decrements the reference count of the resource block and updates it in
+	* the database or deletes the resource block if the reference count reaches
+	* zero.
+	*
+	* @param resourceBlockId the primary key of the resource block
+	* @throws SystemException if a system exception occurred
+	*/
+	public void release(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Decrements the reference count of the resource block and updates it in
@@ -305,14 +328,14 @@ public interface ResourceBlockLocalService {
 	* belong to a group, such as users.
 	*
 	* @param companyId the primary key of the resource's company
-	* @param resource the resource
+	* @param model the permissioned model instance
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key of the resource
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updateResourceBlockId(long companyId,
-		com.liferay.portal.model.PermissionedModel resource,
+		com.liferay.portal.model.PermissionedModel model,
 		java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -323,14 +346,14 @@ public interface ResourceBlockLocalService {
 	*
 	* @param companyId the primary key of the resource's company
 	* @param groupId the primary key of the resource's group
-	* @param resource the resource
+	* @param model the permissioned model instance
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key of the resource
 	* @throws SystemException if a system exception occurred
 	*/
 	public void updateResourceBlockId(long companyId, long groupId,
-		com.liferay.portal.model.PermissionedModel resource,
+		com.liferay.portal.model.PermissionedModel model,
 		java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -97,6 +97,15 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_A",
 			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_R_R = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByR_R",
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_R = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByR_R",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_LIST,
@@ -114,6 +123,12 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R,
+			new Object[] {
+				Long.valueOf(resourceBlockPermission.getResourceBlockId()),
+				Long.valueOf(resourceBlockPermission.getRoleId())
+			}, resourceBlockPermission);
 
 		resourceBlockPermission.resetOriginalValues();
 	}
@@ -165,6 +180,12 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
+			new Object[] {
+				Long.valueOf(resourceBlockPermission.getResourceBlockId()),
+				Long.valueOf(resourceBlockPermission.getRoleId())
+			});
 	}
 
 	/**
@@ -275,6 +296,15 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
+			new Object[] {
+				Long.valueOf(
+					resourceBlockPermissionModelImpl.getResourceBlockId()),
+				Long.valueOf(resourceBlockPermissionModelImpl.getRoleId())
+			});
+
 		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey());
@@ -287,6 +317,10 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
 		boolean merge) throws SystemException {
 		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
+
+		boolean isNew = resourceBlockPermission.isNew();
+
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
 
 		Session session = null;
 
@@ -309,6 +343,28 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
+
+		if (!isNew &&
+				((resourceBlockPermission.getResourceBlockId() != resourceBlockPermissionModelImpl.getOriginalResourceBlockId()) ||
+				(resourceBlockPermission.getRoleId() != resourceBlockPermissionModelImpl.getOriginalRoleId()))) {
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
+				new Object[] {
+					Long.valueOf(
+						resourceBlockPermissionModelImpl.getOriginalResourceBlockId()),
+					Long.valueOf(
+						resourceBlockPermissionModelImpl.getOriginalRoleId())
+				});
+		}
+
+		if (isNew ||
+				((resourceBlockPermission.getResourceBlockId() != resourceBlockPermissionModelImpl.getOriginalResourceBlockId()) ||
+				(resourceBlockPermission.getRoleId() != resourceBlockPermissionModelImpl.getOriginalRoleId()))) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R,
+				new Object[] {
+					Long.valueOf(resourceBlockPermission.getResourceBlockId()),
+					Long.valueOf(resourceBlockPermission.getRoleId())
+				}, resourceBlockPermission);
+		}
 
 		return resourceBlockPermission;
 	}
@@ -1129,6 +1185,146 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
+	 * Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockPermissionException} if it could not be found.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param roleId the role ID
+	 * @return the matching resource block permission
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission findByR_R(long resourceBlockId, long roleId)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = fetchByR_R(resourceBlockId,
+				roleId);
+
+		if (resourceBlockPermission == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("resourceBlockId=");
+			msg.append(resourceBlockId);
+
+			msg.append(", roleId=");
+			msg.append(roleId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchResourceBlockPermissionException(msg.toString());
+		}
+
+		return resourceBlockPermission;
+	}
+
+	/**
+	 * Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param roleId the role ID
+	 * @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission fetchByR_R(long resourceBlockId, long roleId)
+		throws SystemException {
+		return fetchByR_R(resourceBlockId, roleId, true);
+	}
+
+	/**
+	 * Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param roleId the role ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission fetchByR_R(long resourceBlockId,
+		long roleId, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { resourceBlockId, roleId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_R_R,
+					finderArgs, this);
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_R_R_RESOURCEBLOCKID_2);
+
+			query.append(_FINDER_COLUMN_R_R_ROLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(resourceBlockId);
+
+				qPos.add(roleId);
+
+				List<ResourceBlockPermission> list = q.list();
+
+				result = list;
+
+				ResourceBlockPermission resourceBlockPermission = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R,
+						finderArgs, list);
+				}
+				else {
+					resourceBlockPermission = list.get(0);
+
+					cacheResult(resourceBlockPermission);
+
+					if ((resourceBlockPermission.getResourceBlockId() != resourceBlockId) ||
+							(resourceBlockPermission.getRoleId() != roleId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R,
+							finderArgs, resourceBlockPermission);
+					}
+				}
+
+				return resourceBlockPermission;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (ResourceBlockPermission)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the resource block permissions.
 	 *
 	 * @return the resource block permissions
@@ -1267,6 +1463,21 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
+	 * Removes the resource block permission where resourceBlockId = &#63; and roleId = &#63; from the database.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param roleId the role ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByR_R(long resourceBlockId, long roleId)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = findByR_R(resourceBlockId,
+				roleId);
+
+		resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+	}
+
+	/**
 	 * Removes all the resource block permissions from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -1381,6 +1592,65 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_A, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of resource block permissions where resourceBlockId = &#63; and roleId = &#63;.
+	 *
+	 * @param resourceBlockId the resource block ID
+	 * @param roleId the role ID
+	 * @return the number of matching resource block permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByR_R(long resourceBlockId, long roleId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { resourceBlockId, roleId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_R_R,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_R_R_RESOURCEBLOCKID_2);
+
+			query.append(_FINDER_COLUMN_R_R_ROLEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(resourceBlockId);
+
+				qPos.add(roleId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R, finderArgs,
 					count);
 
 				closeSession(session);
@@ -1595,6 +1865,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		"resourceBlockPermission.id.resourceBlockId = ?";
 	private static final String _FINDER_COLUMN_R_A_ROLEID_2 = "resourceBlockPermission.id.roleId = ? AND ";
 	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockPermission.id.actionIds = ?";
+	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 = "resourceBlockPermission.id.resourceBlockId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_ROLEID_2 = "resourceBlockPermission.id.roleId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockPermission.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlockPermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlockPermission exists with the key {";

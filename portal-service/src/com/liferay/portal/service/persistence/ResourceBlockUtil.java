@@ -198,50 +198,61 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
+	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
 	*
+	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block
 	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByG_P(
-		long groupId, java.lang.String permissionsHash)
+	public static com.liferay.portal.model.ResourceBlock findByC_G_N_P(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_P(groupId, permissionsHash);
+		return getPersistence()
+				   .findByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByG_P(
-		long groupId, java.lang.String permissionsHash)
+	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_P(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String permissionsHash)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByG_P(groupId, permissionsHash);
+		return getPersistence()
+				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Returns the resource block where groupId = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByG_P(
-		long groupId, java.lang.String permissionsHash,
-		boolean retrieveFromCache)
+	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_P(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String permissionsHash, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_P(groupId, permissionsHash, retrieveFromCache);
+				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash,
+			retrieveFromCache);
 	}
 
 	/**
@@ -548,17 +559,20 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Removes the resource block where groupId = &#63; and permissionsHash = &#63; from the database.
+	* Removes the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; from the database.
 	*
+	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_P(long groupId,
-		java.lang.String permissionsHash)
+	public static void removeByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_P(groupId, permissionsHash);
+		getPersistence()
+			.removeByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
 
 	/**
@@ -596,16 +610,20 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the number of resource blocks where groupId = &#63; and permissionsHash = &#63;.
+	* Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63;.
 	*
+	* @param companyId the company ID
 	* @param groupId the group ID
+	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @return the number of matching resource blocks
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_P(long groupId, java.lang.String permissionsHash)
+	public static int countByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_P(groupId, permissionsHash);
+		return getPersistence()
+				   .countByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
 
 	/**

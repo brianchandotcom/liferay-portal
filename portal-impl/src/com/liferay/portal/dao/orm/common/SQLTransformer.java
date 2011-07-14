@@ -109,6 +109,9 @@ public class SQLTransformer {
 	private String _replaceBitwiseAndDerby(String sql) {
 		Matcher matcher = _bitwiseAndPattern.matcher(sql);
 
+		// This is not a drop in replacement for all uses of bitwise and. It
+		// will only correctly determine if a single bit is set.
+
 		return matcher.replaceAll("($1 % (2 * $2) >= $2)");
 	}
 

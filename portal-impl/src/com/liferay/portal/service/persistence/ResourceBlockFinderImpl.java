@@ -50,7 +50,7 @@ public class ResourceBlockFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_R_A);
 
 			// The action ID must be string replaced into the query so that
-			// SQL transformer can use it twice in the query
+			// SQL transformer can duplicated it in the query
 
 			sql = StringUtil.replace(
 				sql,

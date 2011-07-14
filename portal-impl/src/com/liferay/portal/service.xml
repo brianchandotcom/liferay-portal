@@ -1570,8 +1570,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_P" return-type="ResourceBlock" unique="true">
+		<finder name="C_G_N_P" return-type="ResourceBlock" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="groupId" />
+			<finder-column name="name" />
 			<finder-column name="permissionsHash" />
 		</finder>
 		<finder name="C_N" return-type="Collection">
@@ -1599,6 +1601,10 @@
 		<finder name="R_A" return-type="Collection">
 			<finder-column name="roleId" />
 			<finder-column name="actionIds" />
+		</finder>
+		<finder name="R_R" return-type="ResourceBlockPermission">
+			<finder-column name="resourceBlockId" />
+			<finder-column name="roleId" />
 		</finder>
 	</entity>
 	<entity name="ResourceCode" local-service="true" remote-service="false">

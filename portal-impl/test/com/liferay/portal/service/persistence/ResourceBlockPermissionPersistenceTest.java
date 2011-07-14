@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.model.ResourceBlockPermission;
+import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -193,6 +195,24 @@ public class ResourceBlockPermissionPersistenceTest
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		assertEquals(0, result.size());
+	}
+
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
+
+		_persistence.clearCache();
+
+		ResourceBlockPermissionModelImpl existingResourceBlockPermissionModelImpl =
+			(ResourceBlockPermissionModelImpl)_persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
+
+		assertEquals(existingResourceBlockPermissionModelImpl.getResourceBlockId(),
+			existingResourceBlockPermissionModelImpl.getOriginalResourceBlockId());
+		assertEquals(existingResourceBlockPermissionModelImpl.getRoleId(),
+			existingResourceBlockPermissionModelImpl.getOriginalRoleId());
 	}
 
 	protected ResourceBlockPermission addResourceBlockPermission()

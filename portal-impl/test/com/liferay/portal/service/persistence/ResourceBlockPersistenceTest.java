@@ -212,8 +212,12 @@ public class ResourceBlockPersistenceTest extends BasePersistenceTestCase {
 
 		ResourceBlockModelImpl existingResourceBlockModelImpl = (ResourceBlockModelImpl)_persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
+		assertEquals(existingResourceBlockModelImpl.getCompanyId(),
+			existingResourceBlockModelImpl.getOriginalCompanyId());
 		assertEquals(existingResourceBlockModelImpl.getGroupId(),
 			existingResourceBlockModelImpl.getOriginalGroupId());
+		assertTrue(Validator.equals(existingResourceBlockModelImpl.getName(),
+				existingResourceBlockModelImpl.getOriginalName()));
 		assertTrue(Validator.equals(
 				existingResourceBlockModelImpl.getPermissionsHash(),
 				existingResourceBlockModelImpl.getOriginalPermissionsHash()));

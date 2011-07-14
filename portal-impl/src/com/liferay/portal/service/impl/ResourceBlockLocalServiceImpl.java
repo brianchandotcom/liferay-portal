@@ -151,12 +151,41 @@ public class ResourceBlockLocalServiceImpl
 	 * Increments the reference count of the resource block and updates it in
 	 * the database.
 	 *
+	 * @param  resourceBlockId the primary key of the resource block
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void retain(long resourceBlockId)
+		throws PortalException, SystemException {
+
+		ResourceBlock resourceBlock = getResourceBlock(resourceBlockId);
+		retain(resourceBlock);
+	}
+
+	/**
+	 * Increments the reference count of the resource block and updates it in
+	 * the database.
+	 *
 	 * @param  resourceBlock the resource block
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void retain(ResourceBlock resourceBlock) throws SystemException {
 		resourceBlock.setReferenceCount(resourceBlock.getReferenceCount() + 1);
 		updateResourceBlock(resourceBlock);
+	}
+
+	/**
+	 * Decrements the reference count of the resource block and updates it in
+	 * the database or deletes the resource block if the reference count reaches
+	 * zero.
+	 *
+	 * @param  resourceBlockId the primary key of the resource block
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void release(long resourceBlockId)
+		throws PortalException, SystemException {
+
+		ResourceBlock resourceBlock = getResourceBlock(resourceBlockId);
+		release(resourceBlock);
 	}
 
 	/**
@@ -186,18 +215,18 @@ public class ResourceBlockLocalServiceImpl
 	 * belong to a group, such as users.
 	 *
 	 * @param  companyId the primary key of the resource's company
-	 * @param  resource the resource
+	 * @param  model the permissioned model instance
 	 * @param  name the resource's name, which can be either a class name or a
 	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateResourceBlockId(
-			long companyId, PermissionedModel resource, String name,
+			long companyId, PermissionedModel model, String name,
 			String primKey)
 		throws SystemException {
 
-		updateResourceBlockId(companyId, 0, resource, name, primKey);
+		updateResourceBlockId(companyId, 0, model, name, primKey);
 	}
 
 	/**
@@ -207,26 +236,16 @@ public class ResourceBlockLocalServiceImpl
 	 *
 	 * @param  companyId the primary key of the resource's company
 	 * @param  groupId the primary key of the resource's group
-	 * @param  resource the resource
+	 * @param  model the permissioned model instance
 	 * @param  name the resource's name, which can be either a class name or a
 	 *         portlet ID
 	 * @param  primKey the primary key of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateResourceBlockId(
-			long companyId, long groupId, PermissionedModel resource,
+			long companyId, long groupId, PermissionedModel model,
 			String name, String primKey)
 		throws SystemException {
-
-		ResourceBlock resourceBlock;
-
-		try {
-			resourceBlock =
-				getResourceBlock(resource.getResourceBlockId());
-		}
-		catch (PortalException e) {
-			throw new SystemException(e);
-		}
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionLocalService.getResourceResourcePermissions(
@@ -234,20 +253,26 @@ public class ResourceBlockLocalServiceImpl
 
 		String newPermissionsHash = getPermissionsHash(resourcePermissions);
 
-		String currentPermissionsHash =	resourceBlock.getPermissionsHash();
+		ResourceBlock resourceBlock =
+			resourceBlockPersistence.fetchByPrimaryKey(
+			model.getResourceBlockId());
 
-		// If the permissions hash is still the same, nothing needs to be done
+		if (resourceBlock != null) {
+			String currentPermissionsHash =	resourceBlock.getPermissionsHash();
 
-		if (currentPermissionsHash.equals(newPermissionsHash)) {
-			return;
+			// If the permissions hash is unchanged, do nothing
+
+			if (currentPermissionsHash.equals(newPermissionsHash)) {
+				return;
+			}
+
+			// Otherwise, release the old resource block
+
+			release(resourceBlock);
 		}
 
-		// Otherwise, release the old resource block
-
-		release(resourceBlock);
-
-		resourceBlock =
-			resourceBlockPersistence.fetchByG_P(groupId, newPermissionsHash);
+		resourceBlock =	resourceBlockPersistence.fetchByC_G_N_P(
+			companyId, groupId, name, newPermissionsHash);
 
 		if (resourceBlock == null) {
 			resourceBlock =
@@ -258,8 +283,8 @@ public class ResourceBlockLocalServiceImpl
 			retain(resourceBlock);
 		}
 
-		resource.setResourceBlockId(resourceBlock.getResourceBlockId());
-		resource.save();
+		model.setResourceBlockId(resourceBlock.getResourceBlockId());
+		model.save();
 	}
 
 }

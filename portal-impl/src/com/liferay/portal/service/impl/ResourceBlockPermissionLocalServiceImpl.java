@@ -32,19 +32,26 @@ public class ResourceBlockPermissionLocalServiceImpl
 			long resourceBlockId, long roleId, long actionIds)
 		throws SystemException {
 
-		ResourceBlockPermissionPK pk =
-			new ResourceBlockPermissionPK(resourceBlockId, roleId,
-			actionIds);
-
 		ResourceBlockPermission resourceBlockPermission =
-			resourceBlockPermissionPersistence.fetchByPrimaryKey(pk);
+			resourceBlockPermissionPersistence.fetchByR_R(resourceBlockId,
+			roleId);
 
 		if (resourceBlockPermission == null) {
+			ResourceBlockPermissionPK pk =
+				new ResourceBlockPermissionPK(resourceBlockId, roleId,
+				actionIds);
+
 			resourceBlockPermissionPersistence.create(pk);
 
 			resourceBlockPermissionPersistence.update(
 				resourceBlockPermission, false);
+
+			return resourceBlockPermission;
 		}
+
+		resourceBlockPermission.setActionIds(actionIds);
+		resourceBlockPermissionPersistence.update(
+			resourceBlockPermission, false);
 
 		return resourceBlockPermission;
 	}

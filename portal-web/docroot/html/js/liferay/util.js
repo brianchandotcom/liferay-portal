@@ -413,7 +413,7 @@
 		},
 
 		isEditorPresent: function(editorImpl) {
-			return Liferay.namespace('EDITORS')[editorImpl];
+			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 		},
 
 		openWindow: function(config) {

@@ -996,6 +996,231 @@ public class DLFileEntryTypeUtil {
 		getPersistence().setDDMStructures(pk, ddmStructures);
 	}
 
+	/**
+	* Returns all the document library folders associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return the document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDLFolders(pk);
+	}
+
+	/**
+	* Returns a range of all the document library folders associated with the document library file entry type.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param start the lower bound of the range of document library file entry types
+	* @param end the upper bound of the range of document library file entry types (not inclusive)
+	* @return the range of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+		long pk, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDLFolders(pk, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the document library folders associated with the document library file entry type.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param start the lower bound of the range of document library file entry types
+	* @param end the upper bound of the range of document library file entry types (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDLFolders(pk, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of document library folders associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return the number of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getDLFoldersSize(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDLFoldersSize(pk);
+	}
+
+	/**
+	* Returns <code>true</code> if the document library folder is associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPK the primary key of the document library folder
+	* @return <code>true</code> if the document library folder is associated with the document library file entry type; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean containsDLFolder(long pk, long dlFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().containsDLFolder(pk, dlFolderPK);
+	}
+
+	/**
+	* Returns <code>true</code> if the document library file entry type has any document library folders associated with it.
+	*
+	* @param pk the primary key of the document library file entry type to check for associations with document library folders
+	* @return <code>true</code> if the document library file entry type has any document library folders associated with it; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean containsDLFolders(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().containsDLFolders(pk);
+	}
+
+	/**
+	* Adds an association between the document library file entry type and the document library folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPK the primary key of the document library folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addDLFolder(long pk, long dlFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().addDLFolder(pk, dlFolderPK);
+	}
+
+	/**
+	* Adds an association between the document library file entry type and the document library folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolder the document library folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addDLFolder(long pk,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().addDLFolder(pk, dlFolder);
+	}
+
+	/**
+	* Adds an association between the document library file entry type and the document library folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPKs the primary keys of the document library folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addDLFolders(long pk, long[] dlFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().addDLFolders(pk, dlFolderPKs);
+	}
+
+	/**
+	* Adds an association between the document library file entry type and the document library folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolders the document library folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void addDLFolders(long pk,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().addDLFolders(pk, dlFolders);
+	}
+
+	/**
+	* Clears all associations between the document library file entry type and its document library folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type to clear the associated document library folders from
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void clearDLFolders(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().clearDLFolders(pk);
+	}
+
+	/**
+	* Removes the association between the document library file entry type and the document library folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPK the primary key of the document library folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeDLFolder(long pk, long dlFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeDLFolder(pk, dlFolderPK);
+	}
+
+	/**
+	* Removes the association between the document library file entry type and the document library folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolder the document library folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeDLFolder(long pk,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeDLFolder(pk, dlFolder);
+	}
+
+	/**
+	* Removes the association between the document library file entry type and the document library folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPKs the primary keys of the document library folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeDLFolders(long pk, long[] dlFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeDLFolders(pk, dlFolderPKs);
+	}
+
+	/**
+	* Removes the association between the document library file entry type and the document library folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolders the document library folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeDLFolders(long pk,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeDLFolders(pk, dlFolders);
+	}
+
+	/**
+	* Sets the document library folders associated with the document library file entry type, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolderPKs the primary keys of the document library folders to be associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setDLFolders(long pk, long[] dlFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().setDLFolders(pk, dlFolderPKs);
+	}
+
+	/**
+	* Sets the document library folders associated with the document library file entry type, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @param dlFolders the document library folders to be associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void setDLFolders(long pk,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().setDLFolders(pk, dlFolders);
+	}
+
 	public static DLFileEntryTypePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (DLFileEntryTypePersistence)PortalBeanLocatorUtil.locate(DLFileEntryTypePersistence.class.getName());

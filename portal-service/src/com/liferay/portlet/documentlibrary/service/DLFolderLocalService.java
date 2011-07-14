@@ -357,6 +357,10 @@ public interface DLFolderLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void setLastPostDate(long folderId, java.util.Date lastPostDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
@@ -366,6 +370,13 @@ public interface DLFolderLocalService {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -283,6 +283,41 @@ public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel {
 	 */
 	public void setLastPostDate(Date lastPostDate);
 
+	/**
+	 * Returns the override file entry types of this document library folder.
+	 *
+	 * @return the override file entry types of this document library folder
+	 */
+	public boolean getOverrideFileEntryTypes();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is override file entry types.
+	 *
+	 * @return <code>true</code> if this document library folder is override file entry types; <code>false</code> otherwise
+	 */
+	public boolean isOverrideFileEntryTypes();
+
+	/**
+	 * Sets whether this document library folder is override file entry types.
+	 *
+	 * @param overrideFileEntryTypes the override file entry types of this document library folder
+	 */
+	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes);
+
+	/**
+	 * Returns the default file entry type ID of this document library folder.
+	 *
+	 * @return the default file entry type ID of this document library folder
+	 */
+	public long getDefaultFileEntryTypeId();
+
+	/**
+	 * Sets the default file entry type ID of this document library folder.
+	 *
+	 * @param defaultFileEntryTypeId the default file entry type ID of this document library folder
+	 */
+	public void setDefaultFileEntryTypeId(long defaultFileEntryTypeId);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

@@ -17,9 +17,15 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -77,10 +83,61 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryType;
 	}
 
+	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
+		throws PortalException, SystemException {
+
+		long groupId = dlFolder.getGroupId();
+		long folderId = dlFolder.getFolderId();
+
+		List<DLFileEntryType> fileEntryTypes =
+			getFileEntryTypesByFolder(groupId, folderId, true);
+
+		List<Long> fileEntryTypeIds = getFileEntryTypeIds(fileEntryTypes);
+
+		long defaultFileEntryTypeId = getDefaultFileEntryType(
+			groupId, folderId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUserId(userId);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setCompanyId(dlFolder.getCompanyId());
+		serviceContext.setAttribute("fileEntryTypeId", defaultFileEntryTypeId);
+
+		cascadeFileEntryTypes(
+			groupId, folderId, fileEntryTypeIds, serviceContext);
+	}
+
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException, SystemException {
 
 		dlFileEntryTypePersistence.remove(fileEntryTypeId);
+	}
+
+	public void deleteFileEntryTypes(long folderId)
+		throws PortalException, SystemException {
+
+		List<DLFileEntryType> fileEntryTypes =
+			dlFolderPersistence.getDLFileEntryTypes(folderId);
+
+		for (DLFileEntryType fileEntryType : fileEntryTypes) {
+			dlFolderPersistence.removeDLFileEntryType(folderId, fileEntryType);
+		}
+	}
+
+	public long getDefaultFileEntryType(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		folderId = getFileEntryTypesPrimaryFolderId(folderId);
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+			return dlFolder.getDefaultFileEntryTypeId();
+		}
+		else {
+			return 0;
+		}
 	}
 
 	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
@@ -108,6 +165,31 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		return dlFileEntryTypePersistence.findByG_N_D(
 			groupId, name, description);
+	}
+
+	public List<DLFileEntryType> getFileEntryTypesByFolder(
+			long groupId, long folderId, boolean inherited)
+		throws PortalException, SystemException {
+
+		if (!inherited) {
+			return dlFolderPersistence.getDLFileEntryTypes(folderId);
+		}
+
+		List<DLFileEntryType> fileEntryTypes = null;
+
+		folderId = getFileEntryTypesPrimaryFolderId(folderId);
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			fileEntryTypes = dlFolderPersistence.getDLFileEntryTypes(folderId);
+		}
+
+		if (fileEntryTypes == null || fileEntryTypes.isEmpty()) {
+			fileEntryTypes = getFileEntryTypes(groupId);
+
+			fileEntryTypes.add(new DLFileEntryTypeImpl());
+		}
+
+		return fileEntryTypes;
 	}
 
 	public List<DLFileEntryType> search(
@@ -144,6 +226,35 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeId, ddmStructureIds);
 	}
 
+	public void updateFileEntryTypesByFolder(
+			DLFolder dlFolder, List<Long> fileEntryTypeIds,
+			long defaultFileEntryTypeId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// DLFolder
+
+		List<Long> originalFileEntryTypeIds = getFileEntryTypeIds(
+			dlFolderPersistence.getDLFileEntryTypes(dlFolder.getFolderId()));
+
+		if (fileEntryTypeIds.equals(originalFileEntryTypeIds)) {
+			return;
+		}
+
+		for (Long fileEntryTypeId : fileEntryTypeIds) {
+			if (!originalFileEntryTypeIds.contains(fileEntryTypeId)) {
+				dlFolderPersistence.addDLFileEntryType(
+					dlFolder.getFolderId(), fileEntryTypeId);
+			}
+		}
+
+		for (Long originalFileEntryTypeId : originalFileEntryTypeIds) {
+			if (!fileEntryTypeIds.contains(originalFileEntryTypeId)) {
+				dlFolderPersistence.removeDLFileEntryType(
+					dlFolder.getFolderId(), originalFileEntryTypeId);
+			}
+		}
+	}
+
 	protected void addFileEntryTypeResources(
 			DLFileEntryType fileEntryType, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -166,6 +277,69 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryType.getUserId(), DLFileEntryType.class.getName(),
 			fileEntryType.getFileEntryTypeId(), groupPermissions,
 			guestPermissions);
+	}
+
+	protected void cascadeFileEntryTypes(
+			long groupId, long folderId, List<Long> fileEntryTypeIds,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
+			groupId, folderId);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			Long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+
+			if (fileEntryTypeIds.contains(fileEntryTypeId)) {
+				continue;
+			}
+
+			dlFileEntryService.updateFileEntry(
+				dlFileEntry.getFileEntryId(), null, null, null, null, null,
+				false, null, 0, serviceContext);
+		}
+
+		List<DLFolder> subFolders = dlFolderPersistence.findByG_P_M(
+			groupId, folderId, false);
+
+		for (DLFolder subFolder : subFolders) {
+			long subFolderId = subFolder.getFolderId();
+
+			if (subFolder.isOverrideFileEntryTypes()) {
+				continue;
+			}
+
+			cascadeFileEntryTypes(
+				groupId, subFolderId, fileEntryTypeIds, serviceContext);
+		}
+	}
+
+	protected List<Long> getFileEntryTypeIds(
+		List<DLFileEntryType> fileEntryTypes) {
+
+		List<Long> fileEntryTypeIds = new SortedArrayList<Long>();
+
+		for (DLFileEntryType fileEntryType : fileEntryTypes) {
+			fileEntryTypeIds.add(fileEntryType.getFileEntryTypeId());
+		}
+
+		return fileEntryTypeIds;
+	}
+
+	protected long getFileEntryTypesPrimaryFolderId(long folderId)
+		throws SystemException, NoSuchFolderException {
+
+		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+			if (dlFolder.isOverrideFileEntryTypes()) {
+				break;
+			}
+
+			folderId = dlFolder.getParentFolderId();
+		}
+
+		return folderId;
 	}
 
 	protected void verify(long[] ddmStructureIds)

@@ -561,10 +561,16 @@ create table DLFileEntryType (
 	description STRING null
 );
 
-create table DLFileEntryType_DDMStructure (
+create table DLFileEntryTypes_DDMStructures (
 	fileEntryTypeId LONG not null,
 	structureId LONG not null,
 	primary key (fileEntryTypeId, structureId)
+);
+
+create table DLFileEntryTypes_DLFolders (
+	fileEntryTypeId LONG not null,
+	folderId LONG not null,
+	primary key (fileEntryTypeId, folderId)
 );
 
 create table DLFileRank (
@@ -632,7 +638,9 @@ create table DLFolder (
 	parentFolderId LONG,
 	name VARCHAR(100) null,
 	description STRING null,
-	lastPostDate DATE null
+	lastPostDate DATE null,
+	overrideFileEntryTypes BOOLEAN,
+	defaultFileEntryTypeId LONG
 );
 
 create table EmailAddress (

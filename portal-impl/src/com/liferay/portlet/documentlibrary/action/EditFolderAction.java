@@ -16,7 +16,9 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -34,6 +36,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -137,6 +140,26 @@ public class EditFolderAction extends PortletAction {
 		}
 	}
 
+	protected SortedArrayList<Long> getLongList(
+		PortletRequest portletRequest, String name) {
+
+		String value = portletRequest.getParameter(name);
+
+		if (value == null) {
+			return null;
+		}
+
+		long[] longArray = StringUtil.split(GetterUtil.getString(value), 0L);
+
+		SortedArrayList<Long> longList = new SortedArrayList<Long>();
+
+		for (long longValue : longArray) {
+			longList.add(longValue);
+		}
+
+		return longList;
+	}
+
 	protected void moveFolders(ActionRequest actionRequest) throws Exception {
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
@@ -170,6 +193,13 @@ public class EditFolderAction extends PortletAction {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
+		SortedArrayList<Long> fileEntryTypeIds = getLongList(
+			actionRequest, "fileEntryTypeSearchContainerPrimaryKeys");
+		long defaultFileEntryTypeId = ParamUtil.getLong(
+			actionRequest, "defaultFileEntryTypeId");
+		boolean overrideFileEntryTypes = ParamUtil.getBoolean(
+			actionRequest, "overrideFileEntryTypes");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFolder.class.getName(), actionRequest);
 
@@ -184,6 +214,12 @@ public class EditFolderAction extends PortletAction {
 		else {
 
 			// Update folder
+
+			serviceContext.setAttribute(
+				"defaultFileEntryTypeId", defaultFileEntryTypeId);
+			serviceContext.setAttribute("fileEntryTypeIds", fileEntryTypeIds);
+			serviceContext.setAttribute(
+				"overrideFileEntryTypes", overrideFileEntryTypes);
 
 			DLAppServiceUtil.updateFolder(
 				folderId, name, description, serviceContext);

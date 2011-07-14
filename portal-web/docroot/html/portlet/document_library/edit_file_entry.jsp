@@ -265,13 +265,12 @@ else if (fileEntryType != null) {
 			<aui:input name="description" />
 
 			<%
-			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFileEntryTypesByFolder(scopeGroupId, folderId, true);
 			%>
 
 			<c:choose>
 				<c:when test="<%= !cmd.equals(Constants.ADD) %>">
 					<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
-						<aui:option label="none" value="0" />
 
 						<%
 						for (DLFileEntryType curFileEntryType : fileEntryTypes) {

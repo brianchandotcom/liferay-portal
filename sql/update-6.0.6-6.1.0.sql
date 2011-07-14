@@ -160,10 +160,16 @@ create table DLFileEntryType (
 	description STRING null
 );
 
-create table DLFileEntryType_DDMStructure (
+create table DLFileEntryTypes_DDMStructures (
 	fileEntryTypeId LONG not null,
 	structureId LONG not null,
 	primary key (fileEntryTypeId, structureId)
+);
+
+create table DLFileEntryTypes_DLFolders (
+	fileEntryTypeId LONG not null,
+	folderId LONG not null,
+	primary key (fileEntryTypeId, folderId)
 );
 
 alter table DLFileEntry add repositoryId LONG;
@@ -201,6 +207,8 @@ update DLFileVersion set repositoryId = groupId;
 
 alter table DLFolder add repositoryId LONG;
 alter table DLFolder add mountPoint BOOLEAN;
+alter table DLFolder add defaultFileEntryTypeId LONG;
+alter table DLFolder add overrideFileEntryTypes BOOLEAN;
 
 COMMIT_TRANSACTION;
 

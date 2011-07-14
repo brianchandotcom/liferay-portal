@@ -160,7 +160,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 				}
 
 				PortletURL portletURL = getPortletURL(
-					request, portletId, resultGroupId);
+					request, portletId, resultScopeGroupId);
 
 				Summary summary = getSummary(
 					indexer, result, themeDisplay.getLocale(), snippet,

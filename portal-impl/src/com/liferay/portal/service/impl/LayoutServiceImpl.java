@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -184,6 +186,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (groupId > 0) {
+			String scopeGroupLayoutUuid = null;
+
+			Group group = groupLocalService.getGroup(groupId);
+
+			if (group.isLayout()) {
+				groupId = group.getParentGroupId();
+
+				Layout scopeGroupLayout = layoutLocalService.getLayout(
+					group.getClassPK());
+
+				scopeGroupLayoutUuid = scopeGroupLayout.getUuid();
+			}
+
 			List<Layout> layouts = layoutPersistence.filterFindByG_P(
 				groupId, privateLayout);
 
@@ -193,7 +208,29 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 						(LayoutTypePortlet)layout.getLayoutType();
 
 					if (layoutTypePortlet.hasPortletId(portletId)) {
-						return layout.getPlid();
+						javax.portlet.PortletPreferences jxPreferences =
+							PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+								layout, portletId);
+
+						if (group.isLayout()) {
+							String scopeLayoutUuid = GetterUtil.getString(
+								jxPreferences.getValue(
+									"lfrScopeLayoutUuid", null));
+
+							if (scopeGroupLayoutUuid != null &&
+								scopeGroupLayoutUuid.equals(scopeLayoutUuid)) {
+
+								return layout.getPlid();
+							}
+						}
+						else {
+							String scopeType = GetterUtil.getString(
+								jxPreferences.getValue("lfr-scope-type", null));
+
+							if (scopeType == null || scopeType.length() == 0) {
+								return layout.getPlid();
+							}
+						}
 					}
 				}
 			}

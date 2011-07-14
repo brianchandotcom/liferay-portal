@@ -17,6 +17,11 @@ package com.liferay.portlet.documentlibrary.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.RowMapper;
+import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
+import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,6 +65,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the document library folder service.
@@ -378,6 +385,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected DLFolder removeImpl(DLFolder dlFolder) throws SystemException {
 		dlFolder = toUnwrappedModel(dlFolder);
 
+		try {
+			clearDLFileEntryTypes.clear(dlFolder.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+
 		Session session = null;
 
 		try {
@@ -547,6 +564,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		dlFolderImpl.setName(dlFolder.getName());
 		dlFolderImpl.setDescription(dlFolder.getDescription());
 		dlFolderImpl.setLastPostDate(dlFolder.getLastPostDate());
+		dlFolderImpl.setOverrideFileEntryTypes(dlFolder.isOverrideFileEntryTypes());
+		dlFolderImpl.setDefaultFileEntryTypeId(dlFolder.getDefaultFileEntryTypeId());
 
 		return dlFolderImpl;
 	}
@@ -5250,6 +5269,489 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
+	 * Returns all the document library file entry types associated with the document library folder.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @return the document library file entry types associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
+		long pk) throws SystemException {
+		return getDLFileEntryTypes(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry types associated with the document library folder.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of document library file entry types associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
+		long pk, int start, int end) throws SystemException {
+		return getDLFileEntryTypes(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_DLFILEENTRYTYPES = new FinderPath(com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+			DLFolderModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS,
+			com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl.class,
+			DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME,
+			"getDLFileEntryTypes",
+			new String[] {
+				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+
+	/**
+	 * Returns an ordered range of all the document library file entry types associated with the document library folder.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of document library file entry types associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				pk, String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> list = (List<com.liferay.portlet.documentlibrary.model.DLFileEntryType>)FinderCacheUtil.getResult(FINDER_PATH_GET_DLFILEENTRYTYPES,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETDLFILEENTRYTYPES.concat(ORDER_BY_CLAUSE)
+												  .concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETDLFILEENTRYTYPES;
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("DLFileEntryType",
+					com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				list = (List<com.liferay.portlet.documentlibrary.model.DLFileEntryType>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_GET_DLFILEENTRYTYPES,
+						finderArgs);
+				}
+				else {
+					dlFileEntryTypePersistence.cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_GET_DLFILEENTRYTYPES,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_DLFILEENTRYTYPES_SIZE = new FinderPath(com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+			DLFolderModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS,
+			Long.class,
+			DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME,
+			"getDLFileEntryTypesSize", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the number of document library file entry types associated with the document library folder.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @return the number of document library file entry types associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getDLFileEntryTypesSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_DLFILEENTRYTYPES_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETDLFILEENTRYTYPESSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_DLFILEENTRYTYPES_SIZE,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_DLFILEENTRYTYPE = new FinderPath(com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+			DLFolderModelImpl.FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS,
+			Boolean.class,
+			DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME,
+			"containsDLFileEntryType",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns <code>true</code> if the document library file entry type is associated with the document library folder.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePK the primary key of the document library file entry type
+	 * @return <code>true</code> if the document library file entry type is associated with the document library folder; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsDLFileEntryType(long pk, long dlFileEntryTypePK)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { pk, dlFileEntryTypePK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_DLFILEENTRYTYPE,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsDLFileEntryType.contains(pk,
+							dlFileEntryTypePK));
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (value == null) {
+					value = Boolean.FALSE;
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_DLFILEENTRYTYPE,
+					finderArgs, value);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Returns <code>true</code> if the document library folder has any document library file entry types associated with it.
+	 *
+	 * @param pk the primary key of the document library folder to check for associations with document library file entry types
+	 * @return <code>true</code> if the document library folder has any document library file entry types associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsDLFileEntryTypes(long pk) throws SystemException {
+		if (getDLFileEntryTypesSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the document library folder and the document library file entry type. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePK the primary key of the document library file entry type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryType(long pk, long dlFileEntryTypePK)
+		throws SystemException {
+		try {
+			addDLFileEntryType.add(pk, dlFileEntryTypePK);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the document library folder and the document library file entry type. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryType the document library file entry type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryType(long pk,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
+		throws SystemException {
+		try {
+			addDLFileEntryType.add(pk, dlFileEntryType.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the document library folder and the document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs)
+		throws SystemException {
+		try {
+			for (long dlFileEntryTypePK : dlFileEntryTypePKs) {
+				addDLFileEntryType.add(pk, dlFileEntryTypePK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the document library folder and the document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypes the document library file entry types
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addDLFileEntryTypes(long pk,
+		List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
+		throws SystemException {
+		try {
+			for (com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+				addDLFileEntryType.add(pk, dlFileEntryType.getPrimaryKey());
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Clears all associations between the document library folder and its document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder to clear the associated document library file entry types from
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearDLFileEntryTypes(long pk) throws SystemException {
+		try {
+			clearDLFileEntryTypes.clear(pk);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the document library folder and the document library file entry type. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePK the primary key of the document library file entry type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeDLFileEntryType(long pk, long dlFileEntryTypePK)
+		throws SystemException {
+		try {
+			removeDLFileEntryType.remove(pk, dlFileEntryTypePK);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the document library folder and the document library file entry type. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryType the document library file entry type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeDLFileEntryType(long pk,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
+		throws SystemException {
+		try {
+			removeDLFileEntryType.remove(pk, dlFileEntryType.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the document library folder and the document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs)
+		throws SystemException {
+		try {
+			for (long dlFileEntryTypePK : dlFileEntryTypePKs) {
+				removeDLFileEntryType.remove(pk, dlFileEntryTypePK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the document library folder and the document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypes the document library file entry types
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeDLFileEntryTypes(long pk,
+		List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
+		throws SystemException {
+		try {
+			for (com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+				removeDLFileEntryType.remove(pk, dlFileEntryType.getPrimaryKey());
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Sets the document library file entry types associated with the document library folder, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types to be associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs)
+		throws SystemException {
+		try {
+			Set<Long> dlFileEntryTypePKSet = SetUtil.fromArray(dlFileEntryTypePKs);
+
+			List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes =
+				getDLFileEntryTypes(pk);
+
+			for (com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+				if (!dlFileEntryTypePKSet.remove(
+							dlFileEntryType.getPrimaryKey())) {
+					removeDLFileEntryType.remove(pk,
+						dlFileEntryType.getPrimaryKey());
+				}
+			}
+
+			for (Long dlFileEntryTypePK : dlFileEntryTypePKSet) {
+				addDLFileEntryType.add(pk, dlFileEntryTypePK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
+	 * Sets the document library file entry types associated with the document library folder, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @param dlFileEntryTypes the document library file entry types to be associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setDLFileEntryTypes(long pk,
+		List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
+		throws SystemException {
+		try {
+			long[] dlFileEntryTypePKs = new long[dlFileEntryTypes.size()];
+
+			for (int i = 0; i < dlFileEntryTypes.size(); i++) {
+				com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType =
+					dlFileEntryTypes.get(i);
+
+				dlFileEntryTypePKs[i] = dlFileEntryType.getPrimaryKey();
+			}
+
+			setDLFileEntryTypes(pk, dlFileEntryTypePKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
+		}
+	}
+
+	/**
 	 * Initializes the document library folder persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -5272,6 +5774,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				_log.error(e);
 			}
 		}
+
+		containsDLFileEntryType = new ContainsDLFileEntryType(this);
+
+		addDLFileEntryType = new AddDLFileEntryType(this);
+		clearDLFileEntryTypes = new ClearDLFileEntryTypes(this);
+		removeDLFileEntryType = new RemoveDLFileEntryType(this);
 	}
 
 	public void destroy() {
@@ -5310,10 +5818,196 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
+	protected ContainsDLFileEntryType containsDLFileEntryType;
+	protected AddDLFileEntryType addDLFileEntryType;
+	protected ClearDLFileEntryTypes clearDLFileEntryTypes;
+	protected RemoveDLFileEntryType removeDLFileEntryType;
+
+	protected class ContainsDLFileEntryType {
+		protected ContainsDLFileEntryType(
+			DLFolderPersistenceImpl persistenceImpl) {
+			super();
+
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSDLFILEENTRYTYPE,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long folderId, long fileEntryTypeId) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(folderId), new Long(fileEntryTypeId)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
+	protected class AddDLFileEntryType {
+		protected AddDLFileEntryType(DLFolderPersistenceImpl persistenceImpl) {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"INSERT INTO DLFileEntryTypes_DLFolders (folderId, fileEntryTypeId) VALUES (?, ?)",
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
+			_persistenceImpl = persistenceImpl;
+		}
+
+		protected void add(long folderId, long fileEntryTypeId)
+			throws SystemException {
+			if (!_persistenceImpl.containsDLFileEntryType.contains(folderId,
+						fileEntryTypeId)) {
+				ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType>[] dlFileEntryTypeListeners =
+					dlFileEntryTypePersistence.getListeners();
+
+				for (ModelListener<DLFolder> listener : listeners) {
+					listener.onBeforeAddAssociation(folderId,
+						com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+						fileEntryTypeId);
+				}
+
+				for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+					listener.onBeforeAddAssociation(fileEntryTypeId,
+						DLFolder.class.getName(), folderId);
+				}
+
+				_sqlUpdate.update(new Object[] {
+						new Long(folderId), new Long(fileEntryTypeId)
+					});
+
+				for (ModelListener<DLFolder> listener : listeners) {
+					listener.onAfterAddAssociation(folderId,
+						com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+						fileEntryTypeId);
+				}
+
+				for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+					listener.onAfterAddAssociation(fileEntryTypeId,
+						DLFolder.class.getName(), folderId);
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+		private DLFolderPersistenceImpl _persistenceImpl;
+	}
+
+	protected class ClearDLFileEntryTypes {
+		protected ClearDLFileEntryTypes(DLFolderPersistenceImpl persistenceImpl) {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"DELETE FROM DLFileEntryTypes_DLFolders WHERE folderId = ?",
+					new int[] { java.sql.Types.BIGINT });
+		}
+
+		protected void clear(long folderId) throws SystemException {
+			ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType>[] dlFileEntryTypeListeners =
+				dlFileEntryTypePersistence.getListeners();
+
+			List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes =
+				null;
+
+			if ((listeners.length > 0) ||
+					(dlFileEntryTypeListeners.length > 0)) {
+				dlFileEntryTypes = getDLFileEntryTypes(folderId);
+
+				for (com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+					for (ModelListener<DLFolder> listener : listeners) {
+						listener.onBeforeRemoveAssociation(folderId,
+							com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+							dlFileEntryType.getPrimaryKey());
+					}
+
+					for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+						listener.onBeforeRemoveAssociation(dlFileEntryType.getPrimaryKey(),
+							DLFolder.class.getName(), folderId);
+					}
+				}
+			}
+
+			_sqlUpdate.update(new Object[] { new Long(folderId) });
+
+			if ((listeners.length > 0) ||
+					(dlFileEntryTypeListeners.length > 0)) {
+				for (com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+					for (ModelListener<DLFolder> listener : listeners) {
+						listener.onAfterRemoveAssociation(folderId,
+							com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+							dlFileEntryType.getPrimaryKey());
+					}
+
+					for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+						listener.onAfterRemoveAssociation(dlFileEntryType.getPrimaryKey(),
+							DLFolder.class.getName(), folderId);
+					}
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+	}
+
+	protected class RemoveDLFileEntryType {
+		protected RemoveDLFileEntryType(DLFolderPersistenceImpl persistenceImpl) {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"DELETE FROM DLFileEntryTypes_DLFolders WHERE folderId = ? AND fileEntryTypeId = ?",
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
+			_persistenceImpl = persistenceImpl;
+		}
+
+		protected void remove(long folderId, long fileEntryTypeId)
+			throws SystemException {
+			if (_persistenceImpl.containsDLFileEntryType.contains(folderId,
+						fileEntryTypeId)) {
+				ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType>[] dlFileEntryTypeListeners =
+					dlFileEntryTypePersistence.getListeners();
+
+				for (ModelListener<DLFolder> listener : listeners) {
+					listener.onBeforeRemoveAssociation(folderId,
+						com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+						fileEntryTypeId);
+				}
+
+				for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+					listener.onBeforeRemoveAssociation(fileEntryTypeId,
+						DLFolder.class.getName(), folderId);
+				}
+
+				_sqlUpdate.update(new Object[] {
+						new Long(folderId), new Long(fileEntryTypeId)
+					});
+
+				for (ModelListener<DLFolder> listener : listeners) {
+					listener.onAfterRemoveAssociation(folderId,
+						com.liferay.portlet.documentlibrary.model.DLFileEntryType.class.getName(),
+						fileEntryTypeId);
+				}
+
+				for (ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType> listener : dlFileEntryTypeListeners) {
+					listener.onAfterRemoveAssociation(fileEntryTypeId,
+						DLFolder.class.getName(), folderId);
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+		private DLFolderPersistenceImpl _persistenceImpl;
+	}
+
 	private static final String _SQL_SELECT_DLFOLDER = "SELECT dlFolder FROM DLFolder dlFolder";
 	private static final String _SQL_SELECT_DLFOLDER_WHERE = "SELECT dlFolder FROM DLFolder dlFolder WHERE ";
 	private static final String _SQL_COUNT_DLFOLDER = "SELECT COUNT(dlFolder) FROM DLFolder dlFolder";
 	private static final String _SQL_COUNT_DLFOLDER_WHERE = "SELECT COUNT(dlFolder) FROM DLFolder dlFolder WHERE ";
+	private static final String _SQL_GETDLFILEENTRYTYPES = "SELECT {DLFileEntryType.*} FROM DLFileEntryType INNER JOIN DLFileEntryTypes_DLFolders ON (DLFileEntryTypes_DLFolders.fileEntryTypeId = DLFileEntryType.fileEntryTypeId) WHERE (DLFileEntryTypes_DLFolders.folderId = ?)";
+	private static final String _SQL_GETDLFILEENTRYTYPESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM DLFileEntryTypes_DLFolders WHERE folderId = ?";
+	private static final String _SQL_CONTAINSDLFILEENTRYTYPE = "SELECT COUNT(*) AS COUNT_VALUE FROM DLFileEntryTypes_DLFolders WHERE folderId = ? AND fileEntryTypeId = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFolder.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFolder.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFolder.uuid IS NULL OR dlFolder.uuid = ?)";

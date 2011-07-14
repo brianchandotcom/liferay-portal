@@ -1384,6 +1384,8 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPostDate" type="Date" />
+		<field name="overrideFileEntryTypes" type="boolean" />
+		<field name="defaultFileEntryTypeId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />

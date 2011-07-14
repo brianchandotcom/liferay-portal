@@ -1479,6 +1479,8 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
+		<property name="overrideFileEntryTypes" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="defaultFileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" table="DDLRecord">
 		<cache usage="read-write" />

@@ -231,7 +231,21 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void cascadeFileEntryTypes(long userId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteFileEntryType(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteFileEntryTypes(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getDefaultFileEntryType(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -257,6 +271,12 @@ public interface DLFileEntryTypeLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypesByFolder(
+		long groupId, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		long companyId, long groupId, java.lang.String keywords, int start,
 		int end,
@@ -271,6 +291,14 @@ public interface DLFileEntryTypeLocalService {
 	public void updateFileEntryType(long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateFileEntryTypesByFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		long defaultFileEntryTypeId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

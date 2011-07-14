@@ -14,12 +14,11 @@
 
 package com.liferay.portal.kernel.notifications;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -117,8 +116,9 @@ public abstract class BaseChannelImpl implements Channel {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseChannelImpl.class);
 
-	private Set<ChannelListener> _channelListeners =
-		new ConcurrentHashSet<ChannelListener>();
+	private List<ChannelListener> _channelListeners =
+		new CopyOnWriteArrayList<ChannelListener>();
+
 	private long _cleanUpInterval;
 	private long _companyId;
 	private AtomicLong _nextCleanUpTime = new AtomicLong();

@@ -113,8 +113,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element dlFoldersElement = entriesElement.addElement("dl-folders");
 		Element dlFileEntriesElement = entriesElement.addElement(
 			"dl-file-entries");
-		Element dlFileRanksElement = entriesElement.addElement(
-			"dl-file-ranks");
+		Element dlFileRanksElement = entriesElement.addElement("dl-file-ranks");
 		Element igFoldersElement = entriesElement.addElement("ig-folders");
 		Element igImagesElement = entriesElement.addElement("ig-images");
 
@@ -122,9 +121,10 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		for (BlogsEntry entry : entries) {
-			exportEntry(portletDataContext, entriesElement, dlFoldersElement,
-			dlFileEntriesElement,dlFileRanksElement, igFoldersElement,
-			igImagesElement, entry, false);
+			exportEntry(
+				portletDataContext, entriesElement, dlFoldersElement,
+				dlFileEntriesElement,dlFileRanksElement, igFoldersElement,
+				igImagesElement, entry, false);
 		}
 
 		return document.formattedString();
@@ -214,8 +214,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		entryElement.addAttribute("image-path", imagePath);
 
-		Image smallImage = ImageUtil.fetchByPrimaryKey(
-			entry.getSmallImageId());
+		Image smallImage = ImageUtil.fetchByPrimaryKey(entry.getSmallImageId());
 
 		if (entry.isSmallImage() && (smallImage != null)) {
 			String smallImagePath = getEntrySmallImagePath(
@@ -284,7 +283,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
 		String content = JournalPortletDataHandlerImpl.importReferencedContent(
-				portletDataContext, entryElement, entry.getContent());
+			portletDataContext, entryElement, entry.getContent());
 
 		entry.setContent(content);
 

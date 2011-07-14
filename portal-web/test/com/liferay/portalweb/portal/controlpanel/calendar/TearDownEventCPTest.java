@@ -35,7 +35,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,13 +47,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Calendar",
+					RuntimeVariables.replace("Calendar"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Events",
+					RuntimeVariables.replace("Events"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -67,7 +69,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -106,7 +108,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -145,7 +147,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -184,7 +186,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -223,7 +225,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

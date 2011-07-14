@@ -43,8 +43,8 @@ public class CalendarTests extends BaseTests {
 		testSuite.addTestSuite(AddInvalidDurationEventTest.class);
 		testSuite.addTestSuite(AddInvalidRepeatEventTest.class);
 		testSuite.addTestSuite(TearDownEventCPTest.class);
-//		testSuite.addTestSuite(ImportLARTest.class);
-//		testSuite.addTestSuite(AssertImportLARTest.class);
+		testSuite.addTestSuite(ImportLARTest.class);
+		testSuite.addTestSuite(AssertImportLARTest.class);
 		testSuite.addTestSuite(TearDownEventCPTest.class);
 		testSuite.addTestSuite(AddRepeatingEventTest.class);
 		testSuite.addTestSuite(AddDailyRepeatingEventTest.class);

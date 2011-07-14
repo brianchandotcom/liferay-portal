@@ -30,7 +30,7 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -66,7 +67,7 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -76,7 +77,7 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_8_title")) {
+				if (selenium.isVisible("//input[@id='_8_title']")) {
 					break;
 				}
 			}
@@ -87,16 +88,16 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_title",
+		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Start Date Test Event"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_8_startDateMonth",
+		selenium.clickAt("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("Start Date Month"));
-		selenium.select("_8_startDateMonth",
+		selenium.select("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("label=February"));
-		Thread.sleep(5000);
-		selenium.select("_8_startDateMonth",
+		selenium.select("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("label=February"));
-		assertFalse(selenium.isPartialText("_8_startDateDay", "30"));
+		assertFalse(selenium.isPartialText("//select[@id='_8_startDateDay']",
+				"30"));
 	}
 }

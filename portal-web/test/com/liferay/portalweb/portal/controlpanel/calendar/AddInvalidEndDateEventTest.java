@@ -30,7 +30,7 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -66,7 +67,7 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -76,7 +77,7 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_8_title")) {
+				if (selenium.isVisible("//input[@id='_8_title']")) {
 					break;
 				}
 			}
@@ -87,11 +88,11 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_title",
+		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid End Date Test Event"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Repeat Daily"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -99,7 +100,7 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_8_dailyInterval")) {
+				if (selenium.isElementPresent("//input[@id='_8_dailyInterval']")) {
 					break;
 				}
 			}
@@ -110,13 +111,13 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_dailyInterval", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_8_dailyInterval']",
+			RuntimeVariables.replace("1"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_8_endDateMonth",
+		selenium.clickAt("//select[@id='_8_endDateMonth']",
 			RuntimeVariables.replace("End Date Month"));
-		selenium.select("_8_endDateMonth",
+		selenium.select("//select[@id='_8_endDateMonth']",
 			RuntimeVariables.replace("label=February"));
-		Thread.sleep(5000);
 		selenium.select("_8_endDateMonth",
 			RuntimeVariables.replace("label=February"));
 		assertFalse(selenium.isPartialText("_8_endDateDay", "30"));

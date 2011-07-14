@@ -30,7 +30,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,13 +41,14 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[6]/span/ul/li/strong/a",
@@ -71,12 +72,15 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/span[4]/span/span/input",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Repeat Monthly"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -104,7 +108,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_8_monthlyPos")) {
+				if (selenium.isVisible("//select[@id='_8_monthlyPos']")) {
 					break;
 				}
 			}
@@ -115,21 +119,44 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_8_monthlyPos", RuntimeVariables.replace("label=First"));
-		selenium.select("_8_monthlyDay1",
+		selenium.select("//select[@id='_8_monthlyPos']",
+			RuntimeVariables.replace("label=First"));
+		selenium.select("//select[@id='_8_monthlyDay1']",
 			RuntimeVariables.replace("label=Thursday"));
-		selenium.type("_8_monthlyInterval1", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_8_monthlyInterval1']",
+			RuntimeVariables.replace("1"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_8_endDateMonth",
+		selenium.select("//select[@id='_8_endDateMonth']",
 			RuntimeVariables.replace("label=January"));
-		selenium.select("_8_endDateDay", RuntimeVariables.replace("label=1"));
-		selenium.select("_8_endDateYear", RuntimeVariables.replace("label=2011"));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_8_endDateDay']",
+			RuntimeVariables.replace("label=1"));
+		selenium.select("//select[@id='_8_endDateYear']",
+			RuntimeVariables.replace("label=2011"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -148,7 +175,10 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -158,27 +188,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//select")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.select("//select", RuntimeVariables.replace("label=2010"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//td[3]/div/table/tbody/tr[3]/td[5]/a")) {
+				if (selenium.isVisible("//td[3]/div/table/tbody/tr[3]/td[5]/a")) {
 					break;
 				}
 			}
@@ -194,7 +204,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Repeating Test Event"));
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -223,8 +233,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//td[5]/div/table/tbody/tr[3]/td[5]/a")) {
+				if (selenium.isVisible("//td[5]/div/table/tbody/tr[3]/td[5]/a")) {
 					break;
 				}
 			}
@@ -240,7 +249,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Repeating Test Event"));
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -269,7 +278,7 @@ public class AddMonthlyDateRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//td[5]/div/table/tbody/tr[4]/td[5]/a/span")) {
 					break;
 				}

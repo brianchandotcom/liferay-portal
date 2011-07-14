@@ -14,24 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar</td>
-	<td></td>
+	<td>Calendar</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Events</td>
-	<td></td>
+	<td>Events</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -44,23 +44,28 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div/div/span[3]/span/span/input</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_8_weeklyInterval</td>
+	<td>clickAt</td>
+	<td>//div/div/span[3]/span/span/input</td>
+	<td>Repeat Weekly</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_8_weeklyInterval</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td>1</td>
 </tr>
 <tr>
@@ -75,8 +80,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos1Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos1Checkbox']</td>
+	<td>Sunday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -95,8 +100,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos2Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos2Checkbox']</td>
+	<td>Monday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -115,8 +120,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos3Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos3Checkbox']</td>
+	<td>Tuesday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -135,8 +140,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos4Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos4Checkbox']</td>
+	<td>Wednesday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -155,8 +160,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos5Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos5Checkbox']</td>
+	<td>Thursday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -175,8 +180,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos6Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos6Checkbox']</td>
+	<td>Friday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -195,8 +200,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos7Checkbox</td>
-	<td></td>
+	<td>//input[@id='_8_weeklyDayPos7Checkbox']</td>
+	<td>Saturday Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -205,43 +210,43 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateMonth</td>
+	<td>//select[@id='_8_endDateMonth']</td>
 	<td>label=January</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateDay</td>
+	<td>//select[@id='_8_endDateDay']</td>
 	<td>label=1</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateYear</td>
+	<td>//select[@id='_8_endDateYear']</td>
 	<td>label=2011</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -254,7 +259,7 @@
 	<td>label=2010</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//a[contains(@href, 'javascript:_8_updateCalendar(0, 7, 2010);')]</td>
 	<td></td>
 </tr>
@@ -266,12 +271,12 @@
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Repeating Test Event</td>
-	<td></td>
+	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -284,7 +289,7 @@
 	<td>label=2010</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//a[contains(@href, 'javascript:_8_updateCalendar(0, 14, 2010);')]</td>
 	<td></td>
 </tr>
@@ -296,12 +301,12 @@
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Repeating Test Event</td>
-	<td></td>
+	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -314,7 +319,7 @@
 	<td>label=2010</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//a[contains(@href, 'javascript:_8_updateCalendar(0, 15, 2010);')]</td>
 	<td></td>
 </tr>
@@ -326,7 +331,7 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Repeating Test Event</td>
-	<td></td>
+	<td>Repeating Test Event</td>
 </tr>
 
 </tbody></table>

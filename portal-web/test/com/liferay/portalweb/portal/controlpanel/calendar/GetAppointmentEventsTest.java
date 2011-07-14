@@ -30,7 +30,7 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,7 +66,7 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Day", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -93,7 +94,7 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Test Event"));
 		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
 		assertFalse(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		selenium.clickAt("link=Week", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -121,7 +122,7 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Test Event"));
 		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
 		assertFalse(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		selenium.clickAt("link=Month", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -149,7 +150,7 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Test Event"));
 		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
 		assertFalse(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Test Event"));

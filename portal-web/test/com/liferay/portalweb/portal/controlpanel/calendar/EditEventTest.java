@@ -30,7 +30,7 @@ public class EditEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class EditEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//tr[5]/td[4]/span/ul/li/strong/a",
@@ -56,7 +57,7 @@ public class EditEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
@@ -68,6 +69,9 @@ public class EditEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
@@ -79,7 +83,7 @@ public class EditEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_8_title")) {
+				if (selenium.isVisible("//input[@id='_8_title']")) {
 					break;
 				}
 			}
@@ -90,19 +94,42 @@ public class EditEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_title", RuntimeVariables.replace("Edited Test Event"));
+		selenium.type("//input[@id='_8_title']",
+			RuntimeVariables.replace("Edited Test Event"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_description",
+		selenium.type("//input[@id='_8_description']",
 			RuntimeVariables.replace(
 				"This is a test event! This test event has been edited."));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_8_startDateHour", RuntimeVariables.replace("label=5"));
-		selenium.select("_8_startDateAmPm", RuntimeVariables.replace("label=AM"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@name='_8_startDateHour']",
+			RuntimeVariables.replace("label=5"));
+		selenium.select("//select[@name='_8_startDateAmPm']",
+			RuntimeVariables.replace("label=AM"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Edited Test Event"));
 	}
 }

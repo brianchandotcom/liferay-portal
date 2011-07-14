@@ -30,7 +30,7 @@ public class AddRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Calendar", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -66,7 +67,7 @@ public class AddRepeatingEventTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -76,7 +77,7 @@ public class AddRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_8_title")) {
+				if (selenium.isVisible("//input[@id='_8_title']")) {
 					break;
 				}
 			}
@@ -87,24 +88,46 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_8_title",
+		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Repeating Test Event"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_8_allDayCheckbox", RuntimeVariables.replace(""));
-		selenium.clickAt("_8_timeZoneSensitiveCheckbox",
+		selenium.clickAt("//input[@id='_8_allDayCheckbox']",
+			RuntimeVariables.replace("All Day Event"));
+		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace(""));
-		selenium.select("_8_startDateMonth",
+		selenium.select("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("label=January"));
-		selenium.select("_8_startDateDay", RuntimeVariables.replace("label=1"));
-		selenium.select("_8_startDateYear",
+		selenium.select("//select[@id='_8_startDateDay']",
+			RuntimeVariables.replace("label=1"));
+		selenium.select("//select[@id='_8_startDateYear']",
 			RuntimeVariables.replace("label=2010"));
-		selenium.select("_8_type", RuntimeVariables.replace("label=Event"));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_8_type']",
+			RuntimeVariables.replace("label=Event"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -123,7 +146,7 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Repeating Test Event"));

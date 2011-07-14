@@ -1227,7 +1227,7 @@
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-client-api.jar</file-name>
-		<version>0.3</version>
+		<version>0.4.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
 		<licenses>
@@ -1238,7 +1238,7 @@
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-client-bindings.jar</file-name>
-		<version>0.3</version>
+		<version>0.4.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
 		<licenses>
@@ -1249,7 +1249,7 @@
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-client-impl.jar</file-name>
-		<version>0.3</version>
+		<version>0.4.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
 		<licenses>
@@ -1260,7 +1260,7 @@
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-commons-api.jar</file-name>
-		<version>0.3</version>
+		<version>0.4.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
 		<licenses>
@@ -1271,7 +1271,7 @@
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-commons-impl.jar </file-name>
-		<version>0.3</version>
+		<version>0.4.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>
 		<licenses>

@@ -31,7 +31,7 @@ public class IncrementVersionWebContentApprovedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,12 +42,11 @@ public class IncrementVersionWebContentApprovedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -61,12 +60,30 @@ public class IncrementVersionWebContentApprovedTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save as Draft']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("1.1"),
 			selenium.getText("//span[2]/strong"));
 		assertEquals(RuntimeVariables.replace("Draft"),
@@ -79,7 +96,7 @@ public class IncrementVersionWebContentApprovedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -90,12 +107,11 @@ public class IncrementVersionWebContentApprovedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

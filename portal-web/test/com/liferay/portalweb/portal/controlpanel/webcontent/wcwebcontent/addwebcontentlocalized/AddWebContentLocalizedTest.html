@@ -14,25 +14,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/span/ul/li/strong/a/span</td>
@@ -45,108 +45,58 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_15_title_en_US</td>
-	<td>Hello World Localized Article</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//fieldset/div/div/span/span/input</td>
-	<td>Select Template</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Selecting a template will change the structure, available input fields, and available templates? Do you want to proceed?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>template</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>template</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=LOCALIZED</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=LOCALIZED</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//fieldset/div/div/div/div/span</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Test Localized Structure</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Test Localized Structure</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Test Localized Structure</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Hello World Localized Article</td>
+</tr>
+<tr>
 	<td>assertNotChecked</td>
 	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>Localizable</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save as Draft']</td>
-	<td></td>
+	<td>Save as Draft</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -154,39 +104,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>page-name</td>
+	<td>//input[@id='page-name']</td>
 	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>page-description</td>
+	<td>//input[@id='page-description']</td>
 	<td>Hello World Page Description</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_15_languageId</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>_15_languageId</td>
-	<td>label=Chinese (China)</td>
+	<td>clickAt</td>
+	<td>//a[@id='_15_changeLanguageId']</td>
+	<td>Change</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Would you like to save the changes made to this language?</td>
+	<td>Changing the default language will delete all unsaved content. Do you want to proceed?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@name='_15_defaultLanguageId']</td>
+	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -195,43 +145,38 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>page-name</td>
+	<td>//input[@id='page-name']</td>
 	<td>世界您好 Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>page-description</td>
+	<td>//input[@id='page-description']</td>
 	<td>世界您好 Page Description</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Hello World Localized Article</td>
-	<td></td>
+	<td>Hello World Localized Article</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Hello World Localized Article</td>
-	<td></td>
+	<td>Hello World Localized Article</td>
 </tr>
 
 </tbody></table>

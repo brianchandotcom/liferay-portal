@@ -30,7 +30,7 @@ public class AddStructureTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,52 +41,72 @@ public class AddStructureTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Structures", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Structures",
+			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Structure']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_name",
+		selenium.type("//input[@id='_15_name']",
 			RuntimeVariables.replace("Web Content Structure Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_description",
+		selenium.type("//textarea[@id='_15_description']",
 			RuntimeVariables.replace("Web Content Structure Description"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Row']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_structure_el0_name", RuntimeVariables.replace("Itp"));
+		selenium.type("//input[@id='_15_structure_el0_name']",
+			RuntimeVariables.replace("Itp"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_15_structure_el0_type",
+		selenium.select("//select[@id='_15_structure_el0_type']",
 			RuntimeVariables.replace("label=Link to Page"));
 		selenium.clickAt("//input[@value='Add Row']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_structure_el0_name",
+		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("title"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_15_structure_el0_type",
+		selenium.select("//select[@id='_15_structure_el0_type']",
 			RuntimeVariables.replace("label=Text"));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Structure Name\nWeb Content Structure Description"),
 			selenium.getText("//td[3]/a"));

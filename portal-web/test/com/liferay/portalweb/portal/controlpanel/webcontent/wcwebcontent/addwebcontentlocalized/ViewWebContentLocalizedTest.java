@@ -30,7 +30,7 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,12 +41,13 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+			selenium.getText("link=Web Content"));
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -55,20 +56,25 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
-		assertEquals("Hello World Page Name", selenium.getValue("page-name"));
+		assertEquals("Hello World Page Name",
+			selenium.getValue("//input[@id='page-name']"));
 		assertEquals("Hello World Page Description",
-			selenium.getValue("page-description"));
-		selenium.select("_15_languageId",
-			RuntimeVariables.replace("label=Chinese (China)"));
+			selenium.getValue("//input[@id='page-description']"));
+		selenium.clickAt("//a[@id='_15_changeLanguageId']",
+			RuntimeVariables.replace("Change"));
+		selenium.select("//select[@name='_15_defaultLanguageId']",
+			RuntimeVariables.replace("Chinese (China)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertEquals("\u4e16\u754c\u60a8\u597d Page Name",
-			selenium.getValue("page-name"));
+			selenium.getValue("//input[@id='page-name']"));
 		assertEquals("\u4e16\u754c\u60a8\u597d Page Description",
-			selenium.getValue("page-description"));
-		selenium.select("_15_languageId",
-			RuntimeVariables.replace("label=English (United States)"));
+			selenium.getValue("//input[@id='page-description']"));
+		selenium.clickAt("_15_changeLanguageId",
+			RuntimeVariables.replace("Change"));
+		selenium.select("_15_defaultLanguageId",
+			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

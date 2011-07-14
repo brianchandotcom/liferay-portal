@@ -30,7 +30,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,12 +41,13 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+			selenium.getText("link=Web Content"));
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -62,7 +63,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -73,64 +74,32 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+		assertEquals(RuntimeVariables.replace("Test Localized Structure"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_title_en_US",
+		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Hello World Localized Article"));
 		selenium.saveScreenShotAndSource();
-		selenium.click("//fieldset/div/div/span/span/input");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Selecting a template will change the structure, available input fields, and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
-		selenium.waitForPopUp("template", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("template");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=LOCALIZED")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.click("link=LOCALIZED");
-		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		assertTrue(selenium.isPartialText("//fieldset/div/div/div/div/span",
-				"Test Localized Structure"));
 		assertFalse(selenium.isChecked("//span[2]/div/span/span/span/input[2]"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[2]/div/span/span/span/input[2]",
-			RuntimeVariables.replace("Localized"));
+			RuntimeVariables.replace("Localizable"));
 		assertTrue(selenium.isChecked("//span[2]/div/span/span/span/input[2]"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//li[2]/span[2]/div/span/span/span/input[2]"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//li[2]/span[2]/div/span/span/span/input[2]",
-			RuntimeVariables.replace("Localized"));
+			RuntimeVariables.replace("Localizable"));
 		assertTrue(selenium.isChecked(
 				"//li[2]/span[2]/div/span/span/span/input[2]"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save as Draft']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
@@ -141,8 +110,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -153,48 +121,34 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		selenium.type("page-name",
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("Hello World Page Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("page-description",
+		selenium.type("//input[@id='page-description']",
 			RuntimeVariables.replace("Hello World Page Description"));
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("_15_languageId")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.select("_15_languageId",
-			RuntimeVariables.replace("label=Chinese (China)"));
+		selenium.clickAt("//a[@id='_15_changeLanguageId']",
+			RuntimeVariables.replace("Change"));
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Would you like to save the changes made to this language[\\s\\S]$"));
+						   .matches("^Changing the default language will delete all unsaved content. Do you want to proceed[\\s\\S]$"));
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@name='_15_defaultLanguageId']",
+			RuntimeVariables.replace("Chinese (China)"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
-		selenium.type("page-name",
+		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("\u4e16\u754c\u60a8\u597d Page Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("page-description",
+		selenium.type("//input[@id='page-description']",
 			RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -202,8 +156,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -214,8 +167,9 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

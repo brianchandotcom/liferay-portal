@@ -439,6 +439,8 @@
 
 		<!-- Directory -->
 
+		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />
+
 		<action path="/directory/view_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
 			<forward name="portlet.users_admin.edit_organization" path="portlet.directory.view_organization" />
 			<forward name="portlet.users_admin.error" path="portlet.directory.error" />

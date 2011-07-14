@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.action;
+package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -20,13 +20,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPageResource;
-import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -42,9 +40,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Samuel Kong
+ * @author Raymond Augé
  */
-public class FindPageAction extends Action {
+public class FindUserAction extends Action {
 
 	@Override
 	public ActionForward execute(
@@ -53,45 +51,23 @@ public class FindPageAction extends Action {
 		throws Exception {
 
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			long plid = ParamUtil.getLong(request, "p_l_id");
-			long pageResourcePrimKey = ParamUtil.getLong(
-				request, "pageResourcePrimKey");
+			long userId2 = ParamUtil.getLong(request, "p_u_i_d");
 
-			plid = getPlid(plid, pageResourcePrimKey);
-
-			WikiPageResource pageResource =
-				WikiPageResourceLocalServiceUtil.getPageResource(
-					pageResourcePrimKey);
-
-			WikiNode node = WikiNodeLocalServiceUtil.getNode(
-				pageResource.getNodeId());
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			String portletId = null;
-
-			for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-				if (curPortletId.startsWith(PortletKeys.WIKI) ||
-					curPortletId.startsWith(PortletKeys.WIKI_DISPLAY)) {
-
-					portletId = curPortletId;
-
-					break;
-				}
-			}
+			plid = getPlid(plid, themeDisplay.getScopeGroupId());
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, portletId, plid, PortletRequest.RENDER_PHASE);
+				request, PortletKeys.DIRECTORY, plid,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setWindowState(WindowState.NORMAL);
 			portletURL.setPortletMode(PortletMode.VIEW);
 
-			portletURL.setParameter("struts_action", "/wiki/view");
-			portletURL.setParameter("nodeName", node.getName());
-			portletURL.setParameter("title", pageResource.getTitle());
+			portletURL.setParameter("struts_action", "/directory/view_user");
+			portletURL.setParameter("p_u_i_d", String.valueOf(userId2));
 
 			response.sendRedirect(portletURL.toString());
 
@@ -104,9 +80,7 @@ public class FindPageAction extends Action {
 		}
 	}
 
-	protected long getPlid(long plid, long pageResourcePrimKey)
-		throws Exception {
-
+	protected long getPlid(long plid, long scopeGroupId) throws Exception {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			try {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
@@ -114,11 +88,7 @@ public class FindPageAction extends Action {
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
 
-				if (layoutTypePortlet.hasPortletId(PortletKeys.WIKI)) {
-					return plid;
-				}
-
-				if (layoutTypePortlet.hasPortletId(PortletKeys.WIKI_DISPLAY)) {
+				if (layoutTypePortlet.hasPortletId(PortletKeys.DIRECTORY)) {
 					return plid;
 				}
 			}
@@ -126,29 +96,15 @@ public class FindPageAction extends Action {
 			}
 		}
 
-		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(
-				pageResourcePrimKey);
-
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(
-			pageResource.getNodeId());
-
 		plid = PortalUtil.getPlidFromPortletId(
-			node.getGroupId(), PortletKeys.WIKI);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			node.getGroupId(), PortletKeys.WIKI_DISPLAY);
+			scopeGroupId, PortletKeys.DIRECTORY);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
 		else {
 			throw new NoSuchLayoutException(
-				"No page was found with the Wiki portlet.");
+				"No page was found with the Directory portlet.");
 		}
 	}
 

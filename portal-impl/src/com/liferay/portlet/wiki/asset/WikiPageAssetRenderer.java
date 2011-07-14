@@ -27,6 +27,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
+import com.liferay.portlet.wiki.util.WikiUtil;
 
 import java.util.Locale;
 
@@ -74,13 +75,11 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 	public String getSummary(Locale locale) {
 		String content = _page.getContent();
 
-		String format = _page.getFormat();
-
-		if (format.equals("html")) {
-			content = HtmlUtil.stripHtml(content);
+		try {
+			content = HtmlUtil.extractText(
+				WikiUtil.convert(_page, null, null, null));
 		}
-		else {
-			content = HtmlUtil.escape(content);
+		catch (Exception e) {
 		}
 
 		return content;

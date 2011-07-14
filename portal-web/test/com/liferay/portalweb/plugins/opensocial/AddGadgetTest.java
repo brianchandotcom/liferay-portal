@@ -96,7 +96,8 @@ public class AddGadgetTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_1_WAR_opensocialportlet_url")) {
+				if (selenium.isElementPresent(
+							"//input[@id='_1_WAR_opensocialportlet_url']")) {
 					break;
 				}
 			}
@@ -107,11 +108,11 @@ public class AddGadgetTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_1_WAR_opensocialportlet_url",
+		selenium.type("//input[@id='_1_WAR_opensocialportlet_url']",
 			RuntimeVariables.replace(
 				"http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/helloworld.xml"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value=\"Save\"]",
+		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

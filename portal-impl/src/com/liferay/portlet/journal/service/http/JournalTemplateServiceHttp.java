@@ -57,7 +57,8 @@ public class JournalTemplateServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateId,
 		boolean autoTemplateId, java.lang.String structureId,
-		java.lang.String name, java.lang.String description,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -68,8 +69,9 @@ public class JournalTemplateServiceHttp {
 					"addTemplate", _addTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateId, autoTemplateId, structureId, name, description,
-					xsl, formatXsl, langType, cacheable, serviceContext);
+					templateId, autoTemplateId, structureId, nameMap,
+					descriptionMap, xsl, formatXsl, langType, cacheable,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -100,7 +102,8 @@ public class JournalTemplateServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateId,
 		boolean autoTemplateId, java.lang.String structureId,
-		java.lang.String name, java.lang.String description,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
 		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
 		java.io.File smallFile,
@@ -112,9 +115,9 @@ public class JournalTemplateServiceHttp {
 					"addTemplate", _addTemplateParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateId, autoTemplateId, structureId, name, description,
-					xsl, formatXsl, langType, cacheable, smallImage,
-					smallImageURL, smallFile, serviceContext);
+					templateId, autoTemplateId, structureId, nameMap,
+					descriptionMap, xsl, formatXsl, langType, cacheable,
+					smallImage, smallImageURL, smallFile, serviceContext);
 
 			Object returnObj = null;
 
@@ -291,9 +294,11 @@ public class JournalTemplateServiceHttp {
 
 	public static com.liferay.portlet.journal.model.JournalTemplate updateTemplate(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateId,
-		java.lang.String structureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsl, boolean formatXsl,
-		java.lang.String langType, boolean cacheable,
+		java.lang.String structureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
+		boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -302,8 +307,8 @@ public class JournalTemplateServiceHttp {
 					"updateTemplate", _updateTemplateParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateId, structureId, name, description, xsl, formatXsl,
-					langType, cacheable, serviceContext);
+					templateId, structureId, nameMap, descriptionMap, xsl,
+					formatXsl, langType, cacheable, serviceContext);
 
 			Object returnObj = null;
 
@@ -333,10 +338,12 @@ public class JournalTemplateServiceHttp {
 
 	public static com.liferay.portlet.journal.model.JournalTemplate updateTemplate(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateId,
-		java.lang.String structureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsl, boolean formatXsl,
-		java.lang.String langType, boolean cacheable, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String structureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsl, boolean formatXsl, java.lang.String langType,
+		boolean cacheable, boolean smallImage, java.lang.String smallImageURL,
+		java.io.File smallFile,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -345,9 +352,9 @@ public class JournalTemplateServiceHttp {
 					"updateTemplate", _updateTemplateParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateId, structureId, name, description, xsl, formatXsl,
-					langType, cacheable, smallImage, smallImageURL, smallFile,
-					serviceContext);
+					templateId, structureId, nameMap, descriptionMap, xsl,
+					formatXsl, langType, cacheable, smallImage, smallImageURL,
+					smallFile, serviceContext);
 
 			Object returnObj = null;
 
@@ -378,18 +385,16 @@ public class JournalTemplateServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(JournalTemplateServiceHttp.class);
 	private static final Class<?>[] _addTemplateParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			java.lang.String.class, java.util.Map.class, java.util.Map.class,
+			java.lang.String.class, boolean.class, java.lang.String.class,
+			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addTemplateParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, boolean.class, boolean.class,
-			java.lang.String.class, java.io.File.class,
-			com.liferay.portal.service.ServiceContext.class
+			java.lang.String.class, java.util.Map.class, java.util.Map.class,
+			java.lang.String.class, boolean.class, java.lang.String.class,
+			boolean.class, boolean.class, java.lang.String.class,
+			java.io.File.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyTemplateParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -406,15 +411,15 @@ public class JournalTemplateServiceHttp {
 		};
 	private static final Class<?>[] _updateTemplateParameterTypes6 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			boolean.class, com.liferay.portal.service.ServiceContext.class
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			boolean.class, java.lang.String.class, boolean.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateTemplateParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.lang.String.class,
-			boolean.class, boolean.class, java.lang.String.class,
-			java.io.File.class, com.liferay.portal.service.ServiceContext.class
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			boolean.class, java.lang.String.class, boolean.class, boolean.class,
+			java.lang.String.class, java.io.File.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 }

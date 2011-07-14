@@ -217,6 +217,10 @@ public class SearchEngineUtil {
 		return _indexReadOnly;
 	}
 
+	public static SearchEngine removeSearchEngine(String searchEngineName) {
+		return _searchEngines.remove(searchEngineName);
+	}
+
 	public static Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, int start, int end)

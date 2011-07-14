@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 
 /**
  * @author Michael C. Han
@@ -44,5 +45,18 @@ public class PluginSearchEngineConfigurator
 	@Override
 	protected MessageBus getMessageBus() {
 		return MessageBusUtil.getMessageBus();
+	}
+
+	@Override
+	protected ClassLoader getOperatingClassloader() {
+		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		return classLoader;
 	}
 }

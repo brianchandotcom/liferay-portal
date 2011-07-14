@@ -110,6 +110,7 @@ public class DefaultMessageBus implements MessageBus {
 
 		destinationModel.removeDestinationEventListeners();
 		destinationModel.unregisterMessageListeners();
+		destinationModel.close();
 
 		fireDestinationRemovedEvent(destinationModel);
 

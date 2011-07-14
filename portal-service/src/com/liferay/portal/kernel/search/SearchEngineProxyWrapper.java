@@ -37,6 +37,10 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		return _searchEngine.getName();
 	}
 
+	public SearchEngine getSearchEngine() {
+		return _searchEngine;
+	}
+
 	public IndexSearcher getSearcher() {
 		return _indexSearcher;
 	}

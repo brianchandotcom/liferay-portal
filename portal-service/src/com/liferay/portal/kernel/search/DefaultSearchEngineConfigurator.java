@@ -50,6 +50,13 @@ public class DefaultSearchEngineConfigurator
 		return _indexWriter;
 	}
 
+	@Override
+	protected ClassLoader getOperatingClassloader() {
+		Thread currentThread = Thread.currentThread();
+
+		return currentThread.getContextClassLoader();
+	}
+
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private MessageBus _messageBus;

@@ -167,38 +167,18 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(OrderedListItemNode orderedListItemNode) {
-		int nodeLevel = orderedListItemNode.getLevel();
-		int diff = nodeLevel - _parentLevel;
-
-		if (nodeLevel != _parentLevel) {
-			if (nodeLevel < _parentLevel) {
-				for (int i = 0; i > diff; i--) {
-					append("</ol>");
-				}
-			}
-			else {
-				for (int i = 0; i < diff; i++) {
-					append("<ol>");
-				}
-			}
-		}
+		appendLevelTag(orderedListItemNode.getLevel(), true);
 
 		traverse(orderedListItemNode.getChildASTNodes(), "<li>", "</li>");
-
-		_parentLevel = nodeLevel;
 	}
 
 	public void visit(OrderedListNode orderedListNode) {
-		append("<ol>");
+		_currentNodeLevel = 0;
 
 		traverse(orderedListNode.getChildASTNodes());
 
-		append("</ol>");
-
-		while (_parentLevel > 1) {
-			append("</ol>");
-
-			_parentLevel = _parentLevel - 1;
+		while (_currentNodeLevel > 0) {
+			appendLevelTag(_currentNodeLevel - 1, true);
 		}
 	}
 
@@ -239,38 +219,18 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(UnorderedListItemNode unorderedListItemNode) {
-		int nodeLevel = unorderedListItemNode.getLevel();
-		int diff = nodeLevel - _parentLevel;
-
-		if (nodeLevel != _parentLevel) {
-			if (nodeLevel < _parentLevel) {
-				for (int i = 0; i > diff; i--) {
-					append("</ul>");
-				}
-			}
-			else {
-				for (int i = 0; i < diff; i++) {
-					append("<ul>");
-				}
-			}
-		}
+		appendLevelTag(unorderedListItemNode.getLevel(), false);
 
 		traverse(unorderedListItemNode.getChildASTNodes(), "<li>", "</li>");
-
-		_parentLevel = nodeLevel;
 	}
 
 	public void visit(UnorderedListNode unorderedListNode) {
-		append("<ul>");
+		_currentNodeLevel = 0;
 
 		traverse(unorderedListNode.getChildASTNodes());
 
-		append("</ul>");
-
-		while (_parentLevel > 1) {
-			append("</ul>");
-
-			_parentLevel = _parentLevel - 1;
+		while (_currentNodeLevel > 0) {
+			appendLevelTag(_currentNodeLevel - 1, false);
 		}
 	}
 
@@ -282,6 +242,33 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		if (object != null) {
 			_sb.append(object);
 		}
+	}
+
+	protected void appendLevelTag(int nodeLevel, boolean ordered) {
+		int diff = nodeLevel - _currentNodeLevel;
+
+		if (diff > 0) {
+			for (int i = 0; i < diff; i++) {
+				if (ordered) {
+					append("<ol>");
+				}
+				else {
+					append("<ul>");
+				}
+			}
+		}
+		else if (diff < 0) {
+			for (int i = 0; i > diff; i--) {
+				if (ordered) {
+					append("</ol>");
+				}
+				else {
+					append("</ul>");
+				}
+			}
+		}
+
+		_currentNodeLevel = nodeLevel;
 	}
 
 	protected void traverse(List<ASTNode> astNodes) {
@@ -313,6 +300,6 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	private StringBundler _sb = new StringBundler();
-	private int _parentLevel = 1;
+	private int _currentNodeLevel;
 
 }

@@ -515,6 +515,9 @@
 				<entry key="csv">
 					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLCSVExporter" />
 				</entry>
+				<entry key="xml">
+					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLXMLExporter" />
+				</entry>
 			</map>
 		</property>
 	</bean>

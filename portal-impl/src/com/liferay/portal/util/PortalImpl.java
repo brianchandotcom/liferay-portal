@@ -125,6 +125,7 @@ import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.servlet.ImageServlet;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
@@ -3147,7 +3148,18 @@ public class PortalImpl implements Portal {
 				if (liveGroup.isStaged() &&
 					!liveGroup.isStagedPortlet(portletId)) {
 
-					scopeGroupId = liveGroup.getGroupId();
+					Layout liveScopedLayout = LayoutUtil.fetchByUUID_G(
+						layout.getUuid(), liveGroup.getGroupId());
+
+					if ((liveScopedLayout != null) &&
+						liveScopedLayout.hasScopeGroup()) {
+
+						scopeGroupId = getScopeGroupId(
+							liveScopedLayout, portletId);
+					}
+					else {
+						scopeGroupId = liveGroup.getGroupId();
+					}
 				}
 			}
 		}

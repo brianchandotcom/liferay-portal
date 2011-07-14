@@ -76,6 +76,7 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 <div class="aui-helper-hidden" id="<portlet:namespace />export-list">
 	<aui:select label="file-extension" name="fileExtension">
 		<aui:option value="csv">CSV</aui:option>
+		<aui:option value="xml">XML</aui:option>
 	</aui:select>
 </div>
 

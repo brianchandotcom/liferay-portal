@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryUtil;
+import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 
 import java.io.File;
 
@@ -107,11 +108,23 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
+		Element entriesElement = rootElement.addElement("entries");
+
+		Element dlFoldersElement = entriesElement.addElement("dl-folders");
+		Element dlFileEntriesElement = entriesElement.addElement(
+			"dl-file-entries");
+		Element dlFileRanksElement = entriesElement.addElement(
+			"dl-file-ranks");
+		Element igFoldersElement = entriesElement.addElement("ig-folders");
+		Element igImagesElement = entriesElement.addElement("ig-images");
+
 		List<BlogsEntry> entries = BlogsEntryUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
 
 		for (BlogsEntry entry : entries) {
-			exportEntry(portletDataContext, rootElement, entry);
+			exportEntry(portletDataContext, entriesElement, dlFoldersElement,
+			dlFileEntriesElement,dlFileRanksElement, igFoldersElement,
+			igImagesElement, entry, false);
 		}
 
 		return document.formattedString();
@@ -131,7 +144,12 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element rootElement = document.getRootElement();
 
-		for (Element entryElement : rootElement.elements("entry")) {
+		Element entiresElement = rootElement.element("entries");
+
+		JournalPortletDataHandlerImpl.importReferencedData(
+			portletDataContext, entiresElement);
+
+		for (Element entryElement : entiresElement.elements("entry")) {
 			String path = entryElement.attributeValue("path");
 
 			if (!portletDataContext.isPathNotProcessed(path)) {
@@ -152,8 +170,10 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected void exportEntry(
-			PortletDataContext portletDataContext, Element rootElement,
-			BlogsEntry entry)
+			PortletDataContext portletDataContext, Element entriesElement,
+			Element dlFoldersElement, Element dlFileEntriesElement,
+			Element dlFileRanksElement, Element igFoldersElement,
+			Element igImagesElement, BlogsEntry entry, boolean checkDateRange)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
@@ -170,9 +190,32 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
-		Element entryElement = rootElement.addElement("entry");
+		// Clone this article to make sure changes to its content are never
+		// persisted
 
-		Image smallImage = ImageUtil.fetchByPrimaryKey(entry.getSmallImageId());
+		entry = (BlogsEntry)entry.clone();
+
+		Element entryElement = (Element)entriesElement.selectSingleNode(
+			"//page[@path='".concat(path).concat("']"));
+
+		if (entryElement == null) {
+			entryElement = entriesElement.addElement("entry");
+		}
+
+		String content =
+			JournalPortletDataHandlerImpl.exportReferencedContent(
+				portletDataContext, dlFoldersElement, dlFileEntriesElement,
+				dlFileRanksElement, igFoldersElement, igImagesElement,
+				entryElement, entry.getContent(), checkDateRange);
+
+		entry.setContent(content);
+
+		String imagePath = getEntryImagePath(portletDataContext, entry);
+
+		entryElement.addAttribute("image-path", imagePath);
+
+		Image smallImage = ImageUtil.fetchByPrimaryKey(
+			entry.getSmallImageId());
 
 		if (entry.isSmallImage() && (smallImage != null)) {
 			String smallImagePath = getEntrySmallImagePath(
@@ -188,6 +231,20 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.addClassedModel(
 			entryElement, path, entry, _NAMESPACE);
+	}
+
+	protected static String getEntryImagePath(
+			PortletDataContext portletDataContext, BlogsEntry entry)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(portletDataContext.getPortletPath(PortletKeys.BLOGS));
+		sb.append("/entry/");
+		sb.append(entry.getUuid());
+		sb.append(StringPool.SLASH);
+
+		return sb.toString();
 	}
 
 	protected String getEntryPath(
@@ -225,6 +282,11 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
+
+		String content = JournalPortletDataHandlerImpl.importReferencedContent(
+				portletDataContext, entryElement, entry.getContent());
+
+		entry.setContent(content);
 
 		Calendar displayDateCal = CalendarFactoryUtil.getCalendar();
 

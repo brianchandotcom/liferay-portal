@@ -35,7 +35,7 @@ public class MoveThreadTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,37 +47,39 @@ public class MoveThreadTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Message Boards",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-					selenium.getText("//tr[4]/td[2]/a[1]/strong"));
 				selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
 					RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+				selenium.clickAt("//a/strong",
+					RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+				selenium.clickAt("//a/strong",
+					RuntimeVariables.replace(
+						"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace(
+						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent(
 						"This m\u00e9ssag\u00e9 will b\u00e9 d\u00e9l\u00e9t\u00e9d!"));
 				selenium.clickAt("link=Move Thread",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_162_addExplanationPostCheckbox",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_162_addExplanationPostCheckbox']",
+					RuntimeVariables.replace("Add post explanation."));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -85,7 +87,7 @@ public class MoveThreadTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_162_subject")) {
+						if (selenium.isVisible("//input[@id='_162_subject']")) {
 							break;
 						}
 					}
@@ -96,40 +98,20 @@ public class MoveThreadTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.typeKeys("_162_subject",
+				selenium.typeKeys("//input[@id='_162_subject']",
 					RuntimeVariables.replace("Moved to Sujr"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_162_subject",
+				selenium.type("//input[@id='_162_subject']",
 					RuntimeVariables.replace("Moved to Sujr"));
 				selenium.saveScreenShotAndSource();
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//td[@id='cke_contents__162_editor']/iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.selectFrame(
-					"//td[@id='cke_contents__162_editor']/iframe");
-				selenium.type("//body",
+				selenium.type("//textarea[@id='_162_editor']",
 					RuntimeVariables.replace(
 						"Trust and paths will be straightened."));
+				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("relative=top");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Select']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Select"));
 				selenium.waitForPopUp("category",
 					RuntimeVariables.replace("30000"));
 				selenium.selectWindow("category");
@@ -145,7 +127,8 @@ public class MoveThreadTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Categories",
+					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -156,7 +139,7 @@ public class MoveThreadTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.isElementPresent("link=Sujr"));
 				selenium.clickAt("//input[@value='Move Thread']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=Sujr"));

@@ -1206,8 +1206,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 				importedTemplate = JournalTemplateLocalServiceUtil.addTemplate(
 					userId, portletDataContext.getScopeGroupId(), templateId,
-					autoTemplateId, parentStructureId, template.getName(),
-					template.getDescription(), template.getXsl(), formatXsl,
+					autoTemplateId, parentStructureId, template.getNameMap(),
+					template.getDescriptionMap(), template.getXsl(), formatXsl,
 					template.getLangType(), template.getCacheable(),
 					template.isSmallImage(), template.getSmallImageURL(),
 					smallFile, serviceContext);
@@ -1217,18 +1217,18 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					JournalTemplateLocalServiceUtil.updateTemplate(
 						existingTemplate.getGroupId(),
 						existingTemplate.getTemplateId(),
-						existingTemplate.getStructureId(), template.getName(),
-						template.getDescription(), template.getXsl(), formatXsl,
-						template.getLangType(), template.getCacheable(),
-						template.isSmallImage(), template.getSmallImageURL(),
-						smallFile, serviceContext);
+						existingTemplate.getStructureId(),
+						template.getNameMap(), template.getDescriptionMap(),
+						template.getXsl(), formatXsl, template.getLangType(),
+						template.getCacheable(), template.isSmallImage(),
+						template.getSmallImageURL(), smallFile, serviceContext);
 			}
 		}
 		else {
 			importedTemplate = JournalTemplateLocalServiceUtil.addTemplate(
 				userId, portletDataContext.getScopeGroupId(), templateId,
-				autoTemplateId, parentStructureId, template.getName(),
-				template.getDescription(), template.getXsl(), formatXsl,
+				autoTemplateId, parentStructureId, template.getNameMap(),
+				template.getDescriptionMap(), template.getXsl(), formatXsl,
 				template.getLangType(), template.getCacheable(),
 				template.isSmallImage(), template.getSmallImageURL(), smallFile,
 				serviceContext);

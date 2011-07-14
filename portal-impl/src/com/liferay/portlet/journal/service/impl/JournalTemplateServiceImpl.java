@@ -27,6 +27,8 @@ import com.liferay.portlet.journal.service.permission.JournalTemplatePermission;
 import java.io.File;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +38,8 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
-			String structureId, String name, String description, String xsl,
+			String structureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsl,
 			boolean formatXsl, String langType, boolean cacheable,
 			boolean smallImage, String smallImageURL, File smallFile,
 			ServiceContext serviceContext)
@@ -46,14 +49,15 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_TEMPLATE);
 
 		return journalTemplateLocalService.addTemplate(
-			getUserId(), groupId, templateId, autoTemplateId, structureId, name,
-			description, xsl, formatXsl, langType, cacheable, smallImage,
-			smallImageURL, smallFile, serviceContext);
+			getUserId(), groupId, templateId, autoTemplateId, structureId, 
+			nameMap, descriptionMap, xsl, formatXsl, langType, cacheable, 
+			smallImage, smallImageURL, smallFile, serviceContext);
 	}
 
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
-			String structureId, String name, String description, String xsl,
+			String structureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsl,
 			boolean formatXsl, String langType, boolean cacheable,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -62,9 +66,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_TEMPLATE);
 
 		return journalTemplateLocalService.addTemplate(
-			getUserId(), groupId, templateId, autoTemplateId, structureId, name,
-			description, xsl, formatXsl, langType, cacheable, false, null, null,
-			serviceContext);
+			getUserId(), groupId, templateId, autoTemplateId, structureId, 
+			nameMap, descriptionMap, xsl, formatXsl, langType, cacheable, false,
+			null, null, serviceContext);
 	}
 
 	public JournalTemplate copyTemplate(
@@ -149,33 +153,35 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 	}
 
 	public JournalTemplate updateTemplate(
-			long groupId, String templateId, String structureId, String name,
-			String description, String xsl, boolean formatXsl, String langType,
-			boolean cacheable, boolean smallImage, String smallImageURL,
-			File smallFile, ServiceContext serviceContext)
+			long groupId, String templateId, String structureId, 
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap, 
+			String xsl, boolean formatXsl, String langType, boolean cacheable, 
+			boolean smallImage, String smallImageURL, File smallFile, 
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalTemplatePermission.check(
 			getPermissionChecker(), groupId, templateId, ActionKeys.UPDATE);
 
 		return journalTemplateLocalService.updateTemplate(
-			groupId, templateId, structureId, name, description, xsl, formatXsl,
-			langType, cacheable, smallImage, smallImageURL, smallFile,
-			serviceContext);
+			groupId, templateId, structureId, nameMap, descriptionMap, xsl, 
+			formatXsl, langType, cacheable, smallImage, smallImageURL, 
+			smallFile, serviceContext);
 	}
 
 	public JournalTemplate updateTemplate(
-			long groupId, String templateId, String structureId, String name,
-			String description, String xsl, boolean formatXsl, String langType,
-			boolean cacheable, ServiceContext serviceContext)
+			long groupId, String templateId, String structureId, 
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap, 
+			String xsl, boolean formatXsl, String langType, boolean cacheable, 
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalTemplatePermission.check(
 			getPermissionChecker(), groupId, templateId, ActionKeys.UPDATE);
 
 		return journalTemplateLocalService.updateTemplate(
-			groupId, templateId, structureId, name, description, xsl, formatXsl,
-			langType, cacheable, false, null, null, serviceContext);
+			groupId, templateId, structureId, nameMap, descriptionMap, xsl, 
+			formatXsl, langType, cacheable, false, null, null, serviceContext);
 	}
 
 }

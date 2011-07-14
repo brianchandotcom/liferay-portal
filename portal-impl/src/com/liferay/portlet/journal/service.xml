@@ -429,8 +429,8 @@
 
 		<column name="templateId" type="String" />
 		<column name="structureId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 		<column name="xsl" type="String" />
 		<column name="langType" type="String" />
 		<column name="cacheable" type="boolean" />

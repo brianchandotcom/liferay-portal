@@ -364,6 +364,12 @@ public class LayoutLocalServiceUtil {
 			parameterMap, startDate, endDate);
 	}
 
+	public static com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLayoutByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static long getDefaultPlid(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getDefaultPlid(groupId);

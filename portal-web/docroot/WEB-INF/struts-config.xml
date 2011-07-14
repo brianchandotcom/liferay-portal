@@ -1601,13 +1601,6 @@
 
 		<action path="/site_map/view" forward="portlet.site_map.view" />
 
-		<!-- Site Settings -->
-
-		<action path="/site_settings/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
-		</action>
-
 		<!-- Sites Admin -->
 
 		<action path="/sites_admin/edit_site" type="com.liferay.portlet.sites.action.EditGroupAction">
@@ -1628,11 +1621,6 @@
 		<action path="/sites_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/sites_admin/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
 		</action>
 
 		<action path="/sites_admin/edit_team" type="com.liferay.portlet.sites.action.EditTeamAction">
@@ -1781,11 +1769,6 @@
 		<action path="/users_admin/edit_organization_logo" type="com.liferay.portlet.usersadmin.action.EditOrganizationLogoAction">
 			<forward name="portlet.users_admin.edit_organization_logo" path="portlet.users_admin.edit_organization_logo" />
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
 		</action>
 
 		<action path="/users_admin/edit_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">

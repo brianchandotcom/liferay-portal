@@ -142,7 +142,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() %>">
 								<li class="settings use-dialog">
-									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="manage-site-settings" />
+									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 

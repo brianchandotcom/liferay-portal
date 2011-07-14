@@ -303,6 +303,11 @@ public interface LayoutLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultPlid(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

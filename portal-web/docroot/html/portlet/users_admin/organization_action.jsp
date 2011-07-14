@@ -77,9 +77,9 @@ if (row == null) {
 		/>
 	</c:if>--%>
 
-	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_STAGING) || OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE) %>">
+	<c:if test="<%= organizationGroup.isSite() && (OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_STAGING) || OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE)) %>">
 		<liferay-portlet:actionURL doAsGroupId="<%= organizationGroupId %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editSettingsURL">
-			<portlet:param name="struts_action" value="/site_settings/edit_settings" />
+			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon

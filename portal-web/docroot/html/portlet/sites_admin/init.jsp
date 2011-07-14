@@ -18,6 +18,7 @@
 
 <%@ page import="com.liferay.portal.DuplicateGroupException" %>
 <%@ page import="com.liferay.portal.DuplicateTeamException" %>
+<%@ page import="com.liferay.portal.GroupFriendlyURLException" %>
 <%@ page import="com.liferay.portal.GroupNameException" %>
 <%@ page import="com.liferay.portal.ImageTypeException" %>
 <%@ page import="com.liferay.portal.LARFileException" %>

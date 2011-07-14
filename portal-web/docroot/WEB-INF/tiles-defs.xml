@@ -1256,14 +1256,6 @@
 
 	<definition name="portlet.site_settings" extends="portlet" />
 
-	<definition name="portlet.site_settings.edit_settings" extends="portlet.site_settings">
-		<put name="portlet_content" value="/portlet/site_settings/edit_settings.jsp" />
-	</definition>
-
-	<definition name="portlet.site_settings.error" extends="portlet.site_settings">
-		<put name="portlet_content" value="/portlet/site_settings/error.jsp" />
-	</definition>
-
 	<!-- Sites Admin -->
 
 	<definition name="portlet.sites_admin" extends="portlet" />

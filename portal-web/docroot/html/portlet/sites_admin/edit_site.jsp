@@ -85,7 +85,7 @@ if (group != null) {
 String[][] categorySections = {mainSections, seoSections, advancedSections};
 %>
 
-<c:if test="<%= !portletName.equals(PortletKeys.COMMUNITIES) %>">
+<c:if test="<%= portletName.equals(PortletKeys.SITES_ADMIN) %>">
 	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "view-all" %>' />
 	</liferay-util:include>

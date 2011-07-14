@@ -197,7 +197,8 @@ public class SCIndexer extends BaseIndexer {
 		String type = (String)searchContext.getAttribute("type");
 
 		if (Validator.isNotNull(type)) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addRequiredTerm("type", type);
 

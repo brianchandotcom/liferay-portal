@@ -115,7 +115,8 @@ public class MBIndexer extends BaseIndexer {
 				return;
 			}
 
-			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			for (long categoryId : categoryIds) {
 				try {
@@ -134,10 +135,14 @@ public class MBIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
+		SearchContext searchContext = new SearchContext();
+		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+
 		if (obj instanceof MBCategory) {
 			MBCategory category = (MBCategory)obj;
 
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
 
@@ -171,7 +176,8 @@ public class MBIndexer extends BaseIndexer {
 			MBMessage message = MBMessageLocalServiceUtil.getMessage(
 				thread.getRootMessageId());
 
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
 

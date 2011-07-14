@@ -299,7 +299,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
-	private StringBundler _sb = new StringBundler();
 	private int _currentNodeLevel;
+	private StringBundler _sb = new StringBundler();
 
 }

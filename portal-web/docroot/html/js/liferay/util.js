@@ -412,6 +412,10 @@
 			return !!(window.Array && object.constructor == window.Array);
 		},
 
+		isEditorPresent: function(editorImpl) {
+			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
+		},
+
 		openWindow: function(config) {
 			config.openingWindow = window;
 

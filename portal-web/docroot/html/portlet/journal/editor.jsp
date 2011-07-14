@@ -25,6 +25,7 @@ String initMethod =	ParamUtil.getString(request, "initMethod");
 String name = ParamUtil.getString(request, "name");
 String onChangeMethod = ParamUtil.getString(request, "onChangeMethod");
 String toolbarSet = ParamUtil.getString(request, "toolbarSet");
+boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
 %>
 
 <liferay-ui:input-editor
@@ -33,5 +34,6 @@ String toolbarSet = ParamUtil.getString(request, "toolbarSet");
 	initMethod="<%= initMethod %>"
 	name="<%= name %>"
 	onChangeMethod="<%= onChangeMethod %>"
+	skipEditorLoading="<%= skipEditorLoading %>"
 	toolbarSet="<%= toolbarSet %>"
 />

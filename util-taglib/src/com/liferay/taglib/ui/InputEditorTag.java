@@ -14,10 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.EditorUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.util.IncludeTag;
@@ -59,6 +56,10 @@ public class InputEditorTag extends IncludeTag {
 		_onChangeMethod = onChangeMethod;
 	}
 
+	public void setSkipEditorLoading(boolean skipEditorLoading) {
+		_skipEditorLoading = skipEditorLoading;
+	}
+
 	public void setToolbarSet(String toolbarSet) {
 		_toolbarSet = toolbarSet;
 	}
@@ -77,6 +78,7 @@ public class InputEditorTag extends IncludeTag {
 		_name = "editor";
 		_onChangeMethod = null;
 		_page = null;
+		_skipEditorLoading = false;
 		_toolbarSet = "liferay";
 		_width = null;
 	}
@@ -96,31 +98,7 @@ public class InputEditorTag extends IncludeTag {
 			cssClasses += portlet.getCssClassWrapper();
 		}
 
-		String editorImpl = _editorImpl;
-
-		if (Validator.isNotNull(editorImpl)) {
-			editorImpl = PropsUtil.get(editorImpl);
-		}
-
-		if (!BrowserSnifferUtil.isRtf(request)) {
-			if (BrowserSnifferUtil.isSafari(request) &&
-				BrowserSnifferUtil.isMobile(request)) {
-
-				editorImpl = "simple";
-			}
-			else if (BrowserSnifferUtil.isSafari(request) &&
-				(editorImpl.indexOf("simple") == -1)) {
-
-				editorImpl = "tinymce_simple";
-			}
-			else {
-				editorImpl = "simple";
-			}
-		}
-
-		if (Validator.isNull(editorImpl)) {
-			editorImpl = _EDITOR_WYSIWYG_DEFAULT;
-		}
+		String editorImpl = EditorUtil.getEditorValue(request, _editorImpl);
 
 		_page = "/html/js/editor/" + editorImpl + ".jsp";
 
@@ -134,12 +112,12 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:name", _name);
 		request.setAttribute(
 			"liferay-ui:input-editor:onChangeMethod", _onChangeMethod);
+		request.setAttribute(
+			"liferay-ui:input-editor:skipEditorLoading",
+			String.valueOf(_skipEditorLoading));
 		request.setAttribute("liferay-ui:input-editor:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 	}
-
-	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
-		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
 	private Map<String, String> _configParams;
 	private String _cssClass;
@@ -149,6 +127,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _name = "editor";
 	private String _onChangeMethod;
 	private String _page;
+	private boolean _skipEditorLoading = false;
 	private String _toolbarSet = "liferay";
 	private String _width;
 

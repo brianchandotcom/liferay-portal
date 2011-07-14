@@ -426,6 +426,10 @@ AUI().add(
 
 				url = url.replace(/LIFERAY_NAME/, A.guid());
 
+				var editorImpl = Journal.PROXY.editorImpl;
+
+				url = url.replace(/LIFERAY_SKIP_EDITOR/, Liferay.Util.isEditorPresent(editorImpl));
+
 				return url;
 			},
 

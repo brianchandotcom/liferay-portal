@@ -194,7 +194,7 @@ if (portletName.equals(PortletKeys.JOURNAL)) {
 		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
 		%>
 
-		<liferay-ui:message arguments="<%= template.getName() %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
+		<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
 	</div>
 </c:if>
 

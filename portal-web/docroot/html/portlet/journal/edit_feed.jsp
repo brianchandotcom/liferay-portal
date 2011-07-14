@@ -297,7 +297,7 @@ if (feed != null) {
 								taglibSelectRendererTemplateOption = renderResponse.getNamespace() + "selectRendererTemplate('" + currTemplate.getTemplateId() + "');";
 							%>
 
-								<aui:option label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName()) %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
+								<aui:option label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName(locale)) %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
 
 							<%
 							}

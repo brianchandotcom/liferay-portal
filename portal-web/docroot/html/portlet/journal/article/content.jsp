@@ -281,7 +281,7 @@ if (Validator.isNotNull(content)) {
 											<aui:input name="templateId" type="hidden" value="<%= template.getTemplateId() %>" />
 
 											<span class="template-name-label">
-												<%= HtmlUtil.escape(template.getName()) %>
+												<%= HtmlUtil.escape(template.getName(locale)) %>
 											</span>
 
 											<c:if test="<%= template.isSmallImage() %>">
@@ -315,7 +315,7 @@ if (Validator.isNotNull(content)) {
 													<aui:option
 														data-img="<%= imageURL != null ? imageURL : StringPool.BLANK %>"
 														data-url="<%= templateURL %>"
-														label="<%= HtmlUtil.escape(template.getName()) %>"
+														label="<%= HtmlUtil.escape(template.getName(locale)) %>"
 														selected="<%= templateId.equals(template.getTemplateId()) %>"
 														value="<%= template.getTemplateId() %>"
 													/>

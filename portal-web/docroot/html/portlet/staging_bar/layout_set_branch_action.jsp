@@ -23,6 +23,25 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 %>
 
 <liferay-ui:icon-menu>
+	<c:if test="<%= LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutSetBranch.getGroupId()) %>" />
+			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+		</portlet:renderURL>
+
+		<%
+		String taglibURL = "javascript:Liferay.Staging.Branching.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) + "'});";
+		%>
+
+		<liferay-ui:icon
+			image="edit"
+			url="<%= taglibURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= LayoutSetBranch.class.getName() %>"
@@ -60,7 +79,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.Staging.Branching.mergeBranch({uri: '" + mergeURL + "'});";
+		String taglibURL = "javascript:Liferay.Staging.Branching.mergeBranch({uri: '" + HtmlUtil.escapeJS(mergeURL) + "'});";
 		%>
 
 		<liferay-ui:icon

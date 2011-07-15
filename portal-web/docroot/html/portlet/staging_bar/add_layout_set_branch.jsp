@@ -16,49 +16,66 @@
 
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
-<div class="aui-helper-hidden" data-namespace="<portlet:namespace />" id="<portlet:namespace />addBranch">
-	<aui:model-context model="<%= LayoutSetBranch.class %>" />
+<%
+LayoutSetBranch layoutSetBranch = null;
+
+long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+if (layoutSetBranchId > 0) {
+	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+}
+
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
+<div class='<%= layoutSetBranch != null ? StringPool.BLANK : "aui-helper-hidden" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
+	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 
 	<portlet:actionURL var="editLayoutSetBranchURL">
 		<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= editLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm3">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= layoutSetBranch != null ? Constants.UPDATE : Constants.ADD %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="groupId" type="hidden" value="<%= stagingGroup.getGroupId() %>" />
 		<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
+		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
 
 		<aui:fieldset>
 			<aui:input name="name" />
 
 			<aui:input name="description" />
 
-			<%
-			List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
-			%>
+			<c:if test="<%= layoutSetBranch == null %>">
+				<%
+				List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+				%>
 
-			<c:if test="<%= layoutSetBranches.size() > 1 %>">
-				<aui:select label="copy-pages-from-backstage" name="copyLayoutSetBranchId">
-					<aui:option label="all-backstages" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
-					<aui:option label="none-empty-backstage" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
+				<c:if test="<%= layoutSetBranches.size() > 1 %>">
+					<aui:select label="copy-pages-from-backstage" name="copyLayoutSetBranchId">
+						<aui:option label="all-backstages" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
+						<aui:option label="none-empty-backstage" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
 
-					<%
-					for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-					%>
+						<%
+						for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
+						%>
 
-						<aui:option label="<%= layoutSetBranch.getName() %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+							<aui:option label="<%= curLayoutSetBranch.getName() %>" value="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</aui:select>
+					</aui:select>
+				</c:if>
 			</c:if>
+
 		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button type="submit" value="add-backstage" />
+			<aui:button type="submit" value='<%= layoutSetBranch != null ? "update-backstage" : "add-backstage" %>' />
 		</aui:button-row>
 	</aui:form>
 </div>

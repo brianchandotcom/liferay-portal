@@ -126,7 +126,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 
 		return mapping.findForward(
 			getForward(
-				renderRequest, "portlet.staging_bar.view_layout_set_branches"));
+				renderRequest, "portlet.staging_bar.edit_layout_set_branch"));
 	}
 
 	protected void deleteLayoutSetBranch(ActionRequest actionRequest)

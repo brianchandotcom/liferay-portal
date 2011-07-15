@@ -50,6 +50,18 @@ AUI().add(
 				mergeDialog.show();
 			},
 
+			updateBranch: function(options) {
+				var instance = this;
+
+				var updateBranchDialog = instance._getUpdateBranchDialog();
+				var updateBranchDialogIO = updateBranchDialog.io;
+
+				updateBranchDialogIO.set('uri', options.uri);
+				updateBranchDialogIO.start();
+
+				updateBranchDialog.show();
+			},
+
 			_getBranchDialog: function() {
 				var instance = this;
 
@@ -76,34 +88,6 @@ AUI().add(
 				}
 
 				return branchDialog;
-			},
-
-			_getVariationDialog: function() {
-				var instance = this;
-
-				var variationDialog = instance._variationDialog;
-
-				if (!variationDialog) {
-					var namespace = instance._namespace;
-
-					variationDialog = new A.Dialog(
-						{
-							align: {
-								points: ['tc', 'tc']
-							},
-							bodyContent: A.one('#' + namespace + 'addRootLayoutRevision').show(),
-							title: Liferay.Language.get('new-page-variation'),
-							modal: true,
-							width: 530
-						}
-					).render();
-
-					variationDialog.move(variationDialog.get('x'), variationDialog.get('y') + 100);
-
-					instance._variationDialog = variationDialog;
-				}
-
-				return variationDialog;
 			},
 
 			_getMergeDialog: function() {
@@ -150,6 +134,63 @@ AUI().add(
 				}
 
 				return mergeDialog;
+			},
+
+			_getUpdateBranchDialog: function() {
+				var instance = this;
+
+				var	updateBranchDialog = new A.Dialog(
+					{
+						align: {
+							points: ['tc', 'tc']
+						},
+						draggable: true,
+						modal: true,
+						title: Liferay.Language.get('update-branch'),
+						width: 530
+					}
+				).plug(
+					A.Plugin.IO,
+					{
+						autoLoad: false,
+						data: {
+							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+							p_l_id: themeDisplay.getPlid(),
+						}
+					}
+				).render();
+
+				updateBranchDialog.move(updateBranchDialog.get('x'), updateBranchDialog.get('y') + 100);
+
+				return updateBranchDialog;
+			},
+
+			_getVariationDialog: function() {
+				var instance = this;
+
+				var variationDialog = instance._variationDialog;
+
+				if (!variationDialog) {
+					var namespace = instance._namespace;
+
+					variationDialog = new A.Dialog(
+						{
+							align: {
+								points: ['tc', 'tc']
+							},
+							bodyContent: A.one('#' + namespace + 'addRootLayoutRevision').show(),
+							title: Liferay.Language.get('new-page-variation'),
+							modal: true,
+							width: 530
+						}
+					).render();
+
+					variationDialog.move(variationDialog.get('x'), variationDialog.get('y') + 100);
+
+					instance._variationDialog = variationDialog;
+				}
+
+				return variationDialog;
 			},
 
 			_onMergeBranch: function(node) {

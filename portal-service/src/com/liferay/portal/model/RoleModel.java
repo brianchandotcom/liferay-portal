@@ -228,8 +228,48 @@ public interface RoleModel extends AttachedModel, BaseModel<Role> {
 	 *
 	 * @return the description of this role
 	 */
-	@AutoEscape
 	public String getDescription();
+
+	/**
+	 * Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized description of this role
+	 */
+	public String getDescription(Locale locale);
+
+	/**
+	 * Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	public String getDescription(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized description of this role
+	 */
+	public String getDescription(String languageId);
+
+	/**
+	 * Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this role
+	 */
+	public String getDescription(String languageId, boolean useDefault);
+
+	/**
+	 * Returns a map of the locales and localized descriptions of this role.
+	 *
+	 * @return the locales and localized descriptions of this role
+	 */
+	public Map<Locale, String> getDescriptionMap();
 
 	/**
 	 * Sets the description of this role.
@@ -237,6 +277,40 @@ public interface RoleModel extends AttachedModel, BaseModel<Role> {
 	 * @param description the description of this role
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Sets the localized description of this role in the language.
+	 *
+	 * @param description the localized description of this role
+	 * @param locale the locale of the language
+	 */
+	public void setDescription(String description, Locale locale);
+
+	/**
+	 * Sets the localized description of this role in the language, and sets the default locale.
+	 *
+	 * @param description the localized description of this role
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale);
+
+	/**
+	 * Sets the localized descriptions of this role from the map of locales and localized descriptions.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this role
+	 */
+	public void setDescriptionMap(Map<Locale, String> descriptionMap);
+
+	/**
+	 * Sets the localized descriptions of this role from the map of locales and localized descriptions, and sets the default locale.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this role
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the type of this role.

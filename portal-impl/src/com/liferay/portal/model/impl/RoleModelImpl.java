@@ -366,8 +366,87 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 	}
 
+	public String getDescription(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId);
+	}
+
+	public String getDescription(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId, useDefault);
+	}
+
+	public String getDescription(String languageId) {
+		String value = LocalizationUtil.getLocalization(getDescription(),
+				languageId);
+
+		if (isEscapedModel()) {
+			return HtmlUtil.escape(value);
+		}
+		else {
+			return value;
+		}
+	}
+
+	public String getDescription(String languageId, boolean useDefault) {
+		String value = LocalizationUtil.getLocalization(getDescription(),
+				languageId, useDefault);
+
+		if (isEscapedModel()) {
+			return HtmlUtil.escape(value);
+		}
+		else {
+			return value;
+		}
+	}
+
+	public Map<Locale, String> getDescriptionMap() {
+		return LocalizationUtil.getLocalizationMap(getDescription());
+	}
+
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public void setDescription(String description, Locale locale) {
+		setDescription(description, locale, LocaleUtil.getDefault());
+	}
+
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(description)) {
+			setDescription(LocalizationUtil.updateLocalization(
+					getDescription(), "Description", description, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setDescription(LocalizationUtil.removeLocalization(
+					getDescription(), "Description", languageId));
+		}
+	}
+
+	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
+		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
+	}
+
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
+		if (descriptionMap == null) {
+			return;
+		}
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String description = descriptionMap.get(locale);
+
+			setDescription(description, locale, defaultLocale);
+		}
 	}
 
 	@JSON

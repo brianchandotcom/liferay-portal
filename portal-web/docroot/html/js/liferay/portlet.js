@@ -27,6 +27,11 @@
 			A.io.request(
 				themeDisplay.getPathMain() + '/portal/update_layout',
 				{
+					after: {
+						success: function() {
+							Liferay.fire('updatedLayout');
+						}
+					},
 					data: {
 						cmd: 'delete',
 						doAsUserId: event.doAsUserId,
@@ -265,6 +270,11 @@
 			A.io.request(
 				url,
 				{
+					after: {
+						success: function() {
+							Liferay.fire('updatedLayout');
+						}
+					},
 					data: data,
 					dataType: dataType,
 					on: {

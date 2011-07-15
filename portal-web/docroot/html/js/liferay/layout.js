@@ -413,6 +413,11 @@ AUI().add(
 				A.io.request(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
+						after: {
+							success: function() {
+								Liferay.fire('updatedLayout');
+							}
+						},
 						data: data
 					}
 				);

@@ -139,6 +139,18 @@
 				}
 			}
 
+			.layout-actions:after {
+				clear: both;
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+			}
+
+			.layout-revision-details {
+				float: left;
+			}
+
 			.layout-revision-id {
 				font-size: 0.6em;
 			}

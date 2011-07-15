@@ -1737,6 +1737,8 @@
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
 
+		<action path="/staging_bar/view_layout_revision_details" forward="portlet.staging_bar.view_layout_revision_details" />
+
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />

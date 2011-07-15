@@ -84,8 +84,7 @@ public class JournalTemplateServiceUtil {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> getStructureTemplates(
 		long groupId, java.lang.String structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getStructureTemplates(groupId, structureId);
 	}
 
@@ -94,6 +93,48 @@ public class JournalTemplateServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTemplate(groupId, templateId);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> search(
+		long companyId, long[] groupIds, java.lang.String keywords,
+		java.lang.String structureId, java.lang.String structureIdComparator,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(companyId, groupIds, keywords, structureId,
+			structureIdComparator, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> search(
+		long companyId, long[] groupIds, java.lang.String templateId,
+		java.lang.String structureId, java.lang.String structureIdComparator,
+		java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(companyId, groupIds, templateId, structureId,
+			structureIdComparator, name, description, andOperator, start, end,
+			obc);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords, java.lang.String structureId,
+		java.lang.String structureIdComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .searchCount(companyId, groupIds, keywords, structureId,
+			structureIdComparator);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String templateId, java.lang.String structureId,
+		java.lang.String structureIdComparator, java.lang.String name,
+		java.lang.String description, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .searchCount(companyId, groupIds, templateId, structureId,
+			structureIdComparator, name, description, andOperator);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalTemplate updateTemplate(

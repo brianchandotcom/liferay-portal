@@ -28,10 +28,10 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -244,12 +244,20 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, primKey, actionId);
 		}
 
-		groupId = layout.getGroupId();
+		Group group = layout.getGroup();
 		name = PortletConstants.getRootPortletId(portletId);
 		primKey = getPrimaryKey(layout.getPlid(), portletId);
 
+		if (!group.isLayoutSetPrototype() &&
+			SitesUtil.isLayoutLocked(layout) &&
+			actionId.equals(ActionKeys.CONFIGURATION)) {
+
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, name, groupId, name, actionId);
+			permissionChecker, group.getGroupId(), name, group.getGroupId(),
+			name, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
@@ -260,23 +268,13 @@ public class PortletPermissionImpl implements PortletPermission {
 			(layout.isPublicLayout() &&
 			 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
 
-			if (actionId.equals(ActionKeys.CONFIGURATION)) {
-				Group group = GroupLocalServiceUtil.getGroup(
-					layout.getGroupId());
-
-				if (group.isUser()) {
-					return false;
-				}
+			if (actionId.equals(ActionKeys.CONFIGURATION) && group.isUser()) {
+				return false;
 			}
 		}
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				layout.getGroupId());
-
-			if (group.isControlPanel()) {
-				return true;
-			}
+		if (actionId.equals(ActionKeys.VIEW) && group.isControlPanel()) {
+			return true;
 		}
 
 		if (strict) {

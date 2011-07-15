@@ -16,12 +16,17 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 import java.util.List;
@@ -71,18 +76,47 @@ public class GroupPermissionImpl implements GroupPermission {
 
 			for (Organization organization : organizations) {
 				if (OrganizationPermissionUtil.contains(
-						permissionChecker, organization.getOrganizationId(),
-						ActionKeys.MANAGE_USERS)) {
+					permissionChecker, organization.getOrganizationId(),
+					ActionKeys.MANAGE_USERS)) {
 
 					return true;
 				}
 			}
 		}
 
-		// Group id must be set so that users can modify their personal pages
+		if (ActionKeys.ADD_LAYOUT.equals(actionId)) {
 
-		return permissionChecker.hasPermission(
-			groupId, Group.class.getName(), groupId, actionId);
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, false);
+
+			if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+				LayoutSetPrototype layoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.
+						getLayoutSetPrototypeByUuid(
+							layoutSet.getLayoutSetPrototypeUuid());
+
+				String allowLayoutAdditions =
+					layoutSetPrototype.getSettingsProperty(
+						"allowLayoutAdditions");
+
+				if (allowLayoutAdditions != null &&
+					!GetterUtil.getBoolean(allowLayoutAdditions)) {
+
+					return false;
+				}
+			}
+
+			return permissionChecker.hasPermission(
+				groupId, Group.class.getName(), groupId,
+				ActionKeys.MANAGE_LAYOUTS);
+		}
+		else {
+			// Group id must be set so that users can modify their personal
+			// pages
+
+			return permissionChecker.hasPermission(
+				groupId, Group.class.getName(), groupId, actionId);
+		}
 	}
 
 }

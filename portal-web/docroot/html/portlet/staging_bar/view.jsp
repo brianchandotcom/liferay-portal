@@ -308,18 +308,20 @@ if (layout != null) {
 										</ul>
 									</c:if>
 
-									<div class="aui-tabview-content variations-tabview-content" id="<portlet:namespace />LayoutRevisionDetails">
+									<div class="aui-tabview-content variations-tabview-content">
 
 										<%
 										request.setAttribute("view.jsp-layoutRevision", layoutRevision);
 										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
 										%>
 
-										<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
-									</div>
+										<div class="layout-actions">
+											<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
+												<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
+											</div>
 
-									<div class="layout-actions">
-										<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
+											<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
+										</div>
 									</div>
 								</div>
 							</aui:form>
@@ -435,33 +437,3 @@ if (layout != null) {
 		</div>
 	</div>
 </c:if>
-
-<aui:script use="aui-base,aui-io-request">
-	var layoutRevisionDetails = A.one('#<portlet:namespace />LayoutRevisionDetails');
-
-	if (layoutRevisionDetails){
-		Liferay.after(
-			'updatedLayout',
-			function(event) {
-				A.io.request(
-					themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
-					{
-						data: {
-							p_l_id: '<%= plid %>'
-						},
-						method: 'GET',
-						on: {
-							success: function(event, id, obj) {
-								var response = this.get('responseData');
-
-								layoutRevisionDetails.plug(A.Plugin.ParseContent);
-
-								layoutRevisionDetails.setContent(response);
-							}
-						}
-					}
-				);
-			}
-		);
-	}
-</aui:script>

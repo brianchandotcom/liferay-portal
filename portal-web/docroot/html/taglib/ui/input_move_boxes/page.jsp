@@ -44,7 +44,7 @@ List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightLi
 
 				<%
 				for (int i = 0; i < leftList.size(); i++) {
-					KeyValuePair kvp = (KeyValuePair)leftList.get(i);
+					KeyValuePair<String, String> kvp = (KeyValuePair<String, String>)leftList.get(i);
 				%>
 
 					<aui:option label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
@@ -63,7 +63,7 @@ List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightLi
 
 				<%
 				for (int i = 0; i < rightList.size(); i++) {
-					KeyValuePair kvp = (KeyValuePair)rightList.get(i);
+					KeyValuePair<String, String> kvp = (KeyValuePair<String, String>)rightList.get(i);
 				%>
 
 					<option value="<%= kvp.getKey() %>"><%= kvp.getValue() %></option>

@@ -19,7 +19,9 @@ import java.util.Comparator;
 /**
  * @author Brian Wing Shun Chan
  */
-public class KeyValuePairComparator implements Comparator<KeyValuePair> {
+public class KeyValuePairComparator
+		<K extends Comparable<K>, V extends Comparable<V>>
+	implements Comparator<KeyValuePair<K, V>> {
 
 	public KeyValuePairComparator() {
 		this(true);
@@ -34,10 +36,10 @@ public class KeyValuePairComparator implements Comparator<KeyValuePair> {
 		_ascending = ascending;
 	}
 
-	public int compare(KeyValuePair kvp1, KeyValuePair kvp2) {
+	public int compare(KeyValuePair<K, V> kvp1, KeyValuePair<K, V> kvp2) {
 		if (_byKey) {
-			String key1 = kvp1.getKey();
-			String key2 = kvp2.getKey();
+			K key1 = kvp1.getKey();
+			K key2 = kvp2.getKey();
 
 			if (_ascending) {
 				return key1.compareTo(key2);
@@ -47,8 +49,8 @@ public class KeyValuePairComparator implements Comparator<KeyValuePair> {
 			}
 		}
 		else {
-			String value1 = kvp1.getValue();
-			String value2 = kvp2.getValue();
+			V value1 = kvp1.getValue();
+			V value2 = kvp2.getValue();
 
 			if (_ascending) {
 				return value1.compareTo(value2);

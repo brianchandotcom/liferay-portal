@@ -19,34 +19,35 @@ import java.io.Serializable;
 /**
  * @author Brian Wing Shun Chan
  */
-public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
+public class KeyValuePair<K extends Comparable<K>, V>
+	implements Comparable<KeyValuePair<K, V>>, Serializable {
 
 	public KeyValuePair() {
 		this(null, null);
 	}
 
-	public KeyValuePair(String key, String value) {
+	public KeyValuePair(K key, V value) {
 		_key = key;
 		_value = value;
 	}
 
-	public String getKey() {
+	public K getKey() {
 		return _key;
 	}
 
-	public void setKey(String key) {
+	public void setKey(K key) {
 		_key = key;
 	}
 
-	public String getValue() {
+	public V getValue() {
 		return _value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(V value) {
 		_value = value;
 	}
 
-	public int compareTo(KeyValuePair kvp) {
+	public int compareTo(KeyValuePair<K, V> kvp) {
 		return _key.compareTo(kvp.getKey());
 	}
 
@@ -60,7 +61,7 @@ public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
 			return false;
 		}
 
-		KeyValuePair kvp = (KeyValuePair)obj;
+		KeyValuePair<K, V> kvp = (KeyValuePair<K, V>)obj;
 
 		if (Validator.equals(_key, kvp._key)) {
 			return true;
@@ -79,7 +80,20 @@ public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
 		}
 	}
 
-	private String _key;
-	private String _value;
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{key=");
+		sb.append(_key);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private K _key;
+	private V _value;
 
 }

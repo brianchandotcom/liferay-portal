@@ -339,14 +339,16 @@ public class DataFactory {
 		return resource;
 	}
 
-	public List<KeyValuePair> addRolesPermissions(
+	public List<KeyValuePair<String, String>> addRolesPermissions(
 			Resource resource, List<Permission> permissions, Role memberRole)
 		throws Exception {
 
-		List<KeyValuePair> rolesPermissions = new ArrayList<KeyValuePair>();
+		List<KeyValuePair<String, String>> rolesPermissions =
+			new ArrayList<KeyValuePair<String, String>>();
 
 		for (Permission permission : permissions) {
-			KeyValuePair kvp = new KeyValuePair();
+			KeyValuePair<String, String> kvp =
+				new KeyValuePair<String, String>();
 
 			kvp.setKey(String.valueOf(_ownerRole.getRoleId()));
 			kvp.setValue(String.valueOf(permission.getPermissionId()));
@@ -365,7 +367,8 @@ public class DataFactory {
 					continue;
 				}
 
-				KeyValuePair kvp = new KeyValuePair();
+				KeyValuePair<String, String> kvp =
+					new KeyValuePair<String, String>();
 
 				kvp.setKey(String.valueOf(memberRole.getRoleId()));
 				kvp.setValue(String.valueOf(permission.getPermissionId()));
@@ -382,7 +385,8 @@ public class DataFactory {
 				continue;
 			}
 
-			KeyValuePair kvp = new KeyValuePair();
+			KeyValuePair<String, String> kvp =
+				new KeyValuePair<String, String>();
 
 			kvp.setKey(String.valueOf(_guestRole.getRoleId()));
 			kvp.setValue(String.valueOf(permission.getPermissionId()));

@@ -350,10 +350,10 @@ public class PermissionExporter {
 		Element rootElement = document.addElement(
 			"portlet-data-permissions");
 
-		Map<String, List<KeyValuePair>> permissionsMap =
+		Map<String, List<KeyValuePair<String, String>>> permissionsMap =
 			portletDataContext.getPermissions();
 
-		for (Map.Entry<String, List<KeyValuePair>> entry :
+		for (Map.Entry<String, List<KeyValuePair<String, String>>> entry :
 				permissionsMap.entrySet()) {
 
 			String[] permissionParts = StringUtil.split(
@@ -369,9 +369,9 @@ public class PermissionExporter {
 			portletDataElement.addAttribute(
 				"resource-pk", String.valueOf(resourcePK));
 
-			List<KeyValuePair> permissions = entry.getValue();
+			List<KeyValuePair<String, String>> permissions = entry.getValue();
 
-			for (KeyValuePair permission : permissions) {
+			for (KeyValuePair<String, String> permission : permissions) {
 				String roleName = permission.getKey();
 				String actions = permission.getValue();
 

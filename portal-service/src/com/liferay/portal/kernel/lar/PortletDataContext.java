@@ -87,7 +87,8 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException, SystemException;
 
 	public void addPermissions(
-		String resourceName, long resourcePK, List<KeyValuePair> permissions);
+		String resourceName, long resourcePK,
+		List<KeyValuePair<String, String>> permissions);
 
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey);
 
@@ -160,7 +161,7 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, String[]> getParameterMap();
 
-	public Map<String, List<KeyValuePair>> getPermissions();
+	public Map<String, List<KeyValuePair<String, String>>> getPermissions();
 
 	public long getPlid();
 

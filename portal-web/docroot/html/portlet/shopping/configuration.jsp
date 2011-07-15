@@ -93,7 +93,7 @@ else if (tabs3.equals("shipping-email")) {
 					for (int i = 0; i < ccTypes2.length; i++) {
 						String ccType = (String)ccTypes2[i];
 
-						leftList.add(new KeyValuePair(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
+						leftList.add(new KeyValuePair<String, String>(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
 					}
 
 					// Right list
@@ -104,7 +104,7 @@ else if (tabs3.equals("shipping-email")) {
 						String ccType = (String)ccTypes1[i];
 
 						if (!ArrayUtil.contains(ccTypes2, ccType)) {
-							rightList.add(new KeyValuePair(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
+							rightList.add(new KeyValuePair<String, String>(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
 						}
 					}
 					%>

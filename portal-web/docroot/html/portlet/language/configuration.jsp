@@ -39,7 +39,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];
 
-			leftList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
+			leftList.add(new KeyValuePair<String, String>(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 		}
 
 		// Right list
@@ -54,11 +54,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 			String languageId = (String)itr.next();
 
 			if (Arrays.binarySearch(languageIds, languageId) < 0) {
-				rightList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
+				rightList.add(new KeyValuePair<String, String>(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 			}
 		}
 
-		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+		rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 		%>
 
 		<liferay-ui:input-move-boxes

@@ -67,7 +67,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					for (int i = 0; i < folderColumns.length; i++) {
 						String folderColumn = folderColumns[i];
 
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+						leftList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 					}
 
 					// Right list
@@ -82,11 +82,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 						String folderColumn = (String)itr.next();
 
 						if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-							rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+							rightList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 						}
 					}
 
-					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+					rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 					%>
 
 					<liferay-ui:input-move-boxes
@@ -118,7 +118,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					for (int i = 0; i < entryColumns.length; i++) {
 						String entryColumn = entryColumns[i];
 
-						leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
+						leftList.add(new KeyValuePair<String, String>(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
 					}
 
 					// Right list
@@ -133,11 +133,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 						String entryColumn = (String)itr.next();
 
 						if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
-							rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
+							rightList.add(new KeyValuePair<String, String>(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
 						}
 					}
 
-					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+					rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 					%>
 
 					<liferay-ui:input-move-boxes

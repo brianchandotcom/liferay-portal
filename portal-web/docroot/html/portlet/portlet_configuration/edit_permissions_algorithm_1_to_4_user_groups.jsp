@@ -133,10 +133,10 @@ int userGroupIdsPos = ParamUtil.getInteger(request, "userGroupIdsPos");
 		for (int i = 0; i < actions2.size(); i++) {
 			String actionId = (String)actions2.get(i);
 
-			leftList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+			leftList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 		}
 
-		leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+		leftList = ListUtil.sort(leftList, new KeyValuePairComparator<String, String>(false, true));
 
 		// Right list
 
@@ -146,11 +146,11 @@ int userGroupIdsPos = ParamUtil.getInteger(request, "userGroupIdsPos");
 			String actionId = (String)actions1.get(i);
 
 			if (!actions2.contains(actionId)) {
-				rightList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+				rightList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 			}
 		}
 
-		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+		rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 		%>
 
 		<div class="assign-permissions">

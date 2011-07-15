@@ -99,6 +99,15 @@ public class DDLUtil {
 			String fieldName = field.getName();
 			String fieldValue = String.valueOf(field.getValue());
 
+			if (ddmStructure.getFieldDisplayChildLabelAsValue(fieldName)) {
+				Map<String, String> childFields = ddmStructure.getFields(
+					fieldName, DDMFieldConstants.VALUE, fieldValue);
+
+				if (childFields != null) {
+					fieldValue = childFields.get(DDMFieldConstants.LABEL);
+				}
+			}
+
 			jsonObject.put(fieldName, fieldValue);
 		}
 

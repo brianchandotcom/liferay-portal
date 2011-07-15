@@ -71,7 +71,7 @@ String[][] categorySections = {mainSections};
 
 		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutToolbar" %>'>
 			<c:if test="<%= stagingGroupId > 0 %>">
-				<liferay-ui:staging groupId="<%= groupId %>" privateLayout="<%= privateLayout %>" selPlid="<%= selPlid %>" showManageBackstages="<%= true %>" />
+				<liferay-ui:staging groupId="<%= groupId %>" privateLayout="<%= privateLayout %>" selPlid="<%= selPlid %>" showManageBranches="<%= true %>" />
 			</c:if>
 		</aui:button-row>
 	</div>

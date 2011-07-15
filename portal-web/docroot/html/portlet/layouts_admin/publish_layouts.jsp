@@ -347,7 +347,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 							%>
 
-							<aui:select inlineLabel="left" label="backstage" name="layoutSetBranchId">
+							<aui:select inlineLabel="left" label='<%= privateLayout ? "private-pages-variation" : "public-pages-variation" %>' name="layoutSetBranchId">
 
 								<%
 								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {

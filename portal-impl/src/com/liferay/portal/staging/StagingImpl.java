@@ -1275,7 +1275,8 @@ public class StagingImpl implements Staging {
 			Locale locale = LocaleUtil.getDefault();
 
 			String description = LanguageUtil.format(
-				locale, LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION,
+				locale,
+				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC,
 				liveGroup.getDescriptiveName());
 
 			try {
@@ -1293,7 +1294,8 @@ public class StagingImpl implements Staging {
 			Locale locale = LocaleUtil.getDefault();
 
 			String description = LanguageUtil.format(
-				locale, LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION,
+				locale,
+				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE,
 				liveGroup.getDescriptiveName());
 
 			try {

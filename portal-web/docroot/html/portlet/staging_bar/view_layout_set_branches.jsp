@@ -34,11 +34,11 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + renderResponse.getNamespace() + "');";
+	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
 	%>
 
 	<aui:button-row>
-		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value="add-backstage" />
+		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value='<%= privateLayout ? "add-private-pages-variation" : "add-public-pages-variation" %>' />
 	</aui:button-row>
 </c:if>
 

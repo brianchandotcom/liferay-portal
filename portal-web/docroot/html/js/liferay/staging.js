@@ -22,10 +22,10 @@ AUI().add(
 				instance._namespace = options.namespace;
 			},
 
-			addBranch: function() {
+			addBranch: function(dialogTitle) {
 				var instance = this;
 
-				var branchDialog = instance._getBranchDialog();
+				var branchDialog = instance._getBranchDialog(dialogTitle);
 
 				branchDialog.show();
 			},
@@ -41,7 +41,7 @@ AUI().add(
 			mergeBranch: function(options) {
 				var instance = this;
 
-				var mergeDialog = instance._getMergeDialog();
+				var mergeDialog = instance._getMergeDialog(options.dialogTitle);
 				var mergeDialogIO = mergeDialog.io;
 
 				mergeDialogIO.set('uri', options.uri);
@@ -53,7 +53,7 @@ AUI().add(
 			updateBranch: function(options) {
 				var instance = this;
 
-				var updateBranchDialog = instance._getUpdateBranchDialog();
+				var updateBranchDialog = instance._getUpdateBranchDialog(options.dialogTitle);
 				var updateBranchDialogIO = updateBranchDialog.io;
 
 				updateBranchDialogIO.set('uri', options.uri);
@@ -62,7 +62,7 @@ AUI().add(
 				updateBranchDialog.show();
 			},
 
-			_getBranchDialog: function() {
+			_getBranchDialog: function(dialogTitle) {
 				var instance = this;
 
 				var branchDialog = instance._branchDialog;
@@ -77,7 +77,7 @@ AUI().add(
 							},
 							bodyContent: A.one('#' + namespace + 'addBranch').show(),
 							modal: true,
-							title: Liferay.Language.get('add-backstage'),
+							title: dialogTitle,
 							width: 530
 						}
 					).render();
@@ -90,7 +90,7 @@ AUI().add(
 				return branchDialog;
 			},
 
-			_getMergeDialog: function() {
+			_getMergeDialog: function(dialogTitle) {
 				var instance = this;
 
 				var mergeDialog = instance._mergeDialog;
@@ -103,7 +103,7 @@ AUI().add(
 							},
 							draggable: true,
 							modal: true,
-							title: Liferay.Language.get('merge-changes-from-branch'),
+							title: dialogTitle,
 							width: 530
 						}
 					).plug(
@@ -136,7 +136,7 @@ AUI().add(
 				return mergeDialog;
 			},
 
-			_getUpdateBranchDialog: function() {
+			_getUpdateBranchDialog: function(dialogTitle) {
 				var instance = this;
 
 				var	updateBranchDialog = new A.Dialog(
@@ -146,7 +146,7 @@ AUI().add(
 						},
 						draggable: true,
 						modal: true,
-						title: Liferay.Language.get('update-branch'),
+						title: dialogTitle,
 						width: 530
 					}
 				).plug(
@@ -155,7 +155,7 @@ AUI().add(
 						autoLoad: false,
 						data: {
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							p_l_id: themeDisplay.getPlid(),
+							p_l_id: themeDisplay.getPlid()
 						}
 					}
 				).render();
@@ -202,8 +202,9 @@ AUI().add(
 
 				var mergeLayoutSetBranchId = node.attr('data-layoutSetBranchId');
 				var mergeLayoutSetBranchName = node.attr('data-layoutSetBranchName');
+				var mergeLayoutSetBranchMessage = node.attr('data-layoutSetBranchMessage');
 
-				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-merge-changes-from-backstage') + ' ' + mergeLayoutSetBranchName)) {
+				if (confirm(mergeLayoutSetBranchMessage)) {
 					var form = A.one('#' + namespace + 'fm4');
 
 					form.one('#' + namespace + 'mergeLayoutSetBranchId').val(mergeLayoutSetBranchId);
@@ -221,10 +222,10 @@ AUI().add(
 
 				instance._namespace = namespace;
 
-				var backstageToolbar = new A.Toolbar(
+				var layoutRevisionToolbar = new A.Toolbar(
 					{
 						activeState: false,
-						boundingBox: '#' + namespace + 'backstageToolbar',
+						boundingBox: '#' + namespace + 'layoutRevisionToolbar',
 						children: [
 							{
 							type: 'ToolbarSpacer'
@@ -238,7 +239,7 @@ AUI().add(
 					}
 				).render();
 
-				Dockbar.backstageToolbar = backstageToolbar;
+				Dockbar.layoutRevisionToolbar = layoutRevisionToolbar;
 
 				var redoText = Liferay.Language.get('redo');
 				var undoText = Liferay.Language.get('undo');

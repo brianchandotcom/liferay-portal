@@ -123,16 +123,16 @@ if (layout != null) {
 							<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 						</portlet:renderURL>
 
-						<li class="aui-state-default aui-tab last manage-backstages-tab">
+						<li class="aui-state-default aui-tab last manage-layout-set-branches-tab">
 							<span class="aui-tab-content">
 								<span class="aui-tab-label">
-									<liferay-ui:icon cssClass="manage-backstages" id="manageBackstages" image="configuration" label="<%= true %>" message="manage-backstages" url="<%= layoutSetBranchesURL %>" />
+									<liferay-ui:icon cssClass="manage-layout-set-branches" id="manageLayoutSetBranches" image="configuration" label="<%= true %>" message='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' url="<%= layoutSetBranchesURL %>" />
 								</span>
 							</span>
 						</li>
 
 						<aui:script use="aui-base">
-							var layoutSetBranchesLink = A.one('#<portlet:namespace />manageBackstages');
+							var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
 
 							if (layoutSetBranchesLink) {
 								layoutSetBranchesLink.detach('click');
@@ -149,7 +149,7 @@ if (layout != null) {
 														width: 820
 													},
 												id: '<portlet:namespace />layoutSetBranches',
-												title: '<liferay-ui:message key="manage-backstages" />',
+												title: '<liferay-ui:message key='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' />',
 												uri: event.currentTarget.attr('href')
 											}
 										);
@@ -167,7 +167,7 @@ if (layout != null) {
 						<li class="aui-state-default aui-tab last <%= (selected ? " aui-state-active aui-tab-active" : StringPool.BLANK) %>">
 							<span class="aui-tab-content">
 								<span class="aui-tab-label">
-									<aui:a href="<%= selected ? null : stagingFriendlyURL %>" label="backstage" />
+									<aui:a href="<%= selected ? null : stagingFriendlyURL %>" label="staging" />
 
 									<liferay-ui:staging extended="<%= false %>" />
 								</span>
@@ -187,12 +187,12 @@ if (layout != null) {
 						LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
 						%>
 
-						<div class="backstage-info">
+						<div class="layout-set-branch-info">
 							<c:if test="<%= Validator.isNotNull(layoutSetBranch.getDescription()) %>">
-								<span class="backstage-description"><%= layoutSetBranch.getDescription() %></span>
+								<span class="layout-set-branch-description"><%= layoutSetBranch.getDescription() %></span>
 							</c:if>
 
-							<span class="backstage-pages"><liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' /></span>
+							<span class="layout-set-branch-pages"><liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' /></span>
 						</div>
 
 						<div class="staging-details">
@@ -361,7 +361,7 @@ if (layout != null) {
 								}
 
 								if (Validator.isNull(lastImportLayoutSetBranchName)) {
-									lastImportLayoutSetBranchName = LanguageUtil.get(pageContext, "backstage");
+									lastImportLayoutSetBranchName = LanguageUtil.get(pageContext, "staging");
 								}
 
 								String lastImportVariationName = null;

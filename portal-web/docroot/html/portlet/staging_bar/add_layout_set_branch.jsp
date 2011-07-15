@@ -54,9 +54,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 				%>
 
 				<c:if test="<%= layoutSetBranches.size() > 1 %>">
-					<aui:select label="copy-pages-from-backstage" name="copyLayoutSetBranchId">
-						<aui:option label="all-backstages" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
-						<aui:option label="none-empty-backstage" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
+					<aui:select label='<%= privateLayout ? "copy-pages-from-private-pages-variation" : "copy-pages-from-public-pages-variation" %>' name="copyLayoutSetBranchId">
+						<aui:option label='<%= privateLayout ? "all-private-pages-variations" : "all-public-pages-variations" %>' selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
+						<aui:option label='<%= privateLayout ? "none-empty-private-pages-variation" : "none-empty-public-pages-variation" %>' value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
 
 						<%
 						for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
@@ -71,11 +71,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 					</aui:select>
 				</c:if>
 			</c:if>
-
 		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button type="submit" value='<%= layoutSetBranch != null ? "update-backstage" : "add-backstage" %>' />
+			<aui:button type="submit" value='<%= layoutSetBranch != null ? "update" : "add" %>' />
 		</aui:button-row>
 	</aui:form>
 </div>

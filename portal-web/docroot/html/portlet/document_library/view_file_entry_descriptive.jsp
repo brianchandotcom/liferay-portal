@@ -39,7 +39,7 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 			<img alt="" border="no" src="<%= thumbnailSrc %>" style="width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 
 			<c:if test="<%= fileEntry.isCheckedOut() %>">
-				<img alt="<%= LanguageUtil.get(pageContext, "locked") %>" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
+				<img alt="<liferay-ui:message key='locked' />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
 			</c:if>
 		</span>
 

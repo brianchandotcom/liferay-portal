@@ -25,14 +25,14 @@
 	}
 
 	&.display-style-2 {
-    	.user-profile-image, .user-name{
+    	.user-profile-image, .user-name {
 			clear: both;
 			display: block;
 			text-align: center;
 		}
 	}
 
-	a .user-name{
+	a .user-name {
     	text-decoration: underline;
 	}
 

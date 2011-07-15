@@ -36,7 +36,7 @@ catch (CaptchaMaxChallengesException cmce) {
 
 <c:if test="<%= captchaEnabled %>">
 	<div class="taglib-captcha">
-		<img alt="<liferay-ui:message key="text-to-identify"/>" class="captcha" src="<%= url %>" />
+		<img alt="<liferay-ui:message key='text-to-identify' />" class="captcha" src="<%= url %>" />
 
 		<aui:input label="text-verification" name="captchaText" size="10" type="text" value="">
 			<aui:validator name="required" />

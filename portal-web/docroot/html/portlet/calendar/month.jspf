@@ -56,7 +56,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 	<tr>
 		<td>
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) - 1 %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img alt="<%= LanguageUtil.get(pageContext, "previous") %>" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
+			<img alt="<liferay-ui:message key='previous' />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
 			</a>
 		</td>
 		<td>
@@ -64,7 +64,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 		</td>
 		<td>
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) + 1 %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img alt="<%= LanguageUtil.get(pageContext, "next") %>" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
+			<img alt="<liferay-ui:message key='next' />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 			</a>
 		</td>
 	</tr>

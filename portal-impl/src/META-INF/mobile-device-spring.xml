@@ -28,21 +28,20 @@
 		</property>
 	</bean>
 
+	<!-- Default Impl -->
+
+	<bean id="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" class="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
+
 	<!-- Util -->
 
 	<bean id="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" class="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil">
-		<property name="deviceRecognitionProvider" ref="com.liferay.portal.mobile.device.DeviceRecognitionProviderProxyBean" />
+		<property name="deviceRecognitionProvider" ref="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
 	</bean>
 
 	<!-- Messaging -->
 
 	<bean id="destination.device_recognition_provider" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/device_recognition_provider" />
-	</bean>
-	<bean id="messageListener.device_recognition_provider" class="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
-		<property name="manager">
-			<bean class="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
-		</property>
 	</bean>
 	<bean id="messagingConfigurator.device_recognition" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinations">
@@ -53,21 +52,13 @@
 		<property name="messageBus">
 			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/device_recognition_provider">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.device_recognition_provider" />
-					</list>
-				</entry>
-			</map>
-		</property>
 		<property name="specificDestinationEventListener">
 			<map>
 				<entry key="liferay/device_recognition_provider">
 					<list>
 						<bean class="com.liferay.portal.mobile.device.messaging.DeviceRecognitionProviderDestinationEventListener">
-							<property name="proxyMessageListener" ref="messageListener.device_recognition_provider" />
+							<property name="directProvider" ref="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
+							<property name="proxyProvider" ref="com.liferay.portal.mobile.device.DeviceRecognitionProviderProxyBean" />
 						</bean>
 					</list>
 				</entry>

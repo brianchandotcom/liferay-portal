@@ -308,7 +308,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<!--<component name="Input">
+	<component name="Input">
 		<attributes>
 			<attribute>
 				<name>bean</name>
@@ -319,22 +319,22 @@
 			</attribute>
 			<attribute>
 				<name>changesContext</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
 			<attribute>
 				<name>checked</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
 			<attribute>
 				<name>classPK</name>
-				<inputType>java.lang.Long</inputType>
-				<outputType>java.lang.Long</outputType>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -354,8 +354,8 @@
 			</attribute>
 			<attribute>
 				<name>disabled</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -374,9 +374,16 @@
 				<description></description>
 			</attribute>
 			<attribute>
-				<name>field</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<name>first</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>formName</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -395,9 +402,30 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>ignoreRequestValue</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>inlineField</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>inlineLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>inputCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -409,9 +437,16 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>languageId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>last</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -419,6 +454,13 @@
 				<name>model</name>
 				<inputType>java.lang.Class</inputType>
 				<outputType>java.lang.Class</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>multiple</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -472,6 +514,13 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>useNamespace</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>value</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
@@ -479,7 +528,7 @@
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 	<component name="Layout" bodyContent="true">
 		<attributes>
 			<attribute>
@@ -526,13 +575,20 @@
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>
-	<component name="Option">
+	</component>-->
+	<component name="Option" bodyContent="true">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>disabled</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -545,8 +601,8 @@
 			</attribute>
 			<attribute>
 				<name>selected</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -566,7 +622,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Panel">
+	<!--<component name="Panel">
 		<attributes>
 			<attribute>
 				<name>collapsible</name>

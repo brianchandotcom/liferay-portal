@@ -51,7 +51,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 </div>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
-	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>, <%= editable %>);
+	var structure = <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>;
+	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
 
 	var ignoreEmptyRecordsSort = function(recA, recB, field, desc) {
 		var sorted = -1;
@@ -106,7 +107,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			contentBox: '#<portlet:namespace />dataTableCC',
 			editEvent: 'dblclick',
 			recordset: recordset,
-			recordsetId: <%= recordSet.getRecordSetId() %>
+			recordsetId: <%= recordSet.getRecordSetId() %>,
+			structure: structure
 		}
 	).plug(
 		A.Plugin.DataTableScroll,

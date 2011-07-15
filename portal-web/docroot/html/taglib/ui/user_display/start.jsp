@@ -22,54 +22,29 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 }
 %>
 
-<div class="taglib-user-display">
-	<c:if test="<%= displayStyle == 1 %>">
-		<table class="lfr-table">
-		<tr>
-			<td class="lfr-top">
-	</c:if>
+<div class="taglib-user-display display-style-<%= displayStyle %>">
 
-	<c:if test="<%= displayStyle == 2 %>">
-		<%--<div style="white-space: nowrap;">--%>
-		<div>
-	</c:if>
+	<%
+	String taglibAlt = (userDisplay != null) ? HtmlUtil.escapeAttribute(userDisplay.getFullName()) : LanguageUtil.get(pageContext, "generic-portrait");
 
-	<div class="user-profile-image">
+	String taglibSrc = null;
 
-		<%
-		String taglibAlt = (userDisplay != null) ? HtmlUtil.escapeAttribute(userDisplay.getFullName()) : LanguageUtil.get(pageContext, "generic-portrait");
+	if (userDisplay != null) {
+		taglibSrc = userDisplay.getPortraitURL(themeDisplay);
+	}
+	else {
+		taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0);
+	}
+	%>
 
-		String taglibSrc = null;
-
-		if (userDisplay != null) {
-			taglibSrc = userDisplay.getPortraitURL(themeDisplay);
-		}
-		else {
-			taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0);
-		}
-		%>
-
-		<aui:a href="<%= url %>">
+	<aui:a href="<%= url %>">
+		<span class="user-profile-image">
 			<img alt="<%= taglibAlt %>" class="avatar" src="<%= HtmlUtil.escape(taglibSrc) %>" width="65" />
-		</aui:a>
-	</div>
+		</span>
 
-	<c:if test="<%= displayStyle == 1 %>">
-		</td>
-		<td class="lfr-top">
-	</c:if>
-
-	<c:if test="<%= displayStyle == 2 %>">
-	</c:if>
+		<span class="user-name">
+			<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+		</span>
+	</aui:a>
 
 	<div class="user-details">
-		<c:choose>
-			<c:when test="<%= userDisplay != null %>">
-				<aui:a cssClass="user-name" href="<%= url %>">
-					<%= HtmlUtil.escape(userDisplay.getFullName()) %>
-				</aui:a>
-			</c:when>
-			<c:otherwise>
-				<%= HtmlUtil.escape(userName) %>
-			</c:otherwise>
-		</c:choose>

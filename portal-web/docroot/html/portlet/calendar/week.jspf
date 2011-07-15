@@ -60,7 +60,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 			%>
 
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
+			<img alt="<liferay-ui:message key="previous" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
 			</a>
 		</td>
 		<td>
@@ -80,7 +80,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 			%>
 
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
+			<img alt="<liferay-ui:message key="next" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 			</a>
 		</td>
 	</tr>
@@ -176,7 +176,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 					<td align="right">
 						<c:if test="<%= CalendarPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_EVENT) %>">
 							<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/edit_event" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="month" value="<%= String.valueOf(cal.get(Calendar.MONTH)) %>" /><portlet:param name="day" value="<%= String.valueOf(cal.get(Calendar.DATE)) %>" /><portlet:param name="year" value="<%= String.valueOf(cal.get(Calendar.YEAR)) %>" /></portlet:renderURL>">
-							<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_plus.png" title="<liferay-ui:message key="add" />" />
+								<img alt="<liferay-ui:message key="add-new-event" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_plus.png" title="<liferay-ui:message key="add-new-event" />" />
 							</a>
 						</c:if>
 					</td>

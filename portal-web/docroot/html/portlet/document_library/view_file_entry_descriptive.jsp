@@ -36,10 +36,10 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 <div class="document-display-style descriptive <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
 	<a class="document-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(fileEntry.getTitle()) + " - " + HtmlUtil.unescape(fileEntry.getDescription())) %>">
 		<span class="document-thumbnail">
-			<img border="no" src="<%= thumbnailSrc %>" style="width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
+			<img alt="" border="no" src="<%= thumbnailSrc %>" style="width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 
 			<c:if test="<%= fileEntry.isCheckedOut() %>">
-				<img alt="<%= LanguageUtil.get(pageContext, "locked") %>" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
+				<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
 			</c:if>
 		</span>
 

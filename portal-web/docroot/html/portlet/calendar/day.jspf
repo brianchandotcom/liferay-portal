@@ -52,7 +52,7 @@ dateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM d, yyyy", 
 			%>
 
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
+			<img alt="<liferay-ui:message key="previous" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
 			</a>
 		</td>
 		<td>
@@ -70,7 +70,7 @@ dateFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM d, yyyy", 
 			%>
 
 			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
-			<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
+			<img alt="<liferay-ui:message key="next" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 			</a>
 		</td>
 	</tr>

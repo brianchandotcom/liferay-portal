@@ -54,6 +54,7 @@ request.setAttribute("view_event.jsp-event", event);
 			<dt>
 				<liferay-ui:icon
 					image="../common/calendar"
+					message=""
 				/>
 
 				<liferay-ui:message key="start-date" />:
@@ -73,6 +74,7 @@ request.setAttribute("view_event.jsp-event", event);
 					<c:when test="<%= (endDateType == 0) || (endDateType == 2) %>">
 						<liferay-ui:icon
 							image="../common/calendar"
+							message=""
 						/>
 
 						<liferay-ui:message key="end-date" />:
@@ -98,6 +100,7 @@ request.setAttribute("view_event.jsp-event", event);
 			<dt>
 				<liferay-ui:icon
 					image="../common/time"
+					message=""
 				/>
 
 				<liferay-ui:message key="duration" />:
@@ -150,6 +153,7 @@ request.setAttribute("view_event.jsp-event", event);
 			<dt>
 				<liferay-ui:icon
 					image="../common/attributes"
+					message=""
 				/>
 
 				<liferay-ui:message key="type" />:
@@ -162,6 +166,7 @@ request.setAttribute("view_event.jsp-event", event);
 				<dt>
 					<liferay-ui:icon
 						image="../common/view_locations"
+						message=""
 					/>
 
 					<liferay-ui:message key="location" />:
@@ -175,6 +180,7 @@ request.setAttribute("view_event.jsp-event", event);
 		<c:if test="<% recurrence.getOccurrence() != null %>">
 			<liferay-ui:icon
 				image="../common/undo"
+				message=""
 			/>
 			<liferay-util:include page="/html/portlet/calendar/view_event_recurrence.jsp" />
 		</c:if>
@@ -229,6 +235,7 @@ request.setAttribute("view_event.jsp-event", event);
 			<liferay-ui:icon
 				cssClass="folder-avatar"
 				image="../file_system/large/calendar"
+				message=""
 			/>
 
 			<div class="event-name">

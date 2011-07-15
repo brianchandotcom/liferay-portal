@@ -16,7 +16,7 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.aui.base.BaseOptionTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
@@ -26,51 +26,7 @@ import javax.servlet.jsp.JspWriter;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class OptionTag extends IncludeTag {
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
-
-	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
-	}
-
-	public void setLabel(Object label) {
-		_label = String.valueOf(label);
-	}
-
-	public void setSelected(boolean selected) {
-		_selected = selected;
-	}
-
-	public void setStyle(String style) {
-		_style = style;
-	}
-
-	public void setValue(Object value) {
-		_value = String.valueOf(value);
-	}
-
-	@Override
-	protected void cleanUp() {
-		_cssClass = null;
-		_disabled = false;
-		_label = null;
-		_selected = false;
-		_style = null;
-		_value = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
+public class OptionTag extends BaseOptionTag {
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {
@@ -88,44 +44,27 @@ public class OptionTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		String value = _value;
+		super.setAttributes(request);
+
+		Object value = getValue();
 
 		if (value == null) {
-			value = _label;
+			value = getLabel();
 		}
 
-		boolean selected = _selected;
+		boolean selected = getSelected();
 
 		String selectValue = GetterUtil.getString(
 			(String)request.getAttribute("aui:select:value"));
 
 		if (Validator.isNotNull(selectValue)) {
-			selected = selectValue.equals(value);
+			selected = selectValue.equals(String.valueOf(value));
 		}
 
-		request.setAttribute("aui:option:cssClass", _cssClass);
-		request.setAttribute(
-			"aui:option:disabled", String.valueOf(_disabled));
-		request.setAttribute(
-			"aui:option:dynamicAttributes", getDynamicAttributes());
-		request.setAttribute("aui:option:label", _label);
-		request.setAttribute("aui:option:selected", String.valueOf(selected));
-		request.setAttribute("aui:option:style", _style);
-		request.setAttribute("aui:option:value", value);
+		setNamespacedAttribute(request, "selected", String.valueOf(selected));
+		setNamespacedAttribute(request, "value", value);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final String _END_PAGE = "/html/taglib/aui/option/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/option/start.jsp";
-
-	private String _cssClass;
-	private boolean _disabled;
-	private String _label;
-	private boolean _selected;
-	private String _style;
-	private String _value;
 
 }

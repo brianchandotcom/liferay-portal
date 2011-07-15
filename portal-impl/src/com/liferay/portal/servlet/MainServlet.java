@@ -1046,7 +1046,7 @@ public class MainServlet extends ActionServlet {
 
 		String companyInactiveMessage = LanguageUtil.get(
 			locale,
-			"this-instance-is-inactive-please-contact-with-your-administrator");
+			"this-instance-is-inactive-please-contact-the-administrator");
 
 		String html = ContentUtil.get(
 			"com/liferay/portal/dependencies/company_inactive.html");

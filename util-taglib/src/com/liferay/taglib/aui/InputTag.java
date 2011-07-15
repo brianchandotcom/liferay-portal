@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.aui.base.BaseInputTag;
 import com.liferay.util.PwdGenerator;
 
 import java.util.HashMap;
@@ -38,7 +38,15 @@ import javax.servlet.jsp.JspException;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class InputTag extends IncludeTag {
+public class InputTag extends BaseInputTag {
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_forLabel = null;
+		_validators = null;
+	}
 
 	@Override
 	public int doEndTag() throws JspException {
@@ -56,146 +64,22 @@ public class InputTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setBean(Object bean) {
-		_bean = bean;
-	}
-
-	public void setChangesContext(boolean changesContext) {
-		_changesContext = changesContext;
-	}
-
-	public void setChecked(boolean checked) {
-		_checked = checked;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
-
-	public void setData(Map<String,Object> data) {
-		_data = data;
-	}
-
-	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
-	}
-
-	public void setField(String field) {
-		_field = field;
-	}
-
-	public void setFieldParam(String fieldParam) {
-		_fieldParam = fieldParam;
-	}
-
-	public void setFirst(boolean first) {
-		_first = first;
-	}
-
-	public void setFormName(String formName) {
-		_formName = formName;
-	}
-
-	public void setHelpMessage(String helpMessage) {
-		_helpMessage = helpMessage;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
-		_ignoreRequestValue = ignoreRequestValue;
-	}
-
-	public void setInlineField(boolean inlineField) {
-		_inlineField = inlineField;
-	}
-
-	public void setInlineLabel(String inlineLabel) {
-		_inlineLabel = inlineLabel;
-	}
-
-	public void setInputCssClass(String inputCssClass) {
-		_inputCssClass = inputCssClass;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
-	}
-
-	public void setLanguageId(String languageId) {
-		_languageId = languageId;
-	}
-
-	public void setLast(boolean last) {
-		_last = last;
-	}
-
-	public void setModel(Class<?> model) {
-		_model = model;
-	}
-
-	public void setMultiple(boolean multiple) {
-		_multiple = multiple;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setOnChange(String onChange) {
-		_onChange = onChange;
-	}
-
-	public void setOnClick(String onClick) {
-		_onClick = onClick;
-	}
-
-	public void setPrefix(String prefix) {
-		_prefix = prefix;
-	}
-
-	public void setSuffix(String suffix) {
-		_suffix = suffix;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
-	public void setUseNamespace(boolean useNamespace) {
-		_useNamespace = useNamespace;
-	}
-
-	public void setValue(Object value) {
-		_value = value;
-	}
-
 	protected void addModelValidators() {
-		Class<?> model = _model;
+		Class<?> model = getModel();
 
 		if (model == null) {
 			model = (Class<?>)pageContext.getAttribute(
 				"aui:model-context:model");
 		}
 
-		if ((model == null) || Validator.isNotNull(_type)) {
+		if ((model == null) || Validator.isNotNull(getType())) {
 			return;
 		}
 
-		String field = _field;
+		String field = getField();
 
 		if (Validator.isNull(field)) {
-			field = _name;
+			field = getName();
 		}
 
 		List<Tuple> modelValidators = ModelHintsUtil.getValidators(
@@ -228,59 +112,21 @@ public class InputTag extends IncludeTag {
 	}
 
 	@Override
-	protected void cleanUp() {
-		_bean = null;
-		_changesContext = false;
-		_checked = false;
-		_classPK = 0;
-		_cssClass = null;
-		_data = null;
-		_disabled = false;
-		_field = null;
-		_fieldParam = null;
-		_first = false;
-		_formName = null;
-		_helpMessage = null;
-		_id = null;
-		_ignoreRequestValue = false;
-		_inlineField = false;
-		_inlineLabel = null;
-		_inputCssClass = null;
-		_label = null;
-		_languageId = null;
-		_last = false;
-		_model = null;
-		_multiple = false;
-		_name = null;
-		_onChange = null;
-		_onClick = null;
-		_prefix = null;
-		_suffix = null;
-		_title = null;
-		_type = null;
-		_validators = null;
-		_value = null;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		Object bean = _bean;
+		super.setAttributes(request);
+
+		Object bean = getBean();
 
 		if (bean == null) {
 			bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
-		String name = _name;
+		String name = getName();
 
 		int pos = name.indexOf(StringPool.DOUBLE_DASH);
 
@@ -288,13 +134,13 @@ public class InputTag extends IncludeTag {
 			name = name.substring(pos + 2, name.length() - 2);
 		}
 
-		String field = _field;
+		String field = getField();
 
 		if (Validator.isNull(field)) {
-			field = _name;
+			field = getName();
 		}
 
-		String formName = _formName;
+		String formName = getFormName();
 
 		if (formName == null) {
 			FormTag formTag = (FormTag)findAncestorWithClass(
@@ -305,10 +151,11 @@ public class InputTag extends IncludeTag {
 			}
 		}
 
-		String id = _id;
+		String id = getId();
+		String type = getType();
 
 		if (Validator.isNull(id)) {
-			if (!Validator.equals(_type, "radio")) {
+			if (!Validator.equals(type, "radio")) {
 				id = name;
 			}
 			else {
@@ -316,13 +163,13 @@ public class InputTag extends IncludeTag {
 			}
 		}
 
-		String label = _label;
+		String label = getLabel();
 
 		if (label == null) {
 			label = TextFormatter.format(name, TextFormatter.K);
 		}
 
-		Class<?> model = _model;
+		Class<?> model = getModel();
 
 		if (model == null) {
 			model = (Class<?>)pageContext.getAttribute(
@@ -333,11 +180,13 @@ public class InputTag extends IncludeTag {
 
 		String baseType = null;
 
-		if ((model != null) && Validator.isNull(_type)) {
+		if ((model != null) && Validator.isNull(type)) {
 			baseType = ModelHintsUtil.getType(model.getName(), field);
 
-			if (Validator.isNotNull(_fieldParam)) {
-				_forLabel = _fieldParam;
+			String fieldParam = getFieldParam();
+
+			if (Validator.isNotNull(fieldParam)) {
+				_forLabel = fieldParam;
 			}
 
 			if (ModelHintsUtil.isLocalized(model.getName(), field)) {
@@ -348,11 +197,11 @@ public class InputTag extends IncludeTag {
 				_forLabel += StringPool.UNDERLINE + defaultLanguageId;
 			}
 		}
-		else if (Validator.isNotNull(_type)) {
-			if (Validator.equals(_type, "checkbox") ||
-				Validator.equals(_type, "radio")) {
+		else if (Validator.isNotNull(type)) {
+			if (Validator.equals(type, "checkbox") ||
+				Validator.equals(type, "radio")) {
 
-				baseType = _type;
+				baseType = type;
 			}
 		}
 
@@ -360,46 +209,16 @@ public class InputTag extends IncludeTag {
 			baseType = "text";
 		}
 
-		request.setAttribute("aui:input:baseType", baseType);
-		request.setAttribute("aui:input:bean", bean);
-		request.setAttribute(
-			"aui:input:changesContext", String.valueOf(_changesContext));
-		request.setAttribute("aui:input:checked", String.valueOf(_checked));
-		request.setAttribute("aui:input:classPK", String.valueOf(_classPK));
-		request.setAttribute("aui:input:cssClass", _cssClass);
-		request.setAttribute("aui:input:data", _data);
-		request.setAttribute("aui:input:disabled", String.valueOf(_disabled));
-		request.setAttribute(
-			"aui:input:dynamicAttributes", getDynamicAttributes());
-		request.setAttribute("aui:input:field", field);
-		request.setAttribute("aui:input:fieldParam", _fieldParam);
-		request.setAttribute("aui:input:first", String.valueOf(_first));
-		request.setAttribute("aui:input:forLabel", _forLabel);
-		request.setAttribute("aui:input:formName", formName);
-		request.setAttribute("aui:input:helpMessage", _helpMessage);
-		request.setAttribute("aui:input:id", id);
-		request.setAttribute(
-			"aui:input:ignoreRequestValue",
-			String.valueOf(_ignoreRequestValue));
-		request.setAttribute(
-			"aui:input:inlineField", String.valueOf(_inlineField));
-		request.setAttribute("aui:input:inlineLabel", _inlineLabel);
-		request.setAttribute("aui:input:inputCssClass", _inputCssClass);
-		request.setAttribute("aui:input:label", label);
-		request.setAttribute("aui:input:languageId", _languageId);
-		request.setAttribute("aui:input:last", String.valueOf(_last));
-		request.setAttribute("aui:input:model", model);
-		request.setAttribute("aui:input:multiple", String.valueOf(_multiple));
-		request.setAttribute("aui:input:name", _name);
-		request.setAttribute("aui:input:onChange", _onChange);
-		request.setAttribute("aui:input:onClick", _onClick);
-		request.setAttribute("aui:input:prefix", _prefix);
-		request.setAttribute("aui:input:suffix", _suffix);
-		request.setAttribute("aui:input:title", _title);
-		request.setAttribute("aui:input:type", _type);
-		request.setAttribute(
-			"aui:input:useNamespace", String.valueOf(_useNamespace));
-		request.setAttribute("aui:input:value", _value);
+		setNamespacedAttribute(request, "baseType", baseType);
+		setNamespacedAttribute(request, "bean", bean);
+		setNamespacedAttribute(request, "field", field);
+		setNamespacedAttribute(request, "forLabel", _forLabel);
+		setNamespacedAttribute(request, "formName", formName);
+		setNamespacedAttribute(request, "id", id);
+		setNamespacedAttribute(request, "label", label);
+		setNamespacedAttribute(request, "model", model);
+
+		request.setAttribute(getAttributeNamespace() + "value", getValue());
 	}
 
 	protected void setEndAttributes() {
@@ -412,7 +231,7 @@ public class InputTag extends IncludeTag {
 			required = true;
 		}
 
-		request.setAttribute("aui:input:required", String.valueOf(required));
+		setNamespacedAttribute(request, "required", String.valueOf(required));
 	}
 
 	protected void updateFormValidators() {
@@ -435,40 +254,7 @@ public class InputTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/html/taglib/aui/input/page.jsp";
-
-	private Object _bean;
-	private boolean _changesContext;
-	private boolean _checked;
-	private long _classPK;
-	private String _cssClass;
-	private Map<String, Object> _data;
-	private boolean _disabled;
-	private String _field;
-	private String _fieldParam;
-	private boolean _first;
 	private String _forLabel;
-	private String _formName;
-	private String _helpMessage;
-	private String _id;
-	private boolean _ignoreRequestValue;
-	private boolean _inlineField;
-	private String _inlineLabel;
-	private String _inputCssClass;
-	private String _label;
-	private String _languageId;
-	private boolean _last;
-	private Class<?> _model;
-	private boolean _multiple;
-	private String _name;
-	private String _onChange;
-	private String _onClick;
-	private String _prefix;
-	private String _suffix;
-	private String _title;
-	private String _type;
 	private Map<String, ValidatorTag> _validators;
-	private boolean _useNamespace = true;
-	private Object _value;
 
 }

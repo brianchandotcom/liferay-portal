@@ -14,8 +14,34 @@
  */
 --%>
 
-.taglib-user-display .user-details .user-name, .taglib-user-display .user-profile-image {
-	clear: both;
-	display: block;
-	text-align: center;
+.taglib-user-display {
+	padding: 0.5em;
+
+	&.display-style-1 {
+		.user-profile-image {
+			float: left;
+			margin-right: 1.5em;
+		}
+	}
+
+	&.display-style-2 {
+		.user-profile-image, .user-name {
+			clear: both;
+			display: block;
+			text-align: center;
+		}
+	}
+
+	a .user-name {
+		text-decoration: underline;
+	}
+
+	.user-name {
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+
+	.user-details {
+		margin-top: 1em;
+	}
 }

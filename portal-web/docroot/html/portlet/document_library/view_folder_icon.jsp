@@ -36,7 +36,7 @@ boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, Ac
 
 	<a class="document-link" data-folder="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escape(folder.getName()) + " - " + HtmlUtil.escape(folder.getDescription()) %>">
 		<span class="document-thumbnail">
-			<img border="no" src="<%= thumbnailSrc %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
+			<img alt="" border="no" src="<%= thumbnailSrc %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 		</span>
 
 		<span class="document-title">

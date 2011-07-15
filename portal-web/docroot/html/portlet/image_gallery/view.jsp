@@ -192,7 +192,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					<liferay-ui:icon
 						cssClass="lfr-asset-avatar"
 						image='<%= "../file_system/large/" + (((foldersCount + imagesCount) > 0) ? "folder_full_image" : "folder_empty") %>'
-						message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "images-home") %>'
+						message=""
 					/>
 
 					<div class="lfr-asset-name">

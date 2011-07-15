@@ -144,12 +144,17 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element rootElement = document.getRootElement();
 
-		Element entiresElement = rootElement.element("entries");
+		Element entriesElement = rootElement.element("entries");
 
-		JournalPortletDataHandlerImpl.importReferencedData(
-			portletDataContext, entiresElement);
+		if (entriesElement != null) {
+			JournalPortletDataHandlerImpl.importReferencedData(
+				portletDataContext, entriesElement);
+		}
+		else {
+			entriesElement = rootElement;
+		}
 
-		for (Element entryElement : entiresElement.elements("entry")) {
+		for (Element entryElement : entriesElement.elements("entry")) {
 			String path = entryElement.attributeValue("path");
 
 			if (!portletDataContext.isPathNotProcessed(path)) {

@@ -8,6 +8,16 @@
 		</layout>
 	</appender>
 
+	<appender name="FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern" value="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" />
+		</rollingPolicy>
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
 	<category name="com.ecyrd.jspwiki">
 		<priority value="ERROR" />
 	</category>
@@ -756,9 +766,9 @@
 		<priority value="WARN" />
 	</category>
 
-    <category name="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil">
-        <priority value="WARN" />
-    </category>
+	<category name="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil">
+		<priority value="WARN" />
+	</category>
 
 	<category name="com.liferay.portlet.documentlibrary.webdav">
 		<priority value="WARN" />
@@ -948,9 +958,9 @@
 		<priority value="FATAL" />
 	</category>
 
-    <category name="org.apache.chemistry.opencmis.client.bindings.spi.atompub.HttpUtils">
-        <priority value="ERROR" />
-    </category>
+	<category name="org.apache.chemistry.opencmis.client.bindings.spi.atompub.HttpUtils">
+		<priority value="ERROR" />
+	</category>
 
 	<category name="org.apache.commons.digester">
 		<priority value="ERROR" />
@@ -1051,5 +1061,6 @@
 	<root>
 		<priority value="INFO" />
 		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
 	</root>
 </log4j:configuration>

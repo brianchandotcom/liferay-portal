@@ -14,19 +14,31 @@
 
 package com.liferay.util.log4j;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+
+import org.aspectj.util.FileUtil;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -42,10 +54,21 @@ public class Log4JUtil {
 			return;
 		}
 
+		String urlContent = _getURLContent(url);
+
+		if (urlContent == null) {
+			return;
+		}
+
 		// See LPS-6029 and LPS-8865
 
 		if (!ServerDetector.isJBoss()) {
-			DOMConfigurator.configure(url);
+			DOMConfigurator domConfigurator = new DOMConfigurator();
+
+			Reader urlReader = new StringReader(urlContent);
+
+			domConfigurator.doConfigure(
+				urlReader, LogManager.getLoggerRepository());
 		}
 
 		Set<String> currentLoggerNames = new HashSet<String>();
@@ -59,20 +82,22 @@ public class Log4JUtil {
 		}
 
 		try {
-			SAXReader reader = new SAXReader();
+			SAXReader saxReader = new SAXReader();
 
-			Document doc = reader.read(url);
+			Reader urlReader = new StringReader(urlContent);
 
-			Element root = doc.getRootElement();
+			Document document = saxReader.read(urlReader, url.toExternalForm());
 
-			Iterator<Element> itr = root.elements("category").iterator();
+			Element rootElement = document.getRootElement();
 
-			while (itr.hasNext()) {
-				Element category = itr.next();
+			List<Element> categoryElements = rootElement.elements("category");
 
-				String name = category.attributeValue("name");
-				String priority =
-					category.element("priority").attributeValue("value");
+			for (Element categoryElement : categoryElements) {
+				String name = categoryElement.attributeValue("name");
+
+				Element priorityElement = categoryElement.element("priority");
+
+				String priority = priorityElement.attributeValue("value");
 
 				setLevel(name, priority);
 			}
@@ -106,6 +131,39 @@ public class Log4JUtil {
 		else {
 			return java.util.logging.Level.INFO;
 		}
+	}
+
+	private static String _getURLContent(URL url) {
+		Map<String, String> variables = new HashMap<String, String>();
+
+		variables.put("liferay.home", PropsUtil.get(PropsKeys.LIFERAY_HOME));
+
+		String urlContent = null;
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = url.openStream();
+
+			byte[] bytes = FileUtil.readAsByteArray(inputStream);
+
+			urlContent = new String(bytes, StringPool.UTF8);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			return null;
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		for (Map.Entry<String, String> variable : variables.entrySet()) {
+			urlContent = urlContent.replaceAll(
+				"@" + variable.getKey() + "@", variable.getValue());
+		}
+
+		return urlContent;
 	}
 
 }

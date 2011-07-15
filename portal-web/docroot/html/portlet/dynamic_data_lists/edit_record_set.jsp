@@ -153,7 +153,6 @@ if (Validator.isNotNull(ddmStructureId)) {
 				chooseCallback: '<portlet:namespace />selectDDMStructure',
 				saveCallback: '<portlet:namespace />selectDDMStructure',
 				dialog: {
-					stack: false,
 					width:820
 				},
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',

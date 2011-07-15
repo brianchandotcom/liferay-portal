@@ -174,7 +174,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 
 		if (layoutSetBranchId <= 0) {
 			LayoutSetBranchServiceUtil.addLayoutSetBranch(
-				groupId, privateLayout, name, description,
+				groupId, privateLayout, name, description, false,
 				copyLayoutSetBranchId, serviceContext);
 		}
 		else {

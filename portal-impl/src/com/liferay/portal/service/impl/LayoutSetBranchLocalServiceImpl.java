@@ -44,7 +44,7 @@ public class LayoutSetBranchLocalServiceImpl
 
 	public LayoutSetBranch addLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout, String name,
-			String description, long copyLayoutSetBranchId,
+			String description, boolean master, long copyLayoutSetBranchId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -53,7 +53,7 @@ public class LayoutSetBranchLocalServiceImpl
 		User user = userLocalService.getUserById(userId);
 		Date now = new Date();
 
-		validate(groupId, privateLayout, name);
+		validate(groupId, privateLayout, name, master);
 
 		long layoutSetBranchId = counterLocalService.increment();
 
@@ -69,6 +69,7 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setPrivateLayout(privateLayout);
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
+		layoutSetBranch.setMaster(master);
 
 		layoutSetBranchPersistence.update(layoutSetBranch, false);
 
@@ -210,9 +211,7 @@ public class LayoutSetBranchLocalServiceImpl
 			long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
-		return layoutSetBranchPersistence.findByG_P_N(
-			groupId, privateLayout,
-			LayoutSetBranchConstants.MASTER_BRANCH_NAME);
+		return layoutSetBranchFinder.findByMaster(groupId, privateLayout);
 	}
 
 	public LayoutSetBranch getUserLayoutSetBranch(
@@ -290,7 +289,8 @@ public class LayoutSetBranchLocalServiceImpl
 		return layoutSetBranch;
 	}
 
-	protected void validate(long groupId, boolean privateLayout, String name)
+	protected void validate(
+			long groupId, boolean privateLayout, String name, boolean master)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(name) || (name.length() < 4)) {
@@ -311,6 +311,17 @@ public class LayoutSetBranchLocalServiceImpl
 				LayoutSetBranchNameException.DUPLICATE);
 		}
 		catch (NoSuchLayoutSetBranchException nsbe) {
+		}
+
+		if (master) {
+			try {
+				layoutSetBranchFinder.findByMaster(groupId, privateLayout);
+
+				throw new LayoutSetBranchNameException(
+					LayoutSetBranchNameException.MASTER);
+			}
+			catch (NoSuchLayoutSetBranchException nsbe) {
+			}
 		}
 	}
 

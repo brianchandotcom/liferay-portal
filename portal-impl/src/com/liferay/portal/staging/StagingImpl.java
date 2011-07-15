@@ -1282,7 +1282,7 @@ public class StagingImpl implements Staging {
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
 					userId, targetGroupId, false,
 					LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-					description, LayoutSetBranchConstants.ALL_BRANCHES,
+					description, true, LayoutSetBranchConstants.ALL_BRANCHES,
 					serviceContext);
 			}
 			catch (LayoutSetBranchNameException lsbne) {
@@ -1300,7 +1300,7 @@ public class StagingImpl implements Staging {
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
 					userId, targetGroupId, true,
 					LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-					description, LayoutSetBranchConstants.ALL_BRANCHES,
+					description, true, LayoutSetBranchConstants.ALL_BRANCHES,
 					serviceContext);
 			}
 			catch (LayoutSetBranchNameException lsbne) {

@@ -717,6 +717,7 @@
 		<column name="privateLayout" type="boolean" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="master" type="boolean" />
 
 		<!-- Order -->
 

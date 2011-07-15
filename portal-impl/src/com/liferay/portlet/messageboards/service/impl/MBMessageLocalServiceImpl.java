@@ -1222,7 +1222,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	public MBMessage updateDiscussionMessage(
 			long userId, long messageId, String className, long classPK,
-			String subject, String body, int workflowAction)
+			String subject, String body, int workflowAction,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(subject)) {
@@ -1234,8 +1235,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		List<String> existingFiles = new ArrayList<String>();
 		double priority = 0.0;
 		boolean allowPingbacks = false;
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));

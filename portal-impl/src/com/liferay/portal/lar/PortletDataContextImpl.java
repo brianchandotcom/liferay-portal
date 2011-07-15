@@ -929,7 +929,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 								userId, existingMessage.getMessageId(),
 								clazz.getName(), newClassPK,
 								message.getSubject(), message.getBody(),
-								WorkflowConstants.ACTION_PUBLISH);
+								WorkflowConstants.ACTION_PUBLISH,
+								serviceContext);
 					}
 				}
 				else {

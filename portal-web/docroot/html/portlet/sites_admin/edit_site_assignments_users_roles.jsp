@@ -106,7 +106,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Description
 
-	row.addText(role.getDescription());
+	row.addText(role.getDescription(locale));
 
 	// CSS
 

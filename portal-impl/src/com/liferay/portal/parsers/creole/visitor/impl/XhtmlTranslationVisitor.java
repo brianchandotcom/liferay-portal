@@ -167,7 +167,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(OrderedListItemNode orderedListItemNode) {
-		appendLevelTag(orderedListItemNode.getLevel(), true);
+		appendLevelTags(orderedListItemNode.getLevel(), true);
 
 		traverse(orderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
@@ -177,9 +177,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 
 		traverse(orderedListNode.getChildASTNodes());
 
-		while (_currentNodeLevel > 0) {
-			appendLevelTag(_currentNodeLevel - 1, true);
-		}
+		appendLevelTags(0, true);
 	}
 
 	public void visit(ParagraphNode paragraphNode) {
@@ -219,7 +217,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(UnorderedListItemNode unorderedListItemNode) {
-		appendLevelTag(unorderedListItemNode.getLevel(), false);
+		appendLevelTags(unorderedListItemNode.getLevel(), false);
 
 		traverse(unorderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
@@ -229,9 +227,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 
 		traverse(unorderedListNode.getChildASTNodes());
 
-		while (_currentNodeLevel > 0) {
-			appendLevelTag(_currentNodeLevel - 1, false);
-		}
+		appendLevelTags(0, false);
 	}
 
 	public void visit(WikiPageNode wikiPageNode) {
@@ -244,7 +240,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
-	protected void appendLevelTag(int nodeLevel, boolean ordered) {
+	protected void appendLevelTags(int nodeLevel, boolean ordered) {
 		int diff = nodeLevel - _currentNodeLevel;
 
 		if (diff > 0) {

@@ -167,15 +167,19 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(OrderedListItemNode orderedListItemNode) {
+		appendLevelTag(orderedListItemNode.getLevel(), true);
+
 		traverse(orderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(OrderedListNode orderedListNode) {
-		append("<ol>");
+		_currentNodeLevel = 0;
 
 		traverse(orderedListNode.getChildASTNodes());
 
-		append("</ol>");
+		while (_currentNodeLevel > 0) {
+			appendLevelTag(_currentNodeLevel - 1, true);
+		}
 	}
 
 	public void visit(ParagraphNode paragraphNode) {
@@ -215,15 +219,19 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(UnorderedListItemNode unorderedListItemNode) {
+		appendLevelTag(unorderedListItemNode.getLevel(), false);
+
 		traverse(unorderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(UnorderedListNode unorderedListNode) {
-		append("<ul>");
+		_currentNodeLevel = 0;
 
 		traverse(unorderedListNode.getChildASTNodes());
 
-		append("</ul>");
+		while (_currentNodeLevel > 0) {
+			appendLevelTag(_currentNodeLevel - 1, false);
+		}
 	}
 
 	public void visit(WikiPageNode wikiPageNode) {
@@ -234,6 +242,33 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		if (object != null) {
 			_sb.append(object);
 		}
+	}
+
+	protected void appendLevelTag(int nodeLevel, boolean ordered) {
+		int diff = nodeLevel - _currentNodeLevel;
+
+		if (diff > 0) {
+			for (int i = 0; i < diff; i++) {
+				if (ordered) {
+					append("<ol>");
+				}
+				else {
+					append("<ul>");
+				}
+			}
+		}
+		else if (diff < 0) {
+			for (int i = 0; i > diff; i--) {
+				if (ordered) {
+					append("</ol>");
+				}
+				else {
+					append("</ul>");
+				}
+			}
+		}
+
+		_currentNodeLevel = nodeLevel;
 	}
 
 	protected void traverse(List<ASTNode> astNodes) {
@@ -264,6 +299,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
+	private int _currentNodeLevel;
 	private StringBundler _sb = new StringBundler();
 
 }

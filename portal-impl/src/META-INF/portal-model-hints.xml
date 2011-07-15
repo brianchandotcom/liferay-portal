@@ -357,6 +357,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="master" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutSetPrototype">
 		<field name="uuid" type="String" />

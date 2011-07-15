@@ -455,6 +455,7 @@
 		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" table="LayoutSetPrototype">
 		<cache usage="read-write" />

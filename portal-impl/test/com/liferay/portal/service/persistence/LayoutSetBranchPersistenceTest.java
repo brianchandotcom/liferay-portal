@@ -87,6 +87,8 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 
 		newLayoutSetBranch.setDescription(randomString());
 
+		newLayoutSetBranch.setMaster(randomBoolean());
+
 		_persistence.update(newLayoutSetBranch, false);
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
@@ -113,6 +115,8 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 			newLayoutSetBranch.getName());
 		assertEquals(existingLayoutSetBranch.getDescription(),
 			newLayoutSetBranch.getDescription());
+		assertEquals(existingLayoutSetBranch.getMaster(),
+			newLayoutSetBranch.getMaster());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -263,6 +267,8 @@ public class LayoutSetBranchPersistenceTest extends BasePersistenceTestCase {
 		layoutSetBranch.setName(randomString());
 
 		layoutSetBranch.setDescription(randomString());
+
+		layoutSetBranch.setMaster(randomBoolean());
 
 		_persistence.update(layoutSetBranch, false);
 

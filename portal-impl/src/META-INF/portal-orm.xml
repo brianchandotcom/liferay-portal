@@ -410,6 +410,7 @@
 			<basic name="privateLayout" />
 			<basic name="name" />
 			<basic name="description" />
+			<basic name="master" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />

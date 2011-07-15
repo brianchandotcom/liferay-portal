@@ -51,7 +51,7 @@ if (structure != null) {
 List<JournalTemplate> templates = new ArrayList();
 
 if (structure != null) {
-	templates = JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId);
+	templates = JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId);
 }
 
 String templateId = BeanParamUtil.getString(article, request, "templateId");

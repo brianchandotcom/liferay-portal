@@ -18,10 +18,10 @@
 int total = 0;
 
 if (searchTerms.isAdvancedSearch()) {
-	total = JournalTemplateLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
 }
 else {
-	total = JournalTemplateLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator());
+	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator());
 }
 
 searchContainer.setTotal(total);
@@ -29,10 +29,10 @@ searchContainer.setTotal(total);
 List results = null;
 
 if (searchTerms.isAdvancedSearch()) {
-	results = JournalTemplateLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+	results = JournalTemplateServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
 }
 else {
-	results = JournalTemplateLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+	results = JournalTemplateServiceUtil.search(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchContainer.getStart(), searchContainer.getEnd(), null);
 }
 
 searchContainer.setResults(results);

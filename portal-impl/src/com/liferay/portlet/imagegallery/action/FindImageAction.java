@@ -64,7 +64,7 @@ public class FindImageAction extends Action {
 			portletURL.setPortletMode(PortletMode.VIEW);
 
 			portletURL.setParameter(
-				"struts_action", "/image_gallery/edit_image");
+				"struts_action", "/image_gallery/view_image");
 			portletURL.setParameter("imageId", String.valueOf(imageId));
 
 			response.sendRedirect(portletURL.toString());

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -45,6 +47,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -98,6 +102,7 @@ import java.io.IOException;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
@@ -1196,8 +1201,19 @@ public class MainServlet extends ActionServlet {
 
 		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
+		String shutdownMessage = ShutdownUtil.getMessage();
+
+		if (Validator.isNull(shutdownMessage)) {
+			Locale locale = LocaleUtil.getDefault();
+
+			shutdownMessage = LanguageUtil.get(
+				locale, "the-system-is-shutdown-please-try-again-later");
+		}
+
 		String html = ContentUtil.get(
 			"com/liferay/portal/dependencies/shutdown.html");
+
+		html = StringUtil.replace(html, "shutdown-message", shutdownMessage);
 
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 

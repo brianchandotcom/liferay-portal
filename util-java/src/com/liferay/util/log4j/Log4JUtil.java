@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -162,6 +163,25 @@ public class Log4JUtil {
 			urlContent = urlContent.replaceAll(
 				"@" + variable.getKey() + "@", variable.getValue());
 		}
+
+		if (ServerDetector.getServerId() != null) {
+			return urlContent;
+		}
+
+		int x = urlContent.indexOf("<appender name=\"FILE\"");
+
+		int y = urlContent.indexOf("</appender>", x);
+
+		if (y != -1) {
+			y = urlContent.indexOf("<", y + 1);
+		}
+
+		if ((x != -1) && (y != -1)) {
+			urlContent = urlContent.substring(0, x) + urlContent.substring(y);
+		}
+
+		urlContent = StringUtil.replace(
+			urlContent, "<appender-ref ref=\"FILE\" />", StringPool.BLANK);
 
 		return urlContent;
 	}

@@ -150,7 +150,8 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			serviceBeanMethodInvocation);
 
 		if (methodInterceptors == null) {
-			_getMethodInterceptors(serviceBeanMethodInvocation);
+			methodInterceptors = _getMethodInterceptors(
+				serviceBeanMethodInvocation);
 
 			_methodInterceptors.put(
 				serviceBeanMethodInvocation.toCacheKeyModel(),

@@ -175,11 +175,12 @@ portletURL.setParameter("tabs1", tabs1);
 
 				// Name and description
 
-				if (Validator.isNotNull(structure.getDescription())) {
-					row.addText(structure.getName().concat("<br />").concat(structure.getDescription()), rowURL);
-				}
-				else {
+				if (Validator.isNotNull(structure.getName())) {
 					row.addText(structure.getName(), rowURL);
+				}
+
+				if (Validator.isNotNull(structure.getDescription())) {
+					row.addText(structure.getDescription(), rowURL);
 				}
 
 				// Action
@@ -253,6 +254,8 @@ portletURL.setParameter("tabs1", tabs1);
 				row.addText(template.getTemplateId(), rowURL);
 
 				// Name, description, and image
+
+				row.addText(template.getName(), rowURL);
 
 				row.addJSP("/html/portlet/journal/template_description.jsp");
 

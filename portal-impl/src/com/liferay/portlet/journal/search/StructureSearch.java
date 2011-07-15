@@ -33,6 +33,7 @@ public class StructureSearch extends SearchContainer<JournalStructure> {
 
 	static {
 		headerNames.add("id");
+		headerNames.add("name");
 		headerNames.add("description");
 	}
 

@@ -14,20 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-String cssClass = GetterUtil.getString((String)request.getAttribute("aui:option:cssClass"));
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:option:dynamicAttributes");
-boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("aui:option:disabled"));
-String label = GetterUtil.getString((String)request.getAttribute("aui:option:label"));
-boolean selected = GetterUtil.getBoolean((String)request.getAttribute("aui:option:selected"));
-String style = GetterUtil.getString((String)request.getAttribute("aui:option:style"));
-String value = GetterUtil.getString((String)request.getAttribute("aui:option:value"));
-%>
+<%@ include file="/html/taglib/aui/option/init.jsp" %>
 
 <option <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + "\"" : StringPool.BLANK %> <%= disabled ? "disabled" : StringPool.BLANK %> <%= selected ? "selected" : StringPool.BLANK %> <%= Validator.isNotNull(style) ? "style=\"" + style + "\"" : StringPool.BLANK %> value="<%= value %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 
 <c:if test="<%= Validator.isNotNull(label) %>">
-	<liferay-ui:message key="<%= label %>" />
+	<liferay-ui:message key="<%= String.valueOf(label) %>" />
 </c:if>

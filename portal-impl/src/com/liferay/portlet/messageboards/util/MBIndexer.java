@@ -39,12 +39,14 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
@@ -98,6 +100,11 @@ public class MBIndexer extends BaseIndexer {
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
+
+		boolean discussion = GetterUtil.getBoolean(
+			searchContext.getAttribute("discussion"), false);
+
+		contextQuery.addRequiredTerm("discussion", discussion);
 
 		long threadId = GetterUtil.getLong(
 			(String)searchContext.getAttribute("threadId"));
@@ -204,6 +211,16 @@ public class MBIndexer extends BaseIndexer {
 
 		if (message.isAnonymous()) {
 			document.remove(Field.USER_NAME);
+		}
+
+		try {
+			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+				message.getThreadId());
+
+			document.addKeyword("discussion", true);
+		}
+		catch (NoSuchDiscussionException nsde) {
+			document.addKeyword("discussion", false);
 		}
 
 		document.addKeyword("threadId", message.getThreadId());

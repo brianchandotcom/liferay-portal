@@ -108,10 +108,9 @@ public class FindEventAction extends Action {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Calendar portlet.");
-		}
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Calendar portlet");
 	}
 
 }

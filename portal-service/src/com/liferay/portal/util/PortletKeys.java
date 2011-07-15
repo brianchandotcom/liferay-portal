@@ -220,6 +220,8 @@ public class PortletKeys {
 
 	public static final String WIKI_ADMIN = "154";
 
+	public static final String WIKI_DISPLAY = "54";
+
 	public static final String WORKFLOW_CONFIGURATION = "152";
 
 	public static final String WORKFLOW_DEFINITIONS = "151";

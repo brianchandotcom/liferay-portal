@@ -44,6 +44,7 @@ if (configParams != null) {
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
+String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 
@@ -53,6 +54,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 
 // To upgrade FCKEditor, download the latest version and unzip it to fckeditor.
@@ -63,14 +65,20 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 %>
 
-<liferay-util:html-top outputKey="js_editor_fckeditor">
+<c:if test="<%= !skipEditorLoading %>">
+	<liferay-util:html-top outputKey="js_editor_fckeditor">
 
-	<%
-	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
-	%>
+		<%
+		long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
+		%>
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/editor/fckeditor/fckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-</liferay-util:html-top>
+		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/editor/fckeditor/fckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+		<script type="text/javascript">
+			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
+		</script>
+	</liferay-util:html-top>
+</c:if>
 
 <aui:script>
 	window['<%= name %>'] = {

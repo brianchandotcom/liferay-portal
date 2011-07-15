@@ -3147,7 +3147,19 @@ public class PortalImpl implements Portal {
 				if (liveGroup.isStaged() &&
 					!liveGroup.isStagedPortlet(portletId)) {
 
-					scopeGroupId = liveGroup.getGroupId();
+					Layout liveGroupLayout =
+						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+							layout.getUuid(), liveGroup.getGroupId());
+
+					if ((liveGroupLayout != null) &&
+						liveGroupLayout.hasScopeGroup()) {
+
+						scopeGroupId = getScopeGroupId(
+							liveGroupLayout, portletId);
+					}
+					else {
+						scopeGroupId = liveGroup.getGroupId();
+					}
 				}
 			}
 		}

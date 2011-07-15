@@ -346,6 +346,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 			portletId, parameterMap, startDate, endDate);
 	}
 
+	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.fetchLayoutByUuidAndGroupId(uuid, groupId);
+	}
+
 	public long getDefaultPlid(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.getDefaultPlid(groupId);

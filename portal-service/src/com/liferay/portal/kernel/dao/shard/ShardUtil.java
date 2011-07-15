@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.shard;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import javax.sql.DataSource;
 
 /**
@@ -38,7 +40,7 @@ public class ShardUtil {
 			return _shard.getCurrentShardName();
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	public static DataSource getDataSource() {

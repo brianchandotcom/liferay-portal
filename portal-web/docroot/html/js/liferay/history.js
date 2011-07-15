@@ -1,14 +1,11 @@
 AUI().add(
 	'liferay-history',
 	function(A) {
-		var Lang = A.Lang;
-
 		var AObject = A.Object;
-
+		var Lang = A.Lang;
 		var QueryString = A.QueryString;
 
 		var isValue = Lang.isValue;
-
 		var owns = AObject.owns;
 
 		var WIN = A.config.win;

@@ -2,10 +2,9 @@ AUI().add(
 	'liferay-history-manager',
 	function(A) {
 		var HistoryBase = A.HistoryBase;
+		var HistoryManager = new Liferay.History();
 
 		var EVENT_STATE_CHANGE = 'stateChange';
-
-		var HistoryManager = new Liferay.History();
 
 		HistoryManager.SRC_ADD = HistoryBase.SRC_ADD;
 		HistoryManager.SRC_REPLACE = HistoryBase.SRC_REPLACE;

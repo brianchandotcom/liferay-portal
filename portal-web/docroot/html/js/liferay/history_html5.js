@@ -1,23 +1,18 @@
 AUI().add(
 	'liferay-history-html5',
 	function(A) {
-		var Lang = A.Lang;
-
 		var AObject = A.Object;
-
+		var History = Liferay.History;
+		var Lang = A.Lang;
 		var QueryString = A.QueryString;
 
 		var isEmpty = AObject.isEmpty;
-
 		var isValue = Lang.isValue;
+		var owns = AObject.owns;
 
 		var WIN = A.config.win;
 
 		var HISTORY = WIN.history;
-
-		var History = Liferay.History;
-
-		var owns = AObject.owns;
 
 		var LOCATION = WIN.location;
 

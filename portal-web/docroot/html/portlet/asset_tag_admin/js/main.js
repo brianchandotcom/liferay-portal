@@ -1,11 +1,10 @@
 AUI().add(
 	'liferay-tags-admin',
 	function(A) {
-		var Lang = A.Lang;
-
-		var Node = A.Node;
-
 		var AObject = A.Object;
+		var HistoryManager = Liferay.HistoryManager;
+		var Lang = A.Lang;
+		var Node = A.Node;
 
 		var owns = AObject.owns;
 
@@ -24,8 +23,6 @@ AUI().add(
 		var EVENT_CLICK  = 'click';
 
 		var EVENT_SUBMIT = 'submit';
-
-		var HistoryManager = Liferay.HistoryManager;
 
 		var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
@@ -157,7 +154,7 @@ AUI().add(
 
 						instance._createTagSearch();
 
-						HistoryManager.on('stateChange', instance._onHistoryChange, instance);
+						HistoryManager.on('stateChange', instance._onStateChange, instance);
 
 						instance._loadData();
 
@@ -1096,30 +1093,7 @@ AUI().add(
 						instance._showTagPanel(action);
 					},
 
-					_onTagChangePermissions: function(event) {
-						var instance = this;
-
-						var url = event.target.attr('data-url');
-
-						instance._loadPermissions(url);
-					},
-
-					_onTagFormSubmit: function(event, form) {
-						var instance = this;
-
-						event.halt();
-
-						Liferay.fire(
-							'saveAutoFields',
-							{
-								form: form
-							}
-						);
-
-						instance._updateTag(form);
-					},
-
-					_onHistoryChange: function(event) {
+					_onStateChange: function(event) {
 						var instance = this;
 
 						var changed = event.changed;
@@ -1154,6 +1128,29 @@ AUI().add(
 
 							instance._reloadData();
 						}
+					},
+
+					_onTagChangePermissions: function(event) {
+						var instance = this;
+
+						var url = event.target.attr('data-url');
+
+						instance._loadPermissions(url);
+					},
+
+					_onTagFormSubmit: function(event, form) {
+						var instance = this;
+
+						event.halt();
+
+						Liferay.fire(
+							'saveAutoFields',
+							{
+								form: form
+							}
+						);
+
+						instance._updateTag(form);
 					},
 
 					_onTagsListClick: function(event) {

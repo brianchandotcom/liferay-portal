@@ -14,18 +14,26 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.aop.framework.AdvisorChainFactory;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.util.ClassUtils;
@@ -39,6 +47,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor) {
 
 		_advisedSupport = advisedSupport;
+		_advisorChainFactory = _advisedSupport.getAdvisorChainFactory();
 		_methodInterceptor = methodInterceptor;
 
 		AnnotationChainableMethodAdvice.registerAnnotationType(Skip.class);
@@ -71,13 +80,11 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 				targetClass = target.getClass();
 			}
 
-			List<Object> interceptors =
-				_advisedSupport.getInterceptorsAndDynamicInterceptionAdvice(
-					method, targetClass);
-
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 				new ServiceBeanMethodInvocation(
-					target, targetClass, method, arguments, interceptors);
+					target, targetClass, method, arguments);
+
+			_installInterceptors(serviceBeanMethodInvocation);
 
 			Skip skip = ServiceMethodAnnotationCache.get(
 				serviceBeanMethodInvocation, Skip.class, null);
@@ -96,7 +103,63 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		}
 	}
 
+	private void _installInterceptors(
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		List<MethodInterceptor> interceptors = _interceptorsCache.get(
+			serviceBeanMethodInvocation);
+
+		if (interceptors == null) {
+			List<Object> list =
+				_advisorChainFactory.
+					getInterceptorsAndDynamicInterceptionAdvice(
+						_advisedSupport,
+							serviceBeanMethodInvocation.getMethod(),
+								serviceBeanMethodInvocation.getTargetClass());
+
+			Iterator<Object> iterator = list.iterator();
+
+			while (iterator.hasNext()) {
+				Object obj = iterator.next();
+
+				if (!(obj instanceof MethodInterceptor)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Skipping unsupported interceptor type " +
+								obj.getClass());
+					}
+
+					iterator.remove();
+				}
+			}
+
+			if (list.isEmpty()) {
+				interceptors = Collections.emptyList();
+			}
+			else {
+				interceptors = new ArrayList<MethodInterceptor>(list.size());
+
+				for (Object obj : list) {
+					interceptors.add((MethodInterceptor)obj);
+				}
+			}
+
+			_interceptorsCache.put(
+				serviceBeanMethodInvocation.toCacheKeyModel(), interceptors);
+		}
+
+		serviceBeanMethodInvocation.setInterceptors(interceptors);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ServiceBeanAopProxy.class);
+
+	private static final Map
+		<ServiceBeanMethodInvocation, List<MethodInterceptor>>
+			_interceptorsCache = new ConcurrentHashMap
+				<ServiceBeanMethodInvocation, List<MethodInterceptor>>();
+
 	private final AdvisedSupport _advisedSupport;
+	private final AdvisorChainFactory _advisorChainFactory;
 	private final MethodInterceptor _methodInterceptor;
 
 }

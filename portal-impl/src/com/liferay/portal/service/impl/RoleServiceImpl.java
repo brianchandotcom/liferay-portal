@@ -34,8 +34,8 @@ import java.util.Map;
 public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 	public Role addRole(
-			String name, Map<Locale, String> titleMap, String description,
-			int type)
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(getPermissionChecker(), ActionKeys.ADD_ROLE);
@@ -43,8 +43,8 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		User user = getUser();
 
 		return roleLocalService.addRole(
-			user.getUserId(), user.getCompanyId(), name, titleMap, description,
-			type);
+			user.getUserId(), user.getCompanyId(), name, titleMap,
+			descriptionMap, type);
 	}
 
 	public void addUserRoles(long userId, long[] roleIds)
@@ -135,14 +135,14 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 	public Role updateRole(
 			long roleId, String name, Map<Locale, String> titleMap,
-			String description, String subtype)
+			Map<Locale, String> descriptionMap, String subtype)
 		throws PortalException, SystemException {
 
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.UPDATE);
 
 		return roleLocalService.updateRole(
-			roleId, name, titleMap, description, subtype);
+			roleId, name, titleMap, descriptionMap, subtype);
 	}
 
 	protected void checkUserRolesPermission(long userId, long[] roleIds)

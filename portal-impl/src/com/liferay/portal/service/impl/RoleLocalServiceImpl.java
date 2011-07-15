@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,16 +66,17 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	public Role addRole(
 			long userId, long companyId, String name,
-			Map<Locale, String> titleMap, String description, int type)
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			int type)
 		throws PortalException, SystemException {
 
 		return addRole(
-			userId, companyId, name, titleMap, description, type, null, 0);
+			userId, companyId, name, titleMap, descriptionMap, type, null, 0);
 	}
 
 	public Role addRole(
 			long userId, long companyId, String name,
-			Map<Locale, String> titleMap, String description,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			int type, String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -99,7 +101,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setClassPK(classPK);
 		role.setName(name);
 		role.setTitleMap(titleMap);
-		role.setDescription(description);
+		role.setDescriptionMap(descriptionMap);
 		role.setType(type);
 
 		rolePersistence.update(role, false);
@@ -149,10 +151,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
 						".description";
 
-			String description = PropsUtil.get(key);
+			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+			descriptionMap.put(LocaleUtil.getDefault(), PropsUtil.get(key));
+
 			int type = RoleConstants.TYPE_REGULAR;
 
-			checkSystemRole(companyId, name, description, type);
+			checkSystemRole(companyId, name, descriptionMap, type);
 		}
 
 		// Organization roles
@@ -166,10 +171,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
 						".description";
 
-			String description = PropsUtil.get(key);
+			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+			descriptionMap.put(LocaleUtil.getDefault(), PropsUtil.get(key));
+
 			int type = RoleConstants.TYPE_ORGANIZATION;
 
-			checkSystemRole(companyId, name, description, type);
+			checkSystemRole(companyId, name, descriptionMap, type);
 		}
 
 		// Site roles
@@ -182,10 +190,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 					StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD) +
 						".description";
 
-			String description = PropsUtil.get(key);
+			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+			descriptionMap.put(LocaleUtil.getDefault(), PropsUtil.get(key));
+
 			int type = RoleConstants.TYPE_SITE;
 
-			checkSystemRole(companyId, name, description, type);
+			checkSystemRole(companyId, name, descriptionMap, type);
 		}
 	}
 
@@ -558,7 +569,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	public Role updateRole(
 			long roleId, String name, Map<Locale, String> titleMap,
-			String description, String subtype)
+			Map<Locale, String> descriptionMap, String subtype)
 		throws PortalException, SystemException {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -572,7 +583,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		role.setName(name);
 		role.setTitleMap(titleMap);
-		role.setDescription(description);
+		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
 
 		rolePersistence.update(role, false);
@@ -581,7 +592,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	protected void checkSystemRole(
-			long companyId, String name, String description, int type)
+			long companyId, String name, Map<Locale, String> descriptionMap,
+			int type)
 		throws PortalException, SystemException {
 
 		Role role = _systemRolesMap.get(companyId + name);
@@ -591,15 +603,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role = rolePersistence.findByC_N(companyId, name);
 			}
 
-			if (!role.getDescription().equals(description)) {
-				role.setDescription(description);
+			if (!role.getDescription().equals(descriptionMap)) {
+				role.setDescriptionMap(descriptionMap);
 
 				roleLocalService.updateRole(role, false);
 			}
 		}
 		catch (NoSuchRoleException nsre) {
 			role = roleLocalService.addRole(
-				0, companyId, name, null, description, type);
+				0, companyId, name, null, descriptionMap, type);
 
 			if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);

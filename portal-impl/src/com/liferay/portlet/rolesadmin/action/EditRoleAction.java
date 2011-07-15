@@ -131,7 +131,8 @@ public class EditRoleAction extends PortletAction {
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-		String description = ParamUtil.getString(actionRequest, "description");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		int type = ParamUtil.getInteger(
 			actionRequest, "type", RoleConstants.TYPE_REGULAR);
 		String subtype = ParamUtil.getString(actionRequest, "subtype");
@@ -140,14 +141,14 @@ public class EditRoleAction extends PortletAction {
 
 			// Add role
 
-			RoleServiceUtil.addRole(name, titleMap, description, type);
+			RoleServiceUtil.addRole(name, titleMap, descriptionMap, type);
 		}
 		else {
 
 			// Update role
 
 			RoleServiceUtil.updateRole(
-				roleId, name, titleMap, description, subtype);
+				roleId, name, titleMap, descriptionMap, subtype);
 		}
 	}
 

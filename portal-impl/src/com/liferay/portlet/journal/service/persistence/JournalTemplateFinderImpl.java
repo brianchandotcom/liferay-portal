@@ -89,97 +89,6 @@ public class JournalTemplateFinderImpl
 			structureIdComparator, names, descriptions, andOperator, false);
 	}
 
-	public int doCountByC_G_T_S_N_D(
-			long companyId, long[] groupIds, String[] templateIds,
-			String structureId, String structureIdComparator, String[] names,
-			String[] descriptions, boolean andOperator, boolean inlineSQLHelper)
-		throws SystemException {
-
-		templateIds = CustomSQLUtil.keywords(templateIds, false);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_T_S_N_D);
-
-			sql = StringUtil.replace(
-				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
-
-			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
-				sql = replaceStructureIdComparator(sql);
-			}
-
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(description)", StringPool.LIKE, true, descriptions);
-
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-						sql, JournalTemplate.class.getName(),
-						"JournalTemplate.id_", groupIds);
-
-				sql = StringUtil.replace(
-					sql, "(companyId", "(JournalTemplate.companyId");
-
-				sql = StringUtil.replace(
-					sql, "(name", "(JournalTemplate.name");
-			}
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(groupIds);
-			qPos.add(templateIds, 2);
-
-			if (structureIdComparator.equals(StringPool.LIKE)) {
-				qPos.add(structureId);
-				qPos.add(structureId);
-			}
-
-			qPos.add(names, 2);
-			qPos.add(descriptions, 2);
-
-			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
-				if (CustomSQLUtil.isVendorOracle()) {
-				}
-				else {
-					qPos.add(structureId);
-				}
-			}
-
-			Iterator<Long> itr = q.list().iterator();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	public List<JournalTemplate> findByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator, int start,
@@ -221,90 +130,6 @@ public class JournalTemplateFinderImpl
 			companyId, groupIds, templateIds, structureId,
 			structureIdComparator, names, descriptions, andOperator, start, end,
 			obc, false);
-	}
-
-	public List<JournalTemplate> doFindByC_G_T_S_N_D(
-			long companyId, long[] groupIds, String[] templateIds,
-			String structureId, String structureIdComparator, String[] names,
-			String[] descriptions, boolean andOperator, int start, int end,
-			OrderByComparator obc, boolean inlineSQLHelper)
-		throws SystemException {
-
-		templateIds = CustomSQLUtil.keywords(templateIds, false);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_T_S_N_D);
-
-			sql = StringUtil.replace(
-				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
-
-			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
-				sql = replaceStructureIdComparator(sql);
-			}
-
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(description)", StringPool.LIKE, true, descriptions);
-
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-						sql, JournalTemplate.class.getName(),
-						"JournalTemplate.id_", groupIds);
-
-				sql = StringUtil.replace(
-					sql, "(companyId", "(JournalTemplate.companyId");
-
-				sql = StringUtil.replace(
-					sql, "(name", "(JournalTemplate.name");
-			}
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("JournalTemplate", JournalTemplateImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(groupIds);
-			qPos.add(templateIds, 2);
-
-			if (structureIdComparator.equals(StringPool.LIKE)) {
-				qPos.add(structureId);
-				qPos.add(structureId);
-			}
-
-			qPos.add(names, 2);
-			qPos.add(descriptions, 2);
-
-			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
-				if (CustomSQLUtil.isVendorOracle()) {
-				}
-				else {
-					qPos.add(structureId);
-				}
-			}
-
-			return (List<JournalTemplate>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	public int filterCountByKeywords(
@@ -387,6 +212,181 @@ public class JournalTemplateFinderImpl
 			companyId, groupIds, templateIds, structureId,
 			structureIdComparator, names, descriptions, andOperator, start, end,
 			obc, true);
+	}
+
+	protected int doCountByC_G_T_S_N_D(
+			long companyId, long[] groupIds, String[] templateIds,
+			String structureId, String structureIdComparator, String[] names,
+			String[] descriptions, boolean andOperator, boolean inlineSQLHelper)
+		throws SystemException {
+
+		templateIds = CustomSQLUtil.keywords(templateIds, false);
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_G_T_S_N_D);
+
+			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "templateId", StringPool.LIKE, false, templateIds);
+
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
+				sql = replaceStructureIdComparator(sql);
+			}
+
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(name)", StringPool.LIKE, false, names);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(description)", StringPool.LIKE, true, descriptions);
+
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalTemplate.class.getName(), "JournalTemplate.id_",
+					groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalTemplate.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalTemplate.name");
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(groupIds);
+			qPos.add(templateIds, 2);
+
+			if (structureIdComparator.equals(StringPool.LIKE)) {
+				qPos.add(structureId);
+				qPos.add(structureId);
+			}
+
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
+
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
+				if (CustomSQLUtil.isVendorOracle()) {
+				}
+				else {
+					qPos.add(structureId);
+				}
+			}
+
+			Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalTemplate> doFindByC_G_T_S_N_D(
+			long companyId, long[] groupIds, String[] templateIds,
+			String structureId, String structureIdComparator, String[] names,
+			String[] descriptions, boolean andOperator, int start, int end,
+			OrderByComparator obc, boolean inlineSQLHelper)
+		throws SystemException {
+
+		templateIds = CustomSQLUtil.keywords(templateIds, false);
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_G_T_S_N_D);
+
+			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "templateId", StringPool.LIKE, false, templateIds);
+
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
+				sql = replaceStructureIdComparator(sql);
+			}
+
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(name)", StringPool.LIKE, false, names);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(description)", StringPool.LIKE, true, descriptions);
+
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+						sql, JournalTemplate.class.getName(),
+						"JournalTemplate.id_", groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalTemplate.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalTemplate.name");
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("JournalTemplate", JournalTemplateImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(groupIds);
+			qPos.add(templateIds, 2);
+
+			if (structureIdComparator.equals(StringPool.LIKE)) {
+				qPos.add(structureId);
+				qPos.add(structureId);
+			}
+
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
+
+			if (structureIdComparator.equals(StringPool.NOT_LIKE)) {
+				if (CustomSQLUtil.isVendorOracle()) {
+				}
+				else {
+					qPos.add(structureId);
+				}
+			}
+
+			return (List<JournalTemplate>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected String getGroupIds(long[] groupIds) {

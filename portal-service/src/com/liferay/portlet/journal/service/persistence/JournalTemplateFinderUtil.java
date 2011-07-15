@@ -40,18 +40,6 @@ public class JournalTemplateFinderUtil {
 			structureId, structureIdComparator, name, description, andOperator);
 	}
 
-	public static int doCountByC_G_T_S_N_D(long companyId, long[] groupIds,
-		java.lang.String[] templateIds, java.lang.String structureId,
-		java.lang.String structureIdComparator, java.lang.String[] names,
-		java.lang.String[] descriptions, boolean andOperator,
-		boolean inlineSQLHelper)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .doCountByC_G_T_S_N_D(companyId, groupIds, templateIds,
-			structureId, structureIdComparator, names, descriptions,
-			andOperator, inlineSQLHelper);
-	}
-
 	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> findByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		java.lang.String structureId, java.lang.String structureIdComparator,
@@ -73,20 +61,6 @@ public class JournalTemplateFinderUtil {
 				   .findByC_G_T_S_N_D(companyId, groupIds, templateId,
 			structureId, structureIdComparator, name, description, andOperator,
 			start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> doFindByC_G_T_S_N_D(
-		long companyId, long[] groupIds, java.lang.String[] templateIds,
-		java.lang.String structureId, java.lang.String structureIdComparator,
-		java.lang.String[] names, java.lang.String[] descriptions,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc,
-		boolean inlineSQLHelper)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .doFindByC_G_T_S_N_D(companyId, groupIds, templateIds,
-			structureId, structureIdComparator, names, descriptions,
-			andOperator, start, end, obc, inlineSQLHelper);
 	}
 
 	public static int filterCountByKeywords(long companyId, long[] groupIds,

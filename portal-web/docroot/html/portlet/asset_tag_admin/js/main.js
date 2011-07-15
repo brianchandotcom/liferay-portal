@@ -41,10 +41,6 @@ AUI().add(
 
 		var NODE = 'node';
 
-		var SRC_HASH = HistoryManager.SRC_HASH;
-
-		var SRC_POPSTATE = HistoryManager.SRC_POPSTATE;
-
 		var TPL_PORTLET_MESSAGES = '<div class="aui-helper-hidden lfr-message-response" id="portletMessages" />';
 
 		var TPL_TAG_LIST = '<li class="tag-item-container results-row {cssClassSelected}" data-tag="{name}" data-tagId="{tagId}" tabIndex="0">' +
@@ -161,7 +157,7 @@ AUI().add(
 
 						instance._createTagSearch();
 
-						HistoryManager.on('change', instance._onHistoryChange, instance);
+						HistoryManager.on('stateChange', instance._onHistoryChange, instance);
 
 						instance._loadData();
 
@@ -1126,39 +1122,37 @@ AUI().add(
 					_onHistoryChange: function(event) {
 						var instance = this;
 
-						if ((event.src === SRC_HASH) || (event.src === SRC_POPSTATE)) {
-							var changed = event.changed;
-							var removed = event.removed;
+						var changed = event.changed;
+						var removed = event.removed;
 
-							var paginatorState = {};
+						var paginatorState = {};
 
-							var paginatorMap = instance._getTagsPaginatorMap();
+						var paginatorMap = instance._getTagsPaginatorMap();
 
-							AObject.each(
-								paginatorMap,
-								function(item, index, collection) {
-									var historyEntry = item.historyEntry;
+						AObject.each(
+							paginatorMap,
+							function(item, index, collection) {
+								var historyEntry = item.historyEntry;
 
-									var value;
+								var value;
 
-									if (owns(changed, historyEntry)) {
-										value = item.formatter(changed[historyEntry].newVal);
-									}
-									else if (owns(removed, historyEntry)) {
-										value = item.defaultValue;
-									}
-
-									if (value) {
-										paginatorState[index] = value;
-									}
+								if (owns(changed, historyEntry)) {
+									value = item.formatter(changed[historyEntry].newVal);
 								}
-							);
+								else if (owns(removed, historyEntry)) {
+									value = item.defaultValue;
+								}
 
-							if (AObject.size(paginatorState)) {
-								instance._tagsPaginator.setState(paginatorState);
-
-								instance._reloadData();
+								if (value) {
+									paginatorState[index] = value;
+								}
 							}
+						);
+
+						if (AObject.size(paginatorState)) {
+							instance._tagsPaginator.setState(paginatorState);
+
+							instance._reloadData();
 						}
 					},
 
@@ -1663,6 +1657,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

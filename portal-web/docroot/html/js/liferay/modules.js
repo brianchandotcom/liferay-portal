@@ -52,6 +52,8 @@
 			'form': ['aui-base', 'aui-form-validator'],
 			'form-navigator': ['aui-base'],
 			'history': getHistoryRequirements(),
+			'history-html5': ['history-html5', 'querystring-stringify-simple'],
+			'history-manager': ['liferay-history'],
 			'hudcrumbs': ['aui-base', 'plugin'],
 			'icon': ['aui-base'],
 			'input-move-boxes': ['aui-base', 'aui-toolbar'],
@@ -108,10 +110,10 @@
 		var module = 'history-hash';
 
 		if (hasNativeHistory) {
-			module = 'history-html5';
+			module = 'liferay-history-html5';
 		}
 
-		return ['history-base', 'querystring-parse-simple', module];
+		return ['querystring-parse-simple', module];
 	};
 
 	GROUPS.liferay = {

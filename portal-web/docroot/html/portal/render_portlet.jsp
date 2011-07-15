@@ -33,11 +33,12 @@ Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_
 Integer columnCount = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT);
 Boolean renderPortletResource = (Boolean)request.getAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 
+boolean isAllowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
 boolean runtimePortlet = (renderPortletResource != null) && renderPortletResource.booleanValue();
 
 boolean access = false;
 
-if (PortalUtil.isAllowAddPortletDefaultResource(request, portlet) && !portlet.isUndeployedPortlet()) {
+if (isAllowAddPortletDefaultResource && !portlet.isUndeployedPortlet()) {
 	PortalUtil.addPortletDefaultResource(request, portlet);
 
 	access = PortletPermissionUtil.contains(permissionChecker, plid, portlet, ActionKeys.VIEW);
@@ -82,7 +83,7 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = null;
 
-if (PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
+if (isAllowAddPortletDefaultResource) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
 }
 else {

@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class DeviceProfileActionPersistenceImpl extends BasePersistenceImpl<DeviceProfileAction>
 	implements DeviceProfileActionPersistence {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use {@link DeviceProfileActionUtil} to access the device profile action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
@@ -80,7 +80,7 @@ public class DeviceProfileActionPersistenceImpl extends BasePersistenceImpl<Devi
 			"findByUuid",
 			new String[] {
 				String.class.getName(),
-				
+
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
@@ -94,7 +94,7 @@ public class DeviceProfileActionPersistenceImpl extends BasePersistenceImpl<Devi
 			"findByDeviceProfileRuleId",
 			new String[] {
 				Long.class.getName(),
-				
+
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
@@ -493,7 +493,7 @@ public class DeviceProfileActionPersistenceImpl extends BasePersistenceImpl<Devi
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				uuid,
-				
+
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
@@ -852,7 +852,7 @@ public class DeviceProfileActionPersistenceImpl extends BasePersistenceImpl<Devi
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				deviceProfileRuleId,
-				
+
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};

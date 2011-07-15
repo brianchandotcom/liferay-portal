@@ -260,10 +260,10 @@ public class LayoutSetLocalServiceUtil {
 		getService().deleteLayoutSet(groupId, privateLayout);
 	}
 
-	public static com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
+	public static com.liferay.portal.model.LayoutSet fetchLayoutSet(
 		long layoutSetId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchByPrimaryKey(layoutSetId);
+		return getService().fetchLayoutSet(layoutSetId);
 	}
 
 	public static com.liferay.portal.model.LayoutSet getLayoutSet(

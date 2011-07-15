@@ -15,7 +15,6 @@
 package com.liferay.portal.mobile.service.base;
 
 import com.liferay.counter.service.CounterLocalService;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -63,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class DeviceProfileLocalServiceBaseImpl
 	implements DeviceProfileLocalService, IdentifiableBean {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.mobile.service.DeviceProfileLocalServiceUtil} to access the device profile local service.

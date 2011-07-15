@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mobile.device;
+package com.liferay.portal.kernel.mobile.device.profile;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
-import com.liferay.portal.kernel.mobile.device.rule.DeviceProfileRuleHandler;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.rule.DeviceProfileRuleHandler;
 
 import java.util.Collection;
 

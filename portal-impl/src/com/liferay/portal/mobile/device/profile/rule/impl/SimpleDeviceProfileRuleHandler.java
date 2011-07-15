@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rule.impl;
+package com.liferay.portal.mobile.device.profile.rule.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
-import com.liferay.portal.kernel.mobile.device.rule.DeviceProfileRuleHandler;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.rule.DeviceProfileRuleHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.mobile.model.DeviceProfileAction;
 import com.liferay.portal.mobile.model.DeviceProfileRule;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Edward Han
@@ -93,22 +95,22 @@ public class SimpleDeviceProfileRuleHandler
 	protected boolean evaluateRule(
 		DeviceProfileRule deviceProfileRule, Device device) {
 
-		UnicodeProperties ruleTypeSettings = deviceProfileRule.
-			getRuleTypeSettingsProperties();
+		UnicodeProperties ruleTypeSettings =
+			deviceProfileRule.getRuleTypeSettingsProperties();
 
 		String os = ruleTypeSettings.get(PARAMETER_OS);
 		String tablet = ruleTypeSettings.get(PARAMETER_TABLET);
 
 		boolean result = true;
 
-		if (os != null) {
-			result = result && os.equals(device.getOS());
+		if (Validator.isNotNull(os)) {
+			result = os.equals(device.getOS());
 		}
 
-		if (tablet != null) {
-			boolean isTablet = GetterUtil.get(tablet, false);
+		if (Validator.isNotNull(tablet)) {
+			boolean tabletRequired = GetterUtil.get(tablet, false);
 
-			result = result && (isTablet == device.isTablet());
+			result = result && (tabletRequired == device.isTablet());
 		}
 
 		return result;
@@ -119,4 +121,5 @@ public class SimpleDeviceProfileRuleHandler
 
 	private Map<String, DeviceProfileActionHandler>
 		_deviceProfileActionHandlers;
+
 }

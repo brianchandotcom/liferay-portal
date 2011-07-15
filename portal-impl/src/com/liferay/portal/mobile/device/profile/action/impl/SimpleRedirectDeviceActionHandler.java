@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.action.impl;
+package com.liferay.portal.mobile.device.profile.action.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.mobile.model.DeviceProfileAction;
 
 import java.util.ArrayList;

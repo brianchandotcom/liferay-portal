@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.action.impl;
+package com.liferay.portal.mobile.device.profile.action.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.mobile.model.DeviceProfileAction;
@@ -43,7 +43,12 @@ public abstract class BaseRedirectDeviceActionHandler
 		String url = getURL(
 			httpServletRequest, httpServletResponse, deviceProfileAction);
 
-		if (Validator.isNotNull(url)) {
+		if (Validator.isNull(url)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No URL to redirect to located");
+			}
+		}
+		else {
 			String requestURL = httpServletRequest.getRequestURL().toString();
 
 			if (StringUtil.contains(requestURL, url)) {
@@ -63,11 +68,6 @@ public abstract class BaseRedirectDeviceActionHandler
 					"Unable to send redirect for url: " + url, ioe);
 			}
 		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info("No URL to redirect to located");
-			}
-		}
 	}
 
 	protected abstract String getURL(
@@ -78,4 +78,5 @@ public abstract class BaseRedirectDeviceActionHandler
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseRedirectDeviceActionHandler.class);
+
 }

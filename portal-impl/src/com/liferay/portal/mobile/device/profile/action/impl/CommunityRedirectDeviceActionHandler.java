@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.action.impl;
+package com.liferay.portal.mobile.device.profile.action.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -65,11 +65,8 @@ public class CommunityRedirectDeviceActionHandler
 			DeviceProfileAction deviceProfileAction)
 		throws PortalException, SystemException {
 
-		UnicodeProperties deviceProfileTypeSettings = deviceProfileAction.
-			getTypeSettingsProperties();
-
-		long groupId = GetterUtil.get(
-			deviceProfileTypeSettings.getProperty(GROUP_ID), 0L);
+		UnicodeProperties deviceProfileTypeSettings =
+			deviceProfileAction.getTypeSettingsProperties();
 
 		long layoutId = GetterUtil.get(
 			deviceProfileTypeSettings.getProperty(LAYOUT_ID), 0L);
@@ -78,45 +75,49 @@ public class CommunityRedirectDeviceActionHandler
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long currentGroupId = themeDisplay.getScopeGroupId();
-
 		long currentLayoutId = themeDisplay.getLayout().getLayoutId();
 
-		if ((currentLayoutId == layoutId) && (currentGroupId == groupId)) {
-			return null;
-		}
-
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Group does not exist: " + groupId);
-			}
-
+		if (currentLayoutId == layoutId) {
 			return null;
 		}
 
 		Layout layout = _layoutLocalService.fetchLayout(layoutId);
+
+		long groupId = GetterUtil.get(
+			deviceProfileTypeSettings.getProperty(GROUP_ID), 0L);
+
+		if ((layout != null) && (layout.getGroupId() != groupId)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("layoutId " + layoutId +
+					" does not belong to group with ID: " +
+					groupId + ". Using default public page");
+			}
+
+			layout = null;
+		}
 
 		if (layout == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default public group layout," +
 					" unable to locate layout with plid: " + layoutId);
 			}
-		}
-		else {
-			if (layout.getGroupId() != groupId) {
+
+			long currentGroupId = themeDisplay.getLayout().getGroupId();
+
+			Group group = null;
+
+			if (currentGroupId != groupId) {
+				group = _groupLocalService.fetchGroup(groupId);
+			}
+
+			if (group == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("layoutId " + layoutId +
-						" does not belong to group with ID: " +
-						groupId + ". Using default public page");
+					_log.warn("Group does not exist: " + groupId);
 				}
 
-				layout = null;
+				return null;
 			}
-		}
 
-		if (layout == null) {
 			layout = LayoutLocalServiceUtil.fetchLayout(
 				group.getDefaultPublicPlid());
 		}
@@ -128,6 +129,7 @@ public class CommunityRedirectDeviceActionHandler
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to resolve default layout");
 			}
+
 			return null;
 		}
 	}
@@ -135,10 +137,10 @@ public class CommunityRedirectDeviceActionHandler
 	private static final String GROUP_ID = "groupId";
 	private static final String LAYOUT_ID = "layoutId";
 
-	private static Collection<String> _propertyNames;
-
 	private static Log _log = LogFactoryUtil.getLog(
 		CommunityRedirectDeviceActionHandler.class);
+
+	private static Collection<String> _propertyNames;
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;

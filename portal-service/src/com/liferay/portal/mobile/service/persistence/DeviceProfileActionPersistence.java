@@ -31,7 +31,7 @@ import com.liferay.portal.service.persistence.BasePersistence;
  * @generated
  */
 public interface DeviceProfileActionPersistence extends BasePersistence<DeviceProfileAction> {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DeviceProfileActionUtil} to access the device profile action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

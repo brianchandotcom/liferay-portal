@@ -9,31 +9,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 
-    <bean id="com.liferay.portal.kernel.mobile.device.DeviceProfileProcessor.impl" class="com.liferay.portal.mobile.device.DefaultDeviceProfileProcessorImpl">
-        <property name="deviceProfileRuleHandlers">
-            <list value-type="com.liferay.portal.kernel.mobile.device.rule.DeviceProfileRuleHandler">
-                <bean class="com.liferay.portal.mobile.device.rule.impl.SimpleDeviceProfileRuleHandler" />
-            </list>
-        </property>
-        <property name="deviceProfileActionHandlers">
-            <list value-type="com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler">
-                <bean class="com.liferay.portal.mobile.device.action.impl.CommunityRedirectDeviceActionHandler">
-                    <property name="groupLocalService" ref="com.liferay.portal.service.GroupLocalService" />
-                    <property name="layoutLocalService" ref="com.liferay.portal.service.LayoutLocalService" />
-                </bean>
-                <bean class="com.liferay.portal.mobile.device.action.impl.SimpleRedirectDeviceActionHandler" />
-                <bean class="com.liferay.portal.mobile.device.action.impl.ThemeDeviceActionHandler">
-                    <property name="themeLocalService" ref="com.liferay.portal.service.ThemeLocalService" />
-                </bean>
-                <bean class="com.liferay.portal.mobile.device.action.impl.LayoutTemplateDeviceProfileActionHandler" />
-            </list>
-        </property>
-    </bean>
-
-    <bean id="com.liferay.portal.kernel.mobile.device.DeviceProfileHandlerUtil" class="com.liferay.portal.kernel.mobile.device.DeviceProfileProcessorUtil">
-        <property name="deviceProfileProcessor" ref="com.liferay.portal.kernel.mobile.device.DeviceProfileProcessor.impl"/>
-    </bean>
-
 	<!-- Advice -->
 
 	<aop:config>
@@ -53,10 +28,37 @@
 		</property>
 	</bean>
 
-	<!-- Util -->
+	<!-- Device Detection -->
 
 	<bean id="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" class="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil">
 		<property name="deviceRecognitionProvider" ref="com.liferay.portal.mobile.device.DeviceRecognitionProviderProxyBean" />
+	</bean>
+
+	<!-- Device Profile-->
+
+	<bean id="com.liferay.portal.mobile.device.profile.DefaultDeviceProfileProcessorImpl" class="com.liferay.portal.mobile.device.profile.DefaultDeviceProfileProcessorImpl">
+		<property name="deviceProfileRuleHandlers">
+			<list value-type="com.liferay.portal.kernel.mobile.device.profile.rule.DeviceProfileRuleHandler">
+				<bean class="com.liferay.portal.mobile.device.profile.rule.impl.SimpleDeviceProfileRuleHandler" />
+			</list>
+		</property>
+		<property name="deviceProfileActionHandlers">
+			<list value-type="com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler">
+				<bean class="com.liferay.portal.mobile.device.profile.action.impl.CommunityRedirectDeviceActionHandler">
+					<property name="groupLocalService" ref="com.liferay.portal.service.GroupLocalService" />
+					<property name="layoutLocalService" ref="com.liferay.portal.service.LayoutLocalService" />
+				</bean>
+				<bean class="com.liferay.portal.mobile.device.profile.action.impl.SimpleRedirectDeviceActionHandler" />
+				<bean class="com.liferay.portal.mobile.device.profile.action.impl.ThemeModificationDeviceActionHandler">
+					<property name="themeLocalService" ref="com.liferay.portal.service.ThemeLocalService" />
+				</bean>
+				<bean class="com.liferay.portal.mobile.device.profile.action.impl.LayoutTemplateModificationDeviceProfileActionHandler" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="com.liferay.portal.kernel.mobile.device.DeviceProfileHandlerUtil" class="com.liferay.portal.kernel.mobile.device.profile.DeviceProfileProcessorUtil">
+		<property name="deviceProfileProcessor" ref="com.liferay.portal.mobile.device.profile.DefaultDeviceProfileProcessorImpl"/>
 	</bean>
 
 	<!-- Messaging -->

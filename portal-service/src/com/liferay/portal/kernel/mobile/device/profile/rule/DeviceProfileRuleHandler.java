@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mobile.device.action;
+package com.liferay.portal.kernel.mobile.device.profile.rule;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.mobile.model.DeviceProfileAction;
+import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
+import com.liferay.portal.mobile.model.DeviceProfileRule;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 
 /**
  * @author Edward Han
  */
-public interface DeviceProfileActionHandler {
-	public void applyDeviceAction(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			DeviceProfileAction deviceProfileAction)
+public interface DeviceProfileRuleHandler {
+	public void evaluateDeviceProfileRule(
+			DeviceProfileRule deviceProfileRule, Device device,
+			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException, SystemException;
 
-	public Collection<String> getPropertyNames();
-
 	public String getType();
+
+	public void setDeviceProfileActionHandlers(
+		Map<String, DeviceProfileActionHandler> deviceProfileActionHandlers);
 }

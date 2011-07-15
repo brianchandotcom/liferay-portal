@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device;
+package com.liferay.portal.mobile.device.profile;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.mobile.device.DeviceProfileProcessor;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
-import com.liferay.portal.kernel.mobile.device.rule.DeviceProfileRuleHandler;
+import com.liferay.portal.kernel.mobile.device.profile.DeviceProfileProcessor;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.rule.DeviceProfileRuleHandler;
 import com.liferay.portal.mobile.model.DeviceProfile;
 import com.liferay.portal.mobile.model.DeviceProfileRule;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -45,8 +45,8 @@ public class DefaultDeviceProfileProcessorImpl
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.
-			getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Device device = themeDisplay.getDevice();
 
@@ -98,8 +98,8 @@ public class DefaultDeviceProfileProcessorImpl
 			if (_log.isWarnEnabled()) {
 				_log.warn("DeviceProfileActionHandler with key: " +
 					deviceActionHandler.getType() +
-					" has already been registering. Replacing with " +
-					deviceActionHandler.getType());
+					" has already been registered. Replacing with " +
+					deviceActionHandler);
 			}
 		}
 	}
@@ -118,8 +118,8 @@ public class DefaultDeviceProfileProcessorImpl
 			if (_log.isWarnEnabled()) {
 				_log.warn("DeviceProfileRuleHandler with key: " +
 					deviceProfileRuleHandler.getType() +
-					" has already been registering. Replacing with " +
-					deviceProfileRuleHandler.getType());
+					" has already been registered. Replacing with " +
+					deviceProfileRuleHandler);
 			}
 		}
 	}

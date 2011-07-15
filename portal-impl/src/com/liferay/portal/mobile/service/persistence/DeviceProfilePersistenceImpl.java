@@ -17,12 +17,16 @@ package com.liferay.portal.mobile.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -66,7 +70,7 @@ import java.util.List;
  */
 public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProfile>
 	implements DeviceProfilePersistence {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use {@link DeviceProfileUtil} to access the device profile persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
@@ -79,7 +83,7 @@ public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProf
 			DeviceProfileImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
 			new String[] {
 				String.class.getName(),
-				
+
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
@@ -472,7 +476,7 @@ public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProf
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
 				uuid,
-				
+
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
@@ -1017,6 +1021,235 @@ public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProf
 	}
 
 	/**
+	 * Returns all the device profile rules associated with the device profile.
+	 *
+	 * @param pk the primary key of the device profile
+	 * @return the device profile rules associated with the device profile
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portal.mobile.model.DeviceProfileRule> getDeviceProfileRules(
+		long pk) throws SystemException {
+		return getDeviceProfileRules(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the device profile rules associated with the device profile.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the device profile
+	 * @param start the lower bound of the range of device profiles
+	 * @param end the upper bound of the range of device profiles (not inclusive)
+	 * @return the range of device profile rules associated with the device profile
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portal.mobile.model.DeviceProfileRule> getDeviceProfileRules(
+		long pk, int start, int end) throws SystemException {
+		return getDeviceProfileRules(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_DEVICEPROFILERULES = new FinderPath(com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl.class,
+			com.liferay.portal.mobile.service.persistence.DeviceProfileRulePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getDeviceProfileRules",
+			new String[] {
+				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+
+	/**
+	 * Returns an ordered range of all the device profile rules associated with the device profile.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the device profile
+	 * @param start the lower bound of the range of device profiles
+	 * @param end the upper bound of the range of device profiles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of device profile rules associated with the device profile
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portal.mobile.model.DeviceProfileRule> getDeviceProfileRules(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				pk, String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<com.liferay.portal.mobile.model.DeviceProfileRule> list = (List<com.liferay.portal.mobile.model.DeviceProfileRule>)FinderCacheUtil.getResult(FINDER_PATH_GET_DEVICEPROFILERULES,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETDEVICEPROFILERULES.concat(ORDER_BY_CLAUSE)
+													.concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETDEVICEPROFILERULES;
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("DeviceProfileRule",
+					com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				list = (List<com.liferay.portal.mobile.model.DeviceProfileRule>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_GET_DEVICEPROFILERULES,
+						finderArgs);
+				}
+				else {
+					deviceProfileRulePersistence.cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_GET_DEVICEPROFILERULES,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_DEVICEPROFILERULES_SIZE = new FinderPath(com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl.class,
+			com.liferay.portal.mobile.service.persistence.DeviceProfileRulePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"getDeviceProfileRulesSize", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the number of device profile rules associated with the device profile.
+	 *
+	 * @param pk the primary key of the device profile
+	 * @return the number of device profile rules associated with the device profile
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getDeviceProfileRulesSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_DEVICEPROFILERULES_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETDEVICEPROFILERULESSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_DEVICEPROFILERULES_SIZE,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_DEVICEPROFILERULE = new FinderPath(com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl.class,
+			com.liferay.portal.mobile.service.persistence.DeviceProfileRulePersistenceImpl.FINDER_CLASS_NAME_LIST,
+			"containsDeviceProfileRule",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns <code>true</code> if the device profile rule is associated with the device profile.
+	 *
+	 * @param pk the primary key of the device profile
+	 * @param deviceProfileRulePK the primary key of the device profile rule
+	 * @return <code>true</code> if the device profile rule is associated with the device profile; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsDeviceProfileRule(long pk, long deviceProfileRulePK)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { pk, deviceProfileRulePK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_DEVICEPROFILERULE,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsDeviceProfileRule.contains(pk,
+							deviceProfileRulePK));
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (value == null) {
+					value = Boolean.FALSE;
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_DEVICEPROFILERULE,
+					finderArgs, value);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Returns <code>true</code> if the device profile has any device profile rules associated with it.
+	 *
+	 * @param pk the primary key of the device profile to check for associations with device profile rules
+	 * @return <code>true</code> if the device profile has any device profile rules associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsDeviceProfileRules(long pk)
+		throws SystemException {
+		if (getDeviceProfileRulesSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initializes the device profile persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -1039,6 +1272,8 @@ public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProf
 				_log.error(e);
 			}
 		}
+
+		containsDeviceProfileRule = new ContainsDeviceProfileRule(this);
 	}
 
 	public void destroy() {
@@ -1057,10 +1292,46 @@ public class DeviceProfilePersistenceImpl extends BasePersistenceImpl<DeviceProf
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	protected ContainsDeviceProfileRule containsDeviceProfileRule;
+
+	protected class ContainsDeviceProfileRule {
+		protected ContainsDeviceProfileRule(
+			DeviceProfilePersistenceImpl persistenceImpl) {
+			super();
+
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSDEVICEPROFILERULE,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long deviceProfileId,
+			long deviceProfileRuleId) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(deviceProfileId), new Long(deviceProfileRuleId)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
 	private static final String _SQL_SELECT_DEVICEPROFILE = "SELECT deviceProfile FROM DeviceProfile deviceProfile";
 	private static final String _SQL_SELECT_DEVICEPROFILE_WHERE = "SELECT deviceProfile FROM DeviceProfile deviceProfile WHERE ";
 	private static final String _SQL_COUNT_DEVICEPROFILE = "SELECT COUNT(deviceProfile) FROM DeviceProfile deviceProfile";
 	private static final String _SQL_COUNT_DEVICEPROFILE_WHERE = "SELECT COUNT(deviceProfile) FROM DeviceProfile deviceProfile WHERE ";
+	private static final String _SQL_GETDEVICEPROFILERULES = "SELECT {DeviceProfileRule.*} FROM DeviceProfileRule INNER JOIN DeviceProfile ON (DeviceProfile.deviceProfileId = DeviceProfileRule.deviceProfileId) WHERE (DeviceProfile.deviceProfileId = ?)";
+	private static final String _SQL_GETDEVICEPROFILERULESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM DeviceProfileRule WHERE deviceProfileId = ?";
+	private static final String _SQL_CONTAINSDEVICEPROFILERULE = "SELECT COUNT(*) AS COUNT_VALUE FROM DeviceProfileRule WHERE deviceProfileId = ? AND deviceProfileRuleId = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "deviceProfile.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "deviceProfile.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(deviceProfile.uuid IS NULL OR deviceProfile.uuid = ?)";

@@ -230,7 +230,7 @@ public interface LayoutSetLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
+	public com.liferay.portal.model.LayoutSet fetchLayoutSet(
 		long layoutSetId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

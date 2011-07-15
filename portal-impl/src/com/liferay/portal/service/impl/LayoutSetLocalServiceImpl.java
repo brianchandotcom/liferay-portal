@@ -118,7 +118,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
-	public LayoutSet fetchByPrimaryKey(long layoutSetId)
+	public LayoutSet fetchLayoutSet(long layoutSetId)
 		throws SystemException{
 
 		return layoutSetPersistence.fetchByPrimaryKey(layoutSetId);
@@ -164,7 +164,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet updateDeviceProfile(long layoutSetId, long deviceProfileId)
 		throws SystemException {
 
-		LayoutSet layoutSet = layoutSetLocalService.fetchByPrimaryKey(
+		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
 			layoutSetId);
 
 		if (layoutSet != null) {

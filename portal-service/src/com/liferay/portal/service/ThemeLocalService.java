@@ -56,11 +56,11 @@ public interface ThemeLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portal.model.ColorScheme findColorScheme(
+	public com.liferay.portal.model.ColorScheme fetchColorScheme(
 		long companyId, java.lang.String themeId, java.lang.String colorSchemeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.model.Theme findTheme(long companyId,
+	public com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

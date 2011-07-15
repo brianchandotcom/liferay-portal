@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.action.impl;
+package com.liferay.portal.mobile.device.profile.action.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.mobile.model.DeviceProfileAction;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -39,39 +39,46 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Edward Han
  */
-public class ThemeDeviceActionHandler implements DeviceProfileActionHandler {
+public class ThemeModificationDeviceActionHandler
+	implements DeviceProfileActionHandler {
+
 	public void applyDeviceAction(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			DeviceProfileAction deviceProfileAction)
 		throws PortalException, SystemException {
 
-		UnicodeProperties deviceProfileTypeSettings = deviceProfileAction.
-			getTypeSettingsProperties();
+		UnicodeProperties deviceProfileTypeSettings =
+			deviceProfileAction.getTypeSettingsProperties();
 
 		String themeId = GetterUtil.get(
 			deviceProfileTypeSettings.getProperty(THEME_ID), StringPool.BLANK);
 
 		String colorSchemeId = GetterUtil.get(
-			deviceProfileTypeSettings.getProperty(
-				COLOR_SCHEME_ID), StringPool.BLANK);
+			deviceProfileTypeSettings.getProperty(COLOR_SCHEME_ID),
+			StringPool.BLANK);
 
 		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
-		Theme theme = _themeLocalService.findTheme(companyId, themeId);
+		Theme theme = _themeLocalService.fetchTheme(companyId, themeId);
 
-		ColorScheme colorScheme = _themeLocalService.findColorScheme(
+		if (theme == null) {
+			return;
+		}
+
+		ColorScheme colorScheme = _themeLocalService.fetchColorScheme(
 			companyId, themeId, colorSchemeId);
 
-		if ((theme == null) || (colorScheme == null)) {
-			return;
+		if (colorScheme == null) {
+			colorScheme = ColorSchemeImpl.getNullColorScheme();
 		}
 
 		httpServletRequest.setAttribute(WebKeys.THEME, theme);
 		httpServletRequest.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.
-			getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String contextPath = PortalUtil.getPathContext();
 
@@ -83,7 +90,7 @@ public class ThemeDeviceActionHandler implements DeviceProfileActionHandler {
 	}
 
 	public String getType() {
-		return ThemeDeviceActionHandler.class.getName();
+		return ThemeModificationDeviceActionHandler.class.getName();
 	}
 
 	public void setThemeLocalService(ThemeLocalService themeLocalService) {

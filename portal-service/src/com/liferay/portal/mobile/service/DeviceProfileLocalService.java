@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface DeviceProfileLocalService {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DeviceProfileLocalServiceUtil} to access the device profile local service. Add custom service methods to {@link com.liferay.portal.mobile.service.impl.DeviceProfileLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.

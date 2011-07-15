@@ -56,16 +56,16 @@ public class ThemeLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.ColorScheme findColorScheme(
+	public static com.liferay.portal.model.ColorScheme fetchColorScheme(
 		long companyId, java.lang.String themeId, java.lang.String colorSchemeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findColorScheme(companyId, themeId, colorSchemeId);
+		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
 	}
 
-	public static com.liferay.portal.model.Theme findTheme(long companyId,
+	public static com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findTheme(companyId, themeId);
+		return getService().fetchTheme(companyId, themeId);
 	}
 
 	public static com.liferay.portal.model.ColorScheme getColorScheme(

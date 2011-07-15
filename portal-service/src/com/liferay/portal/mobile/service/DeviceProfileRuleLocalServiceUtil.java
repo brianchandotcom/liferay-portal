@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @generated
  */
 public class DeviceProfileRuleLocalServiceUtil {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.mobile.service.impl.DeviceProfileRuleLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.

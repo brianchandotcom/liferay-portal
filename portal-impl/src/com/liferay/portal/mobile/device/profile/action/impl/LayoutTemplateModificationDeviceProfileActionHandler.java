@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.action.impl;
+package com.liferay.portal.mobile.device.profile.action.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.mobile.device.action.DeviceProfileActionHandler;
+import com.liferay.portal.kernel.mobile.device.profile.action.DeviceProfileActionHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.mobile.model.DeviceProfileAction;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
@@ -37,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Edward Han
  */
-public class LayoutTemplateDeviceProfileActionHandler
+public class LayoutTemplateModificationDeviceProfileActionHandler
 	implements DeviceProfileActionHandler {
 
 	public void applyDeviceAction(
@@ -46,15 +45,16 @@ public class LayoutTemplateDeviceProfileActionHandler
 			DeviceProfileAction deviceProfileAction)
 		throws PortalException, SystemException {
 
-		UnicodeProperties deviceProfileTypeSettings = deviceProfileAction.
-			getTypeSettingsProperties();
+		UnicodeProperties deviceProfileTypeSettings =
+			deviceProfileAction.getTypeSettingsProperties();
 
 		String layoutTemplateId = GetterUtil.get(
-			deviceProfileTypeSettings.getProperty(
-				LAYOUT_TEMPLATE_ID), StringPool.BLANK);
+			deviceProfileTypeSettings.getProperty(LAYOUT_TEMPLATE_ID),
+			StringPool.BLANK);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.
-			getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -72,7 +72,8 @@ public class LayoutTemplateDeviceProfileActionHandler
 	}
 
 	public String getType() {
-		return LayoutTemplateDeviceProfileActionHandler.class.getName();
+		return LayoutTemplateModificationDeviceProfileActionHandler.class.
+			getName();
 	}
 
 	private static final String LAYOUT_TEMPLATE_ID = "layoutTemplateId";

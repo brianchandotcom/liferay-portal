@@ -66,13 +66,13 @@ import javax.servlet.ServletContext;
  */
 public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
-	public ColorScheme findColorScheme(
+	public ColorScheme fetchColorScheme(
 			long companyId, String themeId, String colorSchemeId)
 		throws SystemException {
 
 		colorSchemeId = GetterUtil.getString(colorSchemeId);
 
-		Theme theme = findTheme(companyId, themeId);
+		Theme theme = fetchTheme(companyId, themeId);
 
 		if (theme == null) {
 			return null;
@@ -83,7 +83,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return colorSchemesMap.get(colorSchemeId);
 	}
 
-	public Theme findTheme(long companyId, String themeId)
+	public Theme fetchTheme(long companyId, String themeId)
 		throws SystemException {
 
 		themeId = GetterUtil.getString(themeId);

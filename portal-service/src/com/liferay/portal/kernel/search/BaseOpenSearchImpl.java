@@ -502,24 +502,22 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		long layoutGroupId = scopeGroupId;
+		long groupId = scopeGroupId;
 
 		if (layout != null) {
-			layoutGroupId = layout.getGroupId();
+			groupId = layout.getGroupId();
 		}
 
 		long plid = LayoutServiceUtil.getDefaultPlid(
-			layoutGroupId, scopeGroupId, false, portletId);
+			groupId, scopeGroupId, false, portletId);
 
 		if (plid == 0) {
 			plid = LayoutServiceUtil.getDefaultPlid(
-				layoutGroupId, scopeGroupId, true, portletId);
+				groupId, scopeGroupId, true, portletId);
 		}
 
-		if (plid == 0) {
-			if (layout != null) {
-				plid = layout.getPlid();
-			}
+		if ((plid == 0) && (layout != null)){
+			plid = layout.getPlid();
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

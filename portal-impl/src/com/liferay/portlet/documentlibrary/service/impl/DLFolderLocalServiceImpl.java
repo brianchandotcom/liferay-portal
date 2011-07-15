@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
@@ -81,6 +82,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
+		dlFolder.setOverrideFileEntryTypes(false);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 		dlFolderPersistence.update(dlFolder, false);
@@ -358,23 +360,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		// Folder
+		DLFolder dlFolder = dlFolderLocalService.updateFolderAndFileEntryTypes(
+			folderId, parentFolderId, name, description, serviceContext);
 
-		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-		parentFolderId = getParentFolderId(dlFolder, parentFolderId);
-
-		validateFolder(
-			dlFolder.getFolderId(), dlFolder.getGroupId(), parentFolderId,
-			name);
-
-		dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
-		dlFolder.setParentFolderId(parentFolderId);
-		dlFolder.setName(name);
-		dlFolder.setDescription(description);
-		dlFolder.setExpandoBridgeAttributes(serviceContext);
-
-		dlFolderPersistence.update(dlFolder, false);
+		dlFileEntryTypeLocalService.cascadeFileEntryTypes(
+			serviceContext.getUserId(), dlFolder);
 
 		return dlFolder;
 	}
@@ -384,20 +374,61 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return updateFolder(
+			folderId, folderId, name, description, serviceContext);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public DLFolder updateFolderAndFileEntryTypes(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Folder
+
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
-		validateFolder(
-			dlFolder.getFolderId(), dlFolder.getGroupId(),
-			dlFolder.getParentFolderId(), name);
+		parentFolderId = getParentFolderId(dlFolder, parentFolderId);
+
+		long defaultFileEntryTypeId = GetterUtil.getLong(
+			serviceContext.getAttribute("defaultFileEntryTypeId"));
+		List<Long> fileEntryTypeIds =
+			(SortedArrayList<Long>)serviceContext.getAttribute(
+				"fileEntryTypeIds");
+		boolean overrideFileEntryTypes = GetterUtil.getBoolean(
+			serviceContext.getAttribute("overrideFileEntryTypes"));
+
+		validateFolder(folderId, dlFolder.getGroupId(), parentFolderId, name);
 
 		dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
+		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
+		dlFolder.setOverrideFileEntryTypes(overrideFileEntryTypes);
+		dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 
 		dlFolderPersistence.update(dlFolder, false);
 
+		// File entry type
+
+		if (fileEntryTypeIds != null) {
+			dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
+				dlFolder, fileEntryTypeIds, defaultFileEntryTypeId,
+				serviceContext);
+		}
+
 		return dlFolder;
+	}
+
+	public void updateLastPostDate(long folderId, Date lastPostDate)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		dlFolder.setLastPostDate(lastPostDate);
+
+		dlFolderPersistence.update(dlFolder, false);
 	}
 
 	protected void addFolderResources(
@@ -473,6 +504,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlFileEntryLocalService.deleteFileEntries(
 			dlFolder.getGroupId(), dlFolder.getFolderId());
+
+		// File entry types
+
+		dlFileEntryTypeLocalService.deleteFileEntryTypes(
+			dlFolder.getFolderId());
 
 		// Expando
 

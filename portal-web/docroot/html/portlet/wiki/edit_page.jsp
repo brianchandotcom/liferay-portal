@@ -406,9 +406,9 @@ if (Validator.isNull(redirect)) {
 
 					<aui:button name="saveButton" type="submit" value="<%= saveButtonLabel %>" />
 
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="<%= publishButtonLabel %>" />
-
 					<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
+
+					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="<%= publishButtonLabel %>" />
 
 					<c:if test="<%= !newPage && wikiPage.isDraft() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<aui:button name="discardDraftButton" onClick='<%= renderResponse.getNamespace() + "discardDraftPage();" %>' value="discard-draft" />

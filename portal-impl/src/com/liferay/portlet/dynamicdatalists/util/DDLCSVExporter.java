@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -50,7 +51,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		Map<String, Map<String, String>> fieldsMap =
 			ddmStructure.getFieldsMap();
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		for (Map<String, String> fieldMap : fieldsMap.values()) {
 			String label = fieldMap.get(DDMFieldConstants.LABEL);
@@ -59,7 +60,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			sb.append(CharPool.COMMA);
 		}
 
-		sb.deleteCharAt(sb.length() - 1);
+		sb.setIndex(sb.length() - 1);
 		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
@@ -79,7 +80,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				sb.append(CharPool.COMMA);
 			}
 
-			sb.deleteCharAt(sb.length() - 1);
+			sb.setIndex(sb.length() - 1);
 			sb.append(StringPool.NEW_LINE);
 		}
 

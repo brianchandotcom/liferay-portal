@@ -131,7 +131,7 @@ if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
 	var autoFields = new Liferay.AutoFields(
 		{
 			contentBox: '#extraFields',
-			fieldIndexes: '<portlet:namespace />indexes',
+			fieldIndexes: '<portlet:namespace />indexes'
 		}
 	).render();
 </aui:script>

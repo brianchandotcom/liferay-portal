@@ -96,7 +96,7 @@ public class DLIndexer extends BaseIndexer {
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_ANY);
+			WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
@@ -220,9 +220,7 @@ public class DLIndexer extends BaseIndexer {
 		catch (WindowStateException wse) {
 		}
 
-		String fileName = document.get("path");
-
-		String title = fileName;
+		String title = document.get(Field.TITLE);
 
 		String content = snippet;
 

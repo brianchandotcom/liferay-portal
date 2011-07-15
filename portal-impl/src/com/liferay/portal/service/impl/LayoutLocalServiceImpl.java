@@ -439,6 +439,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+
+		return layoutPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
 	public long getDefaultPlid(long groupId) throws SystemException {
 		if (groupId > 0) {
 			List<Layout> layouts = layoutPersistence.findByGroupId(

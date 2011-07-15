@@ -228,7 +228,8 @@
 
 		<!-- Relationships -->
 
-		<column name="ddmStructure" type="Collection" entity="com.liferay.portlet.dynamicdatamapping.DDMStructure" mapping-table="DLFileEntryType_DDMStructure" />
+		<column name="folders" type="Collection" entity="DLFolder" mapping-table="DLFileEntryTypes_DLFolders" />
+		<column name="ddmStructure" type="Collection" entity="com.liferay.portlet.dynamicdatamapping.DDMStructure" mapping-table="DLFileEntryTypes_DDMStructures" />
 
 		<!-- Finder methods -->
 
@@ -423,6 +424,12 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="lastPostDate" type="Date" />
+		<column name="defaultFileEntryTypeId" type="long" />
+		<column name="overrideFileEntryTypes" type="boolean" />
+
+		<!-- Relationships -->
+
+		<column name="fileEntryTypes" type="Collection" entity="DLFileEntryType" mapping-table="DLFileEntryTypes_DLFolders" />
 
 		<!-- Order -->
 
@@ -483,6 +490,7 @@
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>
 		<exception>FolderName</exception>
+		<exception>InvalidFileEntryType</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>
 		<exception>RepositoryName</exception>

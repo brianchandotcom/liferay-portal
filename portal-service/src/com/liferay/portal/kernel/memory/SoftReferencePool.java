@@ -19,6 +19,7 @@ import java.lang.ref.SoftReference;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
@@ -32,8 +33,19 @@ public class SoftReferencePool<V, P> {
 	}
 
 	public SoftReferencePool(PoolAction<V, P> poolAction, int maxIdleSize) {
+		this(poolAction, maxIdleSize, true);
+	}
+
+	public SoftReferencePool(
+		PoolAction<V, P> poolAction, int maxIdleSize, boolean useWeakCounter) {
+
 		_poolAction = poolAction;
 		_maxIdleSize = maxIdleSize;
+		_useWeakCounter = useWeakCounter;
+
+		if (_useWeakCounter) {
+			_weakCounter = new AtomicInteger();
+		}
 	}
 
 	public V borrowObject(P parameter) {
@@ -42,6 +54,9 @@ public class SoftReferencePool<V, P> {
 
 			if (softReference == null) {
 				return _poolAction.onCreate(parameter);
+			}
+			else if (_useWeakCounter) {
+				_weakCounter.getAndDecrement();
 			}
 
 			V value = softReference.get();
@@ -53,17 +68,23 @@ public class SoftReferencePool<V, P> {
 	}
 
 	public void returnObject(V value) {
-		if (_softReferences.size() < _maxIdleSize) {
+		if (_getCount() < _maxIdleSize) {
 			SoftReference<V> softReference = new SoftReference<V>(
 				value, _referenceQueue);
 
 			_poolAction.onReturn(value);
 
 			_softReferences.offer(softReference);
+
+			if (_useWeakCounter) {
+				_weakCounter.getAndIncrement();
+			}
 		}
 		else {
-			while (_softReferences.size() > _maxIdleSize) {
-				_softReferences.poll();
+			while (_getCount() > _maxIdleSize) {
+				if ((_softReferences.poll() != null) && _useWeakCounter) {
+					_weakCounter.getAndDecrement();
+				}
 			}
 		}
 
@@ -76,7 +97,18 @@ public class SoftReferencePool<V, P> {
 				break;
 			}
 
-			_softReferences.remove(softReference);
+			if (_softReferences.remove(softReference) && _useWeakCounter) {
+				_weakCounter.getAndDecrement();
+			}
+		}
+	}
+
+	private int _getCount() {
+		if (_useWeakCounter) {
+			return _weakCounter.get();
+		}
+		else {
+			return _softReferences.size();
 		}
 	}
 
@@ -85,5 +117,7 @@ public class SoftReferencePool<V, P> {
 	private ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
 	private Queue<SoftReference<? extends V>> _softReferences =
 		new ConcurrentLinkedQueue<SoftReference<? extends V>>();
+	private boolean _useWeakCounter;
+	private AtomicInteger _weakCounter;
 
 }

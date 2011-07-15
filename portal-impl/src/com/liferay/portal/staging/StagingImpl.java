@@ -62,7 +62,6 @@ import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -1205,7 +1204,7 @@ public class StagingImpl implements Staging {
 				permissionChecker, liveGroup.getGroupId(),
 				ActionKeys.MANAGE_STAGING)) {
 
-			throw new PrincipalException();
+			return;
 		}
 
 		int stagingType = ParamUtil.getInteger(portletRequest, "stagingType");

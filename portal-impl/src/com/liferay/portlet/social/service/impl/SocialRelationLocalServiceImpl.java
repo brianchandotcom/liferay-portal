@@ -121,6 +121,17 @@ public class SocialRelationLocalServiceImpl
 		socialRelationPersistence.removeByUserId2(userId);
 	}
 
+	public void deleteRelations(long userId1, long userId2)
+		throws PortalException, SystemException {
+
+		List<SocialRelation> relations = socialRelationPersistence.findByU1_U2(
+			userId1, userId2);
+
+		for (SocialRelation relation : relations) {
+			deleteRelation(relation);
+		}
+	}
+
 	public List<SocialRelation> getInverseRelations(
 			long userId, int type, int start, int end)
 		throws SystemException {

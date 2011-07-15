@@ -43,7 +43,7 @@
 />
 
 <c:choose>
-	<c:when test="<%= organizationContextView %>">
+	<c:when test="<%= organizationContextView && (organizationGroupId > 0) %>">
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
 			href="<%= rowURL %>"

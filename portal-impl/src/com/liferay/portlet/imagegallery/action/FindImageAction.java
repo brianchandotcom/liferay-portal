@@ -64,7 +64,7 @@ public class FindImageAction extends Action {
 			portletURL.setPortletMode(PortletMode.VIEW);
 
 			portletURL.setParameter(
-				"struts_action", "/image_gallery/edit_image");
+				"struts_action", "/image_gallery/view_image");
 			portletURL.setParameter("imageId", String.valueOf(imageId));
 
 			response.sendRedirect(portletURL.toString());
@@ -102,10 +102,9 @@ public class FindImageAction extends Action {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Image Gallery portlet.");
-		}
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Image Gallery portlet");
 	}
 
 }

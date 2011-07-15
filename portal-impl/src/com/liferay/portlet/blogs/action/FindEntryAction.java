@@ -134,10 +134,9 @@ public class FindEntryAction extends Action {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Blogs portlet.");
-		}
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Blogs portlet");
 	}
 
 	protected String getStrutsAction(String portletId, boolean showAllEntries) {

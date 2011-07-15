@@ -110,10 +110,9 @@ public class FindFolderAction extends Action {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Document Library portlet.");
-		}
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Document Library portlet");
 	}
 
 }

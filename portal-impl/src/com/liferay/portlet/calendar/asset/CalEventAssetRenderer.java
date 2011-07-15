@@ -16,6 +16,7 @@ package com.liferay.portlet.calendar.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -63,7 +64,7 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 	}
 
 	public String getSummary(Locale locale) {
-		return _event.getDescription();
+		return HtmlUtil.extractText(_event.getDescription());
 	}
 
 	public String getTitle(Locale locale) {

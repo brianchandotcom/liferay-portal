@@ -32,8 +32,6 @@ catch (NoSuchRecordSetException nsrse) {
 }
 
 request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
-
-request.setAttribute("record_set_action.jsp-chooseCallback", renderResponse.getNamespace().concat("selectRecordSet"));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -139,12 +137,19 @@ request.setAttribute("record_set_action.jsp-chooseCallback", renderResponse.getN
 				modelVar="recordSet"
 			>
 
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="rowURL">
-					<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-				</liferay-portlet:renderURL>
+				<%
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:");
+				sb.append(renderResponse.getNamespace());
+				sb.append("selectRecordSet('");
+				sb.append(recordSet.getRecordSetId());
+				sb.append("','");
+				sb.append(recordSet.getName(locale));
+				sb.append("');");
+
+				String rowURL = sb.toString();
+				%>
 
 				<%@ include file="/html/portlet/dynamic_data_lists/search_columns.jspf" %>
 

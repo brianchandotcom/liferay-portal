@@ -24,6 +24,7 @@ String editorImpl = ParamUtil.getString(request, "editorImpl");
 String initMethod =	ParamUtil.getString(request, "initMethod");
 String name = ParamUtil.getString(request, "name");
 String onChangeMethod = ParamUtil.getString(request, "onChangeMethod");
+boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
 String toolbarSet = ParamUtil.getString(request, "toolbarSet");
 %>
 
@@ -33,5 +34,6 @@ String toolbarSet = ParamUtil.getString(request, "toolbarSet");
 	initMethod="<%= initMethod %>"
 	name="<%= name %>"
 	onChangeMethod="<%= onChangeMethod %>"
+	skipEditorLoading="<%= skipEditorLoading %>"
 	toolbarSet="<%= toolbarSet %>"
 />

@@ -439,6 +439,8 @@
 
 		<!-- Directory -->
 
+		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />
+
 		<action path="/directory/view_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
 			<forward name="portlet.users_admin.edit_organization" path="portlet.directory.view_organization" />
 			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
@@ -524,6 +526,8 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 			<forward name="portlet.document_library.view" path="portlet.document_library.select_file_entry" />
 		</action>
+
+		<action path="/document_library/select_file_entry_type" forward="portlet.document_library.select_file_entry_type" />
 
 		<action path="/document_library/select_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
 			<forward name="portlet.document_library.edit_folder" path="portlet.document_library.select_folder" />
@@ -1599,13 +1603,6 @@
 
 		<action path="/site_map/view" forward="portlet.site_map.view" />
 
-		<!-- Site Settings -->
-
-		<action path="/site_settings/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
-		</action>
-
 		<!-- Sites Admin -->
 
 		<action path="/sites_admin/edit_site" type="com.liferay.portlet.sites.action.EditGroupAction">
@@ -1626,11 +1623,6 @@
 		<action path="/sites_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/sites_admin/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
 		</action>
 
 		<action path="/sites_admin/edit_team" type="com.liferay.portlet.sites.action.EditTeamAction">
@@ -1745,6 +1737,8 @@
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
 
+		<action path="/staging_bar/view_layout_revision_details" forward="portlet.staging_bar.view_layout_revision_details" />
+
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
@@ -1779,11 +1773,6 @@
 		<action path="/users_admin/edit_organization_logo" type="com.liferay.portlet.usersadmin.action.EditOrganizationLogoAction">
 			<forward name="portlet.users_admin.edit_organization_logo" path="portlet.users_admin.edit_organization_logo" />
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_settings" type="com.liferay.portlet.sitesettings.action.EditSettingsAction">
-			<forward name="portlet.site_settings.edit_settings" path="portlet.site_settings.edit_settings" />
-			<forward name="portlet.site_settings.error" path="portlet.site_settings.error" />
 		</action>
 
 		<action path="/users_admin/edit_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">

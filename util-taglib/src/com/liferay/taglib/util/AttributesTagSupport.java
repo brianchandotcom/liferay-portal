@@ -53,7 +53,7 @@ public class AttributesTagSupport
 	public Object getNamespacedAttribute(
 		HttpServletRequest request, String key) {
 
-		return request.getAttribute(_attributeNamespace.concat(key));
+		return request.getAttribute(_encodeKey(key));
 	}
 
 	public Object getScopedAttribute(String key) {
@@ -88,7 +88,7 @@ public class AttributesTagSupport
 			value = String.valueOf(value);
 		}
 
-		request.setAttribute(_attributeNamespace.concat(key), value);
+		request.setAttribute(_encodeKey(key), value);
 	}
 
 	public void setScopedAttribute(String name, Object value) {
@@ -107,6 +107,15 @@ public class AttributesTagSupport
 
 		if (Validator.isNotNull(dynamicAttributesString)) {
 			jspWriter.write(dynamicAttributesString);
+		}
+	}
+
+	private String _encodeKey(String key) {
+		if (_attributeNamespace.length() == 0) {
+			return key;
+		}
+		else {
+			return _attributeNamespace.concat(key);
 		}
 	}
 

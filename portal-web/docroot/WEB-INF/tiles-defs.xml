@@ -431,6 +431,10 @@
 		<put name="portlet_content" value="/portlet/document_library/select_file_entry.jsp" />
 	</definition>
 
+	<definition name="portlet.document_library.select_file_entry_type" extends="portlet.document_library">
+		<put name="portlet_content" value="/portlet/document_library/select_file_entry_type.jsp" />
+	</definition>
+
 	<definition name="portlet.document_library.select_folder" extends="portlet.document_library">
 		<put name="portlet_content" value="/portlet/document_library/select_folder.jsp" />
 	</definition>
@@ -1252,14 +1256,6 @@
 
 	<definition name="portlet.site_settings" extends="portlet" />
 
-	<definition name="portlet.site_settings.edit_settings" extends="portlet.site_settings">
-		<put name="portlet_content" value="/portlet/site_settings/edit_settings.jsp" />
-	</definition>
-
-	<definition name="portlet.site_settings.error" extends="portlet.site_settings">
-		<put name="portlet_content" value="/portlet/site_settings/error.jsp" />
-	</definition>
-
 	<!-- Sites Admin -->
 
 	<definition name="portlet.sites_admin" extends="portlet" />
@@ -1479,6 +1475,8 @@
 	<definition name="portlet.staging_bar.merge_layout_set_branch" path="/portlet/staging_bar/merge_layout_set_branch.jsp" />
 
 	<definition name="portlet.staging_bar.view" path="/portlet/staging_bar/view.jsp" />
+
+	<definition name="portlet.staging_bar.view_layout_revision_details" path="/portlet/staging_bar/view_layout_revision_details.jsp" />
 
 	<definition name="portlet.staging_bar.view_layout_revisions" path="/portlet/staging_bar/view_layout_revisions.jsp" />
 

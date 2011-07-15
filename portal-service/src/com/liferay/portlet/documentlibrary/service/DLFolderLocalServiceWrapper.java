@@ -432,6 +432,22 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 			serviceContext);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.updateFolderAndFileEntryTypes(folderId,
+			parentFolderId, name, description, serviceContext);
+	}
+
+	public void updateLastPostDate(long folderId, java.util.Date lastPostDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.updateLastPostDate(folderId, lastPostDate);
+	}
+
 	public DLFolderLocalService getWrappedDLFolderLocalService() {
 		return _dlFolderLocalService;
 	}

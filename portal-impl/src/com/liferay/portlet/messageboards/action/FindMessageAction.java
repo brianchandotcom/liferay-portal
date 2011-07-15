@@ -104,10 +104,9 @@ public class FindMessageAction extends Action {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Message Boards portlet.");
-		}
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Message Boards portlet");
 	}
 
 }

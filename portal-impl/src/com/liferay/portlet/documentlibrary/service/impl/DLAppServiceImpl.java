@@ -102,7 +102,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			InputStream is = null;
 			long size = 0;
 
-			if (file == null) {
+			if ((file == null) || !file.exists()) {
 				is = new UnsyncByteArrayInputStream(new byte[0]);
 			}
 			else {

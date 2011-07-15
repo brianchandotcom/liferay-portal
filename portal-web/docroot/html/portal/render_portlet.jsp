@@ -33,11 +33,12 @@ Integer columnPos = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_
 Integer columnCount = (Integer)request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_COUNT);
 Boolean renderPortletResource = (Boolean)request.getAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 
+boolean allowAddPortletDefaultResource = PortalUtil.isAllowAddPortletDefaultResource(request, portlet);
 boolean runtimePortlet = (renderPortletResource != null) && renderPortletResource.booleanValue();
 
 boolean access = false;
 
-if (PortalUtil.isAllowAddPortletDefaultResource(request, portlet) && !portlet.isUndeployedPortlet()) {
+if (allowAddPortletDefaultResource && !portlet.isUndeployedPortlet()) {
 	PortalUtil.addPortletDefaultResource(request, portlet);
 
 	access = PortletPermissionUtil.contains(permissionChecker, plid, portlet, ActionKeys.VIEW);
@@ -76,11 +77,18 @@ catch (RuntimeException re) {
 	re.printStackTrace();
 }
 
-PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
+PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
-PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+PortletPreferences portletPreferences = null;
+
+if (allowAddPortletDefaultResource) {
+	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+}
+else {
+	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
+}
 
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
 

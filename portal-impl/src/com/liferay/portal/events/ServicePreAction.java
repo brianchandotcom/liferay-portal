@@ -1807,7 +1807,7 @@ public class ServicePreAction extends Action {
 				siteSettingsURL.setPortletMode(PortletMode.VIEW);
 
 				siteSettingsURL.setParameter(
-					"struts_action", "/site_settings/edit_settings");
+					"struts_action", "/sites_admin/edit_site");
 
 				siteSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));

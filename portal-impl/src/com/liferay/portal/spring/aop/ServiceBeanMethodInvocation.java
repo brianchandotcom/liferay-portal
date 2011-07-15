@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +22,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -36,13 +35,12 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 
 	public ServiceBeanMethodInvocation(
 		Object target, Class<?> targetClass, Method method,
-		Object[] arguments, List<Object> interceptors) {
+		Object[] arguments) {
 
 		_target = target;
 		_targetClass = targetClass;
 		_method = method;
 		_arguments = arguments;
-		_interceptors = interceptors;
 
 		_method.setAccessible(true);
 	}
@@ -81,6 +79,10 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _method;
 	}
 
+	public Class<?> getTargetClass() {
+		return _targetClass;
+	}
+
 	public Object getThis() {
 		return _target;
 	}
@@ -95,24 +97,13 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 	}
 
 	public Object proceed() throws Throwable {
-		if ((_interceptors != null) && (_index < _interceptors.size())) {
-			Object interceptor = _interceptors.get(_index++);
+		if ((_methodInterceptors != Collections.EMPTY_LIST) &&
+			(_index < _methodInterceptors.size())) {
 
-			if (interceptor instanceof MethodInterceptor) {
-				MethodInterceptor methodInterceptor =
-					(MethodInterceptor)interceptor;
+			MethodInterceptor methodInterceptor = _methodInterceptors.get(
+				_index++);
 
-				return methodInterceptor.invoke(this);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Skipping unsupported interceptor type " +
-							interceptor.getClass());
-				}
-
-				return proceed();
-			}
+			return methodInterceptor.invoke(this);
 		}
 
 		try {
@@ -121,6 +112,21 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		catch (InvocationTargetException ite) {
 			throw ite.getTargetException();
 		}
+	}
+
+	public void setMethodInterceptors(
+		List<MethodInterceptor> methodInterceptors) {
+
+		_methodInterceptors = methodInterceptors;
+	}
+
+	public ServiceBeanMethodInvocation toCacheKeyModel() {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+			new ServiceBeanMethodInvocation(null, null, _method, null);
+
+		serviceBeanMethodInvocation._hashCode = _hashCode;
+
+		return serviceBeanMethodInvocation;
 	}
 
 	@Override
@@ -163,14 +169,11 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _toString;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ServiceBeanMethodInvocation.class);
-
 	private Object[] _arguments;
 	private int _hashCode;
 	private int _index;
-	private List<Object> _interceptors;
 	private Method _method;
+	private List<MethodInterceptor> _methodInterceptors;
 	private Object _target;
 	private Class<?> _targetClass;
 	private String _toString;

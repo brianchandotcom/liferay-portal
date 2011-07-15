@@ -190,8 +190,11 @@ create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_);
 
 create index IX_4501FD9C on DLFileEntryType (groupId);
 
-create index IX_BCDA0038 on DLFileEntryType_DDMStructure (fileEntryTypeId);
-create index IX_16520FB on DLFileEntryType_DDMStructure (structureId);
+create index IX_8373EC7C on DLFileEntryTypes_DDMStructures (fileEntryTypeId);
+create index IX_F147CF3F on DLFileEntryTypes_DDMStructures (structureId);
+
+create index IX_5BB6AD6C on DLFileEntryTypes_DLFolders (fileEntryTypeId);
+create index IX_6E00A2EC on DLFileEntryTypes_DLFolders (folderId);
 
 create unique index IX_38F0315 on DLFileRank (companyId, userId, fileEntryId);
 create index IX_A65A1F8B on DLFileRank (fileEntryId);

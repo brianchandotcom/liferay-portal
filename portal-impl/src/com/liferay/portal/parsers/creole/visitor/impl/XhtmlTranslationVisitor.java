@@ -167,15 +167,17 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(OrderedListItemNode orderedListItemNode) {
+		appendLevelTags(orderedListItemNode.getLevel(), true);
+
 		traverse(orderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(OrderedListNode orderedListNode) {
-		append("<ol>");
+		_currentNodeLevel = 0;
 
 		traverse(orderedListNode.getChildASTNodes());
 
-		append("</ol>");
+		appendLevelTags(0, true);
 	}
 
 	public void visit(ParagraphNode paragraphNode) {
@@ -215,15 +217,17 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(UnorderedListItemNode unorderedListItemNode) {
+		appendLevelTags(unorderedListItemNode.getLevel(), false);
+
 		traverse(unorderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(UnorderedListNode unorderedListNode) {
-		append("<ul>");
+		_currentNodeLevel = 0;
 
 		traverse(unorderedListNode.getChildASTNodes());
 
-		append("</ul>");
+		appendLevelTags(0, false);
 	}
 
 	public void visit(WikiPageNode wikiPageNode) {
@@ -234,6 +238,33 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		if (object != null) {
 			_sb.append(object);
 		}
+	}
+
+	protected void appendLevelTags(int nodeLevel, boolean ordered) {
+		int diff = nodeLevel - _currentNodeLevel;
+
+		if (diff > 0) {
+			for (int i = 0; i < diff; i++) {
+				if (ordered) {
+					append("<ol>");
+				}
+				else {
+					append("<ul>");
+				}
+			}
+		}
+		else if (diff < 0) {
+			for (int i = 0; i > diff; i--) {
+				if (ordered) {
+					append("</ol>");
+				}
+				else {
+					append("</ul>");
+				}
+			}
+		}
+
+		_currentNodeLevel = nodeLevel;
 	}
 
 	protected void traverse(List<ASTNode> astNodes) {
@@ -264,6 +295,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
+	private int _currentNodeLevel;
 	private StringBundler _sb = new StringBundler();
 
 }

@@ -31,7 +31,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml";
 
 if (!selectableTree) {
-	modules += ",liferay-history";
+	modules += ",liferay-history-manager";
 }
 %>
 
@@ -354,29 +354,27 @@ if (!selectableTree) {
 		}
 
 		History.after(
-			'change',
+			'stateChange',
 			function(event) {
-				if (event.src == History.SRC_HASH || event.src == History.SRC_POPSTATE) {
-					var nodePlid = event.newVal[HISTORY_SELECTED_PLID];
+				var nodePlid = event.newVal[HISTORY_SELECTED_PLID];
 
-					if (Lang.isValue(nodePlid)) {
-						var node = findNodeByPlid(null, nodePlid);
+				if (Lang.isValue(nodePlid)) {
+					var node = findNodeByPlid(null, nodePlid);
 
-						if (node) {
-							var lastSelected = treeview.get('lastSelected');
+					if (node) {
+						var lastSelected = treeview.get('lastSelected');
 
-							if (lastSelected) {
-								lastSelected.unselect();
-							}
-
-							node.select();
-
-							var io = layoutsContainer.io;
-
-							io.set('uri', LAYOUT_URL + nodePlid);
-
-							io.start();
+						if (lastSelected) {
+							lastSelected.unselect();
 						}
+
+						node.select();
+
+						var io = layoutsContainer.io;
+
+						io.set('uri', LAYOUT_URL + nodePlid);
+
+						io.start();
 					}
 				}
 			}

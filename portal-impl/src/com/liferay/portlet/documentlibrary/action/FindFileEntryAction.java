@@ -57,8 +57,7 @@ public class FindFileEntryAction extends Action {
 			plid = getPlid(plid, fileEntryId);
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.DOCUMENT_LIBRARY_DISPLAY, plid,
-				PortletRequest.RENDER_PHASE);
+				request, getPortletId(plid), plid, PortletRequest.RENDER_PHASE);
 
 			portletURL.setWindowState(WindowState.NORMAL);
 			portletURL.setPortletMode(PortletMode.VIEW);
@@ -87,6 +86,8 @@ public class FindFileEntryAction extends Action {
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				if (layoutTypePortlet.hasPortletId(
+						PortletKeys.DOCUMENT_LIBRARY) ||
+					layoutTypePortlet.hasPortletId(
 						PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 
 					return plid;
@@ -99,15 +100,38 @@ public class FindFileEntryAction extends Action {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 		plid = PortalUtil.getPlidFromPortletId(
+			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		plid = PortalUtil.getPlidFromPortletId(
 			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
-		else {
-			throw new NoSuchLayoutException(
-				"No page was found with the Document Library portlet.");
+
+		throw new NoSuchLayoutException(
+			"No page was found with the Document Library portlet");
+	}
+
+	protected String getPortletId(long plid) throws Exception {
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (String portletId : layoutTypePortlet.getPortletIds()) {
+			if (portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY) ||
+				portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+
+				return portletId;
+			}
 		}
+
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 }

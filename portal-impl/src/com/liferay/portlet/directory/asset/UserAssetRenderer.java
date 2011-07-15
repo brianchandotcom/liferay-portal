@@ -81,7 +81,7 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	public String getUrlTitle() {
-		return _user.getFullName();
+		return _user.getScreenName();
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-			"/directory/view_user?p_u_i_d=" + _user.getUserId();
+			"/directory/find_user?p_u_i_d=" + _user.getUserId();
 	}
 
 	public long getUserId() {

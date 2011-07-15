@@ -30,6 +30,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BasePreferencesImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -240,6 +241,36 @@ public class PortletPreferencesLocalServiceImpl
 		throws SystemException {
 
 		return getPreferences(
+			portletPreferencesIds.getCompanyId(),
+			portletPreferencesIds.getOwnerId(),
+			portletPreferencesIds.getOwnerType(),
+			portletPreferencesIds.getPlid(),
+			portletPreferencesIds.getPortletId());
+	}
+
+	public javax.portlet.PortletPreferences getStrictPreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId)
+		throws SystemException {
+
+		boolean strict = PortletPreferencesThreadLocal.isStrict();
+
+		PortletPreferencesThreadLocal.setStrict(!PropsValues.TCK_URL);
+
+		try {
+			return getPreferences(
+				companyId, ownerId, ownerType, plid, portletId, null);
+		}
+		finally {
+			PortletPreferencesThreadLocal.setStrict(strict);
+		}
+	}
+
+	public javax.portlet.PortletPreferences getStrictPreferences(
+			PortletPreferencesIds portletPreferencesIds)
+		throws SystemException {
+
+		return getStrictPreferences(
 			portletPreferencesIds.getCompanyId(),
 			portletPreferencesIds.getOwnerId(),
 			portletPreferencesIds.getOwnerType(),

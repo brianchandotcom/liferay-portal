@@ -252,7 +252,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 				WebKeys.LAYOUT);
 
 			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 					layout, _portletName);
 
 			String linkToLayoutUuid = GetterUtil.getString(

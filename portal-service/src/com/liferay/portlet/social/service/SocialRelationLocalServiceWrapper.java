@@ -272,6 +272,12 @@ public class SocialRelationLocalServiceWrapper
 		_socialRelationLocalService.deleteRelations(userId);
 	}
 
+	public void deleteRelations(long userId1, long userId2)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialRelationLocalService.deleteRelations(userId1, userId2);
+	}
+
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> getInverseRelations(
 		long userId, int type, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -70,10 +70,10 @@ if (fileEntry != null) {
 	}
 }
 
-DLFileEntryType fileEntryType = null;
+DLFileEntryType dlFileEntryType = null;
 
 if (fileEntryTypeId > 0) {
-	fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }
 
 long assetClassPK = 0;
@@ -142,8 +142,8 @@ String header = LanguageUtil.get(pageContext, "new-document");
 if (fileVersion != null) {
 	header = fileVersion.getTitle();
 }
-else if (fileEntryType != null) {
-	header = LanguageUtil.format(pageContext, "new-x", new Object[] {fileEntryType.getName()});
+else if (dlFileEntryType != null) {
+	header = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName()});
 }
 %>
 
@@ -265,19 +265,18 @@ else if (fileEntryType != null) {
 			<aui:input name="description" />
 
 			<%
-			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, true);
 			%>
 
 			<c:choose>
 				<c:when test="<%= !cmd.equals(Constants.ADD) %>">
 					<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
-						<aui:option label="none" value="0" />
 
 						<%
-						for (DLFileEntryType curFileEntryType : fileEntryTypes) {
+						for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
 						%>
 
-							<aui:option label="<%= curFileEntryType.getName() %>" selected="<%= (fileEntryTypeId == curFileEntryType.getPrimaryKey()) %>" value="<%= curFileEntryType.getPrimaryKey() %>" />
+							<aui:option label="<%= curDLFileEntryType.getName() %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
 
 						<%
 						}
@@ -293,7 +292,7 @@ else if (fileEntryType != null) {
 			<%
 			if (fileEntryTypeId > 0) {
 				try {
-					List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+					List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 					for (DDMStructure ddmStructure : ddmStructures) {
 						Fields fields = null;

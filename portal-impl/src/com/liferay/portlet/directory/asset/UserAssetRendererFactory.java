@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,6 +43,17 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 		throws PortalException, SystemException {
 
 		User user = UserServiceUtil.getUserById(classPK);
+
+		return new UserAssetRenderer(user);
+	}
+
+	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		User user = UserServiceUtil.getUserByScreenName(
+			group.getCompanyId(), urlTitle);
 
 		return new UserAssetRenderer(user);
 	}

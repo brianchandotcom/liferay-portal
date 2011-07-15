@@ -929,6 +929,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="typePK" type="long" />
 		<field name="workflowDefinitionName" type="String" />
 		<field name="workflowDefinitionVersion" type="int" />
 	</model>

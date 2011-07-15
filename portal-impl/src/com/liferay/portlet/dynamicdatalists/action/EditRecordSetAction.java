@@ -169,7 +169,7 @@ public class EditRecordSetAction extends PortletAction {
 
 		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
 			serviceContext.getUserId(), serviceContext.getCompanyId(), groupId,
-			DDLRecordSet.class.getName(), recordSet.getRecordSetId(),
+			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
 			workflowDefinition);
 
 		String portletResource = ParamUtil.getString(

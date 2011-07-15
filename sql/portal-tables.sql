@@ -2173,6 +2173,7 @@ create table WorkflowDefinitionLink (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
+	typePK LONG,
 	workflowDefinitionName VARCHAR(75) null,
 	workflowDefinitionVersion INTEGER
 );

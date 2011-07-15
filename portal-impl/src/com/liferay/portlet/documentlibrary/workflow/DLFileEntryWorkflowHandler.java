@@ -19,11 +19,16 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -44,6 +49,20 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+	}
+
+	public WorkflowDefinitionLink getWorkflowDefinitionLink(
+			long companyId, long groupId, long classPK)
+		throws PortalException, SystemException {
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.getFileVersion(classPK);
+
+		long folderId = dlFileVersion.getFolderId();
+
+		return WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(
+			companyId, groupId, DLFolder.class.getName(),
+			folderId, dlFileVersion.getFileEntryTypeId());
 	}
 
 	public DLFileEntry updateStatus(

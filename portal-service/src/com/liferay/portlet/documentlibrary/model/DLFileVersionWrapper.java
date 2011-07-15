@@ -603,6 +603,18 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.getFileEntry();
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.getFolder();
+	}
+
+	public long getFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.getFolderId();
+	}
+
 	public java.lang.String getIcon() {
 		return _dlFileVersion.getIcon();
 	}

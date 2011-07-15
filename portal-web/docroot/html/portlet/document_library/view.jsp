@@ -322,7 +322,7 @@ if (folder != null) {
 
 						entriesContainer.plug(A.Plugin.ParseContent);
 						entriesContainer.setContent(entries);
-					},
+					}
 				}
 			}
 		);

@@ -186,7 +186,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 						%>
 
-						<img border="no" class="thumbnail" src="<%= thumbnailSrc %>" />
+						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" />
 					</span>
 
 					<span class="user-date">

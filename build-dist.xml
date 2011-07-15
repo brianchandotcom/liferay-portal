@@ -1232,28 +1232,21 @@ release was successful.</echo>
 					/>
 				</copy>
 
+				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/" executable="cmd.exe">
+					<arg line="/c patching-tool.bat auto-discovery" />
+				</exec>
+
 				<zip destfile="dist/${zip.executable.file}-${lp.version}.zip">
 					<zipfileset
-						dir="${tstamp.value}"
-						excludes="**/*.sh"
-						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+						dir="${tstamp.value}/liferay-portal-${lp.version}"
+						excludes="**/*.sh,patching-tool"
+						prefix="liferay-portal-${lp.version}"
 					/>
 					<zipfileset
-						dir="${tstamp.value}"
+						dir="${tstamp.value}/liferay-portal-${lp.version}"
 						filemode="744"
-						includes="**/*.sh"
-						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
-					/>
-					<zipfileset
-						dir="${tstamp.value}"
-						excludes="patching-tool"
-						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
-					/>
-					<zipfileset
-						dir="${tstamp.value}"
-						filemode="744"
-						includes="patching-tool"
-						prefix="liferay-portal-${lp.version}/${zip.executable.dir.name}"
+						includes="**/*.sh,patching-tool"
+						prefix="liferay-portal-${lp.version}"
 					/>
 				</zip>
 

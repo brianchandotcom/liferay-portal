@@ -63,6 +63,9 @@ if (!group.isUser() && selLayout.isTypePortlet()) {
 }
 
 String[][] categorySections = {mainSections};
+
+boolean locked = SitesUtil.isLayoutLocked(selLayout);
+
 %>
 
 <div class="lfr-header-row title">
@@ -137,6 +140,13 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 				/>
 
+				<c:choose>
+				<c:when test="<%= locked %>">
+					<div class="portlet-msg-alert">
+						<liferay-ui:message key="this-page-is-locked-by-the-template" />
+					</div>
+				</c:when>
+				<c:otherwise>
 				<aui:script use="aui-dialog,aui-dialog-iframe,aui-toolbar">
 					var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
@@ -147,6 +157,7 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 							activeState: false,
 							boundingBox: buttonRow,
 							children: [
+								<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
 								{
 									handler: function(event) {
 										if (!popup) {
@@ -170,6 +181,7 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 									icon: 'circle-plus',
 									label: '<liferay-ui:message key="add-child-page" />'
 								},
+								</c:if>
 								{
 									handler: function(event) {
 										Liferay.Util.openWindow(
@@ -211,12 +223,15 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 
 					buttonRow.setData('layoutToolbar', layoutToolbar);
 				</aui:script>
+				</c:otherwise>
+				</c:choose>
 			</c:if>
 
 			<liferay-ui:form-navigator
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
+				showButtons="<%= !locked %>"
 			/>
 		</c:otherwise>
 	</c:choose>

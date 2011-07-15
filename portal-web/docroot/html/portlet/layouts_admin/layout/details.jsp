@@ -23,6 +23,17 @@ Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+boolean locked;
+
+UnicodeProperties typeSettings = selLayout.getTypeSettingsProperties();
+
+try {
+	locked = Boolean.parseBoolean(typeSettings.get("locked"));
+}
+catch (Exception e) {
+	locked = false;
+}
 %>
 
 <liferay-ui:error-marker key="errorSection" value="details" />
@@ -109,6 +120,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			</c:choose>
 
 			<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" name="hidden" />
+
+			<c:if test="<%= group.isLayoutSetPrototype() %>">
+				<aui:input helpMessage="if-checked-this-page-cannot-be-modified" name="locked" type="checkbox" value="<%= locked %>" />
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= HtmlUtil.escapeAttribute(selLayout.getName(defaultLocale)) %>" />

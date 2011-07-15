@@ -63,6 +63,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class EditGroupAction extends PortletAction {
 
@@ -346,10 +347,10 @@ public class EditGroupAction extends PortletAction {
 
 			long layoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "layoutSetPrototypeId");
-			boolean privateLayoutSetPrototype = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototype");
+			int layoutSetVisibility = ParamUtil.getInteger(
+				actionRequest, "layoutSetVisibility");
 
-			if (privateLayoutSetPrototype) {
+			if (layoutSetVisibility == _LAYOUTSET_VISIBILITY_PRIVATE) {
 				privateLayoutSetPrototypeId = layoutSetPrototypeId;
 			}
 			else {
@@ -369,5 +370,7 @@ public class EditGroupAction extends PortletAction {
 
 		StagingUtil.updateStaging(actionRequest, group);
 	}
+
+	private static final int _LAYOUTSET_VISIBILITY_PRIVATE = 1;
 
 }

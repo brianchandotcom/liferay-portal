@@ -16,6 +16,8 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
+<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
+
 <portlet:defineObjects />
 
 <%

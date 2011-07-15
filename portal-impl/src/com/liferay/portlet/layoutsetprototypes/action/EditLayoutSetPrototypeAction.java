@@ -44,6 +44,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
+ * @author Máté Thurzó
  */
 public class EditLayoutSetPrototypeAction extends PortletAction {
 
@@ -126,8 +127,16 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
+
 		String description = ParamUtil.getString(actionRequest, "description");
+
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		boolean allowModifications = ParamUtil.getBoolean(
+			actionRequest, "allowModifications");
+
+		boolean allowLayoutAddition = ParamUtil.getBoolean(
+			actionRequest, "allowLayoutAdditions");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -140,7 +149,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 			layoutSetPrototype =
 				LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(
-					nameMap, description, active, serviceContext);
+					nameMap, description, active, allowModifications,
+					allowLayoutAddition, serviceContext);
 		}
 		else {
 
@@ -149,7 +159,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			layoutSetPrototype =
 				LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, description, active,
-					serviceContext);
+					allowModifications,	allowLayoutAddition, serviceContext);
 		}
 
 		// Custom JSPs

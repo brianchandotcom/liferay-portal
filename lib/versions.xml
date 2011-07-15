@@ -2307,9 +2307,20 @@
 	</library>
 	<library>
 		<file-name>portal/log4j.jar</file-name>
-		<version>1.2.15</version>
+		<version>1.2.16</version>
 		<project-name>Log4j</project-name>
 		<project-url>http://logging.apache.org/log4j</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/log4j-extras.jar</file-name>
+		<version>1.1</version>
+		<project-name>Log4j Extras</project-name>
+		<project-url>http://logging.apache.org/log4j/companions/extras</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>

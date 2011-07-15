@@ -1,11 +1,10 @@
 AUI().add(
 	'liferay-tags-admin',
 	function(A) {
-		var Lang = A.Lang;
-
-		var Node = A.Node;
-
 		var AObject = A.Object;
+		var HistoryManager = Liferay.HistoryManager;
+		var Lang = A.Lang;
+		var Node = A.Node;
 
 		var owns = AObject.owns;
 
@@ -25,8 +24,6 @@ AUI().add(
 
 		var EVENT_SUBMIT = 'submit';
 
-		var HistoryManager = Liferay.HistoryManager;
-
 		var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
 		var LIFECYCLE_RENDER = 0;
@@ -40,10 +37,6 @@ AUI().add(
 		var MESSAGE_TYPE_SUCCESS = 'success';
 
 		var NODE = 'node';
-
-		var SRC_HASH = HistoryManager.SRC_HASH;
-
-		var SRC_POPSTATE = HistoryManager.SRC_POPSTATE;
 
 		var TPL_PORTLET_MESSAGES = '<div class="aui-helper-hidden lfr-message-response" id="portletMessages" />';
 
@@ -161,7 +154,7 @@ AUI().add(
 
 						instance._createTagSearch();
 
-						HistoryManager.on('change', instance._onHistoryChange, instance);
+						HistoryManager.on('stateChange', instance._onStateChange, instance);
 
 						instance._loadData();
 
@@ -1100,6 +1093,43 @@ AUI().add(
 						instance._showTagPanel(action);
 					},
 
+					_onStateChange: function(event) {
+						var instance = this;
+
+						var changed = event.changed;
+						var removed = event.removed;
+
+						var paginatorState = {};
+
+						var paginatorMap = instance._getTagsPaginatorMap();
+
+						AObject.each(
+							paginatorMap,
+							function(item, index, collection) {
+								var historyEntry = item.historyEntry;
+
+								var value;
+
+								if (owns(changed, historyEntry)) {
+									value = item.formatter(changed[historyEntry].newVal);
+								}
+								else if (owns(removed, historyEntry)) {
+									value = item.defaultValue;
+								}
+
+								if (value) {
+									paginatorState[index] = value;
+								}
+							}
+						);
+
+						if (AObject.size(paginatorState)) {
+							instance._tagsPaginator.setState(paginatorState);
+
+							instance._reloadData();
+						}
+					},
+
 					_onTagChangePermissions: function(event) {
 						var instance = this;
 
@@ -1121,45 +1151,6 @@ AUI().add(
 						);
 
 						instance._updateTag(form);
-					},
-
-					_onHistoryChange: function(event) {
-						var instance = this;
-
-						if ((event.src === SRC_HASH) || (event.src === SRC_POPSTATE)) {
-							var changed = event.changed;
-							var removed = event.removed;
-
-							var paginatorState = {};
-
-							var paginatorMap = instance._getTagsPaginatorMap();
-
-							AObject.each(
-								paginatorMap,
-								function(item, index, collection) {
-									var historyEntry = item.historyEntry;
-
-									var value;
-
-									if (owns(changed, historyEntry)) {
-										value = item.formatter(changed[historyEntry].newVal);
-									}
-									else if (owns(removed, historyEntry)) {
-										value = item.defaultValue;
-									}
-
-									if (value) {
-										paginatorState[index] = value;
-									}
-								}
-							);
-
-							if (AObject.size(paginatorState)) {
-								instance._tagsPaginator.setState(paginatorState);
-
-								instance._reloadData();
-							}
-						}
 					},
 
 					_onTagsListClick: function(event) {
@@ -1663,6 +1654,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-dialog', 'aui-dialog-iframe', 'aui-loading-mask', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTemplate;
@@ -50,6 +50,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PluginSettingLocalServiceUtil;
@@ -92,30 +93,39 @@ public class LayoutTypePortletImpl
 	}
 
 	public static Layout getTemplateLayout(Layout layout) {
+		if (Validator.isNull(layout.getUuid())) {
+			return null;
+		}
+
 		try {
-			LayoutSet layoutSet = layout.getLayoutSet();
+			Group group = null;
 
-			UnicodeProperties settingsProperties =
-				layoutSet.getSettingsProperties();
+			if (Validator.isNotNull(layout.getLayoutPrototypeUuid())) {
+				LayoutPrototype layoutPrototype =
+					LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
+						layout.getLayoutPrototypeUuid());
 
-			String layoutSetPrototypeUuid = settingsProperties.getProperty(
-				"layoutSetPrototypeUuid");
+				group = layoutPrototype.getGroup();
+			} else {
 
-			if (Validator.isNull(layoutSetPrototypeUuid)) {
-				return null;
+				LayoutSet layoutSet = layout.getLayoutSet();
+
+				if (Validator.isNull(
+						layoutSet.getLayoutSetPrototypeUuid())) {
+
+					return null;
+				}
+
+				LayoutSetPrototype layoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.
+						getLayoutSetPrototypeByUuid(
+							layoutSet.getLayoutSetPrototypeUuid());
+
+				group = layoutSetPrototype.getGroup();
 			}
 
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
-					layoutSetPrototypeUuid);
-
-			Group group = layoutSetPrototype.getGroup();
-
-			return LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), group.getGroupId());
-		}
-		catch (NoSuchLayoutException nsle) {
-			_log.error(nsle, nsle);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -598,6 +608,18 @@ public class LayoutTypePortletImpl
 	public String getStateMin() {
 		return getTypeSettingsProperties().getProperty(
 			LayoutTypePortletConstants.STATE_MIN);
+	}
+
+	public Layout getTemplateLayout() {
+		return _templateLayout;
+	}
+
+	public String getTemplateProperty(String key) {
+		if (_templateLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		return _templateLayout.getTypeSettingsProperties().getProperty(key);
 	}
 
 	public boolean hasDefaultScopePortletId(long groupId, String portletId)
@@ -1457,14 +1479,6 @@ public class LayoutTypePortletImpl
 		}
 
 		return portlets;
-	}
-
-	protected String getTemplateProperty(String key) {
-		if (_templateLayout == null) {
-			return StringPool.BLANK;
-		}
-
-		return _templateLayout.getTypeSettingsProperties().getProperty(key);
 	}
 
 	protected String getThemeId() {

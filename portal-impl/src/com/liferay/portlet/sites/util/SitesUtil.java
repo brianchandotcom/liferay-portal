@@ -19,18 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -43,7 +48,9 @@ import com.liferay.portal.util.WebKeys;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -57,6 +64,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  * @author Ryan Park
+ * @author Zsolt Berentey
  */
 public class SitesUtil {
 
@@ -99,6 +107,32 @@ public class SitesUtil {
 
 		if (sourceGroup != null) {
 			copyTypeSettings(sourceGroup, group);
+		}
+	}
+
+	public static void copyLayout(
+			Layout sourceLayout, Layout targetLayout,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, String[]> parameterMap =
+			getLayoutSetPrototypeParameters(serviceContext);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
+			new String[] {Boolean.FALSE.toString()});
+
+		File f = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),
+			new long[] {sourceLayout.getLayoutId()}, parameterMap, null, null);
+
+		try {
+			LayoutServiceUtil.importLayouts(
+				targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+				parameterMap, f);
+		}
+		finally {
+			f.delete();
 		}
 	}
 
@@ -200,6 +234,30 @@ public class SitesUtil {
 				PropsKeys.LAYOUT_CONFIGURATION_ACTION_DELETE,
 				layoutSettings.getConfigurationActionDelete(), request,
 				response);
+		}
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+		Group layoutSetGroup = layoutSet.getGroup();
+
+		if (layoutSetGroup.isLayoutSetPrototype()) {
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+					layoutSetGroup.getClassPK());
+
+			List<LayoutSet> linkedLayoutSets =
+				LayoutSetLocalServiceUtil.getLayoutSetsByLayoutSetPrototypeUuid(
+					layoutSetPrototype.getUuid());
+
+			for (LayoutSet linkedLayoutSet : linkedLayoutSets) {
+				Layout l = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layout.getUuid(), linkedLayoutSet.getGroupId());
+
+				if (l != null && (isLayoutLocked(l) ||
+						isLayoutToBeUpdatedFromTemplate(l))) {
+
+					LayoutServiceUtil.deleteLayout(l.getPlid());
+				}
+			}
 		}
 
 		LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId);
@@ -307,6 +365,138 @@ public class SitesUtil {
 		LayoutServiceUtil.importLayouts(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			parameterMap, inputStream);
+	}
+
+	public static boolean isLayoutLocked(Layout layout) {
+
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (layout.isLayoutPrototypeLinkEnabled() ||
+				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+
+				LayoutTypePortletImpl layoutTypePortlet =
+					new LayoutTypePortletImpl(layout);
+
+				return isLayoutLocked(layoutTypePortlet);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	public static boolean isLayoutLocked(
+		LayoutTypePortlet layoutTypePortlet) {
+
+		Layout layout = layoutTypePortlet.getLayout();
+
+		try {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (layout.isLayoutPrototypeLinkEnabled() ||
+				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+
+				String locked =
+					layoutTypePortlet.getTemplateProperty("locked");
+
+				if (Validator.isNotNull(locked)) {
+					return GetterUtil.getBoolean(locked);
+				}
+				else {
+					return isLayoutSetLocked(layoutSet);
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	public static boolean isLayoutSetLocked(
+		Group group, boolean isPrivate) {
+
+		try {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				group.getGroupId(), isPrivate);
+
+			return isLayoutSetLocked(layoutSet);
+		}
+		catch (Exception e) {
+		}
+
+		return true;
+	}
+
+	public static boolean isLayoutSetLocked(LayoutSet layoutSet) {
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			try {
+				LayoutSetPrototype layoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.
+						getLayoutSetPrototypeByUuid(
+							layoutSet.getLayoutSetPrototypeUuid());
+
+				String allowModifications =
+					layoutSetPrototype.getSettingsProperty(
+						"allowModifications");
+
+				if (allowModifications != null) {
+					return !GetterUtil.getBoolean(allowModifications);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isLayoutToBeUpdatedFromTemplate(Layout layout)
+		throws Exception {
+
+		if (layout == null) {
+			return false;
+		}
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+
+			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
+				layout);
+
+			Date layoutModifiedDate = layout.getModifiedDate();
+
+			if (layoutModifiedDate == null) {
+				layoutModifiedDate = new Date();
+			}
+
+			Date lastCopyDate = null;
+
+			String lastCopyDateString = layout.getTypeSettingsProperty(
+				"layoutSetPrototypeLastCopyDate");
+
+			if (lastCopyDateString != null) {
+				lastCopyDate = new Date(GetterUtil.getLong(lastCopyDateString));
+			}
+
+			if (SitesUtil.isLayoutLocked(layout)) {
+				if (lastCopyDate == null || lastCopyDate.before(
+						templateLayout.getModifiedDate())) {
+
+					return true;
+				}
+			} else if (!layoutModifiedDate.after(
+				templateLayout.getModifiedDate())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

@@ -120,6 +120,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Zsigmond Rab
  * @author Douglas Wong
  * @author Julio Camarero
+ * @author Zsolt Berentey
  */
 public class LayoutImporter {
 
@@ -272,29 +273,23 @@ public class LayoutImporter {
 		String layoutSetPrototypeUuid = headerElement.attributeValue(
 			"layout-set-prototype-uuid");
 
-		if (layoutSetPrototypeInherited &&
-			Validator.isNotNull(layoutSetPrototypeUuid)) {
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			if (layoutSetPrototypeInherited) {
+				if (publishToRemote) {
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
 
-			if (publishToRemote) {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				importLayoutSetPrototype(
-					portletDataContext, user, layoutSetPrototypeUuid,
-					serviceContext);
+					importLayoutSetPrototype(
+						portletDataContext, user, layoutSetPrototypeUuid,
+						serviceContext);
+				}
 			}
 
-			UnicodeProperties settingsProperties =
-				layoutSet.getSettingsProperties();
+			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+			layoutSet.setLayoutSetPrototypeLinkEnabled(
+				layoutSetPrototypeInherited);
 
-			settingsProperties.setProperty(
-				"layoutSetPrototypeUuid", layoutSetPrototypeUuid);
-
-			layoutSet.setSettingsProperties(settingsProperties);
-
-			LayoutSetLocalServiceUtil.updateSettings(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				settingsProperties.toString());
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 
 		// Look and feel
@@ -758,21 +753,14 @@ public class LayoutImporter {
 			layoutElement.attributeValue("delete"));
 
 		if (deleteLayout) {
-			try {
-				Layout layout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						layoutUuid, groupId);
+			Layout layout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layoutUuid, groupId);
 
-				if (layout != null) {
-					newLayoutsMap.put(oldLayoutId, layout);
+			if (layout != null) {
+				newLayoutsMap.put(oldLayoutId, layout);
 
-					LayoutLocalServiceUtil.deleteLayout(layout);
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-				_log.warn(
-					"Error deleting layout for {" + layoutUuid + ", " +
-						groupId + "}");
+				LayoutLocalServiceUtil.deleteLayout(layout);
 			}
 
 			return;
@@ -1109,7 +1097,7 @@ public class LayoutImporter {
 					user.getUserId(), user.getCompanyId(),
 					layoutSetPrototype.getNameMap(),
 					layoutSetPrototype.getDescription(),
-					layoutSetPrototype.getActive(), serviceContext);
+					layoutSetPrototype.getActive(), true, true, serviceContext);
 		}
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(

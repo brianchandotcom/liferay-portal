@@ -78,7 +78,7 @@ public class LayoutLocalServiceStagingAdvice
 				(Map<Locale, String>)arguments[6],
 				(Map<Locale, String>)arguments[7],
 				(Map<Locale, String>)arguments[8], (String)arguments[9],
-				(Boolean)arguments[10], (String)arguments[11],
+				(Boolean)arguments[10], false, (String)arguments[11],
 				(Boolean)arguments[12], (byte[])arguments[13],
 				(ServiceContext)arguments[14]);
 		}
@@ -114,8 +114,8 @@ public class LayoutLocalServiceStagingAdvice
 			long parentLayoutId, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			String type, boolean hidden, String friendlyURL, Boolean iconImage,
-			byte[] iconBytes, ServiceContext serviceContext)
+			String type, boolean hidden, boolean locked, String friendlyURL,
+			Boolean iconImage, byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout
@@ -143,7 +143,7 @@ public class LayoutLocalServiceStagingAdvice
 			return super.updateLayout(
 				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
 				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
-				friendlyURL, iconImage, iconBytes, serviceContext);
+				locked, friendlyURL, iconImage, iconBytes, serviceContext);
 		}
 
 		if (parentLayoutId != layout.getParentLayoutId()) {

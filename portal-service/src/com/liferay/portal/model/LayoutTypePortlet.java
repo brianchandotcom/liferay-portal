@@ -116,6 +116,10 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public String getStateMin();
 
+	public Layout getTemplateLayout();
+
+	public String getTemplateProperty(String key);
+
 	public boolean hasDefaultScopePortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 

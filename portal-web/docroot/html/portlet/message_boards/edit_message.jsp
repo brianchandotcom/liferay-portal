@@ -395,17 +395,17 @@ if (Validator.isNull(redirect)) {
 			</div>
 		</c:if>
 
-		<c:if test="<%=themeDisplay.isSignedIn() %>">
-			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveMessage(true);" %>' value="<%= saveButtonLabel %>" />
-		</c:if>
-
-		<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
 		<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
 			<aui:button onClick='<%= renderResponse.getNamespace() + "manageAttachments(" + !attachments + ");" %>' value='<%= ((attachments) ? "remove" : "attach") + "-files" %>' />
 		</c:if>
 
+		<c:if test="<%=themeDisplay.isSignedIn() %>">
+			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveMessage(true);" %>' value="<%= saveButtonLabel %>" />
+		</c:if>
+
 		<aui:button onClick='<%= renderResponse.getNamespace() + "previewMessage();" %>' value="preview" />
+
+		<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

@@ -15,11 +15,16 @@
 package com.liferay.portal.atom;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.activation.MimeType;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
@@ -82,13 +87,38 @@ public class AtomCollectionAdapterWrapper<E>
 	public Object getContent(E entry, RequestContext requestContext) {
 		Abdera abdera = requestContext.getAbdera();
 
+		AtomEntryContent atomContent =
+			_atomCollectionAdapter.getEntryContent(
+				entry, new AtomRequestContextImpl(requestContext));
+
 		Factory factory = abdera.getFactory();
 
-		Content content = factory.newContent(Content.Type.HTML);
+		Content content = null;
 
-		content.setText(_atomCollectionAdapter.getEntryContent(entry));
+		switch (atomContent.getType()) {
+			case HTML: content = factory.newContent(Content.Type.HTML); break;
+			case MEDIA: content = factory.newContent(Content.Type.MEDIA); break;
+			case TEXT: content = factory.newContent(Content.Type.TEXT); break;
+			case XHTML: content = factory.newContent(Content.Type.XHTML); break;
+			case XML: content = factory.newContent(Content.Type.XML); break;
+		}
+
+		content.setText(atomContent.getText());
+
+		if (atomContent.getSrcLink() != null) {
+			content.setSrc(atomContent.getSrcLink());
+		}
+
+		if (atomContent.getMimeType() != null) {
+			content.setMimeType(atomContent.getMimeType());
+		}
 
 		return content;
+	}
+
+	@Override
+	public String getContentType(E entry) {
+		return _atomCollectionAdapter.getMediaContentType(entry);
 	}
 
 	@Override
@@ -112,6 +142,28 @@ public class AtomCollectionAdapterWrapper<E>
 		try {
 			return _atomCollectionAdapter.getEntry(
 				resourceName, new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
+	public String getMediaName(E entry) throws ResponseContextException {
+		try {
+			return _atomCollectionAdapter.getMediaName(entry);
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
+	public InputStream getMediaStream(E entry) throws ResponseContextException {
+		try {
+			return _atomCollectionAdapter.getMediaStream(entry);
 		}
 		catch (AtomException ae) {
 			throw new ResponseContextException(
@@ -153,6 +205,22 @@ public class AtomCollectionAdapterWrapper<E>
 	}
 
 	@Override
+	public E postMedia(
+		MimeType mimeType, String slug, InputStream inputStream,
+		RequestContext requestContext) throws ResponseContextException {
+
+		try {
+			return _atomCollectionAdapter.postMedia(
+				mimeType.toString(), slug, inputStream,
+				new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
 	public void putEntry(
 			E entry, String title, Date updated, List<Person> authors,
 			String summary, Content content, RequestContext requestContext)
@@ -161,6 +229,23 @@ public class AtomCollectionAdapterWrapper<E>
 		try {
 			_atomCollectionAdapter.putEntry(
 				entry, title, summary, content.getText(), updated,
+				new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
+	public void putMedia(
+			E entry, MimeType contentType, String slug, InputStream inputStream,
+			RequestContext requestContext)
+		throws ResponseContextException {
+
+		try {
+			_atomCollectionAdapter.putMedia(
+				entry, contentType.toString(), slug, inputStream,
 				new AtomRequestContextImpl(requestContext));
 		}
 		catch (AtomException ae) {

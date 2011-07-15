@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
+import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -58,8 +59,10 @@ public class JournalArticleAtomCollectionProvider
 		return authors;
 	}
 
-	public String getEntryContent(JournalArticle journalArticle) {
-		return journalArticle.getContent();
+	public AtomEntryContent getEntryContent(
+		JournalArticle journalArticle, AtomRequestContext atomRequestContext) {
+
+		return new AtomEntryContent(journalArticle.getContent());
 	}
 
 	public String getEntryId(JournalArticle journalArticle) {

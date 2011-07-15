@@ -83,20 +83,20 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			WorkflowDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
 			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_T = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowDefinitionLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowDefinitionLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C_C",
+			"fetchByG_C_C_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_T = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByG_C_C_C",
+			FINDER_CLASS_NAME_LIST, "countByG_C_C_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_W_W = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowDefinitionLinkModelImpl.FINDER_CACHE_ENABLED,
@@ -134,12 +134,13 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			WorkflowDefinitionLinkImpl.class,
 			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 			new Object[] {
 				Long.valueOf(workflowDefinitionLink.getGroupId()),
 				Long.valueOf(workflowDefinitionLink.getCompanyId()),
 				Long.valueOf(workflowDefinitionLink.getClassNameId()),
-				Long.valueOf(workflowDefinitionLink.getClassPK())
+				Long.valueOf(workflowDefinitionLink.getClassPK()),
+				Long.valueOf(workflowDefinitionLink.getTypePK())
 			}, workflowDefinitionLink);
 
 		workflowDefinitionLink.resetOriginalValues();
@@ -193,12 +194,13 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			WorkflowDefinitionLinkImpl.class,
 			workflowDefinitionLink.getPrimaryKey());
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 			new Object[] {
 				Long.valueOf(workflowDefinitionLink.getGroupId()),
 				Long.valueOf(workflowDefinitionLink.getCompanyId()),
 				Long.valueOf(workflowDefinitionLink.getClassNameId()),
-				Long.valueOf(workflowDefinitionLink.getClassPK())
+				Long.valueOf(workflowDefinitionLink.getClassPK()),
+				Long.valueOf(workflowDefinitionLink.getTypePK())
 			});
 	}
 
@@ -310,12 +312,13 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 			new Object[] {
 				Long.valueOf(workflowDefinitionLinkModelImpl.getGroupId()),
 				Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId()),
 				Long.valueOf(workflowDefinitionLinkModelImpl.getClassNameId()),
-				Long.valueOf(workflowDefinitionLinkModelImpl.getClassPK())
+				Long.valueOf(workflowDefinitionLinkModelImpl.getClassPK()),
+				Long.valueOf(workflowDefinitionLinkModelImpl.getTypePK())
 			});
 
 		EntityCacheUtil.removeResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
@@ -361,8 +364,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				((workflowDefinitionLink.getGroupId() != workflowDefinitionLinkModelImpl.getOriginalGroupId()) ||
 				(workflowDefinitionLink.getCompanyId() != workflowDefinitionLinkModelImpl.getOriginalCompanyId()) ||
 				(workflowDefinitionLink.getClassNameId() != workflowDefinitionLinkModelImpl.getOriginalClassNameId()) ||
-				(workflowDefinitionLink.getClassPK() != workflowDefinitionLinkModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+				(workflowDefinitionLink.getClassPK() != workflowDefinitionLinkModelImpl.getOriginalClassPK()) ||
+				(workflowDefinitionLink.getTypePK() != workflowDefinitionLinkModelImpl.getOriginalTypePK()))) {
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 				new Object[] {
 					Long.valueOf(
 						workflowDefinitionLinkModelImpl.getOriginalGroupId()),
@@ -371,7 +375,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					Long.valueOf(
 						workflowDefinitionLinkModelImpl.getOriginalClassNameId()),
 					Long.valueOf(
-						workflowDefinitionLinkModelImpl.getOriginalClassPK())
+						workflowDefinitionLinkModelImpl.getOriginalClassPK()),
+					Long.valueOf(
+						workflowDefinitionLinkModelImpl.getOriginalTypePK())
 				});
 		}
 
@@ -379,13 +385,15 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				((workflowDefinitionLink.getGroupId() != workflowDefinitionLinkModelImpl.getOriginalGroupId()) ||
 				(workflowDefinitionLink.getCompanyId() != workflowDefinitionLinkModelImpl.getOriginalCompanyId()) ||
 				(workflowDefinitionLink.getClassNameId() != workflowDefinitionLinkModelImpl.getOriginalClassNameId()) ||
-				(workflowDefinitionLink.getClassPK() != workflowDefinitionLinkModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+				(workflowDefinitionLink.getClassPK() != workflowDefinitionLinkModelImpl.getOriginalClassPK()) ||
+				(workflowDefinitionLink.getTypePK() != workflowDefinitionLinkModelImpl.getOriginalTypePK()))) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 				new Object[] {
 					Long.valueOf(workflowDefinitionLink.getGroupId()),
 					Long.valueOf(workflowDefinitionLink.getCompanyId()),
 					Long.valueOf(workflowDefinitionLink.getClassNameId()),
-					Long.valueOf(workflowDefinitionLink.getClassPK())
+					Long.valueOf(workflowDefinitionLink.getClassPK()),
+					Long.valueOf(workflowDefinitionLink.getTypePK())
 				}, workflowDefinitionLink);
 		}
 
@@ -412,6 +420,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		workflowDefinitionLinkImpl.setModifiedDate(workflowDefinitionLink.getModifiedDate());
 		workflowDefinitionLinkImpl.setClassNameId(workflowDefinitionLink.getClassNameId());
 		workflowDefinitionLinkImpl.setClassPK(workflowDefinitionLink.getClassPK());
+		workflowDefinitionLinkImpl.setTypePK(workflowDefinitionLink.getTypePK());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionName(workflowDefinitionLink.getWorkflowDefinitionName());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(workflowDefinitionLink.getWorkflowDefinitionVersion());
 
@@ -864,24 +873,25 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchWorkflowDefinitionLinkException} if it could not be found.
+	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a {@link com.liferay.portal.NoSuchWorkflowDefinitionLinkException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param typePK the type p k
 	 * @return the matching workflow definition link
 	 * @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WorkflowDefinitionLink findByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK)
+	public WorkflowDefinitionLink findByG_C_C_C_T(long groupId, long companyId,
+		long classNameId, long classPK, long typePK)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_C(groupId,
-				companyId, classNameId, classPK);
+		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_C_T(groupId,
+				companyId, classNameId, classPK, typePK);
 
 		if (workflowDefinitionLink == null) {
-			StringBundler msg = new StringBundler(10);
+			StringBundler msg = new StringBundler(12);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -897,6 +907,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			msg.append(", classPK=");
 			msg.append(classPK);
 
+			msg.append(", typePK=");
+			msg.append(typePK);
+
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 			if (_log.isWarnEnabled()) {
@@ -910,57 +923,63 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param typePK the type p k
 	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WorkflowDefinitionLink fetchByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK) throws SystemException {
-		return fetchByG_C_C_C(groupId, companyId, classNameId, classPK, true);
+	public WorkflowDefinitionLink fetchByG_C_C_C_T(long groupId,
+		long companyId, long classNameId, long classPK, long typePK)
+		throws SystemException {
+		return fetchByG_C_C_C_T(groupId, companyId, classNameId, classPK,
+			typePK, true);
 	}
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param typePK the type p k
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public WorkflowDefinitionLink fetchByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK, boolean retrieveFromCache)
-		throws SystemException {
+	public WorkflowDefinitionLink fetchByG_C_C_C_T(long groupId,
+		long companyId, long classNameId, long classPK, long typePK,
+		boolean retrieveFromCache) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK
+				groupId, companyId, classNameId, classPK, typePK
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 					finderArgs, this);
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(6);
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
 
 			query.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
 
@@ -983,6 +1002,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 				qPos.add(classPK);
 
+				qPos.add(typePK);
+
 				List<WorkflowDefinitionLink> list = q.list();
 
 				result = list;
@@ -990,7 +1011,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				WorkflowDefinitionLink workflowDefinitionLink = null;
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 						finderArgs, list);
 				}
 				else {
@@ -1001,8 +1022,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					if ((workflowDefinitionLink.getGroupId() != groupId) ||
 							(workflowDefinitionLink.getCompanyId() != companyId) ||
 							(workflowDefinitionLink.getClassNameId() != classNameId) ||
-							(workflowDefinitionLink.getClassPK() != classPK)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+							(workflowDefinitionLink.getClassPK() != classPK) ||
+							(workflowDefinitionLink.getTypePK() != typePK)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 							finderArgs, workflowDefinitionLink);
 					}
 				}
@@ -1014,7 +1036,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			}
 			finally {
 				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C,
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 						finderArgs);
 				}
 
@@ -1575,19 +1597,20 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
-	 * Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param typePK the type p k
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK)
+	public void removeByG_C_C_C_T(long groupId, long companyId,
+		long classNameId, long classPK, long typePK)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
-		WorkflowDefinitionLink workflowDefinitionLink = findByG_C_C_C(groupId,
-				companyId, classNameId, classPK);
+		WorkflowDefinitionLink workflowDefinitionLink = findByG_C_C_C_T(groupId,
+				companyId, classNameId, classPK, typePK);
 
 		workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
 	}
@@ -1673,36 +1696,39 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
-	 * Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
+	 * @param typePK the type p k
 	 * @return the number of matching workflow definition links
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK) throws SystemException {
+	public int countByG_C_C_C_T(long groupId, long companyId, long classNameId,
+		long classPK, long typePK) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK
+				groupId, companyId, classNameId, classPK, typePK
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_C_C_C,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_C_C_C_T,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
 
 			String sql = query.toString();
 
@@ -1723,6 +1749,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 				qPos.add(classPK);
 
+				qPos.add(typePK);
+
 				count = (Long)q.uniqueResult();
 			}
 			catch (Exception e) {
@@ -1733,7 +1761,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T,
 					finderArgs, count);
 
 				closeSession(session);
@@ -2019,10 +2047,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	private static final String _SQL_COUNT_WORKFLOWDEFINITIONLINK = "SELECT COUNT(workflowDefinitionLink) FROM WorkflowDefinitionLink workflowDefinitionLink";
 	private static final String _SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE = "SELECT COUNT(workflowDefinitionLink) FROM WorkflowDefinitionLink workflowDefinitionLink WHERE ";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "workflowDefinitionLink.companyId = ?";
-	private static final String _FINDER_COLUMN_G_C_C_C_GROUPID_2 = "workflowDefinitionLink.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_COMPANYID_2 = "workflowDefinitionLink.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2 = "workflowDefinitionLink.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_CLASSPK_2 = "workflowDefinitionLink.classPK = ?";
+	private static final String _FINDER_COLUMN_G_C_C_C_T_GROUPID_2 = "workflowDefinitionLink.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_T_COMPANYID_2 = "workflowDefinitionLink.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2 = "workflowDefinitionLink.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_T_CLASSPK_2 = "workflowDefinitionLink.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_T_TYPEPK_2 = "workflowDefinitionLink.typePK = ?";
 	private static final String _FINDER_COLUMN_C_W_W_COMPANYID_2 = "workflowDefinitionLink.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1 = "workflowDefinitionLink.workflowDefinitionName IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2 = "workflowDefinitionLink.workflowDefinitionName = ? AND ";

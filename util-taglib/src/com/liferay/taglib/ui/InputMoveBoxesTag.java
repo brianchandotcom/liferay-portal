@@ -34,7 +34,7 @@ public class InputMoveBoxesTag extends IncludeTag {
 		_leftBoxName = leftBoxName;
 	}
 
-	public void setLeftList(List<KeyValuePair> leftList) {
+	public void setLeftList(List<KeyValuePair<String, String>> leftList) {
 		_leftList = leftList;
 	}
 
@@ -54,7 +54,7 @@ public class InputMoveBoxesTag extends IncludeTag {
 		_rightBoxName = rightBoxName;
 	}
 
-	public void setRightList(List<KeyValuePair> rightList) {
+	public void setRightList(List<KeyValuePair<String, String>> rightList) {
 		_rightList = rightList;
 	}
 
@@ -120,12 +120,12 @@ public class InputMoveBoxesTag extends IncludeTag {
 
 	private String _cssClass;
 	private String _leftBoxName;
-	private List<KeyValuePair> _leftList;
+	private List<KeyValuePair<String, String>> _leftList;
 	private String _leftOnChange;
 	private String _leftReorder;
 	private String _leftTitle;
 	private String _rightBoxName;
-	private List<KeyValuePair> _rightList;
+	private List<KeyValuePair<String, String>> _rightList;
 	private String _rightOnChange;
 	private String _rightReorder;
 	private String _rightTitle;

@@ -48,13 +48,13 @@ public class ICQConnector implements Observer {
 	public void update(Observable obs, Object obj) {
 		_connecting = false;
 
-		for (KeyValuePair kvp : _messages) {
+		for (KeyValuePair<String, String> kvp : _messages) {
 			OscarInterface.sendMessage(_icq, kvp.getKey(), kvp.getValue());
 		}
 	}
 
 	private ICQConnector() {
-		_messages = new Vector<KeyValuePair>();
+		_messages = new Vector<KeyValuePair<String, String>>();
 	}
 
 	private void _connect() {
@@ -85,7 +85,7 @@ public class ICQConnector implements Observer {
 		if (((_icq == null) || !_icq.isLogged()) && !_connecting) {
 			_connect();
 
-			_messages.add(new KeyValuePair(to, msg));
+			_messages.add(new KeyValuePair<String, String>(to, msg));
 		}
 		else {
 			OscarInterface.sendMessage(_icq, to, msg);
@@ -97,7 +97,7 @@ public class ICQConnector implements Observer {
 	private static ICQConnector _instance = new ICQConnector();
 
 	private OscarConnection _icq;
-	private List<KeyValuePair> _messages;
+	private List<KeyValuePair<String, String>> _messages;
 	private boolean _connecting;
 
 }

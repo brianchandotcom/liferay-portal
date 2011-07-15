@@ -126,7 +126,7 @@
 		for (int i = 0; i < metadataFields.length; i++) {
 			String folderColumn = metadataFields[i];
 
-			leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+			leftList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 		}
 
 		// Right list
@@ -141,11 +141,11 @@
 			String folderColumn = (String)itr.next();
 
 			if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
-				rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+				rightList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 			}
 		}
 
-		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+		rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 		%>
 
 		<liferay-ui:input-move-boxes

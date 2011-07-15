@@ -39,13 +39,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		// Left list
 
-		List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+		List<KeyValuePair<String, String>> typesLeftList = new ArrayList<KeyValuePair<String, String>>();
 
 		for (long vocabularyId : assetVocabularyIds) {
 			try {
 				AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
 
-				typesLeftList.add(new KeyValuePair(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
+				typesLeftList.add(new KeyValuePair<String, String>(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
 			}
 			catch (NoSuchVocabularyException nsve) {
 			}
@@ -53,7 +53,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		// Right list
 
-		List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+		List<KeyValuePair<String, String>> typesRightList = new ArrayList<KeyValuePair<String, String>>();
 
 		Arrays.sort(assetVocabularyIds);
 
@@ -63,11 +63,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				vocabulary = vocabulary.toEscapedModel();
 
-				typesRightList.add(new KeyValuePair(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
+				typesRightList.add(new KeyValuePair<String, String>(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
 			}
 		}
 
-		typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+		typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator<String, String>(false, true));
 		%>
 
 		<div class="<%= allAssetVocabularies ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">

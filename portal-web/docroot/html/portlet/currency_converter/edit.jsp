@@ -27,10 +27,10 @@
 List leftList = new ArrayList();
 
 for (int i = 0; i < symbols.length; i++) {
-	leftList.add(new KeyValuePair(symbols[i], LanguageUtil.get(pageContext, "currency." + symbols[i])));
+	leftList.add(new KeyValuePair<String, String>(symbols[i], LanguageUtil.get(pageContext, "currency." + symbols[i])));
 }
 
-//leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+//leftList = ListUtil.sort(leftList, new KeyValuePairComparator<String, String>(false, true));
 
 // Right list
 
@@ -47,11 +47,11 @@ while (itr.hasNext()) {
 	String currencyValue = (String)entry.getKey();
 
 	if (Arrays.binarySearch(symbols, symbol) < 0) {
-		rightList.add(new KeyValuePair(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));
+		rightList.add(new KeyValuePair<String, String>(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));
 	}
 }
 
-rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 %>
 
 <liferay-ui:input-move-boxes

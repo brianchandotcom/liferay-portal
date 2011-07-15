@@ -1030,6 +1030,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="workflowDefinitionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="workflowDefinitionVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>

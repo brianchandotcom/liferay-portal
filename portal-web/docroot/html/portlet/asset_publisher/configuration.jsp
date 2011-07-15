@@ -73,17 +73,17 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			// Left list
 
-			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair<String, String>> typesLeftList = new ArrayList<KeyValuePair<String, String>>();
 
 			for (long classNameId : classNameIds) {
 				ClassName className = ClassNameServiceUtil.getClassName(classNameId);
 
-				typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+				typesLeftList.add(new KeyValuePair<String, String>(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
 			}
 
 			// Right list
 
-			List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair<String, String>> typesRightList = new ArrayList<KeyValuePair<String, String>>();
 
 			Arrays.sort(classNameIds);
 
@@ -91,11 +91,11 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
 					ClassName className = ClassNameServiceUtil.getClassName(classNameId);
 
-					typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+					typesRightList.add(new KeyValuePair<String, String>(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
 				}
 			}
 
-			typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+			typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator<String, String>(false, true));
 			%>
 
 			<div class="<%= anyAssetType ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />classNamesBoxes">
@@ -133,27 +133,27 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			// Left list
 
-			List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair<String, String>> scopesLeftList = new ArrayList<KeyValuePair<String, String>>();
 
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				scopesLeftList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
+				scopesLeftList.add(new KeyValuePair<String, String>(_getKey(group), _getName(group, pageContext)));
 			}
 
 			// Right list
 
-			List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair<String, String>> scopesRightList = new ArrayList<KeyValuePair<String, String>>();
 
 			Arrays.sort(groupIds);
 
 			for (Group group : groups) {
 				if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-					scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
+					scopesRightList.add(new KeyValuePair<String, String>(_getKey(group), _getName(group, pageContext)));
 				}
 			}
 
-			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
+			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator<String, String>(false, true));
 			%>
 
 			<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">

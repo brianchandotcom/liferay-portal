@@ -707,7 +707,8 @@ public class PermissionImporter {
 			long resourcePK = GetterUtil.getLong(
 				portletDataElement.attributeValue("resource-pk"));
 
-			List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+			List<KeyValuePair<String, String>> permissions =
+				new ArrayList<KeyValuePair<String, String>>();
 
 			List<Element> permissionsElements = portletDataElement.elements(
 				"permissions");
@@ -717,7 +718,8 @@ public class PermissionImporter {
 					"role-name");
 				String actions = permissionsElement.attributeValue("actions");
 
-				KeyValuePair permission = new KeyValuePair(roleName, actions);
+				KeyValuePair<String, String> permission =
+					new KeyValuePair<String, String>(roleName, actions);
 
 				permissions.add(permission);
 			}

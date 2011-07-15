@@ -70,7 +70,7 @@ public class RememberMeAutoLogin implements AutoLogin {
 
 				Company company = PortalUtil.getCompany(request);
 
-				KeyValuePair kvp = null;
+				KeyValuePair<String, String> kvp = null;
 
 				if (company.isAutoLogin()) {
 					kvp = UserLocalServiceUtil.decryptUserId(

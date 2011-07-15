@@ -40,6 +40,7 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setTypePK(model.getTypePK());
 		soapModel.setWorkflowDefinitionName(model.getWorkflowDefinitionName());
 		soapModel.setWorkflowDefinitionVersion(model.getWorkflowDefinitionVersion());
 
@@ -169,6 +170,14 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public long getTypePK() {
+		return _typePK;
+	}
+
+	public void setTypePK(long typePK) {
+		_typePK = typePK;
+	}
+
 	public String getWorkflowDefinitionName() {
 		return _workflowDefinitionName;
 	}
@@ -194,6 +203,7 @@ public class WorkflowDefinitionLinkSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
+	private long _typePK;
 	private String _workflowDefinitionName;
 	private int _workflowDefinitionVersion;
 }

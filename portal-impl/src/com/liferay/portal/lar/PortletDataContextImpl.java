@@ -401,7 +401,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+		List<KeyValuePair<String, String>> permissions =
+			new ArrayList<KeyValuePair<String, String>>();
 
 		Group group = GroupLocalServiceUtil.getGroup(_groupId);
 
@@ -420,7 +421,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 				String actionIds = getActionIds(
 					role, resourceName, String.valueOf(resourcePK));
 
-				KeyValuePair permission = new KeyValuePair(name, actionIds);
+				KeyValuePair<String, String> permission =
+					new KeyValuePair<String, String>(name, actionIds);
 
 				permissions.add(permission);
 			}
@@ -433,7 +435,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 					String actionIds = getActionIds(
 						role, resourceName, String.valueOf(resourcePK));
 
-					KeyValuePair permission = new KeyValuePair(name, actionIds);
+					KeyValuePair<String, String> permission =
+						new KeyValuePair<String, String>(name, actionIds);
 
 					permissions.add(permission);
 				}
@@ -445,7 +448,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public void addPermissions(
-		String resourceName, long resourcePK, List<KeyValuePair> permissions) {
+		String resourceName, long resourcePK,
+		List<KeyValuePair<String, String>> permissions) {
 
 		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
 			(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) {
@@ -692,7 +696,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _parameterMap;
 	}
 
-	public Map<String, List<KeyValuePair>> getPermissions() {
+	public Map<String, List<KeyValuePair<String, String>>> getPermissions() {
 		return _permissionsMap;
 	}
 
@@ -996,14 +1000,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		List<KeyValuePair> permissions = _permissionsMap.get(
+		List<KeyValuePair<String, String>> permissions = _permissionsMap.get(
 			getPrimaryKeyString(resourceName, resourcePK));
 
 		if (permissions == null) {
 			return;
 		}
 
-		for (KeyValuePair permission : permissions) {
+		for (KeyValuePair<String, String> permission : permissions) {
 			String roleName = permission.getKey();
 
 			Role role = null;
@@ -1471,8 +1475,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Set<String> _notUniquePerLayout = new HashSet<String>();
 	private long _oldPlid;
 	private Map<String, String[]> _parameterMap;
-	private Map<String, List<KeyValuePair>> _permissionsMap =
-		new HashMap<String, List<KeyValuePair>>();
+	private Map<String, List<KeyValuePair<String, String>>> _permissionsMap =
+		new HashMap<String, List<KeyValuePair<String, String>>>();
 	private long _plid;
 	private PortletDataContextListener _portletDataContextListener;
 	private Set<String> _primaryKeys;

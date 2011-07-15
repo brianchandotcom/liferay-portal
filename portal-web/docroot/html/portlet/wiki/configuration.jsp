@@ -318,11 +318,11 @@ else if (tabs2.equals("page-updated-email")) {
 
 				// Left list
 
-				List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+				List<KeyValuePair<String, String>> leftList = new ArrayList<KeyValuePair<String, String>>();
 
 				for (String folderColumn : visibleNodes) {
 					if (currentVisibleNodes.contains(folderColumn)) {
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+						leftList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 					}
 				}
 
@@ -335,23 +335,23 @@ else if (tabs2.equals("page-updated-email")) {
 					String folderColumn = itr.next();
 
 					if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodes, folderColumn) < 0)) {
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+						leftList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 					}
 				}
 
 				// Right list
 
-				List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+				List<KeyValuePair<String, String>> rightList = new ArrayList<KeyValuePair<String, String>>();
 
 				for (String folderColumn : hiddenNodes) {
 					if (currentVisibleNodes.contains(folderColumn)) {
 						if (Arrays.binarySearch(visibleNodes, folderColumn) < 0) {
-							rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+							rightList.add(new KeyValuePair<String, String>(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 						}
 					}
 				}
 
-				rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+				rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 
 				%>
 

@@ -162,15 +162,15 @@ else if (tabs2.equals("site-roles")) {
 
 			if (isGuestRole) {
 				if (!guestUnsupportedActions.contains(actionId)) {
-					leftList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+					leftList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 				}
 			}
 			else {
-				leftList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+				leftList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 			}
 		}
 
-		leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+		leftList = ListUtil.sort(leftList, new KeyValuePairComparator<String, String>(false, true));
 
 		// Right list
 
@@ -182,16 +182,16 @@ else if (tabs2.equals("site-roles")) {
 			if (!actions2.contains(actionId)) {
 				if (isGuestRole) {
 					if (!guestUnsupportedActions.contains(actionId)) {
-						rightList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+						rightList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 					}
 				}
 				else {
-					rightList.add(new KeyValuePair(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
+					rightList.add(new KeyValuePair<String, String>(actionId, ResourceActionsUtil.getAction(pageContext, actionId)));
 				}
 			}
 		}
 
-		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+		rightList = ListUtil.sort(rightList, new KeyValuePairComparator<String, String>(false, true));
 		%>
 
 		<div class="assign-permissions">

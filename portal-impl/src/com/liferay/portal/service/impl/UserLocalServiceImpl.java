@@ -1470,7 +1470,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         or if the user's password was incorrect
 	 * @throws SystemException if a system exception occurred
 	 */
-	public KeyValuePair decryptUserId(
+	public KeyValuePair<String, String> decryptUserId(
 			long companyId, String name, String password)
 		throws PortalException, SystemException {
 
@@ -1503,7 +1503,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userPersistence.update(user, false);
 			}
 
-			return new KeyValuePair(name, password);
+			return new KeyValuePair<String, String>(name, password);
 		}
 		else {
 			throw new PrincipalException();

@@ -765,7 +765,7 @@ public interface UserLocalService {
 	or if the user's password was incorrect
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.kernel.util.KeyValuePair decryptUserId(
+	public com.liferay.portal.kernel.util.KeyValuePair<java.lang.String, java.lang.String> decryptUserId(
 		long companyId, java.lang.String name, java.lang.String password)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

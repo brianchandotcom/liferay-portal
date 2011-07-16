@@ -44,35 +44,37 @@ public class PanelTag extends IncludeTag {
 
 		String parentId = StringPool.BLANK;
 
-		try {
-			PanelFloatingContainerTag panelFloatingContainerTag	=
-				(PanelFloatingContainerTag)baseBodyTagSupport;
-
-			parentId = panelFloatingContainerTag.getId();
-		}
-		catch (ClassCastException cce) {
+		if (baseBodyTagSupport != null) {
 			try {
-				PanelContainerTag panelContainerTag	=
-					(PanelContainerTag)baseBodyTagSupport;
+				PanelFloatingContainerTag panelFloatingContainerTag	=
+					(PanelFloatingContainerTag)baseBodyTagSupport;
 
-				parentId = panelContainerTag.getId();
+				parentId = panelFloatingContainerTag.getId();
 			}
-			catch (ClassCastException ccee) {
+			catch (ClassCastException cce) {
+				try {
+					PanelContainerTag panelContainerTag	=
+						(PanelContainerTag)baseBodyTagSupport;
+
+					parentId = panelContainerTag.getId();
+				}
+				catch (ClassCastException ccee) {
+				}
 			}
 		}
 
- 		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
- 		request.setAttribute("liferay-ui:panel:id", _id);
- 		request.setAttribute("liferay-ui:panel:parentId", parentId);
- 		request.setAttribute("liferay-ui:panel:title", _title);
+		 request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
+		 request.setAttribute("liferay-ui:panel:id", _id);
+		 request.setAttribute("liferay-ui:panel:parentId", parentId);
+		 request.setAttribute("liferay-ui:panel:title", _title);
 		request.setAttribute(
 			"liferay-ui:panel:collapsible", String.valueOf(_collapsible));
- 		request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
- 		request.setAttribute(
+		 request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
+		 request.setAttribute(
 			"liferay-ui:panel:persistState", String.valueOf(_persistState));
- 		request.setAttribute(
+		 request.setAttribute(
 			"liferay-ui:panel:extended", String.valueOf(_extended));
- 		request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
+		 request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
 
 		super.doStartTag();
 
@@ -115,7 +117,7 @@ public class PanelTag extends IncludeTag {
 		_id = id;
 	}
 
- 	public void setTitle(String title) {
+	 public void setTitle(String title) {
 		_title = title;
 	}
 
@@ -123,7 +125,7 @@ public class PanelTag extends IncludeTag {
 		_collapsible = collapsible;
 	}
 
- 	public void setDefaultState(String defaultState) {
+	 public void setDefaultState(String defaultState) {
 		_defaultState = defaultState;
 	}
 
@@ -146,12 +148,12 @@ public class PanelTag extends IncludeTag {
 	private String _startPage;
 	private String _endPage;
 	private String _helpMessage;
- 	private String _id;
- 	private String _title;
+	 private String _id;
+	 private String _title;
 	private boolean _collapsible = true;
- 	private String _defaultState = "open";
+	 private String _defaultState = "open";
 	private boolean _persistState = true;
 	private boolean _extended;
- 	private String _cssClass = StringPool.BLANK;
+	 private String _cssClass = StringPool.BLANK;
 
 }

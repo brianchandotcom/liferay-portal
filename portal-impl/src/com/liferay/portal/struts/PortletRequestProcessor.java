@@ -70,6 +70,7 @@ import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortletRequestProcessor extends TilesRequestProcessor {
 
@@ -573,8 +574,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 					themeDisplay.getPermissionChecker();
 
 				if (!PortletPermissionUtil.contains(
-						permissionChecker, layout.getPlid(), portlet,
-						ActionKeys.VIEW)) {
+						permissionChecker, layout, portlet, ActionKeys.VIEW)) {
 
 					throw new PrincipalException();
 				}

@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public interface LayoutTypePortlet extends LayoutType {
 
@@ -115,6 +116,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public String getStateMin();
 
+	public long getUserId();
+
 	public boolean hasDefaultScopePortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 
@@ -160,6 +163,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean isCustomizable();
 
 	public boolean isCustomizable(String columnId);
+
+	public boolean isCustomizableByPortletId(String portletId);
 
 	public boolean isCustomizedView();
 
@@ -241,5 +246,7 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void setStateMin(String stateMin);
 
 	public void setUpdatePermission(boolean updatePermission);
+
+	public void setUserId(long userId);
 
 }

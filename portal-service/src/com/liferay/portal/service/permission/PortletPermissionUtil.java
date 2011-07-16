@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -23,8 +24,45 @@ import java.util.Collection;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortletPermissionUtil {
+
+	public static void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		getPortletPermission().check(
+			permissionChecker, layout, portletId, actionId);
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		getPortletPermission().check(
+			permissionChecker, layout, portletId, actionId, strict);
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		getPortletPermission().check(
+			permissionChecker, groupId, layout, portletId, actionId);
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		getPortletPermission().check(
+			permissionChecker, groupId, layout, portletId, actionId, strict);
+	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
@@ -68,6 +106,78 @@ public class PortletPermissionUtil {
 		throws PortalException, SystemException {
 
 		getPortletPermission().check(permissionChecker, portletId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, layout, portlet, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, layout, portlet, actionId, strict);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, layout, portletId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, layout, portletId, actionId, strict);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portlet, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portlet, actionId, strict);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portletId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portletId, actionId, strict);
 	}
 
 	public static boolean contains(

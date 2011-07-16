@@ -45,20 +45,21 @@ public interface PortletPreferencesService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId,
-		java.lang.String portletId, long portletItemId,
-		javax.portlet.PortletPreferences preferences)
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
+		long portletItemId, javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId,
-		java.lang.String portletId,
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
 		com.liferay.portal.model.PortletItem portletItem,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId, java.lang.String name,
-		java.lang.String portletId, javax.portlet.PortletPreferences preferences)
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
+		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

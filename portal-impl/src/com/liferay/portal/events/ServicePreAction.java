@@ -131,6 +131,7 @@ import org.apache.struts.Globals;
 /**
  * @author Brian Wing Shun Chan
  * @author Felix Ventero
+ * @author Raymond Augé
  */
 public class ServicePreAction extends Action {
 
@@ -1364,6 +1365,7 @@ public class ServicePreAction extends Action {
 						companyId, user.getUserId(), true);
 
 				layoutTypePortlet.setPortalPreferences(portalPreferences);
+				layoutTypePortlet.setUserId(user.getUserId());
 			}
 
 			LayoutClone layoutClone = LayoutCloneFactory.getInstance();

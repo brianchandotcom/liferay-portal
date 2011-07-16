@@ -69,6 +69,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Daeyoung Song
+ * @author Raymond Augé
  */
 public class ResourceActionsImpl implements ResourceActions {
 
@@ -685,6 +686,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			actions.add(ActionKeys.CONFIGURATION);
 		}
 
+		if (!actions.contains(ActionKeys.PERMISSIONS)) {
+			actions.add(ActionKeys.PERMISSIONS);
+		}
+
 		if (!actions.contains(ActionKeys.VIEW)) {
 			actions.add(ActionKeys.VIEW);
 		}
@@ -711,6 +716,10 @@ public class ResourceActionsImpl implements ResourceActions {
 	protected void checkPortletLayoutManagerActions(List<String> actions) {
 		if (!actions.contains(ActionKeys.CONFIGURATION)) {
 			actions.add(ActionKeys.CONFIGURATION);
+		}
+
+		if (!actions.contains(ActionKeys.PERMISSIONS)) {
+			actions.add(ActionKeys.PERMISSIONS);
 		}
 
 		if (!actions.contains(ActionKeys.PREFERENCES)) {

@@ -42,6 +42,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Jorge Ferrer
+ * @author Raymond Augé
  */
 public class EditArchivedSetupsAction extends EditConfigurationAction {
 
@@ -153,8 +154,8 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 				actionRequest, portlet.getPortletId());
 
 		PortletPreferencesServiceUtil.restoreArchivedPreferences(
-			themeDisplay.getScopeGroupId(), name, portlet.getRootPortletId(),
-			setup);
+			themeDisplay.getScopeGroupId(), name, themeDisplay.getLayout(),
+			portlet.getRootPortletId(), setup);
 	}
 
 	protected void updateSetup(ActionRequest actionRequest, Portlet portlet)

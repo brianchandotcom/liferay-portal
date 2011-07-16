@@ -805,5 +805,6 @@ create index IX_A8B0D276 on WorkflowDefinitionLink (companyId);
 create index IX_A4DB1F0F on WorkflowDefinitionLink (companyId, workflowDefinitionName, workflowDefinitionVersion);
 create index IX_B6EE8C9E on WorkflowDefinitionLink (groupId, companyId, classNameId);
 create index IX_1E5B9905 on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK);
+create index IX_705B40EE on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK, typePK);
 
 create index IX_415A7007 on WorkflowInstanceLink (groupId, companyId, classNameId, classPK);

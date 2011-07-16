@@ -244,6 +244,8 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="WorkflowDefinitionLink" />
+		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
 	<entity name="DLFileRank" human-name="document library file rank" local-service="true" remote-service="false">

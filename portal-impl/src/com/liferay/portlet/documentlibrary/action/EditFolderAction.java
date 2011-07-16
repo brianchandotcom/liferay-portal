@@ -14,15 +14,19 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -32,6 +36,9 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -203,11 +210,13 @@ public class EditFolderAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFolder.class.getName(), actionRequest);
 
+		Folder folder = null;
+
 		if (folderId <= 0) {
 
 			// Add folder
 
-			DLAppServiceUtil.addFolder(
+			folder = DLAppServiceUtil.addFolder(
 				repositoryId, parentFolderId, name, description,
 				serviceContext);
 		}
@@ -221,8 +230,40 @@ public class EditFolderAction extends PortletAction {
 			serviceContext.setAttribute(
 				"overrideFileEntryTypes", overrideFileEntryTypes);
 
-			DLAppServiceUtil.updateFolder(
+			folder = DLAppServiceUtil.updateFolder(
 				folderId, name, description, serviceContext);
+
+			// Update workflow definitions
+
+			if (folder.getModel() instanceof DLFolder) {
+				List<ObjectValuePair<Long, String>> workflowDefinitions =
+					new ArrayList<ObjectValuePair<Long, String>>();
+
+				if (fileEntryTypeIds.isEmpty()) {
+					fileEntryTypeIds.add(new Long(0));
+				}
+				else {
+					workflowDefinitions.add(
+						new ObjectValuePair<Long, String>(
+							new Long(0), StringPool.BLANK));
+				}
+
+				for (long fileEntryTypeId : fileEntryTypeIds) {
+					String workflowDefinition = ParamUtil.getString(
+						actionRequest, "workflowDefinition" + fileEntryTypeId);
+
+					workflowDefinitions.add(
+						new ObjectValuePair<Long, String>(
+							fileEntryTypeId, workflowDefinition));
+				}
+
+				WorkflowDefinitionLinkLocalServiceUtil.
+					updateWorkflowDefinitionLinks(
+						serviceContext.getUserId(),
+						serviceContext.getCompanyId(), folder.getGroupId(),
+						DLFolder.class.getName(), folder.getFolderId(),
+						workflowDefinitions);
+			}
 		}
 	}
 

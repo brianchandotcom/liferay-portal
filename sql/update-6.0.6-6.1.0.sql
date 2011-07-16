@@ -394,3 +394,4 @@ create table VirtualHost (
 );
 
 alter table WorkflowDefinitionLink add classPK LONG;
+alter table WorkflowDefinitionLink add typePK LONG;

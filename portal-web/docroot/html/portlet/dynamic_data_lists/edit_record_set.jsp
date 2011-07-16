@@ -110,7 +110,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 				WorkflowDefinitionLink workflowDefinitionLink = null;
 
 				try {
-					workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, true);
+					workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
 				}
 				catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 				}

@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
+import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -58,8 +59,10 @@ public class BlogsEntryAtomCollectionAdapter
 		return authors;
 	}
 
-	public String getEntryContent(BlogsEntry blogsEntry) {
-		return blogsEntry.getContent();
+	public AtomEntryContent getEntryContent(
+		BlogsEntry blogsEntry, AtomRequestContext atomRequestContext) {
+
+		return new AtomEntryContent(blogsEntry.getContent());
 	}
 
 	public String getEntryId(BlogsEntry blogsEntry) {

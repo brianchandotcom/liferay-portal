@@ -35,6 +35,27 @@ import org.apache.abdera.protocol.server.RequestContext;
  */
 public class AtomUtil {
 
+	public static String buildEntryLink(
+		AtomRequestContext atomRequestContext, String collectionName,
+		String entryName) {
+
+		String resolvedUri = atomRequestContext.getResolvedUri();
+		System.out.println(resolvedUri);
+
+		String targetBasePath = atomRequestContext.getTargetBasePath();
+
+		String entryLink = targetBasePath + '/' + collectionName + '/' +
+			entryName;
+
+		int index = resolvedUri.indexOf(targetBasePath);
+
+		if (index != -1) {
+			entryLink = resolvedUri.substring(0, index) + entryLink;
+		}
+
+		return entryLink;
+	}
+
 	public static String createFeedTitleFromPortletName(
 		AtomRequestContext atomRequestContext, String portletId) {
 

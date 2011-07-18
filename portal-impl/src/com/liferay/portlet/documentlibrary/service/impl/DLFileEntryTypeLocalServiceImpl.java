@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -183,7 +184,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		if ((dlFileEntryTypes == null) || dlFileEntryTypes.isEmpty()) {
-			dlFileEntryTypes = getFileEntryTypes(groupId);
+			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
+				getFileEntryTypes(groupId));
 
 			dlFileEntryTypes.add(new DLFileEntryTypeImpl());
 		}

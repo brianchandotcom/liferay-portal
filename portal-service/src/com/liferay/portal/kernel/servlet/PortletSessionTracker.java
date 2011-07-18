@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 
 import java.io.Serializable;
 
@@ -78,6 +79,10 @@ public class PortletSessionTracker
 	private void _add(HttpSession session) {
 		String sessionId = session.getId();
 
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+			sessionId = CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
+		}
+
 		Set<HttpSession> sessions = _sessions.get(sessionId);
 
 		if (sessions == null) {
@@ -95,6 +100,10 @@ public class PortletSessionTracker
 	}
 
 	private void _invalidate(String sessionId) {
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+			sessionId = CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
+		}
+
 		Set<HttpSession> sessions = _sessions.remove(sessionId);
 
 		if (sessions == null) {

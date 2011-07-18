@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.compoundsessionid;
+package com.liferay.portal.kernel.servlet.filters.compoundsessionid;
 
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,40 +24,16 @@ import javax.servlet.http.HttpSession;
 public class CompoundSessionIdHttpSession extends HttpSessionWrapper {
 
 	public CompoundSessionIdHttpSession(HttpSession session) {
-		this(session, null);
-	}
-
-	public CompoundSessionIdHttpSession(
-		HttpSession session, String sessionIdDelimiter) {
-
 		super(session);
-
-		if (sessionIdDelimiter == null) {
-			_sessionIdDelimiter =
-				CompoundSessionIdFilter.getSessionIdDelimiter();
-		}
-		else {
-			_sessionIdDelimiter = sessionIdDelimiter;
-		}
 	}
 
 	@Override
 	public String getId() {
 		String sessionId = super.getId();
 
-		if (Validator.isNull(_sessionIdDelimiter)) {
-			return sessionId;
-		}
+		sessionId = CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
 
-		int pos = sessionId.indexOf(_sessionIdDelimiter);
-
-		if (pos == -1) {
-			return sessionId;
-		}
-
-		return sessionId.substring(0, pos - 1);
+		return sessionId;
 	}
-
-	private String _sessionIdDelimiter;
 
 }

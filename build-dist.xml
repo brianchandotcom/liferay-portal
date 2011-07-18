@@ -1065,6 +1065,8 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-weblogic">
+		<var name="wl.home" value="${app.server.weblogic.dir}/wlserver" />
+
 		<delete dir="${app.server.weblogic.dir}" />
 
 		<if>
@@ -1092,27 +1094,22 @@ release was successful.</echo>
 		<mkdir dir="${tstamp.value}" />
 
 		<echo file="${tstamp.value}/create-weblogic-domain.py">
-			import sys
+readTemplate('${wl.home}/common/templates/domains/wls.jar')
 
-			def main():
-				readTemplate('${app.server.weblogic.dir}/common/templates/domains/wls.jar')
+set('Name', '${app.server.weblogic.instance.name}')
 
-				set('Name', '${app.server.weblogic.instance.name}')
+cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
 
-				cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
+set('UserPassword', 'testing123')
 
-				set('UserPassword', 'testing123')
+cd('/Servers/AdminServer')
 
-				cd('/Servers/AdminServer')
+set('ListenAddress', '')
+set('ListenPort', 8080)
 
-				set('ListenAddress', '')
-				set('ListenPort', 8080)
+writeDomain('${app.server.weblogic.instance.dir}')
 
-				writeDomain('${app.server.weblogic.instance.dir}')
-
-				closeTemplate()
-
-			sys.exit(main())
+closeTemplate()
 		</echo>
 
 		<if>
@@ -1130,7 +1127,7 @@ set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
 
 set "MW_HOME=${app.server.weblogic.dir}"
 
-set "WL_HOME=%MW_HOME%/wlserver"
+set "WL_HOME=${wl.home}"
 
 call %WL_HOME%/common/bin/commEnv.cmd
 
@@ -1161,9 +1158,9 @@ call startWebLogic.cmd</echo>
 
 export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
 
-export MW_HOME=${app.server.weblogic.dir}
+export MW_HOME="${app.server.weblogic.dir}"
 
-export WL_HOME=${MW_HOME}/wlserver
+export WL_HOME="${wl.home}"
 
 source ${WL_HOME}/common/bin/commEnv.sh
 

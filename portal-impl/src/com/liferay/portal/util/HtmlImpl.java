@@ -33,6 +33,7 @@ import net.htmlparser.jericho.TextExtractor;
  * @author Harry Mark
  * @author Samuel Kong
  * @author Connor McKay
+ * @author Shuyang Zhou
  */
 public class HtmlImpl implements Html {
 
@@ -59,53 +60,69 @@ public class HtmlImpl implements Html {
 		// http://www.owasp.org/index.php/Cross_Site_Scripting
 		// #How_to_Protect_Yourself
 
-		StringBuilder sb = new StringBuilder(text.length());
+		StringBundler sb = null;
+		int lastReplacementIndex = 0;
 
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
+			String replacement = null;
+
 			switch (c) {
 				case '<':
-					sb.append("&lt;");
+					replacement = "&lt;";
 
 					break;
 
 				case '>':
-					sb.append("&gt;");
+					replacement = "&gt;";
 
 					break;
 
 				case '&':
-					sb.append("&amp;");
+					replacement = "&amp;";
 
 					break;
 
 				case '"':
-					sb.append("&#034;");
+					replacement = "&#034;";
 
 					break;
 
 				case '\'':
-					sb.append("&#039;");
+					replacement = "&#039;";
 
 					break;
 
 				case '\u00bb': // '�'
-					sb.append("&#187;");
-
-					break;
-
-				default:
-					sb.append(c);
+					replacement = "&#187;";
 
 					break;
 			}
+
+			if (replacement != null) {
+				if (sb == null) {
+					sb = new StringBundler();
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(text.substring(lastReplacementIndex, i));
+				}
+
+				sb.append(replacement);
+
+				lastReplacementIndex = i + 1;
+			}
 		}
 
-		if (sb.length() == text.length()) {
+		if (sb == null) {
 			return text;
 		}
 		else {
+			if (lastReplacementIndex < text.length()) {
+				sb.append(text.substring(lastReplacementIndex));
+			}
+
 			return sb.toString();
 		}
 	}

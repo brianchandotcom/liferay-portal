@@ -21,9 +21,16 @@ import javax.portlet.PortletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface PermissionChecker {
+public interface PermissionChecker extends Cloneable {
 
 	public static final long[] DEFAULT_ROLE_IDS = {};
+
+	/**
+	 * Create a new PermissionChecker using the current impl class.
+	 *
+	 * @return the new PermissionChecker
+	 */
+	public PermissionChecker clone();
 
 	/**
 	 * Returns the primary key of the user's company.

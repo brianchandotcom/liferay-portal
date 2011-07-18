@@ -19,6 +19,11 @@ package com.liferay.portal.security.permission;
  */
 public class SimplePermissionChecker extends BasePermissionChecker {
 
+	@Override
+	public SimplePermissionChecker clone() {
+		return new SimplePermissionChecker();
+	}
+
 	public boolean hasOwnerPermission(
 		long companyId, String name, String primKey, long ownerId,
 		String actionId) {

@@ -21,7 +21,7 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findByS_G_U_P">
 		<![CDATA[
 			SELECT
-				{MBCategory.*}
+				DISTINCT {MBCategory.*}
 			FROM
 				MBCategory
 			INNER JOIN
@@ -33,8 +33,6 @@
 				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
 				(Subscription.userId = ?)
-			GROUP BY
-				MBCategory.categoryId
 			ORDER BY
 				MBCategory.lastPostDate DESC
 		]]>
@@ -170,14 +168,12 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_C">
 		<![CDATA[
 			SELECT
-				{MBThread.*}
+				DISTINCT {MBThread.*}
 			FROM
 				MBThread
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?)
-			GROUP BY
-				MBThread.threadId
 			ORDER BY
 				MBThread.priority DESC,
 				MBThread.lastPostDate DESC
@@ -186,7 +182,7 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByS_G_U_C_S">
 		<![CDATA[
 			SELECT
-				{MBThread.*}
+				DISTINCT {MBThread.*}
 			FROM
 				MBThread
 			INNER JOIN
@@ -198,8 +194,6 @@
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
 				(Subscription.userId = ?)
-			GROUP BY
-				MBThread.threadId
 			ORDER BY
 				MBThread.priority DESC,
 				MBThread.lastPostDate DESC

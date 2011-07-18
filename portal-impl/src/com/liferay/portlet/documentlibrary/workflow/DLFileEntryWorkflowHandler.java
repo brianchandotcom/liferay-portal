@@ -63,6 +63,11 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 			dlFileVersion.getFolderId(), dlFileVersion.getFileEntryTypeId());
 	}
 
+	@Override
+	public boolean isVisible() {
+		return false;
+	}
+
 	public DLFileEntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {

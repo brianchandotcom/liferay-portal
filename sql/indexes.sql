@@ -16,6 +16,10 @@ create index IX_1AFBDE08 on AnnouncementsEntry (uuid_);
 create index IX_9C7EB9F on AnnouncementsFlag (entryId);
 create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 
+create index IX_4CE01041 on App (companyId);
+create index IX_3192A0C on App (marketplaceAppId);
+create index IX_B6DE2A4D on App (uuid_);
+
 create index IX_E639E2F6 on AssetCategory (groupId);
 create index IX_D61ABE08 on AssetCategory (name, vocabularyId);
 create index IX_7BB1826B on AssetCategory (parentCategoryId);
@@ -471,6 +475,11 @@ create index IX_8A1CC4B on MembershipRequest (groupId);
 create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);
+
+create index IX_6B629B3A on Module (appId);
+create index IX_4620D990 on Module (appId, contextName);
+create index IX_E4753878 on Module (contextName);
+create index IX_95910622 on Module (uuid_);
 
 create index IX_A425F71A on OrgGroupPermission (groupId);
 create index IX_6C53DA4E on OrgGroupPermission (permissionId);

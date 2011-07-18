@@ -1205,3 +1205,5 @@ Liferay.Service.registerClass(
 		updatePage: true
 	}
 );
+
+Liferay.Service.register("Liferay.Service.Marketplace", "com.liferay.portlet.marketplace.service");

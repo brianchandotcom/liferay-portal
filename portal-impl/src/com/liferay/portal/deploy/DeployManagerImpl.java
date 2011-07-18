@@ -47,15 +47,22 @@ public class DeployManagerImpl implements DeployManager {
 	}
 
 	public void deploy(File source, String context) throws Exception {
-		String fileName = source.getName();
+		String deployType = null;
 
-		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+		if (context == null) {
+			String fileName = source.getName();
 
-		if (pos > 0) {
-			context = fileName.substring(0, pos);
+			int pos = fileName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos > 0) {
+				context = fileName.substring(0, pos);
+			}
+			else {
+				context = fileName;
+			}
 		}
 		else {
-			context = fileName;
+			deployType = context;
 		}
 
 		Deployer deployer = null;

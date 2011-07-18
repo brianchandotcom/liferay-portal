@@ -418,6 +418,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				serviceContext);
 		}
 
+		// DLApp
+
+		dlAppHelperLocalService.updateFolder(
+			new LiferayFolder(dlFolder), serviceContext);
+
 		return dlFolder;
 	}
 

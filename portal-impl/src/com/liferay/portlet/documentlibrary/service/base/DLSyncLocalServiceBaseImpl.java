@@ -20,8 +20,15 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -31,6 +38,7 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
+import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
@@ -62,6 +70,9 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
+
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -84,6 +95,238 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLSyncLocalServiceUtil} to access the d l sync local service.
 	 */
+
+	/**
+	 * Adds the d l sync to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlSync the d l sync
+	 * @return the d l sync that was added
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync addDLSync(DLSync dlSync) throws SystemException {
+		dlSync.setNew(true);
+
+		dlSync = dlSyncPersistence.update(dlSync, false);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(dlSync);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return dlSync;
+	}
+
+	/**
+	 * Creates a new d l sync with the primary key. Does not add the d l sync to the database.
+	 *
+	 * @param fileId the primary key for the new d l sync
+	 * @return the new d l sync
+	 */
+	public DLSync createDLSync(String fileId) {
+		return dlSyncPersistence.create(fileId);
+	}
+
+	/**
+	 * Deletes the d l sync with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param fileId the primary key of the d l sync
+	 * @throws PortalException if a d l sync with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLSync(String fileId)
+		throws PortalException, SystemException {
+		DLSync dlSync = dlSyncPersistence.remove(fileId);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(dlSync);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deletes the d l sync from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlSync the d l sync
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteDLSync(DLSync dlSync) throws SystemException {
+		dlSyncPersistence.remove(dlSync);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(dlSync);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return dlSyncPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return dlSyncPersistence.findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return dlSyncPersistence.findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return dlSyncPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * Returns the d l sync with the primary key.
+	 *
+	 * @param fileId the primary key of the d l sync
+	 * @return the d l sync
+	 * @throws PortalException if a d l sync with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync getDLSync(String fileId)
+		throws PortalException, SystemException {
+		return dlSyncPersistence.findByPrimaryKey(fileId);
+	}
+
+	/**
+	 * Returns a range of all the d l syncs.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of d l syncs
+	 * @param end the upper bound of the range of d l syncs (not inclusive)
+	 * @return the range of d l syncs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLSync> getDLSyncs(int start, int end)
+		throws SystemException {
+		return dlSyncPersistence.findAll(start, end);
+	}
+
+	/**
+	 * Returns the number of d l syncs.
+	 *
+	 * @return the number of d l syncs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getDLSyncsCount() throws SystemException {
+		return dlSyncPersistence.countAll();
+	}
+
+	/**
+	 * Updates the d l sync in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlSync the d l sync
+	 * @return the d l sync that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync updateDLSync(DLSync dlSync) throws SystemException {
+		return updateDLSync(dlSync, true);
+	}
+
+	/**
+	 * Updates the d l sync in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlSync the d l sync
+	 * @param merge whether to merge the d l sync with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	 * @return the d l sync that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLSync updateDLSync(DLSync dlSync, boolean merge)
+		throws SystemException {
+		dlSync.setNew(false);
+
+		dlSync = dlSyncPersistence.update(dlSync, merge);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(dlSync);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return dlSync;
+	}
 
 	/**
 	 * Returns the d l app local service.
@@ -664,6 +907,24 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 	}
 
 	/**
+	 * Returns the d l sync persistence.
+	 *
+	 * @return the d l sync persistence
+	 */
+	public DLSyncPersistence getDLSyncPersistence() {
+		return dlSyncPersistence;
+	}
+
+	/**
+	 * Sets the d l sync persistence.
+	 *
+	 * @param dlSyncPersistence the d l sync persistence
+	 */
+	public void setDLSyncPersistence(DLSyncPersistence dlSyncPersistence) {
+		this.dlSyncPersistence = dlSyncPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -844,6 +1105,14 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 		_beanIdentifier = beanIdentifier;
 	}
 
+	protected Class<?> getModelClass() {
+		return DLSync.class;
+	}
+
+	protected String getModelClassName() {
+		return DLSync.class.getName();
+	}
+
 	/**
 	 * Performs an SQL query.
 	 *
@@ -851,7 +1120,7 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = InfrastructureUtil.getDataSource();
+			DataSource dataSource = dlSyncPersistence.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -925,6 +1194,8 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 	protected DLSyncLocalService dlSyncLocalService;
 	@BeanReference(type = DLSyncService.class)
 	protected DLSyncService dlSyncService;
+	@BeanReference(type = DLSyncPersistence.class)
+	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)
@@ -943,5 +1214,6 @@ public abstract class DLSyncLocalServiceBaseImpl implements DLSyncLocalService,
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	private static Log _log = LogFactoryUtil.getLog(DLSyncLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

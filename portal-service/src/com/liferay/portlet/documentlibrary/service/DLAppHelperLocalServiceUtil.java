@@ -67,7 +67,9 @@ public class DLAppHelperLocalServiceUtil {
 
 	public static void addFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().addFolder(folder, serviceContext);
 	}
 
@@ -79,7 +81,9 @@ public class DLAppHelperLocalServiceUtil {
 	}
 
 	public static void deleteFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder) {
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFolder(folder);
 	}
 
@@ -103,6 +107,23 @@ public class DLAppHelperLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {
 		return getService().getNoAssetFileEntries();
+	}
+
+	public static void updateFileEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateFileEntry(fileEntry, fileVersion, serviceContext);
+	}
+
+	public static void updateFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateFolder(folder, serviceContext);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry updateAsset(

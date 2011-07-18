@@ -1,0 +1,459 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.documentlibrary.service.persistence;
+
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLSync;
+
+import java.util.List;
+
+/**
+ * The persistence utility for the d l sync service. This utility wraps {@link DLSyncPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
+ * @see DLSyncPersistence
+ * @see DLSyncPersistenceImpl
+ * @generated
+ */
+public class DLSyncUtil {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 */
+	public static void clearCache(DLSync dlSync) {
+		getPersistence().clearCache(dlSync);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<DLSync> findWithDynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<DLSync> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end) throws SystemException {
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<DLSync> findWithDynamicQuery(DynamicQuery dynamicQuery,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#remove(com.liferay.portal.model.BaseModel)
+	 */
+	public static DLSync remove(DLSync dlSync) throws SystemException {
+		return getPersistence().remove(dlSync);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 */
+	public static DLSync update(DLSync dlSync, boolean merge)
+		throws SystemException {
+		return getPersistence().update(dlSync, merge);
+	}
+
+	/**
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 */
+	public static DLSync update(DLSync dlSync, boolean merge,
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(dlSync, merge, serviceContext);
+	}
+
+	/**
+	* Caches the d l sync in the entity cache if it is enabled.
+	*
+	* @param dlSync the d l sync
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync) {
+		getPersistence().cacheResult(dlSync);
+	}
+
+	/**
+	* Caches the d l syncs in the entity cache if it is enabled.
+	*
+	* @param dlSyncs the d l syncs
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> dlSyncs) {
+		getPersistence().cacheResult(dlSyncs);
+	}
+
+	/**
+	* Creates a new d l sync with the primary key. Does not add the d l sync to the database.
+	*
+	* @param fileId the primary key for the new d l sync
+	* @return the new d l sync
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync create(
+		java.lang.String fileId) {
+		return getPersistence().create(fileId);
+	}
+
+	/**
+	* Removes the d l sync with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param fileId the primary key of the d l sync
+	* @return the d l sync that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync remove(
+		java.lang.String fileId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence().remove(fileId);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLSync updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync, boolean merge)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(dlSync, merge);
+	}
+
+	/**
+	* Returns the d l sync with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncException} if it could not be found.
+	*
+	* @param fileId the primary key of the d l sync
+	* @return the d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync findByPrimaryKey(
+		java.lang.String fileId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence().findByPrimaryKey(fileId);
+	}
+
+	/**
+	* Returns the d l sync with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param fileId the primary key of the d l sync
+	* @return the d l sync, or <code>null</code> if a d l sync with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync fetchByPrimaryKey(
+		java.lang.String fileId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(fileId);
+	}
+
+	/**
+	* Returns all the d l syncs where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @return the matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByC_M_R(
+		long companyId, java.util.Date modifiedDate, long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_M_R(companyId, modifiedDate, repositoryId);
+	}
+
+	/**
+	* Returns a range of all the d l syncs where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @return the range of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByC_M_R(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_M_R(companyId, modifiedDate, repositoryId, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the d l syncs where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByC_M_R(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_M_R(companyId, modifiedDate, repositoryId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync findByC_M_R_First(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByC_M_R_First(companyId, modifiedDate, repositoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync findByC_M_R_Last(
+		long companyId, java.util.Date modifiedDate, long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByC_M_R_Last(companyId, modifiedDate, repositoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d l syncs before and after the current d l sync in the ordered set where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param fileId the primary key of the current d l sync
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync[] findByC_M_R_PrevAndNext(
+		java.lang.String fileId, long companyId, java.util.Date modifiedDate,
+		long repositoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByC_M_R_PrevAndNext(fileId, companyId, modifiedDate,
+			repositoryId, orderByComparator);
+	}
+
+	/**
+	* Returns all the d l syncs.
+	*
+	* @return the d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the d l syncs.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @return the range of d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d l syncs.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the d l syncs where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_M_R(long companyId,
+		java.util.Date modifiedDate, long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_M_R(companyId, modifiedDate, repositoryId);
+	}
+
+	/**
+	* Removes all the d l syncs from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of d l syncs where companyId = &#63; and modifiedDate &ge; &#63; and repositoryId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param repositoryId the repository ID
+	* @return the number of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_M_R(long companyId, java.util.Date modifiedDate,
+		long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByC_M_R(companyId, modifiedDate, repositoryId);
+	}
+
+	/**
+	* Returns the number of d l syncs.
+	*
+	* @return the number of d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countAll();
+	}
+
+	public static DLSyncPersistence getPersistence() {
+		if (_persistence == null) {
+			_persistence = (DLSyncPersistence)PortalBeanLocatorUtil.locate(DLSyncPersistence.class.getName());
+
+			ReferenceRegistry.registerReference(DLSyncUtil.class, "_persistence");
+		}
+
+		return _persistence;
+	}
+
+	public void setPersistence(DLSyncPersistence persistence) {
+		_persistence = persistence;
+
+		ReferenceRegistry.registerReference(DLSyncUtil.class, "_persistence");
+	}
+
+	private static DLSyncPersistence _persistence;
+}

@@ -59,7 +59,9 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 
 	public void addFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppHelperLocalService.addFolder(folder, serviceContext);
 	}
 
@@ -71,7 +73,9 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 	}
 
 	public void deleteFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder) {
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppHelperLocalService.deleteFolder(folder);
 	}
 
@@ -97,6 +101,24 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {
 		return _dlAppHelperLocalService.getNoAssetFileEntries();
+	}
+
+	public void updateFileEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.updateFileEntry(fileEntry, fileVersion,
+			serviceContext);
+	}
+
+	public void updateFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.updateFolder(folder, serviceContext);
 	}
 
 	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,

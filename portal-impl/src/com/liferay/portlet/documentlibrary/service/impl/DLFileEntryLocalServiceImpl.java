@@ -1521,6 +1521,12 @@ public class DLFileEntryLocalServiceImpl
 				size, dlFileVersion.getStatus(),
 				serviceContext.getModifiedDate(now), serviceContext);
 
+			// DLApp
+
+			dlAppHelperLocalService.updateFileEntry(
+				new LiferayFileEntry(dlFileEntry),
+				new LiferayFileVersion(dlFileVersion), serviceContext);
+
 			// File
 
 			if (is != null) {

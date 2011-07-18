@@ -1,0 +1,252 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.documentlibrary.model;
+
+/**
+ * <p>
+ * This class is a wrapper for {@link DLSync}.
+ * </p>
+ *
+ * @author    Brian Wing Shun Chan
+ * @see       DLSync
+ * @generated
+ */
+public class DLSyncWrapper implements DLSync {
+	public DLSyncWrapper(DLSync dlSync) {
+		_dlSync = dlSync;
+	}
+
+	public Class<?> getModelClass() {
+		return DLSync.class;
+	}
+
+	public String getModelClassName() {
+		return DLSync.class.getName();
+	}
+
+	/**
+	* Returns the primary key of this d l sync.
+	*
+	* @return the primary key of this d l sync
+	*/
+	public java.lang.String getPrimaryKey() {
+		return _dlSync.getPrimaryKey();
+	}
+
+	/**
+	* Sets the primary key of this d l sync.
+	*
+	* @param primaryKey the primary key of this d l sync
+	*/
+	public void setPrimaryKey(java.lang.String primaryKey) {
+		_dlSync.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the file ID of this d l sync.
+	*
+	* @return the file ID of this d l sync
+	*/
+	public java.lang.String getFileId() {
+		return _dlSync.getFileId();
+	}
+
+	/**
+	* Sets the file ID of this d l sync.
+	*
+	* @param fileId the file ID of this d l sync
+	*/
+	public void setFileId(java.lang.String fileId) {
+		_dlSync.setFileId(fileId);
+	}
+
+	/**
+	* Returns the company ID of this d l sync.
+	*
+	* @return the company ID of this d l sync
+	*/
+	public long getCompanyId() {
+		return _dlSync.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this d l sync.
+	*
+	* @param companyId the company ID of this d l sync
+	*/
+	public void setCompanyId(long companyId) {
+		_dlSync.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the modified date of this d l sync.
+	*
+	* @return the modified date of this d l sync
+	*/
+	public java.util.Date getModifiedDate() {
+		return _dlSync.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this d l sync.
+	*
+	* @param modifiedDate the modified date of this d l sync
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_dlSync.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the repository ID of this d l sync.
+	*
+	* @return the repository ID of this d l sync
+	*/
+	public long getRepositoryId() {
+		return _dlSync.getRepositoryId();
+	}
+
+	/**
+	* Sets the repository ID of this d l sync.
+	*
+	* @param repositoryId the repository ID of this d l sync
+	*/
+	public void setRepositoryId(long repositoryId) {
+		_dlSync.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Returns the event of this d l sync.
+	*
+	* @return the event of this d l sync
+	*/
+	public java.lang.String getEvent() {
+		return _dlSync.getEvent();
+	}
+
+	/**
+	* Sets the event of this d l sync.
+	*
+	* @param event the event of this d l sync
+	*/
+	public void setEvent(java.lang.String event) {
+		_dlSync.setEvent(event);
+	}
+
+	/**
+	* Returns the type of this d l sync.
+	*
+	* @return the type of this d l sync
+	*/
+	public java.lang.String getType() {
+		return _dlSync.getType();
+	}
+
+	/**
+	* Sets the type of this d l sync.
+	*
+	* @param type the type of this d l sync
+	*/
+	public void setType(java.lang.String type) {
+		_dlSync.setType(type);
+	}
+
+	public boolean isNew() {
+		return _dlSync.isNew();
+	}
+
+	public void setNew(boolean n) {
+		_dlSync.setNew(n);
+	}
+
+	public boolean isCachedModel() {
+		return _dlSync.isCachedModel();
+	}
+
+	public void setCachedModel(boolean cachedModel) {
+		_dlSync.setCachedModel(cachedModel);
+	}
+
+	public boolean isEscapedModel() {
+		return _dlSync.isEscapedModel();
+	}
+
+	public void setEscapedModel(boolean escapedModel) {
+		_dlSync.setEscapedModel(escapedModel);
+	}
+
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _dlSync.getPrimaryKeyObj();
+	}
+
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_dlSync.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _dlSync.getExpandoBridge();
+	}
+
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_dlSync.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DLSyncWrapper((DLSync)_dlSync.clone());
+	}
+
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync) {
+		return _dlSync.compareTo(dlSync);
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlSync.hashCode();
+	}
+
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.documentlibrary.model.DLSync> toCacheModel() {
+		return _dlSync.toCacheModel();
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLSync toEscapedModel() {
+		return new DLSyncWrapper(_dlSync.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlSync.toString();
+	}
+
+	public java.lang.String toXmlString() {
+		return _dlSync.toXmlString();
+	}
+
+	public void save()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlSync.save();
+	}
+
+	public DLSync getWrappedDLSync() {
+		return _dlSync;
+	}
+
+	public void resetOriginalValues() {
+		_dlSync.resetOriginalValues();
+	}
+
+	private DLSync _dlSync;
+}

@@ -36,6 +36,13 @@ public class DLSyncServiceWrapper implements DLSyncService {
 			destinationVersion);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
+		long companyId, long repositoryId, java.util.Date lastAccessDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlSyncService.getDLSyncUpdate(companyId, repositoryId,
+			lastAccessDate);
+	}
+
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,

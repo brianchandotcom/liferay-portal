@@ -14,11 +14,48 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.documentlibrary.model.DLSync;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLSyncLocalServiceBaseImpl;
+
+import java.util.Date;
 
 /**
  * @author Michael Young
  */
 public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
+
+	public DLSync addSync(
+			String fileId, long companyId, long repositoryId,
+			String type)
+		throws PortalException, SystemException {
+
+		DLSync dlSync = dlSyncPersistence.create(fileId);
+
+		dlSync.setCompanyId(companyId);
+		dlSync.setModifiedDate(new Date());
+		dlSync.setRepositoryId(repositoryId);
+		dlSync.setEvent(DLSyncConstants.ADD);
+		dlSync.setType(type);
+
+		dlSyncPersistence.update(dlSync, false);
+
+		return dlSync;
+	}
+
+	public DLSync updateSync(String fileId, String event)
+		throws PortalException, SystemException {
+
+		DLSync dlSync = dlSyncPersistence.findByPrimaryKey(fileId);
+
+		dlSync.setModifiedDate(new Date());
+		dlSync.setEvent(event);
+
+		dlSyncPersistence.update(dlSync, false);
+
+		return dlSync;
+	}
 
 }

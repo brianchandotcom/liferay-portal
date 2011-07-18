@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
@@ -60,9 +61,22 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(), fileEntryId,
 				WorkflowConstants.ACTION_PUBLISH);
 		}
+
+		// Sync
+
+		dlSyncLocalService.addSync(
+			fileEntry.getUuid(), fileEntry.getCompanyId(),
+			fileEntry.getRepositoryId(), DLSyncConstants.FILE);
 	}
 
-	public void addFolder(Folder folder, ServiceContext serviceContext) {
+	public void addFolder(Folder folder, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Sync
+
+		dlSyncLocalService.addSync(
+			folder.getUuid(), folder.getCompanyId(),
+			folder.getRepositoryId(), DLSyncConstants.FOLDER);
 	}
 
 	public void deleteFileEntry(FileEntry fileEntry)
@@ -97,9 +111,20 @@ public class DLAppHelperLocalServiceImpl
 
 		socialActivityLocalService.deleteActivities(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		// Sync
+
+		dlSyncLocalService.updateSync(
+			fileEntry.getUuid(), DLSyncConstants.DELETE);
 	}
 
-	public void deleteFolder(Folder folder) {
+	public void deleteFolder(Folder folder)
+		throws PortalException, SystemException {
+
+		// Sync
+
+		dlSyncLocalService.updateSync(
+			folder.getUuid(), DLSyncConstants.DELETE);
 	}
 
 	public void getFileAsStream(long userId, FileEntry fileEntry)
@@ -149,6 +174,27 @@ public class DLAppHelperLocalServiceImpl
 
 	public List<FileEntry> getNoAssetFileEntries() {
 		return null;
+	}
+
+	public void updateFileEntry(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Sync
+
+		dlSyncLocalService.updateSync(
+			fileEntry.getUuid(), DLSyncConstants.UPDATE);
+
+	}
+
+	public void updateFolder(Folder folder, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Sync
+
+		dlSyncLocalService.updateSync(
+			folder.getUuid(), DLSyncConstants.UPDATE);
 	}
 
 	public AssetEntry updateAsset(

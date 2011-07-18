@@ -163,6 +163,8 @@ public class DLFileEntryAtomCollectionAdapter
 
 		AtomPager atomPager = new AtomPager(page, dlFileEntriesCount, max);
 
+		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
+
 		return DLFileEntryServiceUtil.getFileEntries(
 			groupId, folderId, atomPager.getStart(), atomPager.getEnd() + 1,
 			new EntryModifiedDateComparator());

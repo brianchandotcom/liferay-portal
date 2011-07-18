@@ -291,6 +291,7 @@
 			<basic name="iconImageId" />
 			<basic name="themeId" />
 			<basic name="colorSchemeId" />
+			<basic name="deviceProfileId" />
 			<basic name="wapThemeId" />
 			<basic name="wapColorSchemeId" />
 			<basic name="css" />
@@ -384,6 +385,7 @@
 			<basic name="colorSchemeId" />
 			<basic name="wapThemeId" />
 			<basic name="wapColorSchemeId" />
+			<basic name="deviceProfileId" />
 			<basic name="css" />
 			<basic name="pageCount" />
 			<basic name="settings">
@@ -3204,6 +3206,57 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.mobile.model.impl.DeviceProfileModelImpl">
+		<attributes>
+			<id name="deviceProfileId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="name" />
+			<basic name="description" />
+			<transient name="descriptionMap" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.mobile.model.impl.DeviceProfileActionModelImpl">
+		<attributes>
+			<id name="deviceProfileActionId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="deviceProfileId" />
+			<basic name="deviceProfileRuleId" />
+			<basic name="name" />
+			<basic name="description" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="typeSettings" />
+			<transient name="descriptionMap" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.mobile.model.impl.DeviceProfileRuleModelImpl">
+		<attributes>
+			<id name="deviceProfileRuleId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="deviceProfileId" />
+			<basic name="name" />
+			<basic name="description" />
+			<basic name="ruleType" />
+			<basic name="ruleTypeSettings" />
+			<transient name="descriptionMap" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.counter.model.impl.CounterImpl" name="Counter">
 		<table name="Counter" />
 		<attributes />
@@ -3946,5 +3999,21 @@
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">
 		<table name="WikiPageResource" />
 		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.mobile.model.impl.DeviceProfileImpl" name="DeviceProfile">
+		<table name="DeviceProfile" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.mobile.model.impl.DeviceProfileActionImpl" name="DeviceProfileAction">
+		<table name="DeviceProfileAction" />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
+	</entity>
+	<entity class="com.liferay.portal.mobile.model.impl.DeviceProfileRuleImpl" name="DeviceProfileRule">
+		<table name="DeviceProfileRule" />
+		<attributes>
+			<transient name="ruleTypeSettingsProperties" />
+		</attributes>
 	</entity>
 </entity-mappings>

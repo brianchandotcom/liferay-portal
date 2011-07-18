@@ -763,6 +763,20 @@ public interface LayoutModel extends BaseModel<Layout> {
 	public void setColorSchemeId(String colorSchemeId);
 
 	/**
+	 * Returns the device profile ID of this layout.
+	 *
+	 * @return the device profile ID of this layout
+	 */
+	public long getDeviceProfileId();
+
+	/**
+	 * Sets the device profile ID of this layout.
+	 *
+	 * @param deviceProfileId the device profile ID of this layout
+	 */
+	public void setDeviceProfileId(long deviceProfileId);
+
+	/**
 	 * Returns the wap theme ID of this layout.
 	 *
 	 * @return the wap theme ID of this layout

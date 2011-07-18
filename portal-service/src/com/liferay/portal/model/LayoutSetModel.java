@@ -214,6 +214,20 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	public void setWapColorSchemeId(String wapColorSchemeId);
 
 	/**
+	 * Returns the device profile ID of this layout set.
+	 *
+	 * @return the device profile ID of this layout set
+	 */
+	public long getDeviceProfileId();
+
+	/**
+	 * Sets the device profile ID of this layout set.
+	 *
+	 * @param deviceProfileId the device profile ID of this layout set
+	 */
+	public void setDeviceProfileId(long deviceProfileId);
+
+	/**
 	 * Returns the css of this layout set.
 	 *
 	 * @return the css of this layout set

@@ -379,6 +379,12 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
+	<target name="build-service-mobile">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portal/mobile/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-service-portlet-announcements">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/announcements/service.xml" />
@@ -523,6 +529,7 @@ public class Creole10Parser]]></replacevalue>
 
 	<target name="build-services">
 		<antcall target="build-service-counter" />
+        <antcall target="build-service-mobile" />
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 	</target>

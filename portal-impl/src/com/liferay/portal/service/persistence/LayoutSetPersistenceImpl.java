@@ -357,6 +357,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setColorSchemeId(layoutSet.getColorSchemeId());
 		layoutSetImpl.setWapThemeId(layoutSet.getWapThemeId());
 		layoutSetImpl.setWapColorSchemeId(layoutSet.getWapColorSchemeId());
+		layoutSetImpl.setDeviceProfileId(layoutSet.getDeviceProfileId());
 		layoutSetImpl.setCss(layoutSet.getCss());
 		layoutSetImpl.setPageCount(layoutSet.getPageCount());
 		layoutSetImpl.setSettings(layoutSet.getSettings());

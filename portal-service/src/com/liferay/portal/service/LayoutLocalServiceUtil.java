@@ -364,6 +364,11 @@ public class LayoutLocalServiceUtil {
 			parameterMap, startDate, endDate);
 	}
 
+	public static com.liferay.portal.model.Layout fetchLayout(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLayout(plid);
+	}
+
 	public static com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -532,6 +537,18 @@ public class LayoutLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.setLayouts(groupId, privateLayout, parentLayoutId, layoutIds);
+	}
+
+	public static com.liferay.portal.model.Layout updateDeviceProfile(
+		long plid, com.liferay.portal.mobile.model.DeviceProfile deviceProfile)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateDeviceProfile(plid, deviceProfile);
+	}
+
+	public static com.liferay.portal.model.Layout updateDeviceProfile(
+		long plid, long deviceProfileId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateDeviceProfile(plid, deviceProfileId);
 	}
 
 	public static com.liferay.portal.model.Layout updateFriendlyURL(long plid,

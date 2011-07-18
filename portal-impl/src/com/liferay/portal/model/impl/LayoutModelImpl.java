@@ -90,13 +90,14 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "iconImageId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
 			{ "colorSchemeId", Types.VARCHAR },
+			{ "deviceProfileId", Types.BIGINT },
 			{ "wapThemeId", Types.VARCHAR },
 			{ "wapColorSchemeId", Types.VARCHAR },
 			{ "css", Types.VARCHAR },
 			{ "priority", Types.INTEGER },
 			{ "layoutPrototypeId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,deviceProfileId LONG,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -141,6 +142,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
+		model.setDeviceProfileId(soapModel.getDeviceProfileId());
 		model.setWapThemeId(soapModel.getWapThemeId());
 		model.setWapColorSchemeId(soapModel.getWapColorSchemeId());
 		model.setCss(soapModel.getCss());
@@ -899,6 +901,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	@JSON
+	public long getDeviceProfileId() {
+		return _deviceProfileId;
+	}
+
+	public void setDeviceProfileId(long deviceProfileId) {
+		_deviceProfileId = deviceProfileId;
+	}
+
+	@JSON
 	public String getWapThemeId() {
 		if (_wapThemeId == null) {
 			return StringPool.BLANK;
@@ -1015,6 +1026,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setIconImageId(getIconImageId());
 		layoutImpl.setThemeId(getThemeId());
 		layoutImpl.setColorSchemeId(getColorSchemeId());
+		layoutImpl.setDeviceProfileId(getDeviceProfileId());
 		layoutImpl.setWapThemeId(getWapThemeId());
 		layoutImpl.setWapColorSchemeId(getWapColorSchemeId());
 		layoutImpl.setCss(getCss());
@@ -1243,6 +1255,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			layoutCacheModel.colorSchemeId = null;
 		}
 
+		layoutCacheModel.deviceProfileId = getDeviceProfileId();
+
 		layoutCacheModel.wapThemeId = getWapThemeId();
 
 		String wapThemeId = layoutCacheModel.wapThemeId;
@@ -1276,7 +1290,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1322,6 +1336,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getThemeId());
 		sb.append(", colorSchemeId=");
 		sb.append(getColorSchemeId());
+		sb.append(", deviceProfileId=");
+		sb.append(getDeviceProfileId());
 		sb.append(", wapThemeId=");
 		sb.append(getWapThemeId());
 		sb.append(", wapColorSchemeId=");
@@ -1338,7 +1354,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -1433,6 +1449,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getColorSchemeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>deviceProfileId</column-name><column-value><![CDATA[");
+		sb.append(getDeviceProfileId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>wapThemeId</column-name><column-value><![CDATA[");
 		sb.append(getWapThemeId());
 		sb.append("]]></column-value></column>");
@@ -1494,6 +1514,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private boolean _setOriginalIconImageId;
 	private String _themeId;
 	private String _colorSchemeId;
+	private long _deviceProfileId;
 	private String _wapThemeId;
 	private String _wapColorSchemeId;
 	private String _css;

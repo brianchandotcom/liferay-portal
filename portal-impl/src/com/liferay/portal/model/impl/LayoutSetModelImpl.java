@@ -70,12 +70,13 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "colorSchemeId", Types.VARCHAR },
 			{ "wapThemeId", Types.VARCHAR },
 			{ "wapColorSchemeId", Types.VARCHAR },
+			{ "deviceProfileId", Types.BIGINT },
 			{ "css", Types.VARCHAR },
 			{ "pageCount", Types.INTEGER },
 			{ "settings_", Types.VARCHAR },
 			{ "layoutSetPrototypeId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,deviceProfileId LONG,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -106,6 +107,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setColorSchemeId(soapModel.getColorSchemeId());
 		model.setWapThemeId(soapModel.getWapThemeId());
 		model.setWapColorSchemeId(soapModel.getWapColorSchemeId());
+		model.setDeviceProfileId(soapModel.getDeviceProfileId());
 		model.setCss(soapModel.getCss());
 		model.setPageCount(soapModel.getPageCount());
 		model.setSettings(soapModel.getSettings());
@@ -299,6 +301,15 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	@JSON
+	public long getDeviceProfileId() {
+		return _deviceProfileId;
+	}
+
+	public void setDeviceProfileId(long deviceProfileId) {
+		_deviceProfileId = deviceProfileId;
+	}
+
+	@JSON
 	public String getCss() {
 		if (_css == null) {
 			return StringPool.BLANK;
@@ -389,6 +400,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetImpl.setColorSchemeId(getColorSchemeId());
 		layoutSetImpl.setWapThemeId(getWapThemeId());
 		layoutSetImpl.setWapColorSchemeId(getWapColorSchemeId());
+		layoutSetImpl.setDeviceProfileId(getDeviceProfileId());
 		layoutSetImpl.setCss(getCss());
 		layoutSetImpl.setPageCount(getPageCount());
 		layoutSetImpl.setSettings(getSettings());
@@ -504,6 +516,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			layoutSetCacheModel.wapColorSchemeId = null;
 		}
 
+		layoutSetCacheModel.deviceProfileId = getDeviceProfileId();
+
 		layoutSetCacheModel.css = getCss();
 
 		String css = layoutSetCacheModel.css;
@@ -529,7 +543,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{layoutSetId=");
 		sb.append(getLayoutSetId());
@@ -551,6 +565,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getWapThemeId());
 		sb.append(", wapColorSchemeId=");
 		sb.append(getWapColorSchemeId());
+		sb.append(", deviceProfileId=");
+		sb.append(getDeviceProfileId());
 		sb.append(", css=");
 		sb.append(getCss());
 		sb.append(", pageCount=");
@@ -565,7 +581,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSet");
@@ -612,6 +628,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getWapColorSchemeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>deviceProfileId</column-name><column-value><![CDATA[");
+		sb.append(getDeviceProfileId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>css</column-name><column-value><![CDATA[");
 		sb.append(getCss());
 		sb.append("]]></column-value></column>");
@@ -651,6 +671,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _colorSchemeId;
 	private String _wapThemeId;
 	private String _wapColorSchemeId;
+	private long _deviceProfileId;
 	private String _css;
 	private int _pageCount;
 	private String _settings;

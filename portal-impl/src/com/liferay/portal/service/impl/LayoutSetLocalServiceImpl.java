@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.mobile.model.DeviceProfile;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -117,6 +118,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
+	public LayoutSet fetchLayoutSet(long layoutSetId)
+		throws SystemException{
+
+		return layoutSetPersistence.fetchByPrimaryKey(layoutSetId);
+	}
+
 	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -139,6 +146,34 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		return layoutSetPersistence.findByPrimaryKey(
 			virtualHost.getLayoutSetId());
+	}
+
+	public LayoutSet updateDeviceProfile(
+			long layoutSetId, DeviceProfile deviceProfile)
+		throws SystemException {
+
+		long deviceProfileId = 0;
+
+		if (deviceProfile != null) {
+			deviceProfileId = deviceProfile.getDeviceProfileId();
+		}
+
+		return updateDeviceProfile(layoutSetId, deviceProfileId);
+	}
+
+	public LayoutSet updateDeviceProfile(long layoutSetId, long deviceProfileId)
+		throws SystemException {
+
+		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
+			layoutSetId);
+
+		if (layoutSet != null) {
+			layoutSet.setDeviceProfileId(deviceProfileId);
+
+			layoutSetPersistence.update(layoutSet, false);
+		}
+
+		return layoutSet;
 	}
 
 	public void updateLogo(

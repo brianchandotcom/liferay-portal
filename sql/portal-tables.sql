@@ -643,6 +643,34 @@ create table DLFolder (
 	overrideFileEntryTypes BOOLEAN
 );
 
+create table DeviceProfile (
+	uuid_ VARCHAR(75) null,
+	deviceProfileId LONG not null primary key,
+	name STRING null,
+	description STRING null
+);
+
+create table DeviceProfileAction (
+	uuid_ VARCHAR(75) null,
+	deviceProfileActionId LONG not null primary key,
+	deviceProfileId LONG,
+	deviceProfileRuleId LONG,
+	name STRING null,
+	description STRING null,
+	type_ VARCHAR(255) null,
+	typeSettings TEXT null
+);
+
+create table DeviceProfileRule (
+	uuid_ VARCHAR(75) null,
+	deviceProfileRuleId LONG not null primary key,
+	deviceProfileId LONG,
+	name STRING null,
+	description STRING null,
+	ruleType VARCHAR(75) null,
+	ruleTypeSettings TEXT null
+);
+
 create table EmailAddress (
 	emailAddressId LONG not null primary key,
 	companyId LONG,
@@ -924,6 +952,7 @@ create table Layout (
 	iconImageId LONG,
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,
+	deviceProfileId LONG,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
 	css STRING null,
@@ -985,6 +1014,7 @@ create table LayoutSet (
 	colorSchemeId VARCHAR(75) null,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
+	deviceProfileId LONG,
 	css STRING null,
 	pageCount INTEGER,
 	settings_ STRING null,

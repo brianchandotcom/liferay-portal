@@ -253,6 +253,24 @@ public class LayoutSetWrapper implements LayoutSet {
 	}
 
 	/**
+	* Returns the device profile ID of this layout set.
+	*
+	* @return the device profile ID of this layout set
+	*/
+	public long getDeviceProfileId() {
+		return _layoutSet.getDeviceProfileId();
+	}
+
+	/**
+	* Sets the device profile ID of this layout set.
+	*
+	* @param deviceProfileId the device profile ID of this layout set
+	*/
+	public void setDeviceProfileId(long deviceProfileId) {
+		_layoutSet.setDeviceProfileId(deviceProfileId);
+	}
+
+	/**
 	* Returns the css of this layout set.
 	*
 	* @return the css of this layout set

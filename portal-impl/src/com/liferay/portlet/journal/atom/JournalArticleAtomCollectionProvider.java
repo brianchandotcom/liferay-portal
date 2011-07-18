@@ -62,7 +62,8 @@ public class JournalArticleAtomCollectionProvider
 	public AtomEntryContent getEntryContent(
 		JournalArticle journalArticle, AtomRequestContext atomRequestContext) {
 
-		return new AtomEntryContent(journalArticle.getContent());
+		return new AtomEntryContent(
+			journalArticle.getContent(), AtomEntryContent.Type.XML);
 	}
 
 	public String getEntryId(JournalArticle journalArticle) {

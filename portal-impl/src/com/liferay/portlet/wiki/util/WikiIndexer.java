@@ -78,7 +78,8 @@ public class WikiIndexer extends BaseIndexer {
 		long[] nodeIds = searchContext.getNodeIds();
 
 		if ((nodeIds != null) && (nodeIds.length > 0)) {
-			BooleanQuery nodeIdsQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery nodeIdsQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			for (long nodeId : nodeIds) {
 				try {
@@ -97,6 +98,9 @@ public class WikiIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
+		SearchContext searchContext = new SearchContext();
+		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+
 		if (obj instanceof Object[]) {
 			Object[] array = (Object[])obj;
 
@@ -114,7 +118,8 @@ public class WikiIndexer extends BaseIndexer {
 		else if (obj instanceof WikiNode) {
 			WikiNode node = (WikiNode)obj;
 
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
 

@@ -14,29 +14,30 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 /**
  * @author Raymond Augé
+ * @author Michael C. Han
  */
-public class TermRangeQueryFactoryUtil {
+public class TermRangeQueryFactoryUtil
+	extends BaseQueryFactoryUtil<TermRangeQueryFactory> {
 
 	public static TermRangeQuery create(
-		String field, String lowerTerm, String upperTerm, boolean includesLower,
-		boolean includesUpper) {
+		SearchContext searchContext, String field, String lowerTerm,
+		String upperTerm, boolean includesLower, boolean includesUpper) {
 
-		return getTermRangeQueryFactory().create(
+		return getTermRangeQueryFactory(searchContext).create(
 			field, lowerTerm, upperTerm, includesLower, includesUpper);
 	}
 
-	public static TermRangeQueryFactory getTermRangeQueryFactory() {
-		return _termRangeQueryFactory;
+	public static TermRangeQueryFactory getTermRangeQueryFactory(
+		SearchContext searchContext) {
+
+		return _instance.getQueryFactory(searchContext);
 	}
 
-	public void setTermRangeQueryFactory(
-		TermRangeQueryFactory termRangeQueryFactory) {
-
-		_termRangeQueryFactory = termRangeQueryFactory;
-	}
-
-	private static TermRangeQueryFactory _termRangeQueryFactory;
+	@BeanReference(type = TermRangeQueryFactoryUtil.class)
+	private static TermRangeQueryFactoryUtil _instance;
 
 }

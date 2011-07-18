@@ -73,7 +73,7 @@ public class OrganizationIndexer extends BaseIndexer {
 
 			if (leftAndRightOrganizationIds != null) {
 				BooleanQuery organizationsTreeQuery =
-					BooleanQueryFactoryUtil.create();
+					BooleanQueryFactoryUtil.create(searchContext);
 
 				if (leftAndRightOrganizationIds.length == 0) {
 					organizationsTreeQuery.addRequiredTerm(

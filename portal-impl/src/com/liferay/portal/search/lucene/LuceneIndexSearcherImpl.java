@@ -82,7 +82,8 @@ import org.apache.lucene.search.TopFieldDocs;
 public class LuceneIndexSearcherImpl implements IndexSearcher {
 
 	public Hits search(
-			long companyId, Query query, Sort[] sorts, int start, int end)
+			String searchEngineId, long companyId, Query query, Sort[] sorts,
+			int start, int end)
 		throws SearchException {
 
 		if (_log.isDebugEnabled()) {

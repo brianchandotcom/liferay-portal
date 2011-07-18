@@ -89,7 +89,7 @@ public class UserIndexer extends BaseIndexer {
 					continue;
 				}
 
-				addContextQueryParams(contextQuery, key, value);
+				addContextQueryParams(contextQuery, key, value, searchContext);
 			}
 		}
 	}
@@ -124,7 +124,8 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	protected void addContextQueryParams(
-			BooleanQuery contextQuery, String key, Object value)
+			BooleanQuery contextQuery, String key, Object value,
+			SearchContext searchContext)
 		throws Exception {
 
 		if (key.equals("usersOrgs")) {
@@ -132,7 +133,7 @@ public class UserIndexer extends BaseIndexer {
 				Long[] values = (Long[])value;
 
 				BooleanQuery usersOrgsQuery =
-					BooleanQueryFactoryUtil.create();
+					BooleanQueryFactoryUtil.create(searchContext);
 
 				for (long organizationId : values) {
 					usersOrgsQuery.addTerm(

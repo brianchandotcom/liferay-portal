@@ -183,6 +183,13 @@ public class DeployManagerImpl implements DeployManager {
 		deployer.setUiTaglibDTD(getResourcePath("liferay-ui.tld"));
 		deployer.setUtilTaglibDTD(getResourcePath("liferay-util.tld"));
 
+		deployer.addExtJar(jars, "ext-util-bridges.jar");
+		deployer.addExtJar(jars, "ext-util-java.jar");
+		deployer.addExtJar(jars, "ext-util-taglib.jar");
+		deployer.addRequiredJar(jars, "util-bridges.jar");
+		deployer.addRequiredJar(jars, "util-java.jar");
+		deployer.addRequiredJar(jars, "util-taglib.jar");
+
 		return deployer;
 	}
 

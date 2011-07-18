@@ -16,13 +16,15 @@ package com.liferay.portal.mobile.device.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseDestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
+import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
 public class DeviceRecognitionProviderDestinationEventListener
 	extends BaseDestinationEventListener {
@@ -35,9 +37,7 @@ public class DeviceRecognitionProviderDestinationEventListener
 			return;
 		}
 
-		MessageBusUtil.unregisterMessageListener(
-			DestinationNames.DEVICE_RECOGNITION_PROVIDER,
-			_proxyMessageListener);
+		new DeviceDetectionUtil().setDeviceRecognitionProvider(_proxyProvider);
 	}
 
 	@Override
@@ -48,15 +48,15 @@ public class DeviceRecognitionProviderDestinationEventListener
 			return;
 		}
 
-		MessageBusUtil.registerMessageListener(
-			DestinationNames.DEVICE_RECOGNITION_PROVIDER,
-			_proxyMessageListener);
+		new DeviceDetectionUtil().setDeviceRecognitionProvider(_directProvider);
 	}
 
-	public void setProxyMessageListener(
-		ProxyMessageListener proxyMessageListener) {
+	public void setDirectProvider(DeviceRecognitionProvider directProvider) {
+		_directProvider = directProvider;
+	}
 
-		_proxyMessageListener = proxyMessageListener;
+	public void setProxyProvider(DeviceRecognitionProvider proxyProvider) {
+		_proxyProvider = proxyProvider;
 	}
 
 	protected boolean isProceed(
@@ -64,7 +64,6 @@ public class DeviceRecognitionProviderDestinationEventListener
 
 		if ((!destinationName.equals(
 				DestinationNames.DEVICE_RECOGNITION_PROVIDER)) ||
-			(messageListener == _proxyMessageListener) ||
 			!(messageListener instanceof ProxyMessageListener)) {
 
 			return false;
@@ -74,6 +73,7 @@ public class DeviceRecognitionProviderDestinationEventListener
 		}
 	}
 
-	private ProxyMessageListener _proxyMessageListener;
+	private DeviceRecognitionProvider _directProvider;
+	private DeviceRecognitionProvider _proxyProvider;
 
 }

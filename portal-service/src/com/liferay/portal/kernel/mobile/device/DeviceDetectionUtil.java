@@ -73,6 +73,7 @@ public class DeviceDetectionUtil {
 		_deviceRecognitionProvider = deviceRecognitionProvider;
 	}
 
-	private static DeviceRecognitionProvider _deviceRecognitionProvider;
+	private static volatile DeviceRecognitionProvider
+		_deviceRecognitionProvider;
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter;
-import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -35,7 +35,7 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 
 		_portalSession = request.getSession();
 
-		if (CompoundSessionIdFilter.hasCompoundSessionId() &&
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter() &&
 			!(_portalSession instanceof CompoundSessionIdHttpSession)) {
 
 			_portalSession = new CompoundSessionIdHttpSession(_portalSession);
@@ -72,13 +72,13 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 	protected HttpSession getSharedSessionWrapper(
 		HttpSession portalSession, HttpSession portletSession) {
 
-		if (CompoundSessionIdFilter.hasCompoundSessionId() &&
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter() &&
 			!(portalSession instanceof CompoundSessionIdHttpSession)) {
 
 			portalSession = new CompoundSessionIdHttpSession(portalSession);
 		}
 
-		if (CompoundSessionIdFilter.hasCompoundSessionId() &&
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter() &&
 			!(portletSession instanceof CompoundSessionIdHttpSession)) {
 
 			portletSession = new CompoundSessionIdHttpSession(portletSession);

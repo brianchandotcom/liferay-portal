@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +42,9 @@ public class PortletSessionListenerManager implements HttpSessionListener {
 		_listeners.remove(listener);
 	}
 
-	public void sessionCreated(HttpSessionEvent event) {
+	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -55,7 +60,7 @@ public class PortletSessionListenerManager implements HttpSessionListener {
 
 				currentThread.setContextClassLoader(listenerClassLoader);
 
-				listener.sessionCreated(event);
+				listener.sessionCreated(httpSessionEvent);
 			}
 		}
 		finally {
@@ -63,14 +68,30 @@ public class PortletSessionListenerManager implements HttpSessionListener {
 		}
 	}
 
-	public void sessionDestroyed(HttpSessionEvent event) {
+	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
+
 		Iterator<HttpSessionListener> itr = _listeners.iterator();
 
 		while (itr.hasNext()) {
 			HttpSessionListener listener = itr.next();
 
-			listener.sessionDestroyed(event);
+			listener.sessionDestroyed(httpSessionEvent);
 		}
+	}
+
+	protected HttpSessionEvent getHttpSessionEvent(
+		HttpSessionEvent httpSessionEvent) {
+
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(
+				compoundSessionIdHttpSession);
+		}
+
+		return httpSessionEvent;
 	}
 
 	private static List<HttpSessionListener> _listeners =

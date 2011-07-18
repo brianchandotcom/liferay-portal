@@ -180,6 +180,10 @@ public class PluginPackageUtil {
 		return _instance._isInstallationInProcess(context);
 	}
 
+	public static boolean isInstalled(String context) {
+		return _instance._isInstalled(context);
+	}
+
 	public static boolean isTrusted(String repositoryURL)
 		throws SystemException {
 
@@ -545,6 +549,15 @@ public class PluginPackageUtil {
 		if (_installedPluginPackages.getInstallingPluginPackage(
 				context) != null) {
 
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean _isInstalled(String context) {
+		if (_installedPluginPackages.getPluginPackage(context) != null) {
 			return true;
 		}
 		else {

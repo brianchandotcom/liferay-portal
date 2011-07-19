@@ -305,6 +305,22 @@
 			<transient name="titleMap" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.LayoutBranchModelImpl">
+		<attributes>
+			<id name="LayoutBranchId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="layoutSetBranchId" />
+			<basic name="plid" />
+			<basic name="name" />
+			<basic name="description" />
+			<basic name="master" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.LayoutPrototypeModelImpl">
 		<attributes>
 			<id name="layoutPrototypeId" />
@@ -336,10 +352,10 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="layoutSetBranchId" />
+			<basic name="layoutBranchId" />
 			<basic name="parentLayoutRevisionId" />
 			<basic name="head" />
 			<basic name="major" />
-			<basic name="variationName" />
 			<basic name="plid" />
 			<basic name="privateLayout" />
 			<basic name="name" />
@@ -3284,6 +3300,10 @@
 		<attributes>
 			<transient name="typeSettingsProperties" />
 		</attributes>
+	</entity>
+	<entity class="com.liferay.portal.model.impl.LayoutBranchImpl" name="LayoutBranch">
+		<table name="LayoutBranch" />
+		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutPrototypeImpl" name="LayoutPrototype">
 		<table name="LayoutPrototype" />

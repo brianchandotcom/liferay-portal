@@ -16,6 +16,7 @@
 	<import class="com.liferay.portal.model.Group" />
 	<import class="com.liferay.portal.model.Image" />
 	<import class="com.liferay.portal.model.Layout" />
+	<import class="com.liferay.portal.model.LayoutBranch" />
 	<import class="com.liferay.portal.model.LayoutPrototype" />
 	<import class="com.liferay.portal.model.LayoutRevision" />
 	<import class="com.liferay.portal.model.LayoutSet" />
@@ -375,6 +376,20 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="layoutPrototypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+	<class name="com.liferay.portal.model.impl.LayoutBranchImpl" table="LayoutBranch">
+		<cache usage="read-write" />
+		<id name="LayoutBranchId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="layoutSetBranchId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
 	<class name="com.liferay.portal.model.impl.LayoutPrototypeImpl" table="LayoutPrototype">
 		<cache usage="read-write" />
 		<id name="layoutPrototypeId" type="long">
@@ -398,10 +413,10 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="layoutSetBranchId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="layoutBranchId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="parentLayoutRevisionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="major" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="variationName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />

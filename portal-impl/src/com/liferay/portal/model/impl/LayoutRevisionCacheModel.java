@@ -49,14 +49,14 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision> {
 		sb.append(modifiedDate);
 		sb.append(", layoutSetBranchId=");
 		sb.append(layoutSetBranchId);
+		sb.append(", layoutBranchId=");
+		sb.append(layoutBranchId);
 		sb.append(", parentLayoutRevisionId=");
 		sb.append(parentLayoutRevisionId);
 		sb.append(", head=");
 		sb.append(head);
 		sb.append(", major=");
 		sb.append(major);
-		sb.append(", variationName=");
-		sb.append(variationName);
 		sb.append(", plid=");
 		sb.append(plid);
 		sb.append(", privateLayout=");
@@ -130,17 +130,10 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision> {
 		}
 
 		layoutRevisionImpl.setLayoutSetBranchId(layoutSetBranchId);
+		layoutRevisionImpl.setLayoutBranchId(layoutBranchId);
 		layoutRevisionImpl.setParentLayoutRevisionId(parentLayoutRevisionId);
 		layoutRevisionImpl.setHead(head);
 		layoutRevisionImpl.setMajor(major);
-
-		if (variationName == null) {
-			layoutRevisionImpl.setVariationName(StringPool.BLANK);
-		}
-		else {
-			layoutRevisionImpl.setVariationName(variationName);
-		}
-
 		layoutRevisionImpl.setPlid(plid);
 		layoutRevisionImpl.setPrivateLayout(privateLayout);
 
@@ -254,10 +247,10 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision> {
 	public long createDate;
 	public long modifiedDate;
 	public long layoutSetBranchId;
+	public long layoutBranchId;
 	public long parentLayoutRevisionId;
 	public boolean head;
 	public boolean major;
-	public String variationName;
 	public long plid;
 	public boolean privateLayout;
 	public String name;

@@ -263,6 +263,17 @@
 		<field name="priority" type="int" />
 		<field name="layoutPrototypeId" type="long" />
 	</model>
+	<model name="com.liferay.portal.model.LayoutBranch">
+		<field name="LayoutBranchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="plid" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="master" type="boolean" />
+	</model>
 	<model name="com.liferay.portal.model.LayoutPrototype">
 		<field name="layoutPrototypeId" type="long" />
 		<field name="companyId" type="long" />
@@ -286,10 +297,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="layoutSetBranchId" type="long" />
+		<field name="layoutBranchId" type="long" />
 		<field name="parentLayoutRevisionId" type="long" />
 		<field name="head" type="boolean" />
 		<field name="major" type="boolean" />
-		<field name="variationName" type="String" />
 		<field name="plid" type="long" />
 		<field name="privateLayout" type="boolean" />
 		<field name="name" type="String" localized="true">

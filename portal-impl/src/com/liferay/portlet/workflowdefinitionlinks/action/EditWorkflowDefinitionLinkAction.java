@@ -98,7 +98,7 @@ public class EditWorkflowDefinitionLinkAction extends PortletAction {
 
 			WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
 				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
-				className, 0, workflowDefinition);
+				className, 0, 0, workflowDefinition);
 		}
 	}
 

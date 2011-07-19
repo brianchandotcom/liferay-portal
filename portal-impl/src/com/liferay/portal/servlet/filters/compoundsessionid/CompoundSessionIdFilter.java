@@ -15,12 +15,9 @@
 package com.liferay.portal.servlet.filters.compoundsessionid;
 
 import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdServletRequest;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -36,36 +33,11 @@ import javax.servlet.http.HttpServletResponse;
 public class CompoundSessionIdFilter
 	extends BasePortalFilter implements WrapHttpServletRequestFilter {
 
-	public static String getSessionIdDelimiter() {
-		if (_sessionIdDelimiter != null) {
-			return _sessionIdDelimiter;
-		}
-
-		String sessionIdDelimiter = PropsValues.SESSION_ID_DELIMITER;
-
-		if (Validator.isNull(sessionIdDelimiter)) {
-			_sessionIdDelimiter = PropsUtil.get(
-				"session.id." + ServerDetector.getServerId() + " .delimiter");
-		}
-
-		if (_sessionIdDelimiter == null) {
-			_sessionIdDelimiter = StringPool.BLANK;
-		}
-
-		_sessionIdDelimiter = sessionIdDelimiter;
-
-		return _sessionIdDelimiter;
-	}
-
-	public static boolean hasCompoundSessionId() {
-		return _filterEnabled;
-	}
-
 	@Override
 	public void init(FilterConfig filterConfig) {
 		super.init(filterConfig);
 
-		if (Validator.isNotNull(getSessionIdDelimiter())) {
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			_filterEnabled = true;
 		}
 		else {
@@ -85,6 +57,5 @@ public class CompoundSessionIdFilter
 	}
 
 	private static boolean _filterEnabled;
-	private static String _sessionIdDelimiter;
 
 }

@@ -12,28 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search;
-
-import com.liferay.portal.kernel.search.PortalSearchEngine;
-import com.liferay.portal.util.PropsValues;
+package com.liferay.portlet.documentlibrary.model.impl;
 
 /**
- * @author Bruno Farache
+ * @author Brian Wing Shun Chan
  */
-public class PortalSearchEngineImpl implements PortalSearchEngine {
+public class DLSyncImpl extends DLSyncBaseImpl {
 
-	public PortalSearchEngineImpl() {
-		_indexReadOnly = PropsValues.INDEX_READ_ONLY;
+	public DLSyncImpl() {
 	}
-
-	public boolean isIndexReadOnly() {
-		return _indexReadOnly;
-	}
-
-	public void setIndexReadOnly(boolean indexReadOnly) {
-		_indexReadOnly = indexReadOnly;
-	}
-
-	private boolean _indexReadOnly;
 
 }

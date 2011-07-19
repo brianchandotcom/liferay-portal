@@ -92,4 +92,5 @@
 	<!-- Advice -->
 
 	<bean id="messagingProxyAdvice" class="com.liferay.portal.messaging.proxy.MessagingProxyAdvice" />
+	<bean id="multiDestinationMessagingProxyAdvice" class="com.liferay.portal.messaging.proxy.MultiDestinationMessagingProxyAdvice" />
 </beans>

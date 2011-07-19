@@ -85,6 +85,8 @@ public class WorkflowDefinitionLinkPersistenceTest
 
 		newWorkflowDefinitionLink.setClassPK(nextLong());
 
+		newWorkflowDefinitionLink.setTypePK(nextLong());
+
 		newWorkflowDefinitionLink.setWorkflowDefinitionName(randomString());
 
 		newWorkflowDefinitionLink.setWorkflowDefinitionVersion(nextInt());
@@ -113,6 +115,8 @@ public class WorkflowDefinitionLinkPersistenceTest
 			newWorkflowDefinitionLink.getClassNameId());
 		assertEquals(existingWorkflowDefinitionLink.getClassPK(),
 			newWorkflowDefinitionLink.getClassPK());
+		assertEquals(existingWorkflowDefinitionLink.getTypePK(),
+			newWorkflowDefinitionLink.getTypePK());
 		assertEquals(existingWorkflowDefinitionLink.getWorkflowDefinitionName(),
 			newWorkflowDefinitionLink.getWorkflowDefinitionName());
 		assertEquals(existingWorkflowDefinitionLink.getWorkflowDefinitionVersion(),
@@ -248,6 +252,8 @@ public class WorkflowDefinitionLinkPersistenceTest
 			existingWorkflowDefinitionLinkModelImpl.getOriginalClassNameId());
 		assertEquals(existingWorkflowDefinitionLinkModelImpl.getClassPK(),
 			existingWorkflowDefinitionLinkModelImpl.getOriginalClassPK());
+		assertEquals(existingWorkflowDefinitionLinkModelImpl.getTypePK(),
+			existingWorkflowDefinitionLinkModelImpl.getOriginalTypePK());
 	}
 
 	protected WorkflowDefinitionLink addWorkflowDefinitionLink()
@@ -271,6 +277,8 @@ public class WorkflowDefinitionLinkPersistenceTest
 		workflowDefinitionLink.setClassNameId(nextLong());
 
 		workflowDefinitionLink.setClassPK(nextLong());
+
+		workflowDefinitionLink.setTypePK(nextLong());
 
 		workflowDefinitionLink.setWorkflowDefinitionName(randomString());
 

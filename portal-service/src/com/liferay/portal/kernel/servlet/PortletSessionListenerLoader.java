@@ -28,20 +28,24 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class PortletSessionListenerLoader implements ServletContextListener {
 
-	public PortletSessionListenerLoader(HttpSessionListener listener) {
-		_listener = listener;
+	public PortletSessionListenerLoader(
+		HttpSessionListener httpSessionListener) {
+
+		_httpSessionListener = httpSessionListener;
 	}
 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		PortletSessionListenerManager.addListener(_listener);
+		PortletSessionListenerManager.addHttpSessionListener(
+			_httpSessionListener);
 	}
 
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		PortletSessionListenerManager.removeListener(_listener);
+		PortletSessionListenerManager.removeHttpSessionListener(
+			_httpSessionListener);
 
-		_listener = null;
+		_httpSessionListener = null;
 	}
 
-	private HttpSessionListener _listener;
+	private HttpSessionListener _httpSessionListener;
 
 }

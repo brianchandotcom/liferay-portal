@@ -21,6 +21,8 @@ public interface AtomRequestContext {
 
 	public Object getContainerAttribute(String name);
 
+	public String getHeader(String name);
+
 	public int getIntParameter(String name);
 
 	public int getIntParameter(String name, int defaultValue);
@@ -35,7 +37,11 @@ public interface AtomRequestContext {
 
 	public Object getRequestAttribute(String name);
 
+	public String getResolvedUri();
+
 	public Object getSessionAttribute(String name);
+
+	public String getTargetBasePath();
 
 	public void setContainerAttribute(String name, Object value);
 

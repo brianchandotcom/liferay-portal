@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLSync;
+import com.liferay.portlet.documentlibrary.model.DLSyncUpdate;
 import com.liferay.portlet.documentlibrary.service.base.DLSyncServiceBaseImpl;
 
 import java.io.File;
@@ -36,10 +38,27 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
+import java.util.Collection;
+import java.util.Date;
+
 /**
  * @author Michael Young
  */
 public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
+
+	public DLSyncUpdate getDLSyncUpdate(
+			long companyId, long repositoryId, Date lastAccessDate)
+		throws SystemException {
+
+		Date now = new Date();
+
+		Collection<DLSync> dlSyncs = dlSyncPersistence.findByC_M_R(
+			companyId, lastAccessDate, repositoryId);
+
+		DLSyncUpdate dlSyncUpdate = new DLSyncUpdate(dlSyncs, now);
+
+		return dlSyncUpdate;
+	}
 
 	public InputStream getFileDeltaAsStream(
 			long fileEntryId, String sourceVersion, String destinationVersion)

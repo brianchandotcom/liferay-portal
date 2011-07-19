@@ -73,7 +73,7 @@ public class MultiValueFacet extends BaseFacet {
 			return null;
 		}
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		for (String value : values) {
 			FacetValueValidator facetValueValidator = getFacetValueValidator();
@@ -85,7 +85,7 @@ public class MultiValueFacet extends BaseFacet {
 			}
 
 			TermQuery termQuery = TermQueryFactoryUtil.create(
-				getFieldName(), value);
+				searchContext, getFieldName(), value);
 
 			try {
 				facetQuery.add(termQuery, BooleanClauseOccur.SHOULD);

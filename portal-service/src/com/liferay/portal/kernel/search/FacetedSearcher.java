@@ -62,7 +62,8 @@ public class FacetedSearcher extends BaseIndexer {
 		try {
 			searchContext.setSearchEngineId(getSearchEngineId());
 
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			contextQuery.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
@@ -146,7 +147,8 @@ public class FacetedSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
 
 		String keywords = searchContext.getKeywords();
 
@@ -190,7 +192,7 @@ public class FacetedSearcher extends BaseIndexer {
 			}
 		}
 
-		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 

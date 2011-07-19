@@ -37,6 +37,13 @@ public class DLSyncServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLSyncServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
+		long companyId, long repositoryId, java.util.Date lastAccessDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getDLSyncUpdate(companyId, repositoryId, lastAccessDate);
+	}
+
 	public static java.io.InputStream getFileDeltaAsStream(long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)
 		throws com.liferay.portal.kernel.exception.PortalException,

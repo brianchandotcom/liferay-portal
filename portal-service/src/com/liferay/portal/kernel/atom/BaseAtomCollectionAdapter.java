@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.atom;
 
+import java.io.InputStream;
+
 import java.util.Date;
 
 /**
@@ -79,6 +81,20 @@ public abstract class BaseAtomCollectionAdapter<E>
 		}
 	}
 
+	public String getMediaContentType(E entry) {
+		throw new UnsupportedOperationException();
+	}
+
+	@SuppressWarnings("unused")
+	public String getMediaName(E entry) throws AtomException {
+		throw new UnsupportedOperationException();
+	}
+
+	@SuppressWarnings("unused")
+	public InputStream getMediaStream(E entry) throws AtomException {
+		throw new UnsupportedOperationException();
+	}
+
 	public E postEntry(
 			String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
@@ -87,6 +103,27 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			return doPostEntry(
 				title, summary, content, date, atomRequestContext);
+		}
+		catch (Exception e) {
+			Class<?> clazz = e.getClass();
+
+			String className = clazz.getName();
+
+			if (className.startsWith("NoSuch")) {
+				throw new AtomException(SC_NOT_FOUND);
+			}
+
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
+	public E postMedia(
+			String mimeType, String slug, InputStream inputStream,
+			AtomRequestContext atomRequestContext)
+		throws AtomException {
+
+		try {
+			return doPostMedia(mimeType, slug, inputStream, atomRequestContext);
 		}
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
@@ -123,6 +160,28 @@ public abstract class BaseAtomCollectionAdapter<E>
 		}
 	}
 
+	public void putMedia(
+			E entry, String mimeType, String slug, InputStream inputStream,
+			AtomRequestContext atomRequestContext)
+		throws AtomException {
+
+		try {
+			doPutMedia(
+				entry, mimeType, slug, inputStream, atomRequestContext);
+		}
+		catch (Exception e) {
+			Class<?> clazz = e.getClass();
+
+			String className = clazz.getName();
+
+			if (className.startsWith("NoSuch")) {
+				throw new AtomException(SC_NOT_FOUND);
+			}
+
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
 	protected abstract void doDeleteEntry(
 			String resourceName, AtomRequestContext atomRequestContext)
 		throws Exception;
@@ -140,9 +199,25 @@ public abstract class BaseAtomCollectionAdapter<E>
 			AtomRequestContext atomRequestContext)
 		throws Exception;
 
+	protected E doPostMedia(
+			String mimeType, String slug, InputStream inputStream,
+			AtomRequestContext atomRequestContext)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	protected abstract void doPutEntry(
 			E entry, String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
 		throws Exception;
+
+	protected void doPutMedia(
+			E entry, String mimeType, String slug, InputStream inputStream,
+			AtomRequestContext atomRequestContext)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

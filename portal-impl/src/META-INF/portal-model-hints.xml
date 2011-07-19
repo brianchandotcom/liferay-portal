@@ -929,6 +929,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="typePK" type="long" />
 		<field name="workflowDefinitionName" type="String" />
 		<field name="workflowDefinitionVersion" type="int" />
 	</model>
@@ -1386,6 +1387,16 @@
 		<field name="lastPostDate" type="Date" />
 		<field name="defaultFileEntryTypeId" type="long" />
 		<field name="overrideFileEntryTypes" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLSync">
+		<field name="syncId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fileId" type="String" />
+		<field name="repositoryId" type="long" />
+		<field name="event" type="String" />
+		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />

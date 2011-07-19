@@ -642,6 +642,13 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 			</sequential>
 		</for>
 
+		<if>
+			<available file="${patching.tool.source.dir}" type="dir" />
+			<then>
+				<ant dir="${patching.tool.source.dir}" target="all" inheritAll="false" />
+			</then>
+		</if>
+
 		<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}">
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update -r ${svn.revision}" />
 		</exec>
@@ -693,6 +700,7 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 		<antcall target="zip-jboss" />
 		<antcall target="zip-jetty" />
 		<antcall target="zip-jonas" />
+		<antcall target="zip-patching-tool" />
 		<antcall target="zip-portal-client" />
 		<antcall target="zip-portal-dependencies" />
 		<antcall target="zip-resin" />
@@ -1056,6 +1064,140 @@ release was successful.</echo>
 		<mkdir dir="${app.server.tomcat.dir}/webapps" />
 	</target>
 
+	<target name="unzip-weblogic">
+		<delete dir="${app.server.weblogic.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
+			</not>
+			<then>
+				<get
+					dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+					src="${app.server.weblogic.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="${app.server.weblogic.dir}"
+			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+		/>
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMdd" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<echo file="${tstamp.value}/create-weblogic-domain.py">
+			import sys
+
+			def main():
+				readTemplate('${app.server.weblogic.dir}/common/templates/domains/wls.jar')
+
+				set('Name', '${app.server.weblogic.instance.name}')
+
+				cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
+
+				set('UserPassword', 'testing123')
+
+				cd('/Servers/AdminServer')
+
+				set('ListenAddress', '')
+				set('ListenPort', 8080)
+
+				writeDomain('${app.server.weblogic.instance.dir}')
+
+				closeTemplate()
+
+			sys.exit(main())
+		</echo>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<exec dir="${app.server.weblogic.dir}" executable="cmd">
+					<env key="MW_HOME" value="${app.server.weblogic.dir}" />
+					<arg value="/c" />
+					<arg value="configure.cmd" />
+				</exec>
+
+				<echo file="${tstamp.value}/create-weblogic-domain.bat">@echo off
+
+set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+
+set "MW_HOME=${app.server.weblogic.dir}"
+
+set "WL_HOME=%MW_HOME%/wlserver"
+
+call %WL_HOME%/common/bin/commEnv.cmd
+
+set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
+
+"${env.JAVA_HOME}/bin/java" weblogic.WLST create-weblogic-domain.py</echo>
+
+				<exec dir="${tstamp.value}" executable="cmd">
+					<arg value="/c" />
+					<arg value="create-weblogic-domain.bat" />
+				</exec>
+
+				<echo file="${app.server.weblogic.instance.dir}/run.bat">@echo off
+
+set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+
+set "MW_HOME=${app.server.weblogic.dir}"
+
+call startWebLogic.cmd</echo>
+			</then>
+			<else>
+				<exec dir="${app.server.weblogic.dir}" executable="sh">
+					<env key="MW_HOME" value="${app.server.weblogic.dir}" />
+					<arg value="configure.sh" />
+				</exec>
+
+				<echo file="${tstamp.value}/create-weblogic-domain.sh">#!/bin/sh
+
+export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+
+export MW_HOME=${app.server.weblogic.dir}
+
+export WL_HOME=${MW_HOME}/wlserver
+
+source ${WL_HOME}/common/bin/commEnv.sh
+
+export CLASSPATH=${FMWCONFIG_CLASSPATH}
+
+${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py</echo>
+
+				<chmod
+					file="${tstamp.value}/create-weblogic-domain.sh"
+					perm="744"
+				/>
+
+				<exec dir="${tstamp.value}" executable="sh">
+					<arg value="create-weblogic-domain.sh" />
+				</exec>
+
+				<echo file="${app.server.weblogic.instance.dir}/run.sh">#!/bin/sh
+
+export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+
+export MW_HOME="${app.server.weblogic.dir}"
+
+sh startWebLogic.sh</echo>
+
+				<chmod
+					file="${app.server.weblogic.instance.dir}/run.sh"
+					perm="744"
+				/>
+			</else>
+		</if>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="zip-api">
 		<delete file="dist/liferay-portal-doc-${lp.version}.zip" failonerror="false" />
 
@@ -1146,6 +1288,39 @@ release was successful.</echo>
 		<if>
 			<available file="${zip.executable.dir}/../data" />
 			<then>
+				<delete dir="${zip.executable.dir}/../patching-tool" />
+				<mkdir dir="${zip.executable.dir}/../patching-tool" />
+
+				<if>
+					<available file="${patching.tool.source.dir}" type="dir" />
+					<then>
+						<copy todir="${zip.executable.dir}/../patching-tool">
+							<fileset
+								dir="${patching.tool.source.dir}/scripts"
+							/>
+						</copy>
+
+						<mkdir dir="${zip.executable.dir}/../patching-tool/lib" />
+
+						<copy todir="${zip.executable.dir}/../patching-tool/lib">
+							<fileset
+								dir="${patching.tool.source.dir}"
+								includes="patching-tool.jar"
+							/>
+							<fileset
+								dir="${patching.tool.source.dir}/lib"
+							/>
+						</copy>
+
+						<mkdir dir="${zip.executable.dir}/../patching-tool/logs" />
+						<mkdir dir="${zip.executable.dir}/../patching-tool/patches" />
+
+						<exec dir="${zip.executable.dir}/../patching-tool" executable="cmd.exe">
+							<arg line="/c patching-tool.bat auto-discovery" />
+						</exec>
+					</then>
+				</if>
+
 				<zip
 					destfile="dist/${zip.executable.file}-${lp.version}.zip"
 				>
@@ -1165,12 +1340,21 @@ release was successful.</echo>
 						prefix="liferay-portal-${lp.version}/data"
 					/>
 					<zipfileset
+						dir="${zip.executable.dir}/../patching-tool"
+						prefix="liferay-portal-${lp.version}/patching-tool"
+					/>
+					<zipfileset
 						dir="tools/zip_tmpl"
 						prefix="liferay-portal-${lp.version}"
 					/>
 				</zip>
 			</then>
 			<else>
+
+				<!--
+				Only used by when zipping Tcat admin and agent
+				-->
+
 				<zip
 					destfile="dist/${zip.executable.file}-${lp.version}.zip"
 				>
@@ -1223,6 +1407,53 @@ release was successful.</echo>
 			<param name="zip.executable.file" value="liferay-portal-jonas" />
 			<param name="zip.executable.dir" value="${app.server.jonas.dir}" />
 		</antcall>
+	</target>
+
+	<target name="zip-patching-tool">
+		<if>
+			<available file="${patching.tool.source.dir}" type="dir" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<mkdir dir="${tstamp.value}/lib" />
+				<mkdir dir="${tstamp.value}/logs" />
+				<mkdir dir="${tstamp.value}/patches" />
+
+				<copy todir="${tstamp.value}/lib">
+					<fileset
+						dir="${patching.tool.source.dir}/lib"
+					/>
+					<fileset
+						dir="${patching.tool.source.dir}"
+						includes="patching-tool.jar"
+					/>
+				</copy>
+
+				<copy todir="${tstamp.value}">
+					<fileset
+						dir="${patching.tool.source.dir}/scripts"
+					/>
+				</copy>
+
+				<zip destfile="dist/liferay-portal-patching-tool-${lp.version}.zip">
+					<zipfileset
+						dir="${tstamp.value}"
+						excludes="patching-tool.sh"
+						prefix="liferay-portal-patching-tool-${lp.version}"
+					/>
+					<zipfileset
+						dir="${tstamp.value}"
+						filemode="744"
+						includes="patching-tool.sh"
+						prefix="liferay-portal-patching-tool-${lp.version}"
+					/>
+				</zip>
+
+				<delete dir="${tstamp.value}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="zip-portal-client">

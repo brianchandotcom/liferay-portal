@@ -234,7 +234,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 		String type = (String)searchContext.getAttribute("type");
 
 		if (Validator.isNotNull(type)) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addRequiredTerm("type", type);
 
@@ -244,7 +245,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 		String tag = (String)searchContext.getAttribute("tag");
 
 		if (Validator.isNotNull(tag)) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addExactTerm("tag", tag);
 
@@ -255,10 +257,11 @@ public class PluginPackageIndexer extends BaseIndexer {
 			"repositoryURL");
 
 		if (Validator.isNotNull(repositoryURL)) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			Query query = TermQueryFactoryUtil.create(
-				"repositoryURL", repositoryURL);
+				searchContext, "repositoryURL", repositoryURL);
 
 			searchQuery.add(query, BooleanClauseOccur.SHOULD);
 
@@ -268,7 +271,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 		String license = (String)searchContext.getAttribute("license");
 
 		if (Validator.isNotNull(license)) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addExactTerm("license", license);
 
@@ -278,7 +282,8 @@ public class PluginPackageIndexer extends BaseIndexer {
 		String status = (String)searchContext.getAttribute(Field.STATUS);
 
 		if (Validator.isNotNull(status) && !status.equals("all")) {
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			if (status.equals(
 					PluginPackageImpl.

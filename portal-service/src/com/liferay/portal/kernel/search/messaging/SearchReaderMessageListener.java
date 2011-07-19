@@ -21,7 +21,7 @@ public class SearchReaderMessageListener
 	extends BaseSearchEngineMessageListener {
 
 	public void afterPropertiesSet() {
-		setManager(searchEngine.getSearcher());
+		setManager(searchEngine.getIndexSearcher());
 	}
 
 }

@@ -95,7 +95,7 @@ public class RangeFacet extends BaseFacet {
 		}
 
 		TermRangeQuery facetTermRangeQuery = TermRangeQueryFactoryUtil.create(
-			fieldName, startString, endString, true, true);
+			searchContext, fieldName, startString, endString, true, true);
 
 		return BooleanClauseFactoryUtil.create(
 			facetTermRangeQuery, BooleanClauseOccur.MUST.getName());

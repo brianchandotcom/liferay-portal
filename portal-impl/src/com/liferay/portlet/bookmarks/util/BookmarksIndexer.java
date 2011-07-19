@@ -72,7 +72,8 @@ public class BookmarksIndexer extends BaseIndexer {
 				return;
 			}
 
-			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			for (long folderId : folderIds) {
 				try {

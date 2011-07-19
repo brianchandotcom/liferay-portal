@@ -33,6 +33,10 @@ public class AtomRequestContextImpl implements AtomRequestContext {
 			RequestContext.Scope.CONTAINER, name);
 	}
 
+	public String getHeader(String name) {
+		return _requestContext.getHeader(name);
+	}
+
 	public int getIntParameter(String name) {
 		String value = _requestContext.getParameter(name);
 
@@ -71,8 +75,16 @@ public class AtomRequestContextImpl implements AtomRequestContext {
 		return _requestContext.getAttribute(RequestContext.Scope.REQUEST, name);
 	}
 
+	public String getResolvedUri() {
+		return _requestContext.getResolvedUri().toString();
+	}
+
 	public Object getSessionAttribute(String name) {
 		return _requestContext.getAttribute(RequestContext.Scope.SESSION, name);
+	}
+
+	public String getTargetBasePath() {
+		return _requestContext.getTargetBasePath();
 	}
 
 	public void setContainerAttribute(String name, Object value) {
@@ -88,6 +100,6 @@ public class AtomRequestContextImpl implements AtomRequestContext {
 		_requestContext.setAttribute(RequestContext.Scope.SESSION, name, value);
 	}
 
-	private final RequestContext _requestContext;
+	private RequestContext _requestContext;
 
 }

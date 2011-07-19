@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -510,7 +511,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create();
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			contextQuery.addRequiredTerm(Field.COMPANY_ID, companyId);
 
@@ -526,11 +532,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				contextQuery.addRequiredTerm(Field.TYPE, type);
 			}
 
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addTerms(_KEYWORDS_FIELDS, keywords);
 
-			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 

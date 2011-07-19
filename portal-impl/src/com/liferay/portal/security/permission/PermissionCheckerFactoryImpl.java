@@ -20,18 +20,28 @@ import com.liferay.portal.util.PropsValues;
 /**
  * @author Charles May
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
+
+	public PermissionCheckerFactoryImpl() throws Exception {
+		Class<PermissionChecker> clazz =
+			(Class<PermissionChecker>)Class.forName(
+				PropsValues.PERMISSIONS_CHECKER);
+
+		_permissionChecker = clazz.newInstance();
+	}
 
 	public PermissionChecker create(User user, boolean checkGuest)
 		throws Exception {
 
-		PermissionChecker permissionChecker = (PermissionChecker)Class.forName(
-			PropsValues.PERMISSIONS_CHECKER).newInstance();
+		PermissionChecker permissionChecker = _permissionChecker.clone();
 
 		permissionChecker.init(user, checkGuest);
 
 		return permissionChecker;
 	}
+
+	private PermissionChecker _permissionChecker;
 
 }

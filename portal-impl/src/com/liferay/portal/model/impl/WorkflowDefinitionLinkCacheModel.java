@@ -31,7 +31,7 @@ import java.util.Date;
 public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefinitionLink> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{workflowDefinitionLinkId=");
 		sb.append(workflowDefinitionLinkId);
@@ -51,6 +51,8 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", typePK=");
+		sb.append(typePK);
 		sb.append(", workflowDefinitionName=");
 		sb.append(workflowDefinitionName);
 		sb.append(", workflowDefinitionVersion=");
@@ -91,6 +93,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 
 		workflowDefinitionLinkImpl.setClassNameId(classNameId);
 		workflowDefinitionLinkImpl.setClassPK(classPK);
+		workflowDefinitionLinkImpl.setTypePK(typePK);
 
 		if (workflowDefinitionName == null) {
 			workflowDefinitionLinkImpl.setWorkflowDefinitionName(StringPool.BLANK);
@@ -115,6 +118,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
+	public long typePK;
 	public String workflowDefinitionName;
 	public int workflowDefinitionVersion;
 }

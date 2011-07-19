@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
@@ -48,21 +49,28 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long userId = fileEntry.getUserId();
-		long groupId = fileEntry.getGroupId();
-		long fileEntryId = fileEntry.getFileEntryId();
+		// Sync
+
+		dlSyncLocalService.addSync(
+			fileEntry.getUuid(), fileEntry.getCompanyId(),
+			fileEntry.getRepositoryId(), DLSyncConstants.TYPE_FILE);
 
 		// Message boards
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			mbMessageLocalService.addDiscussionMessage(
-				userId, fileEntry.getUserName(), groupId,
-				DLFileEntryConstants.getClassName(), fileEntryId,
-				WorkflowConstants.ACTION_PUBLISH);
+				fileEntry.getUserId(), fileEntry.getUserName(),
+				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
 	}
 
-	public void addFolder(Folder folder, ServiceContext serviceContext) {
+	public void addFolder(Folder folder, ServiceContext serviceContext)
+		throws SystemException {
+
+		dlSyncLocalService.addSync(
+			folder.getUuid(), folder.getCompanyId(),
+			folder.getRepositoryId(), DLSyncConstants.TYPE_FOLDER);
 	}
 
 	public void deleteFileEntry(FileEntry fileEntry)
@@ -77,6 +85,11 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileShortcutLocalService.deleteFileShortcuts(
 			fileEntry.getFileEntryId());
+
+		// Sync
+
+		dlSyncLocalService.updateSync(
+			fileEntry.getUuid(), DLSyncConstants.EVENT_DELETE);
 
 		// Asset
 
@@ -99,7 +112,11 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 	}
 
-	public void deleteFolder(Folder folder) {
+	public void deleteFolder(Folder folder)
+		throws PortalException, SystemException {
+
+		dlSyncLocalService.updateSync(
+			folder.getUuid(), DLSyncConstants.EVENT_DELETE);
 	}
 
 	public void getFileAsStream(long userId, FileEntry fileEntry)
@@ -200,6 +217,22 @@ public class DLAppHelperLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 
 		return assetEntry;
+	}
+
+	public void updateFileEntry(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		dlSyncLocalService.updateSync(
+			fileEntry.getUuid(), DLSyncConstants.EVENT_UPDATE);
+	}
+
+	public void updateFolder(Folder folder, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		dlSyncLocalService.updateSync(
+			folder.getUuid(), DLSyncConstants.EVENT_UPDATE);
 	}
 
 	public void updateStatus(

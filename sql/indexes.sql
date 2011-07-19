@@ -221,6 +221,9 @@ create index IX_EE29C715 on DLFolder (repositoryId);
 create index IX_CBC408D8 on DLFolder (uuid_);
 create unique index IX_3CC1DED2 on DLFolder (uuid_, groupId);
 
+create index IX_B53EC783 on DLSync (companyId, modifiedDate, repositoryId);
+create unique index IX_F9821AB4 on DLSync (fileId);
+
 create index IX_1BB072CA on EmailAddress (companyId);
 create index IX_49D2DEC4 on EmailAddress (companyId, classNameId);
 create index IX_551A519F on EmailAddress (companyId, classNameId, classPK);
@@ -805,5 +808,6 @@ create index IX_A8B0D276 on WorkflowDefinitionLink (companyId);
 create index IX_A4DB1F0F on WorkflowDefinitionLink (companyId, workflowDefinitionName, workflowDefinitionVersion);
 create index IX_B6EE8C9E on WorkflowDefinitionLink (groupId, companyId, classNameId);
 create index IX_1E5B9905 on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK);
+create index IX_705B40EE on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK, typePK);
 
 create index IX_415A7007 on WorkflowInstanceLink (groupId, companyId, classNameId, classPK);

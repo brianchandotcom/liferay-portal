@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,16 +99,18 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	public Query getPermissionQuery(
 		long companyId, long[] groupIds, long userId, String className,
-		Query query) {
+		Query query, SearchContext searchContext) {
 
 		try {
 			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
 				return doGetPermissionQuery_5(
-					companyId, groupIds, userId, className, query);
+					companyId, groupIds, userId, className, query,
+					searchContext);
 			}
 			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 				return doGetPermissionQuery_6(
-					companyId, groupIds, userId, className, query);
+					companyId, groupIds, userId, className, query,
+					searchContext);
 			}
 		}
 		catch (Exception e) {
@@ -253,7 +256,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	protected Query doGetPermissionQuery_5(
 			long companyId, long[] groupIds, long userId, String className,
-			Query query)
+			Query query, SearchContext searchContext)
 		throws Exception {
 
 		PermissionCheckerBag bag = getUserBag(userId);
@@ -337,7 +340,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		catch (NoSuchResourceException nsre) {
 		}
 
-		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
 
 		if (userId > 0) {
 			permissionQuery.addTerm(Field.USER_ID, userId);
@@ -378,7 +382,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userGroupRole.getRoleId());
 		}
 
-		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		fullQuery.add(query, BooleanClauseOccur.MUST);
 		fullQuery.add(permissionQuery, BooleanClauseOccur.MUST);
@@ -388,7 +392,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	protected Query doGetPermissionQuery_6(
 			long companyId, long[] groupIds, long userId, String className,
-			Query query)
+			Query query, SearchContext searchContext)
 		throws Exception {
 
 		PermissionCheckerBag bag = getUserBag(userId);
@@ -435,7 +439,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
 		}
 
-		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
 
 		if (userId > 0) {
 			permissionQuery.addTerm(Field.USER_ID, userId);
@@ -488,7 +493,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userGroupRole.getRoleId());
 		}
 
-		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		fullQuery.add(query, BooleanClauseOccur.MUST);
 		fullQuery.add(permissionQuery, BooleanClauseOccur.MUST);

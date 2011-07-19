@@ -325,62 +325,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchWorkflowDefinitionLinkException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching workflow definition link
-	* @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowDefinitionLink findByG_C_C_C(
-		long groupId, long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByG_C_C_C(groupId, companyId, classNameId, classPK);
-	}
-
-	/**
-	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_C(
-		long groupId, long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByG_C_C_C(groupId, companyId, classNameId, classPK);
-	}
-
-	/**
-	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_C(
-		long groupId, long companyId, long classNameId, long classPK,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByG_C_C_C(groupId, companyId, classNameId, classPK,
-			retrieveFromCache);
-	}
-
-	/**
 	* Returns all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
 	* @param companyId the company ID
@@ -529,6 +473,68 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
+	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a {@link com.liferay.portal.NoSuchWorkflowDefinitionLinkException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param typePK the type p k
+	* @return the matching workflow definition link
+	* @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink findByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK)
+		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C_C_C_T(groupId, companyId, classNameId, classPK,
+			typePK);
+	}
+
+	/**
+	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param typePK the type p k
+	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_C_C_T(groupId, companyId, classNameId, classPK,
+			typePK);
+	}
+
+	/**
+	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param typePK the type p k
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_C_C_T(groupId, companyId, classNameId, classPK,
+			typePK, retrieveFromCache);
+	}
+
+	/**
 	* Returns all the workflow definition links.
 	*
 	* @return the workflow definition links
@@ -589,23 +595,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByG_C_C_C(groupId, companyId, classNameId, classPK);
-	}
-
-	/**
 	* Removes all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -619,6 +608,24 @@ public class WorkflowDefinitionLinkUtil {
 		getPersistence()
 			.removeByC_W_W(companyId, workflowDefinitionName,
 			workflowDefinitionVersion);
+	}
+
+	/**
+	* Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param typePK the type p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C_C_C_T(long groupId, long companyId,
+		long classNameId, long classPK, long typePK)
+		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByG_C_C_C_T(groupId, companyId, classNameId, classPK, typePK);
 	}
 
 	/**
@@ -644,23 +651,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	* Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching workflow definition links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByG_C_C_C(groupId, companyId, classNameId, classPK);
-	}
-
-	/**
 	* Returns the number of workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
 	*
 	* @param companyId the company ID
@@ -675,6 +665,25 @@ public class WorkflowDefinitionLinkUtil {
 		return getPersistence()
 				   .countByC_W_W(companyId, workflowDefinitionName,
 			workflowDefinitionVersion);
+	}
+
+	/**
+	* Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param typePK the type p k
+	* @return the number of matching workflow definition links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_C_C_T(long groupId, long companyId,
+		long classNameId, long classPK, long typePK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByG_C_C_C_T(groupId, companyId, classNameId, classPK,
+			typePK);
 	}
 
 	/**

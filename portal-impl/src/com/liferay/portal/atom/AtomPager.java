@@ -37,6 +37,10 @@ public class AtomPager {
 			lastPage++;
 		}
 
+		if (lastPage == 0) {
+			lastPage = 1;
+		}
+
 		_lastPage = lastPage;
 
 		if (page < _firstPage) {

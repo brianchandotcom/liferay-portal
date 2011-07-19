@@ -69,6 +69,10 @@ public class BlogsEntryAtomCollectionAdapter
 		return String.valueOf(blogsEntry.getEntryId());
 	}
 
+	public String getEntrySummary(BlogsEntry blogsEntry) {
+		return blogsEntry.getDescription();
+	}
+
 	public String getEntryTitle(BlogsEntry blogsEntry) {
 		return blogsEntry.getTitle();
 	}

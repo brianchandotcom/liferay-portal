@@ -63,6 +63,8 @@ public interface AtomCollectionAdapter<E> {
 
 	public String getEntryTitle(E entry);
 
+	public String getEntrySummary(E entry);
+
 	public Date getEntryUpdated(E entry);
 
 	public Iterable<E> getFeedEntries(AtomRequestContext atomRequestContext)

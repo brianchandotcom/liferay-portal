@@ -106,11 +106,11 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 				"collection");
 
 			targetResolver.setPattern(
-				base + "/([^/#?]+)/([^/#?]+)(\\?[^#]*)?", TargetType.TYPE_ENTRY,
-				"collection", "entry");
+				base + "/([^/#?]+)/([^/#?:]+)(\\?[^#]*)?",
+				TargetType.TYPE_ENTRY, "collection", "entry");
 
 			targetResolver.setPattern(
-				base + "/([^/#?]+)/([^/#?]+)\\?media((&[^#]*)*)?",
+				base + "/([^/#?]+)/([^/#?]+):media(\\?[^#]*)?",
 				TargetType.TYPE_MEDIA, "collection", "media");
 		}
 

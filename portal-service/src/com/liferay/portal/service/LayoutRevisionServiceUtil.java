@@ -38,8 +38,8 @@ public class LayoutRevisionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutRevisionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.model.LayoutRevision addLayoutRevision(
-		long userId, long layoutSetBranchId, long parentLayoutRevisionId,
-		boolean head, java.lang.String variationName, long plid,
+		long userId, long layoutSetBranchId, long layoutBranchId,
+		long parentLayoutRevisionId, boolean head, long plid,
 		boolean privateLayout, java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
@@ -51,18 +51,18 @@ public class LayoutRevisionServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addLayoutRevision(userId, layoutSetBranchId,
-			parentLayoutRevisionId, head, variationName, plid, privateLayout,
+			layoutBranchId, parentLayoutRevisionId, head, plid, privateLayout,
 			name, title, description, keywords, robots, typeSettings,
 			iconImage, iconImageId, themeId, colorSchemeId, wapThemeId,
 			wapColorSchemeId, css, serviceContext);
 	}
 
 	public static void deleteLayoutRevisions(long layoutSetBranchId, long plid,
-		java.lang.String variationName)
+		long layoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
-			.deleteLayoutRevisions(layoutSetBranchId, plid, variationName);
+			.deleteLayoutRevisions(layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public static LayoutRevisionService getService() {

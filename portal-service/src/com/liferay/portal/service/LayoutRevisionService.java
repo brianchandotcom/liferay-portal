@@ -41,8 +41,8 @@ public interface LayoutRevisionService {
 	 * Never modify or reference this interface directly. Always use {@link LayoutRevisionServiceUtil} to access the layout revision remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutRevisionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.model.LayoutRevision addLayoutRevision(
-		long userId, long layoutSetBranchId, long parentLayoutRevisionId,
-		boolean head, java.lang.String variationName, long plid,
+		long userId, long layoutSetBranchId, long layoutBranchId,
+		long parentLayoutRevisionId, boolean head, long plid,
 		boolean privateLayout, java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
@@ -54,7 +54,7 @@ public interface LayoutRevisionService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid,
-		java.lang.String variationName)
+		long layoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

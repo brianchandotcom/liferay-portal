@@ -27,6 +27,8 @@ public class LayoutSetBranchNameException extends PortalException {
 
 	public static final int TOO_SHORT = 3;
 
+	public static final int MASTER = 4;
+
 	private int _type;
 
 	public LayoutSetBranchNameException(int type) {

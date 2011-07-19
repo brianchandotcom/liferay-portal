@@ -258,14 +258,14 @@ public class LayoutSetBranchLocalServiceUtil {
 
 	public static com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout,
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addLayoutSetBranch(userId, groupId, privateLayout, name,
-			description, copyLayoutSetBranchId, serviceContext);
+			description, master, copyLayoutSetBranchId, serviceContext);
 	}
 
 	public static void deleteLayoutSetBranch(

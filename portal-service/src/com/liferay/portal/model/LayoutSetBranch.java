@@ -29,5 +29,4 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutSetBranchImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public boolean isMaster();
 }

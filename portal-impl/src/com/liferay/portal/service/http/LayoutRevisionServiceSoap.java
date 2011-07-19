@@ -65,8 +65,8 @@ import java.rmi.RemoteException;
  */
 public class LayoutRevisionServiceSoap {
 	public static com.liferay.portal.model.LayoutRevisionSoap addLayoutRevision(
-		long userId, long layoutSetBranchId, long parentLayoutRevisionId,
-		boolean head, java.lang.String variationName, long plid,
+		long userId, long layoutSetBranchId, long layoutBranchId,
+		long parentLayoutRevisionId, boolean head, long plid,
 		boolean privateLayout, java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
@@ -77,11 +77,11 @@ public class LayoutRevisionServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.LayoutRevision returnValue = LayoutRevisionServiceUtil.addLayoutRevision(userId,
-					layoutSetBranchId, parentLayoutRevisionId, head,
-					variationName, plid, privateLayout, name, title,
-					description, keywords, robots, typeSettings, iconImage,
-					iconImageId, themeId, colorSchemeId, wapThemeId,
-					wapColorSchemeId, css, serviceContext);
+					layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
+					head, plid, privateLayout, name, title, description,
+					keywords, robots, typeSettings, iconImage, iconImageId,
+					themeId, colorSchemeId, wapThemeId, wapColorSchemeId, css,
+					serviceContext);
 
 			return com.liferay.portal.model.LayoutRevisionSoap.toSoapModel(returnValue);
 		}
@@ -93,10 +93,10 @@ public class LayoutRevisionServiceSoap {
 	}
 
 	public static void deleteLayoutRevisions(long layoutSetBranchId, long plid,
-		java.lang.String variationName) throws RemoteException {
+		long layoutBranchId) throws RemoteException {
 		try {
 			LayoutRevisionServiceUtil.deleteLayoutRevisions(layoutSetBranchId,
-				plid, variationName);
+				plid, layoutBranchId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -31,7 +31,7 @@ import java.util.Date;
 public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(layoutSetBranchId);
@@ -53,6 +53,8 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", master=");
+		sb.append(master);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,6 +105,8 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 			layoutSetBranchImpl.setDescription(description);
 		}
 
+		layoutSetBranchImpl.setMaster(master);
+
 		layoutSetBranchImpl.resetOriginalValues();
 
 		return layoutSetBranchImpl;
@@ -118,4 +122,5 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
 	public boolean privateLayout;
 	public String name;
 	public String description;
+	public boolean master;
 }

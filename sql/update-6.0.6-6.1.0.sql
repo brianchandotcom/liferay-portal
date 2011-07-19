@@ -265,10 +265,10 @@ create table LayoutRevision (
 	createDate DATE null,
 	modifiedDate DATE null,
 	layoutSetBranchId LONG,
+	layoutBranchId LONG,
 	parentLayoutRevisionId LONG,
 	head BOOLEAN,
 	major BOOLEAN,
-	variationName VARCHAR(75) null,
 	plid LONG,
 	privateLayout BOOLEAN,
 	name STRING null,
@@ -302,7 +302,8 @@ create table LayoutSetBranch (
 	modifiedDate DATE null,
 	privateLayout BOOLEAN,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	master BOOLEAN
 );
 
 alter table LayoutSetPrototype add uuid_ VARCHAR(75) null;

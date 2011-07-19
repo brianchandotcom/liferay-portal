@@ -72,9 +72,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "master", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
@@ -107,6 +108,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setMaster(soapModel.getMaster());
 
 		return model;
 	}
@@ -303,6 +305,19 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		_description = description;
 	}
 
+	@JSON
+	public boolean getMaster() {
+		return _master;
+	}
+
+	public boolean isMaster() {
+		return _master;
+	}
+
+	public void setMaster(boolean master) {
+		_master = master;
+	}
+
 	@Override
 	public LayoutSetBranch toEscapedModel() {
 		if (isEscapedModel()) {
@@ -348,6 +363,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setPrivateLayout(getPrivateLayout());
 		layoutSetBranchImpl.setName(getName());
 		layoutSetBranchImpl.setDescription(getDescription());
+		layoutSetBranchImpl.setMaster(getMaster());
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -467,12 +483,14 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			layoutSetBranchCacheModel.description = null;
 		}
 
+		layoutSetBranchCacheModel.master = getMaster();
+
 		return layoutSetBranchCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(getLayoutSetBranchId());
@@ -494,13 +512,15 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", master=");
+		sb.append(getMaster());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSetBranch");
@@ -546,6 +566,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>master</column-name><column-value><![CDATA[");
+		sb.append(getMaster());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -572,6 +596,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private boolean _master;
 	private transient ExpandoBridge _expandoBridge;
 	private LayoutSetBranch _escapedModelProxy;
 }

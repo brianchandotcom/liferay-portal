@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ColorScheme;
+import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
@@ -38,8 +40,15 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	public LayoutRevisionImpl() {
 	}
 
+	public LayoutBranch getLayoutBranch()
+		throws PortalException, SystemException {
+
+		return LayoutBranchLocalServiceUtil.getLayoutBranch(
+			getLayoutBranchId());
+	}
+
 	public List<LayoutRevision> getChildren() throws SystemException {
-		return LayoutRevisionLocalServiceUtil.getLayoutRevisions(
+		return LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(
 			getLayoutSetBranchId(), getLayoutRevisionId(), getPlid());
 	}
 

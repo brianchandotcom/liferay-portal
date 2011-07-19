@@ -72,7 +72,7 @@ public class ActionKeys {
 	public static final String ADD_LAYOUT_SET_PROTOTYPE =
 		"ADD_LAYOUT_SET_PROTOTYPE";
 
-	public static final String ADD_LAYOUT_VARIATION = "ADD_LAYOUT_VARIATION";
+	public static final String ADD_LAYOUT_BRANCH = "ADD_LAYOUT_BRANCH";
 
 	public static final String ADD_LICENSE = "ADD_LICENSE";
 
@@ -142,8 +142,8 @@ public class ActionKeys {
 
 	public static final String DELETE_DISCUSSION = "DELETE_DISCUSSION";
 
-	public static final String DELETE_LAYOUT_VARIATION =
-		"DELETE_LAYOUT_VARIATION";
+	public static final String DELETE_LAYOUT_BRANCH =
+		"DELETE_LAYOUT_BRANCH";
 
 	public static final String DELETE_USER = "DELETE_USER";
 

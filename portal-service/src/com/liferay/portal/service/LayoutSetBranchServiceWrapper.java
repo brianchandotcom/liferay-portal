@@ -31,12 +31,13 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService {
 
 	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name,
-		java.lang.String description, long copyLayoutSetBranchId,
+		java.lang.String description, boolean master,
+		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSetBranchService.addLayoutSetBranch(groupId,
-			privateLayout, name, description, copyLayoutSetBranchId,
+			privateLayout, name, description, master, copyLayoutSetBranchId,
 			serviceContext);
 	}
 

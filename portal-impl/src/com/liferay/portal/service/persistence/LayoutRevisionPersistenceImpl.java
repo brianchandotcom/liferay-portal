@@ -164,22 +164,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_FIND_BY_L_P_V = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FIND_BY_L_P_L = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
-			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST, "findByL_P_V",
+			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST, "findByL_P_L",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_L_P_V = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_L_P_L = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByL_P_V",
+			FINDER_CLASS_NAME_LIST, "countByL_P_L",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_L_P_S = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
@@ -477,10 +475,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setCreateDate(layoutRevision.getCreateDate());
 		layoutRevisionImpl.setModifiedDate(layoutRevision.getModifiedDate());
 		layoutRevisionImpl.setLayoutSetBranchId(layoutRevision.getLayoutSetBranchId());
+		layoutRevisionImpl.setLayoutBranchId(layoutRevision.getLayoutBranchId());
 		layoutRevisionImpl.setParentLayoutRevisionId(layoutRevision.getParentLayoutRevisionId());
 		layoutRevisionImpl.setHead(layoutRevision.isHead());
 		layoutRevisionImpl.setMajor(layoutRevision.isMajor());
-		layoutRevisionImpl.setVariationName(layoutRevision.getVariationName());
 		layoutRevisionImpl.setPlid(layoutRevision.getPlid());
 		layoutRevisionImpl.setPrivateLayout(layoutRevision.isPrivateLayout());
 		layoutRevisionImpl.setName(layoutRevision.getName());
@@ -2917,22 +2915,22 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @return the matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByL_P_V(long layoutSetBranchId, long plid,
-		String variationName) throws SystemException {
-		return findByL_P_V(layoutSetBranchId, plid, variationName,
+	public List<LayoutRevision> findByL_P_L(long layoutSetBranchId, long plid,
+		long layoutBranchId) throws SystemException {
+		return findByL_P_L(layoutSetBranchId, plid, layoutBranchId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2940,20 +2938,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @return the range of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByL_P_V(long layoutSetBranchId, long plid,
-		String variationName, int start, int end) throws SystemException {
-		return findByL_P_V(layoutSetBranchId, plid, variationName, start, end,
+	public List<LayoutRevision> findByL_P_L(long layoutSetBranchId, long plid,
+		long layoutBranchId, int start, int end) throws SystemException {
+		return findByL_P_L(layoutSetBranchId, plid, layoutBranchId, start, end,
 			null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -2961,24 +2959,24 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @param start the lower bound of the range of layout revisions
 	 * @param end the upper bound of the range of layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByL_P_V(long layoutSetBranchId, long plid,
-		String variationName, int start, int end,
+	public List<LayoutRevision> findByL_P_L(long layoutSetBranchId, long plid,
+		long layoutBranchId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				layoutSetBranchId, plid, variationName,
+				layoutSetBranchId, plid, layoutBranchId,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_L_P_V,
+		List<LayoutRevision> list = (List<LayoutRevision>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_L_P_L,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2994,21 +2992,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			query.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
 
-			query.append(_FINDER_COLUMN_L_P_V_LAYOUTSETBRANCHID_2);
+			query.append(_FINDER_COLUMN_L_P_L_LAYOUTSETBRANCHID_2);
 
-			query.append(_FINDER_COLUMN_L_P_V_PLID_2);
+			query.append(_FINDER_COLUMN_L_P_L_PLID_2);
 
-			if (variationName == null) {
-				query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_1);
-			}
-			else {
-				if (variationName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_2);
-				}
-			}
+			query.append(_FINDER_COLUMN_L_P_L_LAYOUTBRANCHID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -3034,9 +3022,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 				qPos.add(plid);
 
-				if (variationName != null) {
-					qPos.add(variationName);
-				}
+				qPos.add(layoutBranchId);
 
 				list = (List<LayoutRevision>)QueryUtil.list(q, getDialect(),
 						start, end);
@@ -3046,13 +3032,13 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_L_P_V,
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_L_P_L,
 						finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_L_P_V,
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_L_P_L,
 						finderArgs, list);
 				}
 
@@ -3064,7 +3050,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3072,17 +3058,17 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout revision
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision findByL_P_V_First(long layoutSetBranchId, long plid,
-		String variationName, OrderByComparator orderByComparator)
+	public LayoutRevision findByL_P_L_First(long layoutSetBranchId, long plid,
+		long layoutBranchId, OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
-		List<LayoutRevision> list = findByL_P_V(layoutSetBranchId, plid,
-				variationName, 0, 1, orderByComparator);
+		List<LayoutRevision> list = findByL_P_L(layoutSetBranchId, plid,
+				layoutBranchId, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(8);
@@ -3095,8 +3081,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			msg.append(", plid=");
 			msg.append(plid);
 
-			msg.append(", variationName=");
-			msg.append(variationName);
+			msg.append(", layoutBranchId=");
+			msg.append(layoutBranchId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -3108,7 +3094,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3116,19 +3102,19 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout revision
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision findByL_P_V_Last(long layoutSetBranchId, long plid,
-		String variationName, OrderByComparator orderByComparator)
+	public LayoutRevision findByL_P_L_Last(long layoutSetBranchId, long plid,
+		long layoutBranchId, OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
-		int count = countByL_P_V(layoutSetBranchId, plid, variationName);
+		int count = countByL_P_L(layoutSetBranchId, plid, layoutBranchId);
 
-		List<LayoutRevision> list = findByL_P_V(layoutSetBranchId, plid,
-				variationName, count - 1, count, orderByComparator);
+		List<LayoutRevision> list = findByL_P_L(layoutSetBranchId, plid,
+				layoutBranchId, count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(8);
@@ -3141,8 +3127,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			msg.append(", plid=");
 			msg.append(plid);
 
-			msg.append(", variationName=");
-			msg.append(variationName);
+			msg.append(", layoutBranchId=");
+			msg.append(layoutBranchId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -3154,7 +3140,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -3163,14 +3149,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @param layoutRevisionId the primary key of the current layout revision
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout revision
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision[] findByL_P_V_PrevAndNext(long layoutRevisionId,
-		long layoutSetBranchId, long plid, String variationName,
+	public LayoutRevision[] findByL_P_L_PrevAndNext(long layoutRevisionId,
+		long layoutSetBranchId, long plid, long layoutBranchId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
 		LayoutRevision layoutRevision = findByPrimaryKey(layoutRevisionId);
@@ -3182,14 +3168,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			LayoutRevision[] array = new LayoutRevisionImpl[3];
 
-			array[0] = getByL_P_V_PrevAndNext(session, layoutRevision,
-					layoutSetBranchId, plid, variationName, orderByComparator,
+			array[0] = getByL_P_L_PrevAndNext(session, layoutRevision,
+					layoutSetBranchId, plid, layoutBranchId, orderByComparator,
 					true);
 
 			array[1] = layoutRevision;
 
-			array[2] = getByL_P_V_PrevAndNext(session, layoutRevision,
-					layoutSetBranchId, plid, variationName, orderByComparator,
+			array[2] = getByL_P_L_PrevAndNext(session, layoutRevision,
+					layoutSetBranchId, plid, layoutBranchId, orderByComparator,
 					false);
 
 			return array;
@@ -3202,9 +3188,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		}
 	}
 
-	protected LayoutRevision getByL_P_V_PrevAndNext(Session session,
+	protected LayoutRevision getByL_P_L_PrevAndNext(Session session,
 		LayoutRevision layoutRevision, long layoutSetBranchId, long plid,
-		String variationName, OrderByComparator orderByComparator,
+		long layoutBranchId, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -3218,21 +3204,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		query.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
 
-		query.append(_FINDER_COLUMN_L_P_V_LAYOUTSETBRANCHID_2);
+		query.append(_FINDER_COLUMN_L_P_L_LAYOUTSETBRANCHID_2);
 
-		query.append(_FINDER_COLUMN_L_P_V_PLID_2);
+		query.append(_FINDER_COLUMN_L_P_L_PLID_2);
 
-		if (variationName == null) {
-			query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_1);
-		}
-		else {
-			if (variationName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_2);
-			}
-		}
+		query.append(_FINDER_COLUMN_L_P_L_LAYOUTBRANCHID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -3305,9 +3281,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		qPos.add(plid);
 
-		if (variationName != null) {
-			qPos.add(variationName);
-		}
+		qPos.add(layoutBranchId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByValues(layoutRevision);
@@ -3920,17 +3894,17 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Removes all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63; from the database.
+	 * Removes all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByL_P_V(long layoutSetBranchId, long plid,
-		String variationName) throws SystemException {
-		for (LayoutRevision layoutRevision : findByL_P_V(layoutSetBranchId,
-				plid, variationName)) {
+	public void removeByL_P_L(long layoutSetBranchId, long plid,
+		long layoutBranchId) throws SystemException {
+		for (LayoutRevision layoutRevision : findByL_P_L(layoutSetBranchId,
+				plid, layoutBranchId)) {
 			layoutRevisionPersistence.remove(layoutRevision);
 		}
 	}
@@ -4377,21 +4351,21 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Returns the number of layout revisions where layoutSetBranchId = &#63; and plid = &#63; and variationName = &#63;.
+	 * Returns the number of layout revisions where layoutSetBranchId = &#63; and plid = &#63; and layoutBranchId = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param variationName the variation name
+	 * @param layoutBranchId the layout branch ID
 	 * @return the number of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByL_P_V(long layoutSetBranchId, long plid,
-		String variationName) throws SystemException {
+	public int countByL_P_L(long layoutSetBranchId, long plid,
+		long layoutBranchId) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				layoutSetBranchId, plid, variationName
+				layoutSetBranchId, plid, layoutBranchId
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_L_P_V,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_L_P_L,
 				finderArgs, this);
 
 		if (count == null) {
@@ -4399,21 +4373,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			query.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
 
-			query.append(_FINDER_COLUMN_L_P_V_LAYOUTSETBRANCHID_2);
+			query.append(_FINDER_COLUMN_L_P_L_LAYOUTSETBRANCHID_2);
 
-			query.append(_FINDER_COLUMN_L_P_V_PLID_2);
+			query.append(_FINDER_COLUMN_L_P_L_PLID_2);
 
-			if (variationName == null) {
-				query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_1);
-			}
-			else {
-				if (variationName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_L_P_V_VARIATIONNAME_2);
-				}
-			}
+			query.append(_FINDER_COLUMN_L_P_L_LAYOUTBRANCHID_2);
 
 			String sql = query.toString();
 
@@ -4430,9 +4394,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 				qPos.add(plid);
 
-				if (variationName != null) {
-					qPos.add(variationName);
-				}
+				qPos.add(layoutBranchId);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -4444,7 +4406,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_V,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_L,
 					finderArgs, count);
 
 				closeSession(session);
@@ -4613,6 +4575,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = LayoutBranchPersistence.class)
+	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = LayoutPrototypePersistence.class)
 	protected LayoutPrototypePersistence layoutPrototypePersistence;
 	@BeanReference(type = LayoutRevisionPersistence.class)
@@ -4730,11 +4694,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_H_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_HEAD_2 = "layoutRevision.head = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_P_PLID_2 = "layoutRevision.plid = ?";
-	private static final String _FINDER_COLUMN_L_P_V_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
-	private static final String _FINDER_COLUMN_L_P_V_PLID_2 = "layoutRevision.plid = ? AND ";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_1 = "layoutRevision.variationName IS NULL AND layoutRevision.status != 5";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_2 = "layoutRevision.variationName = ? AND layoutRevision.status != 5";
-	private static final String _FINDER_COLUMN_L_P_V_VARIATIONNAME_3 = "(layoutRevision.variationName IS NULL OR layoutRevision.variationName = ?) AND layoutRevision.status != 5";
+	private static final String _FINDER_COLUMN_L_P_L_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
+	private static final String _FINDER_COLUMN_L_P_L_PLID_2 = "layoutRevision.plid = ? AND ";
+	private static final String _FINDER_COLUMN_L_P_L_LAYOUTBRANCHID_2 = "layoutRevision.layoutBranchId = ? AND layoutRevision.status != 5";
 	private static final String _FINDER_COLUMN_L_P_S_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 = "layoutRevision.status = ?";

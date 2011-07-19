@@ -41,9 +41,11 @@ else {
 
 <aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+<div class="layout-actions">
+	<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 
-<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
+	<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
+</div>
 
 <aui:script position="inline" use="liferay-staging,aui-io-request">
 	var dockbar = Liferay.Staging.Dockbar;
@@ -66,7 +68,7 @@ else {
 
 			var redoButton = dockbar.redoButton;
 
-			dockbar.backstageToolbar.add(redoButton, 0);
+			dockbar.layoutRevisionToolbar.add(redoButton, 0);
 
 			redoButton.get('contentBox').attr(
 				{
@@ -84,7 +86,7 @@ else {
 	<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 		var undoButton = dockbar.undoButton;
 
-		dockbar.backstageToolbar.add(undoButton, 0);
+		dockbar.layoutRevisionToolbar.add(undoButton, 0);
 
 		undoButton.get('contentBox').attr(
 			{
@@ -101,7 +103,7 @@ else {
 		%>
 
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
-			dockbar.backstageToolbar.add(
+			dockbar.layoutRevisionToolbar.add(
 				{
 					type: 'ToolbarSpacer'
 				}
@@ -117,7 +119,7 @@ else {
 				<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 			</portlet:actionURL>
 
-			dockbar.backstageToolbar.add(
+			dockbar.layoutRevisionToolbar.add(
 				{
 					handler: function(event) {
 						A.io.request(

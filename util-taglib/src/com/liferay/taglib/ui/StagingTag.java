@@ -43,8 +43,8 @@ public class StagingTag extends IncludeTag {
 		_selPlid = selPlid;
 	}
 
-	public void setShowManageBackstages(boolean showManageBackstages) {
-		_showManageBackstages = showManageBackstages;
+	public void setShowManageBranches(boolean showManageBranches) {
+		_showManageBranches = showManageBranches;
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class StagingTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:staging:selPlid", String.valueOf(_selPlid));
 		request.setAttribute(
-			"liferay-ui:staging:showManageBackstages",
-			String.valueOf(_showManageBackstages));
+			"liferay-ui:staging:showManageBranches",
+			String.valueOf(_showManageBranches));
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/staging/page.jsp";
@@ -77,6 +77,6 @@ public class StagingTag extends IncludeTag {
 	private long _layoutSetBranchId;
 	private boolean _privateLayout;
 	private long _selPlid;
-	private boolean _showManageBackstages;
+	private boolean _showManageBranches;
 
 }

@@ -29,6 +29,10 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutRevisionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portal.model.LayoutBranch getLayoutBranch()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

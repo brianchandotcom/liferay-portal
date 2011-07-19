@@ -224,18 +224,37 @@ public class LocaleUtil {
 		}
 
 		String languageId = locale.getLanguage();
+		String countryId = locale.getCountry();
+		String variantId = locale.getVariant();
 
-		if (Validator.isNotNull(locale.getCountry())) {
-			languageId = languageId.concat(StringPool.UNDERLINE);
-			languageId = languageId.concat(locale.getCountry());
+		boolean hasCountryId = countryId.length() != 0;
+		boolean hasVariantId = variantId.length() != 0;
+
+		if ((!hasCountryId) && (!hasVariantId)) {
+			return languageId;
 		}
 
-		if (Validator.isNotNull(locale.getVariant())) {
-			languageId = languageId.concat(StringPool.UNDERLINE);
-			languageId = languageId.concat(locale.getVariant());
+		int length = 3;
+
+		if (hasCountryId && hasVariantId) {
+			length = 5;
 		}
 
-		return languageId;
+		StringBundler sb = new StringBundler(length);
+
+		sb.append(languageId);
+
+		if (hasCountryId) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(countryId);
+		}
+
+		if (hasVariantId) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(variantId);
+		}
+
+		return sb.toString();
 	}
 
 	private String[] _toLanguageIds(Locale[] locales) {

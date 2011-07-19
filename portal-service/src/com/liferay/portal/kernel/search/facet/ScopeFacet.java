@@ -80,7 +80,7 @@ public class ScopeFacet extends MultiValueFacet {
 			return null;
 		}
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		long ownerUserId = searchContext.getOwnerUserId();
 
@@ -88,8 +88,10 @@ public class ScopeFacet extends MultiValueFacet {
 			facetQuery.addRequiredTerm(Field.USER_ID, ownerUserId);
 		}
 
-		BooleanQuery groupIdsQuery = BooleanQueryFactoryUtil.create();
-		BooleanQuery scopeGroupIdsQuery = BooleanQueryFactoryUtil.create();
+		BooleanQuery groupIdsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+		BooleanQuery scopeGroupIdsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
 
 		for (int i = 0; i < groupIds.length; i ++) {
 			long groupId = groupIds[i];

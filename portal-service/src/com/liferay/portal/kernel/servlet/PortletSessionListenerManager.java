@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -31,31 +33,36 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class PortletSessionListenerManager implements HttpSessionListener {
 
-	public static void addListener(HttpSessionListener listener) {
-		_listeners.add(listener);
+	public static void addHttpSessionListener(
+		HttpSessionListener httpSessionListener) {
+
+		_httpSessionListeners.add(httpSessionListener);
 	}
 
-	public static void removeListener(HttpSessionListener listener) {
-		_listeners.remove(listener);
+	public static void removeHttpSessionListener(
+		HttpSessionListener httpSessionListener) {
+
+		_httpSessionListeners.remove(httpSessionListener);
 	}
 
-	public void sessionCreated(HttpSessionEvent event) {
+	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			Iterator<HttpSessionListener> itr = _listeners.iterator();
+			for (HttpSessionListener httpSessionListener :
+					_httpSessionListeners) {
 
-			while (itr.hasNext()) {
-				HttpSessionListener listener = itr.next();
+				Class<?> clazz = httpSessionListener.getClass();
 
-				ClassLoader listenerClassLoader =
-					listener.getClass().getClassLoader();
+				ClassLoader classLoader = clazz.getClassLoader();
 
-				currentThread.setContextClassLoader(listenerClassLoader);
+				currentThread.setContextClassLoader(classLoader);
 
-				listener.sessionCreated(event);
+				httpSessionListener.sessionCreated(httpSessionEvent);
 			}
 		}
 		finally {
@@ -63,17 +70,29 @@ public class PortletSessionListenerManager implements HttpSessionListener {
 		}
 	}
 
-	public void sessionDestroyed(HttpSessionEvent event) {
-		Iterator<HttpSessionListener> itr = _listeners.iterator();
+	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
-		while (itr.hasNext()) {
-			HttpSessionListener listener = itr.next();
-
-			listener.sessionDestroyed(event);
+		for (HttpSessionListener httpSessionListener : _httpSessionListeners) {
+			httpSessionListener.sessionDestroyed(httpSessionEvent);
 		}
 	}
 
-	private static List<HttpSessionListener> _listeners =
+	protected HttpSessionEvent getHttpSessionEvent(
+		HttpSessionEvent httpSessionEvent) {
+
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
+
+			httpSessionEvent = new HttpSessionEvent(
+				compoundSessionIdHttpSession);
+		}
+
+		return httpSessionEvent;
+	}
+
+	private static List<HttpSessionListener> _httpSessionListeners =
 		new ArrayList<HttpSessionListener>();
 
 }

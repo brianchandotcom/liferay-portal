@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -32,6 +31,7 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
+import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
@@ -63,6 +63,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
 
 import javax.sql.DataSource;
 
@@ -665,6 +666,24 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the d l sync persistence.
+	 *
+	 * @return the d l sync persistence
+	 */
+	public DLSyncPersistence getDLSyncPersistence() {
+		return dlSyncPersistence;
+	}
+
+	/**
+	 * Sets the d l sync persistence.
+	 *
+	 * @param dlSyncPersistence the d l sync persistence
+	 */
+	public void setDLSyncPersistence(DLSyncPersistence dlSyncPersistence) {
+		this.dlSyncPersistence = dlSyncPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -845,6 +864,14 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 		_beanIdentifier = beanIdentifier;
 	}
 
+	protected Class<?> getModelClass() {
+		return DLSync.class;
+	}
+
+	protected String getModelClassName() {
+		return DLSync.class.getName();
+	}
+
 	/**
 	 * Performs an SQL query.
 	 *
@@ -852,7 +879,7 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = InfrastructureUtil.getDataSource();
+			DataSource dataSource = dlSyncPersistence.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -926,6 +953,8 @@ public abstract class DLSyncServiceBaseImpl extends PrincipalBean
 	protected DLSyncLocalService dlSyncLocalService;
 	@BeanReference(type = DLSyncService.class)
 	protected DLSyncService dlSyncService;
+	@BeanReference(type = DLSyncPersistence.class)
+	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

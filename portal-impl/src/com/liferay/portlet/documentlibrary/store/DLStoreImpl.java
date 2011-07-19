@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
@@ -211,7 +212,12 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		throws SystemException {
 
 		try {
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create();
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			contextQuery.addRequiredTerm(Field.PORTLET_ID, portletId);
 
@@ -229,7 +235,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 			if ((repositoryIds != null) && (repositoryIds.length > 0)) {
 				BooleanQuery repositoryIdsQuery =
-					BooleanQueryFactoryUtil.create();
+					BooleanQueryFactoryUtil.create(searchContext);
 
 				for (long repositoryId : repositoryIds) {
 					try {
@@ -249,7 +255,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 						}
 
 						TermQuery termQuery = TermQueryFactoryUtil.create(
-							"repositoryId", repositoryId);
+							searchContext, "repositoryId", repositoryId);
 
 						repositoryIdsQuery.add(
 							termQuery, BooleanClauseOccur.SHOULD);
@@ -261,11 +267,13 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 				contextQuery.add(repositoryIdsQuery, BooleanClauseOccur.MUST);
 			}
 
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			searchQuery.addTerms(_KEYWORDS_FIELDS, keywords);
 
-			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create();
+			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
 			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 

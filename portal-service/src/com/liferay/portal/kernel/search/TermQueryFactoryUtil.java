@@ -14,29 +14,34 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public class TermQueryFactoryUtil {
+public class TermQueryFactoryUtil
+	extends BaseQueryFactoryUtil<TermQueryFactory> {
 
-	public static TermQuery create(String field, long value) {
-		return getTermQueryFactory().create(field, value);
+	public static TermQuery create(
+		SearchContext searchContext, String field, long value) {
+
+		return getTermQueryFactory(searchContext).create(field, value);
 	}
 
-	public static TermQuery create(String field, String value) {
-		return getTermQueryFactory().create(field, value);
+	public static TermQuery create(
+		SearchContext searchContext, String field, String value) {
+
+		return getTermQueryFactory(searchContext).create(field, value);
 	}
 
-	public static TermQueryFactory getTermQueryFactory() {
-		return _termQueryFactory;
+	public static TermQueryFactory getTermQueryFactory(
+		SearchContext searchContext) {
+
+		return _termQueryFactoryUtil.getQueryFactory(searchContext);
 	}
 
-	public void setTermQueryFactory(
-		TermQueryFactory termQueryFactory) {
-
-		_termQueryFactory = termQueryFactory;
-	}
-
-	private static TermQueryFactory _termQueryFactory;
+	@BeanReference(type = TermQueryFactoryUtil.class)
+	private static TermQueryFactoryUtil _termQueryFactoryUtil;
 
 }

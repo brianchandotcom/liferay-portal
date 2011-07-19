@@ -643,6 +643,17 @@ create table DLFolder (
 	overrideFileEntryTypes BOOLEAN
 );
 
+create table DLSync (
+	syncId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	fileId VARCHAR(75) null,
+	repositoryId LONG,
+	event VARCHAR(75) null,
+	type_ VARCHAR(75) null
+);
+
 create table EmailAddress (
 	emailAddressId LONG not null primary key,
 	companyId LONG,
@@ -2173,6 +2184,7 @@ create table WorkflowDefinitionLink (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
+	typePK LONG,
 	workflowDefinitionName VARCHAR(75) null,
 	workflowDefinitionVersion INTEGER
 );

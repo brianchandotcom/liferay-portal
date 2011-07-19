@@ -16,8 +16,8 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
-import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter;
-import com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
+import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSessionListener;
 public class PortalSessionListener implements HttpSessionListener {
 
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
 				new CompoundSessionIdHttpSession(
 					httpSessionEvent.getSession());
@@ -48,7 +48,7 @@ public class PortalSessionListener implements HttpSessionListener {
 	}
 
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-		if (CompoundSessionIdFilter.hasCompoundSessionId()) {
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
 				new CompoundSessionIdHttpSession(
 					httpSessionEvent.getSession());

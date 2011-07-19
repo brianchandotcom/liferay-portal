@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.atom;
 
+import java.io.InputStream;
+
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +56,8 @@ public interface AtomCollectionAdapter<E> {
 
 	public List<String> getEntryAuthors(E entry);
 
-	public String getEntryContent(E entry);
+	public AtomEntryContent getEntryContent(
+		E entry, AtomRequestContext atomRequestContext);
 
 	public String getEntryId(E entry);
 
@@ -67,13 +70,29 @@ public interface AtomCollectionAdapter<E> {
 
 	public String getFeedTitle(AtomRequestContext atomRequestContext);
 
+	public String getMediaContentType(E entry);
+
+	public String getMediaName(E entry) throws AtomException;
+
+	public InputStream getMediaStream(E entry) throws AtomException;
+
 	public E postEntry(
 			String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
 		throws AtomException;
 
+	public E postMedia(
+			String mimeType, String slug, InputStream inputStream,
+			AtomRequestContext atomRequestContext)
+		throws AtomException;
+
 	public void putEntry(
 			E entry, String title, String summary, String content, Date date,
+			AtomRequestContext atomRequestContext)
+		throws AtomException;
+
+	public void putMedia(
+			E entry, String mimeType, String slug, InputStream inputStream,
 			AtomRequestContext atomRequestContext)
 		throws AtomException;
 

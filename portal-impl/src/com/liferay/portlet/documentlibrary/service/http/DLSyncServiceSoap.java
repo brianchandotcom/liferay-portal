@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.documentlibrary.service.DLSyncServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -21,6 +28,16 @@ package com.liferay.portlet.documentlibrary.service.http;
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
+ * </p>
+ *
+ * <p>
+ * ServiceBuilder follows certain rules in translating the methods. For example,
+ * if the method in the service utility returns a {@link java.util.List}, that
+ * is translated to an array of {@link com.liferay.portlet.documentlibrary.model.DLSyncSoap}.
+ * If the method in the service utility returns a
+ * {@link com.liferay.portlet.documentlibrary.model.DLSync}, that is translated to a
+ * {@link com.liferay.portlet.documentlibrary.model.DLSyncSoap}. Methods that SOAP cannot
+ * safely wire are skipped.
  * </p>
  *
  * <p>
@@ -43,8 +60,26 @@ package com.liferay.portlet.documentlibrary.service.http;
  *
  * @author    Brian Wing Shun Chan
  * @see       DLSyncServiceHttp
+ * @see       com.liferay.portlet.documentlibrary.model.DLSyncSoap
  * @see       com.liferay.portlet.documentlibrary.service.DLSyncServiceUtil
  * @generated
  */
 public class DLSyncServiceSoap {
+	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
+		long companyId, long repositoryId, java.util.Date lastAccessDate)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLSyncUpdate returnValue = DLSyncServiceUtil.getDLSyncUpdate(companyId,
+					repositoryId, lastAccessDate);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(DLSyncServiceSoap.class);
 }

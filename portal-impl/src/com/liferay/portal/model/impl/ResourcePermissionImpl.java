@@ -16,8 +16,8 @@ package com.liferay.portal.model.impl;
 
 /**
  * Stores the permissions assigned to roles under permissions version 6. A
- * permission gives a role the ability to perform a set of actions on certain
- * resources.
+ * resource permission gives a role the ability to perform a set of actions on
+ * certain resources.
  *
  * <p>
  * The type of resource a permission applies to is specified by the
@@ -38,6 +38,15 @@ package com.liferay.portal.model.impl;
  * specific group. A user must be a member of a group (generally either a site
  * or an organization), and they must have been given the role within that group
  * before they are granted its permissions.
+ * </p>
+ *
+ * <p>
+ * Note: Lacking permission to perform an action on a resource at one scope does
+ * not necessarily mean that a role does not have permission to perform that
+ * action. For instance, a message boards moderator role will not have
+ * individual scope permissions to edit every post, but it will have edit
+ * permissions at the group or company level, which is sufficient. Every scope
+ * must be checked.
  * </p>
  *
  * <p>

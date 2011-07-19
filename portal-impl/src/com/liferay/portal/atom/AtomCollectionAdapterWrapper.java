@@ -15,11 +15,16 @@
 package com.liferay.portal.atom;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.activation.MimeType;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
@@ -80,15 +85,29 @@ public class AtomCollectionAdapterWrapper<E>
 
 	@Override
 	public Object getContent(E entry, RequestContext requestContext) {
-		Abdera abdera = requestContext.getAbdera();
+		AtomEntryContent atomEntryContent =
+			_atomCollectionAdapter.getEntryContent(
+				entry, new AtomRequestContextImpl(requestContext));
 
-		Factory factory = abdera.getFactory();
+		Content content = newContent(
+			atomEntryContent.getType(), requestContext);
 
-		Content content = factory.newContent(Content.Type.HTML);
+		if (atomEntryContent.getMimeType() != null) {
+			content.setMimeType(atomEntryContent.getMimeType());
+		}
 
-		content.setText(_atomCollectionAdapter.getEntryContent(entry));
+		if (atomEntryContent.getSrcLink() != null) {
+			content.setSrc(atomEntryContent.getSrcLink());
+		}
+
+		content.setText(atomEntryContent.getText());
 
 		return content;
+	}
+
+	@Override
+	public String getContentType(E entry) {
+		return _atomCollectionAdapter.getMediaContentType(entry);
 	}
 
 	@Override
@@ -112,6 +131,28 @@ public class AtomCollectionAdapterWrapper<E>
 		try {
 			return _atomCollectionAdapter.getEntry(
 				resourceName, new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
+	public String getMediaName(E entry) throws ResponseContextException {
+		try {
+			return _atomCollectionAdapter.getMediaName(entry);
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
+	public InputStream getMediaStream(E entry) throws ResponseContextException {
+		try {
+			return _atomCollectionAdapter.getMediaStream(entry);
 		}
 		catch (AtomException ae) {
 			throw new ResponseContextException(
@@ -153,6 +194,23 @@ public class AtomCollectionAdapterWrapper<E>
 	}
 
 	@Override
+	public E postMedia(
+			MimeType mimeType, String slug, InputStream inputStream,
+			RequestContext requestContext)
+		throws ResponseContextException {
+
+		try {
+			return _atomCollectionAdapter.postMedia(
+				mimeType.toString(), slug, inputStream,
+				new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
 	public void putEntry(
 			E entry, String title, Date updated, List<Person> authors,
 			String summary, Content content, RequestContext requestContext)
@@ -170,8 +228,53 @@ public class AtomCollectionAdapterWrapper<E>
 	}
 
 	@Override
+	public void putMedia(
+			E entry, MimeType contentType, String slug, InputStream inputStream,
+			RequestContext requestContext)
+		throws ResponseContextException {
+
+		try {
+			_atomCollectionAdapter.putMedia(
+				entry, contentType.toString(), slug, inputStream,
+				new AtomRequestContextImpl(requestContext));
+		}
+		catch (AtomException ae) {
+			throw new ResponseContextException(
+				ae.getErrorCode(), ae.getCause());
+		}
+	}
+
+	@Override
 	protected String getEntryId(E entry) {
 		return _atomCollectionAdapter.getEntryId(entry);
+	}
+
+	protected Content newContent(
+		AtomEntryContent.Type atomEntryContentType,
+		RequestContext requestContext) {
+
+		Abdera abdera = requestContext.getAbdera();
+
+		Factory factory = abdera.getFactory();
+
+		if (atomEntryContentType == AtomEntryContent.Type.HTML) {
+			return factory.newContent(Content.Type.HTML);
+		}
+		else if (atomEntryContentType == AtomEntryContent.Type.MEDIA) {
+			return factory.newContent(Content.Type.MEDIA);
+		}
+		else if (atomEntryContentType == AtomEntryContent.Type.TEXT) {
+			return factory.newContent(Content.Type.TEXT);
+		}
+		else if (atomEntryContentType == AtomEntryContent.Type.XHTML) {
+			return factory.newContent(Content.Type.XHTML);
+		}
+		else if (atomEntryContentType == AtomEntryContent.Type.XML) {
+			return factory.newContent(Content.Type.XML);
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	private AtomCollectionAdapter<E> _atomCollectionAdapter;

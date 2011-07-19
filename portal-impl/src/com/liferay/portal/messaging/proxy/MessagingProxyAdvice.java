@@ -36,9 +36,9 @@ public class MessagingProxyAdvice {
 	public Object invoke(ProceedingJoinPoint proceedingJoinPoint)
 		throws Throwable {
 
-		ProxyRequest proxyRequest = createProxyRequest(proceedingJoinPoint);
-
 		Message message = new Message();
+
+		ProxyRequest proxyRequest = createProxyRequest(proceedingJoinPoint);
 
 		message.setPayload(proxyRequest);
 

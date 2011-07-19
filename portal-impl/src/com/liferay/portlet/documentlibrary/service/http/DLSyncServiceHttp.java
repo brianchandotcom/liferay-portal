@@ -54,6 +54,39 @@ import com.liferay.portlet.documentlibrary.service.DLSyncServiceUtil;
  * @generated
  */
 public class DLSyncServiceHttp {
+	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
+		HttpPrincipal httpPrincipal, long companyId, long repositoryId,
+		java.util.Date lastAccessDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
+					"getDLSyncUpdate", _getDLSyncUpdateParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, repositoryId, lastAccessDate);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.documentlibrary.model.DLSyncUpdate)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.io.InputStream getFileDeltaAsStream(
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)
@@ -61,7 +94,7 @@ public class DLSyncServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
-					"getFileDeltaAsStream", _getFileDeltaAsStreamParameterTypes0);
+					"getFileDeltaAsStream", _getFileDeltaAsStreamParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceVersion, destinationVersion);
@@ -103,7 +136,7 @@ public class DLSyncServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
-					"updateFileEntry", _updateFileEntryParameterTypes1);
+					"updateFileEntry", _updateFileEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -137,10 +170,13 @@ public class DLSyncServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLSyncServiceHttp.class);
-	private static final Class<?>[] _getFileDeltaAsStreamParameterTypes0 = new Class[] {
+	private static final Class<?>[] _getDLSyncUpdateParameterTypes0 = new Class[] {
+			long.class, long.class, java.util.Date.class
+		};
+	private static final Class<?>[] _getFileDeltaAsStreamParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateFileEntryParameterTypes1 = new Class[] {
+	private static final Class<?>[] _updateFileEntryParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.io.InputStream.class,

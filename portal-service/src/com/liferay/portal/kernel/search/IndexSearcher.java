@@ -25,7 +25,8 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 public interface IndexSearcher {
 
 	public Hits search(
-			long companyId, Query query, Sort[] sort, int start, int end)
+			String searchEngineId, long companyId, Query query, Sort[] sort,
+			int start, int end)
 		throws SearchException;
 
 	public Hits search(SearchContext searchContext, Query query)

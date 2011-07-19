@@ -214,6 +214,17 @@ COMMIT_TRANSACTION;
 
 update DLFolder set repositoryId = groupId;
 
+create table DLSync (
+	syncId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	fileId VARCHAR(75) null,
+	repositoryId LONG,
+	event VARCHAR(75) null,
+	type_ VARCHAR(75) null
+);
+
 alter table Group_ add site BOOLEAN;
 
 update Group_ set name = 'User Personal Site' where name = 'User Personal Community';
@@ -394,3 +405,4 @@ create table VirtualHost (
 );
 
 alter table WorkflowDefinitionLink add classPK LONG;
+alter table WorkflowDefinitionLink add typePK LONG;

@@ -14,15 +14,26 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.cluster.Priority;
+
 /**
  * @author Bruno Farache
+ * @author Michael C. Han
  */
 public interface SearchEngine {
 
+	public Priority getClusteredWritePriority();
+
+	public IndexSearcher getIndexSearcher();
+
+	public IndexWriter getIndexWriter();
+
 	public String getName();
 
-	public IndexSearcher getSearcher();
+	public String getVendor();
 
-	public IndexWriter getWriter();
+	public boolean isClusteredWrite();
+
+	public boolean isLuceneBased();
 
 }

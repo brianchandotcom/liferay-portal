@@ -67,6 +67,11 @@ import org.apache.commons.lang.time.StopWatch;
 public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	@Override
+	public AdvancedPermissionChecker clone() {
+		return new AdvancedPermissionChecker();
+	}
+
+	@Override
 	public long[] getRoleIds(long userId, long groupId) {
 		PermissionCheckerBag bag = null;
 

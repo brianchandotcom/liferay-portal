@@ -2292,6 +2292,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="typePK" type="long" />
 		<column name="workflowDefinitionName" type="String" />
 		<column name="workflowDefinitionVersion" type="int" />
 
@@ -2306,16 +2307,17 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_C_C_C" return-type="WorkflowDefinitionLink">
-			<finder-column name="groupId" />
-			<finder-column name="companyId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
 		<finder name="C_W_W" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="workflowDefinitionName" />
 			<finder-column name="workflowDefinitionVersion" />
+		</finder>
+		<finder name="G_C_C_C_T" return-type="WorkflowDefinitionLink">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="typePK" />
 		</finder>
 	</entity>
 	<entity name="WorkflowInstanceLink" local-service="true" remote-service="false">

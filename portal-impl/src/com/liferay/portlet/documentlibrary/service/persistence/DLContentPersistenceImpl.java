@@ -1637,6 +1637,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	protected DLFileVersionPersistence dlFileVersionPersistence;
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
+	@BeanReference(type = DLSyncPersistence.class)
+	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)

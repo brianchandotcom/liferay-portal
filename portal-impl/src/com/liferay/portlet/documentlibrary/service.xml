@@ -244,6 +244,8 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="WorkflowDefinitionLink" />
+		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
 	<entity name="DLFileRank" human-name="document library file rank" local-service="true" remote-service="false">
@@ -477,6 +479,43 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="DLSync" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="syncId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="fileId" type="String" />
+		<column name="repositoryId" type="long" />
+		<column name="event" type="String" />
+		<column name="type" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="companyId" />
+			<order-column name="repositoryId" />
+			<order-column name="modifiedDate" />
+			<order-column name="type" case-sensitive="false" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="FileId" return-type="DLSync" unique="true">
+			<finder-column name="fileId" />
+		</finder>
+		<finder name="C_M_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="modifiedDate" comparator="&gt;=" />
+			<finder-column name="repositoryId" />
+		</finder>
 		<tx-required>getFileDeltaAsStream</tx-required>
 	</entity>
 	<exceptions>

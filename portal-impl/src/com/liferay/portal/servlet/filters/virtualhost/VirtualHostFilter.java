@@ -92,6 +92,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 			friendlyURL.startsWith(_PATH_DELEGATE) ||
 			friendlyURL.startsWith(_PATH_DISPLAY_CHART) ||
 			friendlyURL.startsWith(_PATH_DTD) ||
+			friendlyURL.startsWith(_PATH_ELOQUA) ||
 			friendlyURL.startsWith(_PATH_FACEBOOK) ||
 			friendlyURL.startsWith(_PATH_GOOGLE_GADGET) ||
 			friendlyURL.startsWith(_PATH_HTML) ||
@@ -315,6 +316,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 	private static final String _PATH_DOCUMENTS = "/documents/";
 
 	private static final String _PATH_DTD = "/dtd/";
+
+	private static final String _PATH_ELOQUA = "/elqNow/";
 
 	private static final String _PATH_FACEBOOK = "/facebook/";
 

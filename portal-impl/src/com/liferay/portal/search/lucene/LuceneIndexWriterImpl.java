@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,12 +41,13 @@ import org.apache.lucene.index.Term;
  */
 public class LuceneIndexWriterImpl implements IndexWriter {
 
-	public void addDocument(long companyId, Document document)
+	public void addDocument(
+			SearchContext searchContext, Document document)
 		throws SearchException {
 
 		try {
 			LuceneHelperUtil.addDocument(
-				companyId, _getLuceneDocument(document));
+				searchContext.getCompanyId(), _getLuceneDocument(document));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added document " + document.get(Field.UID));
@@ -56,20 +58,21 @@ public class LuceneIndexWriterImpl implements IndexWriter {
 		}
 	}
 
-	public void addDocuments(long companyId, Collection<Document> documents)
+	public void addDocuments(
+			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException {
 
 		for (Document document : documents) {
-			addDocument(companyId, document);
+			addDocument(searchContext, document);
 		}
 	}
 
-	public void deleteDocument(long companyId, String uid)
+	public void deleteDocument(SearchContext searchContext, String uid)
 		throws SearchException {
 
 		try {
 			LuceneHelperUtil.deleteDocuments(
-				companyId, new Term(Field.UID, uid));
+				searchContext.getCompanyId(), new Term(Field.UID, uid));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Deleted document " + uid);
@@ -80,32 +83,37 @@ public class LuceneIndexWriterImpl implements IndexWriter {
 		}
 	}
 
-	public void deleteDocuments(long companyId, Collection<String> uids)
+	public void deleteDocuments(
+			SearchContext searchContext, Collection<String> uids)
 		throws SearchException {
 
 		for (String uid : uids) {
-			deleteDocument(companyId, uid);
+			deleteDocument(searchContext, uid);
 		}
 	}
 
-	public void deletePortletDocuments(long companyId, String portletId)
+	public void deletePortletDocuments(
+			SearchContext searchContext, String portletId)
 		throws SearchException {
 
 		try {
 			LuceneHelperUtil.deleteDocuments(
-				companyId, new Term(Field.PORTLET_ID, portletId));
+				searchContext.getCompanyId(), new Term(Field.PORTLET_ID,
+				portletId));
 		}
 		catch (IOException ioe) {
 			throw new SearchException(ioe);
 		}
 	}
 
-	public void updateDocument(long companyId, Document document)
+	public void updateDocument(
+			SearchContext searchContext, Document document)
 		throws SearchException {
 
 		try {
 			LuceneHelperUtil.updateDocument(
-				companyId, new Term(Field.UID, document.getUID()),
+				searchContext.getCompanyId(),
+				new Term(Field.UID, document.getUID()),
 				_getLuceneDocument(document));
 
 			if (_log.isDebugEnabled()) {
@@ -117,11 +125,12 @@ public class LuceneIndexWriterImpl implements IndexWriter {
 		}
 	}
 
-	public void updateDocuments(long companyId, Collection<Document> documents)
+	public void updateDocuments(
+			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException {
 
 		for (Document document : documents) {
-			updateDocument(companyId, document);
+			updateDocument(searchContext, document);
 		}
 	}
 

@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
 
 import java.io.Serializable;
 
@@ -931,6 +932,24 @@ public abstract class DLContentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d l sync persistence.
+	 *
+	 * @return the d l sync persistence
+	 */
+	public DLSyncPersistence getDLSyncPersistence() {
+		return dlSyncPersistence;
+	}
+
+	/**
+	 * Sets the d l sync persistence.
+	 *
+	 * @param dlSyncPersistence the d l sync persistence
+	 */
+	public void setDLSyncPersistence(DLSyncPersistence dlSyncPersistence) {
+		this.dlSyncPersistence = dlSyncPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1200,6 +1219,8 @@ public abstract class DLContentLocalServiceBaseImpl
 	protected DLSyncLocalService dlSyncLocalService;
 	@BeanReference(type = DLSyncService.class)
 	protected DLSyncService dlSyncService;
+	@BeanReference(type = DLSyncPersistence.class)
+	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

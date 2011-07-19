@@ -30,6 +30,8 @@ import javax.portlet.PortletRequest;
  */
 public abstract class BasePermissionChecker implements PermissionChecker {
 
+	public abstract PermissionChecker clone();
+
 	public long getCompanyId() {
 		return user.getCompanyId();
 	}

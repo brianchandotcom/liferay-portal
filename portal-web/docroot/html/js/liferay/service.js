@@ -763,6 +763,13 @@ Liferay.Service.registerClass(
 	}
 );
 
+Liferay.Service.registerClass(
+	Liferay.Service.DL, "DLSync",
+	{
+		getDLSyncUpdate: true
+	}
+);
+
 Liferay.Service.register("Liferay.Service.DDL", "com.liferay.portlet.dynamicdatalists.service");
 
 Liferay.Service.registerClass(

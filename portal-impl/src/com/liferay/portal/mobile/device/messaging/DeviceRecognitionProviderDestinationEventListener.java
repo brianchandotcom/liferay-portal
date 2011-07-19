@@ -16,13 +16,15 @@ package com.liferay.portal.mobile.device.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseDestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
+import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
 public class DeviceRecognitionProviderDestinationEventListener
 	extends BaseDestinationEventListener {
@@ -35,9 +37,10 @@ public class DeviceRecognitionProviderDestinationEventListener
 			return;
 		}
 
-		MessageBusUtil.unregisterMessageListener(
-			DestinationNames.DEVICE_RECOGNITION_PROVIDER,
-			_proxyMessageListener);
+		DeviceDetectionUtil deviceDetectionUtil = new DeviceDetectionUtil();
+
+		deviceDetectionUtil.setDeviceRecognitionProvider(
+			_proxyDeviceRecognitionProvider);
 	}
 
 	@Override
@@ -48,15 +51,22 @@ public class DeviceRecognitionProviderDestinationEventListener
 			return;
 		}
 
-		MessageBusUtil.registerMessageListener(
-			DestinationNames.DEVICE_RECOGNITION_PROVIDER,
-			_proxyMessageListener);
+		DeviceDetectionUtil deviceDetectionUtil = new DeviceDetectionUtil();
+
+		deviceDetectionUtil.setDeviceRecognitionProvider(
+			_directDeviceRecognitionProvider);
 	}
 
-	public void setProxyMessageListener(
-		ProxyMessageListener proxyMessageListener) {
+	public void setDirectDeviceRecognitionProvider(
+		DeviceRecognitionProvider directDeviceRecognitionProvider) {
 
-		_proxyMessageListener = proxyMessageListener;
+		_directDeviceRecognitionProvider = directDeviceRecognitionProvider;
+	}
+
+	public void setProxyDeviceRecognitionProvider(
+		DeviceRecognitionProvider proxyDeviceRecognitionProvider) {
+
+		_proxyDeviceRecognitionProvider = proxyDeviceRecognitionProvider;
 	}
 
 	protected boolean isProceed(
@@ -64,7 +74,6 @@ public class DeviceRecognitionProviderDestinationEventListener
 
 		if ((!destinationName.equals(
 				DestinationNames.DEVICE_RECOGNITION_PROVIDER)) ||
-			(messageListener == _proxyMessageListener) ||
 			!(messageListener instanceof ProxyMessageListener)) {
 
 			return false;
@@ -74,6 +83,7 @@ public class DeviceRecognitionProviderDestinationEventListener
 		}
 	}
 
-	private ProxyMessageListener _proxyMessageListener;
+	private DeviceRecognitionProvider _directDeviceRecognitionProvider;
+	private DeviceRecognitionProvider _proxyDeviceRecognitionProvider;
 
 }

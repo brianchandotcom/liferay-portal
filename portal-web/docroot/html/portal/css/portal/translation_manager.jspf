@@ -24,7 +24,7 @@
 	min-height: 1.8em;
 	padding: 0.5em;
 
-	.lfr-translation-manager-icon-menu {
+	.lfr-translation-manager-content .lfr-translation-manager-icon-menu {
 		display: inline;
 		float: none;
 		margin-left: 2em;

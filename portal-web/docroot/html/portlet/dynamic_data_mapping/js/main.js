@@ -2,18 +2,18 @@ AUI().add(
 	'liferay-portlet-dynamic-data-mapping',
 	function(A) {
 		var AArray = A.Array;
-
 		var Lang = A.Lang;
-
 		var DataType = A.DataType;
-
 		var FormBuilderField = A.FormBuilderField;
 
 		var instanceOf = A.instanceOf;
+		var isObject = Lang.isObject;
 
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
 		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue', 'tip'];
+
+		var STR_BLANK = '';
 
 		var MAP_ATTR_DISPLAY_CHILD_LABEL_AS_VALUE = {
 			name: 'displayChildLabelAsValue'
@@ -56,15 +56,13 @@ AUI().add(
 		};
 
 		var MAP_ELEMENT_DATA = {
-			attributeList: '',
-			nodeName: ''
+			attributeList: STR_BLANK,
+			nodeName: STR_BLANK
 		};
 
 		var STR_CDATA_CLOSE = ']]>';
 
 		var STR_CDATA_OPEN = '<![CDATA[';
-
-		var STR_BLANK = '';
 
 		var STR_SPACE = ' ';
 
@@ -73,14 +71,14 @@ AUI().add(
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
-			return /^[\w-]+$/.test(value);
+			return (/^[\w\-]+$/).test(value);
 		};
 
 		var LiferayFormBuilder = A.Component.create(
 			{
 				ATTRS: {
 					availableFields: {
-						validator: Lang.isObject,
+						validator: isObject,
 						valueFn: function() {
 							return LiferayFormBuilder.AVAILABLE_FIELDS.DEFAULT;
 						}
@@ -95,7 +93,7 @@ AUI().add(
 					},
 
 					translationManager: {
-						validator: Lang.isObject,
+						validator: isObject,
 						value: {}
 					},
 
@@ -103,27 +101,30 @@ AUI().add(
 						setter: function(val) {
 							var instance = this;
 
-							var config = A.merge({
-								boundingBox: instance.get('settingsFormNode'),
+							var config = A.merge(
+								{
+									boundingBox: instance.get('settingsFormNode'),
 
-								rules: {
-									name: {
-										required: true,
-										structureFieldName: true
-									}
+									rules: {
+										name: {
+											required: true,
+											structureFieldName: true
+										}
+									},
+									fieldStrings: {
+										name: {
+											required: Liferay.Language.get('this-field-is-required')
+										}
+									},
+									on: {
+										errorField: function(event) {
+											instance._tabs.selectTab(1);
+										}
+									},
+									validateOnBlur: true
 								},
-								fieldStrings: {
-									name: {
-										required: Liferay.Language.get('this-field-is-required')
-									}
-								},
-								on: {
-									errorField: function(event) {
-										instance._tabs.selectTab(1);
-									}
-								},
-								validateOnBlur: true
-							}, val);
+								val
+							);
 
 							return config;
 						},
@@ -153,19 +154,20 @@ AUI().add(
 					initializer: function() {
 						var instance = this;
 
-						instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
+						var translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
+
+						instance.after(
+							'render',
+							function(event) {
+								translationManager.render();
+							}
+						);
+
+						instance.translationManager = translationManager;
 
 						instance.validator = new A.FormValidator(instance.get('validator'));
 
 						instance.addTarget(Liferay.Util.getOpener().Liferay);
-					},
-
-					renderUI: function() {
-						var instance = this;
-
-						LiferayFormBuilder.superclass.renderUI.apply(instance, arguments);
-
-						instance.translationManager.render();
 					},
 
 					bindUI: function() {
@@ -173,18 +175,16 @@ AUI().add(
 
 						LiferayFormBuilder.superclass.bindUI.apply(instance, arguments);
 
-						instance.translationManager.after(
-							{
-								editingLocaleChange: A.bind(instance._afterEditingLocaleChange, instance)
-							}
-						);
+						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 					},
 
 					getXSD: function() {
 						var instance = this;
 
-						var fields = instance.get('fields');
 						var buffer = [];
+
+						var fields = instance.get('fields');
+
 						var translationManager = instance.translationManager;
 
 						var root = instance._createDynamicNode(
@@ -210,22 +210,11 @@ AUI().add(
 					},
 
 					getFieldLocalizedValue: function(field, attribute, locale) {
-						var instance = this;	
+						var instance = this;
 
 						var localizationMap = field.get('localizationMap');
-						var value = field.get(attribute);
 
-						if (!Lang.isUndefined(localizationMap)) {
-							var localeMap = localizationMap[locale];
-
-							if (!Lang.isUndefined(localeMap)) {
-								var localizedValue = localeMap[attribute];
-
-								if (!Lang.isUndefined(localizedValue)) {
-									value = localizedValue;
-								}
-							}
-						}
+						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
 
 						return instance.normalizeValue(value);
 					},
@@ -243,8 +232,8 @@ AUI().add(
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
-						var prevVal = event.prevVal;
 						var newVal = event.newVal;
+						var prevVal = event.prevVal;
 
 						instance._updateFieldsLocalizationMap(prevVal);
 
@@ -312,7 +301,7 @@ AUI().add(
 						A.each(
 							localizationMap,
 							function(item, index, collection) {
-								if (Lang.isObject(item)) {
+								if (isObject(item)) {
 									var metadata = instance._createDynamicNode(
 										'meta-data',
 										{
@@ -540,10 +529,10 @@ AUI().add(
 							function(item, index, collection) {
 								var localizationMap = item.localizationMap;
 
-								if (Lang.isObject(localizationMap)) {
+								if (isObject(localizationMap)) {
 									var localeMap = localizationMap[locale];
-									
-									if (Lang.isObject(localeMap)) {
+
+									if (isObject(localeMap)) {
 										item.label = localeMap.label;
 									}
 								}
@@ -556,29 +545,32 @@ AUI().add(
 					_syncFieldsLocaleUI: function(locale) {
 						var instance = this;
 
-						instance.eachField(function(field, index, fields) {
-							if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-								instance._syncFieldOptionsLocaleUI(field, locale);
-							}
+						instance.eachField(
+							function(field, index, fields) {
+								if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+									instance._syncFieldOptionsLocaleUI(field, locale);
+								}
 
-							var localizationMap = field.get('localizationMap');
-							var localeMap = localizationMap[locale];
+								var localizationMap = field.get('localizationMap');
+								var localeMap = localizationMap[locale];
 
-							if (Lang.isObject(localizationMap) && Lang.isObject(localeMap)) {
-								AArray.each(
-									LOCALIZABLE_FIELD_ATTRS,
-									function(item, index, collection) {
-										field.set(item, localeMap[item]);
+								if (isObject(localizationMap) && isObject(localeMap)) {
+									AArray.each(
+										LOCALIZABLE_FIELD_ATTRS,
+										function(item, index, collection) {
+											field.set(item, localeMap[item]);
 
-										var settingNode = field.settingsNodesMap[item + 'SettingNode'];
+											var settingNode = field.settingsNodesMap[item + 'SettingNode'];
 
-										if (settingNode && field.get('selected')) {
-											settingNode.val(localeMap[item]);
+											if (settingNode && field.get('selected')) {
+												settingNode.val(localeMap[item]);
+											}
 										}
-									}
-								);
-							}
-						}, true);
+									);
+								}
+							},
+							true
+						);
 					},
 
 					_updateFieldOptionsLocalizationMap: function(field, locale) {
@@ -591,12 +583,12 @@ AUI().add(
 							function(item, index, collection) {
 								var localizationMap = item.localizationMap;
 
-								if (!Lang.isObject(localizationMap)) {
+								if (!isObject(localizationMap)) {
 									localizationMap = {};
 								}
 
 								localizationMap[locale] = {
-									label: item.label 
+									label: item.label
 								};
 
 								item.localizationMap = localizationMap;
@@ -609,29 +601,32 @@ AUI().add(
 					_updateFieldsLocalizationMap: function(locale) {
 						var instance = this;
 
-						instance.eachField(function(field, index, fields) {
-							var localizationMap = field.get('localizationMap');
+						instance.eachField(
+							function(field, index, fields) {
+								var localizationMap = field.get('localizationMap');
 
-							if (!Lang.isObject(localizationMap)) {
-								localizationMap = {};
-							}
-
-							var localeMap = localizationMap[locale] = {};
-
-							if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-								instance._updateFieldOptionsLocalizationMap(field, locale); 
-							}
-
-							AArray.each(
-								LOCALIZABLE_FIELD_ATTRS,
-								function(item, index, collection) {
-									localeMap[item] = field.get(item);
+								if (!isObject(localizationMap)) {
+									localizationMap = {};
 								}
-							);
 
-							field.set('localizationMap', localizationMap);
-						}, true);
-					},
+								var localeMap = localizationMap[locale] = {};
+
+								if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+									instance._updateFieldOptionsLocalizationMap(field, locale);
+								}
+
+								AArray.each(
+									LOCALIZABLE_FIELD_ATTRS,
+									function(item, index, collection) {
+										localeMap[item] = field.get(item);
+									}
+								);
+
+								field.set('localizationMap', localizationMap);
+							},
+							true
+						);
+					}
 				}
 			}
 		);

@@ -77,7 +77,6 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 		</liferay-ui:icon-menu>
 
 		<c:if test="<%= availableLocales.length > 0 %>">
-
 			<div class="lfr-translation-manager-available-translations">
 				<label><liferay-ui:message key="available-translations" /></label>
 
@@ -90,8 +89,8 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 					%>
 
 						<span class="lfr-translation-manager-translation" locale="<%= availableLocales[i] %>">
-
 							<img src="<%= themeDisplay.getPathThemeImages() %>/language/<%= availableLocales[i] %>.png">
+
 							<%= LocaleUtil.fromLanguageId(availableLocales[i]).getDisplayName(locale) %>
 
 							<a href="javascript:;" class="lfr-translation-manager-translation-delete">x</a>
@@ -102,7 +101,6 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 					%>
 				</span>
 			</div>
-
 		</c:if>
 	</div>
 </div>
@@ -128,10 +126,14 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 			<div class="aui-form-builder-tabs-container">
 				<ul class="aui-tabview-list yui3-widget-hd">
 					<li class="aui-component aui-form-builder-tab-add aui-state-active aui-state-default aui-tab aui-tab-active yui3-widget">
-						<span class="aui-tab-content"><a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="add-field" /></a></span>
+						<span class="aui-tab-content">
+							<a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="add-field" /></a>
+						</span>
 					</li>
 					<li class="aui-component aui-form-builder-tab-settings aui-tab aui-state-default yui3-widget">
-						<span class="aui-tab-content"><a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="field-settings" /></a></span>
+						<span class="aui-tab-content">
+							<a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="field-settings" /></a>
+						</span>
 					</li>
 				</ul>
 
@@ -195,9 +197,11 @@ for (int i = 0; i < locales.length; i++) {
 			portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
 
 			translationManager: {
+
 				<c:if test="<%= availableLocalesArray.length() > 0 %>">
 					availableLocales: <%= availableLocalesArray.toString() %>,
 				</c:if>
+
 				boundingBox: '#<portlet:namespace />translationManager',
 				defaultLocale: '<%= defaultLanguageId %>',
 				localesMap: <%= localesObject.toString() %>,

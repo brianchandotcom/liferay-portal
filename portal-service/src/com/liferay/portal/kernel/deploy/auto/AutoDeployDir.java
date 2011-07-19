@@ -216,7 +216,7 @@ public class AutoDeployDir {
 
 			if ((file.isFile()) &&
 				(fileName.endsWith(".war") || fileName.endsWith(".zip") ||
-				 fileName.endsWith(".xml"))) {
+				 fileName.endsWith(".xml") || fileName.endsWith(".lpkg"))) {
 
 				processFile(file);
 			}

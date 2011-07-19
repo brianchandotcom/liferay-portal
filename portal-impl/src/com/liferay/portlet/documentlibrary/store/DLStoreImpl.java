@@ -491,9 +491,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			(name.contains("|")) ||
 			(name.contains("[")) ||
 			(name.contains("]")) ||
-			(name.contains("..\\")) ||
 			(name.contains("../")) ||
-			(name.contains("\\..")) ||
 			(name.contains("/.."))) {
 
 			return false;

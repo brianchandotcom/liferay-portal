@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -50,7 +51,7 @@ public class RSSAction extends Action {
 				request, response, null, getRSS(request),
 				ContentTypes.TEXT_XML_UTF8);
 
-			return null;
+			return mapping.findForward(ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

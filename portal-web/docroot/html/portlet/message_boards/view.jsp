@@ -66,6 +66,9 @@ request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionCl
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+rssResourceURL.setParameter("p_l_id", String.valueOf(plid));
+rssResourceURL.setParameter("mbCategoryId", String.valueOf(scopeGroupId));
 %>
 
 <liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
@@ -80,7 +83,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						label="<%= true %>"
 						method="get"
 						target="_blank"
-						url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&mbCategoryId=" + scopeGroupId + rssURLParams %>'
+						url='<%= rssResourceURL.toString() %>'
 					/>
 
 					<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
@@ -358,13 +361,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<c:if test='<%= topLink.equals("recent-posts") %>'>
 
 			<%
-			String rssURL = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&groupId=" + scopeGroupId;
+			rssResourceURL.setParameter("mbCategoryId", "");
+			rssResourceURL.setParameter("groupId", String.valueOf(scopeGroupId));
 
 			if (groupThreadsUserId > 0) {
-				rssURL += "&userId=" + groupThreadsUserId;
+				rssResourceURL.setParameter("userId", String.valueOf(groupThreadsUserId));
 			}
-
-			rssURL += rssURLParams;
 			%>
 
 			<br />
@@ -378,7 +380,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						message="subscribe-to-recent-posts"
 						method="get"
 						target="_blank"
-						url="<%= rssURL %>"
+						url="<%= rssResourceURL.toString() %>"
 					/>
 				</td>
 			</tr>

@@ -7,6 +7,12 @@
 		<implicit-parameter name="struts_action">/message_boards/view</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/rss</pattern>
+		<ignored-parameter name="p_p_cacheability" />
+		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
+		<implicit-parameter name="struts_action">/message_boards/rss</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/category</pattern>
 		<implicit-parameter name="mbCategoryId">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>

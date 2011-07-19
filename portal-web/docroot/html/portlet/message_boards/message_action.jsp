@@ -31,6 +31,9 @@ if (portletName.equals(PortletKeys.MESSAGE_BOARDS)) {
 
 MBCategory category = message.getCategory();
 MBThread thread = message.getThread();
+
+rssResourceURL.setParameter("p_l_id", String.valueOf(plid));
+rssResourceURL.setParameter("threadId", String.valueOf(message.getThreadId()));
 %>
 
 <liferay-ui:icon-menu>
@@ -67,7 +70,7 @@ MBThread thread = message.getThread();
 				image="rss"
 				method="get"
 				target="_blank"
-				url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&threadId=" + message.getThreadId() + rssURLParams %>'
+				url='<%= rssResourceURL.toString() %>'
 			/>
 		</c:if>
 

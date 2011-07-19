@@ -109,9 +109,11 @@ String[][] categorySections = {mainSections};
 		<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
 			<%= LanguageUtil.format(pageContext, "could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server", "<em>" + ree.getURL() + "</em>") %>
 		</c:if>
+
 		<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
 			<%= LanguageUtil.format(pageContext, "remote-group-with-id-x-does-not-exist", ree.getGroupId()) %>
 		</c:if>
+
 		<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
 			<liferay-ui:message key="no-pages-are-selected-for-export" />
 		</c:if>
@@ -123,9 +125,9 @@ String[][] categorySections = {mainSections};
 </c:if>
 
 <aui:script use="aui-dialog,aui-toolbar">
-	var popUp;
-	var exportPopUp;
-	var importPopUp;
+	var popup;
+	var exportPopup;
+	var importPopup;
 
 	var layoutSetToolbar = new A.Toolbar(
 		{
@@ -135,10 +137,10 @@ String[][] categorySections = {mainSections};
 				<c:if test="<%= !group.isLayoutPrototype() %>">
 					{
 						handler: function(event) {
-							if (!popUp) {
+							if (!popup) {
 								var content = A.one('#<portlet:namespace />addLayout');
 
-								popUp = new A.Dialog(
+								popup = new A.Dialog(
 									{
 										bodyContent: content.show(),
 										centered: true,
@@ -149,7 +151,7 @@ String[][] categorySections = {mainSections};
 								).render();
 							}
 
-							popUp.show();
+							popup.show();
 
 							Liferay.Util.focusFormField(content.one('input:text'));
 						},
@@ -180,8 +182,8 @@ String[][] categorySections = {mainSections};
 					},
 					{
 						handler: function(event) {
-							if (!exportPopUp) {
-								exportPopUp = new A.Dialog(
+							if (!exportPopup) {
+								exportPopup = new A.Dialog(
 									{
 										centered: true,
 										constrain: true,
@@ -202,12 +204,12 @@ String[][] categorySections = {mainSections};
 									<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 								</portlet:renderURL>
 
-								exportPopUp.plug(
+								exportPopup.plug(
 									A.Plugin.IO,
 									{
 										after: {
 											success: function() {
-												exportPopUp.centered();
+												exportPopup.centered();
 											}
 										},
 										autoLoad: false,
@@ -216,16 +218,17 @@ String[][] categorySections = {mainSections};
 								);
 							}
 
-							exportPopUp.show();
-							exportPopUp.io.start();
+							exportPopup.show();
+
+							exportPopup.io.start();
 						},
 						icon: 'arrowthick-1-b',
 						label: '<liferay-ui:message key="export" />'
 					},
 					{
 						handler: function(event) {
-							if (!importPopUp) {
-								importPopUp = new A.Dialog(
+							if (!importPopup) {
+								importPopup = new A.Dialog(
 									{
 										centered: true,
 										constrain: true,
@@ -247,18 +250,19 @@ String[][] categorySections = {mainSections};
 									<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 								</portlet:renderURL>
 
-								importPopUp.plug(
+								importPopup.plug(
 									A.Plugin.IO,
 									{
 										after: {
 											success: function() {
-												importPopUp.centered();
+												importPopup.centered();
 
-												var form = importPopUp.get('contentBox').one('#<portlet:namespace />fm1');
+												var form = importPopup.get('contentBox').one('#<portlet:namespace />fm1');
+
 												form.on(
 													'submit',
 													function(event) {
-														importPopUp.io.showLoading();
+														importPopup.io.showLoading();
 													}
 												);
 											}
@@ -269,9 +273,9 @@ String[][] categorySections = {mainSections};
 								);
 							}
 
-							importPopUp.show();
-							importPopUp.centered();
-							importPopUp.io.start();
+							importPopup.show();
+							importPopup.centered();
+							importPopup.io.start();
 						},
 						icon: 'arrowthick-1-t',
 						label: '<liferay-ui:message key="import" />'

@@ -33,7 +33,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.Staging.Branching.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + LanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "update-private-pages-variation" : "update-public-pages-variation") + "'});";
+		String taglibURL = "javascript:Liferay.Staging.Branching.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "update-private-pages-variation" : "update-public-pages-variation") + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -79,7 +79,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.Staging.Branching.mergeBranch({uri: '" + HtmlUtil.escapeJS(mergeURL) + "', dialogTitle: '" + LanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "merge-private-pages-variation" : "merge-public-pages-variation") + "'});";
+		String taglibURL = "javascript:Liferay.Staging.Branching.mergeBranch({uri: '" + HtmlUtil.escapeJS(mergeURL) + "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "merge-private-pages-variation" : "merge-public-pages-variation") + "'});";
 		%>
 
 		<liferay-ui:icon

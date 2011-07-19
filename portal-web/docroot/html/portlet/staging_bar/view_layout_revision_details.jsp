@@ -41,9 +41,11 @@ else {
 
 <aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+<div class="layout-actions">
+	<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 
-<span class="backstage-toolbar" id="<portlet:namespace />backstageToolbar"></span>
+	<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
+</div>
 
 <aui:script position="inline" use="liferay-staging,aui-io-request">
 	var dockbar = Liferay.Staging.Dockbar;

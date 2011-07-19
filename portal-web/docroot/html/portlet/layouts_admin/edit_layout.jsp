@@ -114,9 +114,11 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 						<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
 							<%= LanguageUtil.format(pageContext, "could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server", "<em>" + ree.getURL() + "</em>") %>
 						</c:if>
+
 						<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
 							<%= LanguageUtil.format(pageContext, "remote-group-with-id-x-does-not-exist", ree.getGroupId()) %>
 						</c:if>
+
 						<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
 							<liferay-ui:message key="no-pages-are-selected-for-export" />
 						</c:if>
@@ -138,7 +140,7 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 				<aui:script use="aui-dialog,aui-dialog-iframe,aui-toolbar">
 					var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
-					var popUp = null;
+					var popup = null;
 
 					var layoutToolbar = new A.Toolbar(
 						{
@@ -147,10 +149,10 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 							children: [
 								{
 									handler: function(event) {
-										if (!popUp) {
+										if (!popup) {
 											var content = A.one('#<portlet:namespace />addLayout');
 
-											popUp = new A.Dialog(
+											popup = new A.Dialog(
 												{
 													bodyContent: content.show(),
 													centered: true,
@@ -161,7 +163,7 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 											).render();
 										}
 
-										popUp.show();
+										popup.show();
 
 										Liferay.Util.focusFormField(content.one('input:text'));
 									},

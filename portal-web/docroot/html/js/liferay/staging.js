@@ -25,7 +25,11 @@ AUI().add(
 			addBranch: function(dialogTitle) {
 				var instance = this;
 
-				var branchDialog = instance._getBranchDialog(dialogTitle);
+				var branchDialog = instance._getBranchDialog();
+
+				if (Lang.isValue(dialogTitle)) {
+					branchDialog.set('title', dialogTitle);
+				}
 
 				branchDialog.show();
 			},
@@ -41,11 +45,19 @@ AUI().add(
 			mergeBranch: function(options) {
 				var instance = this;
 
-				var mergeDialog = instance._getMergeDialog(options.dialogTitle);
+				var mergeDialog = instance._getMergeDialog();
+
 				var mergeDialogIO = mergeDialog.io;
 
 				mergeDialogIO.set('uri', options.uri);
+
 				mergeDialogIO.start();
+
+				var dialogTitle = options.dialogTitle;
+
+				if (Lang.isValue(dialogTitle)) {
+					mergeDialog.set('title', dialogTitle);
+				}
 
 				mergeDialog.show();
 			},
@@ -53,16 +65,24 @@ AUI().add(
 			updateBranch: function(options) {
 				var instance = this;
 
-				var updateBranchDialog = instance._getUpdateBranchDialog(options.dialogTitle);
+				var updateBranchDialog = instance._getUpdateBranchDialog();
+
 				var updateBranchDialogIO = updateBranchDialog.io;
 
 				updateBranchDialogIO.set('uri', options.uri);
+
 				updateBranchDialogIO.start();
+
+				var dialogTitle = options.dialogTitle;
+
+				if (Lang.isValue(dialogTitle)) {
+					updateBranchDialog.set('title', dialogTitle);
+				}
 
 				updateBranchDialog.show();
 			},
 
-			_getBranchDialog: function(dialogTitle) {
+			_getBranchDialog: function() {
 				var instance = this;
 
 				var branchDialog = instance._branchDialog;
@@ -77,7 +97,6 @@ AUI().add(
 							},
 							bodyContent: A.one('#' + namespace + 'addBranch').show(),
 							modal: true,
-							title: dialogTitle,
 							width: 530
 						}
 					).render();
@@ -90,7 +109,7 @@ AUI().add(
 				return branchDialog;
 			},
 
-			_getMergeDialog: function(dialogTitle) {
+			_getMergeDialog: function() {
 				var instance = this;
 
 				var mergeDialog = instance._mergeDialog;
@@ -103,7 +122,6 @@ AUI().add(
 							},
 							draggable: true,
 							modal: true,
-							title: dialogTitle,
 							width: 530
 						}
 					).plug(
@@ -136,7 +154,7 @@ AUI().add(
 				return mergeDialog;
 			},
 
-			_getUpdateBranchDialog: function(dialogTitle) {
+			_getUpdateBranchDialog: function() {
 				var instance = this;
 
 				var	updateBranchDialog = new A.Dialog(
@@ -146,7 +164,6 @@ AUI().add(
 						},
 						draggable: true,
 						modal: true,
-						title: dialogTitle,
 						width: 530
 					}
 				).plug(

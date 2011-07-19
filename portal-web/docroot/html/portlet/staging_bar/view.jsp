@@ -315,13 +315,11 @@ if (layout != null) {
 										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
 										%>
 
-										<div class="layout-actions">
-											<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
-												<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
-											</div>
-
-											<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
+										<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
+											<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 										</div>
+
+										<%= (layoutRevisions.size() > 1) ? StringPool.BLANK : managePageVariationsLink %>
 									</div>
 								</div>
 							</aui:form>

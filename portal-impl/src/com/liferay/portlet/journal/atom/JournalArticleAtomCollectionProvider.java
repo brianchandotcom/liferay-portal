@@ -70,6 +70,10 @@ public class JournalArticleAtomCollectionProvider
 		return journalArticle.getArticleId();
 	}
 
+	public String getEntrySummary(JournalArticle entry) {
+		return null;
+	}
+
 	public String getEntryTitle(JournalArticle journalArticle) {
 		return journalArticle.getTitle();
 	}

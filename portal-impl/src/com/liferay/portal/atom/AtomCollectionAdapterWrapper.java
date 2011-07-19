@@ -31,6 +31,7 @@ import org.apache.abdera.factory.Factory;
 import org.apache.abdera.i18n.iri.IRI;
 import org.apache.abdera.model.Content;
 import org.apache.abdera.model.Person;
+import org.apache.abdera.model.Text;
 import org.apache.abdera.protocol.server.RequestContext;
 import org.apache.abdera.protocol.server.context.ResponseContextException;
 
@@ -84,6 +85,17 @@ public class AtomCollectionAdapterWrapper<E>
 	}
 
 	@Override
+	public Text getSummary(E entry, RequestContext request)
+		throws ResponseContextException {
+
+		Text summary = new Abdera().getFactory().newSummary();
+
+		summary.setValue(_atomCollectionAdapter.getEntrySummary(entry));
+
+		return summary;
+	}
+
+	@Override
 	public Object getContent(E entry, RequestContext requestContext) {
 		AtomEntryContent atomEntryContent =
 			_atomCollectionAdapter.getEntryContent(
@@ -129,6 +141,11 @@ public class AtomCollectionAdapterWrapper<E>
 		throws ResponseContextException {
 
 		try {
+			if (resourceName.endsWith(":media")) {
+				resourceName =
+					resourceName.substring(0, resourceName.length() - 6);
+			}
+
 			return _atomCollectionAdapter.getEntry(
 				resourceName, new AtomRequestContextImpl(requestContext));
 		}

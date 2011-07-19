@@ -584,6 +584,9 @@ public class ResourcePermissionLocalServiceImpl
 				}
 			}
 		}
+		else {
+			actionIdsLong |= resourcePermission.getActionIds();
+		}
 
 		resourcePermission.setActionIds(actionIdsLong);
 

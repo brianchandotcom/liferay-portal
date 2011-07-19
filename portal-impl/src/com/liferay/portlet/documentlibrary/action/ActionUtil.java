@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -88,8 +89,10 @@ public class ActionUtil {
 		long groupId = themeDisplay.getScopeGroupId();
 		long folderId = ParamUtil.getLong(request, "folderId");
 		String title = ParamUtil.getString(request, "title");
+		String version = ParamUtil.getString(request, "version");
 
 		FileEntry fileEntry = null;
+		FileVersion fileVersion = null;
 
 		try {
 			if (fileEntryId > 0) {
@@ -99,11 +102,17 @@ public class ActionUtil {
 				fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, folderId, title);
 			}
+
+			if ((fileEntry != null) && Validator.isNotNull(version)) {
+				fileVersion = fileEntry.getFileVersion(version);
+			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
 		}
 
 		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+		request.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 	}
 
 	public static void getFileEntry(PortletRequest portletRequest)

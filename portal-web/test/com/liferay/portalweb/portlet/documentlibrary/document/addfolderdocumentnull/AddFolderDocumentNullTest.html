@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddFolderDocumentDocumentNullTest</title>
+<title>AddFolderDocumentNullTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddFolderDocumentDocumentNullTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddFolderDocumentNullTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -24,9 +24,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test1 Folder1</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Test1 Folder1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/ul/li[5]/a</td>
+	<td>Add Document</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -66,12 +76,7 @@
 <tr>
 	<td>type</td>
 	<td>_20_title</td>
-	<td>Test1 Document1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_20_description</td>
-	<td>This is test1 document1.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -79,39 +84,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request processed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request processed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/a/span/span</td>
-	<td>Test1 Document1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/a/div</td>
-	<td>This is test1 document1.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>0.0k</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>No</td>
+	<td>//div[@class='portlet-msg-error']</td>
+	<td>You have entered invalid data. Please try again.</td>
 </tr>
 
 </tbody></table>

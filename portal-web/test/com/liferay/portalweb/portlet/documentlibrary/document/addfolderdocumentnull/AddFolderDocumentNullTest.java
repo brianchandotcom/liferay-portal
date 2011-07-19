@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocumentdocumentnull;
+package com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocumentnull;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
-	public void testAddFolderDocumentDocumentNull() throws Exception {
+public class AddFolderDocumentNullTest extends BaseTestCase {
+	public void testAddFolderDocumentNull() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -45,9 +45,13 @@ public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add Document"),
+			selenium.getText("//div[2]/ul/li[5]/a"));
 		selenium.clickAt("//div[2]/ul/li[5]/a",
 			RuntimeVariables.replace("Add Document"));
 		selenium.waitForPageToLoad("30000");
@@ -94,48 +98,14 @@ public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.type("_20_file", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_20_title", RuntimeVariables.replace("Test1 Document1"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_20_description",
-			RuntimeVariables.replace("This is test1 document1."));
+		selenium.type("_20_title", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test1 Document1"),
-			selenium.getText("//td[1]/a/span/span"));
-		assertEquals(RuntimeVariables.replace("This is test1 document1."),
-			selenium.getText("//td[1]/a/div"));
-		assertEquals(RuntimeVariables.replace("0.0k"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//td[4]/a"));
+				"You have entered invalid data. Please try again."),
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

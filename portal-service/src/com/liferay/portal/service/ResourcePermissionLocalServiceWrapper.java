@@ -578,24 +578,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Only to be used during the upgrade process, not part of the public API.
-	* Grants the role individual scope permissions to perform the actions on
-	* all resources of the type.
-	*
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param roleName the role's name
-	* @param actionIdsLong the bitwise IDs of the actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setContainerResourcePermissions(java.lang.String name,
-		java.lang.String roleName, long actionIdsLong)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourcePermissionLocalService.setContainerResourcePermissions(name,
-			roleName, actionIdsLong);
-	}
-
-	/**
 	* Updates the role's permissions at the scope, setting the actions that can
 	* be performed on resources of the type, also setting the owner of any
 	* newly created resource permissions. Existing actions are replaced.

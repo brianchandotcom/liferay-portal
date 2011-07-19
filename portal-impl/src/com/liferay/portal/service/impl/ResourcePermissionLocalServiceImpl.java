@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -592,34 +591,6 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * Only to be used during the upgrade process, not part of the public API.
-	 * Grants the role individual scope permissions to perform the actions on
-	 * all resources of the type.
-	 *
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  roleName the role's name
-	 * @param  actionIdsLong the bitwise IDs of the actions
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void setContainerResourcePermissions(
-			String name, String roleName, long actionIdsLong)
-		throws SystemException {
-
-		List<Role> roles = rolePersistence.findByName(roleName);
-
-		for (Role role : roles) {
-			List<Group> groups = groupPersistence.findByCompanyId(
-				role.getCompanyId());
-
-			for (Group group : groups) {
-				setContainerResourcePermissions(
-					group, role, name, actionIdsLong);
-			}
-		}
-	}
-
-	/**
 	 * Updates the role's permissions at the scope, setting the actions that can
 	 * be performed on resources of the type, also setting the owner of any
 	 * newly created resource permissions. Existing actions are replaced.
@@ -777,77 +748,6 @@ public class ResourcePermissionLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 
 		SearchEngineUtil.updatePermissionFields(name, primKey);
-	}
-
-	protected void setContainerResourcePermissions(
-			Group group, Role role, String name, long actionIdsLong)
-		throws SystemException {
-
-		long companyId = group.getCompanyId();
-		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
-		String primKey = String.valueOf(group.getGroupId());
-
-		if (resourcePermissionPersistence.countByC_N_S_P(
-				companyId, name, scope, primKey) == 0) {
-
-			return;
-		}
-
-		ResourcePermission resourcePermission =
-			resourcePermissionPersistence.fetchByC_N_S_P_R(
-				companyId, name, scope, primKey, role.getRoleId());
-
-		if (resourcePermission == null) {
-			long resourcePermissionId = counterLocalService.increment(
-				ResourcePermission.class.getName());
-
-			resourcePermission = resourcePermissionPersistence.create(
-				resourcePermissionId);
-
-			resourcePermission.setCompanyId(companyId);
-			resourcePermission.setName(name);
-			resourcePermission.setScope(scope);
-			resourcePermission.setPrimKey(primKey);
-			resourcePermission.setRoleId(role.getRoleId());
-
-			List<String> defaultActionIds = null;
-
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.GUEST)) {
-				defaultActionIds =
-					ResourceActionsUtil.getModelResourceGuestDefaultActions(
-						name);
-			}
-			else if (roleName.equals(RoleConstants.OWNER)) {
-				defaultActionIds =
-					ResourceActionsUtil.getModelResourceOwnerDefaultActions(
-						name);
-			}
-			else if (roleName.equals(RoleConstants.SITE_MEMBER) ||
-					 roleName.equals(RoleConstants.ORGANIZATION_USER)) {
-
-				defaultActionIds =
-					ResourceActionsUtil.getModelResourceGroupDefaultActions(
-						name);
-			}
-
-			List<ResourceAction> resourceActions =
-				resourceActionLocalService.getResourceActions(name);
-
-			for (ResourceAction resourceAction : resourceActions) {
-				if (defaultActionIds.contains(resourceAction.getActionId())) {
-					actionIdsLong |= resourceAction.getBitwiseValue();
-				}
-			}
-		}
-		else {
-			actionIdsLong |= resourcePermission.getActionIds();
-		}
-
-		resourcePermission.setActionIds(actionIdsLong);
-
-		resourcePermissionPersistence.update(resourcePermission, false);
 	}
 
 	/**

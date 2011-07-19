@@ -106,8 +106,7 @@ public class MBUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(
-			request, "struts_action");
+		String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 

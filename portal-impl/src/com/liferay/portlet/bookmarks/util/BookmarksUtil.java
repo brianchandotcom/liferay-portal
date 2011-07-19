@@ -86,14 +86,11 @@ public class BookmarksUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(
-			request, "struts_action");
-
-		boolean selectFolder = strutsAction.equals("/bookmarks/select_folder");
+		String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (selectFolder) {
+		if (strutsAction.equals("/bookmarks/select_folder")) {
 			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

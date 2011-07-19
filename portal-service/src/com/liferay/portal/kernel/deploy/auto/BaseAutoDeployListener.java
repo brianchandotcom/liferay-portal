@@ -14,13 +14,11 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.util.zip.ZipFile;
 
 /**
  * @author Ivica Cardic
@@ -30,121 +28,33 @@ import java.util.zip.ZipFile;
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	public boolean isExtPlugin(File file) {
-		String fileName = file.getName();
-
-		if (fileName.contains("-ext")) {
-			return true;
-		}
-
-		return false;
+		return DeployManagerUtil.isExtPlugin(file);
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
-
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-hook") && !fileName.contains("-portlet")) {
-
-			return true;
-		}
-
-		return false;
+		return DeployManagerUtil.isHookPlugin(file);
 	}
 
-	public boolean isLiferayPackage(File file) {
-		String fileName = file.getName();
-
-		if (fileName.endsWith(".lpkg")) {
-			return true;
-		}
-
-		return false;
+	public boolean isLayoutTemplatePlugin(File file) throws AutoDeployException {
+		return DeployManagerUtil.isLayoutTemplatePlugin(file);
 	}
 
 	public boolean isMatchingFile(File file, String checkXmlFile)
 		throws AutoDeployException {
 
-		if (!isMatchingFileExtension(file)) {
-			return false;
-		}
-
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(file);
-
-			if (zipFile.getEntry(checkXmlFile) == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						file.getPath() + " does not have " + checkXmlFile);
-				}
-
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
-		catch (IOException ioe) {
-			throw new AutoDeployException(ioe);
-		}
-		finally {
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
-		}
+		return DeployManagerUtil.isMatchingFile(file, checkXmlFile);
 	}
 
 	public boolean isMatchingFileExtension(File file) {
-		String fileName = file.getName().toLowerCase();
-
-		if (fileName.endsWith(".war") || fileName.endsWith(".zip")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(file.getPath() + " has a matching extension");
-			}
-
-			return true;
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					file.getPath() + " does not have a matching extension");
-			}
-
-			return false;
-		}
+		return DeployManagerUtil.isMatchingFileExtension(file);
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
-		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
-			return true;
-		}
-
-		String fileName = file.getName();
-
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-theme")) {
-
-			return true;
-		}
-
-		return false;
+		return DeployManagerUtil.isThemePlugin(file);
 	}
 
 	public boolean isWebPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
-
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-web")) {
-
-			return true;
-		}
-
-		return false;
+		return DeployManagerUtil.isWebPlugin(file);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

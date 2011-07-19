@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.deploy;
 
+import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+
 import java.io.File;
 
 /**
@@ -30,6 +32,29 @@ public interface DeployManager {
 	public String getDeployDir() throws Exception;
 
 	public boolean isDeployed(String context);
+
+	public boolean isExtPlugin(File file);
+
+	public boolean isHookPlugin(File file) throws AutoDeployException;
+
+	public boolean isLayoutTemplatePlugin(File file) throws AutoDeployException;
+
+	public boolean isMatchingFile(File file, String checkXmlFile)
+		throws AutoDeployException;
+
+	public boolean isMatchingFileExtension(File file);
+
+	public boolean isMvcPortletPlugin(File file) throws AutoDeployException;
+
+	public boolean isPhpPortletPlugin(File file) throws AutoDeployException;
+
+	public boolean isPortletPlugin(File file) throws AutoDeployException;
+
+	public boolean isWaiPortletPlugin(File file) throws AutoDeployException;
+
+	public boolean isThemePlugin(File file) throws AutoDeployException;
+
+	public boolean isWebPlugin(File file) throws AutoDeployException;
 
 	public void redeploy(String context) throws Exception;
 

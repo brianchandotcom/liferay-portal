@@ -14,11 +14,11 @@
 
 package com.liferay.portal.deploy.auto;
 
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.Portal;
 
 import java.io.File;
 
@@ -40,23 +40,16 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 		AutoDeployer deployer = null;
 
-		if (isMatchingFile(
-				file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
-
+		if (DeployManagerUtil.isPortletPlugin(file)) {
 			deployer = _autoDeployer;
 		}
-		else if (isMatchingFile(file, "index_mvc.jsp")) {
+		else if (DeployManagerUtil.isMvcPortletPlugin(file)) {
 			deployer = getMvcDeployer();
 		}
-		else if (isMatchingFile(file, "index.php")) {
+		else if (DeployManagerUtil.isPhpPortletPlugin(file)) {
 			deployer = getPhpDeployer();
 		}
-		else if (!isExtPlugin(file) && !isHookPlugin(file) &&
-				 !isMatchingFile(
-					file, "WEB-INF/liferay-layout-templates.xml") &&
-				 !isThemePlugin(file) && !isWebPlugin(file) &&
-				 file.getName().endsWith(".war")) {
-
+		else if (DeployManagerUtil.isWaiPortletPlugin(file)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying package as a web application");
 			}

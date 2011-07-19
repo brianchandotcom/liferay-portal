@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+
+import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 
@@ -46,9 +49,20 @@ public class ThreadLocalCacheAdvice
 			return;
 		}
 
+		Serializable cacheName = null;
+
+		if (methodInvocation instanceof ServiceBeanMethodInvocation) {
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+				(ServiceBeanMethodInvocation)methodInvocation;
+			cacheName = serviceBeanMethodInvocation.toCacheKeyModel();
+		}
+		else {
+			cacheName = methodInvocation.toString();
+		}
+
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodInvocation.toString());
+				threadLocalCachable.scope(), cacheName);
 
 		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
 
@@ -69,9 +83,20 @@ public class ThreadLocalCacheAdvice
 			return null;
 		}
 
+		Serializable cacheName = null;
+
+		if (methodInvocation instanceof ServiceBeanMethodInvocation) {
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+				(ServiceBeanMethodInvocation)methodInvocation;
+			cacheName = serviceBeanMethodInvocation.toCacheKeyModel();
+		}
+		else {
+			cacheName = methodInvocation.toString();
+		}
+
 		ThreadLocalCache<?> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodInvocation.toString());
+				threadLocalCachable.scope(), cacheName);
 
 		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
 

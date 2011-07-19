@@ -485,7 +485,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</div>
 					</c:if>
 
-
 					<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
 
 					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">

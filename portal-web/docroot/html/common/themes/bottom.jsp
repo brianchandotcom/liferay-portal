@@ -24,6 +24,10 @@
 
 <%
 List<Portlet> portlets = (List<Portlet>)request.getAttribute(WebKeys.LAYOUT_PORTLETS);
+
+if (themeDisplay.isShowStagingIcon()) {
+	portlets.add(PortletLocalServiceUtil.getPortletById(company.getCompanyId(), PortletKeys.STAGING_BAR));
+}
 %>
 
 <c:if test="<%= portlets != null %>">

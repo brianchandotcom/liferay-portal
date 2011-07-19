@@ -166,6 +166,13 @@ public class BookmarksFolderLocalServiceWrapper
 		return _bookmarksFolderLocalService.getBookmarksFolder(folderId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the bookmarks folder with the UUID in the group.
 	*

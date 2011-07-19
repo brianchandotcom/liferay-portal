@@ -280,9 +280,9 @@ public class JournalArticleImageWrapper implements JournalArticleImage {
 		return _journalArticleImage.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalArticleImage.save();
+		_journalArticleImage.persist();
 	}
 
 	public JournalArticleImage getWrappedJournalArticleImage() {

@@ -253,9 +253,9 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryMetadata.save();
+		_dlFileEntryMetadata.persist();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()

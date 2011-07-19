@@ -38,7 +38,7 @@ public abstract class ShoppingCartBaseImpl extends ShoppingCartModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a shopping cart model instance should use the {@link ShoppingCart} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		ShoppingCartLocalServiceUtil.updateShoppingCart(this);
 	}
 }

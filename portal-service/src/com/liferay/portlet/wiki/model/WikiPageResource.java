@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.wiki.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the WikiPageResource service. Represents a row in the &quot;WikiPageResource&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl
  * @generated
  */
-public interface WikiPageResource extends WikiPageResourceModel, SaveableModel {
+public interface WikiPageResource extends WikiPageResourceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

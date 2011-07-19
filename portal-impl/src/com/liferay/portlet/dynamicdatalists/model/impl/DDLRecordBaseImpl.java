@@ -38,7 +38,7 @@ public abstract class DDLRecordBaseImpl extends DDLRecordModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a d d l record model instance should use the {@link DDLRecord} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		DDLRecordLocalServiceUtil.updateDDLRecord(this);
 	}
 }

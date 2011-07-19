@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.WebDAVPropsModelImpl
  * @generated
  */
-public interface WebDAVProps extends WebDAVPropsModel, SaveableModel {
+public interface WebDAVProps extends WebDAVPropsModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

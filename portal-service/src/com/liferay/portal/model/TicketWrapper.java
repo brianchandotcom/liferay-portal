@@ -297,9 +297,9 @@ public class TicketWrapper implements Ticket {
 		return _ticket.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ticket.save();
+		_ticket.persist();
 	}
 
 	public boolean isExpired() {

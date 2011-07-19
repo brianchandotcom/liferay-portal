@@ -575,9 +575,9 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddlRecordSet.save();
+		_ddlRecordSet.persist();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.SubscriptionModelImpl
  * @generated
  */
-public interface Subscription extends SubscriptionModel, SaveableModel {
+public interface Subscription extends SubscriptionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

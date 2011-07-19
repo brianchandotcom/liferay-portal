@@ -38,7 +38,7 @@ public abstract class DDMStructureBaseImpl extends DDMStructureModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a d d m structure model instance should use the {@link DDMStructure} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		DDMStructureLocalServiceUtil.updateDDMStructure(this);
 	}
 }

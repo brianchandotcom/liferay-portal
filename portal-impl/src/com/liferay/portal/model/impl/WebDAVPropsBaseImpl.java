@@ -37,7 +37,7 @@ public abstract class WebDAVPropsBaseImpl extends WebDAVPropsModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a web d a v props model instance should use the {@link WebDAVProps} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		WebDAVPropsLocalServiceUtil.updateWebDAVProps(this);
 	}
 }

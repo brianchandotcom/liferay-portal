@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface LayoutSetPrototype extends LayoutSetPrototypeModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

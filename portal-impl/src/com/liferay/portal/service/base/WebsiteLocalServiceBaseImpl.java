@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -202,6 +204,8 @@ import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -389,6 +393,11 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 	public Website getWebsite(long websiteId)
 		throws PortalException, SystemException {
 		return websitePersistence.findByPrimaryKey(websiteId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return websitePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -3666,6 +3675,16 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 		this.counterLocalService = counterLocalService;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Website",
+			websiteLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.Website");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -4057,6 +4076,8 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(WebsiteLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

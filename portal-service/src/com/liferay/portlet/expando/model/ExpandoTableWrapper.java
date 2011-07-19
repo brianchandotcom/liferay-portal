@@ -208,9 +208,9 @@ public class ExpandoTableWrapper implements ExpandoTable {
 		return _expandoTable.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_expandoTable.save();
+		_expandoTable.persist();
 	}
 
 	public boolean isDefaultTable() {

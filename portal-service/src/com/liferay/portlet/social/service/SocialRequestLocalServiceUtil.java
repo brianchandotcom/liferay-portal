@@ -173,6 +173,13 @@ public class SocialRequestLocalServiceUtil {
 		return getService().getSocialRequest(requestId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the social request with the UUID in the group.
 	*

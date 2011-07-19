@@ -37,7 +37,7 @@ public abstract class UserTrackerBaseImpl extends UserTrackerModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user tracker model instance should use the {@link UserTracker} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		UserTrackerLocalServiceUtil.updateUserTracker(this);
 	}
 }

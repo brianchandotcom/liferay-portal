@@ -830,6 +830,12 @@ public abstract class ShoppingOrderServiceBaseImpl extends PrincipalBean
 		this.mbMessageFinder = mbMessageFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

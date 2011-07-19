@@ -160,6 +160,13 @@ public class ShardLocalServiceWrapper implements ShardLocalService {
 		return _shardLocalService.getShard(shardId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shardLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shards.
 	*

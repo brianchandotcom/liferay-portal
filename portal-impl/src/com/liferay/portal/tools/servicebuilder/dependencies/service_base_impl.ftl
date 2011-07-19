@@ -6,7 +6,9 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,14 +16,17 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.base.PrincipalBean;
 
 import java.io.Serializable;
 
-import javax.sql.DataSource;
+import java.util.List;
 
-<#if sessionTypeName == "">
-	import com.liferay.portal.service.base.PrincipalBean;
-</#if>
+import javax.sql.DataSource;
 
 <#if entity.hasColumns()>
 	<#if entity.hasCompoundPK()>
@@ -37,12 +42,6 @@ import javax.sql.DataSource;
 	</#list>
 
 	import ${packagePath}.model.impl.${entity.name}Impl;
-
-	import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-	import com.liferay.portal.kernel.exception.PortalException;
-	import com.liferay.portal.kernel.util.OrderByComparator;
-
-	import java.util.List;
 </#if>
 
 <#list referenceList as tempEntity>
@@ -107,7 +106,7 @@ import javax.sql.DataSource;
 		 */
 </#if>
 
-	<#if sessionTypeName == "Local" && entity.hasColumns()>
+	<#if (sessionTypeName == "Local") && entity.hasColumns()>
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + entity.name, [packagePath + ".model." + entity.name], ["SystemException"])>
 
 		/**
@@ -297,6 +296,10 @@ import javax.sql.DataSource;
 		 */
 		public ${entity.name} get${entity.name}(${entity.PKClassName} ${entity.PKVarName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
 			return ${entity.varName}Persistence.findByPrimaryKey(${entity.PKVarName});
+		}
+
+		public PersistedModel getPersistedModel(Serializable primaryKeyObj) throws PortalException, SystemException {
+			return ${entity.varName}Persistence.findByPrimaryKey(primaryKeyObj);
 		}
 
 		<#if entity.hasUuid() && entity.hasColumn("groupId")>
@@ -504,6 +507,26 @@ import javax.sql.DataSource;
 		</#if>
 	</#list>
 
+	public void afterPropertiesSet() {
+		<#if (sessionTypeName == "Local") && entity.hasColumns()>
+			<#if pluginName != "">
+				PersistedModelLocalServiceRegistryUtil.register("${packagePath}.model.${entity.name}", ${entity.varName}LocalService);
+			<#else>
+				persistedModelLocalServiceRegistry.register("${packagePath}.model.${entity.name}", ${entity.varName}LocalService);
+			</#if>
+		</#if>
+	}
+
+	public void destroy() {
+		<#if (sessionTypeName == "Local") && entity.hasColumns()>
+			<#if pluginName != "">
+				PersistedModelLocalServiceRegistryUtil.unregister("${packagePath}.model.${entity.name}");
+			<#else>
+				persistedModelLocalServiceRegistry.unregister("${packagePath}.model.${entity.name}");
+			</#if>
+		</#if>
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -577,6 +600,11 @@ import javax.sql.DataSource;
 	</#list>
 
 	<#if (sessionTypeName == "Local") && entity.hasColumns()>
+		<#if pluginName == "">
+			@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+			protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+		</#if>
+
 		private static Log _log = LogFactoryUtil.getLog(${entity.name}${sessionTypeName}ServiceBaseImpl.class);
 	</#if>
 

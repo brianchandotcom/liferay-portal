@@ -308,9 +308,9 @@ public class TeamWrapper implements Team {
 		return _team.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_team.save();
+		_team.persist();
 	}
 
 	public com.liferay.portal.model.Role getRole()

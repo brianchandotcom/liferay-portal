@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -75,6 +77,8 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPers
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -265,6 +269,11 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	public DLFileRank getDLFileRank(long fileRankId)
 		throws PortalException, SystemException {
 		return dlFileRankPersistence.findByPrimaryKey(fileRankId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return dlFileRankPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1167,6 +1176,16 @@ public abstract class DLFileRankLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLFileRank",
+			dlFileRankLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.documentlibrary.model.DLFileRank");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1302,6 +1321,8 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(DLFileRankLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

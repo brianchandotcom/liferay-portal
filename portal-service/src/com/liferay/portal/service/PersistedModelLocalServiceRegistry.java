@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import java.util.List;
 
 /**
- * @author Connor McKay
+ * @author Brian Wing Shun Chan
  */
-public interface SaveableModel {
+public interface PersistedModelLocalServiceRegistry {
 
-	/**
-	 * Updates this model instance in the database or adds it if it does not yet
-	 * exist. Also notifies the appropriate model listeners.
-	 *
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void save() throws SystemException;
+	public PersistedModelLocalService getPersistedModelLocalService(
+		String className);
+
+	public List<PersistedModelLocalService> getPersistedModelLocalServices();
+
+	public void register(
+		String className,
+		PersistedModelLocalService persistedModelLocalService);
+
+	public void unregister(String className);
 
 }

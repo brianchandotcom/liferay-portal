@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.UserModelImpl
  * @generated
  */
-public interface User extends UserModel, SaveableModel {
+public interface User extends UserModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

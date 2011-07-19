@@ -803,6 +803,12 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends PrincipalBean
 		this.userGroupFinder = userGroupFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

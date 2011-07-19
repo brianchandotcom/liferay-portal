@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -59,6 +61,8 @@ import com.liferay.portlet.social.service.persistence.SocialEquitySettingPersist
 import com.liferay.portlet.social.service.persistence.SocialEquityUserPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -250,6 +254,11 @@ public abstract class SocialEquityHistoryLocalServiceBaseImpl
 	public SocialEquityHistory getSocialEquityHistory(long equityHistoryId)
 		throws PortalException, SystemException {
 		return socialEquityHistoryPersistence.findByPrimaryKey(equityHistoryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return socialEquityHistoryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -866,6 +875,16 @@ public abstract class SocialEquityHistoryLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.social.model.SocialEquityHistory",
+			socialEquityHistoryLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.social.model.SocialEquityHistory");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -969,6 +988,8 @@ public abstract class SocialEquityHistoryLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(SocialEquityHistoryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

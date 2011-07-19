@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SCLicense service. Represents a row in the &quot;SCLicense&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl
  * @generated
  */
-public interface SCLicense extends SCLicenseModel, SaveableModel {
+public interface SCLicense extends SCLicenseModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

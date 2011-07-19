@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SCProductVersion service. Represents a row in the &quot;SCProductVersion&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionModelImpl
  * @generated
  */
-public interface SCProductVersion extends SCProductVersionModel, SaveableModel {
+public interface SCProductVersion extends SCProductVersionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -341,7 +341,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#if>
 
 	<#if entity.hasLocalService() && entity.hasColumns()>
-		public void save() throws SystemException {
+		public void persist() throws SystemException {
 			${entity.name}LocalServiceUtil.update${entity.name}(this);
 		}
 	</#if>

@@ -471,9 +471,9 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
 		return _announcementsEntry.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_announcementsEntry.save();
+		_announcementsEntry.persist();
 	}
 
 	public long getGroupId()

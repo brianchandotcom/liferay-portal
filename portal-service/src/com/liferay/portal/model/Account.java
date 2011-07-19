@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.AccountModelImpl
  * @generated
  */
-public interface Account extends AccountModel, SaveableModel {
+public interface Account extends AccountModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -165,6 +165,13 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.getAssetCategory(categoryId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the asset category with the UUID in the group.
 	*

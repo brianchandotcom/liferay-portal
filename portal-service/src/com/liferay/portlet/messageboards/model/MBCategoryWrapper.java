@@ -417,9 +417,9 @@ public class MBCategoryWrapper implements MBCategory {
 		return _mbCategory.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbCategory.save();
+		_mbCategory.persist();
 	}
 
 	public java.util.List<java.lang.Long> getAncestorCategoryIds()

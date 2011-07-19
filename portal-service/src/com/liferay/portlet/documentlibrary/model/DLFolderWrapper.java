@@ -453,9 +453,9 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFolder.save();
+		_dlFolder.persist();
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getAncestors()

@@ -38,7 +38,7 @@ public abstract class ShoppingCouponBaseImpl extends ShoppingCouponModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a shopping coupon model instance should use the {@link ShoppingCoupon} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		ShoppingCouponLocalServiceUtil.updateShoppingCoupon(this);
 	}
 }

@@ -902,9 +902,9 @@ public class UserWrapper implements User {
 		return _user.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_user.save();
+		_user.persist();
 	}
 
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()

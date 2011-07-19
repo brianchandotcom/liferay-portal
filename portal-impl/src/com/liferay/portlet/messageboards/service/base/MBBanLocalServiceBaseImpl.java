@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -63,6 +65,8 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenc
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -248,6 +252,11 @@ public abstract class MBBanLocalServiceBaseImpl implements MBBanLocalService,
 	 */
 	public MBBan getMBBan(long banId) throws PortalException, SystemException {
 		return mbBanPersistence.findByPrimaryKey(banId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return mbBanPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -926,6 +935,16 @@ public abstract class MBBanLocalServiceBaseImpl implements MBBanLocalService,
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.messageboards.model.MBBan",
+			mbBanLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.messageboards.model.MBBan");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1037,6 +1056,8 @@ public abstract class MBBanLocalServiceBaseImpl implements MBBanLocalService,
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(MBBanLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

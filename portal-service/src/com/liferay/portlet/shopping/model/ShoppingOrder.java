@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.shopping.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the ShoppingOrder service. Represents a row in the &quot;ShoppingOrder&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.shopping.model.impl.ShoppingOrderModelImpl
  * @generated
  */
-public interface ShoppingOrder extends ShoppingOrderModel, SaveableModel {
+public interface ShoppingOrder extends ShoppingOrderModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

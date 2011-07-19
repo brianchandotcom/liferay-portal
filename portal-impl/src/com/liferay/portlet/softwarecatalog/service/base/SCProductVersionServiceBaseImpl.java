@@ -497,6 +497,12 @@ public abstract class SCProductVersionServiceBaseImpl extends PrincipalBean
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

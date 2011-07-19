@@ -3424,6 +3424,12 @@ public abstract class CMISRepositoryLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

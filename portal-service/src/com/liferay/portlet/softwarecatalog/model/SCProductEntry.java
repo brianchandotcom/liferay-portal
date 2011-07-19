@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SCProductEntry service. Represents a row in the &quot;SCProductEntry&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl
  * @generated
  */
-public interface SCProductEntry extends SCProductEntryModel, SaveableModel {
+public interface SCProductEntry extends SCProductEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

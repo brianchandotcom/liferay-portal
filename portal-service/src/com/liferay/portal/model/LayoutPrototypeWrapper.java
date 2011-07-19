@@ -340,9 +340,9 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 		return _layoutPrototype.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_layoutPrototype.save();
+		_layoutPrototype.persist();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

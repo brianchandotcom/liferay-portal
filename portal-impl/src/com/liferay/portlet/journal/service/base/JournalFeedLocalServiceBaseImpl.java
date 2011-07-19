@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -64,6 +66,8 @@ import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
 import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
 import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -254,6 +258,11 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	public JournalFeed getJournalFeed(long id)
 		throws PortalException, SystemException {
 		return journalFeedPersistence.findByPrimaryKey(id);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return journalFeedPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -974,6 +983,16 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		this.expandoValuePersistence = expandoValuePersistence;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.journal.model.JournalFeed",
+			journalFeedLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.journal.model.JournalFeed");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1087,6 +1106,8 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	protected ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(JournalFeedLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

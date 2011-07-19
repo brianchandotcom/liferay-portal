@@ -37,7 +37,7 @@ public abstract class CompanyBaseImpl extends CompanyModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a company model instance should use the {@link Company} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		CompanyLocalServiceUtil.updateCompany(this);
 	}
 }

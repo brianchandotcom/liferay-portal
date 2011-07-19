@@ -166,6 +166,13 @@ public class UserGroupRoleLocalServiceWrapper
 		return _userGroupRoleLocalService.getUserGroupRole(userGroupRolePK);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupRoleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the user group roles.
 	*

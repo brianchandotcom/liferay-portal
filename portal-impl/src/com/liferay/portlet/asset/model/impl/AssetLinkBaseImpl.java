@@ -38,7 +38,7 @@ public abstract class AssetLinkBaseImpl extends AssetLinkModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset link model instance should use the {@link AssetLink} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		AssetLinkLocalServiceUtil.updateAssetLink(this);
 	}
 }

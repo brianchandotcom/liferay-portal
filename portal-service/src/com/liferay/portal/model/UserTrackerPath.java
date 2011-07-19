@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.UserTrackerPathModelImpl
  * @generated
  */
-public interface UserTrackerPath extends UserTrackerPathModel, SaveableModel {
+public interface UserTrackerPath extends UserTrackerPathModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

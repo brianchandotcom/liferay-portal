@@ -165,6 +165,13 @@ public class PollsQuestionLocalServiceWrapper
 		return _pollsQuestionLocalService.getPollsQuestion(questionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _pollsQuestionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the polls question with the UUID in the group.
 	*

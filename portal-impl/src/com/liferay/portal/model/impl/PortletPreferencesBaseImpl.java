@@ -37,7 +37,7 @@ public abstract class PortletPreferencesBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a portlet preferences model instance should use the {@link PortletPreferences} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		PortletPreferencesLocalServiceUtil.updatePortletPreferences(this);
 	}
 }

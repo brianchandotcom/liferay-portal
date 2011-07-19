@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the BlogsStatsUser service. Represents a row in the &quot;BlogsStatsUser&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl
  * @generated
  */
-public interface BlogsStatsUser extends BlogsStatsUserModel, SaveableModel {
+public interface BlogsStatsUser extends BlogsStatsUserModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

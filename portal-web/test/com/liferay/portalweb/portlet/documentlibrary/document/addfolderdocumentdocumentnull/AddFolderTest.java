@@ -42,11 +42,37 @@ public class AddFolderTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/ul/li[2]/a",
-			RuntimeVariables.replace("Add Folder"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Folder"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("_20_name", RuntimeVariables.replace("Test1 Folder1"));
@@ -54,7 +80,8 @@ public class AddFolderTest extends BaseTestCase {
 		selenium.type("_20_description",
 			RuntimeVariables.replace("This is test1 folder1."));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -89,7 +116,8 @@ public class AddFolderTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace("Test1 Folder1")
-										.equals(selenium.getText("//a/strong"))) {
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
 					break;
 				}
 			}
@@ -101,6 +129,6 @@ public class AddFolderTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//span[@class='document-title']"));
 	}
 }

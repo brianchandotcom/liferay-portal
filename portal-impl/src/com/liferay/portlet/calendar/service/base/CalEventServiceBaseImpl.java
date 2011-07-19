@@ -842,6 +842,12 @@ public abstract class CalEventServiceBaseImpl extends PrincipalBean
 		this.socialActivityFinder = socialActivityFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LayoutSetModelImpl
  * @generated
  */
-public interface LayoutSet extends LayoutSetModel, SaveableModel {
+public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.WebsiteModelImpl
  * @generated
  */
-public interface Website extends WebsiteModel, SaveableModel {
+public interface Website extends WebsiteModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -4136,6 +4136,12 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 		this.socialRequestPersistence = socialRequestPersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

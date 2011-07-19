@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the DLSync service. Represents a row in the &quot;DLSync&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLSyncModelImpl
  * @generated
  */
-public interface DLSync extends DLSyncModel, SaveableModel {
+public interface DLSync extends DLSyncModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

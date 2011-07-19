@@ -38,7 +38,7 @@ public abstract class DLFileEntryTypeBaseImpl extends DLFileEntryTypeModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a document library file entry type model instance should use the {@link DLFileEntryType} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(this);
 	}
 }

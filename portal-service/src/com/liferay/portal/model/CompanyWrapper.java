@@ -324,9 +324,9 @@ public class CompanyWrapper implements Company {
 		return _company.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_company.save();
+		_company.persist();
 	}
 
 	public com.liferay.portal.model.Account getAccount()

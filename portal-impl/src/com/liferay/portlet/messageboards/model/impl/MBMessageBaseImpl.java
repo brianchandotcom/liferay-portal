@@ -38,7 +38,7 @@ public abstract class MBMessageBaseImpl extends MBMessageModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message-boards message model instance should use the {@link MBMessage} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBMessageLocalServiceUtil.updateMBMessage(this);
 	}
 }

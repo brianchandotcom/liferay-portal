@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the PollsQuestion service. Represents a row in the &quot;PollsQuestion&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.polls.model.impl.PollsQuestionModelImpl
  * @generated
  */
-public interface PollsQuestion extends PollsQuestionModel, SaveableModel {
+public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

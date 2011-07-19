@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SocialRelation service. Represents a row in the &quot;SocialRelation&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.social.model.impl.SocialRelationModelImpl
  * @generated
  */
-public interface SocialRelation extends SocialRelationModel, SaveableModel {
+public interface SocialRelation extends SocialRelationModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

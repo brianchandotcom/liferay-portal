@@ -160,6 +160,13 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 		return _companyLocalService.getCompany(companyId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _companyLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the companies.
 	*

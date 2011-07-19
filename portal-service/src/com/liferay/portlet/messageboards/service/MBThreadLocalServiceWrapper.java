@@ -164,6 +164,13 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		return _mbThreadLocalService.getMBThread(threadId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the message boards threads.
 	*

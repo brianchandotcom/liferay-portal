@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the MBThread service. Represents a row in the &quot;MBThread&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl
  * @generated
  */
-public interface MBThread extends MBThreadModel, SaveableModel {
+public interface MBThread extends MBThreadModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

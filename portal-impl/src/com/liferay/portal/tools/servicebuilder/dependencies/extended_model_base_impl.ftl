@@ -29,7 +29,7 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 	 */
 
 	<#if entity.hasLocalService() && entity.hasColumns()>
-		public void save() throws SystemException {
+		public void persist() throws SystemException {
 			${entity.name}LocalServiceUtil.update${entity.name}(this);
 		}
 	</#if>

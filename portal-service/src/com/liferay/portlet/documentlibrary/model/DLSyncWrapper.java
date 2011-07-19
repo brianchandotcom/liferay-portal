@@ -271,9 +271,9 @@ public class DLSyncWrapper implements DLSync {
 		return _dlSync.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlSync.save();
+		_dlSync.persist();
 	}
 
 	public DLSync getWrappedDLSync() {

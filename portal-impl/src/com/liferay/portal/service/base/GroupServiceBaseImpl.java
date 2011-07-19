@@ -4786,6 +4786,12 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 		this.wikiNodePersistence = wikiNodePersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

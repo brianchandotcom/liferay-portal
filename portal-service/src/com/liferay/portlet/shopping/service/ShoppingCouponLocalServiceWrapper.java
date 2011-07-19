@@ -165,6 +165,13 @@ public class ShoppingCouponLocalServiceWrapper
 		return _shoppingCouponLocalService.getShoppingCoupon(couponId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingCouponLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shopping coupons.
 	*

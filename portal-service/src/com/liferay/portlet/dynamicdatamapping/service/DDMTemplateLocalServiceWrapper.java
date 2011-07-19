@@ -164,6 +164,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 		return _ddmTemplateLocalService.getDDMTemplate(templateId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the d d m template with the UUID in the group.
 	*

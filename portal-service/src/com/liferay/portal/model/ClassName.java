@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ClassNameModelImpl
  * @generated
  */
-public interface ClassName extends ClassNameModel, SaveableModel {
+public interface ClassName extends ClassNameModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

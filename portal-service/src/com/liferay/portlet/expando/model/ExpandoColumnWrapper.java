@@ -253,9 +253,9 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 		return _expandoColumn.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_expandoColumn.save();
+		_expandoColumn.persist();
 	}
 
 	public java.io.Serializable getDefaultValue() {

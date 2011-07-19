@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.ratings.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the RatingsStats service. Represents a row in the &quot;RatingsStats&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl
  * @generated
  */
-public interface RatingsStats extends RatingsStatsModel, SaveableModel {
+public interface RatingsStats extends RatingsStatsModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -207,9 +207,9 @@ public class ShardWrapper implements Shard {
 		return _shard.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shard.save();
+		_shard.persist();
 	}
 
 	public Shard getWrappedShard() {

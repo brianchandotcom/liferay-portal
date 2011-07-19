@@ -416,9 +416,9 @@ public class IGImageWrapper implements IGImage {
 		return _igImage.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_igImage.save();
+		_igImage.persist();
 	}
 
 	public com.liferay.portlet.imagegallery.model.IGFolder getFolder() {

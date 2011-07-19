@@ -162,9 +162,9 @@ public class CounterWrapper implements Counter {
 		return _counter.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_counter.save();
+		_counter.persist();
 	}
 
 	public Counter getWrappedCounter() {

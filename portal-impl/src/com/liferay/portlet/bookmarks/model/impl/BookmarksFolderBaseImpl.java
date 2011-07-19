@@ -38,7 +38,7 @@ public abstract class BookmarksFolderBaseImpl extends BookmarksFolderModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a bookmarks folder model instance should use the {@link BookmarksFolder} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		BookmarksFolderLocalServiceUtil.updateBookmarksFolder(this);
 	}
 }

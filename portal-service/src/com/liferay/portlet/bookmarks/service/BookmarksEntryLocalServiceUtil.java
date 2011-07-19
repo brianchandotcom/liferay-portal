@@ -173,6 +173,13 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().getBookmarksEntry(entryId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the bookmarks entry with the UUID in the group.
 	*

@@ -38,7 +38,7 @@ public abstract class ShoppingCategoryBaseImpl extends ShoppingCategoryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a shopping category model instance should use the {@link ShoppingCategory} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		ShoppingCategoryLocalServiceUtil.updateShoppingCategory(this);
 	}
 }

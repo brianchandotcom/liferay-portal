@@ -557,9 +557,9 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_pollsQuestion.save();
+		_pollsQuestion.persist();
 	}
 
 	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getChoices()

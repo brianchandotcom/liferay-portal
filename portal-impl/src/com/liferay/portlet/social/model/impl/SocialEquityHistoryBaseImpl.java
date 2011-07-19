@@ -38,7 +38,7 @@ public abstract class SocialEquityHistoryBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social equity history model instance should use the {@link SocialEquityHistory} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialEquityHistoryLocalServiceUtil.updateSocialEquityHistory(this);
 	}
 }

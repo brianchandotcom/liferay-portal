@@ -562,9 +562,9 @@ public class JournalFeedWrapper implements JournalFeed {
 		return _journalFeed.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalFeed.save();
+		_journalFeed.persist();
 	}
 
 	public JournalFeed getWrappedJournalFeed() {

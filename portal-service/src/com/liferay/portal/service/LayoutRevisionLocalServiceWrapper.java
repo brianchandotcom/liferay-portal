@@ -167,6 +167,13 @@ public class LayoutRevisionLocalServiceWrapper
 		return _layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutRevisionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the layout revisions.
 	*

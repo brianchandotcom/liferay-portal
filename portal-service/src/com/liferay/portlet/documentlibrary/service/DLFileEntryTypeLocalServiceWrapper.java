@@ -166,6 +166,13 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the document library file entry types.
 	*

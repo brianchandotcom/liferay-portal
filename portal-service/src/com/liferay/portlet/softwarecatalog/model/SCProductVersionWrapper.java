@@ -372,9 +372,9 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_scProductVersion.save();
+		_scProductVersion.persist();
 	}
 
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getFrameworkVersions()

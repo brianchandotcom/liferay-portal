@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.OrganizationModelImpl
  * @generated
  */
-public interface Organization extends OrganizationModel, SaveableModel {
+public interface Organization extends OrganizationModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

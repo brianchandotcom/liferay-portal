@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ImageModelImpl
  * @generated
  */
-public interface Image extends ImageModel, SaveableModel {
+public interface Image extends ImageModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

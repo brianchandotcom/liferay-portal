@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.OrgLaborModelImpl
  * @generated
  */
-public interface OrgLabor extends OrgLaborModel, SaveableModel {
+public interface OrgLabor extends OrgLaborModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

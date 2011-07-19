@@ -163,6 +163,13 @@ public class DLSyncLocalServiceWrapper implements DLSyncLocalService {
 		return _dlSyncLocalService.getDLSync(syncId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlSyncLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the d l syncs.
 	*

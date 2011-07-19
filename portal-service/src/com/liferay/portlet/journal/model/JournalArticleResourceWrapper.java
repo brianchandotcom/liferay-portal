@@ -200,9 +200,9 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 		return _journalArticleResource.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalArticleResource.save();
+		_journalArticleResource.persist();
 	}
 
 	public JournalArticleResource getWrappedJournalArticleResource() {

@@ -166,6 +166,13 @@ public class AssetTagPropertyLocalServiceWrapper
 		return _assetTagPropertyLocalService.getAssetTagProperty(tagPropertyId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagPropertyLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the asset tag properties.
 	*

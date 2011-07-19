@@ -1375,6 +1375,12 @@ public abstract class DLFileEntryServiceBaseImpl extends PrincipalBean
 		this.expandoValuePersistence = expandoValuePersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

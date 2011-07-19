@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -74,6 +76,8 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -266,6 +270,11 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	public DLFileEntryMetadata getDLFileEntryMetadata(long fileEntryMetadataId)
 		throws PortalException, SystemException {
 		return dlFileEntryMetadataPersistence.findByPrimaryKey(fileEntryMetadataId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return dlFileEntryMetadataPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1155,6 +1164,16 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 		this.ddmStructureLinkPersistence = ddmStructureLinkPersistence;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
+			dlFileEntryMetadataLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1288,6 +1307,8 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	protected DDMStructureLinkService ddmStructureLinkService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryMetadataLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

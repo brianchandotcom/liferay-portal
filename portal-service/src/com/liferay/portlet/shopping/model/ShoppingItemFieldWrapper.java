@@ -217,9 +217,9 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField {
 		return _shoppingItemField.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingItemField.save();
+		_shoppingItemField.persist();
 	}
 
 	public java.lang.String[] getValuesArray() {

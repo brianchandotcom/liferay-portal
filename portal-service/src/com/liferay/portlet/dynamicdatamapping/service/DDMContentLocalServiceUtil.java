@@ -173,6 +173,13 @@ public class DDMContentLocalServiceUtil {
 		return getService().getDDMContent(contentId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the d d m content with the UUID in the group.
 	*

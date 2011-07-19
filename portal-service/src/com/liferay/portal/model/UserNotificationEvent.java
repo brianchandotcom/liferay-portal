@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface UserNotificationEvent extends UserNotificationEventModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -354,9 +354,9 @@ public class ShoppingCartWrapper implements ShoppingCart {
 		return _shoppingCart.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingCart.save();
+		_shoppingCart.persist();
 	}
 
 	public void addItemId(long itemId, java.lang.String fields) {

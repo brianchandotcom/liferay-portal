@@ -593,9 +593,9 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddmTemplate.save();
+		_ddmTemplate.persist();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()

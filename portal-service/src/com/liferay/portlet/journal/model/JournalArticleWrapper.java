@@ -1011,9 +1011,9 @@ public class JournalArticleWrapper implements JournalArticle {
 		return _journalArticle.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalArticle.save();
+		_journalArticle.persist();
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource()

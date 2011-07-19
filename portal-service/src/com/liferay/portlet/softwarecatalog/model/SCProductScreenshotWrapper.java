@@ -253,9 +253,9 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot {
 		return _scProductScreenshot.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_scProductScreenshot.save();
+		_scProductScreenshot.persist();
 	}
 
 	public SCProductScreenshot getWrappedSCProductScreenshot() {

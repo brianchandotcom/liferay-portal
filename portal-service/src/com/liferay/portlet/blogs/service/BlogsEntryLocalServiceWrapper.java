@@ -164,6 +164,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService {
 		return _blogsEntryLocalService.getBlogsEntry(entryId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the blogs entry with the UUID in the group.
 	*

@@ -38,7 +38,7 @@ public abstract class MBMessageFlagBaseImpl extends MBMessageFlagModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards message flag model instance should use the {@link MBMessageFlag} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBMessageFlagLocalServiceUtil.updateMBMessageFlag(this);
 	}
 }

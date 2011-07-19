@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the DLFolder service. Represents a row in the &quot;DLFolder&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl
  * @generated
  */
-public interface DLFolder extends DLFolderModel, SaveableModel {
+public interface DLFolder extends DLFolderModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

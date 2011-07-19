@@ -164,6 +164,13 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 		return _userIdMapperLocalService.getUserIdMapper(userIdMapperId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userIdMapperLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the user ID mappers.
 	*

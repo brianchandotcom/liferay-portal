@@ -588,9 +588,9 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFileVersion.save();
+		_dlFileVersion.persist();
 	}
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {

@@ -161,6 +161,13 @@ public class CounterLocalServiceWrapper implements CounterLocalService {
 		return _counterLocalService.getCounter(name);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _counterLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the counters.
 	*

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LockModelImpl
  * @generated
  */
-public interface Lock extends LockModel, SaveableModel {
+public interface Lock extends LockModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

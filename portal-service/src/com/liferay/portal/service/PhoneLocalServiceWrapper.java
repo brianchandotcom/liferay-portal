@@ -160,6 +160,13 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService {
 		return _phoneLocalService.getPhone(phoneId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _phoneLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the phones.
 	*

@@ -335,9 +335,9 @@ public class PortletItemWrapper implements PortletItem {
 		return _portletItem.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_portletItem.save();
+		_portletItem.persist();
 	}
 
 	public PortletItem getWrappedPortletItem() {

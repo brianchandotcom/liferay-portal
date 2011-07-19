@@ -244,9 +244,9 @@ public class RatingsStatsWrapper implements RatingsStats {
 		return _ratingsStats.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ratingsStats.save();
+		_ratingsStats.persist();
 	}
 
 	public RatingsStats getWrappedRatingsStats() {

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ReleaseModelImpl
  * @generated
  */
-public interface Release extends ReleaseModel, SaveableModel {
+public interface Release extends ReleaseModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

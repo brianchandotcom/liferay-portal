@@ -710,9 +710,9 @@ public class AssetEntryWrapper implements AssetEntry {
 		return _assetEntry.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetEntry.save();
+		_assetEntry.persist();
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()

@@ -38,7 +38,7 @@ public abstract class SocialRequestBaseImpl extends SocialRequestModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social request model instance should use the {@link SocialRequest} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialRequestLocalServiceUtil.updateSocialRequest(this);
 	}
 }

@@ -255,9 +255,9 @@ public class DLFileRankWrapper implements DLFileRank {
 		return _dlFileRank.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFileRank.save();
+		_dlFileRank.persist();
 	}
 
 	public DLFileRank getWrappedDLFileRank() {

@@ -594,6 +594,12 @@ public abstract class DDMStructureServiceBaseImpl extends PrincipalBean
 		this.dlFileEntryTypeFinder = dlFileEntryTypeFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

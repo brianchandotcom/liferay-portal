@@ -327,9 +327,9 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 		return _shoppingCategory.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingCategory.save();
+		_shoppingCategory.persist();
 	}
 
 	public boolean isRoot() {

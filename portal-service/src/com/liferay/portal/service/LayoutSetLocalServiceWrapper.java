@@ -161,6 +161,13 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService {
 		return _layoutSetLocalService.getLayoutSet(layoutSetId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the layout sets.
 	*

@@ -317,9 +317,9 @@ public class SubscriptionWrapper implements Subscription {
 		return _subscription.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_subscription.save();
+		_subscription.persist();
 	}
 
 	public Subscription getWrappedSubscription() {

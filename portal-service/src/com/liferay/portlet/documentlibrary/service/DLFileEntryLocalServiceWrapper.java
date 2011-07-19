@@ -164,6 +164,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 		return _dlFileEntryLocalService.getDLFileEntry(fileEntryId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the document library file entry with the UUID in the group.
 	*

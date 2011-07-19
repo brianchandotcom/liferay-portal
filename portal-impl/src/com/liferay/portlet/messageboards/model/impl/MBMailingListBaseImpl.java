@@ -38,7 +38,7 @@ public abstract class MBMailingListBaseImpl extends MBMailingListModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards mailing list model instance should use the {@link MBMailingList} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBMailingListLocalServiceUtil.updateMBMailingList(this);
 	}
 }

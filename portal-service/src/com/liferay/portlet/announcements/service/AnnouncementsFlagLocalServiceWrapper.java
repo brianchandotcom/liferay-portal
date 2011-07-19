@@ -166,6 +166,13 @@ public class AnnouncementsFlagLocalServiceWrapper
 		return _announcementsFlagLocalService.getAnnouncementsFlag(flagId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _announcementsFlagLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the announcements flags.
 	*

@@ -37,7 +37,7 @@ public abstract class DLSyncBaseImpl extends DLSyncModelImpl implements DLSync {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a d l sync model instance should use the {@link DLSync} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		DLSyncLocalServiceUtil.updateDLSync(this);
 	}
 }

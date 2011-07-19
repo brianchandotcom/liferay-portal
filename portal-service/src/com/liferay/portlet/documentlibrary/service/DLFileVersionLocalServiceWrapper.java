@@ -165,6 +165,13 @@ public class DLFileVersionLocalServiceWrapper
 		return _dlFileVersionLocalService.getDLFileVersion(fileVersionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the document library file versions.
 	*

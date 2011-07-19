@@ -225,9 +225,9 @@ public class PortletWrapper implements Portlet {
 		return _portlet.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_portlet.save();
+		_portlet.persist();
 	}
 
 	/**

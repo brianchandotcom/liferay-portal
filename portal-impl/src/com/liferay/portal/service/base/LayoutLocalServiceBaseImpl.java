@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
 import com.liferay.portal.service.AddressLocalService;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -219,6 +221,8 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenc
 import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -404,6 +408,11 @@ public abstract class LayoutLocalServiceBaseImpl implements LayoutLocalService,
 	 */
 	public Layout getLayout(long plid) throws PortalException, SystemException {
 		return layoutPersistence.findByPrimaryKey(plid);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return layoutPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -3995,6 +4004,16 @@ public abstract class LayoutLocalServiceBaseImpl implements LayoutLocalService,
 		this.ratingsStatsFinder = ratingsStatsFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Layout",
+			layoutLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.Layout");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -4418,6 +4437,8 @@ public abstract class LayoutLocalServiceBaseImpl implements LayoutLocalService,
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(LayoutLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

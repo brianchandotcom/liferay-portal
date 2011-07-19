@@ -164,6 +164,13 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService {
 		return _mbCategoryLocalService.getMBCategory(categoryId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the message boards category with the UUID in the group.
 	*

@@ -497,9 +497,9 @@ public class AddressWrapper implements Address {
 		return _address.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_address.save();
+		_address.persist();
 	}
 
 	public com.liferay.portal.model.Region getRegion() {

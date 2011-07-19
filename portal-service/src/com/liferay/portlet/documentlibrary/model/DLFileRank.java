@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the DLFileRank service. Represents a row in the &quot;DLFileRank&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl
  * @generated
  */
-public interface DLFileRank extends DLFileRankModel, SaveableModel {
+public interface DLFileRank extends DLFileRankModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

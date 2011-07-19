@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the DDMStructure service. Represents a row in the &quot;DDMStructure&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl
  * @generated
  */
-public interface DDMStructure extends DDMStructureModel, SaveableModel {
+public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

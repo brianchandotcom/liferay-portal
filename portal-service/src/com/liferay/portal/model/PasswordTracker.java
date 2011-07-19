@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PasswordTrackerModelImpl
  * @generated
  */
-public interface PasswordTracker extends PasswordTrackerModel, SaveableModel {
+public interface PasswordTracker extends PasswordTrackerModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

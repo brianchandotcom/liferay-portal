@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
@@ -37,6 +38,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.OrganizationService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.service.PortletPreferencesService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -93,6 +95,8 @@ import com.liferay.portlet.social.service.SocialEquityLogLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -283,6 +287,11 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	public BlogsEntry getBlogsEntry(long entryId)
 		throws PortalException, SystemException {
 		return blogsEntryPersistence.findByPrimaryKey(entryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return blogsEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1534,6 +1543,16 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		this.socialEquityLogPersistence = socialEquityLogPersistence;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.blogs.model.BlogsEntry",
+			blogsEntryLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.blogs.model.BlogsEntry");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1705,6 +1724,8 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	protected SocialEquityLogLocalService socialEquityLogLocalService;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(BlogsEntryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

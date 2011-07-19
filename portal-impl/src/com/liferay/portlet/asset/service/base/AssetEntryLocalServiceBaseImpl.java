@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -110,6 +112,8 @@ import com.liferay.portlet.wiki.service.WikiPageService;
 import com.liferay.portlet.wiki.service.persistence.WikiPageFinder;
 import com.liferay.portlet.wiki.service.persistence.WikiPagePersistence;
 import com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -300,6 +304,11 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	public AssetEntry getAssetEntry(long entryId)
 		throws PortalException, SystemException {
 		return assetEntryPersistence.findByPrimaryKey(entryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return assetEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1856,6 +1865,16 @@ public abstract class AssetEntryLocalServiceBaseImpl
 		this.wikiPageResourcePersistence = wikiPageResourcePersistence;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.asset.model.AssetEntry",
+			assetEntryLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.asset.model.AssetEntry");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -2061,6 +2080,8 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	protected WikiPageResourceLocalService wikiPageResourceLocalService;
 	@BeanReference(type = WikiPageResourcePersistence.class)
 	protected WikiPageResourcePersistence wikiPageResourcePersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

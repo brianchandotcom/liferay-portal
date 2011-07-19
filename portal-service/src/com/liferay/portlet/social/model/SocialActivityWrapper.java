@@ -374,9 +374,9 @@ public class SocialActivityWrapper implements SocialActivity {
 		return _socialActivity.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialActivity.save();
+		_socialActivity.persist();
 	}
 
 	public SocialActivity getWrappedSocialActivity() {

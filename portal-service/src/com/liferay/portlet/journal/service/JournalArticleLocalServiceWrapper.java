@@ -165,6 +165,13 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getJournalArticle(id);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the journal article with the UUID in the group.
 	*

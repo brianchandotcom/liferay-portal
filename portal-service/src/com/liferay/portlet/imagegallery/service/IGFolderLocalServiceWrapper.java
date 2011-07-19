@@ -164,6 +164,13 @@ public class IGFolderLocalServiceWrapper implements IGFolderLocalService {
 		return _igFolderLocalService.getIGFolder(folderId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _igFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the i g folder with the UUID in the group.
 	*

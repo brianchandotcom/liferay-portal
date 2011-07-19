@@ -1287,9 +1287,9 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_layoutRevision.save();
+		_layoutRevision.persist();
 	}
 
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren()

@@ -715,6 +715,12 @@ public abstract class JournalFeedServiceBaseImpl extends PrincipalBean
 		this.expandoValuePersistence = expandoValuePersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

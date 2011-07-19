@@ -783,12 +783,19 @@ public class ResourcePermissionLocalServiceImpl
 			Group group, Role role, String name, long actionIdsLong)
 		throws SystemException {
 
+		long companyId = group.getCompanyId();
+		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
 		String primKey = String.valueOf(group.getGroupId());
+
+		if (resourcePermissionPersistence.countByC_N_S_P(
+				companyId, name, scope, primKey) == 0) {
+
+			return;
+		}
 
 		ResourcePermission resourcePermission =
 			resourcePermissionPersistence.fetchByC_N_S_P_R(
-				group.getCompanyId(), name, ResourceConstants.SCOPE_INDIVIDUAL,
-				primKey, role.getRoleId());
+				companyId, name, scope, primKey, role.getRoleId());
 
 		if (resourcePermission == null) {
 			long resourcePermissionId = counterLocalService.increment(
@@ -797,9 +804,9 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission = resourcePermissionPersistence.create(
 				resourcePermissionId);
 
-			resourcePermission.setCompanyId(group.getCompanyId());
+			resourcePermission.setCompanyId(companyId);
 			resourcePermission.setName(name);
-			resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+			resourcePermission.setScope(scope);
 			resourcePermission.setPrimKey(primKey);
 			resourcePermission.setRoleId(role.getRoleId());
 

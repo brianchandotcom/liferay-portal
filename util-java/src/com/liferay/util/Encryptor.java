@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -42,7 +44,13 @@ public class Encryptor {
 
 	public static final String ENCODING = Digester.ENCODING;
 
-	public static final String KEY_ALGORITHM = "DES";
+	public static final String KEY_ALGORITHM =
+		GetterUtil.getString(PropsUtil.get(
+				PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)).toUpperCase();
+
+	public static final int KEY_SIZE =
+		GetterUtil.getInteger(PropsUtil.get(
+			PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE));
 
 	public static final String SUN_PROVIDER_CLASS =
 		"com.sun.crypto.provider.SunJCE";
@@ -63,7 +71,7 @@ public class Encryptor {
 			Security.addProvider(getProvider());
 
 			KeyGenerator generator = KeyGenerator.getInstance(algorithm);
-			generator.init(56, new SecureRandom());
+			generator.init(KEY_SIZE, new SecureRandom());
 
 			Key key = generator.generateKey();
 

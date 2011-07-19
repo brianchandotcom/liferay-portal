@@ -122,9 +122,9 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 			var fckEditor = new FCKeditor('<%= name %>');
 
-			fckEditor.Config['CustomConfigurationsPath'] = '<%= themeDisplay.getPathJavaScript() %>/editor/fckeditor/fckconfig.jsp?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %><%= configParamsSB.toString() %>';
+			fckEditor.Config['CustomConfigurationsPath'] = '<%= PortalUtil.getPathContext() %>/html/js/editor/fckeditor/fckconfig.jsp?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %><%= configParamsSB.toString() %>';
 
-			fckEditor.BasePath = '<%= themeDisplay.getPathJavaScript() %>/editor/fckeditor/';
+			fckEditor.BasePath = '<%= PortalUtil.getPathContext() %>/html/js/editor/fckeditor/';
 			fckEditor.Width = '100%';
 			fckEditor.Height = '100%';
 			fckEditor.ToolbarSet = '<%= HtmlUtil.escape(toolbarSet) %>';

@@ -765,6 +765,23 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermissionPersistence.update(resourcePermission, false);
 		}
 
+		if (scope == ResourceConstants.SCOPE_COMPANY) {
+			resourceBlockLocalService.setCompanyScopePermissions(
+				companyId, name, roleId, actionIdsLong);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+			resourceBlockLocalService.setGroupTemplateScopePermissions(
+				companyId, name, roleId, actionIdsLong);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP) {
+			resourceBlockLocalService.setGroupScopePermissions(
+				companyId, Long.valueOf(primKey), name, roleId, actionIdsLong);
+		}
+		else {
+			resourceBlockLocalService.setIndividualScopePermissions(
+				companyId, name, primKey, roleId, actionIdsLong);
+		}
+
 		PermissionCacheUtil.clearCache();
 
 		SearchEngineUtil.updatePermissionFields(name, primKey);

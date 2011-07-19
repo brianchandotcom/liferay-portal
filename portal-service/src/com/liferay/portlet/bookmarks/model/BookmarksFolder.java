@@ -26,12 +26,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl
  * @generated
  */
-<<<<<<< HEAD
 public interface BookmarksFolder extends BookmarksFolderModel, PersistedModel {
-=======
-public interface BookmarksFolder extends BookmarksFolderModel, SaveableModel,
-	PermissionedModel {
->>>>>>> Adding resourceBlockId to bookmarks
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

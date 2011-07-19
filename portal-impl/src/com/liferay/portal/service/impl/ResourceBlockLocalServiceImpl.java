@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlock;
+import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -71,46 +74,24 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	/**
-	 * Returns the permissions hash for the resource. The permissions hash is a
-	 * representation of all the roles with access to the resource along with
-	 * the actions they can perform.
-	 *
-	 * @param  companyId the primary key of the resource's company
-	 * @param  groupId the primary key of the resource's group
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key of the resource
-	 * @return the permissions hash for the resource
-	 * @throws SystemException if a system exception occurred
-	 */
-	public String getPermissionsHash(
-			long companyId, long groupId, String name, String primKey)
-		throws SystemException {
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourceResourcePermissions(
-			companyId, groupId, name, primKey);
-
-		return getPermissionsHash(resourcePermissions);
-	}
-
-	/**
 	 * Returns the permissions hash of the resource permissions. The permissions
 	 * hash is a representation of all the roles with access to the resource
 	 * along with the actions they can perform.
 	 *
-	 * @param  resourcePermissions the resource permissions
+	 * @param  resourceBlockPermissions the resource block permissions
 	 * @return the permissions hash of the resource permissions
 	 */
 	public String getPermissionsHash(
-		List<ResourcePermission> resourcePermissions) {
+		List<ResourceBlockPermission> resourceBlockPermissions) {
 
 		ByteBuffer buffer =
-			ByteBuffer.allocate(resourcePermissions.size() * 16);
+			ByteBuffer.allocate(resourceBlockPermissions.size() * 16);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			buffer.putLong(resourcePermission.getRoleId());
-			buffer.putLong(resourcePermission.getActionIds());
+		for (ResourceBlockPermission resourceBlockPermission :
+				resourceBlockPermissions) {
+
+			buffer.putLong(resourceBlockPermission.getRoleId());
+			buffer.putLong(resourceBlockPermission.getActionIds());
 		}
 
 		buffer.flip();
@@ -208,6 +189,74 @@ public class ResourceBlockLocalServiceImpl
 		updateResourceBlock(resourceBlock);
 	}
 
+	public void setCompanyScopePermissions(
+			long companyId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		resourceBlockPermissionLocalService.setPermissions(companyId, name, roleId, actionIdsLong);
+	}
+
+	public void setGroupTemplateScopePermissions(
+			long companyId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		resourceBlockPermissionLocalService.setPermissions(companyId, name, roleId, actionIdsLong);
+	}
+
+	public void setGroupScopePermissions(
+			long companyId, long groupId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		resourceBlockPermissionLocalService.setPermissions(companyId, name, groupId, roleId, actionIdsLong);
+	}
+
+	public void setIndividualScopePermissions(
+			long companyId, String name, String primKey, long roleId,
+			long actionIdsLong)
+		throws PortalException, SystemException {
+
+		PermissionedModel model = getModel(name, primKey);
+
+		if (model == null) {
+			return;
+		}
+
+		ResourceBlock resourceBlock =
+			getResourceBlock(model.getResourceBlockId());
+
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			resourceBlockPermissionLocalService.getResourceBlockPermissions(
+			resourceBlock.getPrimaryKey());
+
+		for (ResourceBlockPermission resourceBlockPermission :
+			resourceBlockPermissions) {
+
+			if (resourceBlockPermission.getRoleId() == roleId) {
+				if (resourceBlockPermission.getActionIds() == actionIdsLong) {
+					return;
+				}
+
+				break;
+			}
+		}
+
+		release(resourceBlock);
+
+
+	}
+
+	public void updatePermissionsHash(ResourceBlock resourceBlock)
+		throws SystemException {
+
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			resourceBlockPermissionLocalService.getResourceBlockPermissions(
+			resourceBlock.getPrimaryKey());
+
+		String permissionsHash = getPermissionsHash(resourceBlockPermissions);
+		resourceBlock.setPermissionsHash(permissionsHash);
+		updateResourceBlock(resourceBlock);
+	}
+
 	/**
 	 * Updates which resource block the resource is a member of, and updates it
 	 * in the database. Automatically retains, releases, and creates resource
@@ -251,7 +300,9 @@ public class ResourceBlockLocalServiceImpl
 			resourcePermissionLocalService.getResourceResourcePermissions(
 			companyId, groupId, name, primKey);
 
-		String newPermissionsHash = getPermissionsHash(resourcePermissions);
+		// This whole method is no longer necessary, but I want it for reference
+		//String newPermissionsHash = getPermissionsHash(resourcePermissions);
+		String newPermissionsHash = "";
 
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.fetchByPrimaryKey(
@@ -285,6 +336,30 @@ public class ResourceBlockLocalServiceImpl
 
 		model.setResourceBlockId(resourceBlock.getResourceBlockId());
 		model.save();
+	}
+
+	protected PermissionedModel getModel(String name, String primKey)
+		throws PortalException, SystemException {
+
+		// NEEDS FIX
+
+		PermissionedModel model = null;
+
+		if (name.equals(
+			"com.liferay.portlet.bookmarks.model.BookmarksEntry")) {
+
+			model =	BookmarksEntryLocalServiceUtil.getBookmarksEntry(
+				Long.valueOf(primKey));
+		}
+		else if (name.equals(
+			"com.liferay.portlet.bookmarks.model.BookmarksFolder")) {
+
+			model =
+				BookmarksFolderLocalServiceUtil.getBookmarksFolder(
+				Long.valueOf(primKey));
+		}
+
+		return model;
 	}
 
 }

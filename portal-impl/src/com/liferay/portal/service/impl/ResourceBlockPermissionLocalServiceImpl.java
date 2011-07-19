@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
@@ -29,7 +30,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
 
 	public ResourceBlockPermission addResourceBlockPermission(
-			long resourceBlockId, long roleId, long actionIds)
+			long resourceBlockId, long roleId, long actionIdsLong)
 		throws SystemException {
 
 		ResourceBlockPermission resourceBlockPermission =
@@ -39,19 +40,17 @@ public class ResourceBlockPermissionLocalServiceImpl
 		if (resourceBlockPermission == null) {
 			ResourceBlockPermissionPK pk =
 				new ResourceBlockPermissionPK(resourceBlockId, roleId,
-				actionIds);
+				actionIdsLong);
 
 			resourceBlockPermissionPersistence.create(pk);
 
-			resourceBlockPermissionPersistence.update(
-				resourceBlockPermission, false);
+			updateResourceBlockPermission(resourceBlockPermission);
 
 			return resourceBlockPermission;
 		}
 
-		resourceBlockPermission.setActionIds(actionIds);
-		resourceBlockPermissionPersistence.update(
-			resourceBlockPermission, false);
+		resourceBlockPermission.setActionIds(actionIdsLong);
+		updateResourceBlockPermission(resourceBlockPermission);
 
 		return resourceBlockPermission;
 	}
@@ -72,6 +71,65 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 		resourceBlockPermissionPersistence.removeByResourceBlockId(
 			resourceBlockId);
+	}
+
+	public List<ResourceBlockPermission> getResourceBlockPermissions(
+			long resourceBlockId)
+		throws SystemException {
+
+		return resourceBlockPermissionPersistence.findByResourceBlockId(
+			resourceBlockId);
+	}
+
+	public void setPermissions(
+			List<ResourceBlock> resourceBlocks, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		for (ResourceBlock resourceBlock : resourceBlocks) {
+			ResourceBlockPermission resourceBlockPermission =
+				resourceBlockPermissionPersistence.fetchByR_R(
+				resourceBlock.getPrimaryKey(), roleId);
+
+			if (resourceBlockPermission == null) {
+				if (actionIdsLong == 0) {
+					continue;
+				}
+
+				resourceBlockPermission =
+					addResourceBlockPermission(
+					resourceBlock.getPrimaryKey(), roleId, actionIdsLong);
+			}
+			else {
+				if (actionIdsLong == 0) {
+					deleteResourceBlockPermission(resourceBlockPermission);
+				}
+				else {
+					resourceBlockPermission.setActionIds(actionIdsLong);
+					updateResourceBlockPermission(resourceBlockPermission);
+				}
+			}
+
+			resourceBlockLocalService.updatePermissionsHash(resourceBlock);
+		}
+	}
+
+	public void setPermissions(
+			long companyId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_N(companyId, name);
+
+		setPermissions(resourceBlocks, roleId, actionIdsLong);
+	}
+
+	public void setPermissions(
+			long companyId, String name, long groupId, long roleId,
+			long actionIdsLong)
+		throws SystemException {
+
+		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_G_N(companyId, groupId, name);
+
+		setPermissions(resourceBlocks, roleId, actionIdsLong);
 	}
 
 }

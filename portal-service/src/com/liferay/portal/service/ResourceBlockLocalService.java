@@ -242,34 +242,16 @@ public interface ResourceBlockLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the permissions hash for the resource. The permissions hash is a
-	* representation of all the roles with access to the resource along with
-	* the actions they can perform.
-	*
-	* @param companyId the primary key of the resource's company
-	* @param groupId the primary key of the resource's group
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param primKey the primary key of the resource
-	* @return the permissions hash for the resource
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getPermissionsHash(long companyId, long groupId,
-		java.lang.String name, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the permissions hash of the resource permissions. The permissions
 	* hash is a representation of all the roles with access to the resource
 	* along with the actions they can perform.
 	*
-	* @param resourcePermissions the resource permissions
+	* @param resourceBlockPermissions the resource block permissions
 	* @return the permissions hash of the resource permissions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getPermissionsHash(
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions);
+		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ResourceBlock> getResourceBlocks(
@@ -319,6 +301,28 @@ public interface ResourceBlockLocalService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void release(com.liferay.portal.model.ResourceBlock resourceBlock)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setCompanyScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setGroupTemplateScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setGroupScopePermissions(long companyId, long groupId,
+		java.lang.String name, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setIndividualScopePermissions(long companyId,
+		java.lang.String name, java.lang.String primKey, long roleId,
+		long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updatePermissionsHash(
+		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

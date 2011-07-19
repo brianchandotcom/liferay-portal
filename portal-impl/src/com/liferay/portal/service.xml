@@ -1580,7 +1580,8 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_N" return-type="Collection">
+		<finder name="C_G_N" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>

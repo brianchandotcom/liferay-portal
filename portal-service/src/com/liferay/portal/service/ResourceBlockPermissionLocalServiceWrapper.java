@@ -245,10 +245,10 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIds)
+		long resourceBlockId, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _resourceBlockPermissionLocalService.addResourceBlockPermission(resourceBlockId,
-			roleId, actionIds);
+			roleId, actionIdsLong);
 	}
 
 	public void addResourceBlockPermissions(long resourceBlockId,
@@ -261,6 +261,34 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
+	}
+
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissions(resourceBlockId);
+	}
+
+	public void setPermissions(
+		java.util.List<com.liferay.portal.model.ResourceBlock> resourceBlocks,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockPermissionLocalService.setPermissions(resourceBlocks,
+			roleId, actionIdsLong);
+	}
+
+	public void setPermissions(long companyId, java.lang.String name,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockPermissionLocalService.setPermissions(companyId, name,
+			roleId, actionIdsLong);
+	}
+
+	public void setPermissions(long companyId, java.lang.String name,
+		long groupId, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockPermissionLocalService.setPermissions(companyId, name,
+			groupId, roleId, actionIdsLong);
 	}
 
 	public ResourceBlockPermissionLocalService getWrappedResourceBlockPermissionLocalService() {

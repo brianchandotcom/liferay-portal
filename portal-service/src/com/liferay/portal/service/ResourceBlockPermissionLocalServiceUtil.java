@@ -253,11 +253,11 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIds)
+		long resourceBlockId, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addResourceBlockPermission(resourceBlockId, roleId,
-			actionIds);
+			actionIdsLong);
 	}
 
 	public static void addResourceBlockPermissions(long resourceBlockId,
@@ -270,6 +270,32 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	public static void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteResourceBlockPermissions(resourceBlockId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResourceBlockPermissions(resourceBlockId);
+	}
+
+	public static void setPermissions(
+		java.util.List<com.liferay.portal.model.ResourceBlock> resourceBlocks,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setPermissions(resourceBlocks, roleId, actionIdsLong);
+	}
+
+	public static void setPermissions(long companyId, java.lang.String name,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setPermissions(companyId, name, roleId, actionIdsLong);
+	}
+
+	public static void setPermissions(long companyId, java.lang.String name,
+		long groupId, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setPermissions(companyId, name, groupId, roleId, actionIdsLong);
 	}
 
 	public static ResourceBlockPermissionLocalService getService() {

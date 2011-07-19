@@ -37,7 +37,7 @@ public abstract class LayoutBranchBaseImpl extends LayoutBranchModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout branch model instance should use the {@link LayoutBranch} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		LayoutBranchLocalServiceUtil.updateLayoutBranch(this);
 	}
 }

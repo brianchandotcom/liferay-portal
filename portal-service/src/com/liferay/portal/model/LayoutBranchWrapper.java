@@ -317,9 +317,9 @@ public class LayoutBranchWrapper implements LayoutBranch {
 		return _layoutBranch.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_layoutBranch.save();
+		_layoutBranch.persist();
 	}
 
 	public LayoutBranch getWrappedLayoutBranch() {

@@ -21,6 +21,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public class UpgradePermission extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 
 		// LPS-14202 and LPS-17841
+
+		RoleLocalServiceUtil.checkSystemRoles();
 
 		updatePermissions("com.liferay.portlet.bookmarks", true, true);
 		updatePermissions("com.liferay.portlet.documentlibrary", false, true);

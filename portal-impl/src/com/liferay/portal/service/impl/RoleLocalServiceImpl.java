@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
@@ -129,6 +130,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		indexer.reindex(userId);
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	public void checkSystemRoles() throws PortalException, SystemException {
+		List<Company> companies = companyLocalService.getCompanies();
+
+		for (Company company : companies) {
+			checkSystemRoles(company.getCompanyId());
+		}
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

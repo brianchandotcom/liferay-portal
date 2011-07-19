@@ -26,6 +26,7 @@ import javax.servlet.jsp.JspException;
  */
 public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 
+	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
@@ -112,7 +113,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _last;
 	}
 
-	public java.lang.Class getModel() {
+	public java.lang.Class<?> getModel() {
 		return _model;
 	}
 
@@ -276,7 +277,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("last", last);
 	}
 
-	public void setModel(java.lang.Class model) {
+	public void setModel(java.lang.Class<?> model) {
 		_model = model;
 
 		setScopedAttribute("model", model);
@@ -342,6 +343,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("value", value);
 	}
 
+	@Override
 	protected void cleanUp() {
 		_bean = null;
 		_changesContext = false;
@@ -376,10 +378,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_value = null;
 	}
 
+	@Override
 	protected String getPage() {
 		return _PAGE;
 	}
 
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "bean", _bean);
 		setNamespacedAttribute(request, "changesContext", _changesContext);
@@ -394,8 +398,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "formName", _formName);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
-		setNamespacedAttribute(
-			request, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "inputCssClass", _inputCssClass);
@@ -440,7 +443,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _label = null;
 	private java.lang.String _languageId = null;
 	private boolean _last = false;
-	private java.lang.Class _model = null;
+	private java.lang.Class<?> _model = null;
 	private boolean _multiple = false;
 	private java.lang.String _name = null;
 	private java.lang.String _onChange = null;

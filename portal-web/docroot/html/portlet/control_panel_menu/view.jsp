@@ -98,9 +98,15 @@
 				}
 
 				if (!manageableSites.isEmpty() && !manageableSites.contains(curLiveGroup)) {
-					curGroup = manageableSites.get(0);
+					if (_hasPermission(themeDisplay.getPermissionChecker(), curLiveGroup, categoryPortlets)) {
+						manageableSites.add(0, curLiveGroup);
+					}
+					else {
+						curGroup = manageableSites.get(0);
+						curLiveGroup = curGroup;
 
-					themeDisplay.setScopeGroupId(curGroup.getGroupId());
+						themeDisplay.setScopeGroupId(curGroup.getGroupId());
+					}
 				}
 
 				String curGroupName = null;
@@ -342,3 +348,13 @@
 		);
 	}
 </aui:script>
+
+<%!
+private boolean _hasPermission(PermissionChecker permissionChecker, Group group, Collection<Portlet> portlets) throws PortalException, SystemException{
+	if (!group.isSite() || !PortletPermissionUtil.contains(permissionChecker, group.getGroupId(), 0L, portlets, ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+		return false;
+	}
+
+	return true;
+}
+%>

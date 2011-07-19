@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
 import com.liferay.portal.service.AddressLocalService;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -207,6 +209,8 @@ import com.liferay.portlet.imagegallery.service.IGImageLocalService;
 import com.liferay.portlet.imagegallery.service.IGImageService;
 import com.liferay.portlet.imagegallery.service.persistence.IGImageFinder;
 import com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -393,6 +397,11 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 	 */
 	public Image getImage(long imageId) throws PortalException, SystemException {
 		return imagePersistence.findByPrimaryKey(imageId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return imagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -3741,6 +3750,16 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 		this.igImageFinder = igImageFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Image",
+			imageLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.Image");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -4140,6 +4159,8 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 	protected IGImagePersistence igImagePersistence;
 	@BeanReference(type = IGImageFinder.class)
 	protected IGImageFinder igImageFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(ImageLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

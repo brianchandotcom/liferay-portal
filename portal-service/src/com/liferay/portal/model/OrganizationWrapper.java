@@ -351,9 +351,9 @@ public class OrganizationWrapper implements Organization {
 		return _organization.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_organization.save();
+		_organization.persist();
 	}
 
 	public com.liferay.portal.model.Address getAddress() {

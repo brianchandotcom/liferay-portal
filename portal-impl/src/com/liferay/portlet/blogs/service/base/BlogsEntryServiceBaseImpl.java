@@ -1275,6 +1275,12 @@ public abstract class BlogsEntryServiceBaseImpl extends PrincipalBean
 		this.socialEquityLogPersistence = socialEquityLogPersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

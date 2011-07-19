@@ -329,9 +329,9 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 		return _socialEquityUser.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialEquityUser.save();
+		_socialEquityUser.persist();
 	}
 
 	public double getContributionEquity() {

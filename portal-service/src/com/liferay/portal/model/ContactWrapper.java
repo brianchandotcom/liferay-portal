@@ -695,9 +695,9 @@ public class ContactWrapper implements Contact {
 		return _contact.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_contact.save();
+		_contact.persist();
 	}
 
 	public java.lang.String getFullName() {

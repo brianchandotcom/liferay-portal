@@ -38,7 +38,7 @@ public abstract class SocialEquitySettingBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social equity setting model instance should use the {@link SocialEquitySetting} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialEquitySettingLocalServiceUtil.updateSocialEquitySetting(this);
 	}
 }

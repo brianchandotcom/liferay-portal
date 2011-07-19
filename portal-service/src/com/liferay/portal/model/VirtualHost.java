@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.VirtualHostModelImpl
  * @generated
  */
-public interface VirtualHost extends VirtualHostModel, SaveableModel {
+public interface VirtualHost extends VirtualHostModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

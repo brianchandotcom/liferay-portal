@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ResourceCodeModelImpl
  * @generated
  */
-public interface ResourceCode extends ResourceCodeModel, SaveableModel {
+public interface ResourceCode extends ResourceCodeModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

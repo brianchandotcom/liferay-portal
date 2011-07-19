@@ -309,9 +309,9 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryType.save();
+		_dlFileEntryType.persist();
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()

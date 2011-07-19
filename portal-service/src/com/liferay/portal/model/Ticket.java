@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.TicketModelImpl
  * @generated
  */
-public interface Ticket extends TicketModel, SaveableModel {
+public interface Ticket extends TicketModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

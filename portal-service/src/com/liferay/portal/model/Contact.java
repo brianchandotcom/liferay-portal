@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ContactModelImpl
  * @generated
  */
-public interface Contact extends ContactModel, SaveableModel {
+public interface Contact extends ContactModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

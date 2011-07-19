@@ -207,9 +207,9 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_clusterGroup.save();
+		_clusterGroup.persist();
 	}
 
 	public java.lang.String[] getClusterNodeIdsArray() {

@@ -38,7 +38,7 @@ public abstract class WikiPageResourceBaseImpl extends WikiPageResourceModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki page resource model instance should use the {@link WikiPageResource} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		WikiPageResourceLocalServiceUtil.updateWikiPageResource(this);
 	}
 }

@@ -29,12 +29,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -60,6 +62,8 @@ import com.liferay.portlet.imagegallery.service.IGImageService;
 import com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistence;
 import com.liferay.portlet.imagegallery.service.persistence.IGImageFinder;
 import com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -247,6 +251,11 @@ public abstract class IGFolderLocalServiceBaseImpl
 	public IGFolder getIGFolder(long folderId)
 		throws PortalException, SystemException {
 		return igFolderPersistence.findByPrimaryKey(folderId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return igFolderPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -875,6 +884,16 @@ public abstract class IGFolderLocalServiceBaseImpl
 		this.expandoValuePersistence = expandoValuePersistence;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.imagegallery.model.IGFolder",
+			igFolderLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.imagegallery.model.IGFolder");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -980,6 +999,8 @@ public abstract class IGFolderLocalServiceBaseImpl
 	protected ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(IGFolderLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

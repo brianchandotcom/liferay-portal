@@ -310,9 +310,9 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
 		return _assetCategoryProperty.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetCategoryProperty.save();
+		_assetCategoryProperty.persist();
 	}
 
 	public AssetCategoryProperty getWrappedAssetCategoryProperty() {

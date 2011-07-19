@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.UserIdMapperModelImpl
  * @generated
  */
-public interface UserIdMapper extends UserIdMapperModel, SaveableModel {
+public interface UserIdMapper extends UserIdMapperModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

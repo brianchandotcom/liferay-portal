@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -71,6 +73,8 @@ import com.liferay.portlet.shopping.service.persistence.ShoppingItemPricePersist
 import com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder;
 import com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistence;
 import com.liferay.portlet.shopping.service.persistence.ShoppingOrderPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -261,6 +265,11 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	public ShoppingOrder getShoppingOrder(long orderId)
 		throws PortalException, SystemException {
 		return shoppingOrderPersistence.findByPrimaryKey(orderId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return shoppingOrderPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1075,6 +1084,16 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 		this.mbMessageFinder = mbMessageFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.shopping.model.ShoppingOrder",
+			shoppingOrderLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.shopping.model.ShoppingOrder");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1200,6 +1219,8 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	protected MBMessagePersistence mbMessagePersistence;
 	@BeanReference(type = MBMessageFinder.class)
 	protected MBMessageFinder mbMessageFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingOrderLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

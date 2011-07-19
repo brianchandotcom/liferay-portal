@@ -318,9 +318,9 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		return _ratingsEntry.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ratingsEntry.save();
+		_ratingsEntry.persist();
 	}
 
 	public RatingsEntry getWrappedRatingsEntry() {

@@ -166,6 +166,13 @@ public class ShoppingCategoryLocalServiceWrapper
 		return _shoppingCategoryLocalService.getShoppingCategory(categoryId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingCategoryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shopping categories.
 	*

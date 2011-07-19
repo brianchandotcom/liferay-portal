@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -69,6 +71,8 @@ import com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -256,6 +260,11 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 	public IGImage getIGImage(long imageId)
 		throws PortalException, SystemException {
 		return igImagePersistence.findByPrimaryKey(imageId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return igImagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1057,6 +1066,16 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 		this.socialActivityFinder = socialActivityFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.imagegallery.model.IGImage",
+			igImageLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.imagegallery.model.IGImage");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1180,6 +1199,8 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(IGImageLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

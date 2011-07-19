@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.imagegallery.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the IGImage service. Represents a row in the &quot;IGImage&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.imagegallery.model.impl.IGImageModelImpl
  * @generated
  */
-public interface IGImage extends IGImageModel, SaveableModel {
+public interface IGImage extends IGImageModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -38,7 +38,7 @@ public abstract class DLFileEntryMetadataBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a document library file entry metadata model instance should use the {@link DLFileEntryMetadata} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		DLFileEntryMetadataLocalServiceUtil.updateDLFileEntryMetadata(this);
 	}
 }

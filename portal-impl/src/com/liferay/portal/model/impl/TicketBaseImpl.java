@@ -36,7 +36,7 @@ public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ticket model instance should use the {@link Ticket} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		TicketLocalServiceUtil.updateTicket(this);
 	}
 }

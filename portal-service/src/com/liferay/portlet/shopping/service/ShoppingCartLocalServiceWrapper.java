@@ -164,6 +164,13 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.getShoppingCart(cartId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingCartLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shopping carts.
 	*

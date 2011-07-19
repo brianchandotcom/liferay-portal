@@ -696,9 +696,9 @@ public class MBMessageWrapper implements MBMessage {
 		return _mbMessage.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessage.save();
+		_mbMessage.persist();
 	}
 
 	public java.lang.String[] getAssetTagNames()

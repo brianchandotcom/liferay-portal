@@ -38,7 +38,7 @@ public abstract class CalEventBaseImpl extends CalEventModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a cal event model instance should use the {@link CalEvent} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		CalEventLocalServiceUtil.updateCalEvent(this);
 	}
 }

@@ -1477,6 +1477,7 @@ public class SourceFormatter {
 				"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
 				"**\\model\\BaseModel.java",
 				"**\\model\\impl\\BaseModelImpl.java",
+				"**\\service\\PersistedModelLocalService*.java",
 				"**\\service\\base\\PrincipalBean.java",
 				"**\\service\\http\\*HttpTest.java",
 				"**\\service\\http\\*SoapTest.java",

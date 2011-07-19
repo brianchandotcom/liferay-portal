@@ -38,7 +38,7 @@ public abstract class SCProductEntryBaseImpl extends SCProductEntryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a s c product entry model instance should use the {@link SCProductEntry} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SCProductEntryLocalServiceUtil.updateSCProductEntry(this);
 	}
 }

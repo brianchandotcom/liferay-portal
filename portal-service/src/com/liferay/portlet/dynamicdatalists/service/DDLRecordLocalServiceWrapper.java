@@ -164,6 +164,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService {
 		return _ddlRecordLocalService.getDDLRecord(recordId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the d d l record with the UUID in the group.
 	*

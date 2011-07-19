@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.TeamModelImpl
  * @generated
  */
-public interface Team extends TeamModel, SaveableModel {
+public interface Team extends TeamModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

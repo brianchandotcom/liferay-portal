@@ -557,9 +557,9 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		return _assetVocabulary.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_assetVocabulary.save();
+		_assetVocabulary.persist();
 	}
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {

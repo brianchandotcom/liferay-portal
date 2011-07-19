@@ -532,6 +532,12 @@ public abstract class DDLRecordSetServiceBaseImpl extends PrincipalBean
 		this.ddmStructureLinkPersistence = ddmStructureLinkPersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

@@ -198,9 +198,9 @@ public class ResourceActionWrapper implements ResourceAction {
 		return _resourceAction.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceAction.save();
+		_resourceAction.persist();
 	}
 
 	public ResourceAction getWrappedResourceAction() {

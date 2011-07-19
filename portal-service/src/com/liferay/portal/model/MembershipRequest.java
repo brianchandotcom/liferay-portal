@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.MembershipRequestModelImpl
  * @generated
  */
-public interface MembershipRequest extends MembershipRequestModel, SaveableModel {
+public interface MembershipRequest extends MembershipRequestModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

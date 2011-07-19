@@ -271,9 +271,9 @@ public class ResourcePermissionWrapper implements ResourcePermission {
 		return _resourcePermission.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourcePermission.save();
+		_resourcePermission.persist();
 	}
 
 	public ResourcePermission getWrappedResourcePermission() {

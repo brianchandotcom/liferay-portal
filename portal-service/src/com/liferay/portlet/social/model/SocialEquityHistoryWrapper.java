@@ -255,9 +255,9 @@ public class SocialEquityHistoryWrapper implements SocialEquityHistory {
 		return _socialEquityHistory.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialEquityHistory.save();
+		_socialEquityHistory.persist();
 	}
 
 	public SocialEquityHistory getWrappedSocialEquityHistory() {

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PortalPreferencesModelImpl
  * @generated
  */
-public interface PortalPreferences extends PortalPreferencesModel, SaveableModel {
+public interface PortalPreferences extends PortalPreferencesModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -46,6 +48,8 @@ import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -236,6 +240,11 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	public RatingsStats getRatingsStats(long statsId)
 		throws PortalException, SystemException {
 		return ratingsStatsPersistence.findByPrimaryKey(statsId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return ratingsStatsPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -600,6 +609,16 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.ratings.model.RatingsStats",
+			ratingsStatsLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.ratings.model.RatingsStats");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -677,6 +696,8 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(RatingsStatsLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

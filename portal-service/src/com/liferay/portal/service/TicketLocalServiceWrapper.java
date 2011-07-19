@@ -160,6 +160,13 @@ public class TicketLocalServiceWrapper implements TicketLocalService {
 		return _ticketLocalService.getTicket(ticketId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ticketLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the tickets.
 	*

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ClusterGroupModelImpl
  * @generated
  */
-public interface ClusterGroup extends ClusterGroupModel, SaveableModel {
+public interface ClusterGroup extends ClusterGroupModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

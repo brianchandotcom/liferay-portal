@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the SocialEquitySetting service. Represents a row in the &quot;SocialEquitySetting&quot; database table, with each column mapped to a property of this class.
@@ -26,7 +26,7 @@ import com.liferay.portal.model.SaveableModel;
  * @generated
  */
 public interface SocialEquitySetting extends SocialEquitySettingModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

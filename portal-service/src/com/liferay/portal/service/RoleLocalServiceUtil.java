@@ -172,6 +172,13 @@ public class RoleLocalServiceUtil {
 		return getService().getRole(roleId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the roles.
 	*
@@ -272,6 +279,12 @@ public class RoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().addUserRoles(userId, roleIds);
+	}
+
+	public static void checkSystemRoles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkSystemRoles();
 	}
 
 	public static void checkSystemRoles(long companyId)

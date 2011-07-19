@@ -344,9 +344,9 @@ public class WikiNodeWrapper implements WikiNode {
 		return _wikiNode.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_wikiNode.save();
+		_wikiNode.persist();
 	}
 
 	public WikiNode getWrappedWikiNode() {

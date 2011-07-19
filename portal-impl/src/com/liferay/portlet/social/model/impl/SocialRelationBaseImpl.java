@@ -38,7 +38,7 @@ public abstract class SocialRelationBaseImpl extends SocialRelationModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social relation model instance should use the {@link SocialRelation} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialRelationLocalServiceUtil.updateSocialRelation(this);
 	}
 }

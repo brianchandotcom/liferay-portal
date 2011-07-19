@@ -38,7 +38,7 @@ public abstract class JournalContentSearchBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a journal content search model instance should use the {@link JournalContentSearch} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		JournalContentSearchLocalServiceUtil.updateJournalContentSearch(this);
 	}
 }

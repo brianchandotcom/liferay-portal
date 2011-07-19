@@ -38,7 +38,7 @@ public abstract class SCProductScreenshotBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a s c product screenshot model instance should use the {@link SCProductScreenshot} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SCProductScreenshotLocalServiceUtil.updateSCProductScreenshot(this);
 	}
 }

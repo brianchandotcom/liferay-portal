@@ -38,7 +38,7 @@ public abstract class IGImageBaseImpl extends IGImageModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a i g image model instance should use the {@link IGImage} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		IGImageLocalServiceUtil.updateIGImage(this);
 	}
 }

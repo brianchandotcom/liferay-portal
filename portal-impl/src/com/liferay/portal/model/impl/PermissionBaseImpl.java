@@ -37,7 +37,7 @@ public abstract class PermissionBaseImpl extends PermissionModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a permission model instance should use the {@link Permission} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		PermissionLocalServiceUtil.updatePermission(this);
 	}
 }

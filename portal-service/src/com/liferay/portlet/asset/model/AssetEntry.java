@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the AssetEntry service. Represents a row in the &quot;AssetEntry&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.asset.model.impl.AssetEntryModelImpl
  * @generated
  */
-public interface AssetEntry extends AssetEntryModel, SaveableModel {
+public interface AssetEntry extends AssetEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

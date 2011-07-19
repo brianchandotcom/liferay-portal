@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.EmailAddressModelImpl
  * @generated
  */
-public interface EmailAddress extends EmailAddressModel, SaveableModel {
+public interface EmailAddress extends EmailAddressModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

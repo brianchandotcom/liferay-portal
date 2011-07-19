@@ -161,6 +161,13 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService {
 		return _orgLaborLocalService.getOrgLabor(orgLaborId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _orgLaborLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the org labors.
 	*

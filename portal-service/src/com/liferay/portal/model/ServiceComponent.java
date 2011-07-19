@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ServiceComponentModelImpl
  * @generated
  */
-public interface ServiceComponent extends ServiceComponentModel, SaveableModel {
+public interface ServiceComponent extends ServiceComponentModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

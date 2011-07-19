@@ -173,6 +173,13 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getAssetVocabulary(vocabularyId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the asset vocabulary with the UUID in the group.
 	*

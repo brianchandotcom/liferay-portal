@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -54,6 +56,8 @@ import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersist
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder;
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordVersionPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -243,6 +247,11 @@ public abstract class DDLRecordLocalServiceBaseImpl
 	public DDLRecord getDDLRecord(long recordId)
 		throws PortalException, SystemException {
 		return ddlRecordPersistence.findByPrimaryKey(recordId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return ddlRecordPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -770,6 +779,16 @@ public abstract class DDLRecordLocalServiceBaseImpl
 		this.assetEntryFinder = assetEntryFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.dynamicdatalists.model.DDLRecord",
+			ddlRecordLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecord");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -863,6 +882,8 @@ public abstract class DDLRecordLocalServiceBaseImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

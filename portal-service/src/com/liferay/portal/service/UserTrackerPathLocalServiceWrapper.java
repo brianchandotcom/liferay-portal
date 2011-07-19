@@ -166,6 +166,13 @@ public class UserTrackerPathLocalServiceWrapper
 		return _userTrackerPathLocalService.getUserTrackerPath(userTrackerPathId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userTrackerPathLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the user tracker paths.
 	*

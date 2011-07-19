@@ -36,7 +36,7 @@ public abstract class LockBaseImpl extends LockModelImpl implements Lock {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a lock model instance should use the {@link Lock} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		LockLocalServiceUtil.updateLock(this);
 	}
 }

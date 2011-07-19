@@ -166,6 +166,13 @@ public class JournalContentSearchLocalServiceWrapper
 		return _journalContentSearchLocalService.getJournalContentSearch(contentSearchId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalContentSearchLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the journal content searchs.
 	*

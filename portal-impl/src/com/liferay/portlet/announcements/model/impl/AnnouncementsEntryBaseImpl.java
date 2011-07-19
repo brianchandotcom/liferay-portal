@@ -38,7 +38,7 @@ public abstract class AnnouncementsEntryBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a announcements entry model instance should use the {@link AnnouncementsEntry} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		AnnouncementsEntryLocalServiceUtil.updateAnnouncementsEntry(this);
 	}
 }

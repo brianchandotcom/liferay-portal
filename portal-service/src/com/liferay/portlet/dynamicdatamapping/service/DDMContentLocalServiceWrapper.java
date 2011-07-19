@@ -164,6 +164,13 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService {
 		return _ddmContentLocalService.getDDMContent(contentId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmContentLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the d d m content with the UUID in the group.
 	*

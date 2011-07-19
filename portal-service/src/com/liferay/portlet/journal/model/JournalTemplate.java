@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the JournalTemplate service. Represents a row in the &quot;JournalTemplate&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.journal.model.impl.JournalTemplateModelImpl
  * @generated
  */
-public interface JournalTemplate extends JournalTemplateModel, SaveableModel {
+public interface JournalTemplate extends JournalTemplateModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

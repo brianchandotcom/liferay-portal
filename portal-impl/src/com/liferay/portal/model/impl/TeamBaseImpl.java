@@ -36,7 +36,7 @@ public abstract class TeamBaseImpl extends TeamModelImpl implements Team {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a team model instance should use the {@link Team} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		TeamLocalServiceUtil.updateTeam(this);
 	}
 }

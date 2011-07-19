@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -67,6 +69,8 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCLicensePersiste
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductScreenshotPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductVersionPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -257,6 +261,11 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	public SCProductEntry getSCProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 		return scProductEntryPersistence.findByPrimaryKey(productEntryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return scProductEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1012,6 +1021,16 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 		this.ratingsStatsFinder = ratingsStatsFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.softwarecatalog.model.SCProductEntry",
+			scProductEntryLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.softwarecatalog.model.SCProductEntry");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1131,6 +1150,8 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(SCProductEntryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

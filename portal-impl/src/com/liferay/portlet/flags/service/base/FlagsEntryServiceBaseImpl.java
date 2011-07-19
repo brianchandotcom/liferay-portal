@@ -777,6 +777,12 @@ public abstract class FlagsEntryServiceBaseImpl extends PrincipalBean
 		this.assetEntryFinder = assetEntryFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

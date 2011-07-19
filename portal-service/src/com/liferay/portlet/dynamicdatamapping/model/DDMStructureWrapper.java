@@ -602,9 +602,9 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddmStructure.save();
+		_ddmStructure.persist();
 	}
 
 	public java.lang.String getFieldDataType(java.lang.String fieldName) {

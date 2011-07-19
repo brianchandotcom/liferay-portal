@@ -164,6 +164,13 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService {
 		return _mbMessageLocalService.getMBMessage(messageId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the message-boards message with the UUID in the group.
 	*

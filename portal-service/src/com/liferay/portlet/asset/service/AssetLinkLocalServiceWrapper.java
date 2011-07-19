@@ -163,6 +163,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService {
 		return _assetLinkLocalService.getAssetLink(linkId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the asset links.
 	*

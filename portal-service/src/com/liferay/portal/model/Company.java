@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.CompanyModelImpl
  * @generated
  */
-public interface Company extends CompanyModel, SaveableModel {
+public interface Company extends CompanyModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

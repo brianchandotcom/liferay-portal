@@ -166,6 +166,13 @@ public class SCProductVersionLocalServiceWrapper
 		return _scProductVersionLocalService.getSCProductVersion(productVersionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _scProductVersionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the s c product versions.
 	*

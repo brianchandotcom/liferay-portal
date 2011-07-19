@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ShardModelImpl
  * @generated
  */
-public interface Shard extends ShardModel, SaveableModel {
+public interface Shard extends ShardModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

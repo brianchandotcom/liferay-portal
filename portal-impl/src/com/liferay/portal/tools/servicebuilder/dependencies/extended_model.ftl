@@ -1,6 +1,6 @@
 package ${packagePath}.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
@@ -15,7 +15,7 @@ public interface ${entity.name} extends
 	${entity.name}Model
 
 	<#if entity.hasLocalService() && entity.hasColumns()>
-		, SaveableModel
+		, PersistedModel
 	</#if>
 
 	{

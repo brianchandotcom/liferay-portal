@@ -279,9 +279,9 @@ public class UserGroupWrapper implements UserGroup {
 		return _userGroup.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userGroup.save();
+		_userGroup.persist();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

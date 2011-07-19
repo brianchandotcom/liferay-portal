@@ -48,9 +48,7 @@ public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Add Document"),
-			selenium.getText("//div[2]/ul/li[4]/a"));
-		selenium.clickAt("//div[2]/ul/li[4]/a",
+		selenium.clickAt("//div[2]/ul/li[5]/a",
 			RuntimeVariables.replace("Add Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -112,7 +110,10 @@ public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent("Your request failed to complete.")) {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -123,6 +124,18 @@ public class AddFolderDocumentDocumentNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Test1 Document1"),
+			selenium.getText("//td[1]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("This is test1 document1."),
+			selenium.getText("//td[1]/a/div"));
+		assertEquals(RuntimeVariables.replace("0.0k"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("No"),
+			selenium.getText("//td[4]/a"));
 	}
 }

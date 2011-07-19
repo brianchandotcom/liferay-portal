@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -264,6 +266,11 @@ public abstract class DLContentLocalServiceBaseImpl
 	public DLContent getDLContent(long contentId)
 		throws PortalException, SystemException {
 		return dlContentPersistence.findByPrimaryKey(contentId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return dlContentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1112,6 +1119,16 @@ public abstract class DLContentLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLContent",
+			dlContentLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.documentlibrary.model.DLContent");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1239,6 +1256,8 @@ public abstract class DLContentLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(DLContentLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

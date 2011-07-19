@@ -37,7 +37,7 @@ public abstract class WorkflowDefinitionLinkBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a workflow definition link model instance should use the {@link WorkflowDefinitionLink} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(this);
 	}
 }

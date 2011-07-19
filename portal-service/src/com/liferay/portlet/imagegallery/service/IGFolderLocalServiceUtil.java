@@ -173,6 +173,13 @@ public class IGFolderLocalServiceUtil {
 		return getService().getIGFolder(folderId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the i g folder with the UUID in the group.
 	*

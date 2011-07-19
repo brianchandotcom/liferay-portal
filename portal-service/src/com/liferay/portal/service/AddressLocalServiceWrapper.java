@@ -160,6 +160,13 @@ public class AddressLocalServiceWrapper implements AddressLocalService {
 		return _addressLocalService.getAddress(addressId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _addressLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the addresses.
 	*

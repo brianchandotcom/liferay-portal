@@ -162,6 +162,13 @@ public class PermissionLocalServiceWrapper implements PermissionLocalService {
 		return _permissionLocalService.getPermission(permissionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _permissionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the permissions.
 	*

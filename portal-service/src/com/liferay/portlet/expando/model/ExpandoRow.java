@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.expando.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the ExpandoRow service. Represents a row in the &quot;ExpandoRow&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl
  * @generated
  */
-public interface ExpandoRow extends ExpandoRowModel, SaveableModel {
+public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

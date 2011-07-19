@@ -199,9 +199,9 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 		return _wikiPageResource.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageResource.save();
+		_wikiPageResource.persist();
 	}
 
 	public WikiPageResource getWrappedWikiPageResource() {

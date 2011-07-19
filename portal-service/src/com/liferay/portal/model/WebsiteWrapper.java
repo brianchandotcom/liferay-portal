@@ -362,9 +362,9 @@ public class WebsiteWrapper implements Website {
 		return _website.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_website.save();
+		_website.persist();
 	}
 
 	public com.liferay.portal.model.ListType getType()

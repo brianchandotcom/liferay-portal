@@ -307,9 +307,9 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 		return _shoppingOrderItem.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderItem.save();
+		_shoppingOrderItem.persist();
 	}
 
 	public ShoppingOrderItem getWrappedShoppingOrderItem() {

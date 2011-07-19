@@ -14,7 +14,7 @@
 
 package com.liferay.counter.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.counter.model.impl.CounterModelImpl
  * @generated
  */
-public interface Counter extends CounterModel, SaveableModel {
+public interface Counter extends CounterModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

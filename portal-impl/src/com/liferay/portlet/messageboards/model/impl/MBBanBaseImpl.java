@@ -37,7 +37,7 @@ public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards ban model instance should use the {@link MBBan} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBBanLocalServiceUtil.updateMBBan(this);
 	}
 }

@@ -290,9 +290,9 @@ public class UserTrackerWrapper implements UserTracker {
 		return _userTracker.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userTracker.save();
+		_userTracker.persist();
 	}
 
 	public java.lang.String getFullName() {

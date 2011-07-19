@@ -243,9 +243,9 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_pluginSetting.save();
+		_pluginSetting.persist();
 	}
 
 	/**

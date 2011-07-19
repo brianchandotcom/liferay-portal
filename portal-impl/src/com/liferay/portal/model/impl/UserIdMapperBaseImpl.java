@@ -37,7 +37,7 @@ public abstract class UserIdMapperBaseImpl extends UserIdMapperModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user ID mapper model instance should use the {@link UserIdMapper} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		UserIdMapperLocalServiceUtil.updateUserIdMapper(this);
 	}
 }

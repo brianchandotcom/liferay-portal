@@ -166,6 +166,13 @@ public class ShoppingOrderItemLocalServiceWrapper
 		return _shoppingOrderItemLocalService.getShoppingOrderItem(orderItemId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingOrderItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shopping order items.
 	*

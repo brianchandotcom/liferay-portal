@@ -163,6 +163,13 @@ public class IGImageLocalServiceWrapper implements IGImageLocalService {
 		return _igImageLocalService.getIGImage(imageId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _igImageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the i g image with the UUID in the group.
 	*

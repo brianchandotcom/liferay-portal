@@ -38,7 +38,7 @@ public abstract class SocialEquityUserBaseImpl extends SocialEquityUserModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social equity user model instance should use the {@link SocialEquityUser} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialEquityUserLocalServiceUtil.updateSocialEquityUser(this);
 	}
 }

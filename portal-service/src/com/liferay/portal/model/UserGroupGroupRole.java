@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface UserGroupGroupRole extends UserGroupGroupRoleModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

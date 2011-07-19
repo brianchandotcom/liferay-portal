@@ -164,6 +164,13 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.getClusterGroup(clusterGroupId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _clusterGroupLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the cluster groups.
 	*

@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface WorkflowDefinitionLink extends WorkflowDefinitionLinkModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

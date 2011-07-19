@@ -380,9 +380,9 @@ public class PhoneWrapper implements Phone {
 		return _phone.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_phone.save();
+		_phone.persist();
 	}
 
 	public com.liferay.portal.model.ListType getType()

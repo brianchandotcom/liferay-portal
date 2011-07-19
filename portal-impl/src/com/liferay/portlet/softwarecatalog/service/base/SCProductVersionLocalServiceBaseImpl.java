@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -53,6 +55,8 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCLicensePersiste
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductScreenshotPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductVersionPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -244,6 +248,11 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	public SCProductVersion getSCProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 		return scProductVersionPersistence.findByPrimaryKey(productVersionId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return scProductVersionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -745,6 +754,16 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.softwarecatalog.model.SCProductVersion",
+			scProductVersionLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.softwarecatalog.model.SCProductVersion");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -836,6 +855,8 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(SCProductVersionLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

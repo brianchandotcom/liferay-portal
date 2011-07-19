@@ -208,9 +208,9 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel {
 		return _passwordPolicyRel.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_passwordPolicyRel.save();
+		_passwordPolicyRel.persist();
 	}
 
 	public PasswordPolicyRel getWrappedPasswordPolicyRel() {

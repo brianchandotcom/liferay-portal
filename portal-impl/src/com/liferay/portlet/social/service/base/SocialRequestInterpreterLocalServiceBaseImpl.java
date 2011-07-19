@@ -617,6 +617,12 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

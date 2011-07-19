@@ -36,7 +36,7 @@ public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a image model instance should use the {@link Image} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		ImageLocalServiceUtil.updateImage(this);
 	}
 }

@@ -3741,6 +3741,12 @@ public abstract class LayoutServiceBaseImpl extends PrincipalBean
 		this.ratingsStatsFinder = ratingsStatsFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

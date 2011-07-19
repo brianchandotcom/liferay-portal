@@ -165,6 +165,13 @@ public class SocialRelationLocalServiceWrapper
 		return _socialRelationLocalService.getSocialRelation(relationId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialRelationLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the social relations.
 	*

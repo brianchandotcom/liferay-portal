@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PermissionModelImpl
  * @generated
  */
-public interface Permission extends PermissionModel, SaveableModel {
+public interface Permission extends PermissionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

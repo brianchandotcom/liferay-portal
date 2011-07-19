@@ -37,7 +37,7 @@ public abstract class ContactBaseImpl extends ContactModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a contact model instance should use the {@link Contact} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		ContactLocalServiceUtil.updateContact(this);
 	}
 }

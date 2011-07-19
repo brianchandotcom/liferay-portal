@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.OrganizationService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.RoleLocalService;
@@ -70,6 +72,8 @@ import com.liferay.portlet.announcements.service.persistence.AnnouncementsDelive
 import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder;
 import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryPersistence;
 import com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -261,6 +265,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	public AnnouncementsEntry getAnnouncementsEntry(long entryId)
 		throws PortalException, SystemException {
 		return announcementsEntryPersistence.findByPrimaryKey(entryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return announcementsEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1051,6 +1060,16 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		this.userGroupFinder = userGroupFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.announcements.model.AnnouncementsEntry",
+			announcementsEntryLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.announcements.model.AnnouncementsEntry");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1174,6 +1193,8 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	protected UserGroupPersistence userGroupPersistence;
 	@BeanReference(type = UserGroupFinder.class)
 	protected UserGroupFinder userGroupFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsEntryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

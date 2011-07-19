@@ -441,9 +441,9 @@ public class DDMContentWrapper implements DDMContent {
 		return _ddmContent.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddmContent.save();
+		_ddmContent.persist();
 	}
 
 	public DDMContent getWrappedDDMContent() {

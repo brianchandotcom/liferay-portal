@@ -336,9 +336,9 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		return _layoutSetBranch.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetBranch.save();
+		_layoutSetBranch.persist();
 	}
 
 	public boolean isMaster() {

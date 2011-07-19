@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the JournalContentSearch service. Represents a row in the &quot;JournalContentSearch&quot; database table, with each column mapped to a property of this class.
@@ -26,7 +26,7 @@ import com.liferay.portal.model.SaveableModel;
  * @generated
  */
 public interface JournalContentSearch extends JournalContentSearchModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

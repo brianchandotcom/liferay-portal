@@ -280,9 +280,9 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_expandoValue.save();
+		_expandoValue.persist();
 	}
 
 	public boolean getBoolean()

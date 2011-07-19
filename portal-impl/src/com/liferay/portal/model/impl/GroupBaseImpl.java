@@ -36,7 +36,7 @@ public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a group model instance should use the {@link Group} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		GroupLocalServiceUtil.updateGroup(this);
 	}
 }

@@ -208,9 +208,9 @@ public class DDMStructureLinkWrapper implements DDMStructureLink {
 		return _ddmStructureLink.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_ddmStructureLink.save();
+		_ddmStructureLink.persist();
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()

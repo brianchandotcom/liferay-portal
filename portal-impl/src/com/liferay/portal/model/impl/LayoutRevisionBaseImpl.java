@@ -37,7 +37,7 @@ public abstract class LayoutRevisionBaseImpl extends LayoutRevisionModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout revision model instance should use the {@link LayoutRevision} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		LayoutRevisionLocalServiceUtil.updateLayoutRevision(this);
 	}
 }

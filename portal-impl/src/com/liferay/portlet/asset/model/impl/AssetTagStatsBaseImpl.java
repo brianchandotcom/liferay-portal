@@ -38,7 +38,7 @@ public abstract class AssetTagStatsBaseImpl extends AssetTagStatsModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset tag stats model instance should use the {@link AssetTagStats} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		AssetTagStatsLocalServiceUtil.updateAssetTagStats(this);
 	}
 }

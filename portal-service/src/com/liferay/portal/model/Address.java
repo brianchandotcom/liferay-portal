@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.AddressModelImpl
  * @generated
  */
-public interface Address extends AddressModel, SaveableModel {
+public interface Address extends AddressModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

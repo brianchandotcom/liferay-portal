@@ -38,7 +38,7 @@ public abstract class IGFolderBaseImpl extends IGFolderModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a i g folder model instance should use the {@link IGFolder} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		IGFolderLocalServiceUtil.updateIGFolder(this);
 	}
 }

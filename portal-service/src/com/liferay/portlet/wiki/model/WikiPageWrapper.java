@@ -645,9 +645,9 @@ public class WikiPageWrapper implements WikiPage {
 		return _wikiPage.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_wikiPage.save();
+		_wikiPage.persist();
 	}
 
 	public java.lang.String getAttachmentsDir() {

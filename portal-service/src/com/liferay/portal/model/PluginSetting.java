@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PluginSettingModelImpl
  * @generated
  */
-public interface PluginSetting extends PluginSettingModel, SaveableModel {
+public interface PluginSetting extends PluginSettingModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

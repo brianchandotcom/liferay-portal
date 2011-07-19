@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.BrowserTrackerModelImpl
  * @generated
  */
-public interface BrowserTracker extends BrowserTrackerModel, SaveableModel {
+public interface BrowserTracker extends BrowserTrackerModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

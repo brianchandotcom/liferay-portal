@@ -24,7 +24,7 @@ package com.liferay.portal.model;
  * @generated
  */
 public interface PortletPreferences extends PortletPreferencesModel,
-	SaveableModel {
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -36,7 +36,7 @@ public abstract class LayoutBaseImpl extends LayoutModelImpl implements Layout {
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout model instance should use the {@link Layout} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		LayoutLocalServiceUtil.updateLayout(this);
 	}
 }

@@ -38,7 +38,7 @@ public abstract class SocialEquityLogBaseImpl extends SocialEquityLogModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social equity log model instance should use the {@link SocialEquityLog} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		SocialEquityLogLocalServiceUtil.updateSocialEquityLog(this);
 	}
 }

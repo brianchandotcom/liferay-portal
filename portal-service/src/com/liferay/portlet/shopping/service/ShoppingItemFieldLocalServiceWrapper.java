@@ -166,6 +166,13 @@ public class ShoppingItemFieldLocalServiceWrapper
 		return _shoppingItemFieldLocalService.getShoppingItemField(itemFieldId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingItemFieldLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the shopping item fields.
 	*

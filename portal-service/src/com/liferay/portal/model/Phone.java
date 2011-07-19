@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PhoneModelImpl
  * @generated
  */
-public interface Phone extends PhoneModel, SaveableModel {
+public interface Phone extends PhoneModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -164,6 +164,13 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService {
 		return _mbStatsUserLocalService.getMBStatsUser(statsUserId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbStatsUserLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the message boards stats users.
 	*

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the MBMessage service. Represents a row in the &quot;MBMessage&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl
  * @generated
  */
-public interface MBMessage extends MBMessageModel, SaveableModel {
+public interface MBMessage extends MBMessageModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PortletModelImpl
  * @generated
  */
-public interface Portlet extends PortletModel, SaveableModel {
+public interface Portlet extends PortletModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

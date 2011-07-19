@@ -161,6 +161,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService {
 		return _wikiPageLocalService.getWikiPage(pageId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the wiki page with the UUID in the group.
 	*

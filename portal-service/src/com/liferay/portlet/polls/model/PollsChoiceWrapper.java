@@ -315,9 +315,9 @@ public class PollsChoiceWrapper implements PollsChoice {
 		return _pollsChoice.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_pollsChoice.save();
+		_pollsChoice.persist();
 	}
 
 	public int getVotesCount()

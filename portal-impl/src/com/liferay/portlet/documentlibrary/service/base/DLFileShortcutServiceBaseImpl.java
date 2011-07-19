@@ -1001,6 +1001,12 @@ public abstract class DLFileShortcutServiceBaseImpl extends PrincipalBean
 		this.assetTagFinder = assetTagFinder;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

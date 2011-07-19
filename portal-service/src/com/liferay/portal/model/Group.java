@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.GroupModelImpl
  * @generated
  */
-public interface Group extends GroupModel, SaveableModel {
+public interface Group extends GroupModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

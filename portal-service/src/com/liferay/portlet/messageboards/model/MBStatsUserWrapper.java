@@ -257,9 +257,9 @@ public class MBStatsUserWrapper implements MBStatsUser {
 		return _mbStatsUser.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbStatsUser.save();
+		_mbStatsUser.persist();
 	}
 
 	public MBStatsUser getWrappedMBStatsUser() {

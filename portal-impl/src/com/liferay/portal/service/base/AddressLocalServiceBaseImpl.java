@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
 import com.liferay.portal.service.AddressLocalService;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -202,6 +204,8 @@ import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -389,6 +393,11 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	public Address getAddress(long addressId)
 		throws PortalException, SystemException {
 		return addressPersistence.findByPrimaryKey(addressId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return addressPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -3666,6 +3675,16 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 		this.counterLocalService = counterLocalService;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Address",
+			addressLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.Address");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -4057,6 +4076,8 @@ public abstract class AddressLocalServiceBaseImpl implements AddressLocalService
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(AddressLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

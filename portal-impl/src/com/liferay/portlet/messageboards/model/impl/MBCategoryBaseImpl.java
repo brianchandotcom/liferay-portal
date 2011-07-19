@@ -38,7 +38,7 @@ public abstract class MBCategoryBaseImpl extends MBCategoryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards category model instance should use the {@link MBCategory} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBCategoryLocalServiceUtil.updateMBCategory(this);
 	}
 }

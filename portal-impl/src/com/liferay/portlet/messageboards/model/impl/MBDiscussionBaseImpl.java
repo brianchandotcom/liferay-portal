@@ -38,7 +38,7 @@ public abstract class MBDiscussionBaseImpl extends MBDiscussionModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a message boards discussion model instance should use the {@link MBDiscussion} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		MBDiscussionLocalServiceUtil.updateMBDiscussion(this);
 	}
 }

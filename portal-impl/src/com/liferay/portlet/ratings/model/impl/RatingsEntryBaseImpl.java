@@ -38,7 +38,7 @@ public abstract class RatingsEntryBaseImpl extends RatingsEntryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ratings entry model instance should use the {@link RatingsEntry} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		RatingsEntryLocalServiceUtil.updateRatingsEntry(this);
 	}
 }

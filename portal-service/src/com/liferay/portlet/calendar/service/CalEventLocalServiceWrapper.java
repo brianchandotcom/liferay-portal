@@ -163,6 +163,13 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService {
 		return _calEventLocalService.getCalEvent(eventId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _calEventLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the cal event with the UUID in the group.
 	*

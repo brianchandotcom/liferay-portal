@@ -1611,6 +1611,12 @@ public abstract class AssetEntryServiceBaseImpl extends PrincipalBean
 		this.wikiPageResourcePersistence = wikiPageResourcePersistence;
 	}
 
+	public void afterPropertiesSet() {
+	}
+
+	public void destroy() {
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *

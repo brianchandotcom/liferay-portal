@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.ResourceActionModelImpl
  * @generated
  */
-public interface ResourceAction extends ResourceActionModel, SaveableModel {
+public interface ResourceAction extends ResourceActionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

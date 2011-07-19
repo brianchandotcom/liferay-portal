@@ -162,6 +162,13 @@ public class RoleLocalServiceWrapper implements RoleLocalService {
 		return _roleLocalService.getRole(roleId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the roles.
 	*
@@ -260,6 +267,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_roleLocalService.addUserRoles(userId, roleIds);
+	}
+
+	public void checkSystemRoles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_roleLocalService.checkSystemRoles();
 	}
 
 	public void checkSystemRoles(long companyId)

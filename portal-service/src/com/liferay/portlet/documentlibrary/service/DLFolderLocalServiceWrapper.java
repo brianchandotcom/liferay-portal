@@ -164,6 +164,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 		return _dlFolderLocalService.getDLFolder(folderId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the document library folder with the UUID in the group.
 	*

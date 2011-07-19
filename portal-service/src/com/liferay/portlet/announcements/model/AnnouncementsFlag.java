@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
-import com.liferay.portal.model.SaveableModel;
+import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the AnnouncementsFlag service. Represents a row in the &quot;AnnouncementsFlag&quot; database table, with each column mapped to a property of this class.
@@ -25,7 +25,7 @@ import com.liferay.portal.model.SaveableModel;
  * @see com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl
  * @generated
  */
-public interface AnnouncementsFlag extends AnnouncementsFlagModel, SaveableModel {
+public interface AnnouncementsFlag extends AnnouncementsFlagModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

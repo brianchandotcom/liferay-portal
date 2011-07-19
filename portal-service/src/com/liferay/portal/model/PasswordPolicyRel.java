@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.PasswordPolicyRelModelImpl
  * @generated
  */
-public interface PasswordPolicyRel extends PasswordPolicyRelModel, SaveableModel {
+public interface PasswordPolicyRel extends PasswordPolicyRelModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -489,9 +489,9 @@ public class JournalTemplateWrapper implements JournalTemplate {
 		return _journalTemplate.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_journalTemplate.save();
+		_journalTemplate.persist();
 	}
 
 	public java.lang.String getSmallImageType()

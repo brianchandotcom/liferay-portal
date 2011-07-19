@@ -38,7 +38,7 @@ public abstract class AssetCategoryBaseImpl extends AssetCategoryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset category model instance should use the {@link AssetCategory} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		AssetCategoryLocalServiceUtil.updateAssetCategory(this);
 	}
 }

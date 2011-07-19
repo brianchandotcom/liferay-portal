@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.service.PortletPreferencesService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -72,6 +74,8 @@ import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -259,6 +263,11 @@ public abstract class CalEventLocalServiceBaseImpl
 	public CalEvent getCalEvent(long eventId)
 		throws PortalException, SystemException {
 		return calEventPersistence.findByPrimaryKey(eventId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return calEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -1097,6 +1106,16 @@ public abstract class CalEventLocalServiceBaseImpl
 		this.socialActivityFinder = socialActivityFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.calendar.model.CalEvent",
+			calEventLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.calendar.model.CalEvent");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -1224,6 +1243,8 @@ public abstract class CalEventLocalServiceBaseImpl
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(CalEventLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

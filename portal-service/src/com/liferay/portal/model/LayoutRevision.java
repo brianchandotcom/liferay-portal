@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.LayoutRevisionModelImpl
  * @generated
  */
-public interface LayoutRevision extends LayoutRevisionModel, SaveableModel {
+public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

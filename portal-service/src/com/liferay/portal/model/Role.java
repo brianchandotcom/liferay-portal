@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see com.liferay.portal.model.impl.RoleModelImpl
  * @generated
  */
-public interface Role extends RoleModel, SaveableModel {
+public interface Role extends RoleModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

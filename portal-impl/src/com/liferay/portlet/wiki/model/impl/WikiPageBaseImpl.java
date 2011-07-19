@@ -38,7 +38,7 @@ public abstract class WikiPageBaseImpl extends WikiPageModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a wiki page model instance should use the {@link WikiPage} interface instead.
 	 */
-	public void save() throws SystemException {
+	public void persist() throws SystemException {
 		WikiPageLocalServiceUtil.updateWikiPage(this);
 	}
 }

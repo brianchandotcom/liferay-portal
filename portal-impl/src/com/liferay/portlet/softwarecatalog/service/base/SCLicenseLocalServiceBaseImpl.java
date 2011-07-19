@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
@@ -53,6 +55,8 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCLicensePersiste
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductScreenshotPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductVersionPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -242,6 +246,11 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	public SCLicense getSCLicense(long licenseId)
 		throws PortalException, SystemException {
 		return scLicensePersistence.findByPrimaryKey(licenseId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return scLicensePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -741,6 +750,16 @@ public abstract class SCLicenseLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portlet.softwarecatalog.model.SCLicense",
+			scLicenseLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portlet.softwarecatalog.model.SCLicense");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -832,6 +851,8 @@ public abstract class SCLicenseLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(SCLicenseLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

@@ -162,6 +162,13 @@ public class ResourceCodeLocalServiceWrapper implements ResourceCodeLocalService
 		return _resourceCodeLocalService.getResourceCode(codeId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourceCodeLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the resource codes.
 	*

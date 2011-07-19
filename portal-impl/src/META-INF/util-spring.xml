@@ -394,6 +394,10 @@
 	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
 		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
 	</bean>
+	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
+	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil">
+		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.service.PersistedModelLocalServiceRegistry" />
+	</bean>
 	<bean id="com.liferay.portal.service.permission.AccountPermissionUtil" class="com.liferay.portal.service.permission.AccountPermissionUtil">
 		<property name="accountPermission">
 			<bean class="com.liferay.portal.service.permission.AccountPermissionImpl" />

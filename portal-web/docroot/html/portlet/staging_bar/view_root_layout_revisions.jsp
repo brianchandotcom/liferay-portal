@@ -19,12 +19,12 @@
 <%
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
-List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
+List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
 %>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup.getGroupId(), ActionKeys.ADD_LAYOUT_VARIATION) %>">
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup.getGroupId(), ActionKeys.ADD_LAYOUT_BRANCH) %>">
 	<liferay-util:html-top>
 		<liferay-util:include page="/html/portlet/staging_bar/add_root_layout_revision.jsp">
 			<liferay-util:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
@@ -59,13 +59,13 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 		>
 
 			<%
-			String variationName = layoutRevision.getVariationName();
+			String layoutBranchNameName = layoutRevision.getLayoutBranch().getName();
 
 			if (layoutRevision.isHead()) {
 				buffer.append("<strong>");
 			}
 
-			buffer.append(variationName);
+			buffer.append(layoutBranchNameName);
 
 			if (layoutRevision.isHead()) {
 				buffer.append(" (*)</strong>");

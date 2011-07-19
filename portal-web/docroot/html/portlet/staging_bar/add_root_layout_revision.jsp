@@ -23,7 +23,7 @@ long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
 <div class="aui-helper-hidden" id="<portlet:namespace />addRootLayoutRevision">
 	<portlet:actionURL var="addVariationURL">
 		<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-		<portlet:param name="<%= Constants.CMD %>" value="add_layout_variation" />
+		<portlet:param name="<%= Constants.CMD %>" value="add_layout_branch" />
 		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 		<portlet:param name="mergeLayoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
 		<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
@@ -36,7 +36,8 @@ long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
 			<liferay-ui:message key="new-page-variation-help" />
 		</div>
 
-		<aui:input label="page-variation-name" name="variationName" value="" />
+		<aui:input name="name" value="" />
+		<aui:input name="description" value="" />
 
 		<aui:button-row>
 			<aui:button type="submit" />

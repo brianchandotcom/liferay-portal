@@ -14,13 +14,17 @@
 
 package com.liferay.portal.model;
 
-/**
- * <a href="RevisionConstants.java.html"><b><i>View Source</i></b></a>
- *
- * @author Raymond Augé
- */
-public class LayoutRevisionConstants {
+import com.liferay.portal.kernel.util.StringPool;
 
-	public static final long DEFAULT_PARENT_LAYOUT_REVISION_ID = 0;
+/**
+ * <a href="BranchConstants.java.html"><b><i>View Source</i></b></a>
+ *
+ * @author Julio Camarero
+ */
+public class LayoutBranchConstants {
+
+	public static final String MASTER_BRANCH_DESCRIPTION = StringPool.BLANK;
+
+	public static final String MASTER_BRANCH_NAME = "main-variation";
 
 }

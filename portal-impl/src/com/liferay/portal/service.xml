@@ -537,6 +537,30 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
+	<entity name="LayoutBranch" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="LayoutBranchId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="layoutSetBranchId" type="long" />
+		<column name="plid" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<column name="master" type="boolean" />
+	</entity>
 	<entity name="LayoutPrototype" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -585,10 +609,10 @@
 		<!-- Other fields -->
 
 		<column name="layoutSetBranchId" type="long" />
+		<column name="layoutBranchId" type="long" />
 		<column name="parentLayoutRevisionId" type="long" />
 		<column name="head" type="boolean" />
 		<column name="major" type="boolean" />
-		<column name="variationName" type="String" />
 		<column name="plid" type="long" />
 		<column name="privateLayout" type="boolean" />
 		<column name="name" type="String" localized="true" />
@@ -645,10 +669,10 @@
 			<finder-column name="head" />
 			<finder-column name="plid" />
 		</finder>
-		<finder name="L_P_V" return-type="Collection" where="status != 5">
+		<finder name="L_P_L" return-type="Collection" where="status != 5">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
-			<finder-column name="variationName" />
+			<finder-column name="layoutBranchId" />
 		</finder>
 		<finder name="L_P_S" return-type="Collection">
 			<finder-column name="layoutSetBranchId" />

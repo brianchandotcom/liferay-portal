@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutBranch;
+import com.liferay.portal.model.LayoutBranchConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionConstants;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetBranchLocalServiceBaseImpl;
 
@@ -90,11 +93,17 @@ public class LayoutSetBranchLocalServiceImpl
 				layoutSetBranch.getPrivateLayout());
 
 			for (Layout layout : layouts) {
+				LayoutBranch layoutBranch =
+					LayoutBranchLocalServiceUtil.addLayoutBranch(
+						layoutSetBranchId, layout.getPlid(),
+						LayoutBranchConstants.MASTER_BRANCH_NAME,
+						LayoutBranchConstants.MASTER_BRANCH_DESCRIPTION, true,
+						serviceContext);
+
 				layoutRevisionLocalService.addLayoutRevision(
-					userId, layoutSetBranchId,
+					userId, layoutSetBranchId, layoutBranch.getLayoutBranchId(),
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-					true, LayoutRevisionConstants.DEFAULT_LAYOUT_VARIATION_NAME,
-					layout.getPlid(), layout.getPrivateLayout(),
+					true, layout.getPlid(), layout.getPrivateLayout(),
 					layout.getName(), layout.getTitle(),
 					layout.getDescription(), layout.getKeywords(),
 					layout.getRobots(), layout.getTypeSettings(),
@@ -112,11 +121,11 @@ public class LayoutSetBranchLocalServiceImpl
 			for (LayoutRevision layoutRevision : layoutRevisions) {
 				layoutRevisionLocalService.addLayoutRevision(
 					userId, layoutSetBranchId,
+					layoutRevision.getLayoutBranchId(),
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-					true, layoutRevision.getVariationName(),
-					layoutRevision.getPlid(), layoutRevision.getPrivateLayout(),
-					layoutRevision.getName(), layoutRevision.getTitle(),
-					layoutRevision.getDescription(),
+					true, layoutRevision.getPlid(),
+					layoutRevision.getPrivateLayout(), layoutRevision.getName(),
+					layoutRevision.getTitle(), layoutRevision.getDescription(),
 					layoutRevision.getKeywords(), layoutRevision.getRobots(),
 					layoutRevision.getTypeSettings(),
 					layoutRevision.isIconImage(),
@@ -257,14 +266,15 @@ public class LayoutSetBranchLocalServiceImpl
 			layoutRevisionLocalService.addLayoutRevision(
 				layoutRevision.getUserId(),
 				layoutSetBranch.getLayoutSetBranchId(),
+				layoutRevision.getLayoutBranchId(),
 				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-				false, layoutRevision.getVariationName(),
-				layoutRevision.getPlid(), layoutRevision.isPrivateLayout(),
-				layoutRevision.getName(), layoutRevision.getTitle(),
-				layoutRevision.getDescription(), layoutRevision.getKeywords(),
-				layoutRevision.getRobots(), layoutRevision.getTypeSettings(),
-				layoutRevision.getIconImage(), layoutRevision.getIconImageId(),
-				layoutRevision.getThemeId(), layoutRevision.getColorSchemeId(),
+				false, layoutRevision.getPlid(),
+				layoutRevision.isPrivateLayout(), layoutRevision.getName(),
+				layoutRevision.getTitle(), layoutRevision.getDescription(),
+				layoutRevision.getKeywords(), layoutRevision.getRobots(),
+				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
+				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
+				layoutRevision.getColorSchemeId(),
 				layoutRevision.getWapThemeId(),
 				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);

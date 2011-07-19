@@ -43,8 +43,8 @@ public class LayoutRevisionLocalServiceImpl
 	extends LayoutRevisionLocalServiceBaseImpl {
 
 	public LayoutRevision addLayoutRevision(
-			long userId, long layoutSetBranchId, long parentLayoutRevisionId,
-			boolean head, String variationName, long plid,
+			long userId, long layoutSetBranchId, long layoutBranchId,
+			long parentLayoutRevisionId, boolean head,  long plid,
 			boolean privateLayout, String name, String title,
 			String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,
@@ -83,7 +83,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setMajor(true);
 		}
 
-		layoutRevision.setVariationName(variationName);
+		layoutRevision.setLayoutBranchId(layoutBranchId);
 		layoutRevision.setPlid(plid);
 		layoutRevision.setPrivateLayout(privateLayout);
 		layoutRevision.setName(name);
@@ -196,12 +196,12 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	public void deleteLayoutRevisions(
-			long layoutSetBranchId, long plid, String variationName)
+			long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException, SystemException {
 
 		List<LayoutRevision> layoutRevisions =
-			layoutRevisionPersistence.findByL_P_V(
-				layoutSetBranchId, plid, variationName);
+			layoutRevisionPersistence.findByL_P_L(
+				layoutSetBranchId, plid, layoutBranchId);
 
 		for (LayoutRevision layoutRevision : layoutRevisions) {
 			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
@@ -236,12 +236,12 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	public LayoutRevision getLayoutRevision(
-			long layoutSetBranchId, long plid, String variationName)
+			long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException, SystemException {
 
 		List<LayoutRevision> layoutRevisions =
-			layoutRevisionPersistence.findByL_P_V(
-				layoutSetBranchId, plid, variationName, 0, 1,
+			layoutRevisionPersistence.findByL_P_L(
+				layoutSetBranchId, plid, layoutBranchId, 0, 1,
 				new LayoutRevisionIdComparator(false));
 
 		if (!layoutRevisions.isEmpty()) {
@@ -286,7 +286,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutSetBranchId, plid, status);
 	}
 
-	public List<LayoutRevision> getLayoutRevisions(
+	public List<LayoutRevision> getChildLayoutRevisions(
 			long layoutSetBranchId, long parentLayoutRevisionId, long plid)
 		throws SystemException {
 
@@ -294,7 +294,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutSetBranchId, parentLayoutRevisionId, plid);
 	}
 
-	public List<LayoutRevision> getLayoutRevisions(
+	public List<LayoutRevision> getChildLayoutRevisions(
 			long layoutSetBranchId, long parentLayoutRevision, long plid,
 			int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
@@ -305,16 +305,16 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	public List<LayoutRevision> getLayoutRevisions(
-			long layoutSetBranchId, long plid, String variationName, int start,
-			int end, OrderByComparator orderByComparator)
+			long layoutSetBranchId, long plid, long layoutBranchId,
+			int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return layoutRevisionPersistence.findByL_P_V(
-			layoutSetBranchId, plid, variationName, start, end,
+		return layoutRevisionPersistence.findByL_P_L(
+			layoutSetBranchId, plid, layoutBranchId, start, end,
 			orderByComparator);
 	}
 
-	public int getLayoutRevisionsCount(
+	public int getChildLayoutRevisionsCount(
 			long layoutSetBranchId, long parentLayoutRevision, long plid)
 		throws SystemException {
 
@@ -323,15 +323,15 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	public int getLayoutRevisionsCount(
-			long layoutSetBranchId, long plid, String variationName)
+			long layoutSetBranchId, long plid, long layoutBranchId)
 		throws SystemException {
 
-		return layoutRevisionPersistence.countByL_P_V(
-			layoutSetBranchId, plid, variationName);
+		return layoutRevisionPersistence.countByL_P_L(
+			layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public LayoutRevision updateLayoutRevision(
-			long userId, long layoutRevisionId, String variationName,
+			long userId, long layoutRevisionId, long layoutBranchId,
 			String name, String title, String description, String keywords,
 			String robots, String typeSettings, boolean iconImage,
 			long iconImageId, String themeId, String colorSchemeId,
@@ -367,7 +367,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setParentLayoutRevisionId(
 				oldLayoutRevision.getLayoutRevisionId());
 			layoutRevision.setHead(false);
-			layoutRevision.setVariationName(variationName);
+			layoutRevision.setLayoutBranchId(layoutBranchId);
 			layoutRevision.setPlid(oldLayoutRevision.getPlid());
 			layoutRevision.setPrivateLayout(
 				oldLayoutRevision.isPrivateLayout());
@@ -403,9 +403,9 @@ public class LayoutRevisionLocalServiceImpl
 				user, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid());
 
-			StagingUtil.setRecentVariationName(
+			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid(), layoutRevision.getVariationName());
+				layoutRevision.getPlid(), layoutRevision.getLayoutBranchId());
 		}
 		else {
 			layoutRevision = oldLayoutRevision;

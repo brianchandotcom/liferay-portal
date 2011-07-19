@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.staging;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
@@ -146,7 +147,7 @@ public class StagingUtil {
 
 	public static long getRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
-		throws SystemException{
+		throws PortalException, SystemException{
 
 		return getStaging().getRecentLayoutRevisionId(
 			request, layoutSetBranchId, plid);
@@ -154,7 +155,7 @@ public class StagingUtil {
 
 	public static long getRecentLayoutRevisionId(
 			User user, long layoutSetBranchId, long plid)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getStaging().getRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid);
@@ -301,21 +302,21 @@ public class StagingUtil {
 		getStaging().setRecentLayoutSetBranchId(user, layoutSetBranchId);
 	}
 
-	public static void setRecentVariationName(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			String variationName)
+	public static void setRecentLayoutBranchId(
+		HttpServletRequest request, long layoutSetBranchId, long plid,
+		long layoutBranchId)
 		throws SystemException {
 
-		getStaging().setRecentVariationName(
-			request, layoutSetBranchId, plid, variationName);
+		getStaging().setRecentLayoutBranchId(
+			request, layoutSetBranchId, plid, layoutBranchId);
 	}
 
-	public static void setRecentVariationName(
-			User user, long layoutSetBranchId, long plid, String variationName)
+	public static void setRecentLayoutBranchId(
+		User user, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws SystemException {
 
-		getStaging().setRecentVariationName(
-			user, layoutSetBranchId, plid, variationName);
+		getStaging().setRecentLayoutBranchId(
+			user, layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public static void unscheduleCopyFromLive(PortletRequest PortletRequest)

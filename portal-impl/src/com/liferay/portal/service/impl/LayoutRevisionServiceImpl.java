@@ -30,8 +30,8 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 
 	public LayoutRevision addLayoutRevision(
-			long userId, long layoutSetBranchId, long parentLayoutRevisionId,
-			boolean head, String variationName, long plid,
+			long userId, long layoutSetBranchId, long layoutBranchId,
+			long parentLayoutRevisionId, boolean head, long plid,
 			boolean privateLayout, String name, String title,
 			String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,
@@ -44,17 +44,18 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layoutSetBranch.getGroupId(),
-			ActionKeys.ADD_LAYOUT_VARIATION);
+			ActionKeys.ADD_LAYOUT_BRANCH);
 
 		return layoutRevisionLocalService.addLayoutRevision(
-			userId, layoutSetBranchId, parentLayoutRevisionId, head,
-			variationName, plid, privateLayout, name, title, description,
-			keywords, robots, typeSettings, iconImage, iconImageId, themeId,
-			colorSchemeId, wapThemeId, wapColorSchemeId, css, serviceContext);
+			userId, layoutSetBranchId, layoutBranchId,
+			parentLayoutRevisionId, head, plid, privateLayout, name, title,
+			description, keywords, robots, typeSettings, iconImage, iconImageId,
+			themeId, colorSchemeId, wapThemeId, wapColorSchemeId, css,
+			serviceContext);
 	}
 
 	public void deleteLayoutRevisions(
-			long layoutSetBranchId, long plid, String variationName)
+			long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException, SystemException {
 
 		LayoutSetBranch layoutSetBranch =
@@ -62,10 +63,10 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layoutSetBranch.getGroupId(),
-			ActionKeys.DELETE_LAYOUT_VARIATION);
+			ActionKeys.DELETE_LAYOUT_BRANCH);
 
 		layoutRevisionLocalService.deleteLayoutRevisions(
-			layoutSetBranchId, plid, variationName);
+			layoutSetBranchId, plid, layoutBranchId);
 	}
 
 }

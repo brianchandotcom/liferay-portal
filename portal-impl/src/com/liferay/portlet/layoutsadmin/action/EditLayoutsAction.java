@@ -46,10 +46,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutBranchConstants;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutRevisionConstants;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
@@ -58,6 +58,7 @@ import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -145,8 +146,8 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				SitesUtil.deleteLayout(actionRequest, actionResponse);
 			}
-			else if (cmd.equals("add_layout_variation")) {
-				addRootRevision(actionRequest);
+			else if (cmd.equals("add_layout_branch")) {
+				addLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -157,8 +158,8 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("delete_layout_revision")) {
 				deleteLayoutRevision(actionRequest);
 			}
-			else if (cmd.equals("delete_layout_variation")) {
-				deleteLayoutVariation(actionRequest);
+			else if (cmd.equals("delete_layout_branch")) {
+				deleteLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
@@ -192,8 +193,8 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("select_layout_set_branch")) {
 				selectLayoutSetBranch(actionRequest);
 			}
-			else if (cmd.equals("select_layout_variation")) {
-				selectLayoutVariation(actionRequest);
+			else if (cmd.equals("select_layout_branch")) {
+				selectLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals("unschedule_copy_from_live")) {
 				StagingUtil.unscheduleCopyFromLive(actionRequest);
@@ -334,7 +335,7 @@ public class EditLayoutsAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void addRootRevision(ActionRequest actionRequest)
+	protected void addLayoutBranch(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutRevisionId = ParamUtil.getLong(
@@ -343,24 +344,19 @@ public class EditLayoutsAction extends PortletAction {
 		LayoutRevision layoutRevision =
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
 
-		String variationName = ParamUtil.getString(
-			actionRequest, "variationName", layoutRevision.getVariationName());
+		String name = ParamUtil.getString(
+			actionRequest, "name",
+			LayoutBranchConstants.MASTER_BRANCH_NAME);
+
+		String description = ParamUtil.getString(
+			actionRequest, "description",
+			LayoutBranchConstants.MASTER_BRANCH_DESCRIPTION);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		LayoutRevisionServiceUtil.addLayoutRevision(
-			serviceContext.getUserId(), layoutRevision.getLayoutSetBranchId(),
-			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-			false, variationName, layoutRevision.getPlid(),
-			layoutRevision.isPrivateLayout(), layoutRevision.getName(),
-			layoutRevision.getTitle(), layoutRevision.getDescription(),
-			layoutRevision.getKeywords(), layoutRevision.getRobots(),
-			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
-			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
-			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
-			serviceContext);
+		LayoutBranchLocalServiceUtil.addLayoutBranch(
+			name, description, false, layoutRevision, serviceContext);
 	}
 
 	protected void checkPermissions(PortletRequest portletRequest)
@@ -500,20 +496,20 @@ public class EditLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected void deleteLayoutVariation(ActionRequest actionRequest)
+	protected void deleteLayoutBranch(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String variationName = ParamUtil.getString(
-			actionRequest, "variationName");
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId");
 
 		long layoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "layoutSetBranchId");
 
 		LayoutRevisionServiceUtil.deleteLayoutRevisions(
-			layoutSetBranchId, themeDisplay.getPlid(), variationName);
+			layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
 	}
 
 	protected void deleteThemeSettings(
@@ -542,9 +538,9 @@ public class EditLayoutsAction extends PortletAction {
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(
 				incompleteLayoutRevisionId);
 
-		String variationName = ParamUtil.getString(
-			actionRequest, "variationName",
-			incompleteLayoutRevision.getVariationName());
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId",
+			incompleteLayoutRevision.getLayoutBranchId());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -552,10 +548,10 @@ public class EditLayoutsAction extends PortletAction {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		LayoutRevisionLocalServiceUtil.addLayoutRevision(
-			serviceContext.getUserId(),
+			serviceContext.getUserId(), layoutBranchId,
 			incompleteLayoutRevision.getLayoutSetBranchId(),
 			incompleteLayoutRevision.getLayoutRevisionId(), false,
-			variationName, incompleteLayoutRevision.getPlid(),
+			incompleteLayoutRevision.getPlid(),
 			incompleteLayoutRevision.isPrivateLayout(),
 			incompleteLayoutRevision.getName(),
 			incompleteLayoutRevision.getTitle(),
@@ -600,7 +596,7 @@ public class EditLayoutsAction extends PortletAction {
 			request, layoutSetBranch.getLayoutSetBranchId());
 	}
 
-	protected void selectLayoutVariation(ActionRequest actionRequest)
+	protected void selectLayoutBranch(ActionRequest actionRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -612,11 +608,12 @@ public class EditLayoutsAction extends PortletAction {
 		long layoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "layoutSetBranchId");
 
-		String variationName = ParamUtil.getString(
-			actionRequest, "variationName");
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId");
 
-		StagingUtil.setRecentVariationName(
-			request, layoutSetBranchId, themeDisplay.getPlid(), variationName);
+		StagingUtil.setRecentLayoutBranchId(
+			request, layoutSetBranchId, themeDisplay.getPlid(),
+			layoutBranchId);
 	}
 
 	protected void updateDisplayOrder(ActionRequest actionRequest)
@@ -856,7 +853,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevisionId,
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),

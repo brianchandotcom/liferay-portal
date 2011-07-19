@@ -23,7 +23,7 @@ long currentLayoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, la
 
 LayoutRevision recentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(currentLayoutRevisionId);
 
-List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
+List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 %>
 
 <c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
@@ -34,7 +34,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 			%>
 
-				<aui:option label="<%= rootLayoutRevision.getVariationName() %>" selected="<%= recentLayoutRevision.getVariationName().equals(rootLayoutRevision.getVariationName()) %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
+				<aui:option label="<%= rootLayoutRevision.getLayoutBranch().getName() %>" selected="<%= recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId() %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
 
 			<%
 			}
@@ -50,15 +50,15 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 		for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 		%>
 
-			<div class="layout-variation-container <%= recentLayoutRevision.getVariationName().equals(rootLayoutRevision.getVariationName()) ? StringPool.BLANK : "aui-helper-hidden" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
+			<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "aui-helper-hidden" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
 				<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
-					<h3 class="layout-variation-name"><%= rootLayoutRevision.getVariationName() %></h3>
+					<h3 class="layout-variation-name"><%= rootLayoutRevision.getLayoutBranch().getName() %></h3>
 				</c:if>
 
 				<liferay-ui:search-container>
 					<liferay-ui:search-container-results
-						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getVariationName(), searchContainer.getStart(), searchContainer.getEnd(), new LayoutRevisionIdComparator(false)) %>"
-						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getVariationName()) %>"
+						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getLayoutBranchId(), searchContainer.getStart(), searchContainer.getEnd(), new LayoutRevisionIdComparator(false)) %>"
+						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getPlid(), rootLayoutRevision.getLayoutBranchId()) %>"
 					/>
 
 					<liferay-ui:search-container-row
@@ -208,21 +208,21 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getLay
 	var variationsSelector = A.one('#<portlet:namespace/>variationsSelector');
 	var layoutRevisionsContainer = A.one('#<portlet:namespace/>layoutRevisionsContainer');
 
-	var layoutVariationsContainer = A.all('.layout-variation-container');
+	var layoutBranchesContainer = A.all('.layout-variation-container');
 
 	if (variationsSelector) {
 		variationsSelector.on(
 			'change',
 			function() {
 				if (variationsSelector.val() == 'all') {
-					layoutVariationsContainer.show();
+					layoutBranchesContainer.show();
 				}
 				else {
-					layoutVariationsContainer.hide();
+					layoutBranchesContainer.hide();
 
-					var layoutVariation = A.one('#<portlet:namespace/>' + variationsSelector.val());
+					var layoutBranch = A.one('#<portlet:namespace/>' + variationsSelector.val());
 
-					layoutVariation.show();
+					layoutBranch.show();
 				}
 			}
 		);

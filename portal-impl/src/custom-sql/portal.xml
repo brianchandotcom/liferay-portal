@@ -354,6 +354,18 @@
 				(PortletPreferences.preferences LIKE ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.LayoutBranchFinder.findByMaster">
+		<![CDATA[
+			SELECT
+				{LayoutBranch.*}
+			FROM
+				LayoutBranch
+			WHERE
+				(LayoutBranch.layoutSetBranchId = ?) AND
+				(LayoutBranch.plid = ?) AND
+				(LayoutBranch.master = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.LayoutSetBranchFinder.findByMaster">
 		<![CDATA[
 			SELECT

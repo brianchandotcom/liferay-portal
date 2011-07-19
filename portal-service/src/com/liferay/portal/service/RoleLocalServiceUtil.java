@@ -281,6 +281,12 @@ public class RoleLocalServiceUtil {
 		getService().addUserRoles(userId, roleIds);
 	}
 
+	public static void checkSystemRoles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkSystemRoles();
+	}
+
 	public static void checkSystemRoles(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

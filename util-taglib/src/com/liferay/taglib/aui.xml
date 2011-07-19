@@ -452,8 +452,8 @@
 			</attribute>
 			<attribute>
 				<name>model</name>
-				<inputType>java.lang.Class</inputType>
-				<outputType>java.lang.Class</outputType>
+				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
+				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>

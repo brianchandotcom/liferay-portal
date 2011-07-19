@@ -33,7 +33,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.admin.util.OmniadminUtil;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -329,7 +328,7 @@ public class LDAPAuth implements Authenticator {
 		catch (Exception e) {
 			if (e instanceof PasswordExpiredException ||
 				e instanceof UserLockoutException) {
-				
+
 				throw e;
 			}
 

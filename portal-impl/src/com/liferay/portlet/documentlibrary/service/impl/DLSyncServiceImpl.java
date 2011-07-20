@@ -52,8 +52,12 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 
 		Date now = new Date();
 
-		Collection<DLSync> dlSyncs = dlSyncPersistence.findByC_M_R(
-			companyId, lastAccessDate, repositoryId);
+		Collection<DLSync> dlSyncs = null;
+
+		if (lastAccessDate != null) {
+			dlSyncs = dlSyncPersistence.findByC_M_R(
+				companyId, lastAccessDate, repositoryId);
+		}
 
 		DLSyncUpdate dlSyncUpdate = new DLSyncUpdate(dlSyncs, now);
 

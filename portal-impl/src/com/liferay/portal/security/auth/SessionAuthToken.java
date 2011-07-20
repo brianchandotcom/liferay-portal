@@ -24,9 +24,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 import com.liferay.util.PwdGenerator;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -75,39 +73,20 @@ public class SessionAuthToken implements AuthToken {
 	protected String getSessionAuthenticationToken(
 		HttpServletRequest request, String key) {
 
-		Map<String, String> sessionAuthenticationTokensMap =
-			getSessionAuthenticationTokensMap(request);
+		HttpSession session = request.getSession();
 
-		String sessionAuthenticationToken = sessionAuthenticationTokensMap.get(
-			key);
+		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
+
+		String sessionAuthenticationToken =
+			(String)session.getAttribute(tokenKey);
 
 		if (Validator.isNull(sessionAuthenticationToken)) {
 			sessionAuthenticationToken = PwdGenerator.getPassword();
 
-			sessionAuthenticationTokensMap.put(key, sessionAuthenticationToken);
+			session.setAttribute(tokenKey, sessionAuthenticationToken);
 		}
 
 		return sessionAuthenticationToken;
-	}
-
-	protected Map<String, String> getSessionAuthenticationTokensMap(
-		HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-
-		Map<String, String> sessionAuthenticationTokensMap =
-			(Map<String, String>)session.getAttribute(
-				WebKeys.AUTHENTICATION_TOKEN);
-
-		if (sessionAuthenticationTokensMap == null) {
-			sessionAuthenticationTokensMap =
-				new ConcurrentHashMap<String, String>();
-
-			session.setAttribute(
-				WebKeys.AUTHENTICATION_TOKEN, sessionAuthenticationTokensMap);
-		}
-
-		return sessionAuthenticationTokensMap;
 	}
 
 	protected boolean isIgnoreAction(HttpServletRequest request) {

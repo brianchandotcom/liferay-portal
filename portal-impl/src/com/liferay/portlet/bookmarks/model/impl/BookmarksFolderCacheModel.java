@@ -32,7 +32,7 @@ import java.util.Date;
 public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -50,6 +50,8 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder> {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", resourceBlockId=");
+		sb.append(resourceBlockId);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
 		sb.append(", name=");
@@ -97,6 +99,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder> {
 			bookmarksFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		bookmarksFolderImpl.setResourceBlockId(resourceBlockId);
 		bookmarksFolderImpl.setParentFolderId(parentFolderId);
 
 		if (name == null) {
@@ -126,6 +129,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder> {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long resourceBlockId;
 	public long parentFolderId;
 	public String name;
 	public String description;

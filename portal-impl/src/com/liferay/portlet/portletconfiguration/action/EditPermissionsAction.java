@@ -29,7 +29,6 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PermissionServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -351,12 +350,12 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				model = bookmarksFolder;
 			}
 
-			if (model != null) {
-				long companyId = themeDisplay.getCompanyId();
-
-				ResourceBlockLocalServiceUtil.updateResourceBlockId(
-					companyId, groupId, model, modelResource, resourcePrimKey);
-			}
+//			if (model != null) {
+//				long companyId = themeDisplay.getCompanyId();
+//
+//				ResourceBlockLocalServiceUtil.updateResourceBlockId(
+//					companyId, groupId, model, modelResource, resourcePrimKey);
+//			}
 		}
 	}
 

@@ -1477,13 +1477,6 @@ create table ResourceBlockPermission (
 	primary key (resourceBlockId, roleId, actionIds)
 );
 
-create table ResourceBlockPermission (
-	actionIds LONG not null,
-	resourceBlockId LONG not null,
-	roleId LONG not null,
-	primary key (actionIds, resourceBlockId, roleId)
-);
-
 create table Resource_ (
 	resourceId LONG not null primary key,
 	codeId LONG,

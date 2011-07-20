@@ -234,9 +234,9 @@ public class ResourceBlockWrapper implements ResourceBlock {
 		return _resourceBlock.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlock.save();
+		_resourceBlock.persist();
 	}
 
 	public ResourceBlock getWrappedResourceBlock() {

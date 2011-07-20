@@ -35,7 +35,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface ResourceBlockPermissionLocalService {
+public interface ResourceBlockPermissionLocalService
+	extends PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -160,6 +161,12 @@ public interface ResourceBlockPermissionLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns a range of all the resource block permissions.
 	*
@@ -229,10 +236,6 @@ public interface ResourceBlockPermissionLocalService {
 		long resourceBlockId, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void addResourceBlockPermissions(long resourceBlockId,
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -241,16 +244,12 @@ public interface ResourceBlockPermissionLocalService {
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void setPermissions(
-		java.util.List<com.liferay.portal.model.ResourceBlock> resourceBlocks,
-		long roleId, long actionIdsLong)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
+		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void setPermissions(long companyId, java.lang.String name,
-		long roleId, long actionIdsLong)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void setPermissions(long companyId, java.lang.String name,
-		long groupId, long roleId, long actionIdsLong)
+	public void updateResourceBlockPermissions(long resourceBlockId,
+		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

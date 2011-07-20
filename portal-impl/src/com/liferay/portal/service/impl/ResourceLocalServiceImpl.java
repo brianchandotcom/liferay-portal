@@ -142,12 +142,12 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				guestPermissions);
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6 &&
-			model != null) {
-
-			resourceBlockLocalService.updateResourceBlockId(
-				companyId, groupId, model, name, primKey);
-		}
+//		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6 &&
+//			model != null) {
+//
+//			resourceBlockLocalService.updateResourceBlockId(
+//				companyId, groupId, model, name, primKey);
+//		}
 	}
 
 	public Resource addResource(
@@ -284,12 +284,12 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			ResourcePermissionsThreadLocal.setResourcePermissions(null);
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6 &&
-			model != null) {
-
-			resourceBlockLocalService.updateResourceBlockId(
-				companyId, groupId, model, name, primKey);
-		}
+//		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6 &&
+//			model != null) {
+//
+//			resourceBlockLocalService.updateResourceBlockId(
+//				companyId, groupId, model, name, primKey);
+//		}
 	}
 
 	@Override

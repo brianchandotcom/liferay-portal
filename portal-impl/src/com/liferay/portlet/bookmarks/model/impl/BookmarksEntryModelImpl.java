@@ -524,6 +524,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			bookmarksEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		bookmarksEntryCacheModel.resourceBlockId = getResourceBlockId();
+
 		bookmarksEntryCacheModel.folderId = getFolderId();
 
 		bookmarksEntryCacheModel.name = getName();

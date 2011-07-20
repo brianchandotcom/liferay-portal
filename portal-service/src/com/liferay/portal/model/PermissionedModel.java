@@ -17,7 +17,7 @@ package com.liferay.portal.model;
 /**
  * @author Connor McKay
  */
-public interface PermissionedModel extends SaveableModel {
+public interface PermissionedModel extends PersistedModel {
 
 	public long getResourceBlockId();
 

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -208,6 +210,8 @@ import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
+
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -404,6 +408,11 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 		ResourceBlockPermissionPK resourceBlockPermissionPK)
 		throws PortalException, SystemException {
 		return resourceBlockPermissionPersistence.findByPrimaryKey(resourceBlockPermissionPK);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return resourceBlockPermissionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -3779,6 +3788,16 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.ResourceBlockPermission",
+			resourceBlockPermissionLocalService);
+	}
+
+	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.ResourceBlockPermission");
+	}
+
 	/**
 	 * Returns the Spring bean ID for this bean.
 	 *
@@ -4180,6 +4199,8 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

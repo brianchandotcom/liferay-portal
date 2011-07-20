@@ -484,6 +484,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 			bookmarksFolderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		bookmarksFolderCacheModel.resourceBlockId = getResourceBlockId();
+
 		bookmarksFolderCacheModel.parentFolderId = getParentFolderId();
 
 		bookmarksFolderCacheModel.name = getName();

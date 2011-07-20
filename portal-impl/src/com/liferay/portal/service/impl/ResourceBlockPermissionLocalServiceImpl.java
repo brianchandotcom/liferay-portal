@@ -14,13 +14,16 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
+import com.liferay.portal.util.comparator.ResourceBlockPermissionRoleIdComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,17 +58,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 		return resourceBlockPermission;
 	}
 
-	public void addResourceBlockPermissions(
-			long resourceBlockId, List<ResourcePermission> resourcePermissions)
-		throws SystemException {
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			addResourceBlockPermission(
-				resourceBlockId, resourcePermission.getRoleId(),
-				resourcePermission.getActionIds());
-		}
-	}
-
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws SystemException {
 
@@ -78,58 +70,39 @@ public class ResourceBlockPermissionLocalServiceImpl
 		throws SystemException {
 
 		return resourceBlockPermissionPersistence.findByResourceBlockId(
-			resourceBlockId);
+			resourceBlockId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new ResourceBlockPermissionRoleIdComparator());
 	}
 
-	public void setPermissions(
-			List<ResourceBlock> resourceBlocks, long roleId, long actionIdsLong)
+	public List<ResourceBlockPermission> getResourceBlockPermissions(
+			List<ResourcePermission> resourcePermissions)
 		throws SystemException {
 
-		for (ResourceBlock resourceBlock : resourceBlocks) {
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			new ArrayList<ResourceBlockPermission>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
 			ResourceBlockPermission resourceBlockPermission =
-				resourceBlockPermissionPersistence.fetchByR_R(
-				resourceBlock.getPrimaryKey(), roleId);
-
-			if (resourceBlockPermission == null) {
-				if (actionIdsLong == 0) {
-					continue;
-				}
-
-				resourceBlockPermission =
-					addResourceBlockPermission(
-					resourceBlock.getPrimaryKey(), roleId, actionIdsLong);
-			}
-			else {
-				if (actionIdsLong == 0) {
-					deleteResourceBlockPermission(resourceBlockPermission);
-				}
-				else {
-					resourceBlockPermission.setActionIds(actionIdsLong);
-					updateResourceBlockPermission(resourceBlockPermission);
-				}
-			}
-
-			resourceBlockLocalService.updatePermissionsHash(resourceBlock);
+				new ResourceBlockPermissionImpl();
+			resourceBlockPermission.setActionIds(
+				resourcePermission.getActionIds());
+			resourceBlockPermission.setRoleId(resourcePermission.getRoleId());
+			resourceBlockPermissions.add(resourceBlockPermission);
 		}
+
+		return resourceBlockPermissions;
 	}
 
-	public void setPermissions(
-			long companyId, String name, long roleId, long actionIdsLong)
+	public void updateResourceBlockPermissions(
+			long resourceBlockId, List<ResourceBlockPermission> resourceBlockPermissions)
 		throws SystemException {
-
-		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_N(companyId, name);
-
-		setPermissions(resourceBlocks, roleId, actionIdsLong);
-	}
-
-	public void setPermissions(
-			long companyId, String name, long groupId, long roleId,
-			long actionIdsLong)
-		throws SystemException {
-
-		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_G_N(companyId, groupId, name);
-
-		setPermissions(resourceBlocks, roleId, actionIdsLong);
+	
+		for (ResourceBlockPermission resourceBlockPermission :
+			resourceBlockPermissions) {
+	
+			resourceBlockPermission.setResourceBlockId(resourceBlockId);
+			updateResourceBlockPermission(resourceBlockPermission);
+		}
 	}
 
 }

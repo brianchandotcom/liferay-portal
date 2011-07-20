@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface ResourceBlockLocalService {
+public interface ResourceBlockLocalService extends PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -159,6 +159,12 @@ public interface ResourceBlockLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns a range of all the resource blocks.
 	*
@@ -224,21 +230,20 @@ public interface ResourceBlockLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
-	* Adds a resource block and creates associations between it and the roles
-	* specified in the resource permissions. The resource block will have an
-	* initial reference count of one.
+	* Adds a resource block and associates the resource block permissions with
+	* it. The resource block will have an initial reference count of one.
 	*
 	* @param companyId the primary key of the resource block's company
 	* @param groupId the primary key of the resource block's group
 	* @param permissionsHash the resource block's permissions hash
-	* @param resourcePermissions the resource permissions
+	* @param resourceBlockPermissions the resource block permissions
 	* @return the new resource block
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceBlock addResourceBlock(
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String permissionsHash,
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -316,8 +321,12 @@ public interface ResourceBlockLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void setIndividualScopePermissions(long companyId,
-		java.lang.String name, java.lang.String primKey, long roleId,
-		long actionIdsLong)
+		java.lang.String name, long primKey, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ResourceBlock verifyResourceBlockId(
+		long companyId, java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -340,7 +349,7 @@ public interface ResourceBlockLocalService {
 	*/
 	public void updateResourceBlockId(long companyId,
 		com.liferay.portal.model.PermissionedModel model,
-		java.lang.String name, java.lang.String primKey)
+		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -358,6 +367,6 @@ public interface ResourceBlockLocalService {
 	*/
 	public void updateResourceBlockId(long companyId, long groupId,
 		com.liferay.portal.model.PermissionedModel model,
-		java.lang.String name, java.lang.String primKey)
+		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

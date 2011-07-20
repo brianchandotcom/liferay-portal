@@ -17,15 +17,21 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
+import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
-import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portal.util.comparator.ResourceBlockPermissionRoleIdComparator;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,23 +44,23 @@ public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
 	/**
-	 * Adds a resource block and creates associations between it and the roles
-	 * specified in the resource permissions. The resource block will have an
-	 * initial reference count of one.
+	 * Adds a resource block and associates the resource block permissions with
+	 * it. The resource block will have an initial reference count of one.
 	 *
 	 * @param  companyId the primary key of the resource block's company
 	 * @param  groupId the primary key of the resource block's group
 	 * @param  permissionsHash the resource block's permissions hash
-	 * @param  resourcePermissions the resource permissions
+	 * @param  resourceBlockPermissions the resource block permissions
 	 * @return the new resource block
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceBlock addResourceBlock(
 			long companyId, long groupId, String name, String permissionsHash,
-			List<ResourcePermission> resourcePermissions)
+			List<ResourceBlockPermission> resourceBlockPermissions)
 		throws SystemException {
 
-		long resourceBlockId = counterLocalService.increment();
+		long resourceBlockId = counterLocalService.increment(
+			ResourceBlock.class.getName());
 
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.create(resourceBlockId);
@@ -65,10 +71,10 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlock.setPermissionsHash(permissionsHash);
 		resourceBlock.setReferenceCount(1);
 
-		resourceBlockPersistence.update(resourceBlock, false);
+		updateResourceBlock(resourceBlock);
 
-		resourceBlockPermissionLocalService.addResourceBlockPermissions(
-			resourceBlockId, resourcePermissions);
+		resourceBlockPermissionLocalService.updateResourceBlockPermissions(
+			resourceBlockId, resourceBlockPermissions);
 
 		return resourceBlock;
 	}
@@ -83,6 +89,10 @@ public class ResourceBlockLocalServiceImpl
 	 */
 	public String getPermissionsHash(
 		List<ResourceBlockPermission> resourceBlockPermissions) {
+
+		resourceBlockPermissions =
+			ListUtil.sort(resourceBlockPermissions,
+			new ResourceBlockPermissionRoleIdComparator());
 
 		ByteBuffer buffer =
 			ByteBuffer.allocate(resourceBlockPermissions.size() * 16);
@@ -193,56 +203,121 @@ public class ResourceBlockLocalServiceImpl
 			long companyId, String name, long roleId, long actionIdsLong)
 		throws SystemException {
 
-		resourceBlockPermissionLocalService.setPermissions(companyId, name, roleId, actionIdsLong);
+		setPermissions(companyId, name, roleId, actionIdsLong);
 	}
 
 	public void setGroupTemplateScopePermissions(
 			long companyId, String name, long roleId, long actionIdsLong)
 		throws SystemException {
 
-		resourceBlockPermissionLocalService.setPermissions(companyId, name, roleId, actionIdsLong);
+		setPermissions(companyId, name, roleId, actionIdsLong);
 	}
 
 	public void setGroupScopePermissions(
 			long companyId, long groupId, String name, long roleId, long actionIdsLong)
 		throws SystemException {
 
-		resourceBlockPermissionLocalService.setPermissions(companyId, name, groupId, roleId, actionIdsLong);
+		setPermissions(companyId, groupId, name, roleId, actionIdsLong);
 	}
 
 	public void setIndividualScopePermissions(
-			long companyId, String name, String primKey, long roleId,
+			long companyId, String name, long primKey, long roleId,
 			long actionIdsLong)
 		throws PortalException, SystemException {
 
-		PermissionedModel model = getModel(name, primKey);
+		PermissionedModel model = getPermissionedModel(name, primKey);
 
 		if (model == null) {
 			return;
 		}
 
-		ResourceBlock resourceBlock =
-			getResourceBlock(model.getResourceBlockId());
+		long groupId = 0;
 
-		List<ResourceBlockPermission> resourceBlockPermissions =
-			resourceBlockPermissionLocalService.getResourceBlockPermissions(
-			resourceBlock.getPrimaryKey());
-
-		for (ResourceBlockPermission resourceBlockPermission :
-			resourceBlockPermissions) {
-
-			if (resourceBlockPermission.getRoleId() == roleId) {
-				if (resourceBlockPermission.getActionIds() == actionIdsLong) {
-					return;
-				}
-
-				break;
-			}
+		if (model instanceof GroupedModel) {
+			groupId = ((GroupedModel)model).getGroupId();
 		}
 
-		release(resourceBlock);
+		ResourceBlock resourceBlock =
+			resourceBlockPersistence.fetchByPrimaryKey(
+			model.getResourceBlockId());
 
+		List<ResourceBlockPermission> resourceBlockPermissions =
+				new ArrayList<ResourceBlockPermission>();
 
+		boolean addNewResourceBlockPermission = true;
+
+		if (resourceBlock != null) {
+			List<ResourceBlockPermission> oldResourceBlockPermissions =
+				resourceBlockPermissionLocalService.getResourceBlockPermissions(
+				resourceBlock.getPrimaryKey());
+
+			for (ResourceBlockPermission oldResourceBlockPermission :
+				oldResourceBlockPermissions) {
+
+				ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
+				resourceBlockPermission.setNew(true);
+
+				if (oldResourceBlockPermission.getRoleId() == roleId) {
+					if (oldResourceBlockPermission.getActionIds() == actionIdsLong) {
+						return;
+					}
+
+					resourceBlockPermission.setActionIds(actionIdsLong);
+					addNewResourceBlockPermission = false;
+				}
+				else {
+					resourceBlockPermission.setActionIds(
+						oldResourceBlockPermission.getActionIds());
+				}
+
+				resourceBlockPermission.setRoleId(oldResourceBlockPermission.getRoleId());
+				resourceBlockPermissions.add(resourceBlockPermission);
+			}
+
+			release(resourceBlock);
+		}
+
+		if (addNewResourceBlockPermission) {
+			ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
+			resourceBlockPermission.setActionIds(actionIdsLong);
+			resourceBlockPermission.setRoleId(roleId);
+			resourceBlockPermissions.add(resourceBlockPermission);
+		}
+
+		updateResourceBlockId(companyId, groupId, name, model,
+			resourceBlockPermissions);
+	}
+
+	public ResourceBlock verifyResourceBlockId(
+			long companyId, String name, long primKey)
+		throws PortalException, SystemException {
+
+		PermissionedModel model = getPermissionedModel(name, primKey);
+
+		long groupId = 0;
+
+		if (model instanceof GroupedModel) {
+			groupId = ((GroupedModel)model).getGroupId();
+		}
+
+		ResourceBlock resourceBlock =
+			resourceBlockPersistence.fetchByPrimaryKey(
+			model.getResourceBlockId());
+
+		if (resourceBlock == null) {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionLocalService.getResourceResourcePermissions(
+				companyId, groupId, name, String.valueOf(primKey));
+
+			List<ResourceBlockPermission> resourceBlockPermissions =
+				resourceBlockPermissionLocalService.getResourceBlockPermissions(
+				resourcePermissions);
+
+			resourceBlock = updateResourceBlockId(
+				companyId, groupId, name, model, resourceBlockPermissions);
+		}
+
+		return resourceBlock;
 	}
 
 	public void updatePermissionsHash(ResourceBlock resourceBlock)
@@ -270,9 +345,10 @@ public class ResourceBlockLocalServiceImpl
 	 * @param  primKey the primary key of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Deprecated
 	public void updateResourceBlockId(
 			long companyId, PermissionedModel model, String name,
-			String primKey)
+			long primKey)
 		throws SystemException {
 
 		updateResourceBlockId(companyId, 0, model, name, primKey);
@@ -291,14 +367,15 @@ public class ResourceBlockLocalServiceImpl
 	 * @param  primKey the primary key of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Deprecated
 	public void updateResourceBlockId(
 			long companyId, long groupId, PermissionedModel model,
-			String name, String primKey)
+			String name, long primKey)
 		throws SystemException {
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionLocalService.getResourceResourcePermissions(
-			companyId, groupId, name, primKey);
+			companyId, groupId, name, String.valueOf(primKey));
 
 		// This whole method is no longer necessary, but I want it for reference
 		//String newPermissionsHash = getPermissionsHash(resourcePermissions);
@@ -326,40 +403,121 @@ public class ResourceBlockLocalServiceImpl
 			companyId, groupId, name, newPermissionsHash);
 
 		if (resourceBlock == null) {
-			resourceBlock =
-				addResourceBlock(companyId, groupId, name, newPermissionsHash,
-				resourcePermissions);
+			//resourceBlock =
+			//	addResourceBlock(companyId, groupId, name, newPermissionsHash,
+			//	resourcePermissions);
 		}
 		else {
 			retain(resourceBlock);
 		}
 
 		model.setResourceBlockId(resourceBlock.getResourceBlockId());
-		model.save();
+		model.persist();
 	}
 
-	protected PermissionedModel getModel(String name, String primKey)
+	protected PermissionedModel getPermissionedModel(String name, long primKey)
 		throws PortalException, SystemException {
 
-		// NEEDS FIX
+		PersistedModelLocalService localService =
+			PersistedModelLocalServiceRegistryUtil.
+			getPersistedModelLocalService(name);
 
-		PermissionedModel model = null;
-
-		if (name.equals(
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry")) {
-
-			model =	BookmarksEntryLocalServiceUtil.getBookmarksEntry(
-				Long.valueOf(primKey));
-		}
-		else if (name.equals(
-			"com.liferay.portlet.bookmarks.model.BookmarksFolder")) {
-
-			model =
-				BookmarksFolderLocalServiceUtil.getBookmarksFolder(
-				Long.valueOf(primKey));
+		if (localService == null) {
+			return null;
 		}
 
-		return model;
+		PersistedModel model = localService.getPersistedModel(primKey);
+
+		if (model == null) {
+			return null;
+		}
+
+		if (model instanceof PermissionedModel) {
+			return (PermissionedModel)model;
+		}
+
+		return null;
+	}
+
+	protected void setPermissions(
+			long companyId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		List<ResourceBlock> resourceBlocks =
+			resourceBlockPersistence.findByC_N(companyId, name);
+
+		setPermissions(resourceBlocks, roleId, actionIdsLong);
+	}
+
+	protected void setPermissions(
+			long companyId, long groupId, String name, long roleId,
+			long actionIdsLong)
+		throws SystemException {
+
+		List<ResourceBlock> resourceBlocks =
+			resourceBlockPersistence.findByC_G_N(companyId, groupId, name);
+
+		setPermissions(resourceBlocks, roleId, actionIdsLong);
+	}
+
+	protected void setPermissions(
+			List<ResourceBlock> resourceBlocks, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		for (ResourceBlock resourceBlock : resourceBlocks) {
+			ResourceBlockPermission resourceBlockPermission =
+				resourceBlockPermissionPersistence.fetchByR_R(
+				resourceBlock.getPrimaryKey(), roleId);
+
+			if (resourceBlockPermission == null) {
+				if (actionIdsLong == 0) {
+					continue;
+				}
+
+				resourceBlockPermission =
+					resourceBlockPermissionLocalService.
+					addResourceBlockPermission(
+					resourceBlock.getPrimaryKey(), roleId, actionIdsLong);
+			}
+			else {
+				if (actionIdsLong == 0) {
+					resourceBlockPermissionLocalService.
+					deleteResourceBlockPermission(resourceBlockPermission);
+				}
+				else {
+					resourceBlockPermission.setActionIds(actionIdsLong);
+					resourceBlockPermissionLocalService.
+					updateResourceBlockPermission(resourceBlockPermission);
+				}
+			}
+
+			updatePermissionsHash(resourceBlock);
+		}
+	}
+
+	protected ResourceBlock updateResourceBlockId(long companyId, long groupId,
+			String name, PermissionedModel model,
+			List<ResourceBlockPermission> resourceBlockPermissions)
+			throws SystemException {
+
+		String permissionsHash = getPermissionsHash(resourceBlockPermissions);
+
+		ResourceBlock resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
+
+		if (resourceBlock == null) {
+			resourceBlock =
+				addResourceBlock(companyId, groupId, name, permissionsHash,
+				resourceBlockPermissions);
+		}
+		else {
+			retain(resourceBlock);
+		}
+
+		model.setResourceBlockId(resourceBlock.getResourceBlockId());
+		model.persist();
+
+		return resourceBlock;
 	}
 
 }

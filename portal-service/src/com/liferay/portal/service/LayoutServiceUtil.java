@@ -133,11 +133,13 @@ public class LayoutServiceUtil {
 			parameterMap, startDate, endDate);
 	}
 
-	public static long getDefaultPlid(long groupId, boolean privateLayout,
-		java.lang.String portletId)
+	public static long getDefaultPlid(long groupId, long scopeGroupId,
+		boolean privateLayout, java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDefaultPlid(groupId, privateLayout, portletId);
+		return getService()
+				   .getDefaultPlid(groupId, scopeGroupId, privateLayout,
+			portletId);
 	}
 
 	public static java.lang.String getLayoutName(long groupId,

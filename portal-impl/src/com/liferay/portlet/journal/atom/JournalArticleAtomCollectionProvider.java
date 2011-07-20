@@ -19,7 +19,6 @@ import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -68,6 +67,10 @@ public class JournalArticleAtomCollectionProvider
 
 	public String getEntryId(JournalArticle journalArticle) {
 		return journalArticle.getArticleId();
+	}
+
+	public String getEntrySummary(JournalArticle entry) {
+		return null;
 	}
 
 	public String getEntryTitle(JournalArticle journalArticle) {
@@ -140,11 +143,7 @@ public class JournalArticleAtomCollectionProvider
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 
-		int page = atomRequestContext.getIntParameter("page");
-		int max = atomRequestContext.getIntParameter(
-			"max", SearchContainer.DEFAULT_DELTA);
-
-		AtomPager atomPager = new AtomPager(page, count, max);
+		AtomPager atomPager = new AtomPager(atomRequestContext, count);
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 

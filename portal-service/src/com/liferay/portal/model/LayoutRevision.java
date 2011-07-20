@@ -44,6 +44,10 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 
 	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId);
 
+	public com.liferay.portal.model.LayoutBranch getLayoutBranch()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

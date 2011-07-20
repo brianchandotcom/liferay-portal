@@ -175,7 +175,7 @@ html > .lfr-dockbar-pinned {
 }
 
 .staging .staging-details {
-	background-image: url(../images/staging_bar/backstage.png);
+	background-image: url(../images/staging_bar/staging.png);
 }
 
 .live-view .staging-details {

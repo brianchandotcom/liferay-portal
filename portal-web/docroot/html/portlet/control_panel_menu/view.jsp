@@ -98,9 +98,16 @@
 				}
 
 				if (!manageableSites.isEmpty() && !manageableSites.contains(curLiveGroup)) {
-					curGroup = manageableSites.get(0);
+					if (curLiveGroup.isSite() && PortletPermissionUtil.contains(permissionChecker, curLiveGroup.getGroupId(), 0, categoryPortlets, ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+						manageableSites.add(0, curLiveGroup);
+					}
+					else {
+						curGroup = manageableSites.get(0);
 
-					themeDisplay.setScopeGroupId(curGroup.getGroupId());
+						curLiveGroup = curGroup;
+
+						themeDisplay.setScopeGroupId(curGroup.getGroupId());
+					}
 				}
 
 				String curGroupName = null;

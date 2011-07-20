@@ -21,8 +21,6 @@ package com.liferay.portal.model;
  */
 public class LayoutRevisionConstants {
 
-	public static final String DEFAULT_LAYOUT_VARIATION_NAME = "default";
-
 	public static final long DEFAULT_PARENT_LAYOUT_REVISION_ID = 0;
 
 }

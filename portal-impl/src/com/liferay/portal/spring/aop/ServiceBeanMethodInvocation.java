@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,7 +33,8 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanMethodInvocation implements MethodInvocation {
+public class ServiceBeanMethodInvocation
+	implements MethodInvocation, Serializable {
 
 	public ServiceBeanMethodInvocation(
 		Object target, Class<?> targetClass, Method method,

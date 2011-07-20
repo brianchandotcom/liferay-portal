@@ -190,6 +190,20 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public void setLayoutSetBranchId(long layoutSetBranchId);
 
 	/**
+	 * Returns the layout branch ID of this layout revision.
+	 *
+	 * @return the layout branch ID of this layout revision
+	 */
+	public long getLayoutBranchId();
+
+	/**
+	 * Sets the layout branch ID of this layout revision.
+	 *
+	 * @param layoutBranchId the layout branch ID of this layout revision
+	 */
+	public void setLayoutBranchId(long layoutBranchId);
+
+	/**
 	 * Returns the parent layout revision ID of this layout revision.
 	 *
 	 * @return the parent layout revision ID of this layout revision
@@ -244,21 +258,6 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 * @param major the major of this layout revision
 	 */
 	public void setMajor(boolean major);
-
-	/**
-	 * Returns the variation name of this layout revision.
-	 *
-	 * @return the variation name of this layout revision
-	 */
-	@AutoEscape
-	public String getVariationName();
-
-	/**
-	 * Sets the variation name of this layout revision.
-	 *
-	 * @param variationName the variation name of this layout revision
-	 */
-	public void setVariationName(String variationName);
 
 	/**
 	 * Returns the plid of this layout revision.

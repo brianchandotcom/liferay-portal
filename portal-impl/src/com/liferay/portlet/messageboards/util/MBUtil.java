@@ -106,15 +106,13 @@ public class MBUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(
-			request, "struts_action");
-
-		boolean selectCategory = strutsAction.equals(
-			"/message_boards/select_category");
+		String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (selectCategory) {
+		if (strutsAction.equals("/message_boards/select_category") ||
+			strutsAction.equals("/message_boards_admin/select_category")) {
+
 			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

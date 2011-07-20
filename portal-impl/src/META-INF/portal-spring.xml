@@ -37,6 +37,8 @@
 	<bean id="com.liferay.portal.service.LayoutService" class="com.liferay.portal.service.impl.LayoutServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutPersistence" class="com.liferay.portal.service.persistence.LayoutPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.LayoutFinder" class="com.liferay.portal.service.persistence.LayoutFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.LayoutBranchLocalService" class="com.liferay.portal.service.impl.LayoutBranchLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.LayoutBranchPersistence" class="com.liferay.portal.service.persistence.LayoutBranchPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.LayoutPrototypeLocalService" class="com.liferay.portal.service.impl.LayoutPrototypeLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.LayoutPrototypeService" class="com.liferay.portal.service.impl.LayoutPrototypeServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutPrototypePersistence" class="com.liferay.portal.service.persistence.LayoutPrototypePersistenceImpl" parent="basePersistence" />
@@ -49,6 +51,7 @@
 	<bean id="com.liferay.portal.service.LayoutSetBranchLocalService" class="com.liferay.portal.service.impl.LayoutSetBranchLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.LayoutSetBranchService" class="com.liferay.portal.service.impl.LayoutSetBranchServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutSetBranchPersistence" class="com.liferay.portal.service.persistence.LayoutSetBranchPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.LayoutSetBranchFinder" class="com.liferay.portal.service.persistence.LayoutSetBranchFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.LayoutSetPrototypeLocalService" class="com.liferay.portal.service.impl.LayoutSetPrototypeLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.LayoutSetPrototypeService" class="com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutSetPrototypePersistence" class="com.liferay.portal.service.persistence.LayoutSetPrototypePersistenceImpl" parent="basePersistence" />

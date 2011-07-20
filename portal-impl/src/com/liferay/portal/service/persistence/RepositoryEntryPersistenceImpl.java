@@ -2067,6 +2067,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = LayoutBranchPersistence.class)
+	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = LayoutPrototypePersistence.class)
 	protected LayoutPrototypePersistence layoutPrototypePersistence;
 	@BeanReference(type = LayoutRevisionPersistence.class)

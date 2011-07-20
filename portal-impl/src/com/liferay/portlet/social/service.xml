@@ -186,6 +186,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
 		<finder name="AEI_T_A" return-type="Collection">
 			<finder-column name="assetEntryId" />
 			<finder-column name="type" />

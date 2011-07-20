@@ -40,6 +40,11 @@ public interface RoleFinder {
 		java.lang.Integer[] types)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByKeywords(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.Role> findBySystem(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -97,6 +102,12 @@ public interface RoleFinder {
 
 	public java.util.List<com.liferay.portal.model.Role> findByKeywords(
 		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Role> findByKeywords(
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.cache;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ import java.util.Map;
  */
 public class ThreadLocalCache<T> {
 
-	public ThreadLocalCache(String name, Lifecycle lifecycle) {
+	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {
 		_name = name;
 		_lifecycle = lifecycle;
 	}
@@ -42,7 +44,7 @@ public class ThreadLocalCache<T> {
 		return _lifecycle;
 	}
 
-	public String getName() {
+	public Serializable getName() {
 		return _name;
 	}
 
@@ -83,6 +85,6 @@ public class ThreadLocalCache<T> {
 
 	private Map<String, T> _cache;
 	private Lifecycle _lifecycle;
-	private String _name;
+	private Serializable _name;
 
 }

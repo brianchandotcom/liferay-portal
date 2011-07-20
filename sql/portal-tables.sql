@@ -942,6 +942,19 @@ create table Layout (
 	layoutPrototypeId LONG
 );
 
+create table LayoutBranch (
+	LayoutBranchId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	layoutSetBranchId LONG,
+	plid LONG,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	master BOOLEAN
+);
+
 create table LayoutPrototype (
 	layoutPrototypeId LONG not null primary key,
 	companyId LONG,
@@ -960,10 +973,10 @@ create table LayoutRevision (
 	createDate DATE null,
 	modifiedDate DATE null,
 	layoutSetBranchId LONG,
+	layoutBranchId LONG,
 	parentLayoutRevisionId LONG,
 	head BOOLEAN,
 	major BOOLEAN,
-	variationName VARCHAR(75) null,
 	plid LONG,
 	privateLayout BOOLEAN,
 	name STRING null,
@@ -1012,7 +1025,8 @@ create table LayoutSetBranch (
 	modifiedDate DATE null,
 	privateLayout BOOLEAN,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	master BOOLEAN
 );
 
 create table LayoutSetPrototype (

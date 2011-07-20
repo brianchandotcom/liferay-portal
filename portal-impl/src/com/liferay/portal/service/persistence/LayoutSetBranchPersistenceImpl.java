@@ -401,6 +401,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranchImpl.setPrivateLayout(layoutSetBranch.isPrivateLayout());
 		layoutSetBranchImpl.setName(layoutSetBranch.getName());
 		layoutSetBranchImpl.setDescription(layoutSetBranch.getDescription());
+		layoutSetBranchImpl.setMaster(layoutSetBranch.isMaster());
 
 		return layoutSetBranchImpl;
 	}
@@ -2558,6 +2559,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = LayoutBranchPersistence.class)
+	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = LayoutPrototypePersistence.class)
 	protected LayoutPrototypePersistence layoutPrototypePersistence;
 	@BeanReference(type = LayoutRevisionPersistence.class)

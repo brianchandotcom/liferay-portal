@@ -23,10 +23,13 @@ public class LayoutSetBranchConstants {
 
 	public static final long ALL_BRANCHES = 0;
 
-	public static final String MASTER_BRANCH_DESCRIPTION =
-		"default-backstage-of-x";
+	public static final String MASTER_BRANCH_DESCRIPTION_PRIVATE =
+		"main-private-pages-variation-of-x";
 
-	public static final String MASTER_BRANCH_NAME = "backstage";
+	public static final String MASTER_BRANCH_DESCRIPTION_PUBLIC =
+		"main-public-pages-variation-of-x";
+
+	public static final String MASTER_BRANCH_NAME = "main-variation";
 
 	public static final long NO_BRANCHES = -1;
 

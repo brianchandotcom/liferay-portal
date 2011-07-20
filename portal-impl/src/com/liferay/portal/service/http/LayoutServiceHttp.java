@@ -404,7 +404,8 @@ public class LayoutServiceHttp {
 	}
 
 	public static long getDefaultPlid(HttpPrincipal httpPrincipal,
-		long groupId, boolean privateLayout, java.lang.String portletId)
+		long groupId, long scopeGroupId, boolean privateLayout,
+		java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -412,7 +413,7 @@ public class LayoutServiceHttp {
 					"getDefaultPlid", _getDefaultPlidParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, portletId);
+					scopeGroupId, privateLayout, portletId);
 
 			Object returnObj = null;
 
@@ -1271,7 +1272,7 @@ public class LayoutServiceHttp {
 			java.util.Date.class, java.util.Date.class
 		};
 	private static final Class<?>[] _getDefaultPlidParameterTypes9 = new Class[] {
-			long.class, boolean.class, java.lang.String.class
+			long.class, long.class, boolean.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getLayoutNameParameterTypes10 = new Class[] {
 			long.class, boolean.class, long.class, java.lang.String.class

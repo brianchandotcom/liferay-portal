@@ -309,7 +309,7 @@ public class ResourcePermissionLocalServiceUtil {
 	* resources of the type. Existing actions are retained.
 	*
 	* <p>
-	* This method should only used add default permissions to existing
+	* This method should only be used to add default permissions to existing
 	* resources en masse during upgrades or while verifying permissions. For
 	* example, this method could be used to grant site members individual scope
 	* permissions to view all blog posts.
@@ -585,24 +585,6 @@ public class ResourcePermissionLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.removeResourcePermissions(companyId, name, scope, roleId, actionId);
-	}
-
-	/**
-	* Only to be used during the upgrade process, not part of the public API.
-	* Grants the role individual scope permissions to perform the actions on
-	* all resources of the type.
-	*
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param roleName the role's name
-	* @param actionIdsLong the bitwise IDs of the actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setContainerResourcePermissions(java.lang.String name,
-		java.lang.String roleName, long actionIdsLong)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.setContainerResourcePermissions(name, roleName, actionIdsLong);
 	}
 
 	/**

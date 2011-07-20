@@ -169,7 +169,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		layoutRevision = LayoutRevisionLocalServiceUtil.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),

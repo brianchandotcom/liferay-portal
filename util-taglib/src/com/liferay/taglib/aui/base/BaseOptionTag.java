@@ -26,6 +26,7 @@ import javax.servlet.jsp.JspException;
  */
 public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 
+	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
@@ -92,6 +93,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("value", value);
 	}
 
+	@Override
 	protected void cleanUp() {
 		_cssClass = null;
 		_disabled = false;
@@ -101,14 +103,17 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		_value = null;
 	}
 
+	@Override
 	protected String getEndPage() {
 		return _END_PAGE;
 	}
 
+	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
 	}
 
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "disabled", _disabled);

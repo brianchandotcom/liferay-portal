@@ -472,7 +472,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											%>
 
 											<aui:button-row>
-												<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' type="submit" value="<%= publishButtonLabel %>" />
+												<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 												<%
 												String taglibCancel = "document.getElementById('" + randomNamespace + "editForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "editReplyBody" + i + "').value = '" + message.getBody() + "'; void('');";
@@ -586,6 +586,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
 			document.<%= namespace %><%= formName %>.<%= namespace %>messageId.value = messageId;
 			document.<%= namespace %><%= formName %>.<%= namespace %>body.value = body;
+
+			<portlet:namespace />sendMessage(document.<%= namespace %><%= formName %>);
 		}
 
 		Liferay.provide(

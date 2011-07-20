@@ -109,7 +109,8 @@ AUI().add(
 								serviceContext: JSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),
-										userId: themeDisplay.getUserId()
+										userId: themeDisplay.getUserId(),
+										workflowAction: Liferay.Workflow.ACTION_PUBLISH
 									}
 								),
 								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
@@ -147,8 +148,8 @@ AUI().add(
 
 						var serviceParameterTypes = [
 							'long',
-							'java.util.Map<java.lang.String, java.io.Serializable>',
 							'int',
+							'java.util.Map<java.lang.String, java.io.Serializable>',
 							'boolean',
 							'com.liferay.portal.service.ServiceContext'
 						];
@@ -156,13 +157,14 @@ AUI().add(
 						DDLRecord.updateRecord(
 							{
 								recordId: recordId,
-								fieldsMap: JSON.stringify(fieldsMap),
 								displayIndex: displayIndex,
+								fieldsMap: JSON.stringify(fieldsMap),
 								merge: merge,
 								serviceContext: JSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),
-										userId: themeDisplay.getUserId()
+										userId: themeDisplay.getUserId(),
+										workflowAction: Liferay.Workflow.ACTION_PUBLISH
 									}
 								),
 								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)

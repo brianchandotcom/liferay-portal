@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.manage-backstages-tab, .manage-page-variations {
+	.manage-layout-set-branches-tab, .manage-page-variations {
 		margin-left: 1em;
 	}
 
@@ -78,17 +78,17 @@
 				margin-right: 1em;
 			}
 
-			.backstage-info {
+			.layout-set-branch-info {
 				font-size: 1.1em;
 				margin-bottom: 1em;
 
-				.backstage-description {
+				.layout-set-branch-description {
 					border-right: 1px solid #AAA;
 					padding: 0 0.5em 0;
 					font-style: italic;
 				}
 
-				.backstage-pages {
+				.layout-set-branch-pages {
 					padding-left: 0.5em;
 				}
 			}
@@ -199,7 +199,7 @@
 				padding: 5px 0 0;
 			}
 
-			.backstage-toolbar {
+			.layout-revision-toolbar {
 				padding-left: 1em;
 			}
 		}

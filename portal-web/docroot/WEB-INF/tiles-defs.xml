@@ -1470,6 +1470,8 @@
 
 	<!-- Staging Bar -->
 
+	<definition name="portlet.staging_bar.edit_layout_set_branch" path="/portlet/staging_bar/add_layout_set_branch.jsp" />
+
 	<definition name="portlet.staging_bar.error" path="/portlet/staging_bar/error.jsp" />
 
 	<definition name="portlet.staging_bar.merge_layout_set_branch" path="/portlet/staging_bar/merge_layout_set_branch.jsp" />

@@ -299,6 +299,12 @@ public class GroupLocalServiceUtil {
 		getService().checkSystemGroups(companyId);
 	}
 
+	public static com.liferay.portal.model.Group fetchFriendlyURLGroup(
+		long companyId, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFriendlyURLGroup(companyId, friendlyURL);
+	}
+
 	public static com.liferay.portal.model.Group fetchGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchGroup(groupId);

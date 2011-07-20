@@ -28,15 +28,17 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup.getGroupId(), ActionKeys.ADD_LAYOUT_SET_BRANCH) %>">
 	<liferay-util:html-top>
-		<liferay-util:include page="/html/portlet/staging_bar/add_layout_set_branch.jsp" />
+		<liferay-util:include page="/html/portlet/staging_bar/add_layout_set_branch.jsp">
+			<liferay-util:param name="redirect" value="<%= currentURL %>" />
+		</liferay-util:include>
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + renderResponse.getNamespace() + "');";
+	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
 	%>
 
 	<aui:button-row>
-		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value="add-backstage" />
+		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value='<%= privateLayout ? "add-private-pages-variation" : "add-public-pages-variation" %>' />
 	</aui:button-row>
 </c:if>
 

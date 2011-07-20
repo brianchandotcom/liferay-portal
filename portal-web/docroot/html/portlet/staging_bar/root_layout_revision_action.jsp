@@ -24,14 +24,19 @@ LayoutRevision rootLayoutRevision = (LayoutRevision)row.getObject();
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= !rootLayoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, rootLayoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-		<c:if test="<%= !LayoutRevisionConstants.DEFAULT_LAYOUT_VARIATION_NAME.equals(rootLayoutRevision.getVariationName()) && !rootLayoutRevision.isHead() && GroupPermissionUtil.contains(permissionChecker, rootLayoutRevision.getGroupId(), ActionKeys.DELETE_LAYOUT_VARIATION) %>">
+
+		<%
+		LayoutBranch layoutBranch = LayoutBranchLocalServiceUtil.getLayoutBranch(rootLayoutRevision.getLayoutBranchId());
+		%>
+
+		<c:if test="<%= !layoutBranch.isMaster() && !rootLayoutRevision.isHead() && GroupPermissionUtil.contains(permissionChecker, rootLayoutRevision.getGroupId(), ActionKeys.DELETE_LAYOUT_BRANCH) %>">
 			<portlet:actionURL var="deleteURL">
 				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="delete_layout_variation" />
+				<portlet:param name="<%= Constants.CMD %>" value="delete_layout_branch" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(rootLayoutRevision.getGroupId()) %>" />
 				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutSetBranchId()) %>" />
-				<portlet:param name="variationName" value="<%= rootLayoutRevision.getVariationName() %>" />
+				<portlet:param name="layoutBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutBranchId()) %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete

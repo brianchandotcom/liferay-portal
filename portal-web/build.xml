@@ -640,9 +640,10 @@
 			</not>
 			<then>
 				<delete dir="docroot/html/VAADIN_ZIP" />
-				<delete dir="docroot/html/VAADIN" />
 
 				<unzip src="third-party/${vaadin.file}" dest="docroot/html/VAADIN_ZIP" />
+
+				<delete dir="docroot/html/VAADIN" />
 
 				<copy todir="docroot/html/VAADIN/themes">
 					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/themes">

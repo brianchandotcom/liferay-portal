@@ -20,14 +20,13 @@ import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseMediaAtomCollectionAdapter;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
@@ -69,7 +68,7 @@ public class DLFileEntryAtomCollectionAdapter
 
 		String srcLink = AtomUtil.createEntryLink(
 			atomRequestContext, _COLLECTION_NAME,
-			dlFileEntry.getFileEntryId() + "?media");
+			dlFileEntry.getFileEntryId() + ":media");
 
 		atomEntryContent.setSrcLink(srcLink);
 
@@ -78,6 +77,10 @@ public class DLFileEntryAtomCollectionAdapter
 
 	public String getEntryId(DLFileEntry dlFileEntry) {
 		return String.valueOf(dlFileEntry.getPrimaryKey());
+	}
+
+	public String getEntrySummary(DLFileEntry dlFileEntry) {
+		return dlFileEntry.getDescription();
 	}
 
 	public String getEntryTitle(DLFileEntry dlFileEntry) {
@@ -90,7 +93,7 @@ public class DLFileEntryAtomCollectionAdapter
 
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
 		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY);
+			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY) + " files";
 	}
 
 	@Override
@@ -153,21 +156,17 @@ public class DLFileEntryAtomCollectionAdapter
 			groupId = atomRequestContext.getLongParameter("groupId");
 		}
 
-		int max = atomRequestContext.getIntParameter(
-			"max", SearchContainer.DEFAULT_DELTA);
-
-		int page = atomRequestContext.getIntParameter("page");
-
-		int dlFileEntriesCount = DLFileEntryServiceUtil.getFileEntriesCount(
+		int count = DLFileEntryServiceUtil.getFileEntriesCount(
 			groupId, folderId);
 
-		AtomPager atomPager = new AtomPager(page, dlFileEntriesCount, max);
+		AtomPager atomPager = new AtomPager(
+			atomRequestContext, count);
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 		return DLFileEntryServiceUtil.getFileEntries(
 			groupId, folderId, atomPager.getStart(), atomPager.getEnd() + 1,
-			new EntryModifiedDateComparator());
+			new EntryNameComparator());
 	}
 
 	@Override
@@ -306,6 +305,6 @@ public class DLFileEntryAtomCollectionAdapter
 			content.length, serviceContext);
 	}
 
-	private static final String _COLLECTION_NAME = "dl";
+	static final String _COLLECTION_NAME = "files";
 
 }

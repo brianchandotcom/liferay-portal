@@ -69,17 +69,17 @@ else if (tabs2.equals("site-roles")) {
 		<%
 		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
 
-		LinkedHashMap roleParams = new LinkedHashMap();
+		LinkedHashMap<String, Object> roleParams = new LinkedHashMap<String, Object>();
 
 		if (tabs3.equals("current")) {
 			roleParams.put("permissionsResourceId", new Long(resource.getResourceId()));
 		}
 
-		int total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), new Integer[] {type}, roleParams);
+		int total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {type}, roleParams);
 
 		searchContainer.setTotal(total);
 
-		List results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), new Integer[] {type}, roleParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		List results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {type}, roleParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 		%>

@@ -63,11 +63,17 @@ MBThread thread = message.getThread();
 
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
+
+			<%
+			rssURL.setParameter("p_l_id", String.valueOf(plid));
+			rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
+			%>
+
 			<liferay-ui:icon
 				image="rss"
 				method="get"
 				target="_blank"
-				url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&threadId=" + message.getThreadId() + rssURLParams %>'
+				url="<%= rssURL.toString() %>"
 			/>
 		</c:if>
 

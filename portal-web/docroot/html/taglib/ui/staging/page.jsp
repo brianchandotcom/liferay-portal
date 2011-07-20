@@ -22,7 +22,7 @@ long groupId = GetterUtil.getLong((String) request.getAttribute("liferay-ui:stag
 long layoutSetBranchId = GetterUtil.getLong((String) request.getAttribute("liferay-ui:staging:layoutSetBranchId"));
 boolean privateLayout = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:privateLayout"));
 long selPlid = GetterUtil.getLong((String) request.getAttribute("liferay-ui:staging:selPlid"));
-boolean showManageBackStages = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:showManageBackstages"));
+boolean showManageBranches = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:showManageBranches"));
 
 LayoutSetBranch layoutSetBranch = null;
 List<LayoutSetBranch> layoutSetBranches = null;
@@ -87,7 +87,7 @@ layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(staging
 
 <c:if test="<%= stagingGroup != null %>">
 	<span class="staging-icon-menu-container">
-		<liferay-ui:icon-menu align="auto" cssClass="staging-icon-menu" direction="down" extended="<%= extended %>" icon='<%= extended ? themeDisplay.getPathThemeImages() + "/dockbar/staging.png" : StringPool.BLANK %>' message='<%= extended ? "backstage" : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu align="auto" cssClass="staging-icon-menu" direction="down" extended="<%= extended %>" icon='<%= extended ? themeDisplay.getPathThemeImages() + "/dockbar/staging.png" : StringPool.BLANK %>' message='<%= extended ? "staging" : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
 			<c:if test="<%= (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
 
 				<%
@@ -179,7 +179,7 @@ layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(staging
 				</aui:script>
 			</c:if>
 
-			<c:if test="<%= showManageBackStages && !layoutSetBranches.isEmpty() %>">
+			<c:if test="<%= showManageBranches && !layoutSetBranches.isEmpty() %>">
 				<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="layoutSetBranchesURL">
 					<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -187,10 +187,10 @@ layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(staging
 					<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon cssClass="manage-backstages" id="manageBackstages" image="configuration" label="<%= true %>" message="manage-backstages" url="<%= layoutSetBranchesURL %>" />
+				<liferay-ui:icon cssClass="manage-layout-set-branches" id="manageLayoutSetBranches" image="configuration" label="<%= true %>" message='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' url="<%= layoutSetBranchesURL %>" />
 
 				<aui:script use="aui-base">
-					var layoutSetBranchesLink = A.one('#<portlet:namespace />manageBackstages');
+					var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
 
 					if (layoutSetBranchesLink) {
 						layoutSetBranchesLink.detach('click');
@@ -207,7 +207,7 @@ layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(staging
 												width: 820
 											},
 										id: '<portlet:namespace />',
-										title: '<liferay-ui:message key="manage-backstages" />',
+										title: '<liferay-ui:message key='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' />',
 										uri: event.currentTarget.attr('href')
 									}
 								);

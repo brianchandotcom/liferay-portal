@@ -287,6 +287,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService {
 		_groupLocalService.checkSystemGroups(companyId);
 	}
 
+	public com.liferay.portal.model.Group fetchFriendlyURLGroup(
+		long companyId, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchFriendlyURLGroup(companyId, friendlyURL);
+	}
+
 	public com.liferay.portal.model.Group fetchGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.fetchGroup(groupId);

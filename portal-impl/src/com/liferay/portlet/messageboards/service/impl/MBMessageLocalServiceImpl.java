@@ -1480,6 +1480,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					if (!message.isAnonymous() && !user.isDefaultUser()) {
 						int activityType = MBActivityKeys.ADD_MESSAGE;
 						long receiverUserId = 0;
+						MBMessage socialEquityLogMessage = message;
 						String actionId = ActionKeys.ADD_MESSAGE;
 
 						MBMessage parentMessage =
@@ -1491,6 +1492,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							receiverUserId = parentMessage.getUserId();
 
 							if (receiverUserId != userId) {
+								socialEquityLogMessage = parentMessage;
 								actionId = ActionKeys.REPLY_TO_MESSAGE;
 							}
 						}
@@ -1501,8 +1503,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							activityType, StringPool.BLANK, receiverUserId);
 
 						socialEquityLogLocalService.addEquityLogs(
-							userId, MBMessage.class.getName(), messageId,
-							actionId, StringPool.BLANK);
+							userId, MBMessage.class.getName(),
+							socialEquityLogMessage.getMessageId(), actionId,
+							StringPool.BLANK);
 					}
 				}
 				else {

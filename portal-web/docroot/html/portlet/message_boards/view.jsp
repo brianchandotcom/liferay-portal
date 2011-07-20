@@ -80,7 +80,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						label="<%= true %>"
 						method="get"
 						target="_blank"
-						url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&mbCategoryId=" + scopeGroupId + rssURLParams %>'
+						url="<%= rssURL.toString() %>"
 					/>
 
 					<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
@@ -358,13 +358,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<c:if test='<%= topLink.equals("recent-posts") %>'>
 
 			<%
-			String rssURL = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&groupId=" + scopeGroupId;
+			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
 
 			if (groupThreadsUserId > 0) {
-				rssURL += "&userId=" + groupThreadsUserId;
+				rssURL.setParameter("userId", String.valueOf(groupThreadsUserId));
 			}
 
-			rssURL += rssURLParams;
+			rssURL.setParameter("mbCategoryId", "");
 			%>
 
 			<br />
@@ -378,7 +378,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						message="subscribe-to-recent-posts"
 						method="get"
 						target="_blank"
-						url="<%= rssURL %>"
+						url="<%= rssURL.toString() %>"
 					/>
 				</td>
 			</tr>

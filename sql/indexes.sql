@@ -364,16 +364,18 @@ create index IX_23922F7D on Layout (iconImageId);
 create index IX_D0822724 on Layout (uuid_);
 create unique index IX_CED31606 on Layout (uuid_, groupId);
 
+create unique index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
+
 create index IX_30616AAA on LayoutPrototype (companyId);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
 
 create index IX_314B621A on LayoutRevision (layoutSetBranchId);
 create index IX_A9AC086E on LayoutRevision (layoutSetBranchId, head);
 create index IX_E10AC39 on LayoutRevision (layoutSetBranchId, head, plid);
+create index IX_13984800 on LayoutRevision (layoutSetBranchId, layoutBranchId, plid);
 create index IX_4A84AF43 on LayoutRevision (layoutSetBranchId, parentLayoutRevisionId, plid);
 create index IX_B7B914E5 on LayoutRevision (layoutSetBranchId, plid);
 create index IX_70DA9ECB on LayoutRevision (layoutSetBranchId, plid, status);
-create index IX_AE2994E9 on LayoutRevision (layoutSetBranchId, plid, variationName);
 create index IX_7FFAE700 on LayoutRevision (layoutSetBranchId, status);
 create index IX_9329C9D6 on LayoutRevision (plid);
 
@@ -645,6 +647,7 @@ create unique index IX_E4F84168 on SocialEquityGroupSetting (groupId, classNameI
 create index IX_AC18D8F8 on SocialEquityLog (assetEntryId, actionId, actionDate, active_, type_, extraData);
 create index IX_541BDA0F on SocialEquityLog (assetEntryId, actionId, active_, extraData);
 create index IX_E8DA181D on SocialEquityLog (assetEntryId, type_, active_);
+create index IX_3C8A04B2 on SocialEquityLog (userId);
 create index IX_18F55CAF on SocialEquityLog (userId, actionId, actionDate, active_, type_, extraData);
 create unique index IX_A0FA597E on SocialEquityLog (userId, assetEntryId, actionId, actionDate, active_, type_, extraData);
 create index IX_DAE54B49 on SocialEquityLog (userId, assetEntryId, actionId, active_, extraData);

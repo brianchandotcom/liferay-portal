@@ -35,6 +35,12 @@ import org.apache.abdera.protocol.server.RequestContext;
  */
 public class AtomUtil {
 
+	public static String createCollectionLink(
+		AtomRequestContext atomRequestContext, String collectionName) {
+
+		return createEntryLink(atomRequestContext, collectionName, null);
+	}
+
 	public static String createEntryLink(
 		AtomRequestContext atomRequestContext, String collectionName,
 		String entryName) {
@@ -47,8 +53,11 @@ public class AtomUtil {
 
 		sb.append(CharPool.SLASH);
 		sb.append(collectionName);
-		sb.append(CharPool.SLASH);
-		sb.append(entryName);
+
+		if (entryName != null) {
+			sb.append(CharPool.SLASH);
+			sb.append(entryName);
+		}
 
 		String entryLink = sb.toString();
 

@@ -104,8 +104,8 @@ public interface LayoutService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultPlid(long groupId, boolean privateLayout,
-		java.lang.String portletId)
+	public long getDefaultPlid(long groupId, long scopeGroupId,
+		boolean privateLayout, java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

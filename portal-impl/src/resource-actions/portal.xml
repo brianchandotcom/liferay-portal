@@ -288,12 +288,12 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
+				<action-key>ADD_LAYOUT_BRANCH</action-key>
 				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
-				<action-key>ADD_LAYOUT_VARIATION</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>DELETE_LAYOUT_VARIATION</action-key>
+				<action-key>DELETE_LAYOUT_BRANCH</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
@@ -307,12 +307,12 @@
 			<community-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_LAYOUT_BRANCH</action-key>
 				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
-				<action-key>ADD_LAYOUT_VARIATION</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>DELETE_LAYOUT_VARIATION</action-key>
+				<action-key>DELETE_LAYOUT_BRANCH</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>

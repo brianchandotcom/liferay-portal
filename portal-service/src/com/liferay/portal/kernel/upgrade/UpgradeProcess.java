@@ -79,6 +79,12 @@ public abstract class UpgradeProcess {
 		return db.increment();
 	}
 
+	public long increment(String name) throws SystemException {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.increment(name);
+	}
+
 	public boolean isSupportsAlterColumnName() {
 		DB db = DBFactoryUtil.getDB();
 

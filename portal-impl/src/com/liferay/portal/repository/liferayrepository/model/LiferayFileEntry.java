@@ -84,6 +84,14 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getCreateDate();
 	}
 
+	public long getCustom1ImageId() {
+		return _dlFileEntry.getCustom1ImageId();
+	}
+
+	public long getCustom2ImageId() {
+		return _dlFileEntry.getCustom2ImageId();
+	}
+
 	public String getDescription() {
 		return _dlFileEntry.getDescription();
 	}
@@ -135,6 +143,14 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getIcon();
 	}
 
+	public String getImageType() {
+		return _dlFileEntry.getImageType();
+	}
+
+	public long getLargeImageId() {
+		return _dlFileEntry.getLargeImageId();
+	}
+
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
@@ -180,6 +196,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getModifiedDate();
 	}
 
+	public String getNameWithExtension() {
+		return _dlFileEntry.getNameWithExtension();
+	}
+
 	@Override
 	public long getPrimaryKey() {
 		return _dlFileEntry.getPrimaryKey();
@@ -199,6 +219,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	public long getSize() {
 		return _dlFileEntry.getSize();
+	}
+
+	public long getSmallImageId() {
+		return _dlFileEntry.getSmallImageId();
 	}
 
 	public String getTitle() {

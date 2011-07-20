@@ -1654,6 +1654,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getSubfolderIds(folderId, recurse);
 	}
 
+	public void getSubfolderIds(
+			long repositoryId, List<Long> folderIds, long folderId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		repository.getSubfolderIds(folderIds, folderId);
+	}
+
 	/**
 	 * Returns all the temporary file entry names.
 	 *

@@ -108,6 +108,10 @@
 		<column name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="readCount" type="int" />
+		<column name="smallImageId" type="long" />
+		<column name="largeImageId" type="long" />
+		<column name="custom1ImageId" type="long" />
+		<column name="custom2ImageId" type="long" />
 
 		<!-- Order -->
 
@@ -155,6 +159,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
@@ -382,6 +387,10 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="smallImageId" type="long" />
+		<column name="largeImageId" type="long" />
+		<column name="custom1ImageId" type="long" />
+		<column name="custom2ImageId" type="long" />
 
 		<!-- Order -->
 
@@ -534,6 +543,7 @@
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>
 		<exception>FolderName</exception>
+		<exception>ImageSize</exception>
 		<exception>InvalidFileEntryType</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>

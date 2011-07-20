@@ -74,6 +74,7 @@
 <%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %>

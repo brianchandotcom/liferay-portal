@@ -67,7 +67,7 @@ if (!question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permi
 	<liferay-ui:error exception="<%= DuplicateVoteException.class %>" message="you-may-only-vote-once" />
 	<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
-	<%= question.getDescription(locale) %>
+	<%= StringUtil.replace(HtmlUtil.escape(question.getDescription(locale)), StringPool.NEW_LINE, "<br />") %>
 
 	<br /><br />
 

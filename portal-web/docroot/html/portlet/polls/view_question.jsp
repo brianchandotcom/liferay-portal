@@ -58,7 +58,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 		/>
 
 		<span style="font-size: x-small;">
-			<%= HtmlUtil.escape(question.getDescription(locale)) %>
+			<%= StringUtil.replace(HtmlUtil.escape(question.getDescription(locale)), StringPool.NEW_LINE, "<br />") %>
 		</span>
 
 		<br /><br />

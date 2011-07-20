@@ -74,47 +74,33 @@
 		}
 	);
 
-	Liferay.provide(
-		ToolTip,
-		'hide',
-		function() {
-			var instance = this;
+	ToolTip._getText = A.cached(
+		function(id) {
+			var node = A.one('#' + id);
 
-			if (instance._cached) {
-				instance._cached.hide();
-			}
-		},
-		['aui-tooltip']
-	);
+			var text = '';
 
-	Liferay.provide(
-		ToolTip,
-		'addShowListeners',
-		function() {
-			var DOC = A.config.doc;
+			if (node) {
+				var toolTipTextNode = node.next('.tooltip-text');
 
-			var TOOLTIP_TARGET = '.tooltip-target';
-
-			var showTooltip = function(event) {
-				var node = event.currentTarget;
-
-				var tooltipContainerNode = node.next('.tooltip-container');
-
-				if (tooltipContainerNode) {
-					var content = tooltipContainerNode.get('innerHTML');
-
-					Liferay.Portal.ToolTip.show(node, content);
+				if (toolTipTextNode) {
+					text = toolTipTextNode.html();
 				}
-			};
+			}
 
-			A.delegate('mouseover', showTooltip, DOC, TOOLTIP_TARGET );
-
-			A.delegate('focus', showTooltip, DOC, TOOLTIP_TARGET );
-
-			A.delegate('blur', Liferay.Portal.ToolTip.hide, DOC, TOOLTIP_TARGET);
-		},
-		['aui-tooltip']
+			return text;
+		}
 	);
+
+	ToolTip.hide = function() {
+		var instance = this;
+
+		var cached = instance._cached;
+
+		if (cached) {
+			cached.hide();
+		}
+	};
 
 	Liferay.provide(
 		ToolTip,
@@ -122,24 +108,34 @@
 		function(obj, text) {
 			var instance = this;
 
-			if (!instance._cached) {
-				instance._cached = new A.Tooltip(
+			var cached = instance._cached;
+
+			if (!cached) {
+				cached = new A.Tooltip(
 					{
 						trigger: '.liferay-tooltip',
 						zIndex: 10000
 					}
 				).render();
+
+				instance._cached = cached;
 			}
 
-			var cached = instance._cached;
-
 			var trigger = cached.get('trigger');
-			var newElement = (trigger.indexOf(obj) == -1);
 			var bodyContent = cached.get('bodyContent');
+
+			var newElement = (trigger.indexOf(obj) == -1);
+
+			if (text == null) {
+				obj = A.one(obj);
+
+				text = instance._getText(obj.guid());
+			}
 
 			if (newElement || (bodyContent != text)) {
 				cached.set('trigger', obj);
 				cached.set('bodyContent', text);
+
 				cached.show();
 			}
 

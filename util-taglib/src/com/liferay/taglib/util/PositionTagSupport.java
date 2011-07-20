@@ -28,15 +28,16 @@ import javax.servlet.jsp.tagext.BodyTag;
  */
 public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 
-	public static String getPosition(
-		HttpServletRequest request, String defaultPosition) {
+	public String getPosition() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-		String position = defaultPosition;
+		String position = _position;
 
 		String fragmentId = ParamUtil.getString(request, "p_f_id");
 
 		if (Validator.isNotNull(fragmentId)) {
-			position = POSITION_INLINE;
+			position = _POSITION_INLINE;
 		}
 
 		if (Validator.isNull(position)) {
@@ -47,27 +48,20 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 				themeDisplay.isLifecycleResource() ||
 				themeDisplay.isStateExclusive()) {
 
-				position = POSITION_INLINE;
+				position = _POSITION_INLINE;
 			}
 			else {
-				position = POSITION_AUTO;
+				position = _POSITION_AUTO;
 			}
 		}
 
 		return position;
 	}
 
-	public String getPosition() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		return getPosition(request, _position);
-	}
-
 	public boolean isPositionAuto() {
 		String position = getPosition();
 
-		if (position.equals(POSITION_AUTO)) {
+		if (position.equals(_POSITION_AUTO)) {
 			return true;
 		}
 		else {
@@ -78,7 +72,7 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 	public boolean isPositionInLine() {
 		String position = getPosition();
 
-		if (position.equals(POSITION_INLINE)) {
+		if (position.equals(_POSITION_INLINE)) {
 			return true;
 		}
 		else {
@@ -94,9 +88,9 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		_position = null;
 	}
 
-	public static final String POSITION_AUTO = "auto";
+	private static final String _POSITION_AUTO = "auto";
 
-	public static final String POSITION_INLINE = "inline";
+	private static final String _POSITION_INLINE = "inline";
 
 	private String _position;
 

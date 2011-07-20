@@ -15,15 +15,10 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.taglib.util.PositionTagSupport;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -44,54 +39,19 @@ public class IconHelpTag extends IconTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		HttpServletRequest request = getServletRequest();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
 			"themeDisplay");
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		boolean jsLoaded = GetterUtil.getBoolean(
-			(String)request.getAttribute("taglib-icon-help"));
-
-		if (!jsLoaded) {
-			StringBundler script = new StringBundler();
-
-			script.append("<script type=\"text/javascript\">");
-			script.append("Liferay.Portal.ToolTip.addShowListeners();");
-			script.append("</script>");
-
-			String position = PositionTagSupport.getPosition(
-				request, StringPool.BLANK);
-
-			if (position.equals(PositionTagSupport.POSITION_INLINE)) {
-				jspWriter.write(script.toString());
-			}
-			else {
-				StringBundler sb = (StringBundler)request.getAttribute(
-					WebKeys.PAGE_TOP);
-
-				if (sb == null) {
-					sb = new StringBundler();
-
-					request.setAttribute(WebKeys.PAGE_TOP, sb);
-				}
-
-				sb.append(script.toString());
-			}
-
-			request.setAttribute("taglib-icon-help", String.valueOf(true));
-
-		}
-
-		jspWriter.write("<span class=\"taglib-icon-help\">");
-		jspWriter.write("<img tabindex=\"0\" alt=\"\" ");
-		jspWriter.write("class=\"tooltip-target\" ");
+		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
+		jspWriter.write("onBlur=\"Liferay.Portal.ToolTip.hide();\"");
+		jspWriter.write("onMouseOver=\"Liferay.Portal.ToolTip.show(this);\"");
+		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this);\"");
 		jspWriter.write("src=\"");
 		jspWriter.write(themeDisplay.getPathThemeImages());
-		jspWriter.write("/portlet/help.png\" />");
-		jspWriter.write("<span class=\"aui-helper-hidden-accessible ");
-		jspWriter.write("tooltip-container\" >");
+		jspWriter.write("/portlet/help.png\" tabIndex=\"0\" />");
+		jspWriter.write("<span class=\"aui-helper-hidden-accessible tooltip-text\">");
 		jspWriter.write(LanguageUtil.get(pageContext, getMessage()));
 		jspWriter.write("</span></span>");
 

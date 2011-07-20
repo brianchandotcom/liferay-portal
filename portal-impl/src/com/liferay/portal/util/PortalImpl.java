@@ -1915,17 +1915,7 @@ public class PortalImpl implements Portal {
 		UnicodeProperties typeSettingsProperties =
 			layout.getLayoutType().getTypeSettingsProperties();
 
-		Iterator<Map.Entry<String, String>> itr =
-			typeSettingsProperties.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
-			String key = entry.getKey();
-			String value = entry.getValue();
-
-			variables.put(key, value);
-		}
+		variables.putAll(typeSettingsProperties);
 
 		LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);
 

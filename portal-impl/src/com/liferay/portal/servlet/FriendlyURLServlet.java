@@ -14,15 +14,12 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -50,6 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Shuyang Zhou
  */
 public class FriendlyURLServlet extends HttpServlet {
 
@@ -61,47 +59,45 @@ public class FriendlyURLServlet extends HttpServlet {
 			servletConfig.getInitParameter("private"));
 		_user = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("user"));
+
+		if (_private) {
+			if (_user) {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateUser();
+			}
+			else {
+				_friendlyURLPathPrefix =
+					PortalUtil.getPathFriendlyURLPrivateGroup();
+			}
+		}
+		else {
+			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
+		}
 	}
 
 	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-
-		ServletContext servletContext = getServletContext();
-
 		// Do not set the entire full main path. See LEP-456.
 
 		//String mainPath = (String)ctx.getAttribute(WebKeys.MAIN_PATH);
 		String mainPath = Portal.PATH_MAIN;
 
-		String friendlyURLPath = null;
+		String redirect = mainPath;
 
-		if (_private) {
-			if (_user) {
-				friendlyURLPath = PortalUtil.getPathFriendlyURLPrivateUser();
-			}
-			else {
-				friendlyURLPath = PortalUtil.getPathFriendlyURLPrivateGroup();
-			}
-		}
-		else {
-			friendlyURLPath = PortalUtil.getPathFriendlyURLPublic();
-		}
+		String pathInfo = request.getPathInfo();
 
 		request.setAttribute(
-			WebKeys.FRIENDLY_URL, friendlyURLPath + request.getPathInfo());
-
-		String redirect = mainPath;
+			WebKeys.FRIENDLY_URL, _friendlyURLPathPrefix.concat(pathInfo));
 
 		try {
 			redirect = getRedirect(
-				request, request.getPathInfo(), mainPath,
-				request.getParameterMap());
+				request, pathInfo, mainPath, request.getParameterMap());
 
 			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
 				LastPath lastPath = new LastPath(
-					friendlyURLPath, request.getPathInfo(),
+					_friendlyURLPathPrefix, pathInfo,
 					request.getParameterMap());
 
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
@@ -129,7 +125,9 @@ public class FriendlyURLServlet extends HttpServlet {
 			_log.debug("Redirect " + redirect);
 		}
 
-		if (redirect.startsWith(StringPool.SLASH)) {
+		if (redirect.charAt(0) == CharPool.SLASH) {
+			ServletContext servletContext = getServletContext();
+
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(redirect);
 
@@ -147,7 +145,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			Map<String, String[]> params)
 		throws Exception {
 
-		if (Validator.isNull(path) || !path.startsWith(StringPool.SLASH)) {
+		if (Validator.isNull(path) || !(path.charAt(0) == CharPool.SLASH)) {
 			return mainPath;
 		}
 
@@ -166,10 +164,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (pos != -1) {
 			friendlyURL = path.substring(0, pos);
 		}
-		else {
-			if (path.length() > 1) {
-				friendlyURL = path.substring(0, path.length());
-			}
+		else if (path.length() > 1) {
+			friendlyURL = path;
 		}
 
 		if (Validator.isNull(friendlyURL)) {
@@ -178,57 +174,46 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		long companyId = PortalInstances.getCompanyId(request);
 
-		Group group = null;
-
-		try {
-			group = GroupLocalServiceUtil.getFriendlyURLGroup(
-				companyId, friendlyURL);
-		}
-		catch (NoSuchGroupException nsge) {
-		}
+		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			companyId, friendlyURL);
 
 		if (group == null) {
 			String screenName = friendlyURL.substring(1);
 
 			if (_user || !Validator.isNumber(screenName)) {
-				try {
-					User user = UserLocalServiceUtil.getUserByScreenName(
-						companyId, screenName);
+				User user = UserLocalServiceUtil.fetchUserByScreenName(
+					companyId, screenName);
 
+				if (user != null) {
 					group = user.getGroup();
 				}
-				catch (NoSuchUserException nsue) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No user exists with friendly URL " + screenName);
-					}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No user exists with friendly URL " + screenName);
 				}
 			}
 			else {
 				long groupId = GetterUtil.getLong(screenName);
 
-				try {
-					group = GroupLocalServiceUtil.getGroup(groupId);
-				}
-				catch (NoSuchGroupException nsge) {
+				group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				if (group == null) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"No group exists with friendly URL " + groupId +
 								". Try fetching by screen name instead.");
 					}
 
-					try {
-						User user = UserLocalServiceUtil.getUserByScreenName(
-							companyId, screenName);
+					User user = UserLocalServiceUtil.fetchUserByScreenName(
+						companyId, screenName);
 
+					if (user != null) {
 						group = user.getGroup();
 					}
-					catch (NoSuchUserException nsue) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"No user or group exists with friendly URL " +
-									groupId);
-						}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No user or group exists with friendly URL " +
+								groupId);
 					}
 				}
 			}
@@ -257,6 +242,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private static Log _log = LogFactoryUtil.getLog(FriendlyURLServlet.class);
 
+	private String _friendlyURLPathPrefix;
 	private boolean _private;
 	private boolean _user;
 

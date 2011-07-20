@@ -543,6 +543,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		deleteGroup(group);
 	}
 
+	public Group fetchFriendlyURLGroup(long companyId, String friendlyURL)
+		throws SystemException {
+
+		if (Validator.isNull(friendlyURL)) {
+			return null;
+		}
+
+		friendlyURL = getFriendlyURL(friendlyURL);
+
+		return groupPersistence.fetchByC_F(companyId, friendlyURL);
+	}
+
 	@ThreadLocalCachable
 	public Group fetchGroup(long groupId) throws SystemException {
 		return groupPersistence.fetchByPrimaryKey(groupId);

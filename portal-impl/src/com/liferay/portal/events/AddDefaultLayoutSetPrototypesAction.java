@@ -192,7 +192,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		layout = addLayout(layoutSet, "Images", "/images", "1_column");
 
-		addPortletId(layout, PortletKeys.IMAGE_GALLERY, "column-1");
+		addPortletId(layout, PortletKeys.IMAGE_GALLERY_DISPLAY, "column-1");
 	}
 
 	protected void addPublicSite(

@@ -62,7 +62,7 @@ public class IGFolderPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, folder.getGroupId(), IGFolder.class.getName(),
-			folder.getFolderId(), PortletKeys.IMAGE_GALLERY, actionId);
+			folder.getFolderId(), PortletKeys.IMAGE_GALLERY_DISPLAY, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

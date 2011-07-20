@@ -1,0 +1,91 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+boolean view = GetterUtil.getBoolean((String)request.getAttribute("view_image.jsp-view"));
+%>
+
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+
+	<%
+	String downloadURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + fileEntry.getLargeImageId() + "&fileName=" + HttpUtil.encodeURL(fileEntry.getNameWithExtension()) + "&t=" + ImageServletTokenUtil.getToken(fileEntry.getLargeImageId());
+	%>
+
+	<liferay-ui:icon
+		image="download"
+		message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+		url="<%= downloadURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= !view && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+	<portlet:renderURL var="viewURL">
+		<portlet:param name="struts_action" value="/image_gallery_display/view_image" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		image="view"
+		url="<%= viewURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="struts_action" value="/image_gallery_display/edit_image" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		image="edit"
+		url="<%= editURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+	<liferay-security:permissionsURL
+		modelResource="<%= DLFileEntryConstants.getClassName() %>"
+		modelResourceDescription="<%= String.valueOf(fileEntry.getTitle()) %>"
+		resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+		var="permissionsURL"
+	/>
+
+	<liferay-ui:icon
+		image="permissions"
+		url="<%= permissionsURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+	<portlet:renderURL var="viewFolderURL">
+		<portlet:param name="struts_action" value="/image_gallery_display/view" />
+		<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+	</portlet:renderURL>
+
+	<portlet:actionURL var="deleteURL">
+		<portlet:param name="struts_action" value="/image_gallery_display/edit_image" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:param name="redirect" value="<%= viewFolderURL %>" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon-delete
+		url="<%= deleteURL %>"
+	/>
+</c:if>

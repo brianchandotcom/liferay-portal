@@ -168,7 +168,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					<%
 					long igScopeGroupId = groupId;
 
-					if (liveGroup.isStaged() && !liveGroup.isStagedRemotely() && !liveGroup.isStagedPortlet(PortletKeys.IMAGE_GALLERY)) {
+					if (liveGroup.isStaged() && !liveGroup.isStagedRemotely() && !liveGroup.isStagedPortlet(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
 						igScopeGroupId = liveGroup.getGroupId();
 					}
 					%>

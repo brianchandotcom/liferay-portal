@@ -14,14 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery/init.jsp" %>
+<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-IGFolder folder = (IGFolder)request.getAttribute(WebKeys.IMAGE_GALLERY_FOLDER);
+Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = (folder == null) ? 0 : folder.getFolderId();
 
-List images = IGImageServiceUtil.getImages(scopeGroupId, folderId);
+long repositoryId = scopeGroupId;
+
+if (folder != null) {
+	repositoryId = folder.getRepositoryId();
+}
+
+List fileEntries = DLAppServiceUtil.getFileEntries(repositoryId, folderId);
 
 int defaultSpeed = 3000;
 %>
@@ -60,11 +66,13 @@ int defaultSpeed = 3000;
 	<td>
 
 		<%
-		if (!images.isEmpty()) {
-			IGImage image = (IGImage)images.get(0);
+		if (!fileEntries.isEmpty()) {
+			FileEntry fileEntry = (FileEntry)fileEntries.get(0);
+
+			FileVersion fileVersion = fileEntry.getFileVersion();
 		%>
 
-			<img border="0" name="<portlet:namespace />slideShow" src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= image.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(image.getLargeImageId()) %>" />
+			<img border="0" name="<portlet:namespace />slideShow" src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>" />
 
 		<%
 		}
@@ -78,11 +86,13 @@ int defaultSpeed = 3000;
 	var <portlet:namespace />imgArray = new Array();
 
 	<%
-	for	(int i = 0; i < images.size(); i++) {
-		IGImage image = (IGImage)images.get(i);
+	for	(int i = 0; i < fileEntries.size(); i++) {
+		FileEntry fileEntry = (FileEntry)fileEntries.get(i);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
 	%>
 
-		<portlet:namespace />imgArray[<%= i %>] = "<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= image.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(image.getLargeImageId()) %>";
+		<portlet:namespace />imgArray[<%= i %>] = "<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>";
 
 	<%
 	}

@@ -555,6 +555,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 			majorVersion, fileEntryTypeId, fieldsMap, is, size, serviceContext);
 	}
 
+	public void updateSmallImage(long smallImageId, long largeImageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.updateSmallImage(smallImageId, largeImageId);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(
 		long userId, long fileVersionId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)

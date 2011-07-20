@@ -112,6 +112,14 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 
 		newDLFileEntry.setReadCount(nextInt());
 
+		newDLFileEntry.setSmallImageId(nextLong());
+
+		newDLFileEntry.setLargeImageId(nextLong());
+
+		newDLFileEntry.setCustom1ImageId(nextLong());
+
+		newDLFileEntry.setCustom2ImageId(nextLong());
+
 		_persistence.update(newDLFileEntry, false);
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
@@ -156,6 +164,14 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDLFileEntry.getSize(), newDLFileEntry.getSize());
 		assertEquals(existingDLFileEntry.getReadCount(),
 			newDLFileEntry.getReadCount());
+		assertEquals(existingDLFileEntry.getSmallImageId(),
+			newDLFileEntry.getSmallImageId());
+		assertEquals(existingDLFileEntry.getLargeImageId(),
+			newDLFileEntry.getLargeImageId());
+		assertEquals(existingDLFileEntry.getCustom1ImageId(),
+			newDLFileEntry.getCustom1ImageId());
+		assertEquals(existingDLFileEntry.getCustom2ImageId(),
+			newDLFileEntry.getCustom2ImageId());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -338,6 +354,14 @@ public class DLFileEntryPersistenceTest extends BasePersistenceTestCase {
 		dlFileEntry.setSize(nextLong());
 
 		dlFileEntry.setReadCount(nextInt());
+
+		dlFileEntry.setSmallImageId(nextLong());
+
+		dlFileEntry.setLargeImageId(nextLong());
+
+		dlFileEntry.setCustom1ImageId(nextLong());
+
+		dlFileEntry.setCustom2ImageId(nextLong());
 
 		_persistence.update(dlFileEntry, false);
 

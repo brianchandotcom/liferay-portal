@@ -426,6 +426,12 @@ public class DLFolderLocalServiceUtil {
 		return getService().getMountFoldersCount(groupId, parentFolderId);
 	}
 
+	public static void getSubfolderIds(
+		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().getSubfolderIds(folderIds, groupId, folderId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)

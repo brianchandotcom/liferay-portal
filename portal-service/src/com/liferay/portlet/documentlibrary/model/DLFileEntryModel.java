@@ -409,6 +409,62 @@ public interface DLFileEntryModel extends BaseModel<DLFileEntry>, GroupedModel {
 	 */
 	public void setReadCount(int readCount);
 
+	/**
+	 * Returns the small image ID of this document library file entry.
+	 *
+	 * @return the small image ID of this document library file entry
+	 */
+	public long getSmallImageId();
+
+	/**
+	 * Sets the small image ID of this document library file entry.
+	 *
+	 * @param smallImageId the small image ID of this document library file entry
+	 */
+	public void setSmallImageId(long smallImageId);
+
+	/**
+	 * Returns the large image ID of this document library file entry.
+	 *
+	 * @return the large image ID of this document library file entry
+	 */
+	public long getLargeImageId();
+
+	/**
+	 * Sets the large image ID of this document library file entry.
+	 *
+	 * @param largeImageId the large image ID of this document library file entry
+	 */
+	public void setLargeImageId(long largeImageId);
+
+	/**
+	 * Returns the custom1 image ID of this document library file entry.
+	 *
+	 * @return the custom1 image ID of this document library file entry
+	 */
+	public long getCustom1ImageId();
+
+	/**
+	 * Sets the custom1 image ID of this document library file entry.
+	 *
+	 * @param custom1ImageId the custom1 image ID of this document library file entry
+	 */
+	public void setCustom1ImageId(long custom1ImageId);
+
+	/**
+	 * Returns the custom2 image ID of this document library file entry.
+	 *
+	 * @return the custom2 image ID of this document library file entry
+	 */
+	public long getCustom2ImageId();
+
+	/**
+	 * Sets the custom2 image ID of this document library file entry.
+	 *
+	 * @param custom2ImageId the custom2 image ID of this document library file entry
+	 */
+	public void setCustom2ImageId(long custom2ImageId);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

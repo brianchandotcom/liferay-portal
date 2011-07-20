@@ -25,9 +25,18 @@ public interface DLFileEntryFinder {
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByAnyImageId(
+		long imageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByG_F_S(long groupId,
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
+		long imageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByExtraSettings(
 		int start, int end)

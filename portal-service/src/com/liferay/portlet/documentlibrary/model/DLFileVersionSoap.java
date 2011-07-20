@@ -52,6 +52,10 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setSmallImageId(model.getSmallImageId());
+		soapModel.setLargeImageId(model.getLargeImageId());
+		soapModel.setCustom1ImageId(model.getCustom1ImageId());
+		soapModel.setCustom2ImageId(model.getCustom2ImageId());
 
 		return soapModel;
 	}
@@ -272,6 +276,38 @@ public class DLFileVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public long getSmallImageId() {
+		return _smallImageId;
+	}
+
+	public void setSmallImageId(long smallImageId) {
+		_smallImageId = smallImageId;
+	}
+
+	public long getLargeImageId() {
+		return _largeImageId;
+	}
+
+	public void setLargeImageId(long largeImageId) {
+		_largeImageId = largeImageId;
+	}
+
+	public long getCustom1ImageId() {
+		return _custom1ImageId;
+	}
+
+	public void setCustom1ImageId(long custom1ImageId) {
+		_custom1ImageId = custom1ImageId;
+	}
+
+	public long getCustom2ImageId() {
+		return _custom2ImageId;
+	}
+
+	public void setCustom2ImageId(long custom2ImageId) {
+		_custom2ImageId = custom2ImageId;
+	}
+
 	private long _fileVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -293,4 +329,8 @@ public class DLFileVersionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _smallImageId;
+	private long _largeImageId;
+	private long _custom1ImageId;
+	private long _custom2ImageId;
 }

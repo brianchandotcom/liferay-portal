@@ -40,6 +40,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -611,6 +612,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntryImpl.setVersion(dlFileEntry.getVersion());
 		dlFileEntryImpl.setSize(dlFileEntry.getSize());
 		dlFileEntryImpl.setReadCount(dlFileEntry.getReadCount());
+		dlFileEntryImpl.setSmallImageId(dlFileEntry.getSmallImageId());
+		dlFileEntryImpl.setLargeImageId(dlFileEntry.getLargeImageId());
+		dlFileEntryImpl.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
+		dlFileEntryImpl.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
 
 		return dlFileEntryImpl;
 	}
@@ -8147,6 +8152,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;
 	@BeanReference(type = ResourcePersistence.class)
@@ -8229,6 +8236,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		return sql;
 	}
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_WHERE = "SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ";
@@ -8237,7 +8245,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	private static final String _FILTER_SQL_COUNT_DLFILEENTRY_WHERE = "SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "dlFileEntry";
 	private static final String _FILTER_ENTITY_TABLE = "DLFileEntry";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntry.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFileEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntry exists with the primary key ";

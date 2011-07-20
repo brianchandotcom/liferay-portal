@@ -85,9 +85,13 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "fileEntryTypeId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "size_", Types.BIGINT },
-			{ "readCount", Types.INTEGER }
+			{ "readCount", Types.INTEGER },
+			{ "smallImageId", Types.BIGINT },
+			{ "largeImageId", Types.BIGINT },
+			{ "custom1ImageId", Types.BIGINT },
+			{ "custom2ImageId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -132,6 +136,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setVersion(soapModel.getVersion());
 		model.setSize(soapModel.getSize());
 		model.setReadCount(soapModel.getReadCount());
+		model.setSmallImageId(soapModel.getSmallImageId());
+		model.setLargeImageId(soapModel.getLargeImageId());
+		model.setCustom1ImageId(soapModel.getCustom1ImageId());
+		model.setCustom2ImageId(soapModel.getCustom2ImageId());
 
 		return model;
 	}
@@ -491,6 +499,42 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_readCount = readCount;
 	}
 
+	@JSON
+	public long getSmallImageId() {
+		return _smallImageId;
+	}
+
+	public void setSmallImageId(long smallImageId) {
+		_smallImageId = smallImageId;
+	}
+
+	@JSON
+	public long getLargeImageId() {
+		return _largeImageId;
+	}
+
+	public void setLargeImageId(long largeImageId) {
+		_largeImageId = largeImageId;
+	}
+
+	@JSON
+	public long getCustom1ImageId() {
+		return _custom1ImageId;
+	}
+
+	public void setCustom1ImageId(long custom1ImageId) {
+		_custom1ImageId = custom1ImageId;
+	}
+
+	@JSON
+	public long getCustom2ImageId() {
+		return _custom2ImageId;
+	}
+
+	public void setCustom2ImageId(long custom2ImageId) {
+		_custom2ImageId = custom2ImageId;
+	}
+
 	@Override
 	public DLFileEntry toEscapedModel() {
 		if (isEscapedModel()) {
@@ -548,6 +592,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setVersion(getVersion());
 		dlFileEntryImpl.setSize(getSize());
 		dlFileEntryImpl.setReadCount(getReadCount());
+		dlFileEntryImpl.setSmallImageId(getSmallImageId());
+		dlFileEntryImpl.setLargeImageId(getLargeImageId());
+		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
+		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -751,12 +799,20 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryCacheModel.readCount = getReadCount();
 
+		dlFileEntryCacheModel.smallImageId = getSmallImageId();
+
+		dlFileEntryCacheModel.largeImageId = getLargeImageId();
+
+		dlFileEntryCacheModel.custom1ImageId = getCustom1ImageId();
+
+		dlFileEntryCacheModel.custom2ImageId = getCustom2ImageId();
+
 		return dlFileEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -802,13 +858,21 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getSize());
 		sb.append(", readCount=");
 		sb.append(getReadCount());
+		sb.append(", smallImageId=");
+		sb.append(getSmallImageId());
+		sb.append(", largeImageId=");
+		sb.append(getLargeImageId());
+		sb.append(", custom1ImageId=");
+		sb.append(getCustom1ImageId());
+		sb.append(", custom2ImageId=");
+		sb.append(getCustom2ImageId());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -902,6 +966,22 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			"<column><column-name>readCount</column-name><column-value><![CDATA[");
 		sb.append(getReadCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
+		sb.append(getSmallImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>largeImageId</column-name><column-value><![CDATA[");
+		sb.append(getLargeImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>custom1ImageId</column-name><column-value><![CDATA[");
+		sb.append(getCustom1ImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>custom2ImageId</column-name><column-value><![CDATA[");
+		sb.append(getCustom2ImageId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -943,6 +1023,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private String _version;
 	private long _size;
 	private int _readCount;
+	private long _smallImageId;
+	private long _largeImageId;
+	private long _custom1ImageId;
+	private long _custom2ImageId;
 	private transient ExpandoBridge _expandoBridge;
 	private DLFileEntry _escapedModelProxy;
 }

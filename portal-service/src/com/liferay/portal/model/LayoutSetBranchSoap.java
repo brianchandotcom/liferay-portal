@@ -41,6 +41,7 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setMaster(model.getMaster());
 
 		return soapModel;
 	}
@@ -179,6 +180,18 @@ public class LayoutSetBranchSoap implements Serializable {
 		_description = description;
 	}
 
+	public boolean getMaster() {
+		return _master;
+	}
+
+	public boolean isMaster() {
+		return _master;
+	}
+
+	public void setMaster(boolean master) {
+		_master = master;
+	}
+
 	private long _layoutSetBranchId;
 	private long _groupId;
 	private long _companyId;
@@ -189,4 +202,5 @@ public class LayoutSetBranchSoap implements Serializable {
 	private boolean _privateLayout;
 	private String _name;
 	private String _description;
+	private boolean _master;
 }

@@ -263,6 +263,33 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		_layoutSetBranch.setDescription(description);
 	}
 
+	/**
+	* Returns the master of this layout set branch.
+	*
+	* @return the master of this layout set branch
+	*/
+	public boolean getMaster() {
+		return _layoutSetBranch.getMaster();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout set branch is master.
+	*
+	* @return <code>true</code> if this layout set branch is master; <code>false</code> otherwise
+	*/
+	public boolean isMaster() {
+		return _layoutSetBranch.isMaster();
+	}
+
+	/**
+	* Sets whether this layout set branch is master.
+	*
+	* @param master the master of this layout set branch
+	*/
+	public void setMaster(boolean master) {
+		_layoutSetBranch.setMaster(master);
+	}
+
 	public boolean isNew() {
 		return _layoutSetBranch.isNew();
 	}
@@ -339,10 +366,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_layoutSetBranch.persist();
-	}
-
-	public boolean isMaster() {
-		return _layoutSetBranch.isMaster();
 	}
 
 	public LayoutSetBranch getWrappedLayoutSetBranch() {

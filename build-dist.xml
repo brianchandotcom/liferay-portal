@@ -437,7 +437,7 @@ app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app
 		</exec>
 
 		<exec dir="${shelf.drive}\projects\liferay.public\portal\${shelf.branch}" executable="cmd.exe" os="${os.windows}">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} copy -r ${svn.revision} -m ' ' ${shelf.path}/${shelf.branch} ${shelf.path}/${shelf.version}" />
+			<arg line="/c svn --username ${svn.username} --password ${svn.password} copy -r ${svn.revision} -m 'From: ${svn.username} &lt;${svn.username}@liferay.com&gt;' ${shelf.path}/${shelf.branch} ${shelf.path}/${shelf.version}" />
 		</exec>
 
 		<exec dir="${shelf.drive}\projects\liferay.public\portal\${shelf.branch}" executable="cmd.exe" os="${os.windows}">

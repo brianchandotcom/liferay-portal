@@ -1078,16 +1078,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		if (resourceCode == null) {
-			long codeId = counterLocalService.increment(
-				ResourceCode.class.getName());
-
-			resourceCode = resourceCodePersistence.create(codeId);
-
-			resourceCode.setCompanyId(companyId);
-			resourceCode.setName(name);
-			resourceCode.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-
-			resourceCodePersistence.update(resourceCode, false);
+			return;
 		}
 
 		List<Group> groups = groupPersistence.findByCompanyId(companyId);
@@ -1099,15 +1090,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 				resourceCode.getCodeId(), primKey);
 
 			if (resource == null) {
-				long resourceId = counterLocalService.increment(
-					Resource.class.getName());
-
-				resource = resourcePersistence.create(resourceId);
-
-				resource.setCodeId(resourceCode.getCodeId());
-				resource.setPrimKey(primKey);
-
-				resourcePersistence.update(resource, false);
+				continue;
 			}
 
 			Permission permission = permissionPersistence.fetchByA_R(

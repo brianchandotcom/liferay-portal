@@ -25,6 +25,12 @@
 		<%
 		for (int i = 0; i < results.size(); i++) {
 			BlogsEntry entry = (BlogsEntry)results.get(i);
+
+			if (entry.getDisplayDate().after(new Date())) {
+				searchContainer.setTotal(searchContainer.getTotal() - 1);
+
+				continue;
+			}
 		%>
 
 			<%@ include file="/html/portlet/blogs_aggregator/view_entry_content.jspf" %>

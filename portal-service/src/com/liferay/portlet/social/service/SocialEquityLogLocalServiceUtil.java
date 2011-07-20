@@ -342,6 +342,11 @@ public class SocialEquityLogLocalServiceUtil {
 			.deactivateEquityLogs(className, classPK, actionId, extraData);
 	}
 
+	public static void deactivateUserEquityLogs(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deactivateUserEquityLogs(userId);
+	}
+
 	public static void incrementSocialEquityAssetEntry_IQ(long assetEntryId,
 		com.liferay.portlet.social.model.SocialEquityIncrementPayload equityPayload)
 		throws com.liferay.portal.kernel.exception.SystemException {

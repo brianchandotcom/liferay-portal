@@ -33,7 +33,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 
 	public LayoutSetBranch addLayoutSetBranch(
 			long groupId, boolean privateLayout, String name,
-			String description, long copyLayoutSetBranchId,
+			String description, boolean master, long copyLayoutSetBranchId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -41,7 +41,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT_SET_BRANCH);
 
 		return layoutSetBranchLocalService.addLayoutSetBranch(
-			getUserId(), groupId, privateLayout, name, description,
+			getUserId(), groupId, privateLayout, name, description, master,
 			copyLayoutSetBranchId, serviceContext);
 	}
 

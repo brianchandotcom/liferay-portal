@@ -14,22 +14,12 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.model.LayoutSetBranchConstants;
-
 /**
  * @author Raymond Augé
  */
 public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 
 	public LayoutSetBranchImpl() {
-	}
-
-	public boolean isMaster() {
-		if (getName().equals(LayoutSetBranchConstants.MASTER_BRANCH_NAME)) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

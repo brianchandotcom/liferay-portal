@@ -110,6 +110,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -187,6 +188,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1913,17 +1915,7 @@ public class PortalImpl implements Portal {
 		UnicodeProperties typeSettingsProperties =
 			layout.getLayoutType().getTypeSettingsProperties();
 
-		Iterator<Map.Entry<String, String>> itr =
-			typeSettingsProperties.entrySet().iterator();
-
-		while (itr.hasNext()) {
-			Map.Entry<String, String> entry = itr.next();
-
-			String key = entry.getKey();
-			String value = entry.getValue();
-
-			variables.put(key, value);
-		}
+		variables.putAll(typeSettingsProperties);
 
 		LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);
 
@@ -3110,12 +3102,7 @@ public class PortalImpl implements Portal {
 				Group doAsGroup = GroupLocalServiceUtil.fetchGroup(doAsGroupId);
 
 				if ((doAsGroupId <= 0) || (doAsGroup == null)) {
-					Group guestGroup = GroupLocalServiceUtil.fetchGroup(
-						group.getCompanyId(), GroupConstants.GUEST);
-
-					if (guestGroup != null) {
-						doAsGroupId = guestGroup.getGroupId();
-					}
+					doAsGroupId = getDefaultScopeGroupId(group.getCompanyId());
 				}
 
 				if (doAsGroupId > 0) {
@@ -5036,6 +5023,33 @@ public class PortalImpl implements Portal {
 		}
 
 		return filteredPortlets;
+	}
+
+	protected long getDefaultScopeGroupId(long companyId)
+		throws PortalException , SystemException {
+
+		long doAsGroupId = 0;
+
+		Collection<Portlet> portlets = PortalUtil.getControlPanelPortlets(
+			companyId, PortletCategoryKeys.CONTENT);
+
+		List<Group> groups = GroupServiceUtil.getManageableSites(portlets, 1);
+
+		if (!groups.isEmpty()) {
+			Group group = groups.get(0);
+
+			doAsGroupId = group.getGroupId();
+		}
+		else {
+			Group guestGroup = GroupLocalServiceUtil.fetchGroup(
+				companyId, GroupConstants.GUEST);
+
+			if (guestGroup != null) {
+				doAsGroupId = guestGroup.getGroupId();
+			}
+		}
+
+		return doAsGroupId;
 	}
 
 	protected long getDoAsUserId(

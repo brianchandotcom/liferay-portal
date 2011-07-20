@@ -53,11 +53,17 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 	</c:if>
 
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
+
+		<%
+		rssURL.setParameter("p_l_id", String.valueOf(plid));
+		rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+		%>
+
 		<liferay-ui:icon
 			image="rss"
 			method="get"
 			target="_blank"
-			url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/message_boards/rss?p_l_id=" + plid + "&mbCategoryId=" + category.getCategoryId() + rssURLParams %>'
+			url="<%= rssURL.toString() %>"
 		/>
 
 		<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) %>">

@@ -249,6 +249,11 @@ public class SocialEquityUserLocalServiceWrapper
 		_socialEquityUserLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void clearRanks(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialEquityUserLocalService.clearRanks(userId);
+	}
+
 	public com.liferay.portlet.social.model.SocialEquityValue getContributionEquity(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _socialEquityUserLocalService.getContributionEquity(userId);

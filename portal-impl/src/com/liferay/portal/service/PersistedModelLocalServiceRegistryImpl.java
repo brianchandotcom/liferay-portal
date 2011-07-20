@@ -31,35 +31,34 @@ public class PersistedModelLocalServiceRegistryImpl
 	public PersistedModelLocalService getPersistedModelLocalService(
 		String className) {
 
-		return _persistedModelLocalServiceRegistries.get(className);
+		return _persistedModelLocalServices.get(className);
 	}
 
 	public List<PersistedModelLocalService> getPersistedModelLocalServices() {
-		return ListUtil.fromCollection(
-			_persistedModelLocalServiceRegistries.values());
+		return ListUtil.fromCollection(_persistedModelLocalServices.values());
 	}
 
 	public void register(
 		String className,
 		PersistedModelLocalService persistedModelLocalService) {
 
-		if (_persistedModelLocalServiceRegistries.containsKey(className)) {
+		if (_persistedModelLocalServices.containsKey(className)) {
 			_log.warn("Duplicate class name " + className);
 		}
 
-		_persistedModelLocalServiceRegistries.put(
+		_persistedModelLocalServices.put(
 			className, persistedModelLocalService);
 	}
 
 	public void unregister(String className) {
-		_persistedModelLocalServiceRegistries.remove(className);
+		_persistedModelLocalServices.remove(className);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PersistedModelLocalServiceRegistryImpl.class);
 
 	private Map<String, PersistedModelLocalService>
-		_persistedModelLocalServiceRegistries =
+		_persistedModelLocalServices =
 			new ConcurrentHashMap<String, PersistedModelLocalService>();
 
 }

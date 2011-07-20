@@ -112,29 +112,32 @@ boolean threadAsQuestionByDefault = GetterUtil.getBoolean(preferences.getValue("
 String rssFormatType = RSSUtil.getFormatType(rssFormat);
 double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
 
-StringBundler rssURLParams = new StringBundler();
+ResourceURL rssURL = new PortletURLImpl(request, PortletKeys.MESSAGE_BOARDS, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+rssURL.setCacheability(ResourceURL.FULL);
+
+rssURL.setParameter("struts_action", "/message_boards/rss");
 
 if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.DEFAULT_TYPE) || (rssFormatVersion != RSSUtil.DEFAULT_VERSION) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
 	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
-		rssURLParams.append("&max=");
-		rssURLParams.append(rssDelta);
+		rssURL.setParameter("max", String.valueOf(rssDelta));
 	}
 
 	if (!rssFormatType.equals(RSSUtil.DEFAULT_TYPE)) {
-		rssURLParams.append("&type=");
-		rssURLParams.append(rssFormatType);
+		rssURL.setParameter("type", rssFormatType);
 	}
 
 	if (rssFormatVersion != RSSUtil.DEFAULT_VERSION) {
-		rssURLParams.append("&version=");
-		rssURLParams.append(rssFormatVersion);
+		rssURL.setParameter("version", String.valueOf(rssFormatVersion));
 	}
 
 	if (!rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
-		rssURLParams.append("&displayStyle=");
-		rssURLParams.append(rssDisplayStyle);
+		rssURL.setParameter("displayStyle", rssDisplayStyle);
 	}
 }
+
+rssURL.setParameter("p_l_id", String.valueOf(plid));
+rssURL.setParameter("mbCategoryId", String.valueOf(scopeGroupId));
 
 boolean categoriesPanelCollapsible = true;
 boolean categoriesPanelExtended = true;

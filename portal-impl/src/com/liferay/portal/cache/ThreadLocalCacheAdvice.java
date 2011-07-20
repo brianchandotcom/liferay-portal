@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+
+import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 
@@ -46,11 +49,13 @@ public class ThreadLocalCacheAdvice
 			return;
 		}
 
+		Serializable cacheName = _getCacheName(methodInvocation);
+
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodInvocation.toString());
+				threadLocalCachable.scope(), cacheName);
 
-		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
+		String cacheKey = _getCacheKey(methodInvocation.getArguments());
 
 		if (result == null) {
 			threadLocalCache.put(cacheKey, nullResult);
@@ -69,11 +74,13 @@ public class ThreadLocalCacheAdvice
 			return null;
 		}
 
+		Serializable cacheName = _getCacheName(methodInvocation);
+
 		ThreadLocalCache<?> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), methodInvocation.toString());
+				threadLocalCachable.scope(), cacheName);
 
-		String cacheKey = _buildCacheKey(methodInvocation.getArguments());
+		String cacheKey = _getCacheKey(methodInvocation.getArguments());
 
 		Object value = threadLocalCache.get(cacheKey);
 
@@ -89,7 +96,7 @@ public class ThreadLocalCacheAdvice
 		return _nullThreadLocalCacheable;
 	}
 
-	private String _buildCacheKey(Object[] arguments) {
+	private String _getCacheKey(Object[] arguments) {
 		StringBundler sb = new StringBundler(arguments.length * 2 - 1);
 
 		for (int i = 0; i < arguments.length; i++) {
@@ -101,6 +108,18 @@ public class ThreadLocalCacheAdvice
 		}
 
 		return sb.toString();
+	}
+
+	private Serializable _getCacheName(MethodInvocation methodInvocation) {
+		if (methodInvocation instanceof ServiceBeanMethodInvocation) {
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+				(ServiceBeanMethodInvocation)methodInvocation;
+
+			return serviceBeanMethodInvocation.toCacheKeyModel();
+		}
+		else {
+			return methodInvocation.toString();
+		}
 	}
 
 	private static ThreadLocalCachable _nullThreadLocalCacheable =

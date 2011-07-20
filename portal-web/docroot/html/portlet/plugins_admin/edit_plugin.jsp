@@ -75,8 +75,8 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 
 					int maxNumberOfRolesChecked = 500;
 
-					List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, null, 0, maxNumberOfRolesChecked, new RoleRoleIdComparator(true));
-					int rolesCount = RoleLocalServiceUtil.searchCount(company.getCompanyId(), null, null, null);
+					List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, (Integer[])null, 0, maxNumberOfRolesChecked, new RoleRoleIdComparator(true));
+					int rolesCount = RoleLocalServiceUtil.searchCount(company.getCompanyId(), null, null, (Integer[])null);
 
 					List<Role> addToPageRoles = null;
 					List<Role> accessInControlPanelRoles = null;

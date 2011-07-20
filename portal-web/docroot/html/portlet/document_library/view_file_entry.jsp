@@ -33,24 +33,28 @@ String extension = fileEntry.getExtension();
 String title = fileEntry.getTitle();
 
 Folder folder = fileEntry.getFolder();
-FileVersion fileVersion = fileEntry.getFileVersion();
+FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
-long fileVersionId = 0;
+boolean versionSpecific = false;
 
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId");
+if (fileVersion != null) {
+	versionSpecific = true;
+}
+else if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+	fileVersion = fileEntry.getLatestFileVersion();
+}
+else {
+	fileVersion = fileEntry.getFileVersion();
+}
 
-if (fileEntry != null) {
-	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-		fileVersion = fileEntry.getLatestFileVersion();
-	}
+long fileVersionId = fileVersion.getFileVersionId();
 
-	fileVersionId = fileVersion.getFileVersionId();
+long fileEntryTypeId = 0;
 
-	if ((fileEntryTypeId == 0) && (fileVersion.getModel() instanceof DLFileVersion)) {
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+if (fileVersion.getModel() instanceof DLFileVersion) {
+	DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
-		fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
-	}
+	fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 }
 
 Lock lock = fileEntry.getLock();
@@ -63,12 +67,12 @@ if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.O
 
 long assetClassPK = 0;
 
-if ((fileVersion != null) && !fileVersion.isApproved() && (fileVersion.getVersion() != DLFileEntryConstants.DEFAULT_VERSION)) {
+if (!fileVersion.isApproved() && (fileVersion.getVersion() != DLFileEntryConstants.DEFAULT_VERSION)) {
 	assetClassPK = fileVersion.getFileVersionId();
 	title = fileVersion.getTitle();
 	extension = fileVersion.getExtension();
 }
-else if (fileEntry != null) {
+else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
@@ -171,7 +175,18 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 			<div class="body-row">
 				<div class="document-info">
-					<h2 class="document-title"><%= title %></h2>
+					<h2 class="document-title">
+						<c:choose>
+							<c:when test="<%= versionSpecific %>">
+								<%= fileVersion.getTitle() %>
+
+								(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
+							</c:when>
+							<c:otherwise>
+								<%= title %>
+							</c:otherwise>
+						</c:choose>
+					</h2>
 
 					<span class="document-thumbnail">
 
@@ -511,7 +526,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
 
-										<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true, locale) %>
 
 									</liferay-ui:panel>
 
@@ -542,7 +557,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" persistState="<%= true %>" title="<%= name %>">
 
-										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true, locale) %>
 
 									</liferay-ui:panel>
 
@@ -576,6 +591,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								headerNames.add("status");
 							}
 
+							headerNames.add(StringPool.BLANK);
+
 							searchContainer.setHeaderNames(headerNames);
 
 							if (comparableFileEntry) {
@@ -600,32 +617,21 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 								ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, fileEntry.isCheckedOut(), fileEntry.hasLock()}, String.valueOf(curFileVersion.getVersion()), i);
 
-								StringBundler sb = new StringBundler(10);
-
-								sb.append(themeDisplay.getPortalURL());
-								sb.append(themeDisplay.getPathContext());
-								sb.append("/documents/");
-								sb.append(themeDisplay.getScopeGroupId());
-								sb.append(StringPool.SLASH);
-								sb.append(folderId);
-								sb.append(StringPool.SLASH);
-								sb.append(HttpUtil.encodeURL(title));
-								sb.append("?version=");
-								sb.append(String.valueOf(curFileVersion.getVersion()));
-
-								String rowHREF = sb.toString();
-
 								// Statistics
 
-								row.addText(String.valueOf(curFileVersion.getVersion()), rowHREF);
-								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()), rowHREF);
-								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k", rowHREF);
+								row.addText(String.valueOf(curFileVersion.getVersion()));
+								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()));
+								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k");
 
 								// Status
 
 								if (showNonApprovedDocuments) {
 									row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curFileVersion.getStatus())));
 								}
+
+								// Action
+
+								row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_history_action.jsp");
 
 								// Add result row
 

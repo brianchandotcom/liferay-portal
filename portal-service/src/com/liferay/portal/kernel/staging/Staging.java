@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.staging;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
@@ -93,11 +94,11 @@ public interface Staging {
 
 	public long getRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
-		throws SystemException;
+		throws PortalException, SystemException;
 
 	public long getRecentLayoutRevisionId(
 			User user, long layoutSetBranchId, long plid)
-		throws SystemException;
+		throws PortalException, SystemException;
 
 	public long getRecentLayoutSetBranchId(HttpServletRequest request);
 
@@ -150,6 +151,15 @@ public interface Staging {
 	public void schedulePublishToRemote(PortletRequest PortletRequest)
 		throws Exception;
 
+	public void setRecentLayoutBranchId(
+		HttpServletRequest request, long layoutSetBranchId, long plid,
+		long layoutBranchId)
+		throws SystemException;
+
+	public void setRecentLayoutBranchId(
+		User user, long layoutSetBranchId, long plid, long layoutBranchId)
+		throws SystemException;
+
 	public void setRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid,
 			long layoutRevisionId)
@@ -163,15 +173,6 @@ public interface Staging {
 		HttpServletRequest request, long layoutSetBranchId);
 
 	public void setRecentLayoutSetBranchId(User user, long layoutSetBranchId)
-		throws SystemException;
-
-	public void setRecentVariationName(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			String variationName)
-		throws SystemException;
-
-	public void setRecentVariationName(
-			User user, long layoutSetBranchId, long plid, String variationName)
 		throws SystemException;
 
 	public void unscheduleCopyFromLive(PortletRequest PortletRequest)

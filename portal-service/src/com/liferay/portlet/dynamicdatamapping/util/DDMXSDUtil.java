@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.util.Locale;
+
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -33,62 +35,66 @@ public class DDMXSDUtil {
 		return _ddmXSD;
 	}
 
-	public static String getHTML(PageContext pageContext, Document document)
-		throws Exception {
-
-		return getDDMXSD().getHTML(pageContext, document);
-	}
-
 	public static String getHTML(
-			PageContext pageContext, Document document, Fields fields)
+			PageContext pageContext, Document document, Locale locale)
 		throws Exception {
 
-		return getDDMXSD().getHTML(pageContext, document, fields);
+		return getDDMXSD().getHTML(pageContext, document, locale);
 	}
 
 	public static String getHTML(
 			PageContext pageContext, Document document, Fields fields,
-			String namespace, boolean readOnly)
+			Locale locale)
 		throws Exception {
 
-		return getDDMXSD().getHTML(
-			pageContext, document, fields, namespace, readOnly);
-	}
-
-	public static String getHTML(PageContext pageContext, Element element)
-		throws Exception {
-
-		return getDDMXSD().getHTML(pageContext, element);
-	}
-
-	public static String getHTML(PageContext pageContext, String xml)
-		throws Exception {
-
-		return getDDMXSD().getHTML(pageContext, xml);
+		return getDDMXSD().getHTML(pageContext, document, fields, locale);
 	}
 
 	public static String getHTML(
-			PageContext pageContext, String xml, Fields fields)
+			PageContext pageContext, Document document, Fields fields,
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception {
 
-		return getDDMXSD().getHTML(pageContext, xml, fields);
+		return getDDMXSD().getHTML(
+			pageContext, document, fields, namespace, readOnly, locale);
+	}
+
+	public static String getHTML(
+			PageContext pageContext, Element element, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getHTML(pageContext, element, locale);
+	}
+
+	public static String getHTML(
+			PageContext pageContext, String xml, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getHTML(pageContext, xml, locale);
+	}
+
+	public static String getHTML(
+			PageContext pageContext, String xml, Fields fields, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getHTML(pageContext, xml, fields, locale);
 	}
 
 	public static String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace)
+			String namespace, Locale locale)
 		throws Exception {
 
-		return getDDMXSD().getHTML(pageContext, xml, fields, namespace);
+		return getDDMXSD().getHTML(pageContext, xml, fields, namespace, locale);
 	}
 
 	public static String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, boolean readOnly)
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception {
 
 		return getDDMXSD().getHTML(
-			pageContext, xml, fields, namespace, readOnly);
+			pageContext, xml, fields, namespace, readOnly, locale);
 	}
 
 	public static JSONArray getJSONArray(Document document)

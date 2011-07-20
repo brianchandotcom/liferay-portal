@@ -670,7 +670,7 @@
 		</action>
 
 		<action path="/group_pages/edit_layout_set_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutSetBranchAction">
-			<forward name="portlet.staging_bar.view_layout_set_branches" path="portlet.staging_bar.view_layout_set_branches" />
+			<forward name="portlet.staging_bar.edit_layout_set_branch" path="portlet.staging_bar.edit_layout_set_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
@@ -953,7 +953,7 @@
 		</action>
 
 		<action path="/layouts_admin/edit_layout_set_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutSetBranchAction">
-			<forward name="portlet.staging_bar.view_layout_set_branches" path="portlet.staging_bar.view_layout_set_branches" />
+			<forward name="portlet.staging_bar.edit_layout_set_branch" path="portlet.staging_bar.edit_layout_set_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
@@ -1729,7 +1729,7 @@
 		</action>
 
 		<action path="/staging_bar/edit_layout_set_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutSetBranchAction">
-			<forward name="portlet.staging_bar.view_layout_set_branches" path="portlet.staging_bar.view_layout_set_branches" />
+			<forward name="portlet.staging_bar.edit_layout_set_branch" path="portlet.staging_bar.edit_layout_set_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 

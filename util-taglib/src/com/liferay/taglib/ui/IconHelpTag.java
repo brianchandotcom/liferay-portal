@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -45,12 +44,13 @@ public class IconHelpTag extends IconTag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
-		jspWriter.write("onMouseOver=\"Liferay.Portal.ToolTip.show(this, '");
-		jspWriter.write(UnicodeLanguageUtil.get(pageContext, getMessage()));
-		jspWriter.write("');\" src=\"");
+		jspWriter.write("onBlur=\"Liferay.Portal.ToolTip.hide();\"");
+		jspWriter.write("onMouseOver=\"Liferay.Portal.ToolTip.show(this);\"");
+		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this);\"");
+		jspWriter.write("src=\"");
 		jspWriter.write(themeDisplay.getPathThemeImages());
-		jspWriter.write("/portlet/help.png\" />");
-		jspWriter.write("<span class=\"aui-helper-hidden-accessible\">");
+		jspWriter.write("/portlet/help.png\" tabIndex=\"0\" /><span ");
+		jspWriter.write("class=\"aui-helper-hidden-accessible tooltip-text\">");
 		jspWriter.write(LanguageUtil.get(pageContext, getMessage()));
 		jspWriter.write("</span></span>");
 

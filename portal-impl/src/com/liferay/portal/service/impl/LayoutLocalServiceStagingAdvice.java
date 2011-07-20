@@ -181,7 +181,7 @@ public class LayoutLocalServiceStagingAdvice
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
@@ -236,7 +236,7 @@ public class LayoutLocalServiceStagingAdvice
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
@@ -285,7 +285,7 @@ public class LayoutLocalServiceStagingAdvice
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
@@ -321,7 +321,7 @@ public class LayoutLocalServiceStagingAdvice
 
 		layoutRevisionLocalService.updateLayoutRevision(
 			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getVariationName(), layoutRevision.getName(),
+			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
 			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),

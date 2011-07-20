@@ -224,6 +224,27 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	 */
 	public void setDescription(String description);
 
+	/**
+	 * Returns the master of this layout set branch.
+	 *
+	 * @return the master of this layout set branch
+	 */
+	public boolean getMaster();
+
+	/**
+	 * Returns <code>true</code> if this layout set branch is master.
+	 *
+	 * @return <code>true</code> if this layout set branch is master; <code>false</code> otherwise
+	 */
+	public boolean isMaster();
+
+	/**
+	 * Sets whether this layout set branch is master.
+	 *
+	 * @param master the master of this layout set branch
+	 */
+	public void setMaster(boolean master);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

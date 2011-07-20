@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.cache;
 
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 
+import java.io.Serializable;
+
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +28,10 @@ import java.util.Map;
 public class ThreadLocalCacheManager {
 
 	public static void clearAll(Lifecycle lifecycle) {
-		Map<Lifecycle, Map<String, ThreadLocalCache<?>>> threadLocalCacheMaps =
-			_threadLocalCacheMaps.get();
+		Map<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>
+			threadLocalCacheMaps = _threadLocalCacheMaps.get();
 
-		Map<String, ThreadLocalCache<?>> threadLocalCacheMap =
+		Map<Serializable, ThreadLocalCache<?>> threadLocalCacheMap =
 			threadLocalCacheMaps.get(lifecycle);
 
 		if (threadLocalCacheMap != null) {
@@ -42,16 +44,17 @@ public class ThreadLocalCacheManager {
 	}
 
 	public static <T> ThreadLocalCache<T> getThreadLocalCache(
-		Lifecycle lifecycle, String name) {
+		Lifecycle lifecycle, Serializable name) {
 
-		Map<Lifecycle, Map<String, ThreadLocalCache<?>>> threadLocalCacheMaps =
-			_threadLocalCacheMaps.get();
+		Map<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>
+			threadLocalCacheMaps = _threadLocalCacheMaps.get();
 
-		Map<String, ThreadLocalCache<?>> threadLocalCacheMap =
+		Map<Serializable, ThreadLocalCache<?>> threadLocalCacheMap =
 			threadLocalCacheMaps.get(lifecycle);
 
 		if (threadLocalCacheMap == null) {
-			threadLocalCacheMap = new HashMap<String, ThreadLocalCache<?>>();
+			threadLocalCacheMap =
+				new HashMap<Serializable, ThreadLocalCache<?>>();
 
 			threadLocalCacheMaps.put(lifecycle, threadLocalCacheMap);
 		}
@@ -67,11 +70,13 @@ public class ThreadLocalCacheManager {
 		return (ThreadLocalCache<T>)threadLocalCache;
 	}
 
-	private static ThreadLocal<Map<Lifecycle, Map<String, ThreadLocalCache<?>>>>
-		_threadLocalCacheMaps = new InitialThreadLocal
-			<Map<Lifecycle, Map<String, ThreadLocalCache<?>>>>(
-				ThreadLocalCacheManager.class + "._threadLocalCacheMaps",
-				new EnumMap<Lifecycle, Map<String, ThreadLocalCache<?>>>(
-					Lifecycle.class));
+	private static ThreadLocal
+		<Map<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>>
+			_threadLocalCacheMaps = new InitialThreadLocal
+				<Map<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>>(
+					ThreadLocalCacheManager.class + "._threadLocalCacheMaps",
+					new EnumMap
+						<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>(
+							Lifecycle.class));
 
 }

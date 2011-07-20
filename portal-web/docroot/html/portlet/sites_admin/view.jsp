@@ -122,12 +122,10 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		ResultRow row = new ResultRow(group, group.getGroupId(), i);
 
-		PortletURL rowURL = renderResponse.createRenderURL();
+		LiferayPortletURL rowURL = ((LiferayPortletResponse)renderResponse).createRenderURL(PortletKeys.SITE_SETTINGS);
 
-		rowURL.setWindowState(WindowState.NORMAL);
+		rowURL.setDoAsGroupId(group.getGroupId());
 
-		rowURL.setParameter("struts_action", "/sites_admin/edit_site");
-		rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 		rowURL.setParameter("redirect", currentURL);
 
 		// Name

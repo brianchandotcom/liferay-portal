@@ -233,7 +233,7 @@ public interface LayoutSetBranchLocalService extends PersistedModelLocalService 
 
 	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout,
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,

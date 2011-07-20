@@ -51,6 +51,7 @@ import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
+import com.liferay.portal.service.LayoutBranchLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portal.service.LayoutPrototypeService;
@@ -141,10 +142,12 @@ import com.liferay.portal.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
+import com.liferay.portal.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutPrototypePersistence;
 import com.liferay.portal.service.persistence.LayoutRevisionPersistence;
+import com.liferay.portal.service.persistence.LayoutSetBranchFinder;
 import com.liferay.portal.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPrototypePersistence;
@@ -1126,6 +1129,44 @@ public abstract class ResourceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the layout branch local service.
+	 *
+	 * @return the layout branch local service
+	 */
+	public LayoutBranchLocalService getLayoutBranchLocalService() {
+		return layoutBranchLocalService;
+	}
+
+	/**
+	 * Sets the layout branch local service.
+	 *
+	 * @param layoutBranchLocalService the layout branch local service
+	 */
+	public void setLayoutBranchLocalService(
+		LayoutBranchLocalService layoutBranchLocalService) {
+		this.layoutBranchLocalService = layoutBranchLocalService;
+	}
+
+	/**
+	 * Returns the layout branch persistence.
+	 *
+	 * @return the layout branch persistence
+	 */
+	public LayoutBranchPersistence getLayoutBranchPersistence() {
+		return layoutBranchPersistence;
+	}
+
+	/**
+	 * Sets the layout branch persistence.
+	 *
+	 * @param layoutBranchPersistence the layout branch persistence
+	 */
+	public void setLayoutBranchPersistence(
+		LayoutBranchPersistence layoutBranchPersistence) {
+		this.layoutBranchPersistence = layoutBranchPersistence;
+	}
+
+	/**
 	 * Returns the layout prototype local service.
 	 *
 	 * @return the layout prototype local service
@@ -1350,6 +1391,25 @@ public abstract class ResourceLocalServiceBaseImpl
 	public void setLayoutSetBranchPersistence(
 		LayoutSetBranchPersistence layoutSetBranchPersistence) {
 		this.layoutSetBranchPersistence = layoutSetBranchPersistence;
+	}
+
+	/**
+	 * Returns the layout set branch finder.
+	 *
+	 * @return the layout set branch finder
+	 */
+	public LayoutSetBranchFinder getLayoutSetBranchFinder() {
+		return layoutSetBranchFinder;
+	}
+
+	/**
+	 * Sets the layout set branch finder.
+	 *
+	 * @param layoutSetBranchFinder the layout set branch finder
+	 */
+	public void setLayoutSetBranchFinder(
+		LayoutSetBranchFinder layoutSetBranchFinder) {
+		this.layoutSetBranchFinder = layoutSetBranchFinder;
 	}
 
 	/**
@@ -3802,6 +3862,10 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutFinder.class)
 	protected LayoutFinder layoutFinder;
+	@BeanReference(type = LayoutBranchLocalService.class)
+	protected LayoutBranchLocalService layoutBranchLocalService;
+	@BeanReference(type = LayoutBranchPersistence.class)
+	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = LayoutPrototypeLocalService.class)
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	@BeanReference(type = LayoutPrototypeService.class)
@@ -3826,6 +3890,8 @@ public abstract class ResourceLocalServiceBaseImpl
 	protected LayoutSetBranchService layoutSetBranchService;
 	@BeanReference(type = LayoutSetBranchPersistence.class)
 	protected LayoutSetBranchPersistence layoutSetBranchPersistence;
+	@BeanReference(type = LayoutSetBranchFinder.class)
+	protected LayoutSetBranchFinder layoutSetBranchFinder;
 	@BeanReference(type = LayoutSetPrototypeLocalService.class)
 	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
 	@BeanReference(type = LayoutSetPrototypeService.class)

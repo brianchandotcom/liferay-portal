@@ -58,7 +58,7 @@ DDLRecordVersion recordVersion = record.getRecordVersion(version);
 	}
 	%>
 
-	<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true) %>
+	<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true, locale) %>
 
 	<%
 	boolean pending = false;

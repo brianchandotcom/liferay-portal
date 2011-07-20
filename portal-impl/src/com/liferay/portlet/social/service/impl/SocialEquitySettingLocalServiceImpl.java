@@ -72,7 +72,11 @@ public class SocialEquitySettingLocalServiceImpl
 			ResourceActionsUtil.getSocialEquityActionMapping(
 				className, actionId);
 
-		if (equityActionMapping == null) {
+		List<SocialEquitySetting> equitySettings =
+			socialEquitySettingPersistence.findByG_C_A(
+				groupId, classNameId, actionId);
+
+		if ((equityActionMapping == null) && equitySettings.isEmpty()) {
 			socialEquitySettings = Collections.emptyList();
 
 			_portalCache.put(key, socialEquitySettings);
@@ -80,9 +84,11 @@ public class SocialEquitySettingLocalServiceImpl
 			return socialEquitySettings;
 		}
 
-		List<SocialEquitySetting> equitySettings =
-			socialEquitySettingPersistence.findByG_C_A(
-				groupId, classNameId, actionId);
+		if (equityActionMapping == null) {
+			equityActionMapping = new SocialEquityActionMapping();
+
+			equityActionMapping.setActionId(actionId);
+		}
 
 		equitySettings = ListUtil.copy(equitySettings);
 
@@ -198,6 +204,48 @@ public class SocialEquitySettingLocalServiceImpl
 
 		List<SocialEquitySetting> equitySettings = getEquitySettings(
 			groupId, className, equityActionMapping.getActionId());
+
+		if (equitySettings.isEmpty()) {
+			SocialEquitySetting equitySetting = new SocialEquitySettingImpl();
+
+			equitySetting.setActionId(equityActionMapping.getActionId());
+			equitySetting.setType(
+				SocialEquitySettingConstants.TYPE_INFORMATION);
+
+			equitySettings.add(equitySetting);
+
+			equitySetting = new SocialEquitySettingImpl();
+
+			equitySetting.setActionId(equityActionMapping.getActionId());
+			equitySetting.setType(
+				SocialEquitySettingConstants.TYPE_PARTICIPATION);
+
+			equitySettings.add(equitySetting);
+		}
+		else if (equitySettings.size() == 1) {
+			if (equitySettings.get(0).getType() ==
+					SocialEquitySettingConstants.TYPE_INFORMATION) {
+
+				SocialEquitySetting equitySetting =
+					new SocialEquitySettingImpl();
+
+				equitySetting.setActionId(equityActionMapping.getActionId());
+				equitySetting.setType(
+					SocialEquitySettingConstants.TYPE_PARTICIPATION);
+
+				equitySettings.add(equitySetting);
+			}
+			else {
+				SocialEquitySetting equitySetting =
+					new SocialEquitySettingImpl();
+
+				equitySetting.setActionId(equityActionMapping.getActionId());
+				equitySetting.setType(
+					SocialEquitySettingConstants.TYPE_INFORMATION);
+
+				equitySettings.add(equitySetting);
+			}
+		}
 
 		for (SocialEquitySetting equitySetting : equitySettings) {
 			if (!equityActionMapping.equals(equitySetting)) {

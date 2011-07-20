@@ -595,7 +595,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		List<CalEvent> events = eventsPool.get(key);
 
 		if (events == null) {
-			if (types != null) {
+			if ((types != null) && (types.length > 0) &&
+				((types.length > 1) || Validator.isNotNull(types[0]))) {
+
 				events = calEventPersistence.findByG_T_R(groupId, types, true);
 			}
 			else {

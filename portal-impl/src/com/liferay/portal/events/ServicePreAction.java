@@ -1607,7 +1607,9 @@ public class ServicePreAction extends Action {
 
 		// Session
 
-		if (!CookieKeys.hasSessionId(request)) {
+		if (PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID &&
+			!CookieKeys.hasSessionId(request)) {
+
 			themeDisplay.setAddSessionIdToURL(true);
 			themeDisplay.setSessionId(session.getId());
 		}

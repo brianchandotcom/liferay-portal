@@ -326,6 +326,10 @@ public class SocialEquityLogLocalServiceImpl
 		deactivateEquityLogs(equityLogs);
 	}
 
+	public void deactivateUserEquityLogs(long userId) throws SystemException {
+		socialEquityLogPersistence.removeByUserId(userId);
+	}
+
 	@BufferedIncrement(incrementClass = SocialEquityIncrement.class)
 	public void incrementSocialEquityAssetEntry_IQ(
 			long assetEntryId, SocialEquityIncrementPayload equityPayload)

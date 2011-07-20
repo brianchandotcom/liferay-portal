@@ -488,8 +488,19 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
+		return search(
+			companyId, keywords, types, new LinkedHashMap<String, Object>(),
+			start, end, obc);
+	}
+
+	public List<Role> search(
+			long companyId, String keywords, Integer[] types,
+			LinkedHashMap<String, Object> params, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
 		return roleFinder.findByKeywords(
-			companyId, keywords, types, start, end, obc);
+			companyId, keywords, types, params, start, end, obc);
 	}
 
 	public List<Role> search(
@@ -516,7 +527,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			long companyId, String keywords, Integer[] types)
 		throws SystemException {
 
-		return roleFinder.countByKeywords(companyId, keywords, types);
+		return searchCount(
+			companyId, keywords, types, new LinkedHashMap<String, Object>());
+	}
+
+	public int searchCount(
+			long companyId, String keywords, Integer[] types,
+			LinkedHashMap<String, Object> params)
+		throws SystemException {
+
+		return roleFinder.countByKeywords(companyId, keywords, types, params);
 	}
 
 	public int searchCount(

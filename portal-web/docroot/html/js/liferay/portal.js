@@ -29,6 +29,8 @@
 
 		names.splice(selectedIndex, 1);
 
+		var el;
+
 		for (var i = 0; i < names.length; i++) {
 			el = A.one('#' + namespace + toCharCode(names[i]) + 'TabsSection');
 
@@ -72,30 +74,68 @@
 		}
 	);
 
+	ToolTip._getText = A.cached(
+		function(id) {
+			var node = A.one('#' + id);
+
+			var text = '';
+
+			if (node) {
+				var toolTipTextNode = node.next('.tooltip-text');
+
+				if (toolTipTextNode) {
+					text = toolTipTextNode.html();
+				}
+			}
+
+			return text;
+		}
+	);
+
+	ToolTip.hide = function() {
+		var instance = this;
+
+		var cached = instance._cached;
+
+		if (cached) {
+			cached.hide();
+		}
+	};
+
 	Liferay.provide(
 		ToolTip,
 		'show',
 		function(obj, text) {
 			var instance = this;
 
-			if (!instance._cached) {
-				instance._cached = new A.Tooltip(
+			var cached = instance._cached;
+
+			if (!cached) {
+				cached = new A.Tooltip(
 					{
 						trigger: '.liferay-tooltip',
 						zIndex: 10000
 					}
 				).render();
+
+				instance._cached = cached;
 			}
 
-			var cached = instance._cached;
-
 			var trigger = cached.get('trigger');
-			var newElement = (trigger.indexOf(obj) == -1);
 			var bodyContent = cached.get('bodyContent');
+
+			var newElement = (trigger.indexOf(obj) == -1);
+
+			if (text == null) {
+				obj = A.one(obj);
+
+				text = instance._getText(obj.guid());
+			}
 
 			if (newElement || (bodyContent != text)) {
 				cached.set('trigger', obj);
 				cached.set('bodyContent', text);
+
 				cached.show();
 			}
 

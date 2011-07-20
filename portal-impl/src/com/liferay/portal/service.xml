@@ -1720,9 +1720,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_G" return-type="Collection">
+		<finder name="C_G_N" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
+			<finder-column name="name" />
 		</finder>
 	</entity>
 	<entity name="Role" local-service="true" remote-service="true">

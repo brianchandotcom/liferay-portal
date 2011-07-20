@@ -566,8 +566,6 @@ create unique index IX_8D83D0CE on ResourcePermission (companyId, name, scope, p
 create unique index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_A37A0588 on ResourcePermission (roleId);
 
-create index IX_9E0D3B7F on ResourceTypePermission (companyId, groupId);
-
 create index IX_2578FBD3 on Resource_ (codeId);
 create unique index IX_67DE7856 on Resource_ (codeId, primKey);
 

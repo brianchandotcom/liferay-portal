@@ -4282,6 +4282,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		boolean wasActive = user.isActive();
+
 		user.setStatus(status);
 
 		userPersistence.update(user, false);
@@ -4289,6 +4291,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 		indexer.reindex(user);
+
+		if (!user.isActive() && wasActive) {
+			socialEquityUserLocalService.clearRanks(user);
+		}
 
 		return user;
 	}

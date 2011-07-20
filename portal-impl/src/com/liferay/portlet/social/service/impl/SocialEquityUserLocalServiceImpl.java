@@ -35,6 +35,17 @@ import java.util.List;
 public class SocialEquityUserLocalServiceImpl
 	extends SocialEquityUserLocalServiceBaseImpl {
 
+	public void clearRanks(User user) throws SystemException {
+		List<SocialEquityUser> equityUsers =
+			socialEquityUserPersistence.findByUserId(user.getUserId());
+
+		for (SocialEquityUser equityUser : equityUsers) {
+			equityUser.setRank(0);
+
+			socialEquityUserPersistence.update(equityUser, false);
+		}
+	}
+
 	public void deleteSocialEquityUser(User user) throws SystemException {
 		socialEquityUserPersistence.removeByUserId(user.getUserId());
 	}

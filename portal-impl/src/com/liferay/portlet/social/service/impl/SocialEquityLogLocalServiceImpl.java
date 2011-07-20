@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PropsValues;
@@ -828,24 +829,30 @@ public class SocialEquityLogLocalServiceImpl
 			long equityUserId = rs.getLong("equityUserId");
 			long groupId = rs.getLong("groupId");
 			double equityValue = rs.getDouble("equityValue");
+			int status = rs.getInt("status");
 
-			if (groupId == _groupId) {
-				if (equityValue == _equityValue) {
-					_ties++;
-				}
-				else {
-					_equityValue = equityValue;
-					_rank = _rank + _ties + 1;
-					_ties = 0;
-				}
+			if (status != WorkflowConstants.STATUS_APPROVED) {
+				_updateRanksSetter.add(equityUserId, 0);
 			}
 			else {
-				_groupId = groupId;
-				_rank = 1;
-				_ties = 0;
-			}
+				if (groupId == _groupId) {
+					if (equityValue == _equityValue) {
+						_ties++;
+					}
+					else {
+						_equityValue = equityValue;
+						_rank = _rank + _ties + 1;
+						_ties = 0;
+					}
+				}
+				else {
+					_groupId = groupId;
+					_rank = 1;
+					_ties = 0;
+				}
 
-			_updateRanksSetter.add(equityUserId, _rank);
+				_updateRanksSetter.add(equityUserId, _rank);
+			}
 		}
 
 		private double _equityValue;

@@ -255,6 +255,12 @@ public class SocialEquityUserLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void deleteSocialEquityUser(
+		com.liferay.portal.model.User user)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSocialEquityUser(user);
+	}
+
 	public static com.liferay.portlet.social.model.SocialEquityValue getContributionEquity(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getContributionEquity(userId);

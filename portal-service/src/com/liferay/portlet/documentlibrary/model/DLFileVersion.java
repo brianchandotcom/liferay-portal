@@ -51,6 +51,8 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel {
 
 	public java.lang.String getIcon();
 
+	public java.lang.String getImageType();
+
 	public void setExtraSettings(java.lang.String extraSettings);
 
 	public void setExtraSettingsProperties(

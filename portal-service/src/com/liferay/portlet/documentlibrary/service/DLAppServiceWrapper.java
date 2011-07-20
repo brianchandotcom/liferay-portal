@@ -463,6 +463,13 @@ public class DLAppServiceWrapper implements DLAppService {
 		return _dlAppService.getSubfolderIds(repositoryId, folderId, recurse);
 	}
 
+	public void getSubfolderIds(long repositoryId,
+		java.util.List<java.lang.Long> folderIds, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.getSubfolderIds(repositoryId, folderIds, folderId);
+	}
+
 	public com.liferay.portal.model.Lock lockFolder(long repositoryId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,

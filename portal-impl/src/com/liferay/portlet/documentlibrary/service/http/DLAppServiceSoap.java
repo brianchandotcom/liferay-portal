@@ -365,6 +365,19 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void getSubfolderIds(long repositoryId, Long[] folderIds,
+		long folderId) throws RemoteException {
+		try {
+			DLAppServiceUtil.getSubfolderIds(repositoryId,
+				ListUtil.toList(folderIds), folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void revertFileEntry(long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

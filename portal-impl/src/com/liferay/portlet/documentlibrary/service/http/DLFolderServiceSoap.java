@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
@@ -289,6 +290,19 @@ public class DLFolderServiceSoap {
 					folderId, recurse);
 
 			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void getSubfolderIds(Long[] folderIds, long groupId,
+		long folderId) throws RemoteException {
+		try {
+			DLFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
+				groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

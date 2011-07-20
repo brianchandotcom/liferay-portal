@@ -57,6 +57,13 @@ public class RoleFinderUtil {
 		return getFinder().countByKeywords(companyId, keywords, types);
 	}
 
+	public static int countByKeywords(long companyId,
+		java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByKeywords(companyId, keywords, types, params);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Role> findBySystem(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -145,6 +152,16 @@ public class RoleFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByKeywords(companyId, keywords, types, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Role> findByKeywords(
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByKeywords(companyId, keywords, types, params, start,
+			end, obc);
 	}
 
 	public static RoleFinder getFinder() {

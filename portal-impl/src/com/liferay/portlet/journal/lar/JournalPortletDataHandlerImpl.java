@@ -55,10 +55,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.imagegallery.lar.IGPortletDataHandlerImpl;
-import com.liferay.portlet.imagegallery.model.IGImage;
-import com.liferay.portlet.imagegallery.service.IGImageLocalServiceUtil;
-import com.liferay.portlet.imagegallery.service.persistence.IGImageUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.NoSuchTemplateException;
@@ -138,9 +134,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		content = exportDLFileEntries(
 			portletDataContext, dlFoldersElement, dlFileEntriesElement,
 			dlFileRanksElement, entityElement, content, false);
-		content = exportIGImages(
-			portletDataContext, igFoldersElement, igImagesElement,
-			entityElement, content, false);
 		content = exportLayoutFriendlyURLs(portletDataContext, content);
 		content = exportLinksToLayout(portletDataContext, content);
 
@@ -161,7 +154,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		content = importDLFileEntries(
 			portletDataContext, parentElement, content);
-		content = importIGImages(portletDataContext, parentElement, content);
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());
@@ -216,32 +208,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (Element fileRankElement : dlFileRankElements) {
 			DLPortletDataHandlerImpl.importFileRank(
 				portletDataContext, fileRankElement);
-		}
-
-		Element igFoldersElement = entityElement.element("ig-folders");
-
-		List<Element> igFolderElements = Collections.emptyList();
-
-		if (igFoldersElement != null) {
-			igFolderElements = igFoldersElement.elements("folder");
-		}
-
-		for (Element folderElement : igFolderElements) {
-			IGPortletDataHandlerImpl.importFolder(
-				portletDataContext, folderElement);
-		}
-
-		Element igImagesElement = entityElement.element("ig-images");
-
-		List<Element> igImageElements = Collections.emptyList();
-
-		if (igImagesElement != null) {
-			igImageElements = igImagesElement.elements("image");
-		}
-
-		for (Element imageElement : igImageElements) {
-			IGPortletDataHandlerImpl.importImage(
-				portletDataContext, imageElement);
 		}
 	}
 
@@ -632,158 +598,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addClassedModel(feedElement, path, feed, _NAMESPACE);
-	}
-
-	protected static String exportIGImages(
-			PortletDataContext portletDataContext, Element igFoldersElement,
-			Element igImagesElement, Element entityElement, String content,
-			boolean checkDateRange)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getGroupId());
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			!group.isStagedPortlet(PortletKeys.IMAGE_GALLERY)) {
-
-			return content;
-		}
-
-		StringBuilder sb = new StringBuilder(content);
-
-		int beginPos = content.length();
-
-		while (true) {
-			beginPos = content.lastIndexOf("/image/image_gallery?", beginPos);
-
-			if (beginPos == -1) {
-				return sb.toString();
-			}
-
-			int endPos1 = content.indexOf(CharPool.APOSTROPHE, beginPos);
-			int endPos2 = content.indexOf(CharPool.CLOSE_BRACKET, beginPos);
-			int endPos3 = content.indexOf(
-				CharPool.CLOSE_PARENTHESIS, beginPos);
-			int endPos4 = content.indexOf(CharPool.LESS_THAN, beginPos);
-			int endPos5 = content.indexOf(CharPool.QUOTE, beginPos);
-			int endPos6 = content.indexOf(CharPool.SPACE, beginPos);
-
-			int endPos = endPos1;
-
-			if ((endPos == -1) || ((endPos2 != -1) && (endPos2 < endPos))) {
-				endPos = endPos2;
-			}
-
-			if ((endPos == -1) || ((endPos3 != -1) && (endPos3 < endPos))) {
-				endPos = endPos3;
-			}
-
-			if ((endPos == -1) || ((endPos4 != -1) && (endPos4 < endPos))) {
-				endPos = endPos4;
-			}
-
-			if ((endPos == -1) || ((endPos5 != -1) && (endPos5 < endPos))) {
-				endPos = endPos5;
-			}
-
-			if ((endPos == -1) || ((endPos6 != -1) && (endPos6 < endPos))) {
-				endPos = endPos6;
-			}
-
-			if ((beginPos == -1) || (endPos == -1)) {
-				break;
-			}
-
-			try {
-				String oldParameters = content.substring(beginPos, endPos);
-
-				oldParameters = oldParameters.substring(
-					oldParameters.indexOf(StringPool.QUESTION) + 1);
-
-				while (oldParameters.contains(StringPool.AMPERSAND_ENCODED)) {
-					oldParameters = oldParameters.replace(
-						StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
-				}
-
-				Map<String, String[]> map = HttpUtil.parameterMapFromString(
-					oldParameters);
-
-				IGImage image = null;
-
-				if (map.containsKey("uuid")) {
-					String uuid = MapUtil.getString(map, "uuid");
-
-					String groupIdString = MapUtil.getString(map, "groupId");
-
-					long groupId = GetterUtil.getLong(groupIdString);
-
-					if (groupIdString.equals("@group_id@")) {
-						groupId = portletDataContext.getScopeGroupId();
-					}
-
-					image = IGImageLocalServiceUtil.getImageByUuidAndGroupId(
-						uuid, groupId);
-				}
-				else if (map.containsKey("image_id") ||
-						 map.containsKey("img_id") ||
-						 map.containsKey("i_id")) {
-
-					long imageId = MapUtil.getLong(map, "image_id");
-
-					if (imageId <= 0) {
-						imageId = MapUtil.getLong(map, "img_id");
-
-						if (imageId <= 0) {
-							imageId = MapUtil.getLong(map, "i_id");
-						}
-					}
-
-					try {
-						image = IGImageLocalServiceUtil.getImageByLargeImageId(
-							imageId);
-					}
-					catch (Exception e) {
-						image = IGImageLocalServiceUtil.getImageBySmallImageId(
-							imageId);
-					}
-				}
-
-				if (image == null) {
-					beginPos--;
-
-					continue;
-				}
-
-				String path = IGPortletDataHandlerImpl.getImagePath(
-					portletDataContext, image);
-
-				Element igReferenceElement = entityElement.addElement(
-					"ig-reference");
-
-				igReferenceElement.addAttribute("path", path);
-
-				IGPortletDataHandlerImpl.exportImage(
-					portletDataContext, igFoldersElement, igImagesElement,
-					image, checkDateRange);
-
-				String igReference = "[$ig-reference=" + path + "$]";
-
-				sb.replace(beginPos, endPos, igReference);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
-				}
-			}
-
-			beginPos--;
-		}
-
-		return sb.toString();
 	}
 
 	protected static String exportLayoutFriendlyURLs(
@@ -1244,7 +1058,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		content = importDLFileEntries(
 			portletDataContext, articleElement, content);
-		content = importIGImages(portletDataContext, articleElement, content);
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());
@@ -1820,57 +1633,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 	}
 
-	protected static String importIGImages(
-			PortletDataContext portletDataContext, Element parentElement,
-			String content)
-		throws Exception {
-
-		List<Element> igReferenceElements = parentElement.elements(
-			"ig-reference");
-
-		for (Element igReferenceElement : igReferenceElements) {
-			String igReferencePath = igReferenceElement.attributeValue("path");
-
-			IGImage image = null;
-
-			try {
-				image = (IGImage)portletDataContext.getZipEntryAsObject(
-					igReferencePath);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
-				}
-			}
-
-			if (image == null) {
-				continue;
-			}
-
-			image = IGImageUtil.fetchByUUID_G(
-				image.getUuid(), portletDataContext.getGroupId());
-
-			if (image == null) {
-				continue;
-			}
-
-			String igReference = "[$ig-reference=" + igReferencePath + "$]";
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("/image/image_gallery?uuid=");
-			sb.append(image.getUuid());
-			sb.append("&groupId=");
-			sb.append(portletDataContext.getScopeGroupId());
-			sb.append("&t=");
-			sb.append(System.currentTimeMillis());
-
-			content = StringUtil.replace(content, igReference, sb.toString());
-		}
-
-		return content;
-	}
-
 	protected static String importLinksToLayout(
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
@@ -2148,7 +1910,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String xsl = template.getXsl();
 
 		xsl = importDLFileEntries(portletDataContext, templateElement, xsl);
-		xsl = importIGImages(portletDataContext, templateElement, xsl);
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());

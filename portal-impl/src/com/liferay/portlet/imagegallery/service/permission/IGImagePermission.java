@@ -56,7 +56,7 @@ public class IGImagePermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, image.getGroupId(), IGImage.class.getName(),
-			image.getImageId(), PortletKeys.IMAGE_GALLERY, actionId);
+			image.getImageId(), PortletKeys.IMAGE_GALLERY_DISPLAY, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

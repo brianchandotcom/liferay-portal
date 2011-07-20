@@ -81,7 +81,7 @@ public class PortletKeys {
 
 	public static final String IFRAME = "48";
 
-	public static final String IMAGE_GALLERY = "31";
+	public static final String IMAGE_GALLERY_DISPLAY = "31";
 
 	public static final String INVITATION = "100";
 

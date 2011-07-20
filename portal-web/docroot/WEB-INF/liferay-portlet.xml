@@ -352,26 +352,21 @@
 	<portlet>
 		<portlet-name>31</portlet-name>
 		<icon>/html/icons/image_gallery.png</icon>
-		<struts-path>image_gallery</struts-path>
-		<indexer-class>com.liferay.portlet.imagegallery.util.IGIndexer</indexer-class>
-		<open-search-class>com.liferay.portlet.imagegallery.util.IGOpenSearchImpl</open-search-class>
-		<portlet-data-handler-class>com.liferay.portlet.imagegallery.lar.IGPortletDataHandlerImpl</portlet-data-handler-class>
-		<social-activity-interpreter-class>com.liferay.portlet.imagegallery.social.IGActivityInterpreter</social-activity-interpreter-class>
-		<webdav-storage-token>image_gallery</webdav-storage-token>
-		<webdav-storage-class>com.liferay.portlet.imagegallery.webdav.IGWebDAVStorageImpl</webdav-storage-class>
+		<struts-path>image_gallery_display</struts-path>
+		<parent-struts-path>document_library</parent-struts-path>
+		<configuration-action-class>com.liferay.portlet.imagegallerydisplay.action.ConfigurationActionImpl</configuration-action-class>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>12.0</control-panel-entry-weight>
-		<asset-renderer-factory>com.liferay.portlet.imagegallery.asset.IGImageAssetRendererFactory</asset-renderer-factory>
-		<custom-attributes-display>com.liferay.portlet.imagegallery.IGImageCustomAttributesDisplay</custom-attributes-display>
-		<custom-attributes-display>com.liferay.portlet.imagegallery.IGFolderCustomAttributesDisplay</custom-attributes-display>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/image_gallery/css/main.jsp</header-portlet-css>
-		<css-class-wrapper>portlet-image-gallery</css-class-wrapper>
+		<header-portlet-css>/html/portlet/image_gallery_display/css/main.jsp</header-portlet-css>
+		<css-class-wrapper>portlet-image-gallery-display</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>

@@ -88,7 +88,9 @@ public class FindFileEntryAction extends Action {
 				if (layoutTypePortlet.hasPortletId(
 						PortletKeys.DOCUMENT_LIBRARY) ||
 					layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+						PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+					layoutTypePortlet.hasPortletId(
+						PortletKeys.IMAGE_GALLERY_DISPLAY)) {
 
 					return plid;
 				}
@@ -108,6 +110,13 @@ public class FindFileEntryAction extends Action {
 
 		plid = PortalUtil.getPlidFromPortletId(
 			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		plid = PortalUtil.getPlidFromPortletId(
+			fileEntry.getRepositoryId(), PortletKeys.IMAGE_GALLERY_DISPLAY);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;

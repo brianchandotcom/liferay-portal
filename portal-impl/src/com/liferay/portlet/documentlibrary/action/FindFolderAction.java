@@ -64,6 +64,8 @@ public class FindFolderAction extends Action {
 			portletURL.setWindowState(WindowState.NORMAL);
 			portletURL.setPortletMode(PortletMode.VIEW);
 
+			String strutsAction = ParamUtil.getString(request, "struts_action");
+
 			portletURL.setParameter("struts_action", "/document_library/view");
 			portletURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -89,7 +91,9 @@ public class FindFolderAction extends Action {
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				if (layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+						PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+					layoutTypePortlet.hasPortletId(
+						PortletKeys.IMAGE_GALLERY_DISPLAY)) {
 
 					return plid;
 				}
@@ -106,6 +110,13 @@ public class FindFolderAction extends Action {
 
 		plid = PortalUtil.getPlidFromPortletId(
 			groupId, PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		plid = PortalUtil.getPlidFromPortletId(
+			groupId, PortletKeys.IMAGE_GALLERY_DISPLAY);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;

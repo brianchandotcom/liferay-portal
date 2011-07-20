@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallery.action;
+package com.liferay.portlet.imagegallerydisplay.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.documentlibrary.action.ActionUtil;
 import com.liferay.portlet.imagegallery.NoSuchFolderException;
 
 import javax.portlet.PortletConfig;
@@ -30,7 +31,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewSlideShowAction extends PortletAction {
+public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
@@ -47,14 +48,15 @@ public class ViewSlideShowAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass().getName());
 
-				return mapping.findForward("portlet.image_gallery.error");
+				return mapping.findForward(
+					"portlet.image_gallery_display.error");
 			}
 			else {
 				throw e;
 			}
 		}
 
-		return mapping.findForward("portlet.image_gallery.view_slide_show");
+		return mapping.findForward("portlet.image_gallery_display.view");
 	}
 
 }

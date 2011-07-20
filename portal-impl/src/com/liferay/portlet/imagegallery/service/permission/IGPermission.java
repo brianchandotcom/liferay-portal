@@ -39,7 +39,7 @@ public class IGPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, _CLASS_NAME, groupId,
-			PortletKeys.IMAGE_GALLERY, actionId);
+			PortletKeys.IMAGE_GALLERY_DISPLAY, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

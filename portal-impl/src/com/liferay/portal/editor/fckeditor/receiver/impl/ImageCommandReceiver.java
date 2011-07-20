@@ -138,7 +138,7 @@ public class ImageCommandReceiver extends BaseCommandReceiver {
 
 	@Override
 	protected boolean isStagedData(Group group) {
-		return group.isStagedPortlet(PortletKeys.IMAGE_GALLERY);
+		return group.isStagedPortlet(PortletKeys.IMAGE_GALLERY_DISPLAY);
 	}
 
 	private void _getFiles(

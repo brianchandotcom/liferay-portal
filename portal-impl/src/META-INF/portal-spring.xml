@@ -129,6 +129,8 @@
 	<bean id="com.liferay.portal.service.ResourcePermissionService" class="com.liferay.portal.service.impl.ResourcePermissionServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourcePermissionPersistence" class="com.liferay.portal.service.persistence.ResourcePermissionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.ResourcePermissionFinder" class="com.liferay.portal.service.persistence.ResourcePermissionFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.ResourceTypePermissionLocalService" class="com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.ResourceTypePermissionPersistence" class="com.liferay.portal.service.persistence.ResourceTypePermissionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.RoleLocalService" class="com.liferay.portal.service.impl.RoleLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.RoleService" class="com.liferay.portal.service.impl.RoleServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.RolePersistence" class="com.liferay.portal.service.persistence.RolePersistenceImpl" parent="basePersistence" />

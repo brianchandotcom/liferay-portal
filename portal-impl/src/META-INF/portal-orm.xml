@@ -884,6 +884,17 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceTypePermissionModelImpl">
+		<attributes>
+			<id name="resourceTypePermissionId" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="name" />
+			<basic name="actionIds" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.RoleModelImpl">
 		<attributes>
 			<id name="roleId" />
@@ -3565,6 +3576,10 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourcePermissionImpl" name="ResourcePermission">
 		<table name="ResourcePermission" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceTypePermissionImpl" name="ResourceTypePermission">
+		<table name="ResourceTypePermission" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.RoleImpl" name="Role">

@@ -1091,6 +1091,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = ServiceComponentPersistence.class)

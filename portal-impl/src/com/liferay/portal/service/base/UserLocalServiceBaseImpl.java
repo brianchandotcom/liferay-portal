@@ -106,6 +106,7 @@ import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.ResourcePermissionService;
 import com.liferay.portal.service.ResourceService;
+import com.liferay.portal.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.RoleService;
 import com.liferay.portal.service.ServiceComponentLocalService;
@@ -190,6 +191,7 @@ import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.ServiceComponentPersistence;
@@ -2892,6 +2894,44 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	}
 
 	/**
+	 * Returns the resource type permission local service.
+	 *
+	 * @return the resource type permission local service
+	 */
+	public ResourceTypePermissionLocalService getResourceTypePermissionLocalService() {
+		return resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource type permission local service.
+	 *
+	 * @param resourceTypePermissionLocalService the resource type permission local service
+	 */
+	public void setResourceTypePermissionLocalService(
+		ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
+		this.resourceTypePermissionLocalService = resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource type permission persistence.
+	 *
+	 * @return the resource type permission persistence
+	 */
+	public ResourceTypePermissionPersistence getResourceTypePermissionPersistence() {
+		return resourceTypePermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource type permission persistence.
+	 *
+	 * @param resourceTypePermissionPersistence the resource type permission persistence
+	 */
+	public void setResourceTypePermissionPersistence(
+		ResourceTypePermissionPersistence resourceTypePermissionPersistence) {
+		this.resourceTypePermissionPersistence = resourceTypePermissionPersistence;
+	}
+
+	/**
 	 * Returns the role local service.
 	 *
 	 * @return the role local service
@@ -4934,6 +4974,10 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
+	@BeanReference(type = ResourceTypePermissionLocalService.class)
+	protected ResourceTypePermissionLocalService resourceTypePermissionLocalService;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 	@BeanReference(type = RoleService.class)

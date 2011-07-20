@@ -53,6 +53,7 @@
 	<import class="com.liferay.portal.model.ResourceBlockPermission" />
 	<import class="com.liferay.portal.model.ResourceCode" />
 	<import class="com.liferay.portal.model.ResourcePermission" />
+	<import class="com.liferay.portal.model.ResourceTypePermission" />
 	<import class="com.liferay.portal.model.Role" />
 	<import class="com.liferay.portal.model.ServiceComponent" />
 	<import class="com.liferay.portal.model.Shard" />
@@ -823,6 +824,16 @@
 		<property name="primKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission">
+		<cache usage="read-write" />
+		<id name="resourceTypePermissionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RoleImpl" table="Role_">

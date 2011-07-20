@@ -106,6 +106,14 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
+Image largeImage = ImageLocalServiceUtil.getImage(fileEntry.getLargeImageId());
+Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
+
+boolean hasAudio = AudioProcessor.hasAudio(fileEntry);
+boolean hasImages = ImageProcessor.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessor.hasImages(fileEntry, fileVersion.getVersion());
+boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
+
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
 request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
@@ -193,11 +201,20 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<%
 						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(extension) + ".png";
 
-						if (PDFProcessor.hasImages(fileEntry, fileVersion.getVersion())) {
+						if (hasPDFImages) {
 							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&documentThumbnail=1";
 						}
-						else if (VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion())){
+						else if (hasVideo){
 							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
+						}
+						else if (hasImages) {
+							long smallImageId = 0;
+
+							if (smallImage != null) {
+								smallImageId = smallImage.getImageId();
+							}
+
+							thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + ImageServletTokenUtil.getToken(smallImageId);
 						}
 						%>
 
@@ -260,19 +277,24 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
 						if (supportedAudio) {
-							if (AudioProcessor.hasAudio(fileEntry)) {
+							if (hasAudio) {
 								previewFileCount = 1;
 							}
 
 							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + title + "?version=" + fileVersion.getVersion() + "&audioPreview=1";
 						}
 						else if (supportedVideo) {
-							if (VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion())) {
+							if (hasVideo) {
 								previewFileCount = 1;
 							}
 
 							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoPreview=1");
 							videoThumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1");
+						}
+						else if (hasImages) {
+							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + ImageServletTokenUtil.getToken(largeImage.getImageId());
+
+							previewFileCount = 1;
 						}
 						else {
 							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry, fileVersion.getVersion());
@@ -288,7 +310,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !supportedAudio && !supportedVideo %>">
+									<c:when test ="<%= !hasImages && !supportedAudio && !supportedVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -326,7 +348,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 											).render();
 										</aui:script>
 									</c:when>
-									<c:otherwise>
+									<c:when test="<%= supportedAudio || supportedVideo %>">
 										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
 										</div>
@@ -357,7 +379,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 											so.write('<portlet:namespace />previewFileContent');
 										</aui:script>
-									</c:otherwise>
+									</c:when>
+									<c:when test="<%= hasImages %>">
+										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
+											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
+												<img src="<%=themeDisplay.getPathImage() %>/image_gallery?img_id=<%= largeImage.getImageId() %>&t=<%= ImageServletTokenUtil.getToken(largeImage.getImageId()) %>" style="max-height: 480px; max-width: 700px;" />
+											</div>
+										</div>
+									</c:when>
 								</c:choose>
 							</c:otherwise>
 						</c:choose>
@@ -526,7 +555,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
 
-										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
+										<%= DDMXSDUtil. getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true) %>
 
 									</liferay-ui:panel>
 
@@ -591,8 +620,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								headerNames.add("status");
 							}
 
-							headerNames.add(StringPool.BLANK);
-
 							searchContainer.setHeaderNames(headerNames);
 
 							if (comparableFileEntry) {
@@ -617,21 +644,32 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 								ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, fileEntry.isCheckedOut(), fileEntry.hasLock()}, String.valueOf(curFileVersion.getVersion()), i);
 
+								StringBundler sb = new StringBundler(10);
+
+								sb.append(themeDisplay.getPortalURL());
+								sb.append(themeDisplay.getPathContext());
+								sb.append("/documents/");
+								sb.append(themeDisplay.getScopeGroupId());
+								sb.append(StringPool.SLASH);
+								sb.append(folderId);
+								sb.append(StringPool.SLASH);
+								sb.append(HttpUtil.encodeURL(title));
+								sb.append("?version=");
+								sb.append(String.valueOf(curFileVersion.getVersion()));
+
+								String rowHREF = sb.toString();
+
 								// Statistics
 
-								row.addText(String.valueOf(curFileVersion.getVersion()));
-								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()));
-								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k");
+								row.addText(String.valueOf(curFileVersion.getVersion()), rowHREF);
+								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()), rowHREF);
+								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k", rowHREF);
 
 								// Status
 
 								if (showNonApprovedDocuments) {
 									row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curFileVersion.getStatus())));
 								}
-
-								// Action
-
-								row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_history_action.jsp");
 
 								// Add result row
 

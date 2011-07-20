@@ -508,6 +508,10 @@ public class ThemeDisplay implements Serializable {
 		return _urlUpdateManager;
 	}
 
+	public PortletURL getURLUpgradeImageGallery() {
+		return _urlUpgradeImageGallery;
+	}
+
 	public User getUser() {
 		return _user;
 	}
@@ -1226,6 +1230,10 @@ public class ThemeDisplay implements Serializable {
 		_urlUpdateManager = urlUpdateManager;
 	}
 
+	public void setURLUpgradeImageGallery(PortletURL urlUpgradeImageGallery) {
+		_urlUpgradeImageGallery = urlUpgradeImageGallery;
+	}
+
 	public void setUser(User user) throws PortalException, SystemException {
 		_user = user;
 
@@ -1368,6 +1376,7 @@ public class ThemeDisplay implements Serializable {
 	private transient PortletURL _urlSiteMapSettings = null;
 	private transient PortletURL _urlSiteSettings = null;
 	private transient PortletURL _urlUpdateManager = null;
+	private transient PortletURL _urlUpgradeImageGallery = null;
 	private User _user;
 	private boolean _widget;
 

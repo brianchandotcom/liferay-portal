@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallery.lar;
+package com.liferay.portlet.imagegallerydisplay.lar;
 
 import com.liferay.portal.kernel.image.ImageProcessor;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
@@ -106,7 +106,9 @@ public class IGPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.IMAGE_GALLERY));
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.IMAGE_GALLERY_DISPLAY));
 		sb.append("/images/");
 		sb.append(image.getImageId());
 		sb.append(".xml");
@@ -482,7 +484,9 @@ public class IGPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.IMAGE_GALLERY));
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.IMAGE_GALLERY_DISPLAY));
 		sb.append("/folders/");
 		sb.append(folderId);
 		sb.append(".xml");
@@ -518,7 +522,9 @@ public class IGPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.IMAGE_GALLERY));
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.IMAGE_GALLERY_DISPLAY));
 		sb.append("/bin/");
 		sb.append(image.getImageId());
 		sb.append(StringPool.PERIOD);
@@ -533,7 +539,8 @@ public class IGPortletDataHandlerImpl extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getSourcePortletPath(PortletKeys.IMAGE_GALLERY));
+			portletDataContext.getSourcePortletPath(
+				PortletKeys.IMAGE_GALLERY_DISPLAY));
 		sb.append("/folders/");
 		sb.append(folderId);
 		sb.append(".xml");

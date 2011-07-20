@@ -14,10 +14,24 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery/init.jsp" %>
+<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
+if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+	repositoryId = folder.getRepositoryId();
+}
+
+int status = WorkflowConstants.STATUS_APPROVED;
+
+if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+status = WorkflowConstants.STATUS_ANY;
+}
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
@@ -28,18 +42,18 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= IGFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= IGFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
+		results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.imagegallery.model.IGFolder"
+		className="com.liferay.portal.kernel.repository.model.Folder"
 		escapedModel="<%= true %>"
 		keyProperty="folderId"
 		modelVar="curFolder"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/image_gallery/view" />
+			<portlet:param name="struts_action" value="/image_gallery_display/view" />
 			<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
@@ -69,17 +83,17 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 			buffer.append("</a>");
 
-			List subfolders = IGFolderServiceUtil.getFolders(scopeGroupId, curFolder.getFolderId(), 0, 5);
+			List subfolders = DLAppServiceUtil.getFolders(repositoryId, curFolder.getFolderId(), 0, 5);
 
 			if (!subfolders.isEmpty()) {
-				int subfoldersCount = IGFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
+				int subfoldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
 
 				buffer.append("<br /><u>");
 				buffer.append(LanguageUtil.get(pageContext, "subfolders"));
 				buffer.append("</u>: ");
 
 				for (int j = 0; j < subfolders.size(); j++) {
-					IGFolder subfolder = (IGFolder)subfolders.get(j);
+					Folder subfolder = (Folder)subfolders.get(j);
 
 					subfolder = subfolder.toEscapedModel();
 
@@ -118,10 +132,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 		subfolderIds.add(new Long(curFolder.getFolderId()));
 
-		IGFolderServiceUtil.getSubfolderIds(subfolderIds, scopeGroupId, curFolder.getFolderId());
+		DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId());
 
 		int subFoldersCount = subfolderIds.size() - 1;
-		int subEntriesCount = IGImageServiceUtil.getFoldersImagesCount(scopeGroupId, subfolderIds);
+		int subEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, subfolderIds, status);
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -138,7 +152,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
-			path="/html/portlet/image_gallery/folder_action.jsp"
+			path="/html/portlet/document_library/folder_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

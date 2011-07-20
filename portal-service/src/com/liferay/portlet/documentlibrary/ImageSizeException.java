@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallery;
+package com.liferay.portlet.documentlibrary;
 
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.imagegallery.model.IGFolder;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Jorge Ferrer
+ * @author Brian Wing Shun Chan
  */
-public class IGFolderCustomAttributesDisplay
-	extends BaseCustomAttributesDisplay {
+public class ImageSizeException extends PortalException {
 
-	public static final String CLASS_NAME = IGFolder.class.getName();
-
-	public String getClassName() {
-		return CLASS_NAME;
+	public ImageSizeException() {
+		super();
 	}
 
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
+	public ImageSizeException(String msg) {
+		super(msg);
+	}
+
+	public ImageSizeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public ImageSizeException(Throwable cause) {
+		super(cause);
 	}
 
 }

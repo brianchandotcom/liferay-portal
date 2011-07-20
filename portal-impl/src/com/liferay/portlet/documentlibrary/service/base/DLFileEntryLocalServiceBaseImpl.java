@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.ImageLocalService;
+import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.LockLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
@@ -38,6 +40,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -997,6 +1000,60 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the image local service.
+	 *
+	 * @return the image local service
+	 */
+	public ImageLocalService getImageLocalService() {
+		return imageLocalService;
+	}
+
+	/**
+	 * Sets the image local service.
+	 *
+	 * @param imageLocalService the image local service
+	 */
+	public void setImageLocalService(ImageLocalService imageLocalService) {
+		this.imageLocalService = imageLocalService;
+	}
+
+	/**
+	 * Returns the image remote service.
+	 *
+	 * @return the image remote service
+	 */
+	public ImageService getImageService() {
+		return imageService;
+	}
+
+	/**
+	 * Sets the image remote service.
+	 *
+	 * @param imageService the image remote service
+	 */
+	public void setImageService(ImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	/**
+	 * Returns the image persistence.
+	 *
+	 * @return the image persistence
+	 */
+	public ImagePersistence getImagePersistence() {
+		return imagePersistence;
+	}
+
+	/**
+	 * Sets the image persistence.
+	 *
+	 * @param imagePersistence the image persistence
+	 */
+	public void setImagePersistence(ImagePersistence imagePersistence) {
+		this.imagePersistence = imagePersistence;
+	}
+
+	/**
 	 * Returns the lock local service.
 	 *
 	 * @return the lock local service
@@ -1764,6 +1821,12 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	protected DLSyncPersistence dlSyncPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = ImageLocalService.class)
+	protected ImageLocalService imageLocalService;
+	@BeanReference(type = ImageService.class)
+	protected ImageService imageService;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LockLocalService.class)
 	protected LockLocalService lockLocalService;
 	@BeanReference(type = LockPersistence.class)

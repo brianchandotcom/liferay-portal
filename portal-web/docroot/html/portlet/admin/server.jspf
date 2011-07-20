@@ -336,6 +336,24 @@ numberFormat.setMinimumIntegerDigits(2);
 				</aui:button-row>
 			</c:when>
 			<c:when test='<%= tabs2.equals("data-migration") %>'>
+				<c:if test="<%= !PortalUtil.isImageGalleryUsingDLHook() %>">
+					<liferay-ui:panel-container extended="<%= true %>" id="upgradeImageGallery" persistState="<%= true %>">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "upgradeImageGalleryPanel" %>' persistState="<%= true %>" title="upgrade-image-gallery-data">
+							<div class="portlet-msg-alert">
+								<%= LanguageUtil.get(pageContext, "liferay-needs-to-upgrade-the-image-gallery-data-in-order-to-use-image-gallery-in-this-version-this-operation-consists-of-upgrading-the-database-and-replacing-the-current-image-gallery-hook-with-document-library-hook-depending-on-the-number-of-images-and-its-size-this-operation-may-take-longer-do-not-forget-to-change-portal-property-image.hook.impl-to-use-com.liferay.portal.image.DLHook") %>
+							</div>
+
+							<aui:button-row>
+
+								<%
+								String taglibUpgradeImageGallery = renderResponse.getNamespace() + "saveServer('upgradeImageGallery');";
+								%>
+
+								<aui:button onClick="<%= taglibUpgradeImageGallery %>" value="execute" />
+							</aui:button-row>
+						</liferay-ui:panel>
+					</liferay-ui:panel-container>
+				</c:if>
 
 				<%
 				List<ConvertProcess> convertProcesses = new ArrayList<ConvertProcess>();

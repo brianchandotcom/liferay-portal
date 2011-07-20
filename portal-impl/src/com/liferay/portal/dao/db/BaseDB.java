@@ -154,6 +154,10 @@ public abstract class BaseDB implements DB {
 		return CounterLocalServiceUtil.increment();
 	}
 
+	public long increment(String name) throws SystemException {
+		return CounterLocalServiceUtil.increment(name);
+	}
+
 	public boolean isSupportsAlterColumnName() {
 		return _SUPPORTS_ALTER_COLUMN_NAME;
 	}

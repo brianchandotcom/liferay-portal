@@ -15,14 +15,14 @@
 package com.liferay.portlet.imagegallery.util;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.imagegallery.model.IGFolder;
-import com.liferay.portlet.imagegallery.model.IGFolderConstants;
-import com.liferay.portlet.imagegallery.model.IGImage;
-import com.liferay.portlet.imagegallery.service.IGFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,21 +38,23 @@ import javax.servlet.http.HttpServletRequest;
 public class IGUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			IGImage image, HttpServletRequest request,
+			FileEntry fileEntry, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {
 
-		IGFolder folder = image.getFolder();
+		Folder folder = fileEntry.getFolder();
 
 		addPortletBreadcrumbEntries(folder, request, renderResponse);
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/image_gallery/view_image");
-		portletURL.setParameter("imageId", String.valueOf(image.getImageId()));
+		portletURL.setParameter(
+			"struts_action", "/image_gallery_display/view_image");
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, image.getName(), portletURL.toString());
+			request, fileEntry.getTitle(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -60,18 +62,17 @@ public class IGUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		if (folderId == IGFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return;
 		}
 
-		IGFolder folder = IGFolderLocalServiceUtil.getFolder(
-			folderId);
+		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
 		addPortletBreadcrumbEntries(folder, request, renderResponse);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			IGFolder folder, HttpServletRequest request,
+			Folder folder, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -80,7 +81,7 @@ public class IGUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (strutsAction.equals("/journal/select_image_gallery") ||
-			strutsAction.equals("/image_gallery/select_folder")) {
+			strutsAction.equals("/image_gallery_display/select_folder")) {
 			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -98,14 +99,15 @@ public class IGUtil {
 				portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/image_gallery/view");
+			portletURL.setParameter(
+				"struts_action", "/image_gallery_display/view");
 		}
 
-		List<IGFolder> ancestorFolders = folder.getAncestors();
+		List<Folder> ancestorFolders = folder.getAncestors();
 
 		Collections.reverse(ancestorFolders);
 
-		for (IGFolder ancestorFolder : ancestorFolders) {
+		for (Folder ancestorFolder : ancestorFolders) {
 			portletURL.setParameter(
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 

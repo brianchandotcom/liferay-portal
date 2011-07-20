@@ -172,7 +172,7 @@ public class DLAppHelperLocalServiceImpl
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,
 			long[] assetLinkEntryIds, String mimeType,
-			boolean addDraftAssetEntry, boolean visible)
+			boolean addDraftAssetEntry, boolean visible,int height, int width)
 		throws PortalException, SystemException {
 
 		AssetEntry assetEntry = null;
@@ -184,7 +184,7 @@ public class DLAppHelperLocalServiceImpl
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				assetCategoryIds, assetTagNames, false, null, null, null, null,
 				mimeType, fileEntry.getTitle(), fileEntry.getDescription(),
-				null, null, null, 0, 0, null, false);
+				null, null, null, height, width, null, false);
 		}
 		else {
 			assetEntry = assetEntryLocalService.updateEntry(
@@ -193,8 +193,8 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getFileEntryId(), fileEntry.getUuid(),
 				assetCategoryIds, assetTagNames, visible, null, null, null,
 				null, mimeType, fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null,
-				false);
+				fileEntry.getDescription(), null, null, null, height, width,
+				null, false);
 
 			List<DLFileShortcut> fileShortcuts =
 				dlFileShortcutPersistence.findByToFileEntryId(
@@ -207,8 +207,8 @@ public class DLAppHelperLocalServiceImpl
 					fileShortcut.getFileShortcutId(), fileShortcut.getUuid(),
 					assetCategoryIds, assetTagNames, true, null, null, null,
 					null, mimeType, fileEntry.getTitle(),
-					fileEntry.getDescription(), null, null, null, 0, 0, null,
-					false);
+					fileEntry.getDescription(), null, null, null, height, width,
+					null, false);
 			}
 		}
 

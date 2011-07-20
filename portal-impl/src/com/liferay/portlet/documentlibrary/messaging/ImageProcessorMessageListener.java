@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallery;
+package com.liferay.portlet.documentlibrary.messaging;
 
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.imagegallery.model.IGImage;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 /**
- * @author Jorge Ferrer
+ * @author Sergio González
  */
-public class IGImageCustomAttributesDisplay
-	extends BaseCustomAttributesDisplay {
-
-	public static final String CLASS_NAME = IGImage.class.getName();
-
-	public String getClassName() {
-		return CLASS_NAME;
-	}
+public class ImageProcessorMessageListener extends BaseMessageListener {
 
 	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/file_system/small/bmp.png";
+	protected void doReceive(Message message) throws Exception {
+		FileVersion fileVersion = (FileVersion)message.getPayload();
+
+		ImageProcessor.generateImages(fileVersion);
 	}
 
 }

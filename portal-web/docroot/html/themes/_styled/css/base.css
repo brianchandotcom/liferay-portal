@@ -249,7 +249,7 @@ hr, .separator {
 
 /* ---------- Update Manager ---------- */
 
-.update-available {
+.update-available, .required-image-gallery-upgrade {
 	margin-top: 10px;
 	padding: 2px;
 	text-align: left;

@@ -170,7 +170,7 @@ hr, .separator {
 
 /* ---------- Update Manager ---------- */
 
-.update-available {
+.update-available, .required-image-gallery-upgrade {
 }
 
 /* ---------- Text highlighting ---------- */

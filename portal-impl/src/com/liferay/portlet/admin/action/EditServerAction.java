@@ -18,7 +18,9 @@ import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.portal.convert.ConvertImageGallery;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.image.DLHook;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
@@ -66,9 +68,11 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeImageGallery;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
@@ -172,6 +176,9 @@ public class EditServerAction extends PortletAction {
 		else if (cmd.equals("updateMail")) {
 			updateMail(actionRequest, preferences);
 		}
+		else if (cmd.startsWith("upgradeImageGallery")) {
+			upgradeImageGallery(actionRequest);
+		}
 		else if (cmd.equals("verifyPluginTables")) {
 			verifyPluginTables();
 		}
@@ -198,6 +205,32 @@ public class EditServerAction extends PortletAction {
 
 	protected void cacheSingle() throws Exception {
 		WebCachePoolUtil.clear();
+	}
+
+	protected void upgradeImageGallery(ActionRequest actionRequest)
+		throws Exception {
+
+		UpgradeImageGallery.startManualUpgrade();
+
+		if (PortalUtil.isImageGalleryUsingDLHook()) {
+			return;
+		}
+
+		String className = ConvertImageGallery.class.getName();
+
+		String[] parameters = {DLHook.class.getName()};
+
+		ConvertProcess convertProcess = (ConvertProcess)InstancePool.get(
+			className);
+
+		convertProcess.setParameterValues(parameters);
+
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		MaintenanceUtil.maintain(portletSession.getId(), className);
+
+		MessageBusUtil.sendMessage(
+			DestinationNames.CONVERT_PROCESS, className);
 	}
 
 	protected String convertProcess(

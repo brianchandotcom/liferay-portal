@@ -33,6 +33,12 @@
 				<a class="update-available" href="$update_available_url">#language("updates-are-available-for-liferay")</a>
 			</div>
 		#end
+
+		#if ($upgrade_image_gallery_url)
+			<div class="popup-alert-notice">
+				<a class="required-image-gallery-upgrade" href="$upgrade_image_gallery_url">#language("required-manual-image-gallery-upgrade")</a>
+			</div>
+		#end
 	</header>
 
 	<div id="content">

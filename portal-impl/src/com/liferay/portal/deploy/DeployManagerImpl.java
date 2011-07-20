@@ -26,9 +26,13 @@ import com.liferay.portal.deploy.auto.WebAutoDeployer;
 import com.liferay.portal.kernel.deploy.DeployManager;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.deploy.ExtDeployer;
 import com.liferay.portal.tools.deploy.HookDeployer;
 import com.liferay.portal.tools.deploy.LayoutTemplateDeployer;
@@ -99,6 +103,12 @@ public class DeployManagerImpl implements DeployManager {
 
 	public String getDeployDir() throws Exception {
 		return DeployUtil.getAutoDeployDestDir();
+	}
+
+	public List<PluginPackage> getInstalledPlugins()
+		throws PortalException, SystemException {
+
+		return PluginPackageUtil.getInstalledPluginPackages();
 	}
 
 	public boolean isExtPlugin(File file) {

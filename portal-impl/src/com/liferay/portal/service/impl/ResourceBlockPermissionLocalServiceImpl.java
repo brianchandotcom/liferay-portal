@@ -70,8 +70,8 @@ public class ResourceBlockPermissionLocalServiceImpl
 		throws SystemException {
 
 		return resourceBlockPermissionPersistence.findByResourceBlockId(
-			resourceBlockId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ResourceBlockPermissionRoleIdComparator());
+			resourceBlockId/*, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new ResourceBlockPermissionRoleIdComparator()*/);
 	}
 
 	public List<ResourceBlockPermission> getResourceBlockPermissions(
@@ -96,10 +96,10 @@ public class ResourceBlockPermissionLocalServiceImpl
 	public void updateResourceBlockPermissions(
 			long resourceBlockId, List<ResourceBlockPermission> resourceBlockPermissions)
 		throws SystemException {
-	
+
 		for (ResourceBlockPermission resourceBlockPermission :
 			resourceBlockPermissions) {
-	
+
 			resourceBlockPermission.setResourceBlockId(resourceBlockId);
 			updateResourceBlockPermission(resourceBlockPermission);
 		}

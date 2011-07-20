@@ -35,7 +35,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface ResourceBlockLocalService extends PersistedModelLocalService {
+public interface ResourceBlockLocalService extends PersistedModelLocalService,
+	PermissionedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -263,6 +264,9 @@ public interface ResourceBlockLocalService extends PersistedModelLocalService {
 		long companyId, long groupId, java.lang.String name, long[] roleIds,
 		long actionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isSupported(java.lang.String name);
 
 	/**
 	* Increments the reference count of the resource block and updates it in

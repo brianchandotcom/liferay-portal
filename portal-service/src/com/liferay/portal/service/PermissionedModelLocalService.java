@@ -14,25 +14,14 @@
 
 package com.liferay.portal.service;
 
-import java.util.List;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Connor McKay
  */
-public interface PersistedModelLocalServiceRegistry {
-
-	public PersistedModelLocalService getPersistedModelLocalService(
-		String className);
-
-	public List<PersistedModelLocalService> getPersistedModelLocalServices();
-
-	public boolean isPermissionedModelLocalService(String className);
-
-	public void register(
-		String className,
-		PersistedModelLocalService persistedModelLocalService);
-
-	public void unregister(String className);
-
+public interface PermissionedModelLocalService extends PersistedModelLocalService {
 }

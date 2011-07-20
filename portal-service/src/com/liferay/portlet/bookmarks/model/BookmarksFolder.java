@@ -26,8 +26,8 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl
  * @generated
  */
-public interface BookmarksFolder extends BookmarksFolderModel, PermissionedModel,
-	PersistedModel {
+public interface BookmarksFolder extends BookmarksFolderModel, PersistedModel,
+	PermissionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

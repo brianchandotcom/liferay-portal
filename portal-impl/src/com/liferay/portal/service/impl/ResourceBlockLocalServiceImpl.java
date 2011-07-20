@@ -118,6 +118,11 @@ public class ResourceBlockLocalServiceImpl
 			companyId, groupId, name, roleIds, actionId);
 	}
 
+	public boolean isSupported(String name) {
+		return PersistedModelLocalServiceRegistryUtil.
+			isPermissionedModelLocalService(name);
+	}
+
 	@Override
 	public void deleteResourceBlock(long resourceBlockId)
 		throws PortalException, SystemException {

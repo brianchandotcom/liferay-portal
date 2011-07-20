@@ -97,6 +97,8 @@ import com.liferay.portal.service.RegionService;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceActionLocalService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourceBlockPermissionLocalService;
 import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
@@ -178,6 +180,9 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockFinder;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
@@ -2644,6 +2649,100 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the resource block local service.
+	 *
+	 * @return the resource block local service
+	 */
+	public ResourceBlockLocalService getResourceBlockLocalService() {
+		return resourceBlockLocalService;
+	}
+
+	/**
+	 * Sets the resource block local service.
+	 *
+	 * @param resourceBlockLocalService the resource block local service
+	 */
+	public void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+		this.resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	/**
+	 * Returns the resource block persistence.
+	 *
+	 * @return the resource block persistence
+	 */
+	public ResourceBlockPersistence getResourceBlockPersistence() {
+		return resourceBlockPersistence;
+	}
+
+	/**
+	 * Sets the resource block persistence.
+	 *
+	 * @param resourceBlockPersistence the resource block persistence
+	 */
+	public void setResourceBlockPersistence(
+		ResourceBlockPersistence resourceBlockPersistence) {
+		this.resourceBlockPersistence = resourceBlockPersistence;
+	}
+
+	/**
+	 * Returns the resource block finder.
+	 *
+	 * @return the resource block finder
+	 */
+	public ResourceBlockFinder getResourceBlockFinder() {
+		return resourceBlockFinder;
+	}
+
+	/**
+	 * Sets the resource block finder.
+	 *
+	 * @param resourceBlockFinder the resource block finder
+	 */
+	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+		this.resourceBlockFinder = resourceBlockFinder;
+	}
+
+	/**
+	 * Returns the resource block permission local service.
+	 *
+	 * @return the resource block permission local service
+	 */
+	public ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+		return resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource block permission local service.
+	 *
+	 * @param resourceBlockPermissionLocalService the resource block permission local service
+	 */
+	public void setResourceBlockPermissionLocalService(
+		ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
+		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource block permission persistence.
+	 *
+	 * @return the resource block permission persistence
+	 */
+	public ResourceBlockPermissionPersistence getResourceBlockPermissionPersistence() {
+		return resourceBlockPermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource block permission persistence.
+	 *
+	 * @param resourceBlockPermissionPersistence the resource block permission persistence
+	 */
+	public void setResourceBlockPermissionPersistence(
+		ResourceBlockPermissionPersistence resourceBlockPermissionPersistence) {
+		this.resourceBlockPermissionPersistence = resourceBlockPermissionPersistence;
+	}
+
+	/**
 	 * Returns the resource code local service.
 	 *
 	 * @return the resource code local service
@@ -4028,6 +4127,16 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockLocalService.class)
+	protected ResourceBlockLocalService resourceBlockLocalService;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockFinder.class)
+	protected ResourceBlockFinder resourceBlockFinder;
+	@BeanReference(type = ResourceBlockPermissionLocalService.class)
+	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodeLocalService.class)
 	protected ResourceCodeLocalService resourceCodeLocalService;
 	@BeanReference(type = ResourceCodePersistence.class)

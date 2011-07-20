@@ -22,7 +22,7 @@ import com.liferay.portal.model.ResourceBlockPermission;
  */
 public class ResourceBlockPermissionRoleIdComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "ResourceBlockPermission.roleId ASC";
+	public static String ORDER_BY_ASC = "roleId ASC";
 
 	public static String[] ORDER_BY_FIELDS = {"roleId"};
 

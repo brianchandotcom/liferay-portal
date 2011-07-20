@@ -297,6 +297,10 @@ public class ResourceBlockLocalServiceUtil {
 			actionId);
 	}
 
+	public static boolean isSupported(java.lang.String name) {
+		return getService().isSupported(name);
+	}
+
 	/**
 	* Increments the reference count of the resource block and updates it in
 	* the database.

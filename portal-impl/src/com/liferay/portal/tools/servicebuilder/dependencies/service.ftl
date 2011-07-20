@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.PermissionedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})
@@ -38,7 +39,16 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @generated
  */
 </#if>
-public interface ${entity.name}${sessionTypeName}Service <#if (sessionTypeName == "Local") && entity.hasColumns()>extends PersistedModelLocalService</#if> {
+public interface ${entity.name}${sessionTypeName}Service
+	<#if (sessionTypeName == "Local") && entity.hasColumns()>
+		extends PersistedModelLocalService
+
+		<#if entity.isPermissionedModel()>
+			, PermissionedModelLocalService
+		</#if>
+	</#if>
+
+	{
 
 	/*
 	 * NOTE FOR DEVELOPERS:

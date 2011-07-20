@@ -765,7 +765,7 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermissionPersistence.update(resourcePermission, false);
 		}
 
-		try {
+		if (resourceBlockLocalService.isSupported(name)) {
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
 				resourceBlockLocalService.setCompanyScopePermissions(
 					companyId, name, roleId, actionIdsLong);
@@ -782,8 +782,6 @@ public class ResourcePermissionLocalServiceImpl
 				resourceBlockLocalService.setIndividualScopePermissions(
 					companyId, name, Long.valueOf(primKey), roleId, actionIdsLong);
 			}
-		}
-		catch (NumberFormatException e) {
 		}
 
 		PermissionCacheUtil.clearCache();

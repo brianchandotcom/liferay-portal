@@ -288,6 +288,10 @@ public class ResourceBlockLocalServiceWrapper
 			name, roleIds, actionId);
 	}
 
+	public boolean isSupported(java.lang.String name) {
+		return _resourceBlockLocalService.isSupported(name);
+	}
+
 	/**
 	* Increments the reference count of the resource block and updates it in
 	* the database.

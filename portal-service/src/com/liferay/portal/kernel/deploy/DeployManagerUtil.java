@@ -14,7 +14,13 @@
 
 package com.liferay.portal.kernel.deploy;
 
+import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.plugin.PluginPackage;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * @author Jonathan Potter
@@ -36,6 +42,68 @@ public class DeployManagerUtil {
 
 	public static DeployManager getDeployManager() {
 		return _deployManager;
+	}
+
+	public static List<PluginPackage> getInstalledPlugins()
+		throws PortalException, SystemException {
+
+		return getDeployManager().getInstalledPlugins();
+	}
+
+	public static boolean isExtPlugin(File file) {
+		return getDeployManager().isExtPlugin(file);
+	}
+
+	public static boolean isHookPlugin(File file) throws AutoDeployException {
+		return getDeployManager().isHookPlugin(file);
+	}
+
+	public static boolean isLayoutTemplatePlugin(File file)
+		throws AutoDeployException {
+
+		return getDeployManager().isLayoutTemplatePlugin(file);
+	}
+
+	public static boolean isMatchingFile(File file, String checkXmlFile)
+		throws AutoDeployException {
+
+		return getDeployManager().isMatchingFile(file, checkXmlFile);
+	}
+
+	public static boolean isMatchingFileExtension(File file) {
+		return getDeployManager().isMatchingFileExtension(file);
+	}
+
+	public static boolean isMvcPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return getDeployManager().isMvcPortletPlugin(file);
+	}
+
+	public static boolean isPhpPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return getDeployManager().isPhpPortletPlugin(file);
+	}
+
+	public static boolean isPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return getDeployManager().isPortletPlugin(file);
+	}
+
+	public static boolean isWaiPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return getDeployManager().isWaiPortletPlugin(file);
+	}
+
+	public static boolean isThemePlugin(File file) throws AutoDeployException {
+		return getDeployManager().isThemePlugin(file);
+	}
+
+	public static boolean isWebPlugin(File file) throws AutoDeployException {
+		return getDeployManager().isWebPlugin(file);
 	}
 
 	public static void redeploy(String context) throws Exception {

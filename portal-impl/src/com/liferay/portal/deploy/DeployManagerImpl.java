@@ -14,28 +14,39 @@
 
 package com.liferay.portal.deploy;
 
+import com.liferay.portal.deploy.auto.ExtAutoDeployer;
+import com.liferay.portal.deploy.auto.HookAutoDeployer;
+import com.liferay.portal.deploy.auto.LayoutTemplateAutoDeployer;
+import com.liferay.portal.deploy.auto.MVCPortletAutoDeployer;
+import com.liferay.portal.deploy.auto.PHPPortletAutoDeployer;
+import com.liferay.portal.deploy.auto.PortletAutoDeployer;
+import com.liferay.portal.deploy.auto.ThemeAutoDeployer;
+import com.liferay.portal.deploy.auto.WAIAutoDeployer;
+import com.liferay.portal.deploy.auto.WebAutoDeployer;
 import com.liferay.portal.kernel.deploy.DeployManager;
 import com.liferay.portal.kernel.deploy.Deployer;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.deploy.ExtDeployer;
 import com.liferay.portal.tools.deploy.HookDeployer;
 import com.liferay.portal.tools.deploy.LayoutTemplateDeployer;
 import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portal.tools.deploy.ThemeDeployer;
 import com.liferay.portal.tools.deploy.WebDeployer;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.Portal;
 
 import java.io.File;
-
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 
@@ -50,82 +61,179 @@ public class DeployManagerImpl implements DeployManager {
 	}
 
 	public void deploy(File source, String context) throws Exception {
-		String fileName = source.getName();
-
-		int pos = fileName.lastIndexOf(StringPool.PERIOD);
-
-		if (pos > 0) {
-			context = fileName.substring(0, pos);
-		}
-		else {
-			context = fileName;
-		}
-
 		Deployer deployer = null;
 
-		List<String> jars = new ArrayList<String>();
-
-		if (context.endsWith("-ext")) {
-			deployer = getExtDeployer(jars);
+		if (isExtPlugin(source)) {
+			deployer = new ExtAutoDeployer();
 		}
-		else if (context.endsWith("-hook")) {
-			deployer = getHookDeployer(jars);
+		else if (isHookPlugin(source)) {
+			deployer = new HookAutoDeployer();
 		}
-		else if (context.endsWith("-layouttpl")) {
-			deployer = getLayoutTemplateDeployer();
+		else if (isLayoutTemplatePlugin(source)) {
+			deployer = new LayoutTemplateAutoDeployer();
 		}
-		else if (context.endsWith("-portlet")) {
-			deployer = getPortletDeployer(jars);
+		else if (isPortletPlugin(source)) {
+			deployer = new PortletAutoDeployer();
 		}
-		else if (context.endsWith("-theme")) {
-			deployer = getThemeDeployer(jars);
+		else if (isMvcPortletPlugin(source)) {
+			deployer = new MVCPortletAutoDeployer();
 		}
-		else if (context.endsWith("-web")) {
-			deployer = getWebDeployer(jars);
+		else if (isPhpPortletPlugin(source)) {
+			deployer = new PHPPortletAutoDeployer();
+		}
+		else if (isWaiPortletPlugin(source)) {
+			deployer = new WAIAutoDeployer();
+		}
+		else if (isThemePlugin(source)) {
+			deployer = new ThemeAutoDeployer();
+		}
+		else if (isWebPlugin(source)) {
+			deployer = new WebAutoDeployer();
 		}
 		else {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid context " + context);
+				_log.warn("Invalid plugin type " + source.getName());
 			}
 
 			return;
 		}
-
-		deployer.setAppServerType(ServerDetector.getServerId());
-		deployer.setBaseDir(
-			PrefsPropsUtil.getString(
-				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
-				PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
-		deployer.setDestDir(getDeployDir());
-		deployer.setFilePattern(StringPool.BLANK);
-		deployer.setJbossPrefix(
-			PrefsPropsUtil.getString(
-				PropsKeys.AUTO_DEPLOY_JBOSS_PREFIX,
-				PropsValues.AUTO_DEPLOY_JBOSS_PREFIX));
-		deployer.setTomcatLibDir(
-			PrefsPropsUtil.getString(
-				PropsKeys.AUTO_DEPLOY_TOMCAT_LIB_DIR,
-				PropsValues.AUTO_DEPLOY_TOMCAT_LIB_DIR));
-		deployer.setUnpackWar(
-			PrefsPropsUtil.getBoolean(
-				PropsKeys.AUTO_DEPLOY_UNPACK_WAR,
-				PropsValues.AUTO_DEPLOY_UNPACK_WAR));
-
-		deployer.setJars(jars);
-
-		List<String> wars = new ArrayList<String>();
-
-		wars.add(source.getAbsolutePath());
-
-		deployer.setWars(wars);
-
-		deployer.checkArguments();
 
 		deployer.deployFile(source, context);
 	}
 
 	public String getDeployDir() throws Exception {
 		return DeployUtil.getAutoDeployDestDir();
+	}
+
+	public List<PluginPackage> getInstalledPlugins()
+		throws PortalException, SystemException {
+
+		return PluginPackageUtil.getInstalledPluginPackages();
+	}
+
+	public boolean isExtPlugin(File file) {
+		return file.getName().contains("-ext");
+	}
+
+	public  boolean isHookPlugin(File file) throws AutoDeployException {
+		return isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties") &&
+			file.getName().contains("-hook") &&
+			!file.getName().contains("-portlet");
+	}
+
+	public boolean isLayoutTemplatePlugin(File file)
+		throws AutoDeployException {
+
+		return isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml");
+	}
+
+	public boolean isMatchingFile(File file, String checkXmlFile)
+		throws AutoDeployException {
+
+		if (!isMatchingFileExtension(file)) {
+			return false;
+		}
+
+		ZipFile zipFile = null;
+
+		try {
+			zipFile = new ZipFile(file);
+
+			if (zipFile.getEntry(checkXmlFile) == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						file.getPath() + " does not have " + checkXmlFile);
+				}
+
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		catch (IOException ioe) {
+			throw new AutoDeployException(ioe);
+		}
+		finally {
+			if (zipFile != null) {
+				try {
+					zipFile.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+		}
+	}
+
+	public boolean isMatchingFileExtension(File file) {
+		String fileName = file.getName().toLowerCase();
+
+		if (fileName.endsWith(".war") || fileName.endsWith(".zip")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(file.getPath() + " has a matching extension");
+			}
+
+			return true;
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					file.getPath() + " does not have a matching extension");
+			}
+
+			return false;
+		}
+	}
+
+	public boolean isMvcPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return isMatchingFile(file, "index_mvc.jsp");
+	}
+
+	public boolean isPhpPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return isMatchingFile(file, "index.php");
+	}
+
+	public boolean isPortletPlugin(File file) throws AutoDeployException {
+		return isMatchingFile(
+			file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
+	}
+
+	public boolean isWaiPortletPlugin(File file)
+		throws AutoDeployException {
+
+		return !isExtPlugin(file) &&
+			   !isHookPlugin(file) &&
+			   !isMatchingFile(
+				   file, "WEB-INF/liferay-layout-templates.xml") &&
+			   !isThemePlugin(file) &&
+			   !isWebPlugin(file) &&
+			   file.getName().endsWith(".war");
+	}
+
+	public boolean isThemePlugin(File file) throws AutoDeployException {
+		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
+			return true;
+		}
+
+		if ((isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties")) &&
+			(file.getName().contains("-theme"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isWebPlugin(File file) throws AutoDeployException {
+		return isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties") &&
+			file.getName().contains("-web");
 	}
 
 	public void redeploy(String context) throws Exception {
@@ -182,6 +290,13 @@ public class DeployManagerImpl implements DeployManager {
 		deployer.setUiTaglibDTD(getResourcePath("liferay-ui.tld"));
 		deployer.setUtilTaglibDTD(getResourcePath("liferay-util.tld"));
 
+		deployer.addExtJar(jars, "ext-util-bridges.jar");
+		deployer.addExtJar(jars, "ext-util-java.jar");
+		deployer.addExtJar(jars, "ext-util-taglib.jar");
+		deployer.addRequiredJar(jars, "util-bridges.jar");
+		deployer.addRequiredJar(jars, "util-java.jar");
+		deployer.addRequiredJar(jars, "util-taglib.jar");
+
 		return deployer;
 	}
 
@@ -232,7 +347,7 @@ public class DeployManagerImpl implements DeployManager {
 	}
 
 	protected void redeployTomcat(String context) throws Exception {
-		File webXml = new File(getDeployDir(), "/WEB-INF/web.xml");
+		File webXml = new File(getDeployDir(), context + "/WEB-INF/web.xml");
 
 		FileUtils.touch(webXml);
 	}

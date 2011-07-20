@@ -183,7 +183,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	public long getDefaultPlid(
-			long groupId, boolean privateLayout, String portletId)
+			long groupId, long scopeGroupId, boolean privateLayout,
+			String portletId)
 		throws PortalException, SystemException {
 
 		if (groupId <= 0) {
@@ -192,13 +193,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		String scopeGroupLayoutUuid = null;
 
-		Group group = groupLocalService.getGroup(groupId);
+		Group scopeGroup = groupLocalService.getGroup(scopeGroupId);
 
-		if (group.isLayout()) {
-			groupId = group.getParentGroupId();
-
+		if (scopeGroup.isLayout()) {
 			Layout scopeGroupLayout = layoutLocalService.getLayout(
-				group.getClassPK());
+				scopeGroup.getClassPK());
 
 			scopeGroupLayoutUuid = scopeGroupLayout.getUuid();
 		}
@@ -222,18 +221,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletId);
 
-			if (group.isLayout()) {
+			String scopeType = GetterUtil.getString(
+				jxPreferences.getValue("lfr-scope-type", null));
+
+			if (scopeGroup.isLayout()) {
 				String scopeLayoutUuid = GetterUtil.getString(
 					jxPreferences.getValue("lfrScopeLayoutUuid", null));
 
-				if (scopeGroupLayoutUuid.equals(scopeLayoutUuid)) {
-					return layout.getPlid();
+				if (Validator.isNotNull(scopeType) &&
+					Validator.isNotNull(scopeLayoutUuid) &&
+					scopeLayoutUuid.equals(scopeGroupLayoutUuid)) {
+						return layout.getPlid();
+				}
+			}
+			else if (scopeGroup.isCompany()) {
+				if (Validator.isNotNull(scopeType) &&
+					scopeType.equals("company")) {
+	        		return layout.getPlid();
 				}
 			}
 			else {
-				String scopeType = GetterUtil.getString(
-					jxPreferences.getValue("lfr-scope-type", null));
-
 				if (Validator.isNull(scopeType)) {
 					return layout.getPlid();
 				}

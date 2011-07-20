@@ -119,7 +119,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 				String title = StringPool.BLANK;
 
 				PortletURL portletURL = getPortletURL(
-					request, portletId, resultGroupId);
+					request, portletId, resultScopeGroupId);
 
 				String url = portletURL.toString();
 

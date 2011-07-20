@@ -107,11 +107,12 @@ public class LayoutServiceSoap {
 		}
 	}
 
-	public static long getDefaultPlid(long groupId, boolean privateLayout,
-		java.lang.String portletId) throws RemoteException {
+	public static long getDefaultPlid(long groupId, long scopeGroupId,
+		boolean privateLayout, java.lang.String portletId)
+		throws RemoteException {
 		try {
 			long returnValue = LayoutServiceUtil.getDefaultPlid(groupId,
-					privateLayout, portletId);
+					scopeGroupId, privateLayout, portletId);
 
 			return returnValue;
 		}

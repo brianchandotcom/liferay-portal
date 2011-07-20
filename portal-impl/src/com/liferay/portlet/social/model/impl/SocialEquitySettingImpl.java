@@ -25,6 +25,11 @@ public class SocialEquitySettingImpl extends SocialEquitySettingBaseImpl {
 	public SocialEquitySettingImpl() {
 	}
 
+	public SocialEquitySettingImpl(String actionId, int type) {
+		setActionId(actionId);
+		setType(type);
+	}
+
 	public void update(SocialEquityActionMapping equityActionMapping) {
 		if (getType() == SocialEquitySettingConstants.TYPE_INFORMATION) {
 			setDailyLimit(equityActionMapping.getInformationDailyLimit());

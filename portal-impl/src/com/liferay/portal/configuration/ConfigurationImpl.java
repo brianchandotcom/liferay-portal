@@ -55,6 +55,7 @@ import org.apache.commons.configuration.MapConfiguration;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ConfigurationImpl
 	implements com.liferay.portal.kernel.configuration.Configuration {
@@ -235,9 +236,36 @@ public class ConfigurationImpl
 	}
 
 	public String get(String key, Filter filter) {
-		ComponentProperties componentProperties = getComponentProperties();
+		String filterCacheKey = buildFilterCacheKey(key, filter, false);
 
-		return componentProperties.getString(key, getEasyConfFilter(filter));
+		Object value = null;
+
+		if (filterCacheKey != null) {
+			value = _values.get(filterCacheKey);
+		}
+
+		if (value == null) {
+			ComponentProperties componentProperties = getComponentProperties();
+
+			value = componentProperties.getString(
+				key, getEasyConfFilter(filter));
+
+			if (filterCacheKey != null) {
+				if (value == null) {
+					value = _nullValue;
+				}
+
+				_values.put(filterCacheKey, value);
+			}
+		}
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+		else {
+			return null;
+		}
+
 	}
 
 	public String[] getArray(String key) {
@@ -250,28 +278,7 @@ public class ConfigurationImpl
 
 			String[] array = componentProperties.getStringArray(key);
 
-			if ((array == null) || (array.length == 0)) {
-				value = _nullValue;
-			}
-			else if (array.length > 0) {
-
-				// Commons Configuration parses an empty property into a String
-				// array with one String containing one space. It also leaves a
-				// trailing array member if you set a property in more than one
-				// line.
-
-				if (Validator.isNull(array[array.length - 1])) {
-					String[] subArray = new String[array.length - 1];
-
-					System.arraycopy(array, 0, subArray, 0, subArray.length);
-
-					array = subArray;
-				}
-
-				value = array;
-			}
-
-			_values.put(cacheKey, value);
+			value = fixArrayValue(cacheKey, array);
 		}
 
 		if (value instanceof String[]) {
@@ -283,10 +290,29 @@ public class ConfigurationImpl
 	}
 
 	public String[] getArray(String key, Filter filter) {
-		ComponentProperties componentProperties = getComponentProperties();
+		String filterCacheKey = buildFilterCacheKey(key, filter, true);
 
-		return componentProperties.getStringArray(
-			key, getEasyConfFilter(filter));
+		Object value = null;
+
+		if (filterCacheKey != null) {
+			value = _values.get(filterCacheKey);
+		}
+
+		if (value == null) {
+			ComponentProperties componentProperties = getComponentProperties();
+
+			String[] array = componentProperties.getStringArray(
+				key, getEasyConfFilter(filter));
+
+			value = fixArrayValue(filterCacheKey, array);
+		}
+
+		if (value instanceof String[]) {
+			return (String[])value;
+		}
+		else {
+			return _emptyArray;
+		}
 	}
 
 	public Properties getProperties() {
@@ -381,6 +407,66 @@ public class ConfigurationImpl
 		componentProperties.setProperty(key, value);
 
 		_values.put(key, value);
+	}
+
+	protected String buildFilterCacheKey(
+		String key, Filter filter, boolean isArray) {
+		if (filter.getVariables() != null) {
+			return null;
+		}
+
+		String[] selectors = filter.getSelectors();
+
+		int length;
+
+		if (isArray) {
+			length = selectors.length + 2;
+		}
+		else {
+			length = selectors.length + 1;
+		}
+
+		StringBundler sb = new StringBundler(length);
+
+		if (isArray) {
+			sb.append(_ARRAY_KEY_PREFIX);
+		}
+
+		sb.append(key);
+		sb.append(selectors);
+
+		return sb.toString();
+	}
+
+	protected Object fixArrayValue(String cacheKey, String[] array) {
+		if (cacheKey == null) {
+			return array;
+		}
+
+		Object value = _nullValue;
+
+		if ((array != null) && (array.length > 0)) {
+			// Commons Configuration parses an empty property into a String
+			// array with one String containing one space. It also leaves a
+			// trailing array member if you set a property in more than one
+			// line.
+
+			if (Validator.isNull(array[array.length - 1])) {
+				String[] subArray = new String[array.length - 1];
+
+				System.arraycopy(array, 0, subArray, 0, subArray.length);
+
+				array = subArray;
+			}
+
+			if (array.length > 0) {
+				value = array;
+			}
+		}
+
+		_values.put(cacheKey, value);
+
+		return value;
 	}
 
 	protected ComponentProperties getComponentProperties() {

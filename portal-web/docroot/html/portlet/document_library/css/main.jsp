@@ -543,6 +543,16 @@
 		}
 	}
 
+	.folder-info-container {
+		float: right;
+		margin-top: 5px;
+
+		.total-documents, .total-folders {
+			margin-right: 1em;
+		}
+	}
+
+
 	.aui-liferaylistview-content {
 		ul .expand-folder {
 			height: 10px;

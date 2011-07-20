@@ -120,6 +120,7 @@ if (folder != null) {
 						<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="start" value="0" />
 						<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
@@ -161,6 +162,7 @@ if (folder != null) {
 						<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="start" value="0" />
 						<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 					</liferay-portlet:resourceURL>
@@ -186,6 +188,7 @@ if (folder != null) {
 						<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="start" value="0" />
 						<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 					</liferay-portlet:resourceURL>
@@ -217,6 +220,7 @@ if (folder != null) {
 							<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="start" value="0" />
 							<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 						</liferay-portlet:resourceURL>
@@ -248,6 +252,7 @@ if (folder != null) {
 							<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="start" value="0" />
 							<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 						</liferay-portlet:resourceURL>
@@ -291,6 +296,7 @@ if (folder != null) {
 							<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="start" value="0" />
 							<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 						</liferay-portlet:resourceURL>
@@ -338,6 +344,7 @@ if (folder != null) {
 						<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="start" value="0" />
 						<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
@@ -384,6 +391,7 @@ if (folder != null) {
 							<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewFolderInfo" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="start" value="0" />
 							<portlet:param name="end" value="<%= String.valueOf(end - start) %>" />
 						</liferay-portlet:resourceURL>

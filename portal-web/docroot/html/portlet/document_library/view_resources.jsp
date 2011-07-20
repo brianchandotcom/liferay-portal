@@ -41,6 +41,7 @@ boolean viewBreadcrumb = ParamUtil.getBoolean(request, "viewBreadcrumb");
 boolean viewDisplayStyleButtons = ParamUtil.getBoolean(request, "viewDisplayStyleButtons");
 boolean viewEntries = ParamUtil.getBoolean(request, "viewEntries");
 boolean viewFileEntrySearch = ParamUtil.getBoolean(request, "viewFileEntrySearch");
+boolean viewFolderInfo = ParamUtil.getBoolean(request, "viewFolderInfo");
 boolean viewFolders = ParamUtil.getBoolean(request, "viewFolders");
 boolean viewSortButton = ParamUtil.getBoolean(request, "viewSortButton");
 
@@ -90,5 +91,11 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 <c:if test="<%= viewBreadcrumb %>">
 	<span id="<portlet:namespace />breadcrumb">
 		<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+	</span>
+</c:if>
+
+<c:if test="<%= viewFolderInfo %>">
+	<span id="<portlet:namespace />folderInfo">
+		<liferay-util:include page="/html/portlet/document_library/folder_info.jsp" />
 	</span>
 </c:if>

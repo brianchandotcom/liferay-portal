@@ -115,6 +115,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			</aui:form>
 		</aui:column>
 	</aui:layout>
+
+	<div class="folder-info-container" id="<portlet:namespace />folderInfoContainer">
+		<liferay-util:include page="/html/portlet/document_library/folder_info.jsp" />
+	</div>
 </div>
 
 <%
@@ -414,6 +418,11 @@ if (folder != null) {
 
 								breadcrumbContainer.setContent(breadcrumb);
 
+								var folderInfoContainer = A.one('#<portlet:namespace />folderInfoContainer');
+								var folderInfo = content.one('#<portlet:namespace />folderInfo');
+
+								folderInfoContainer.setContent(folderInfo);
+
 								var entries = content.one('#<portlet:namespace />entries');
 
 								entriesContainer.setContent(entries);
@@ -500,6 +509,11 @@ if (folder != null) {
 							var breadcrumb = content.one('#<portlet:namespace />breadcrumb');
 
 							breadcrumbContainer.setContent(breadcrumb);
+
+							var folderInfoContainer = A.one('#<portlet:namespace />folderInfoContainer');
+							var folderInfo = content.one('#<portlet:namespace />folderInfo');
+
+							folderInfoContainer.setContent(folderInfo);
 
 							var entries = content.one('#<portlet:namespace />entries');
 

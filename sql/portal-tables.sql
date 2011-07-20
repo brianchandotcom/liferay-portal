@@ -1473,8 +1473,8 @@ create table ResourceBlock (
 create table ResourceBlockPermission (
 	resourceBlockId LONG not null,
 	roleId LONG not null,
-	actionIds LONG not null,
-	primary key (resourceBlockId, roleId, actionIds)
+	actionIds LONG,
+	primary key (resourceBlockId, roleId)
 );
 
 create table Resource_ (

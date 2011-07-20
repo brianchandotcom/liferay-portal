@@ -17,7 +17,6 @@ package com.liferay.util.ant;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-
 import java.util.Map;
 
 import org.apache.tools.ant.taskdefs.Copy;
@@ -98,16 +97,23 @@ public class CopyTask {
 		File sourceFile, File destinationDir, Map<String, String> filterMap,
 		boolean overwrite, boolean preserveLastModified) {
 
+		File destinationFile = new File(destinationDir, sourceFile.getName());
+
+		copyFileRename(
+			sourceFile, destinationFile, filterMap, overwrite,
+			preserveLastModified);
+	}
+
+	public static void copyFileRename(
+		File sourceFile, File destinationFile, Map<String, String> filterMap,
+		boolean overwrite, boolean preserveLastModified) {
+
 		Copy copy = new Copy();
-
-		FileSet fileSet = new FileSet();
-
-		fileSet.setFile(sourceFile);
 
 		copy.setProject(AntUtil.getProject());
 		copy.setFiltering(true);
-		copy.addFileset(fileSet);
-		copy.setTodir(destinationDir);
+		copy.setFile(sourceFile);
+		copy.setTofile(destinationFile);
 		copy.setOverwrite(overwrite);
 		copy.setPreserveLastModified(preserveLastModified);
 

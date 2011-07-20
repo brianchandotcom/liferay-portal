@@ -56,7 +56,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -657,6 +656,10 @@ public class BaseDeployer implements Deployer {
 				deployWebXml.setLastModified(
 					System.currentTimeMillis() + (Time.SECOND * 6));
 			}
+		}
+
+		if (appServerType.equals(ServerDetector.JETTY_ID)) {
+			DeployUtil.redeployJetty(displayName);
 		}
 	}
 

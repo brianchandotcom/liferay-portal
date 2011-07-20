@@ -212,6 +212,7 @@ alter table DLFolder add overrideFileEntryTypes BOOLEAN;
 
 COMMIT_TRANSACTION;
 
+update DLFolder set mountPoint = FALSE;
 update DLFolder set repositoryId = groupId;
 
 create table DLSync (

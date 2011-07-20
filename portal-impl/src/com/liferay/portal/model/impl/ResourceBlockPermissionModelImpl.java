@@ -54,7 +54,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			{ "roleId", Types.BIGINT },
 			{ "actionIds", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockId LONG not null,roleId LONG not null,actionIds LONG not null,primary key (resourceBlockId, roleId, actionIds))";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockId LONG not null,roleId LONG not null,actionIds LONG,primary key (resourceBlockId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockPermission";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -81,19 +81,16 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public ResourceBlockPermissionPK getPrimaryKey() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
-			_actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId);
 	}
 
 	public void setPrimaryKey(ResourceBlockPermissionPK primaryKey) {
 		setResourceBlockId(primaryKey.resourceBlockId);
 		setRoleId(primaryKey.roleId);
-		setActionIds(primaryKey.actionIds);
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
-			_actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId);
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

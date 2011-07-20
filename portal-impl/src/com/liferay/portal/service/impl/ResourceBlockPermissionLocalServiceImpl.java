@@ -42,14 +42,10 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 		if (resourceBlockPermission == null) {
 			ResourceBlockPermissionPK pk =
-				new ResourceBlockPermissionPK(resourceBlockId, roleId,
-				actionIdsLong);
+				new ResourceBlockPermissionPK(resourceBlockId, roleId);
 
-			resourceBlockPermissionPersistence.create(pk);
-
-			updateResourceBlockPermission(resourceBlockPermission);
-
-			return resourceBlockPermission;
+			resourceBlockPermission =
+				resourceBlockPermissionPersistence.create(pk);
 		}
 
 		resourceBlockPermission.setActionIds(actionIdsLong);

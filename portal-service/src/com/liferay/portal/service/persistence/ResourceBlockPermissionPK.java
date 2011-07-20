@@ -26,16 +26,13 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 	Serializable {
 	public long resourceBlockId;
 	public long roleId;
-	public long actionIds;
 
 	public ResourceBlockPermissionPK() {
 	}
 
-	public ResourceBlockPermissionPK(long resourceBlockId, long roleId,
-		long actionIds) {
+	public ResourceBlockPermissionPK(long resourceBlockId, long roleId) {
 		this.resourceBlockId = resourceBlockId;
 		this.roleId = roleId;
-		this.actionIds = actionIds;
 	}
 
 	public long getResourceBlockId() {
@@ -52,14 +49,6 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 
 	public void setRoleId(long roleId) {
 		this.roleId = roleId;
-	}
-
-	public long getActionIds() {
-		return actionIds;
-	}
-
-	public void setActionIds(long actionIds) {
-		this.actionIds = actionIds;
 	}
 
 	public int compareTo(ResourceBlockPermissionPK pk) {
@@ -97,20 +86,6 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 			return value;
 		}
 
-		if (actionIds < pk.actionIds) {
-			value = -1;
-		}
-		else if (actionIds > pk.actionIds) {
-			value = 1;
-		}
-		else {
-			value = 0;
-		}
-
-		if (value != 0) {
-			return value;
-		}
-
 		return 0;
 	}
 
@@ -129,8 +104,7 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 			return false;
 		}
 
-		if ((resourceBlockId == pk.resourceBlockId) && (roleId == pk.roleId) &&
-				(actionIds == pk.actionIds)) {
+		if ((resourceBlockId == pk.resourceBlockId) && (roleId == pk.roleId)) {
 			return true;
 		}
 		else {
@@ -140,13 +114,12 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 
 	@Override
 	public int hashCode() {
-		return (String.valueOf(resourceBlockId) + String.valueOf(roleId) +
-		String.valueOf(actionIds)).hashCode();
+		return (String.valueOf(resourceBlockId) + String.valueOf(roleId)).hashCode();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
@@ -159,12 +132,6 @@ public class ResourceBlockPermissionPK implements Comparable<ResourceBlockPermis
 		sb.append("roleId");
 		sb.append(StringPool.EQUAL);
 		sb.append(roleId);
-
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
-		sb.append("actionIds");
-		sb.append(StringPool.EQUAL);
-		sb.append(actionIds);
 
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 

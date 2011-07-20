@@ -1866,7 +1866,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_RESOURCEBLOCKID_RESOURCEBLOCKID_2 =
 		"resourceBlockPermission.id.resourceBlockId = ?";
 	private static final String _FINDER_COLUMN_R_A_ROLEID_2 = "resourceBlockPermission.id.roleId = ? AND ";
-	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockPermission.id.actionIds = ?";
+	private static final String _FINDER_COLUMN_R_A_ACTIONIDS_2 = "resourceBlockPermission.actionIds = ?";
 	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 = "resourceBlockPermission.id.resourceBlockId = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_ROLEID_2 = "resourceBlockPermission.id.roleId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceBlockPermission.";

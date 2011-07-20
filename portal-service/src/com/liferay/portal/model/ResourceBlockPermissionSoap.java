@@ -83,14 +83,12 @@ public class ResourceBlockPermissionSoap implements Serializable {
 	}
 
 	public ResourceBlockPermissionPK getPrimaryKey() {
-		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId,
-			_actionIds);
+		return new ResourceBlockPermissionPK(_resourceBlockId, _roleId);
 	}
 
 	public void setPrimaryKey(ResourceBlockPermissionPK pk) {
 		setResourceBlockId(pk.resourceBlockId);
 		setRoleId(pk.roleId);
-		setActionIds(pk.actionIds);
 	}
 
 	public long getResourceBlockId() {

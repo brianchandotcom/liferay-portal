@@ -41,7 +41,7 @@ public class ResourceBlockPermissionPersistenceTest
 
 	public void testCreate() throws Exception {
 		ResourceBlockPermissionPK pk = new ResourceBlockPermissionPK(nextLong(),
-				nextLong(), nextLong());
+				nextLong());
 
 		ResourceBlockPermission resourceBlockPermission = _persistence.create(pk);
 
@@ -66,9 +66,11 @@ public class ResourceBlockPermissionPersistenceTest
 
 	public void testUpdateExisting() throws Exception {
 		ResourceBlockPermissionPK pk = new ResourceBlockPermissionPK(nextLong(),
-				nextLong(), nextLong());
+				nextLong());
 
 		ResourceBlockPermission newResourceBlockPermission = _persistence.create(pk);
+
+		newResourceBlockPermission.setActionIds(nextLong());
 
 		_persistence.update(newResourceBlockPermission, false);
 
@@ -92,7 +94,7 @@ public class ResourceBlockPermissionPersistenceTest
 
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		ResourceBlockPermissionPK pk = new ResourceBlockPermissionPK(nextLong(),
-				nextLong(), nextLong());
+				nextLong());
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -114,7 +116,7 @@ public class ResourceBlockPermissionPersistenceTest
 
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		ResourceBlockPermissionPK pk = new ResourceBlockPermissionPK(nextLong(),
-				nextLong(), nextLong());
+				nextLong());
 
 		ResourceBlockPermission missingResourceBlockPermission = _persistence.fetchByPrimaryKey(pk);
 
@@ -132,8 +134,6 @@ public class ResourceBlockPermissionPersistenceTest
 				newResourceBlockPermission.getResourceBlockId()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
 				newResourceBlockPermission.getRoleId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionIds",
-				newResourceBlockPermission.getActionIds()));
 
 		List<ResourceBlockPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -151,7 +151,6 @@ public class ResourceBlockPermissionPersistenceTest
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.resourceBlockId",
 				nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId", nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.actionIds", nextLong()));
 
 		List<ResourceBlockPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -218,9 +217,11 @@ public class ResourceBlockPermissionPersistenceTest
 	protected ResourceBlockPermission addResourceBlockPermission()
 		throws Exception {
 		ResourceBlockPermissionPK pk = new ResourceBlockPermissionPK(nextLong(),
-				nextLong(), nextLong());
+				nextLong());
 
 		ResourceBlockPermission resourceBlockPermission = _persistence.create(pk);
+
+		resourceBlockPermission.setActionIds(nextLong());
 
 		_persistence.update(resourceBlockPermission, false);
 

@@ -800,8 +800,8 @@
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPK">
 			<key-property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
+		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceCodeImpl" table="ResourceCode">
 		<cache usage="read-write" />

@@ -337,40 +337,4 @@ public interface ResourceBlockLocalService extends PersistedModelLocalService,
 	public void updatePermissionsHash(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Updates which resource block the resource is a member of, and updates it
-	* in the database. Automatically retains, releases, and creates resource
-	* blocks as necessary. Only use this method for resources that do not
-	* belong to a group, such as users.
-	*
-	* @param companyId the primary key of the resource's company
-	* @param model the permissioned model instance
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param primKey the primary key of the resource
-	* @throws SystemException if a system exception occurred
-	*/
-	public void updateResourceBlockId(long companyId,
-		com.liferay.portal.model.PermissionedModel model,
-		java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Updates which resource block the resource is a member of, and updates it
-	* in the database. Automatically retains, releases, and creates resource
-	* blocks as necessary.
-	*
-	* @param companyId the primary key of the resource's company
-	* @param groupId the primary key of the resource's group
-	* @param model the permissioned model instance
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param primKey the primary key of the resource
-	* @throws SystemException if a system exception occurred
-	*/
-	public void updateResourceBlockId(long companyId, long groupId,
-		com.liferay.portal.model.PermissionedModel model,
-		java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
 }

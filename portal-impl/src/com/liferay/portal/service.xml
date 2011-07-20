@@ -1592,7 +1592,7 @@
 
 		<column name="resourceBlockId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
-		<column name="actionIds" type="long" primary="true" />
+		<column name="actionIds" type="long" />
 
 		<!-- Finder methods -->
 

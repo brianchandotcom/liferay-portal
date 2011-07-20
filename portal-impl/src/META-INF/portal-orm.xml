@@ -855,7 +855,7 @@
 		<attributes>
 			<id name="resourceBlockId" />
 			<id name="roleId" />
-			<id name="actionIds" />
+			<basic name="actionIds" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>

@@ -337,89 +337,6 @@ public class ResourceBlockLocalServiceImpl
 		updateResourceBlock(resourceBlock);
 	}
 
-	/**
-	 * Updates which resource block the resource is a member of, and updates it
-	 * in the database. Automatically retains, releases, and creates resource
-	 * blocks as necessary. Only use this method for resources that do not
-	 * belong to a group, such as users.
-	 *
-	 * @param  companyId the primary key of the resource's company
-	 * @param  model the permissioned model instance
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key of the resource
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Deprecated
-	public void updateResourceBlockId(
-			long companyId, PermissionedModel model, String name,
-			long primKey)
-		throws SystemException {
-
-		updateResourceBlockId(companyId, 0, model, name, primKey);
-	}
-
-	/**
-	 * Updates which resource block the resource is a member of, and updates it
-	 * in the database. Automatically retains, releases, and creates resource
-	 * blocks as necessary.
-	 *
-	 * @param  companyId the primary key of the resource's company
-	 * @param  groupId the primary key of the resource's group
-	 * @param  model the permissioned model instance
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key of the resource
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Deprecated
-	public void updateResourceBlockId(
-			long companyId, long groupId, PermissionedModel model,
-			String name, long primKey)
-		throws SystemException {
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourceResourcePermissions(
-			companyId, groupId, name, String.valueOf(primKey));
-
-		// This whole method is no longer necessary, but I want it for reference
-		//String newPermissionsHash = getPermissionsHash(resourcePermissions);
-		String newPermissionsHash = "";
-
-		ResourceBlock resourceBlock =
-			resourceBlockPersistence.fetchByPrimaryKey(
-			model.getResourceBlockId());
-
-		if (resourceBlock != null) {
-			String currentPermissionsHash =	resourceBlock.getPermissionsHash();
-
-			// If the permissions hash is unchanged, do nothing
-
-			if (currentPermissionsHash.equals(newPermissionsHash)) {
-				return;
-			}
-
-			// Otherwise, release the old resource block
-
-			release(resourceBlock);
-		}
-
-		resourceBlock =	resourceBlockPersistence.fetchByC_G_N_P(
-			companyId, groupId, name, newPermissionsHash);
-
-		if (resourceBlock == null) {
-			//resourceBlock =
-			//	addResourceBlock(companyId, groupId, name, newPermissionsHash,
-			//	resourcePermissions);
-		}
-		else {
-			retain(resourceBlock);
-		}
-
-		model.setResourceBlockId(resourceBlock.getResourceBlockId());
-		model.persist();
-	}
-
 	protected PermissionedModel getPermissionedModel(String name, long primKey)
 		throws PortalException, SystemException {
 
@@ -492,7 +409,7 @@ public class ResourceBlockLocalServiceImpl
 				else {
 					resourceBlockPermission.setActionIds(actionIdsLong);
 					resourceBlockPermissionLocalService.
-					updateResourceBlockPermission(resourceBlockPermission);
+						updateResourceBlockPermission(resourceBlockPermission);
 				}
 			}
 

@@ -56,7 +56,7 @@ while (itr.hasNext()) {
 
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
 
-	if (portlet != null) {
+	if ((portlet != null) && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
 		portlets.add(portlet);
 
 		PortletApp portletApp = portlet.getPortletApp();

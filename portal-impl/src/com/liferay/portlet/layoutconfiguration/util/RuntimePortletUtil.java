@@ -174,7 +174,7 @@ public class RuntimePortletUtil {
 
 			if (Validator.isNotNull(instanceId) &&
 				Validator.isPassword(instanceId) &&
-				(instanceId.length() == 4)) {
+				(instanceId.length() >= 4)) {
 
 				/*portletId +=
 					PortletConstants.INSTANCE_SEPARATOR + instanceId;

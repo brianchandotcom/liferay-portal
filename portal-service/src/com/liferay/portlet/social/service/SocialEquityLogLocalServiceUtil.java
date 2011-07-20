@@ -297,6 +297,11 @@ public class SocialEquityLogLocalServiceUtil {
 		getService().checkEquityLogs();
 	}
 
+	public static void deactivateEquityLogs(com.liferay.portal.model.User user)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deactivateEquityLogs(user);
+	}
+
 	public static void deactivateEquityLogs(long assetEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deactivateEquityLogs(assetEntryId);

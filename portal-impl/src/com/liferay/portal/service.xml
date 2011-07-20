@@ -1989,6 +1989,8 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialEquityUser" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
 	</entity>
 	<entity name="UserGroup" local-service="true" remote-service="true">

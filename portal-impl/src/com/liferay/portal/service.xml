@@ -444,7 +444,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.imagegallery" entity="IGImage" />
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
 	</entity>
 	<entity name="Layout" uuid="true" local-service="true" remote-service="true">
 

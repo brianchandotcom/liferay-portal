@@ -73,6 +73,14 @@ public class FileEntryProxyBean
 		return _fileEntry.getCreateDate();
 	}
 
+	public long getCustom1ImageId() {
+		return _fileEntry.getCustom1ImageId();
+	}
+
+	public long getCustom2ImageId() {
+		return _fileEntry.getCustom2ImageId();
+	}
+
 	public String getDescription() {
 		return _fileEntry.getDescription();
 	}
@@ -134,6 +142,14 @@ public class FileEntryProxyBean
 		return _fileEntry.getIcon();
 	}
 
+	public String getImageType() {
+		return _fileEntry.getImageType();
+	}
+
+	public long getLargeImageId() {
+		return _fileEntry.getLargeImageId();
+	}
+
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
@@ -172,6 +188,10 @@ public class FileEntryProxyBean
 		return _fileEntry.getModifiedDate();
 	}
 
+	public String getNameWithExtension() {
+		return _fileEntry.getNameWithExtension();
+	}
+
 	public long getPrimaryKey() {
 		return _fileEntry.getPrimaryKey();
 	}
@@ -190,6 +210,10 @@ public class FileEntryProxyBean
 
 	public long getSize() {
 		return _fileEntry.getSize();
+	}
+
+	public long getSmallImageId() {
+		return _fileEntry.getSmallImageId();
 	}
 
 	public String getTitle() {

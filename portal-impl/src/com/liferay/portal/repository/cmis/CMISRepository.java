@@ -735,6 +735,23 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	public void getSubfolderIds(List<Long> folderIds, long folderId)
+		throws SystemException {
+
+		try {
+			List<Folder> subfolders = getFolders(
+				folderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			getSubfolderIds(folderIds, subfolders, true);
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new RepositoryException(e);
+		}
+	}
+
 	public String[] getSupportedConfigurations() {
 		return _cmisRepositoryHandler.getSupportedConfigurations();
 	}

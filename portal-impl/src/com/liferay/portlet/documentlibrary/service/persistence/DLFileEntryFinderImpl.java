@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -44,6 +45,9 @@ public class DLFileEntryFinderImpl
 
 	public static String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
+
+	public static String FIND_BY_ANY_IMAGE_ID =
+		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
 	public static String FIND_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".findByExtraSettings";
@@ -92,11 +96,61 @@ public class DLFileEntryFinderImpl
 		return doCountByG_F_S(groupId, folderIds, status, false);
 	}
 
+	public DLFileEntry fetchByAnyImageId(long imageId) throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_ANY_IMAGE_ID);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(imageId);
+			qPos.add(imageId);
+			qPos.add(imageId);
+			qPos.add(imageId);
+
+			List<DLFileEntry> list = q.list();
+
+			if (list.isEmpty()) {
+				return null;
+			}
+			else {
+				return list.get(0);
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	public int filterCountByG_F_S(
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
 
 		return doCountByG_F_S(groupId, folderIds, status, true);
+	}
+
+	public DLFileEntry findByAnyImageId(long imageId)
+		throws NoSuchFileEntryException, SystemException {
+
+		DLFileEntry image = fetchByAnyImageId(imageId);
+
+		if (image == null) {
+			throw new NoSuchFileEntryException(
+				"No DLFileEntry exists with the imageId " + imageId);
+		}
+		else {
+			return image;
+		}
 	}
 
 	public List<DLFileEntry> findByExtraSettings(int start, int end)

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <%
 Group group = null;
@@ -437,11 +437,12 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 		}
 	</aui:script>
 </c:if>
-<c:if test="<%=SitesUtil.isLayoutLocked(layoutTypePortlet) %>">
+
+<c:if test="<%= themeDisplay.isShowPageSettingsIcon() && SitesUtil.isLayoutLocked(layoutTypePortlet) %>">
 	<div class="page-customization-bar">
-		<div class="portlet-msg-alert">
-			<liferay-ui:message key="this-page-is-locked-by-the-template" />
-		</div>
+		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
+
+		<liferay-ui:message key="this-page-is-locked-by-the-template" />
 	</div>
 </c:if>
 

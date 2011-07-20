@@ -141,89 +141,89 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 				/>
 
 				<c:choose>
-				<c:when test="<%= locked %>">
-					<div class="portlet-msg-alert">
-						<liferay-ui:message key="this-page-is-locked-by-the-template" />
-					</div>
-				</c:when>
-				<c:otherwise>
-				<aui:script use="aui-dialog,aui-dialog-iframe,aui-toolbar">
-					var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
+					<c:when test="<%= locked %>">
+						<div class="portlet-msg-alert">
+							<liferay-ui:message key="this-page-is-locked-by-the-template" />
+						</div>
+					</c:when>
+					<c:otherwise>
+						<aui:script use="aui-dialog,aui-dialog-iframe,aui-toolbar">
+							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 					var popup = null;
 
 					var layoutToolbar = new A.Toolbar(
-						{
-							activeState: false,
-							boundingBox: buttonRow,
-							children: [
-								<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
 								{
-									handler: function(event) {
-										if (!popup) {
-											var content = A.one('#<portlet:namespace />addLayout');
-
-											popup = new A.Dialog(
-												{
-													bodyContent: content.show(),
-													centered: true,
-													title: '<liferay-ui:message key="add-child-page" />',
-													modal: true,
-													width: 500
-												}
-											).render();
-										}
-
-										popup.show();
-
-										Liferay.Util.focusFormField(content.one('input:text'));
-									},
-									icon: 'circle-plus',
-									label: '<liferay-ui:message key="add-child-page" />'
-								},
-								</c:if>
-								{
-									handler: function(event) {
-										Liferay.Util.openWindow(
+									activeState: false,
+									boundingBox: buttonRow,
+									children: [
+										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
 											{
-												cache: false,
-												dialog: {
-													width: 700
-												},
-												id: '<portlet:namespace /><%= selPlid %>_permissions',
-												title: '<liferay-ui:message key="permissions" />',
-												uri: '<%= permissionURL %>'
-											}
-										);
-									},
-									icon: 'key',
-									label: '<liferay-ui:message key="permissions" />'
-								},
-								{
-									handler: function(event) {
-										<c:choose>
-											<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
-												alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
-											</c:when>
-											<c:otherwise>
-												if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-													document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-													document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
-													submitForm(document.<portlet:namespace />fm);
-												}
-											</c:otherwise>
-										</c:choose>
-									},
-									icon: 'circle-minus',
-									label: '<liferay-ui:message key="delete" />'
-								}
-							]
-						}
-					).render();
+												handler: function(event) {
+													if (!popup) {
+														var content = A.one('#<portlet:namespace />addLayout');
 
-					buttonRow.setData('layoutToolbar', layoutToolbar);
-				</aui:script>
-				</c:otherwise>
+														popup = new A.Dialog(
+															{
+																bodyContent: content.show(),
+																centered: true,
+																title: '<liferay-ui:message key="add-child-page" />',
+																modal: true,
+																width: 500
+															}
+														).render();
+													}
+
+													popup.show();
+
+													Liferay.Util.focusFormField(content.one('input:text'));
+												},
+												icon: 'circle-plus',
+												label: '<liferay-ui:message key="add-child-page" />'
+											},
+										</c:if>
+										{
+											handler: function(event) {
+												Liferay.Util.openWindow(
+													{
+														cache: false,
+														dialog: {
+															width: 700
+														},
+														id: '<portlet:namespace /><%= selPlid %>_permissions',
+														title: '<liferay-ui:message key="permissions" />',
+														uri: '<%= permissionURL %>'
+													}
+												);
+											},
+											icon: 'key',
+											label: '<liferay-ui:message key="permissions" />'
+										},
+										{
+											handler: function(event) {
+												<c:choose>
+													<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
+														alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
+													</c:when>
+													<c:otherwise>
+														if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+															document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+															document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+															submitForm(document.<portlet:namespace />fm);
+														}
+													</c:otherwise>
+												</c:choose>
+											},
+											icon: 'circle-minus',
+											label: '<liferay-ui:message key="delete" />'
+										}
+									]
+								}
+							).render();
+
+							buttonRow.setData('layoutToolbar', layoutToolbar);
+						</aui:script>
+					</c:otherwise>
 				</c:choose>
 			</c:if>
 

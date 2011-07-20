@@ -127,14 +127,10 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
-
 		String description = ParamUtil.getString(actionRequest, "description");
-
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
 		boolean allowModifications = ParamUtil.getBoolean(
 			actionRequest, "allowModifications");
-
 		boolean allowLayoutAddition = ParamUtil.getBoolean(
 			actionRequest, "allowLayoutAdditions");
 

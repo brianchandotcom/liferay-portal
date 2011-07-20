@@ -91,9 +91,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			Group group = layout.getGroup();
 
 			if (!group.isLayoutSetPrototype() &&
-				SitesUtil.isLayoutLocked(layout) &&
-				(ActionKeys.CUSTOMIZE.equals(actionId) ||
-					ActionKeys.UPDATE.equals(actionId))) {
+				attemptToModifyLockedLayout(layout, actionId)) {
 
 				return false;
 			}
@@ -155,10 +153,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, layoutId);
 
-			if (SitesUtil.isLayoutLocked(layout) &&
-				(ActionKeys.CUSTOMIZE.equals(actionId) ||
-					ActionKeys.UPDATE.equals(actionId))) {
-
+			if (attemptToModifyLockedLayout(layout, actionId)) {
 				return false;
 			}
 
@@ -175,10 +170,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 
-			if (SitesUtil.isLayoutLocked(layout) &&
-				(ActionKeys.CUSTOMIZE.equals(actionId) ||
-					ActionKeys.UPDATE.equals(actionId))) {
-
+			if (attemptToModifyLockedLayout(layout, actionId)) {
 				return false;
 			}
 
@@ -193,6 +185,19 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		return contains(permissionChecker, layout, actionId);
+	}
+
+	protected boolean attemptToModifyLockedLayout(
+		Layout layout, String actionId) {
+
+		if (SitesUtil.isLayoutLocked(layout) &&
+			(ActionKeys.CUSTOMIZE.equals(actionId) ||
+				ActionKeys.UPDATE.equals(actionId))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -59,6 +59,8 @@ if (group != null) {
 %>
 
 <aui:fieldset>
+	<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
+
 	<c:choose>
 		<c:when test="<%= (group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null)) %>">
 			<aui:fieldset label="public-pages">
@@ -81,14 +83,12 @@ if (group != null) {
 							%>
 
 						</aui:select>
-
-						<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
 					</c:when>
 					<c:otherwise>
 						<c:if test="<%= (publicLayoutSetPrototype != null) %>">
 							<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-the-template-x" />
-							<br /><br />
 						</c:if>
+
 						<c:choose>
 							<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
 								<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
@@ -133,14 +133,12 @@ if (group != null) {
 							%>
 
 						</aui:select>
-
-						<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
 					</c:when>
 					<c:otherwise>
 						<c:if test="<%= (privateLayoutSetPrototype != null) %>">
 							<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-the-template-x" />
-							<br /><br />
 						</c:if>
+
 						<c:choose>
 							<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
 								<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
@@ -206,8 +204,6 @@ if (group != null) {
 					<aui:option label="public" value="0" />
 					<aui:option label="private" value="1" />
 				</aui:select>
-
-				<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
 			</aui:fieldset>
 		</c:when>
 	</c:choose>

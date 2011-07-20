@@ -249,13 +249,14 @@ public class SitesUtil {
 					layoutSetPrototype.getUuid());
 
 			for (LayoutSet linkedLayoutSet : linkedLayoutSets) {
-				Layout l = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layout.getUuid(), linkedLayoutSet.getGroupId());
+				Layout linkedLayout =
+					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+						layout.getUuid(), linkedLayoutSet.getGroupId());
 
-				if (l != null && (isLayoutLocked(l) ||
-						isLayoutToBeUpdatedFromTemplate(l))) {
+				if (linkedLayout != null && (isLayoutLocked(linkedLayout) ||
+						isLayoutToBeUpdatedFromTemplate(linkedLayout))) {
 
-					LayoutServiceUtil.deleteLayout(l.getPlid());
+					LayoutServiceUtil.deleteLayout(linkedLayout.getPlid());
 				}
 			}
 		}

@@ -77,8 +77,9 @@ if (allowLayoutAdditionsProperty != null) {
 
 		<aui:input inlineLabel="left" name="active" />
 
-		<aui:input inlineLabel="left" name="allowModifications" type="checkbox" value="<%= allowModifications %>" />
-		<aui:input inlineLabel="left" name="allowLayoutAdditions" type="checkbox" value="<%= allowLayoutAdditions %>" />
+		<aui:input name="allowModifications" type="checkbox" value="<%= allowModifications %>" />
+
+		<aui:input name="allowLayoutAdditions" type="checkbox" value="<%= allowLayoutAdditions %>" />
 
 		<c:if test="<%= !layoutSetPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">

@@ -198,7 +198,6 @@ public class UpdateLayoutAction extends JSONAction {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			if (group.isLayoutSetPrototype()) {
-
 				LayoutSetPrototype layoutSetPrototype =
 					LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 						group.getClassPK());

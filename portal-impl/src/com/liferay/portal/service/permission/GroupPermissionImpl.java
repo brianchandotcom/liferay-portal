@@ -76,8 +76,8 @@ public class GroupPermissionImpl implements GroupPermission {
 
 			for (Organization organization : organizations) {
 				if (OrganizationPermissionUtil.contains(
-					permissionChecker, organization.getOrganizationId(),
-					ActionKeys.MANAGE_USERS)) {
+						permissionChecker, organization.getOrganizationId(),
+						ActionKeys.MANAGE_USERS)) {
 
 					return true;
 				}
@@ -85,7 +85,6 @@ public class GroupPermissionImpl implements GroupPermission {
 		}
 
 		if (ActionKeys.ADD_LAYOUT.equals(actionId)) {
-
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, false);
 
@@ -111,6 +110,7 @@ public class GroupPermissionImpl implements GroupPermission {
 				ActionKeys.MANAGE_LAYOUTS);
 		}
 		else {
+
 			// Group id must be set so that users can modify their personal
 			// pages
 

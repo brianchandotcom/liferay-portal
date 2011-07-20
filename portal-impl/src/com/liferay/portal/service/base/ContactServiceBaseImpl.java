@@ -179,6 +179,7 @@ import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
@@ -2642,6 +2643,25 @@ public abstract class ContactServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the resource type permission finder.
+	 *
+	 * @return the resource type permission finder
+	 */
+	public ResourceTypePermissionFinder getResourceTypePermissionFinder() {
+		return resourceTypePermissionFinder;
+	}
+
+	/**
+	 * Sets the resource type permission finder.
+	 *
+	 * @param resourceTypePermissionFinder the resource type permission finder
+	 */
+	public void setResourceTypePermissionFinder(
+		ResourceTypePermissionFinder resourceTypePermissionFinder) {
+		this.resourceTypePermissionFinder = resourceTypePermissionFinder;
+	}
+
+	/**
 	 * Returns the role local service.
 	 *
 	 * @return the role local service
@@ -3934,6 +3954,8 @@ public abstract class ContactServiceBaseImpl extends PrincipalBean
 	protected ResourceTypePermissionLocalService resourceTypePermissionLocalService;
 	@BeanReference(type = ResourceTypePermissionPersistence.class)
 	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionFinder.class)
+	protected ResourceTypePermissionFinder resourceTypePermissionFinder;
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 	@BeanReference(type = RoleService.class)

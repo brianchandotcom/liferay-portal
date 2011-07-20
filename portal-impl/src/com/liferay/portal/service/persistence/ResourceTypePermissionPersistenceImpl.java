@@ -69,20 +69,24 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	public static final String FINDER_CLASS_NAME_ENTITY = ResourceTypePermissionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
-	public static final FinderPath FINDER_PATH_FIND_BY_C_G = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FIND_BY_C_G_N = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceTypePermissionImpl.class, FINDER_CLASS_NAME_LIST,
-			"findByC_G",
+			"findByC_G_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
+				String.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_N = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByC_G",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			FINDER_CLASS_NAME_LIST, "countByC_G_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceTypePermissionImpl.class, FINDER_CLASS_NAME_LIST,
@@ -420,21 +424,22 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Returns all the resource type permissions where companyId = &#63; and groupId = &#63;.
+	 * Returns all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @return the matching resource type permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceTypePermission> findByC_G(long companyId, long groupId)
-		throws SystemException {
-		return findByC_G(companyId, groupId, QueryUtil.ALL_POS,
+	public List<ResourceTypePermission> findByC_G_N(long companyId,
+		long groupId, String name) throws SystemException {
+		return findByC_G_N(companyId, groupId, name, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the resource type permissions where companyId = &#63; and groupId = &#63;.
+	 * Returns a range of all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -442,18 +447,20 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of resource type permissions
 	 * @param end the upper bound of the range of resource type permissions (not inclusive)
 	 * @return the range of matching resource type permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceTypePermission> findByC_G(long companyId, long groupId,
-		int start, int end) throws SystemException {
-		return findByC_G(companyId, groupId, start, end, null);
+	public List<ResourceTypePermission> findByC_G_N(long companyId,
+		long groupId, String name, int start, int end)
+		throws SystemException {
+		return findByC_G_N(companyId, groupId, name, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the resource type permissions where companyId = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -461,41 +468,54 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of resource type permissions
 	 * @param end the upper bound of the range of resource type permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching resource type permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<ResourceTypePermission> findByC_G(long companyId, long groupId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<ResourceTypePermission> findByC_G_N(long companyId,
+		long groupId, String name, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				companyId, groupId,
+				companyId, groupId, name,
 				
 				String.valueOf(start), String.valueOf(end),
 				String.valueOf(orderByComparator)
 			};
 
-		List<ResourceTypePermission> list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_G,
+		List<ResourceTypePermission> list = (List<ResourceTypePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_G_N,
 				finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
+				query = new StringBundler(5 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_RESOURCETYPEPERMISSION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_N_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_N_GROUPID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_G_N_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_G_N_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_G_N_NAME_2);
+				}
+			}
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -517,6 +537,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 				qPos.add(groupId);
 
+				if (name != null) {
+					qPos.add(name);
+				}
+
 				list = (List<ResourceTypePermission>)QueryUtil.list(q,
 						getDialect(), start, end);
 			}
@@ -525,13 +549,13 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_G,
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_G_N,
 						finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_G,
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_G_N,
 						finderArgs, list);
 				}
 
@@ -543,7 +567,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Returns the first resource type permission in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the first resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -551,19 +575,20 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource type permission
 	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceTypePermission findByC_G_First(long companyId, long groupId,
-		OrderByComparator orderByComparator)
+	public ResourceTypePermission findByC_G_N_First(long companyId,
+		long groupId, String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceTypePermissionException, SystemException {
-		List<ResourceTypePermission> list = findByC_G(companyId, groupId, 0, 1,
-				orderByComparator);
+		List<ResourceTypePermission> list = findByC_G_N(companyId, groupId,
+				name, 0, 1, orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -572,6 +597,9 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 			msg.append(", groupId=");
 			msg.append(groupId);
+
+			msg.append(", name=");
+			msg.append(name);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -583,7 +611,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Returns the last resource type permission in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the last resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -591,21 +619,22 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource type permission
 	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceTypePermission findByC_G_Last(long companyId, long groupId,
-		OrderByComparator orderByComparator)
+	public ResourceTypePermission findByC_G_N_Last(long companyId,
+		long groupId, String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceTypePermissionException, SystemException {
-		int count = countByC_G(companyId, groupId);
+		int count = countByC_G_N(companyId, groupId, name);
 
-		List<ResourceTypePermission> list = findByC_G(companyId, groupId,
-				count - 1, count, orderByComparator);
+		List<ResourceTypePermission> list = findByC_G_N(companyId, groupId,
+				name, count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -614,6 +643,9 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 			msg.append(", groupId=");
 			msg.append(groupId);
+
+			msg.append(", name=");
+			msg.append(name);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -625,7 +657,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -634,14 +666,15 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 * @param resourceTypePermissionId the primary key of the current resource type permission
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next resource type permission
 	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ResourceTypePermission[] findByC_G_PrevAndNext(
+	public ResourceTypePermission[] findByC_G_N_PrevAndNext(
 		long resourceTypePermissionId, long companyId, long groupId,
-		OrderByComparator orderByComparator)
+		String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceTypePermissionException, SystemException {
 		ResourceTypePermission resourceTypePermission = findByPrimaryKey(resourceTypePermissionId);
 
@@ -652,13 +685,13 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 			ResourceTypePermission[] array = new ResourceTypePermissionImpl[3];
 
-			array[0] = getByC_G_PrevAndNext(session, resourceTypePermission,
-					companyId, groupId, orderByComparator, true);
+			array[0] = getByC_G_N_PrevAndNext(session, resourceTypePermission,
+					companyId, groupId, name, orderByComparator, true);
 
 			array[1] = resourceTypePermission;
 
-			array[2] = getByC_G_PrevAndNext(session, resourceTypePermission,
-					companyId, groupId, orderByComparator, false);
+			array[2] = getByC_G_N_PrevAndNext(session, resourceTypePermission,
+					companyId, groupId, name, orderByComparator, false);
 
 			return array;
 		}
@@ -670,9 +703,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		}
 	}
 
-	protected ResourceTypePermission getByC_G_PrevAndNext(Session session,
+	protected ResourceTypePermission getByC_G_N_PrevAndNext(Session session,
 		ResourceTypePermission resourceTypePermission, long companyId,
-		long groupId, OrderByComparator orderByComparator, boolean previous) {
+		long groupId, String name, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -685,9 +719,21 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 		query.append(_SQL_SELECT_RESOURCETYPEPERMISSION_WHERE);
 
-		query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+		query.append(_FINDER_COLUMN_C_G_N_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+		query.append(_FINDER_COLUMN_C_G_N_GROUPID_2);
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_C_G_N_NAME_1);
+		}
+		else {
+			if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_G_N_NAME_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_G_N_NAME_2);
+			}
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
@@ -755,6 +801,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		qPos.add(companyId);
 
 		qPos.add(groupId);
+
+		if (name != null) {
+			qPos.add(name);
+		}
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByValues(resourceTypePermission);
@@ -884,16 +934,17 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Removes all the resource type permissions where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_G(long companyId, long groupId)
+	public void removeByC_G_N(long companyId, long groupId, String name)
 		throws SystemException {
-		for (ResourceTypePermission resourceTypePermission : findByC_G(
-				companyId, groupId)) {
+		for (ResourceTypePermission resourceTypePermission : findByC_G_N(
+				companyId, groupId, name)) {
 			resourceTypePermissionPersistence.remove(resourceTypePermission);
 		}
 	}
@@ -910,28 +961,41 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Returns the number of resource type permissions where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @return the number of matching resource type permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByC_G(long companyId, long groupId)
+	public int countByC_G_N(long companyId, long groupId, String name)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		Object[] finderArgs = new Object[] { companyId, groupId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_G,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_G_N,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_RESOURCETYPEPERMISSION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_G_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_G_N_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_G_GROUPID_2);
+			query.append(_FINDER_COLUMN_C_G_N_GROUPID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_G_N_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_G_N_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_G_N_NAME_2);
+				}
+			}
 
 			String sql = query.toString();
 
@@ -948,6 +1012,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 				qPos.add(groupId);
 
+				if (name != null) {
+					qPos.add(name);
+				}
+
 				count = (Long)q.uniqueResult();
 			}
 			catch (Exception e) {
@@ -958,8 +1026,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N,
+					finderArgs, count);
 
 				closeSession(session);
 			}
@@ -1173,8 +1241,11 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	private static final String _SQL_SELECT_RESOURCETYPEPERMISSION_WHERE = "SELECT resourceTypePermission FROM ResourceTypePermission resourceTypePermission WHERE ";
 	private static final String _SQL_COUNT_RESOURCETYPEPERMISSION = "SELECT COUNT(resourceTypePermission) FROM ResourceTypePermission resourceTypePermission";
 	private static final String _SQL_COUNT_RESOURCETYPEPERMISSION_WHERE = "SELECT COUNT(resourceTypePermission) FROM ResourceTypePermission resourceTypePermission WHERE ";
-	private static final String _FINDER_COLUMN_C_G_COMPANYID_2 = "resourceTypePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_G_GROUPID_2 = "resourceTypePermission.groupId = ?";
+	private static final String _FINDER_COLUMN_C_G_N_COMPANYID_2 = "resourceTypePermission.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_N_GROUPID_2 = "resourceTypePermission.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_C_G_N_NAME_1 = "resourceTypePermission.name IS NULL";
+	private static final String _FINDER_COLUMN_C_G_N_NAME_2 = "resourceTypePermission.name = ?";
+	private static final String _FINDER_COLUMN_C_G_N_NAME_3 = "(resourceTypePermission.name IS NULL OR resourceTypePermission.name = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceTypePermission.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceTypePermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceTypePermission exists with the key {";

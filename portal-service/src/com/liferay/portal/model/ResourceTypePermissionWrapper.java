@@ -191,7 +191,8 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 		return new ResourceTypePermissionWrapper((ResourceTypePermission)_resourceTypePermission.clone());
 	}
 
-	public int compareTo(ResourceTypePermission resourceTypePermission) {
+	public int compareTo(
+		com.liferay.portal.model.ResourceTypePermission resourceTypePermission) {
 		return _resourceTypePermission.compareTo(resourceTypePermission);
 	}
 
@@ -200,11 +201,11 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 		return _resourceTypePermission.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<ResourceTypePermission> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ResourceTypePermission> toCacheModel() {
 		return _resourceTypePermission.toCacheModel();
 	}
 
-	public ResourceTypePermission toEscapedModel() {
+	public com.liferay.portal.model.ResourceTypePermission toEscapedModel() {
 		return new ResourceTypePermissionWrapper(_resourceTypePermission.toEscapedModel());
 	}
 

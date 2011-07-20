@@ -1004,6 +1004,21 @@
 				(ResourcePermission.scope = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder.findByC_G_N">
+		<![CDATA[
+			SELECT
+				{ResourceTypePermission.*}
+			FROM
+				ResourceTypePermission
+			WHERE
+				(ResourceTypePermission.companyId = ?) AND
+				(ResourceTypePermission.name = ?) AND
+				(
+					(ResourceTypePermission.groupId = ?) OR
+					(ResourceTypePermission.groupId = 0)
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByCommunity">
 		<![CDATA[
 			SELECT

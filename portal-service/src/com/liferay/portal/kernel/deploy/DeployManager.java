@@ -15,8 +15,12 @@
 package com.liferay.portal.kernel.deploy;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author Jonathan Potter
@@ -31,7 +35,8 @@ public interface DeployManager {
 
 	public String getDeployDir() throws Exception;
 
-	public boolean isDeployed(String context);
+	public List<PluginPackage> getInstalledPlugins()
+		throws PortalException, SystemException;
 
 	public boolean isExtPlugin(File file);
 

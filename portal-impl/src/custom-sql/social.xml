@@ -215,9 +215,11 @@
 	<sql id="com.liferay.portlet.social.service.impl.SocialEquityLogLocalServiceImpl.findSocialEquityUser">
 		<![CDATA[
 			SELECT
-				equityUserId, groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue
+				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue, status
 			FROM
-				SocialEquityUser
+				SocialEquityUser 
+			INNER JOIN 
+				User_ ON SocialEquityUser.userId = User_.userId
 			ORDER BY
 				groupId, equityValue DESC
 		]]>
@@ -225,9 +227,11 @@
 	<sql id="com.liferay.portlet.social.service.impl.SocialEquityLogLocalServiceImpl.findSocialEquityUserByGroup">
 		<![CDATA[
 			SELECT
-				equityUserId, groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue
+				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue, status
 			FROM
-				SocialEquityUser
+				SocialEquityUser 
+			INNER JOIN 
+				User_ ON SocialEquityUser.userId = User_.userId
 			WHERE
 				(groupId = [$GROUP_ID$])
 			ORDER BY

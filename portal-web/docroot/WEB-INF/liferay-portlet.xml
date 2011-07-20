@@ -1389,6 +1389,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-dockbar</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
@@ -1756,7 +1757,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/staging_bar/css/main.jsp</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/staging_bar/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-staging-bar</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>

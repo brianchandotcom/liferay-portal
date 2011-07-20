@@ -68,7 +68,7 @@ public class DLFileEntryAtomCollectionAdapter
 
 		String srcLink = AtomUtil.createEntryLink(
 			atomRequestContext, _COLLECTION_NAME,
-			dlFileEntry.getFileEntryId() + "?media");
+			dlFileEntry.getFileEntryId() + ":media");
 
 		atomEntryContent.setSrcLink(srcLink);
 

@@ -205,6 +205,18 @@ public class SocialEquityLogLocalServiceImpl
 		updateRanks();
 	}
 
+	public void deactivateEquityLogs(User user) throws SystemException {
+
+		List<SocialEquityLog> equityLogs =
+			socialEquityLogPersistence.findByUserId(user.getUserId());
+
+		for (SocialEquityLog equityLog : equityLogs) {
+			equityLog.setActive(false);
+
+			socialEquityLogPersistence.remove(equityLog);
+		}
+	}
+
 	public void deactivateEquityLogs(long assetEntryId) throws SystemException {
 		if (!PropsValues.SOCIAL_EQUITY_EQUITY_LOG_ENABLED) {
 			return;

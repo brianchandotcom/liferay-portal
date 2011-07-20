@@ -1662,6 +1662,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Social
 
 		socialActivityLocalService.deleteUserActivities(user.getUserId());
+		socialEquityLogLocalService.deactivateEquityLogs(user);
+		socialEquityUserLocalService.deleteSocialEquityUser(user);
 		socialRequestLocalService.deleteReceiverUserRequests(user.getUserId());
 		socialRequestLocalService.deleteUserRequests(user.getUserId());
 

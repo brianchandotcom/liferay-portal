@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -125,6 +124,8 @@ public interface File {
 	public void touch(java.io.File file) throws IOException;
 
 	public void touch(String fileName) throws IOException;
+
+	public void unzip(java.io.File source, java.io.File destination);
 
 	public void write(String fileName, String s) throws IOException;
 

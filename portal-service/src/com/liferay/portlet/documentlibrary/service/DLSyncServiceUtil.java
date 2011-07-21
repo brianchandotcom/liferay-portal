@@ -53,6 +53,12 @@ public class DLSyncServiceUtil {
 			destinationVersion);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> getRepositories()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRepositories();
+	}
+
 	public static com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
 		long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,

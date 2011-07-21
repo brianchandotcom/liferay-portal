@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
@@ -125,13 +126,17 @@ public class MailMessageListener extends BaseMessageListener {
 
 		String address = internetAddress.toString();
 
-		for (int i = 0; i < address.length(); i++) {
-			char c = address.charAt(i);
-
+		for (char c : address.toCharArray()) {
 			if ((c == CharPool.NEW_LINE) || (c == CharPool.RETURN)) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("E-mail address " + address + " contains " +
-						"line break characters, excluded from e-mail.");
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("E-mail address ");
+					sb.append(address);
+					sb.append(" contains line break characters, excluded ");
+					sb.append("from email.");
+
+					_log.warn(sb.toString());
 				}
 
 				return null;

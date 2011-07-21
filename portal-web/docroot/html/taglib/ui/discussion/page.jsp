@@ -43,6 +43,7 @@ String className = (String)request.getAttribute("liferay-ui:discussion:className
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
 String formAction = (String)request.getAttribute("liferay-ui:discussion:formAction");
 String formName = (String)request.getAttribute("liferay-ui:discussion:formName");
+boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
@@ -99,7 +100,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			MBMessage message = rootMessage;
 			%>
 
-			<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 				<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 					<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 						<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
@@ -367,67 +368,69 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										/>
 									</c:if>
 
-									<ul class="lfr-discussion-actions">
-										<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
-											<li class="lfr-discussion-reply-to">
+									<c:if test="<%= !hideControls %>">
+										<ul class="lfr-discussion-actions">
+											<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+												<li class="lfr-discussion-reply-to">
 
-												<%
-												String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "');";
-												%>
+													<%
+													String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "');";
+													%>
 
-												<liferay-ui:icon
-													image="reply"
-													label="<%= true %>"
-													message="post-reply"
-													url="<%= taglibPostReplyURL %>"
-												/>
-											</li>
-										</c:if>
-
-										<c:if test="<%= i > 0 %>">
-
-											<%
-											String taglibTopURL = "#" + randomNamespace + "messages_top";
-											%>
-
-											<li class="lfr-discussion-top-link">
-												<liferay-ui:icon
-													image="top"
-													label="<%= true %>"
-													url="<%= taglibTopURL %>"
-													/>
-											</li>
-
-											<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
-
-												<%
-												String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');";
-												%>
-
-												<li class="lfr-discussion-delete-reply">
 													<liferay-ui:icon
-														image="edit"
+														image="reply"
 														label="<%= true %>"
-														url="<%= taglibEditURL %>"
+														message="post-reply"
+														url="<%= taglibPostReplyURL %>"
 													/>
 												</li>
 											</c:if>
 
-											<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.DELETE_DISCUSSION) %>">
+											<c:if test="<%= i > 0 %>">
 
 												<%
-												String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";
+												String taglibTopURL = "#" + randomNamespace + "messages_top";
 												%>
 
-												<li class="lfr-discussion-delete">
-													<liferay-ui:icon-delete
+												<li class="lfr-discussion-top-link">
+													<liferay-ui:icon
+														image="top"
 														label="<%= true %>"
-														url="<%= taglibDeleteURL %>"
-													/>
+														url="<%= taglibTopURL %>"
+														/>
 												</li>
+
+												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
+
+													<%
+													String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');";
+													%>
+
+													<li class="lfr-discussion-delete-reply">
+														<liferay-ui:icon
+															image="edit"
+															label="<%= true %>"
+															url="<%= taglibEditURL %>"
+														/>
+													</li>
+												</c:if>
+
+												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.DELETE_DISCUSSION) %>">
+
+													<%
+													String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";
+													%>
+
+													<li class="lfr-discussion-delete">
+														<liferay-ui:icon-delete
+															label="<%= true %>"
+															url="<%= taglibDeleteURL %>"
+														/>
+													</li>
+												</c:if>
 											</c:if>
-										</c:if>
-									</ul>
+										</ul>
+									</c:if>
 								</div>
 
 								<aui:layout cssClass="lfr-discussion-form-container">
@@ -452,7 +455,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										</aui:button-row>
 									</div>
 
-									<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
+									<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
 										<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= randomNamespace %>editForm<%= i %>" style="display: none;">
 											<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' value="<%= message.getBody() %>" type="textarea" wrap="soft" />
 

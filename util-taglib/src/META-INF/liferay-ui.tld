@@ -439,6 +439,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>hideControls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>permissionClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

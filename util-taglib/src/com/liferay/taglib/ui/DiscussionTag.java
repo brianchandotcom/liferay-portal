@@ -40,6 +40,10 @@ public class DiscussionTag extends IncludeTag {
 		_formName = formName;
 	}
 
+	public void setHideControls(boolean hideControls) {
+		_hideControls = hideControls;
+	}
+
 	public void setPermissionClassName(String permissionClassName) {
 		_permissionClassName = permissionClassName;
 	}
@@ -70,6 +74,7 @@ public class DiscussionTag extends IncludeTag {
 		_classPK = 0;
 		_formAction = null;
 		_formName = "fm";
+		_hideControls = false;
 		_permissionClassName = null;
 		_permissionClassPK = 0;
 		_ratingsEnabled = true;
@@ -103,6 +108,9 @@ public class DiscussionTag extends IncludeTag {
 		request.setAttribute("liferay-ui:discussion:formAction", _formAction);
 		request.setAttribute("liferay-ui:discussion:formName", _formName);
 		request.setAttribute(
+				"liferay-ui:discussion:hideControls",
+				String.valueOf(_hideControls));
+		request.setAttribute(
 			"liferay-ui:discussion:permissionClassName", permissionClassName);
 		request.setAttribute(
 			"liferay-ui:discussion:permissionClassPK",
@@ -122,6 +130,7 @@ public class DiscussionTag extends IncludeTag {
 	private long _classPK;
 	private String _formAction;
 	private String _formName = "fm";
+	private boolean _hideControls = false;
 	private String _permissionClassName;
 	private long _permissionClassPK;
 	private boolean _ratingsEnabled = true;

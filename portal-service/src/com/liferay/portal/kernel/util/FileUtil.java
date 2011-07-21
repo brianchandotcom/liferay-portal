@@ -19,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -246,6 +245,10 @@ public class FileUtil {
 
 	public static Properties toProperties(String fileName) {
 		return getFile().toProperties(fileName);
+	}
+
+	public static void unzip(File source, File destination) {
+		getFile().unzip(source, destination);
 	}
 
 	public static void write(String fileName, String s) throws IOException {

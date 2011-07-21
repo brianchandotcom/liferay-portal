@@ -122,6 +122,15 @@ public class PortletPreferencesFactoryUtil {
 			request, portletId);
 	}
 
+	public static PortletPreferencesIds getPortletPreferencesIds(
+			long scopeGroupId, long userId, Layout layout, String portletId,
+			boolean modeEditGuest)
+		throws PortalException, SystemException {
+
+		return getPortletPreferencesFactory().getPortletPreferencesIds(
+			scopeGroupId, userId, layout, portletId, modeEditGuest);
+	}
+
 	public static PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId)
 		throws PortalException, SystemException {

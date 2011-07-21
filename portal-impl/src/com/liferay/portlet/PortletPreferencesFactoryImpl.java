@@ -222,7 +222,45 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, Layout selLayout, String portletId)
+			HttpServletRequest request, Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = PortalUtil.getScopeGroupId(
+			request, portletId);
+		long userId = PortalUtil.getUserId(request);
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		boolean modeEditGuest = false;
+
+		String portletMode = ParamUtil.getString(request, "p_p_mode");
+
+		if (portletMode.equals(LiferayPortletMode.EDIT_GUEST.toString()) ||
+			((layoutTypePortlet != null) &&
+			 (layoutTypePortlet.hasModeEditGuestPortletId(portletId)))) {
+
+			modeEditGuest = true;
+		}
+
+		return getPortletPreferencesIds(
+			scopeGroupId, userId, layout, portletId, modeEditGuest);
+	}
+
+	public PortletPreferencesIds getPortletPreferencesIds(
+			HttpServletRequest request, String portletId)
+		throws PortalException, SystemException {
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		return getPortletPreferencesIds(request, layout, portletId);
+	}
+
+	public PortletPreferencesIds getPortletPreferencesIds(
+			long scopeGroupId, long userId, Layout layout, String portletId,
+			boolean modeEditGuest)
 		throws PortalException, SystemException {
 
 		// Below is a list of  the possible combinations, where we specify the
@@ -246,32 +284,15 @@ public class PortletPreferencesFactoryImpl
 		// PUB.10.USER.liferay.com.1, 3, 56_INSTANCE_abcd, preference is scoped
 		// per portlet, user, and layout
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletId);
+			layout.getCompanyId(), portletId);
 
 		long ownerId = 0;
 		int ownerType = 0;
 		long plid = 0;
-
-		boolean modeEditGuest = false;
-
-		String portletMode = ParamUtil.getString(request, "p_p_mode");
-
-		if (portletMode.equals(LiferayPortletMode.EDIT_GUEST.toString()) ||
-			((layoutTypePortlet != null) &&
-			 (layoutTypePortlet.hasModeEditGuestPortletId(portletId)))) {
-
-			modeEditGuest = true;
-		}
 
 		if (modeEditGuest) {
 			boolean hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
@@ -289,7 +310,7 @@ public class PortletPreferencesFactoryImpl
 		}
 
 		if (portlet.isPreferencesCompanyWide()) {
-			ownerId = themeDisplay.getCompanyId();
+			ownerId = layout.getCompanyId();
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 			plid = PortletKeys.PREFS_PLID_SHARED;
 			portletId = PortletConstants.getRootPortletId(portletId);
@@ -298,16 +319,14 @@ public class PortletPreferencesFactoryImpl
 			if (portlet.isPreferencesUniquePerLayout()) {
 				ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-				plid = selLayout.getPlid();
+				plid = layout.getPlid();
 
 				if (portlet.isPreferencesOwnedByGroup()) {
 				}
 				else {
-					long userId = PortalUtil.getUserId(request);
-
 					if ((userId <= 0) || modeEditGuest) {
 						userId = UserLocalServiceUtil.getDefaultUserId(
-							themeDisplay.getCompanyId());
+							layout.getCompanyId());
 					}
 
 					ownerId = userId;
@@ -318,19 +337,14 @@ public class PortletPreferencesFactoryImpl
 				plid = PortletKeys.PREFS_PLID_SHARED;
 
 				if (portlet.isPreferencesOwnedByGroup()) {
-					long scopeGroupId = PortalUtil.getScopeGroupId(
-						request, portletId);
-
 					ownerId = scopeGroupId;
 					ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
 					portletId = PortletConstants.getRootPortletId(portletId);
 				}
 				else {
-					long userId = PortalUtil.getUserId(request);
-
 					if ((userId <= 0) || modeEditGuest) {
 						userId = UserLocalServiceUtil.getDefaultUserId(
-							themeDisplay.getCompanyId());
+							layout.getCompanyId());
 					}
 
 					ownerId = userId;
@@ -340,16 +354,7 @@ public class PortletPreferencesFactoryImpl
 		}
 
 		return new PortletPreferencesIds(
-			themeDisplay.getCompanyId(), ownerId, ownerType, plid, portletId);
-	}
-
-	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, String portletId)
-		throws PortalException, SystemException {
-
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		return getPortletPreferencesIds(request, layout, portletId);
+			layout.getCompanyId(), ownerId, ownerType, plid, portletId);
 	}
 
 	public PortletPreferences getPortletSetup(

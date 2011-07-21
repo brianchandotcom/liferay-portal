@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public interface LayoutTypePortlet extends LayoutType {
 
@@ -160,6 +161,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean isCustomizable();
 
 	public boolean isCustomizable(String columnId);
+
+	public boolean isCustomizableByPortletId(String portletId);
 
 	public boolean isCustomizedView();
 

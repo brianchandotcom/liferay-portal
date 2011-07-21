@@ -43,8 +43,12 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
+import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
@@ -58,6 +62,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
 
@@ -74,13 +79,14 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Berentey Zsolt
  * @author Jorge Ferrer
+ * @author Raymond Augé
  */
 public class LayoutTypePortletImpl
 	extends LayoutTypeImpl implements LayoutTypePortlet {
 
 	public static String getFullInstanceSeparator() {
 		String instanceId = PwdGenerator.getPassword(
-			PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3, 4);
+			PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3, 12);
 
 		return PortletConstants.INSTANCE_SEPARATOR + instanceId;
 	}
@@ -207,7 +213,13 @@ public class LayoutTypePortletImpl
 				return null;
 			}
 
-			if (checkPermission && !portlet.hasAddPortletPermission(userId)) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (checkPermission && !PortletPermissionUtil.contains(
+					permissionChecker, layout, portlet,
+					ActionKeys.ADD_TO_PAGE)) {
+
 				return null;
 			}
 		}
@@ -402,19 +414,7 @@ public class LayoutTypePortletImpl
 	public List<Portlet> getAllPortlets(String columnId)
 		throws PortalException, SystemException {
 
-		String columnValue = StringPool.BLANK;
-
-		if (isCustomizable() && isColumnDisabled(columnId) && hasTemplate()) {
-			columnValue = getTemplateProperty(columnId);
-		}
-		else if (isCustomizable() && !isColumnDisabled(columnId) &&
-				 hasUserPreferenes()) {
-
-			columnValue = getUserPreference(columnId);
-		}
-		else {
-			columnValue = getTypeSettingsProperties().getProperty(columnId);
-		}
+		String columnValue = getColumnValue(columnId);
 
 		String[] portletIds = StringUtil.split(columnValue);
 
@@ -537,21 +537,7 @@ public class LayoutTypePortletImpl
 		for (int i = 0; i < columns.size(); i++) {
 			String columnId = columns.get(i);
 
-			String columnValue = StringPool.BLANK;
-
-			if (isCustomizable() && isColumnDisabled(columnId) &&
-				hasTemplate()) {
-
-				columnValue = getTemplateProperty(columnId);
-			}
-			else if (isCustomizable() && !isColumnDisabled(columnId) &&
-					 hasUserPreferenes()) {
-
-				columnValue = getUserPreference(columnId);
-			}
-			else {
-				columnValue = getTypeSettingsProperties().getProperty(columnId);
-			}
+			String columnValue = getColumnValue(columnId);
 
 			portletIds.addAll(
 				ListUtil.fromArray(StringUtil.split(columnValue)));
@@ -669,9 +655,7 @@ public class LayoutTypePortletImpl
 
 		List<String> columns = getColumns();
 
-		for (int i = 0; i < columns.size(); i++) {
-			String columnId = columns.get(i);
-
+		for (String columnId : columns) {
 			if (hasNonstaticPortletId(columnId, portletId)) {
 				return true;
 			}
@@ -844,6 +828,10 @@ public class LayoutTypePortletImpl
 		return false;
 	}
 
+	public boolean isCustomizableByPortletId(String portletId) {
+		return isCustomizable(getColumn(portletId));
+	}
+
 	public boolean isCustomizedView() {
 		return _customizedView;
 	}
@@ -988,7 +976,12 @@ public class LayoutTypePortletImpl
 				return;
 			}
 
-			if (!portlet.hasAddPortletPermission(userId) &&
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (!PortletPermissionUtil.contains(
+					permissionChecker, getLayout(), portlet,
+					ActionKeys.ADD_TO_PAGE) &&
 				!isCustomizable()) {
 
 				return;
@@ -1263,6 +1256,39 @@ public class LayoutTypePortletImpl
 		}
 	}
 
+	protected void copyPreferences(
+		String sourcePortletId, String targetPortletId) {
+
+		Layout layout = getLayout();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PortletPreferencesIds portletPreferencesIds =
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					layout.getGroupId(), permissionChecker.getUserId(), layout,
+					sourcePortletId, false);
+
+			javax.portlet.PortletPreferences sourcePreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					portletPreferencesIds);
+
+			portletPreferencesIds =
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					layout.getGroupId(), permissionChecker.getUserId(), layout,
+					targetPortletId, false);
+
+			PortletPreferencesLocalServiceUtil.updatePreferences(
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(),
+				portletPreferencesIds.getPlid(),
+				portletPreferencesIds.getPortletId(), sourcePreferences);
+		}
+		catch (Exception e) {
+		}
+	}
+
 	protected void deletePortletSetup(String portletId) {
 		try {
 			List<PortletPreferences> portletPreferencesList =
@@ -1281,6 +1307,30 @@ public class LayoutTypePortletImpl
 		}
 	}
 
+	protected String getColumn(String portletId) {
+		String rootPortletId = PortletConstants.getRootPortletId(
+			portletId);
+
+		List<String> columns = getColumns();
+
+		for (String columnId : columns) {
+			String columnValue = getColumnValue(columnId);
+
+			String[] portletIds = StringUtil.split(columnValue);
+
+			for (String columnPortletId : portletIds) {
+				if (portletId.equals(columnPortletId) ||
+					(portletId.equals(rootPortletId) &&
+						columnPortletId.startsWith(rootPortletId))) {
+
+					return columnId;
+				}
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected List<String> getColumns() {
 		LayoutTemplate layoutTemplate = getLayoutTemplate();
 
@@ -1290,6 +1340,24 @@ public class LayoutTypePortletImpl
 		columns.addAll(getNestedColumns());
 
 		return columns;
+	}
+
+	protected String getColumnValue(String columnId) {
+		String columnValue = StringPool.BLANK;
+
+		if (isCustomizable() && isColumnDisabled(columnId) && hasTemplate()) {
+			columnValue = getTemplateProperty(columnId);
+		}
+		else if (isCustomizable() && !isColumnDisabled(columnId) &&
+				 hasUserPreferenes()) {
+
+			columnValue = getUserPreference(columnId);
+		}
+		else {
+			columnValue = getTypeSettingsProperties().getProperty(columnId);
+		}
+
+		return columnValue;
 	}
 
 	protected long getCompanyId() {
@@ -1437,6 +1505,33 @@ public class LayoutTypePortletImpl
 				else {
 					value = getTypeSettingsProperties().getProperty(key);
 				}
+
+				if (Validator.isNotNull(value)) {
+					String[] portletIds = StringUtil.split(value);
+					String[] result = new String[portletIds.length];
+
+					for (int i = 0; i < portletIds.length; i++) {
+						if (portletIds[i].contains(
+								PortletConstants.INSTANCE_SEPARATOR)) {
+
+							String rootPortletId =
+								PortletConstants.getRootPortletId(
+									portletIds[i]);
+
+							result[i] = rootPortletId +
+								getFullInstanceSeparator();
+
+							copyPreferences(portletIds[i], result[i]);
+						}
+						else {
+							result[i] = portletIds[i];
+						}
+					}
+
+					value = StringUtil.merge(result);
+
+					setUserPreference(key, value);
+				}
 			}
 		}
 
@@ -1460,19 +1555,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected boolean hasNonstaticPortletId(String columnId, String portletId) {
-		String columnValue = StringPool.BLANK;
-
-		if (isCustomizable() && isColumnDisabled(columnId) && hasTemplate()) {
-			columnValue = getTemplateProperty(columnId);
-		}
-		else if (isCustomizable() && !isColumnDisabled(columnId) &&
-				 hasUserPreferenes()) {
-
-			columnValue = getUserPreference(columnId);
-		}
-		else {
-			columnValue = getTypeSettingsProperties().getProperty(columnId);
-		}
+		String columnValue = getColumnValue(columnId);
 
 		String[] columnValues = StringUtil.split(columnValue);
 

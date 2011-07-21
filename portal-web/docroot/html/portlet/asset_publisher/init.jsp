@@ -185,6 +185,7 @@ if (defaultAssetPublisherPortletId.equals(portletResource)) {
 	defaultAssetPublisher = true;
 }
 
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
 boolean enableComments = GetterUtil.getBoolean(preferences.getValue("enableComments", null));
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
@@ -200,7 +201,6 @@ boolean enableFlags = GetterUtil.getBoolean(preferences.getValue("enableFlags", 
 String defaultMetadataFields = StringPool.BLANK;
 String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags,ratings";
 
-boolean showAssetLinks = GetterUtil.getBoolean(preferences.getValue("showAssetLinks", null), true);
 String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields", defaultMetadataFields));
 
 boolean enableRSS = GetterUtil.getBoolean(preferences.getValue("enableRss", null));

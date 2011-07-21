@@ -67,6 +67,7 @@ if (Validator.isNull(articleId)) {
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", StringPool.BLANK));
 String[] extensions = preferences.getValues("extensions", null);
 boolean enablePrint = GetterUtil.getBoolean(preferences.getValue("enablePrint", null));
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
 boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null));
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));

@@ -221,12 +221,14 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 						</span>
 					</c:if>
 
-					<div class="entry-links">
-						<liferay-ui:asset-links
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= assetClassPK %>"
-						/>
-					</div>
+					<c:if test="<%= enableRelatedAssets %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								className="<%= DLFileEntryConstants.getClassName() %>"
+								classPK="<%= assetClassPK %>"
+							/>
+						</div>
+					</c:if>
 
 					<span class="document-description">
 						<%= HtmlUtil.escape(fileVersion.getDescription()) %>

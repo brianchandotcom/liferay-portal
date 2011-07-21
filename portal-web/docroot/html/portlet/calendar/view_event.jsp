@@ -219,12 +219,14 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			/>
 		</span>
 
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= CalEvent.class.getName() %>"
-				classPK="<%= event.getEventId() %>"
-			/>
-		</div>
+		<c:if test="<%= enableRelatedAssets %>">
+			<div class="entry-links">
+				<liferay-ui:asset-links
+					className="<%= CalEvent.class.getName() %>"
+					classPK="<%= event.getEventId() %>"
+				/>
+			</div>
+		</c:if>
 
 		<c:if test="<%= enableRatings %>">
 			<div class="entry-ratings">

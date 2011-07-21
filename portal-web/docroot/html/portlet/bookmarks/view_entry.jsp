@@ -88,12 +88,14 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			</div>
 		</div>
 
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= BookmarksEntry.class.getName() %>"
-				classPK="<%= entryId %>"
-			/>
-		</div>
+		<c:if test="<%= enableRelatedAssets %>">
+			<div class="entry-links">
+				<liferay-ui:asset-links
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</div>
+		</c:if>
 
 		<div class="lfr-asset-ratings">
 			<liferay-ui:ratings

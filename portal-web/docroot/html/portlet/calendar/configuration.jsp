@@ -163,6 +163,8 @@ String editorContent = emailEventReminderBody;
 
 				<aui:input label="show-todays-events" name="preferences--summaryTabShowTodaysEvents--" type="checkbox" value="<%= summaryTabShowTodaysEvents %>" />
 
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 				<c:if test="<%= PropsValues.CALENDAR_EVENT_RATINGS_ENABLED %>">
 					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 				</c:if>

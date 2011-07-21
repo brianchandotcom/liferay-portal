@@ -104,6 +104,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksListingPanel" persistState="<%= true %>" title="bookmarks-listing">
 			<aui:fieldset>
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 				<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= entriesPerPage %>" />
 
 				<aui:field-wrapper label="show-columns">

@@ -97,6 +97,7 @@ if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 int entriesPerPage = PrefsParamUtil.getInteger(preferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
 
 String defaultEntryColumns = "name,url,visits,modified-date";

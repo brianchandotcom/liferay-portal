@@ -159,7 +159,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 			<br />
 
-			<c:if test='<%= showAssetLinks %>' >
+			<c:if test='<%= enableRelatedAssets %>' >
 				<liferay-ui:asset-links
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"

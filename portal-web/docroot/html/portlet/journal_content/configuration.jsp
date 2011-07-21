@@ -243,6 +243,8 @@ type = ParamUtil.getString(request, "type", type);
 
 		<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= enablePrint %>" />
 
+		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 		<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
 		<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">

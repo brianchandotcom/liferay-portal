@@ -222,12 +222,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</span>
 
 				<c:if test='<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") %>'>
-					<div class="entry-links">
-						<liferay-ui:asset-links
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-						/>
-					</div>
+					<c:if test="<%= enableRelatedAssets %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								className="<%= BlogsEntry.class.getName() %>"
+								classPK="<%= entry.getEntryId() %>"
+							/>
+						</div>
+					</c:if>
 
 					<liferay-ui:social-bookmarks
 						url="<%= bookmarkURL.toString() %>"

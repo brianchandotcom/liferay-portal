@@ -47,7 +47,7 @@
 
 				PortletCategory portletCategory = (PortletCategory)WebAppPool.get(String.valueOf(company.getCompanyId()), WebKeys.PORTLET_CATEGORY);
 
-				portletCategory = _getRelevantPortletCategory(portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
+				portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
 
 				List categories = ListUtil.fromCollection(portletCategory.getCategories());
 
@@ -108,7 +108,7 @@
 </c:if>
 
 <%!
-private static PortletCategory _getRelevantPortletCategory(PortletCategory portletCategory, Set panelSelectedPortlets, LayoutTypePortlet layoutTypePortlet, Layout layout, User user) throws Exception {
+private static PortletCategory _getRelevantPortletCategory(PermissionChecker permissionChecker, PortletCategory portletCategory, Set panelSelectedPortlets, LayoutTypePortlet layoutTypePortlet, Layout layout, User user) throws Exception {
 	PortletCategory relevantPortletCategory = new PortletCategory(portletCategory.getName(), portletCategory.getPortletIds());
 
 	for (PortletCategory curPortletCategory : portletCategory.getCategories()) {
@@ -131,7 +131,7 @@ private static PortletCategory _getRelevantPortletCategory(PortletCategory portl
 				}
 				else if (layout.isTypePanel() && !panelSelectedPortlets.contains(portlet.getRootPortletId())) {
 				}
-				else if (!portlet.hasAddPortletPermission(user.getUserId())) {
+				else if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
 				}
 				else if (!portlet.isInstanceable() && layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
 					portletIds.add(portlet.getPortletId());
@@ -142,7 +142,7 @@ private static PortletCategory _getRelevantPortletCategory(PortletCategory portl
 			}
 		}
 
-		PortletCategory curRelevantPortletCategory = _getRelevantPortletCategory(curPortletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
+		PortletCategory curRelevantPortletCategory = _getRelevantPortletCategory(permissionChecker, curPortletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
 
 		curRelevantPortletCategory.setPortletIds(portletIds);
 

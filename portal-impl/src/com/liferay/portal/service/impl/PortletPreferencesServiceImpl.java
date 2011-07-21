@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -35,6 +36,7 @@ import javax.portlet.ValidatorException;
 
 /**
  * @author Jorge Ferrer
+ * @author Raymond Augé
  */
 public class PortletPreferencesServiceImpl
 	extends PortletPreferencesServiceBaseImpl {
@@ -61,7 +63,7 @@ public class PortletPreferencesServiceImpl
 	}
 
 	public void restoreArchivedPreferences(
-			long groupId, String portletId, long portletItemId,
+			long groupId, Layout layout, String portletId, long portletItemId,
 			javax.portlet.PortletPreferences preferences)
 		throws PortalException, SystemException {
 
@@ -69,16 +71,17 @@ public class PortletPreferencesServiceImpl
 			portletItemId);
 
 		restoreArchivedPreferences(
-			groupId, portletId, portletItem, preferences);
+			groupId, layout, portletId, portletItem, preferences);
 	}
 
 	public void restoreArchivedPreferences(
-			long groupId, String portletId, PortletItem portletItem,
+			long groupId, Layout layout, String portletId,
+			PortletItem portletItem,
 			javax.portlet.PortletPreferences preferences)
 		throws PortalException, SystemException {
 
 		PortletPermissionUtil.check(
-			getPermissionChecker(), groupId, 0, portletId,
+			getPermissionChecker(), groupId, layout, portletId,
 			ActionKeys.CONFIGURATION);
 
 		long ownerId = portletItem.getPortletItemId();
@@ -94,7 +97,7 @@ public class PortletPreferencesServiceImpl
 	}
 
 	public void restoreArchivedPreferences(
-			long groupId, String name, String portletId,
+			long groupId, String name, Layout layout, String portletId,
 			javax.portlet.PortletPreferences preferences)
 		throws PortalException, SystemException {
 
@@ -102,7 +105,7 @@ public class PortletPreferencesServiceImpl
 			groupId, name, portletId, PortletPreferences.class.getName());
 
 		restoreArchivedPreferences(
-			groupId, portletId, portletItem, preferences);
+			groupId, layout, portletId, portletItem, preferences);
 	}
 
 	public void updateArchivePreferences(

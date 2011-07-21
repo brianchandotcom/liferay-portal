@@ -52,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class EditConfigurationAction extends PortletAction {
 
@@ -187,7 +188,7 @@ public class EditConfigurationAction extends PortletAction {
 			portletRequest, "portletResource");
 
 		if (!PortletPermissionUtil.contains(
-				permissionChecker, themeDisplay.getPlid(), portletId,
+				permissionChecker, themeDisplay.getLayout(), portletId,
 				ActionKeys.CONFIGURATION)) {
 
 			throw new PrincipalException();

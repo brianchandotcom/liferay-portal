@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.io.delta.DeltaUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncUpdate;
@@ -40,6 +42,7 @@ import java.nio.channels.WritableByteChannel;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Michael Young
@@ -168,6 +171,17 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 		}
 
 		return deltaInputStream;
+	}
+
+	public List<Group> getRepositories() throws PortalException, SystemException
+	{
+		User user = getUser();
+
+		if (user == null) {
+			return null;
+		}
+
+		return user.getMyPlaces();
 	}
 
 	public FileEntry updateFileEntry(

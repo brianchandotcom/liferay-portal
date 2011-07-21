@@ -40,7 +40,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 	public LayoutSetPrototype addLayoutSetPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
+			String description, boolean active, boolean allowModifications,
+			boolean allowLayoutAddition, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout set prototype
@@ -55,6 +56,14 @@ public class LayoutSetPrototypeLocalServiceImpl
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);
+
+		UnicodeProperties typeSettings =
+			layoutSetPrototype.getSettingsProperties();
+
+		typeSettings.put(
+			"allowModifications", String.valueOf(allowModifications));
+		typeSettings.put(
+			"allowLayoutAdditions", String.valueOf(allowLayoutAddition));
 
 		layoutSetPrototypePersistence.update(layoutSetPrototype, false);
 
@@ -81,7 +90,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 		layoutLocalService.addLayout(
 			userId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "home", null, null,
-			LayoutConstants.TYPE_PORTLET, false, "/home", serviceContext);
+			LayoutConstants.TYPE_PORTLET, false, false, "/home",
+			serviceContext);
 
 		return layoutSetPrototype;
 	}
@@ -158,7 +168,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
+			String description, boolean active, boolean allowModifications,
+			boolean allowLayoutAddition, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout set prototype
@@ -170,6 +181,14 @@ public class LayoutSetPrototypeLocalServiceImpl
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);
+
+		UnicodeProperties typeSettings =
+			layoutSetPrototype.getSettingsProperties();
+
+		typeSettings.put(
+			"allowModifications", String.valueOf(allowModifications));
+		typeSettings.put(
+			"allowLayoutAdditions", String.valueOf(allowLayoutAddition));
 
 		layoutSetPrototypePersistence.update(layoutSetPrototype, false);
 

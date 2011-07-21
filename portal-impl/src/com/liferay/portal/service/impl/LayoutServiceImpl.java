@@ -63,8 +63,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-			Map<Locale, String> robotsMap, String type, boolean hidden,
-			String friendlyURL, ServiceContext serviceContext)
+			Map<Locale, String> robotsMap, String type,	boolean hidden,
+			boolean locked, String friendlyURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -73,13 +73,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.addLayout(
 			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, serviceContext);
+			hidden, locked, friendlyURL, serviceContext);
 	}
 
 	public Layout addLayout(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			boolean hidden, boolean locked, String friendlyURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
@@ -92,7 +93,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, serviceContext);
+			type, hidden, locked, friendlyURL, serviceContext);
 	}
 
 	public void deleteLayout(long plid)
@@ -479,8 +480,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
-			String friendlyURL, Boolean iconImage, byte[] iconBytes,
-			ServiceContext serviceContext)
+			boolean locked,	String friendlyURL, Boolean iconImage,
+			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
@@ -490,7 +491,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, iconImage, iconBytes, serviceContext);
+			hidden, locked, friendlyURL, iconImage, iconBytes, serviceContext);
 	}
 
 	public Layout updateLayout(

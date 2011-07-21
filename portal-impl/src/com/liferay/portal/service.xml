@@ -484,7 +484,8 @@
 		<column name="wapColorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
-		<column name="layoutPrototypeId" type="long" />
+		<column name="layoutPrototypeUuid" type="String" />
+		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 
 		<!-- Order -->
 
@@ -569,7 +570,7 @@
 			<finder-column name="master" />
 		</finder>
 	</entity>
-	<entity name="LayoutPrototype" local-service="true" remote-service="true">
+	<entity name="LayoutPrototype" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -714,12 +715,16 @@
 		<column name="css" type="String" />
 		<column name="pageCount" type="int" />
 		<column name="settings" type="String" />
-		<column name="layoutSetPrototypeId" type="long" />
+		<column name="layoutSetPrototypeUuid" type="String" />
+		<column name="layoutSetPrototypeLinkEnabled" type="boolean" />
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="LayoutSetPrototypeUuid" return-type="Collection">
+			<finder-column name="layoutSetPrototypeUuid" />
 		</finder>
 		<finder name="G_P" return-type="LayoutSet" unique="true">
 			<finder-column name="groupId" />

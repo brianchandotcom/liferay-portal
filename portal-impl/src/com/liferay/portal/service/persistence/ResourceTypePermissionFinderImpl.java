@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.model.impl.ResourceTypePermissionsImpl;
+import com.liferay.portal.model.impl.ResourceTypePermissionImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -50,13 +49,14 @@ public class ResourceTypePermissionFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("ResourceTypePermission", ResourceTypePermissionImpl.class);
+			q.addEntity("ResourceTypePermission",
+				ResourceTypePermissionImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(groupId);
 			qPos.add(name);
+			qPos.add(groupId);
 
 			return (List<ResourceTypePermission>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

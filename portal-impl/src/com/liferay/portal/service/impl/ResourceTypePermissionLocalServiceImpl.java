@@ -14,27 +14,77 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ResourceBlockPermissionsContainer;
+import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.service.base.ResourceTypePermissionLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.ResourceTypePermissionPK;
+
+import java.util.List;
 
 /**
- * The implementation of the resource type permission local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.ResourceTypePermissionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.ResourceTypePermissionLocalServiceBaseImpl
- * @see com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil
+ * @author Connor McKay
  */
 public class ResourceTypePermissionLocalServiceImpl
 	extends ResourceTypePermissionLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil} to access the resource type permission local service.
-	 */
+
+	public ResourceBlockPermissionsContainer
+			getResourceBlockPermissionsContainer(
+			long companyId, long groupId, String name)
+		throws SystemException {
+
+		List<ResourceTypePermission> resourceTypePermissions =
+			resourceTypePermissionFinder.findByC_G_N(
+			companyId, groupId, name);
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+			new ResourceBlockPermissionsContainer();
+
+		for (ResourceTypePermission resourceTypePermission :
+			resourceTypePermissions) {
+
+			resourceBlockPermissionContainer.setPermissions(
+				resourceTypePermission.getRoleId(),
+				resourceTypePermission.getActionIds());
+		}
+
+		return resourceBlockPermissionContainer;
+	}
+
+	public void setResourceTypePermissions(
+			long companyId, String name, long roleId, long actionIdsLong)
+		throws SystemException {
+
+		setResourceTypePermissions(
+			companyId, 0, name, roleId, actionIdsLong);
+	}
+
+	public void setResourceTypePermissions(
+			long companyId, long groupId, String name, long roleId,
+			long actionIdsLong)
+		throws SystemException {
+
+		ResourceTypePermissionPK pk =
+			new ResourceTypePermissionPK(companyId, groupId, name, roleId);
+
+		ResourceTypePermission resourceTypePermission =
+			resourceTypePermissionPersistence.fetchByPrimaryKey(pk);
+
+		if (resourceTypePermission == null) {
+			if (actionIdsLong == 0) {
+				return;
+			}
+
+			resourceTypePermission =
+				resourceTypePermissionPersistence.create(pk);
+		}
+
+		if (actionIdsLong == 0) {
+			deleteResourceTypePermission(resourceTypePermission);
+		}
+		else {
+			resourceTypePermission.setActionIds(actionIdsLong);
+			updateResourceTypePermission(resourceTypePermission);
+		}
+	}
 }

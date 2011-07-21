@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.service.persistence.ResourceTypePermissionPK;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -30,10 +32,10 @@ public class ResourceTypePermissionSoap implements Serializable {
 		ResourceTypePermission model) {
 		ResourceTypePermissionSoap soapModel = new ResourceTypePermissionSoap();
 
-		soapModel.setResourceTypePermissionId(model.getResourceTypePermissionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setName(model.getName());
+		soapModel.setRoleId(model.getRoleId());
 		soapModel.setActionIds(model.getActionIds());
 
 		return soapModel;
@@ -82,20 +84,15 @@ public class ResourceTypePermissionSoap implements Serializable {
 	public ResourceTypePermissionSoap() {
 	}
 
-	public long getPrimaryKey() {
-		return _resourceTypePermissionId;
+	public ResourceTypePermissionPK getPrimaryKey() {
+		return new ResourceTypePermissionPK(_companyId, _groupId, _name, _roleId);
 	}
 
-	public void setPrimaryKey(long pk) {
-		setResourceTypePermissionId(pk);
-	}
-
-	public long getResourceTypePermissionId() {
-		return _resourceTypePermissionId;
-	}
-
-	public void setResourceTypePermissionId(long resourceTypePermissionId) {
-		_resourceTypePermissionId = resourceTypePermissionId;
+	public void setPrimaryKey(ResourceTypePermissionPK pk) {
+		setCompanyId(pk.companyId);
+		setGroupId(pk.groupId);
+		setName(pk.name);
+		setRoleId(pk.roleId);
 	}
 
 	public long getCompanyId() {
@@ -122,6 +119,14 @@ public class ResourceTypePermissionSoap implements Serializable {
 		_name = name;
 	}
 
+	public long getRoleId() {
+		return _roleId;
+	}
+
+	public void setRoleId(long roleId) {
+		_roleId = roleId;
+	}
+
 	public long getActionIds() {
 		return _actionIds;
 	}
@@ -130,9 +135,9 @@ public class ResourceTypePermissionSoap implements Serializable {
 		_actionIds = actionIds;
 	}
 
-	private long _resourceTypePermissionId;
 	private long _companyId;
 	private long _groupId;
 	private String _name;
+	private long _roleId;
 	private long _actionIds;
 }

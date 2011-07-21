@@ -1478,11 +1478,12 @@ create table ResourceBlockPermission (
 );
 
 create table ResourceTypePermission (
-	resourceTypePermissionId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	actionIds LONG
+	companyId LONG not null,
+	groupId LONG not null,
+	name VARCHAR(75) not null,
+	roleId LONG not null,
+	actionIds LONG,
+	primary key (companyId, groupId, name, roleId)
 );
 
 create table Resource_ (

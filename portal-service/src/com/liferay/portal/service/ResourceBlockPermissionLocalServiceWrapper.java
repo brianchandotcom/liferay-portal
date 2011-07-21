@@ -251,10 +251,17 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		_resourceBlockPermissionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIdsLong)
+	public void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.addResourceBlockPermission(resourceBlockId,
+		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
+			resourceBlockPermissionsContainer);
+	}
+
+	public void setResourceBlockPermission(long resourceBlockId, long roleId,
+		long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockPermissionLocalService.setResourceBlockPermission(resourceBlockId,
 			roleId, actionIdsLong);
 	}
 
@@ -263,23 +270,17 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
 	}
 
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissions(resourceBlockId);
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissions(resourcePermissions);
-	}
-
-	public void updateResourceBlockPermissions(long resourceBlockId,
-		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlockPermissionLocalService.updateResourceBlockPermissions(resourceBlockId,
-			resourceBlockPermissions);
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(companyId,
+			groupId, name, primKey);
 	}
 
 	public ResourceBlockPermissionLocalService getWrappedResourceBlockPermissionLocalService() {

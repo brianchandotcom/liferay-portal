@@ -190,6 +190,7 @@ import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
+import com.liferay.portal.service.persistence.ResourceTypePermissionPK;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
@@ -276,24 +277,25 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	/**
 	 * Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
 	 *
-	 * @param resourceTypePermissionId the primary key for the new resource type permission
+	 * @param resourceTypePermissionPK the primary key for the new resource type permission
 	 * @return the new resource type permission
 	 */
 	public ResourceTypePermission createResourceTypePermission(
-		long resourceTypePermissionId) {
-		return resourceTypePermissionPersistence.create(resourceTypePermissionId);
+		ResourceTypePermissionPK resourceTypePermissionPK) {
+		return resourceTypePermissionPersistence.create(resourceTypePermissionPK);
 	}
 
 	/**
 	 * Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @param resourceTypePermissionPK the primary key of the resource type permission
 	 * @throws PortalException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteResourceTypePermission(long resourceTypePermissionId)
+	public void deleteResourceTypePermission(
+		ResourceTypePermissionPK resourceTypePermissionPK)
 		throws PortalException, SystemException {
-		ResourceTypePermission resourceTypePermission = resourceTypePermissionPersistence.remove(resourceTypePermissionId);
+		ResourceTypePermission resourceTypePermission = resourceTypePermissionPersistence.remove(resourceTypePermissionPK);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
 
@@ -403,14 +405,15 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	/**
 	 * Returns the resource type permission with the primary key.
 	 *
-	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @param resourceTypePermissionPK the primary key of the resource type permission
 	 * @return the resource type permission
 	 * @throws PortalException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceTypePermission getResourceTypePermission(
-		long resourceTypePermissionId) throws PortalException, SystemException {
-		return resourceTypePermissionPersistence.findByPrimaryKey(resourceTypePermissionId);
+		ResourceTypePermissionPK resourceTypePermissionPK)
+		throws PortalException, SystemException {
+		return resourceTypePermissionPersistence.findByPrimaryKey(resourceTypePermissionPK);
 	}
 
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

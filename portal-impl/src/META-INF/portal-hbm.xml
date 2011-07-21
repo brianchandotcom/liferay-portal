@@ -828,12 +828,12 @@
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission">
 		<cache usage="read-write" />
-		<id name="resourceTypePermissionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceTypePermissionPK">
+			<key-property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RoleImpl" table="Role_">

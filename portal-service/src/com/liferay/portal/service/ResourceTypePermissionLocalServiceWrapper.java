@@ -46,25 +46,26 @@ public class ResourceTypePermissionLocalServiceWrapper
 	/**
 	* Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
 	*
-	* @param resourceTypePermissionId the primary key for the new resource type permission
+	* @param resourceTypePermissionPK the primary key for the new resource type permission
 	* @return the new resource type permission
 	*/
 	public com.liferay.portal.model.ResourceTypePermission createResourceTypePermission(
-		long resourceTypePermissionId) {
-		return _resourceTypePermissionLocalService.createResourceTypePermission(resourceTypePermissionId);
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK) {
+		return _resourceTypePermissionLocalService.createResourceTypePermission(resourceTypePermissionPK);
 	}
 
 	/**
 	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @param resourceTypePermissionPK the primary key of the resource type permission
 	* @throws PortalException if a resource type permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteResourceTypePermission(long resourceTypePermissionId)
+	public void deleteResourceTypePermission(
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermissionId);
+		_resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermissionPK);
 	}
 
 	/**
@@ -154,16 +155,16 @@ public class ResourceTypePermissionLocalServiceWrapper
 	/**
 	* Returns the resource type permission with the primary key.
 	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @param resourceTypePermissionPK the primary key of the resource type permission
 	* @return the resource type permission
 	* @throws PortalException if a resource type permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ResourceTypePermission getResourceTypePermission(
-		long resourceTypePermissionId)
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _resourceTypePermissionLocalService.getResourceTypePermission(resourceTypePermissionId);
+		return _resourceTypePermissionLocalService.getResourceTypePermission(resourceTypePermissionPK);
 	}
 
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -248,6 +249,27 @@ public class ResourceTypePermissionLocalServiceWrapper
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_resourceTypePermissionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
+			groupId, name);
+	}
+
+	public void setResourceTypePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceTypePermissionLocalService.setResourceTypePermissions(companyId,
+			name, roleId, actionIdsLong);
+	}
+
+	public void setResourceTypePermissions(long companyId, long groupId,
+		java.lang.String name, long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceTypePermissionLocalService.setResourceTypePermissions(companyId,
+			groupId, name, roleId, actionIdsLong);
 	}
 
 	public ResourceTypePermissionLocalService getWrappedResourceTypePermissionLocalService() {

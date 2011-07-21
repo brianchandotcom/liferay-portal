@@ -144,27 +144,27 @@ public class ResourceTypePermissionUtil {
 	/**
 	* Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
 	*
-	* @param resourceTypePermissionId the primary key for the new resource type permission
+	* @param resourceTypePermissionPK the primary key for the new resource type permission
 	* @return the new resource type permission
 	*/
 	public static com.liferay.portal.model.ResourceTypePermission create(
-		long resourceTypePermissionId) {
-		return getPersistence().create(resourceTypePermissionId);
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK) {
+		return getPersistence().create(resourceTypePermissionPK);
 	}
 
 	/**
 	* Removes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @param resourceTypePermissionPK the primary key of the resource type permission
 	* @return the resource type permission that was removed
 	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceTypePermission remove(
-		long resourceTypePermissionId)
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(resourceTypePermissionId);
+		return getPersistence().remove(resourceTypePermissionPK);
 	}
 
 	public static com.liferay.portal.model.ResourceTypePermission updateImpl(
@@ -177,167 +177,83 @@ public class ResourceTypePermissionUtil {
 	/**
 	* Returns the resource type permission with the primary key or throws a {@link com.liferay.portal.NoSuchResourceTypePermissionException} if it could not be found.
 	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @param resourceTypePermissionPK the primary key of the resource type permission
 	* @return the resource type permission
 	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceTypePermission findByPrimaryKey(
-		long resourceTypePermissionId)
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(resourceTypePermissionId);
+		return getPersistence().findByPrimaryKey(resourceTypePermissionPK);
 	}
 
 	/**
 	* Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @param resourceTypePermissionPK the primary key of the resource type permission
 	* @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceTypePermission fetchByPrimaryKey(
-		long resourceTypePermissionId)
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK resourceTypePermissionPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(resourceTypePermissionId);
+		return getPersistence().fetchByPrimaryKey(resourceTypePermissionPK);
 	}
 
 	/**
-	* Returns all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
+	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourceTypePermissionException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
-	* @return the matching resource type permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByC_G_N(
-		long companyId, long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_G_N(companyId, groupId, name);
-	}
-
-	/**
-	* Returns a range of all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @return the range of matching resource type permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByC_G_N(
-		long companyId, long groupId, java.lang.String name, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_G_N(companyId, groupId, name, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource type permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByC_G_N(
-		long companyId, long groupId, java.lang.String name, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_G_N(companyId, groupId, name, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource type permission
+	* @param roleId the role ID
+	* @return the matching resource type permission
 	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceTypePermission findByC_G_N_First(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.liferay.portal.model.ResourceTypePermission findByC_G_N_R(
+		long companyId, long groupId, java.lang.String name, long roleId)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_G_N_First(companyId, groupId, name,
-			orderByComparator);
+		return getPersistence().findByC_G_N_R(companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Returns the last resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource type permission
-	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	* @param roleId the role ID
+	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceTypePermission findByC_G_N_Last(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_G_N_Last(companyId, groupId, name, orderByComparator);
+	public static com.liferay.portal.model.ResourceTypePermission fetchByC_G_N_R(
+		long companyId, long groupId, java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByC_G_N_R(companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param resourceTypePermissionId the primary key of the current resource type permission
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource type permission
-	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	* @param roleId the role ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.ResourceTypePermission[] findByC_G_N_PrevAndNext(
-		long resourceTypePermissionId, long companyId, long groupId,
-		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.ResourceTypePermission fetchByC_G_N_R(
+		long companyId, long groupId, java.lang.String name, long roleId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_G_N_PrevAndNext(resourceTypePermissionId,
-			companyId, groupId, name, orderByComparator);
+				   .fetchByC_G_N_R(companyId, groupId, name, roleId,
+			retrieveFromCache);
 	}
 
 	/**
@@ -390,17 +306,19 @@ public class ResourceTypePermissionUtil {
 	}
 
 	/**
-	* Removes all the resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; from the database.
+	* Removes the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
+	* @param roleId the role ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_G_N(long companyId, long groupId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_G_N(companyId, groupId, name);
+	public static void removeByC_G_N_R(long companyId, long groupId,
+		java.lang.String name, long roleId)
+		throws com.liferay.portal.NoSuchResourceTypePermissionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_G_N_R(companyId, groupId, name, roleId);
 	}
 
 	/**
@@ -414,18 +332,19 @@ public class ResourceTypePermissionUtil {
 	}
 
 	/**
-	* Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63;.
+	* Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
+	* @param roleId the role ID
 	* @return the number of matching resource type permissions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_G_N(long companyId, long groupId,
-		java.lang.String name)
+	public static int countByC_G_N_R(long companyId, long groupId,
+		java.lang.String name, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_G_N(companyId, groupId, name);
+		return getPersistence().countByC_G_N_R(companyId, groupId, name, roleId);
 	}
 
 	/**

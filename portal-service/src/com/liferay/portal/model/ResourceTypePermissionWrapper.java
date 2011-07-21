@@ -42,7 +42,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 	*
 	* @return the primary key of this resource type permission
 	*/
-	public long getPrimaryKey() {
+	public com.liferay.portal.service.persistence.ResourceTypePermissionPK getPrimaryKey() {
 		return _resourceTypePermission.getPrimaryKey();
 	}
 
@@ -51,26 +51,9 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 	*
 	* @param primaryKey the primary key of this resource type permission
 	*/
-	public void setPrimaryKey(long primaryKey) {
+	public void setPrimaryKey(
+		com.liferay.portal.service.persistence.ResourceTypePermissionPK primaryKey) {
 		_resourceTypePermission.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the resource type permission ID of this resource type permission.
-	*
-	* @return the resource type permission ID of this resource type permission
-	*/
-	public long getResourceTypePermissionId() {
-		return _resourceTypePermission.getResourceTypePermissionId();
-	}
-
-	/**
-	* Sets the resource type permission ID of this resource type permission.
-	*
-	* @param resourceTypePermissionId the resource type permission ID of this resource type permission
-	*/
-	public void setResourceTypePermissionId(long resourceTypePermissionId) {
-		_resourceTypePermission.setResourceTypePermissionId(resourceTypePermissionId);
 	}
 
 	/**
@@ -125,6 +108,24 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 	*/
 	public void setName(java.lang.String name) {
 		_resourceTypePermission.setName(name);
+	}
+
+	/**
+	* Returns the role ID of this resource type permission.
+	*
+	* @return the role ID of this resource type permission
+	*/
+	public long getRoleId() {
+		return _resourceTypePermission.getRoleId();
+	}
+
+	/**
+	* Sets the role ID of this resource type permission.
+	*
+	* @param roleId the role ID of this resource type permission
+	*/
+	public void setRoleId(long roleId) {
+		_resourceTypePermission.setRoleId(roleId);
 	}
 
 	/**

@@ -710,10 +710,10 @@
 		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceTypePermission">
-		<field name="resourceTypePermissionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="name" type="String" />
+		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.Role">

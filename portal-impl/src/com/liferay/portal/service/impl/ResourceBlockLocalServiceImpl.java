@@ -14,25 +14,23 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.ResourceBlocksNotSupportedException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.ResourceBlock;
-import com.liferay.portal.model.ResourceBlockPermission;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
+import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
-import com.liferay.portal.util.comparator.ResourceBlockPermissionRoleIdComparator;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 /**
  * Manages the creation and upkeep of resource blocks and the resources they
@@ -44,26 +42,24 @@ public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
 	/**
-	 * Adds a resource block and associates the resource block permissions with
+	 * Adds a resource block if necessary and associates the resource block permissions with
 	 * it. The resource block will have an initial reference count of one.
 	 *
 	 * @param  companyId the primary key of the resource block's company
 	 * @param  groupId the primary key of the resource block's group
-	 * @param  permissionsHash the resource block's permissions hash
 	 * @param  resourceBlockPermissions the resource block permissions
 	 * @return the new resource block
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ResourceBlock addResourceBlock(
 			long companyId, long groupId, String name, String permissionsHash,
-			List<ResourceBlockPermission> resourceBlockPermissions)
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws SystemException {
 
 		long resourceBlockId = counterLocalService.increment(
 			ResourceBlock.class.getName());
 
-		ResourceBlock resourceBlock =
-			resourceBlockPersistence.create(resourceBlockId);
+		ResourceBlock resourceBlock = resourceBlockPersistence.create(resourceBlockId);
 
 		resourceBlock.setCompanyId(companyId);
 		resourceBlock.setGroupId(groupId);
@@ -73,8 +69,8 @@ public class ResourceBlockLocalServiceImpl
 
 		updateResourceBlock(resourceBlock);
 
-		resourceBlockPermissionLocalService.updateResourceBlockPermissions(
-			resourceBlockId, resourceBlockPermissions);
+		resourceBlockPermissionLocalService.addResourceBlockPermissions(
+			resourceBlockId, resourceBlockPermissionsContainer);
 
 		return resourceBlock;
 	}
@@ -84,24 +80,21 @@ public class ResourceBlockLocalServiceImpl
 	 * hash is a representation of all the roles with access to the resource
 	 * along with the actions they can perform.
 	 *
-	 * @param  resourceBlockPermissions the resource block permissions
+	 * @param  resourceBlockPermissionsContainer the resource block permissions
 	 * @return the permissions hash of the resource permissions
 	 */
 	public String getPermissionsHash(
-		List<ResourceBlockPermission> resourceBlockPermissions) {
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
 
-		resourceBlockPermissions =
-			ListUtil.sort(resourceBlockPermissions,
-			new ResourceBlockPermissionRoleIdComparator());
+		SortedMap<Long, Long> permissions =
+			resourceBlockPermissionsContainer.getPermissions();
 
-		ByteBuffer buffer =
-			ByteBuffer.allocate(resourceBlockPermissions.size() * 16);
+		ByteBuffer buffer = ByteBuffer.allocate(permissions.size() * 16);
 
-		for (ResourceBlockPermission resourceBlockPermission :
-				resourceBlockPermissions) {
+		for (Map.Entry<Long, Long> permission :	permissions.entrySet()) {
 
-			buffer.putLong(resourceBlockPermission.getRoleId());
-			buffer.putLong(resourceBlockPermission.getActionIds());
+			buffer.putLong(permission.getKey());
+			buffer.putLong(permission.getValue());
 		}
 
 		buffer.flip();
@@ -246,51 +239,38 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPersistence.fetchByPrimaryKey(
 			model.getResourceBlockId());
 
-		List<ResourceBlockPermission> resourceBlockPermissions =
-				new ArrayList<ResourceBlockPermission>();
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer;
 
-		boolean addNewResourceBlockPermission = true;
-
-		if (resourceBlock != null) {
-			List<ResourceBlockPermission> oldResourceBlockPermissions =
-				resourceBlockPermissionLocalService.getResourceBlockPermissions(
+		if (resourceBlock == null) {
+			resourceBlockPermissionsContainer =
+				resourceTypePermissionLocalService.
+				getResourceBlockPermissionsContainer(
+				companyId, groupId, name);
+		}
+		else {
+			resourceBlockPermissionsContainer =
+				resourceBlockPermissionLocalService.
+				getResourceBlockPermissionsContainer(
 				resourceBlock.getPrimaryKey());
 
-			for (ResourceBlockPermission oldResourceBlockPermission :
-				oldResourceBlockPermissions) {
+			long oldActionIdsLong =
+				resourceBlockPermissionsContainer.getActionIds(roleId);
 
-				ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
-				resourceBlockPermission.setNew(true);
-
-				if (oldResourceBlockPermission.getRoleId() == roleId) {
-					if (oldResourceBlockPermission.getActionIds() == actionIdsLong) {
-						return;
-					}
-
-					resourceBlockPermission.setActionIds(actionIdsLong);
-					addNewResourceBlockPermission = false;
-				}
-				else {
-					resourceBlockPermission.setActionIds(
-						oldResourceBlockPermission.getActionIds());
-				}
-
-				resourceBlockPermission.setRoleId(oldResourceBlockPermission.getRoleId());
-				resourceBlockPermissions.add(resourceBlockPermission);
+			if (oldActionIdsLong == actionIdsLong) {
+				return;
 			}
 
 			release(resourceBlock);
 		}
 
-		if (addNewResourceBlockPermission) {
-			ResourceBlockPermission resourceBlockPermission = new ResourceBlockPermissionImpl();
-			resourceBlockPermission.setActionIds(actionIdsLong);
-			resourceBlockPermission.setRoleId(roleId);
-			resourceBlockPermissions.add(resourceBlockPermission);
-		}
+		resourceBlockPermissionsContainer.setPermissions(roleId, actionIdsLong);
 
-		updateResourceBlockId(companyId, groupId, name, model,
-			resourceBlockPermissions);
+		String permissionsHash =
+			getPermissionsHash(resourceBlockPermissionsContainer);
+
+		updateResourceBlockId(
+			companyId, groupId, name, model, permissionsHash,
+			resourceBlockPermissionsContainer);
 	}
 
 	public ResourceBlock verifyResourceBlockId(
@@ -305,36 +285,26 @@ public class ResourceBlockLocalServiceImpl
 			groupId = ((GroupedModel)model).getGroupId();
 		}
 
+		ResourceBlockPermissionsContainer
+		resourceBlockPermissionsContainer =
+			resourceBlockPermissionLocalService.
+			getResourceBlockPermissionsContainer(
+			companyId, groupId, name, primKey);
+
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.fetchByPrimaryKey(
 			model.getResourceBlockId());
 
-		if (resourceBlock == null) {
-			List<ResourcePermission> resourcePermissions =
-				resourcePermissionLocalService.getResourceResourcePermissions(
-				companyId, groupId, name, String.valueOf(primKey));
+		String permissionsHash =
+			getPermissionsHash(resourceBlockPermissionsContainer);
 
-			List<ResourceBlockPermission> resourceBlockPermissions =
-				resourceBlockPermissionLocalService.getResourceBlockPermissions(
-				resourcePermissions);
-
+		if (permissionsHash != resourceBlock.getPermissionsHash()) {
 			resourceBlock = updateResourceBlockId(
-				companyId, groupId, name, model, resourceBlockPermissions);
+				companyId, groupId, name, model, permissionsHash,
+				resourceBlockPermissionsContainer);
 		}
 
 		return resourceBlock;
-	}
-
-	public void updatePermissionsHash(ResourceBlock resourceBlock)
-		throws SystemException {
-
-		List<ResourceBlockPermission> resourceBlockPermissions =
-			resourceBlockPermissionLocalService.getResourceBlockPermissions(
-			resourceBlock.getPrimaryKey());
-
-		String permissionsHash = getPermissionsHash(resourceBlockPermissions);
-		resourceBlock.setPermissionsHash(permissionsHash);
-		updateResourceBlock(resourceBlock);
 	}
 
 	protected PermissionedModel getPermissionedModel(String name, long primKey)
@@ -345,25 +315,25 @@ public class ResourceBlockLocalServiceImpl
 			getPersistedModelLocalService(name);
 
 		if (localService == null) {
-			return null;
+			throw new ResourceBlocksNotSupportedException();
 		}
 
 		PersistedModel model = localService.getPersistedModel(primKey);
 
-		if (model == null) {
-			return null;
-		}
-
-		if (model instanceof PermissionedModel) {
+		try {
 			return (PermissionedModel)model;
 		}
-
-		return null;
+		catch (ClassCastException e) {
+			throw new ResourceBlocksNotSupportedException();
+		}
 	}
 
 	protected void setPermissions(
 			long companyId, String name, long roleId, long actionIdsLong)
 		throws SystemException {
+
+		resourceTypePermissionLocalService.setResourceTypePermissions(
+			companyId, name, roleId, actionIdsLong);
 
 		List<ResourceBlock> resourceBlocks =
 			resourceBlockPersistence.findByC_N(companyId, name);
@@ -376,6 +346,9 @@ public class ResourceBlockLocalServiceImpl
 			long actionIdsLong)
 		throws SystemException {
 
+		resourceTypePermissionLocalService.setResourceTypePermissions(
+			companyId, groupId, name, roleId, actionIdsLong);
+
 		List<ResourceBlock> resourceBlocks =
 			resourceBlockPersistence.findByC_G_N(companyId, groupId, name);
 
@@ -387,50 +360,39 @@ public class ResourceBlockLocalServiceImpl
 		throws SystemException {
 
 		for (ResourceBlock resourceBlock : resourceBlocks) {
-			ResourceBlockPermission resourceBlockPermission =
-				resourceBlockPermissionPersistence.fetchByR_R(
-				resourceBlock.getPrimaryKey(), roleId);
-
-			if (resourceBlockPermission == null) {
-				if (actionIdsLong == 0) {
-					continue;
-				}
-
-				resourceBlockPermission =
-					resourceBlockPermissionLocalService.
-					addResourceBlockPermission(
-					resourceBlock.getPrimaryKey(), roleId, actionIdsLong);
-			}
-			else {
-				if (actionIdsLong == 0) {
-					resourceBlockPermissionLocalService.
-					deleteResourceBlockPermission(resourceBlockPermission);
-				}
-				else {
-					resourceBlockPermission.setActionIds(actionIdsLong);
-					resourceBlockPermissionLocalService.
-						updateResourceBlockPermission(resourceBlockPermission);
-				}
-			}
+			resourceBlockPermissionLocalService.setResourceBlockPermission(
+				resourceBlock.getPrimaryKey(), roleId, actionIdsLong);
 
 			updatePermissionsHash(resourceBlock);
 		}
 	}
 
-	protected ResourceBlock updateResourceBlockId(long companyId, long groupId,
-			String name, PermissionedModel model,
-			List<ResourceBlockPermission> resourceBlockPermissions)
-			throws SystemException {
+	protected void updatePermissionsHash(ResourceBlock resourceBlock)
+		throws SystemException {
 
-		String permissionsHash = getPermissionsHash(resourceBlockPermissions);
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
+			resourceBlockPermissionLocalService.
+			getResourceBlockPermissionsContainer(resourceBlock.getPrimaryKey());
+
+		String permissionsHash =
+			getPermissionsHash(resourceBlockPermissionsContainer);
+
+		resourceBlock.setPermissionsHash(permissionsHash);
+		updateResourceBlock(resourceBlock);
+	}
+
+	protected ResourceBlock updateResourceBlockId(long companyId, long groupId,
+			String name, PermissionedModel model, String permissionsHash,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws SystemException {
 
 		ResourceBlock resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
 			companyId, groupId, name, permissionsHash);
 
 		if (resourceBlock == null) {
-			resourceBlock =
-				addResourceBlock(companyId, groupId, name, permissionsHash,
-				resourceBlockPermissions);
+			resourceBlock = addResourceBlock(
+				companyId, groupId, name, permissionsHash,
+				resourceBlockPermissionsContainer);
 		}
 		else {
 			retain(resourceBlock);

@@ -885,11 +885,12 @@
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceTypePermissionModelImpl">
+		<id-class class="com.liferay.portal.service.persistence.ResourceTypePermissionPK" />
 		<attributes>
-			<id name="resourceTypePermissionId" />
-			<basic name="companyId" />
-			<basic name="groupId" />
-			<basic name="name" />
+			<id name="companyId" />
+			<id name="groupId" />
+			<id name="name" />
+			<id name="roleId" />
 			<basic name="actionIds" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

@@ -31,14 +31,14 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("{resourceTypePermissionId=");
-		sb.append(resourceTypePermissionId);
-		sb.append(", companyId=");
+		sb.append("{companyId=");
 		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", roleId=");
+		sb.append(roleId);
 		sb.append(", actionIds=");
 		sb.append(actionIds);
 		sb.append("}");
@@ -49,7 +49,6 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 	public ResourceTypePermission toEntityModel() {
 		ResourceTypePermissionImpl resourceTypePermissionImpl = new ResourceTypePermissionImpl();
 
-		resourceTypePermissionImpl.setResourceTypePermissionId(resourceTypePermissionId);
 		resourceTypePermissionImpl.setCompanyId(companyId);
 		resourceTypePermissionImpl.setGroupId(groupId);
 
@@ -60,6 +59,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 			resourceTypePermissionImpl.setName(name);
 		}
 
+		resourceTypePermissionImpl.setRoleId(roleId);
 		resourceTypePermissionImpl.setActionIds(actionIds);
 
 		resourceTypePermissionImpl.resetOriginalValues();
@@ -67,9 +67,9 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		return resourceTypePermissionImpl;
 	}
 
-	public long resourceTypePermissionId;
 	public long companyId;
 	public long groupId;
 	public String name;
+	public long roleId;
 	public long actionIds;
 }

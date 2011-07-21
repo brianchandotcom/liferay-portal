@@ -16,6 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.persistence.ResourceTypePermissionPK;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -46,28 +47,14 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 	 *
 	 * @return the primary key of this resource type permission
 	 */
-	public long getPrimaryKey();
+	public ResourceTypePermissionPK getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this resource type permission.
 	 *
 	 * @param primaryKey the primary key of this resource type permission
 	 */
-	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the resource type permission ID of this resource type permission.
-	 *
-	 * @return the resource type permission ID of this resource type permission
-	 */
-	public long getResourceTypePermissionId();
-
-	/**
-	 * Sets the resource type permission ID of this resource type permission.
-	 *
-	 * @param resourceTypePermissionId the resource type permission ID of this resource type permission
-	 */
-	public void setResourceTypePermissionId(long resourceTypePermissionId);
+	public void setPrimaryKey(ResourceTypePermissionPK primaryKey);
 
 	/**
 	 * Returns the company ID of this resource type permission.
@@ -111,6 +98,20 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 	 * @param name the name of this resource type permission
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the role ID of this resource type permission.
+	 *
+	 * @return the role ID of this resource type permission
+	 */
+	public long getRoleId();
+
+	/**
+	 * Sets the role ID of this resource type permission.
+	 *
+	 * @param roleId the role ID of this resource type permission
+	 */
+	public void setRoleId(long roleId);
 
 	/**
 	 * Returns the action IDs of this resource type permission.

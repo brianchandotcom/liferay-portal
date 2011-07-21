@@ -232,24 +232,24 @@ public interface ResourceBlockPermissionLocalService
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portal.model.ResourceBlockPermission addResourceBlockPermission(
-		long resourceBlockId, long roleId, long actionIdsLong)
+	public void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setResourceBlockPermission(long resourceBlockId, long roleId,
+		long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getResourceBlockPermissions(
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void updateResourceBlockPermissions(long resourceBlockId,
-		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions)
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

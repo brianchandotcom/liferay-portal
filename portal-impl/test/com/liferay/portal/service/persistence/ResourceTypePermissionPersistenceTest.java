@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -38,7 +41,8 @@ public class ResourceTypePermissionPersistenceTest
 	}
 
 	public void testCreate() throws Exception {
-		long pk = nextLong();
+		ResourceTypePermissionPK pk = new ResourceTypePermissionPK(nextLong(),
+				nextLong(), randomString(), nextLong());
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
@@ -62,15 +66,10 @@ public class ResourceTypePermissionPersistenceTest
 	}
 
 	public void testUpdateExisting() throws Exception {
-		long pk = nextLong();
+		ResourceTypePermissionPK pk = new ResourceTypePermissionPK(nextLong(),
+				nextLong(), randomString(), nextLong());
 
 		ResourceTypePermission newResourceTypePermission = _persistence.create(pk);
-
-		newResourceTypePermission.setCompanyId(nextLong());
-
-		newResourceTypePermission.setGroupId(nextLong());
-
-		newResourceTypePermission.setName(randomString());
 
 		newResourceTypePermission.setActionIds(nextLong());
 
@@ -78,14 +77,14 @@ public class ResourceTypePermissionPersistenceTest
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		assertEquals(existingResourceTypePermission.getResourceTypePermissionId(),
-			newResourceTypePermission.getResourceTypePermissionId());
 		assertEquals(existingResourceTypePermission.getCompanyId(),
 			newResourceTypePermission.getCompanyId());
 		assertEquals(existingResourceTypePermission.getGroupId(),
 			newResourceTypePermission.getGroupId());
 		assertEquals(existingResourceTypePermission.getName(),
 			newResourceTypePermission.getName());
+		assertEquals(existingResourceTypePermission.getRoleId(),
+			newResourceTypePermission.getRoleId());
 		assertEquals(existingResourceTypePermission.getActionIds(),
 			newResourceTypePermission.getActionIds());
 	}
@@ -99,7 +98,8 @@ public class ResourceTypePermissionPersistenceTest
 	}
 
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		ResourceTypePermissionPK pk = new ResourceTypePermissionPK(nextLong(),
+				nextLong(), randomString(), nextLong());
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -120,7 +120,8 @@ public class ResourceTypePermissionPersistenceTest
 	}
 
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = nextLong();
+		ResourceTypePermissionPK pk = new ResourceTypePermissionPK(nextLong(),
+				nextLong(), randomString(), nextLong());
 
 		ResourceTypePermission missingResourceTypePermission = _persistence.fetchByPrimaryKey(pk);
 
@@ -134,9 +135,14 @@ public class ResourceTypePermissionPersistenceTest
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceTypePermission.class,
 				ResourceTypePermission.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"resourceTypePermissionId",
-				newResourceTypePermission.getResourceTypePermissionId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.companyId",
+				newResourceTypePermission.getCompanyId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
+				newResourceTypePermission.getGroupId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.name",
+				newResourceTypePermission.getName()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
+				newResourceTypePermission.getRoleId()));
 
 		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -151,8 +157,10 @@ public class ResourceTypePermissionPersistenceTest
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceTypePermission.class,
 				ResourceTypePermission.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"resourceTypePermissionId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.companyId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId", nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.name", randomString()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId", nextLong()));
 
 		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -167,22 +175,20 @@ public class ResourceTypePermissionPersistenceTest
 				ResourceTypePermission.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"resourceTypePermissionId"));
+				"id.companyId"));
 
-		Object newResourceTypePermissionId = newResourceTypePermission.getResourceTypePermissionId();
+		Object newCompanyId = newResourceTypePermission.getCompanyId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"resourceTypePermissionId",
-				new Object[] { newResourceTypePermissionId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("id.companyId",
+				new Object[] { newCompanyId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		assertEquals(1, result.size());
 
-		Object existingResourceTypePermissionId = result.get(0);
+		Object existingCompanyId = result.get(0);
 
-		assertEquals(existingResourceTypePermissionId,
-			newResourceTypePermissionId);
+		assertEquals(existingCompanyId, newCompanyId);
 	}
 
 	public void testDynamicQueryByProjectionMissing() throws Exception {
@@ -190,27 +196,44 @@ public class ResourceTypePermissionPersistenceTest
 				ResourceTypePermission.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"resourceTypePermissionId"));
+				"id.companyId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"resourceTypePermissionId", new Object[] { nextLong() }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("id.companyId",
+				new Object[] { nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		assertEquals(0, result.size());
 	}
 
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
+
+		_persistence.clearCache();
+
+		ResourceTypePermissionModelImpl existingResourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)_persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
+
+		assertEquals(existingResourceTypePermissionModelImpl.getCompanyId(),
+			existingResourceTypePermissionModelImpl.getOriginalCompanyId());
+		assertEquals(existingResourceTypePermissionModelImpl.getGroupId(),
+			existingResourceTypePermissionModelImpl.getOriginalGroupId());
+		assertTrue(Validator.equals(
+				existingResourceTypePermissionModelImpl.getName(),
+				existingResourceTypePermissionModelImpl.getOriginalName()));
+		assertEquals(existingResourceTypePermissionModelImpl.getRoleId(),
+			existingResourceTypePermissionModelImpl.getOriginalRoleId());
+	}
+
 	protected ResourceTypePermission addResourceTypePermission()
 		throws Exception {
-		long pk = nextLong();
+		ResourceTypePermissionPK pk = new ResourceTypePermissionPK(nextLong(),
+				nextLong(), randomString(), nextLong());
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
-
-		resourceTypePermission.setCompanyId(nextLong());
-
-		resourceTypePermission.setGroupId(nextLong());
-
-		resourceTypePermission.setName(randomString());
 
 		resourceTypePermission.setActionIds(nextLong());
 

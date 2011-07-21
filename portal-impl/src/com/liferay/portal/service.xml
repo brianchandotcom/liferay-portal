@@ -1592,6 +1592,9 @@
 
 		<column name="resourceBlockId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
 		<column name="actionIds" type="long" />
 
 		<!-- Finder methods -->
@@ -1706,24 +1709,22 @@
 
 		<!-- PK fields -->
 
-		<column name="resourceTypePermissionId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
+		<column name="companyId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" />
+		<column name="name" type="String" primary="true" />
+		<column name="roleId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
-		<column name="groupId" type="long" />
-		<column name="name" type="String" />
 		<column name="actionIds" type="long" />
 
 		<!-- Finder methods -->
 
-		<finder name="C_G_N" return-type="Collection">
+		<finder name="C_G_N_R" return-type="ResourceTypePermission">
 			<finder-column name="companyId" />
 			<finder-column name="groupId" />
 			<finder-column name="name" />
+			<finder-column name="roleId" />
 		</finder>
 	</entity>
 	<entity name="Role" local-service="true" remote-service="true">

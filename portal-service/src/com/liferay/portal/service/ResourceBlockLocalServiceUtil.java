@@ -255,12 +255,11 @@ public class ResourceBlockLocalServiceUtil {
 	}
 
 	/**
-	* Adds a resource block and associates the resource block permissions with
+	* Adds a resource block if necessary and associates the resource block permissions with
 	* it. The resource block will have an initial reference count of one.
 	*
 	* @param companyId the primary key of the resource block's company
 	* @param groupId the primary key of the resource block's group
-	* @param permissionsHash the resource block's permissions hash
 	* @param resourceBlockPermissions the resource block permissions
 	* @return the new resource block
 	* @throws SystemException if a system exception occurred
@@ -268,11 +267,11 @@ public class ResourceBlockLocalServiceUtil {
 	public static com.liferay.portal.model.ResourceBlock addResourceBlock(
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String permissionsHash,
-		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions)
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addResourceBlock(companyId, groupId, name, permissionsHash,
-			resourceBlockPermissions);
+			resourceBlockPermissionsContainer);
 	}
 
 	/**
@@ -280,12 +279,12 @@ public class ResourceBlockLocalServiceUtil {
 	* hash is a representation of all the roles with access to the resource
 	* along with the actions they can perform.
 	*
-	* @param resourceBlockPermissions the resource block permissions
+	* @param resourceBlockPermissionsContainer the resource block permissions
 	* @return the permissions hash of the resource permissions
 	*/
 	public static java.lang.String getPermissionsHash(
-		java.util.List<com.liferay.portal.model.ResourceBlockPermission> resourceBlockPermissions) {
-		return getService().getPermissionsHash(resourceBlockPermissions);
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
+		return getService().getPermissionsHash(resourceBlockPermissionsContainer);
 	}
 
 	public static java.util.List<com.liferay.portal.model.ResourceBlock> getResourceBlocks(
@@ -392,12 +391,6 @@ public class ResourceBlockLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().verifyResourceBlockId(companyId, name, primKey);
-	}
-
-	public static void updatePermissionsHash(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updatePermissionsHash(resourceBlock);
 	}
 
 	public static ResourceBlockLocalService getService() {

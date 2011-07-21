@@ -374,6 +374,8 @@ public class WebServerServlet extends HttpServlet {
 		boolean videoThumbnail = ParamUtil.getBoolean(
 			request, "videoThumbnail");
 
+		long contentLength = 0;
+
 		if (Validator.isNotNull(targetExtension)) {
 			File convertedFile = DocumentConversionUtil.convert(
 				tempFileId, inputStream, extension, targetExtension);
@@ -383,6 +385,8 @@ public class WebServerServlet extends HttpServlet {
 					StringPool.PERIOD).concat(targetExtension);
 
 				inputStream = new FileInputStream(convertedFile);
+
+				contentLength = convertedFile.length();
 
 				converted = true;
 			}
@@ -395,6 +399,8 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
 
+			contentLength = thumbnailFile.length();
+
 			converted = true;
 		}
 		else if (previewFileIndex > 0) {
@@ -406,6 +412,8 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
 
+			contentLength = previewFile.length();
+
 			converted = true;
 		}
 		else if (audioPreview) {
@@ -416,6 +424,8 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
 
+			contentLength = previewFile.length();
+
 			converted = true;
 		}
 		else if (videoPreview) {
@@ -425,6 +435,8 @@ public class WebServerServlet extends HttpServlet {
 
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.PREVIEW_TYPE);
+
+			contentLength = previewFile.length();
 
 			converted = true;
 		}
@@ -437,11 +449,12 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
 
+			contentLength = thumbnailFile.length();
+
 			converted = true;
 		}
 
 		String contentType = fileEntry.getMimeType(version);
-		long contentLength = 0;
 
 		if (!converted) {
 			if (DLUtil.compareVersions(version, fileEntry.getVersion()) >= 0) {

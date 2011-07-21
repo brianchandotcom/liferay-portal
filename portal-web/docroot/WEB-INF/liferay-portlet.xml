@@ -1389,6 +1389,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-dockbar</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>

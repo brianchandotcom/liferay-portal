@@ -47,7 +47,7 @@ else {
 	<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
 </div>
 
-<aui:script position="inline" use="liferay-staging,aui-io-request">
+<aui:script position="inline" use="aui-io-request,liferay-staging">
 	var dockbar = Liferay.Staging.Dockbar;
 
 	dockbar.init(

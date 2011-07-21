@@ -942,7 +942,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			long userGroupId, Attribute attribute)
 		throws Exception {
 
-		List<Long> newUserIds = new ArrayList<Long>(attribute.size());
+		UserLocalServiceUtil.clearUserGroupUsers(userGroupId);
 
 		for (int i = 0; i < attribute.size(); i++) {
 			String fullUserDN = (String)attribute.get(i);
@@ -973,17 +973,14 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 								userGroupId);
 					}
 
-					newUserIds.add(user.getUserId());
+					UserLocalServiceUtil.addUserGroupUsers(
+						userGroupId, new long[] {user.getUserId()});
 				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to load user " + userAttributes, e);
 			}
 		}
-
-		UserLocalServiceUtil.setUserGroupUsers(
-			userGroupId,
-			ArrayUtil.toArray(newUserIds.toArray(new Long[newUserIds.size()])));
 	}
 
 	protected void populateExpandoAttributes(

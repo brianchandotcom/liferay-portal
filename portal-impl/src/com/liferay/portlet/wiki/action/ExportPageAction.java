@@ -142,7 +142,9 @@ public class ExportPageAction extends PortletAction {
 					" with the format " + page.getFormat(), e);
 		}
 
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(17);
+
+		sb.append("<!DOCTYPE html>");
 
 		sb.append("<html>");
 

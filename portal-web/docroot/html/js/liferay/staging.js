@@ -308,6 +308,8 @@ AUI().add(
 						}
 					);
 				}
+
+				A.getBody().addClass('staging-ready');
 			},
 
 			_getGraphDialog: function() {

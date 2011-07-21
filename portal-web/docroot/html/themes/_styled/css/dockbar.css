@@ -1,15 +1,32 @@
+.portlet-dockbar, .portlet-staging-bar {
+	background: url(../images/application/loading_indicator.gif) no-repeat 50%;
+}
+
+.portlet-dockbar {
+	background-color: #E0E7F1;
+	border-bottom: 1px solid #636364;
+}
+
+.dockbar, .staging-bar {
+	visibility: hidden;
+}
+
+.dockbar-ready .dockbar, .staging-ready .staging-bar, .live-view .staging-bar {
+	visibility: visible;
+}
+
+.dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar {
+	background: none;
+	border-width: 0;
+}
+
 .dockbar {
 	background: #97A1AE url(../images/dockbar/dockbar_bg.png) repeat-x 0 0;
 	border-bottom: 1px solid #636364;
 	font-size: 13px;
 	padding: 1px 5px;
 	position: relative;
-	visibility: hidden;
 	z-index: 300;
-}
-
-.dockbar-ready .dockbar {
-	visibility: visible;
 }
 
 .dockbar:after {

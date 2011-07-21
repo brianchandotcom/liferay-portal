@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 import java.util.Locale;
 
@@ -151,6 +153,18 @@ public class StringServletResponse extends HeaderCacheServletResponse {
 
 	public void setString(String string) {
 		_string = string;
+	}
+
+	public void writeTo(Writer writer) throws IOException {
+		if (_string != null) {
+			writer.write(_string);
+		}
+		else if (_calledGetWriter) {
+			_unsyncStringWriter.getStringBundler().writeTo(writer);
+		}
+		else {
+			writer.write(getString());
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

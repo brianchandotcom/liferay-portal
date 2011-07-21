@@ -902,7 +902,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 		<%
 				}
 				else {
-					pageContext.getOut().print(stringResponse.getString());
+					stringResponse.writeTo(pageContext.getOut());
 				}
 			}
 		}

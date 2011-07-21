@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet.filters.absoluteredirects;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Jorge Ferrer
+ * @author Shuyang Zhou
  */
 public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
@@ -40,12 +41,12 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void sendRedirect(String redirect) throws IOException {
-		String portalURL = getPortalURL();
+		if (redirect.charAt(0) == CharPool.SLASH) {
+			String portalURL = PortalUtil.getPortalURL(_request);
 
-		if (Validator.isNotNull(portalURL) &&
-			redirect.startsWith(StringPool.SLASH)) {
-
-			redirect = portalURL + redirect;
+			if (Validator.isNotNull(portalURL)) {
+				redirect = portalURL.concat(redirect);
+			}
 		}
 
 		if (!CookieKeys.hasSessionId(_request)) {
@@ -57,10 +58,6 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 			AbsoluteRedirectsResponse.class.getName(), redirect);
 
 		super.sendRedirect(redirect);
-	}
-
-	protected String getPortalURL() {
-		return PortalUtil.getPortalURL(_request);
 	}
 
 	private HttpServletRequest _request;

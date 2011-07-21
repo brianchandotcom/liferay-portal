@@ -14,6 +14,8 @@
 
 package com.liferay.portal;
 
+import com.liferay.portal.NoSuchModelException;
+
 /**
  * @author Brian Wing Shun Chan
  */

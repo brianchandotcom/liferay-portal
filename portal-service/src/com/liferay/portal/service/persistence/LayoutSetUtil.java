@@ -315,6 +315,134 @@ public class LayoutSetUtil {
 	}
 
 	/**
+	* Returns all the layout sets where layoutSetPrototypeUuid = &#63;.
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @return the matching layout sets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
+	/**
+	* Returns a range of all the layout sets where layoutSetPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @param start the lower bound of the range of layout sets
+	* @param end the upper bound of the range of layout sets (not inclusive)
+	* @return the range of matching layout sets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the layout sets where layoutSetPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @param start the lower bound of the range of layout sets
+	* @param end the upper bound of the range of layout sets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout sets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the first layout set in the ordered set where layoutSetPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout set
+	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_First(
+		java.lang.String layoutSetPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutSetException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last layout set in the ordered set where layoutSetPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout set
+	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_Last(
+		java.lang.String layoutSetPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutSetException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the layout sets before and after the current layout set in the ordered set where layoutSetPrototypeUuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param layoutSetId the primary key of the current layout set
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout set
+	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
+		long layoutSetId, java.lang.String layoutSetPrototypeUuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutSetException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLayoutSetPrototypeUuid_PrevAndNext(layoutSetId,
+			layoutSetPrototypeUuid, orderByComparator);
+	}
+
+	/**
 	* Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutSetException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -421,6 +549,18 @@ public class LayoutSetUtil {
 	}
 
 	/**
+	* Removes all the layout sets where layoutSetPrototypeUuid = &#63; from the database.
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
+	/**
 	* Removes the layout set where groupId = &#63; and privateLayout = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -453,6 +593,20 @@ public class LayoutSetUtil {
 	public static int countByGroupId(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of layout sets where layoutSetPrototypeUuid = &#63;.
+	*
+	* @param layoutSetPrototypeUuid the layout set prototype uuid
+	* @return the number of matching layout sets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
 	/**

@@ -939,7 +939,8 @@ create table Layout (
 	wapColorSchemeId VARCHAR(75) null,
 	css STRING null,
 	priority INTEGER,
-	layoutPrototypeId LONG
+	layoutPrototypeUuid VARCHAR(75) null,
+	layoutPrototypeLinkEnabled BOOLEAN
 );
 
 create table LayoutBranch (
@@ -956,6 +957,7 @@ create table LayoutBranch (
 );
 
 create table LayoutPrototype (
+	uuid_ VARCHAR(75) null,
 	layoutPrototypeId LONG not null primary key,
 	companyId LONG,
 	name STRING null,
@@ -1012,7 +1014,8 @@ create table LayoutSet (
 	css STRING null,
 	pageCount INTEGER,
 	settings_ STRING null,
-	layoutSetPrototypeId LONG
+	layoutSetPrototypeUuid VARCHAR(75) null,
+	layoutSetPrototypeLinkEnabled BOOLEAN
 );
 
 create table LayoutSetBranch (

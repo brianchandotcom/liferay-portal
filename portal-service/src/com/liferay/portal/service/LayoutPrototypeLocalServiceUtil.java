@@ -267,6 +267,13 @@ public class LayoutPrototypeLocalServiceUtil {
 			active);
 	}
 
+	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutPrototypeByUuid(uuid);
+	}
+
 	public static java.util.List<com.liferay.portal.model.LayoutPrototype> search(
 		long companyId, java.lang.Boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

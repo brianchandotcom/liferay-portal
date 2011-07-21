@@ -110,6 +110,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
+	public java.lang.String getTypeSettingsProperty(java.lang.String key);
+
 	public com.liferay.portal.model.ColorScheme getWapColorScheme()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -261,7 +261,8 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="priority" type="int" />
-		<field name="layoutPrototypeId" type="long" />
+		<field name="layoutPrototypeUuid" type="String" />
+		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutBranch">
 		<field name="LayoutBranchId" type="long" />
@@ -276,6 +277,7 @@
 		<field name="master" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutPrototype">
+		<field name="uuid" type="String" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="name" type="String" localized="true">
@@ -351,7 +353,8 @@
 		<field name="settings" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="layoutSetPrototypeId" type="long" />
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutSetBranch">
 		<field name="layoutSetBranchId" type="long" />

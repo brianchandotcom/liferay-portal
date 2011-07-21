@@ -1034,21 +1034,49 @@ public class LayoutWrapper implements Layout {
 	}
 
 	/**
-	* Returns the layout prototype ID of this layout.
+	* Returns the layout prototype uuid of this layout.
 	*
-	* @return the layout prototype ID of this layout
+	* @return the layout prototype uuid of this layout
 	*/
-	public long getLayoutPrototypeId() {
-		return _layout.getLayoutPrototypeId();
+	public java.lang.String getLayoutPrototypeUuid() {
+		return _layout.getLayoutPrototypeUuid();
 	}
 
 	/**
-	* Sets the layout prototype ID of this layout.
+	* Sets the layout prototype uuid of this layout.
 	*
-	* @param layoutPrototypeId the layout prototype ID of this layout
+	* @param layoutPrototypeUuid the layout prototype uuid of this layout
 	*/
-	public void setLayoutPrototypeId(long layoutPrototypeId) {
-		_layout.setLayoutPrototypeId(layoutPrototypeId);
+	public void setLayoutPrototypeUuid(java.lang.String layoutPrototypeUuid) {
+		_layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
+	}
+
+	/**
+	* Returns the layout prototype link enabled of this layout.
+	*
+	* @return the layout prototype link enabled of this layout
+	*/
+	public boolean getLayoutPrototypeLinkEnabled() {
+		return _layout.getLayoutPrototypeLinkEnabled();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout is layout prototype link enabled.
+	*
+	* @return <code>true</code> if this layout is layout prototype link enabled; <code>false</code> otherwise
+	*/
+	public boolean isLayoutPrototypeLinkEnabled() {
+		return _layout.isLayoutPrototypeLinkEnabled();
+	}
+
+	/**
+	* Sets whether this layout is layout prototype link enabled.
+	*
+	* @param layoutPrototypeLinkEnabled the layout prototype link enabled of this layout
+	*/
+	public void setLayoutPrototypeLinkEnabled(
+		boolean layoutPrototypeLinkEnabled) {
+		_layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 	}
 
 	public boolean isNew() {
@@ -1249,6 +1277,10 @@ public class LayoutWrapper implements Layout {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _layout.getTypeSettingsProperties();
+	}
+
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _layout.getTypeSettingsProperty(key);
 	}
 
 	public com.liferay.portal.model.ColorScheme getWapColorScheme()

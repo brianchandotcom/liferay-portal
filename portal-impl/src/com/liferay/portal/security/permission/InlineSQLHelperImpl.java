@@ -245,13 +245,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler primKeysSQL = new StringBundler();
 
-		primKeysSQL.append("(ResourcePermission.primKey = CAST_TEXT(");
+		primKeysSQL.append("(RP.primKey = CAST_TEXT(");
 		primKeysSQL.append(classPKField);
 		primKeysSQL.append(")");
 
 		if (groupIds.length > 1) {
 			for (long groupId : groupIds) {
-				primKeysSQL.append(" OR ResourcePermission.primKey = '");
+				primKeysSQL.append(" OR RP.primKey = '");
 				primKeysSQL.append(groupId);
 				primKeysSQL.append("'");
 			}

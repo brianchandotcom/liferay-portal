@@ -4,11 +4,14 @@
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
 			INNER JOIN
-				ResourcePermission ON
-					(
+				(
+					SELECT
+						primKey
+					FROM
+						ResourcePermission
+					WHERE
 						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 						(ResourcePermission.name = '[$CLASS_NAME$]') AND
-						[$PRIM_KEYS$] AND
 						(
 							(
 								[$ROLE_IDS$] AND
@@ -16,7 +19,9 @@
 							)
 							OR [$OWNER_CHECK$]
 						)
-					)
+				)
+				AS RP ON
+					[$PRIM_KEYS$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByGroupId">

@@ -281,7 +281,11 @@ public class VideoProcessor implements DLProcessor {
 
 		sb.append(_PREVIEW_PATH);
 		sb.append(id);
-		sb.append("_tmp");
+
+		if (PREVIEW_TYPE.equals(targetExtension)) {
+			sb.append("_tmp");
+		}
+
 		sb.append(StringPool.PERIOD);
 		sb.append(targetExtension);
 

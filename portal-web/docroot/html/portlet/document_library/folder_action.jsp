@@ -132,6 +132,7 @@ if (row == null && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 					<liferay-security:permissionsURL
 						modelResource="<%= modelResource %>"
 						modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+						redirect="<%= currentURL %>"
 						resourcePrimKey="<%= resourcePrimKey %>"
 						var="permissionsURL"
 					/>
@@ -197,6 +198,7 @@ if (row == null && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 					<liferay-security:permissionsURL
 						modelResource="<%= modelResource %>"
 						modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+						redirect="<%= currentURL %>"
 						resourcePrimKey="<%= resourcePrimKey %>"
 						var="permissionsURL"
 					/>
@@ -226,6 +228,10 @@ if (row == null && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 				</c:if>
 			</c:otherwise>
 		</c:choose>
+
+		<c:if test="<%= portletDisplay.isWebDAVEnabled() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+			<liferay-ui:icon cssClass='<%= randomNamespace + "-webdav-action" %>' image="desktop" message="access-from-desktop" url="javascript:;" />
+		</c:if>
 
 		<c:if test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 			<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
@@ -269,10 +275,6 @@ if (row == null && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 				</portlet:renderURL>
 
 				<liferay-ui:icon image="add_instance" message="add-shortcut" url="<%= editFileShortcutURL %>" />
-			</c:if>
-
-			<c:if test="<%= portletDisplay.isWebDAVEnabled() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
-				<liferay-ui:icon cssClass='<%= randomNamespace + "-webdav-action" %>' image="desktop" message="access-from-desktop" url="javascript:;" />
 			</c:if>
 		</c:if>
 	</liferay-ui:icon-menu>

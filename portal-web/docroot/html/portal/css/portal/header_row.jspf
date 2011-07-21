@@ -59,6 +59,10 @@
 	border-color: #5F5F5F;
 }
 
+.lfr-header-row .aui-field-choice .aui-field-element {
+	display: inline-block;
+}
+
 .lfr-header-row .aui-button-input {
 	padding: 4px;
 }

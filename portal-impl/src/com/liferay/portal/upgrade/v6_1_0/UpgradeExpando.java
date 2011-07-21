@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Document;
@@ -42,7 +41,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		updateTypeSettingsSelection();
 	}
 
-	protected String upgradeData(String data)
+	protected String getDataXml(String data)
 		throws Exception {
 
 		String[] dataArray = StringUtil.split(data);
@@ -82,7 +81,7 @@ public class UpgradeExpando extends UpgradeProcess {
 				long columnId = rs.getLong("columnId");
 				String defaultData = rs.getString("defaultData");
 
-				defaultData = upgradeData(defaultData);
+				defaultData = getDataXml(defaultData);
 
 				updateDefaultData(columnId, defaultData);
 
@@ -134,7 +133,7 @@ public class UpgradeExpando extends UpgradeProcess {
 				long valueId = rs.getLong("valueId");
 				String data = rs.getString("data_");
 
-				data = upgradeData(data);
+				data = getDataXml(data);
 
 				updateExpandoValue(valueId, data);
 			}

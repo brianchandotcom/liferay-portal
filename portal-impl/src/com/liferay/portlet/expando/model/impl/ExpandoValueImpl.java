@@ -168,7 +168,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 					values.add(element.getText());
 				}
 
-				return values.toArray(new String[elements.size()]);
+				return values.toArray(new String[values.size()]);
 			}
 			catch (Exception e) {
 			}

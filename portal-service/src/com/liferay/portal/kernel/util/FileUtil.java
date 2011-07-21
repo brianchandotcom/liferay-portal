@@ -248,6 +248,10 @@ public class FileUtil {
 		return getFile().toProperties(fileName);
 	}
 
+	public static void unzip(File source, File destination) {
+		getFile().unzip(source, destination);
+	}
+
 	public static void write(String fileName, String s) throws IOException {
 		getFile().write(fileName, s);
 	}

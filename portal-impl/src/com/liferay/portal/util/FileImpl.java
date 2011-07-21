@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.PwdGenerator;
 import com.liferay.util.SystemProperties;
+import com.liferay.util.ant.ExpandTask;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -676,6 +677,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	public void touch(String fileName) throws IOException {
 		touch(new File(fileName));
+	}
+
+	public void unzip(File source, File destination) {
+		ExpandTask.expand(source, destination);
 	}
 
 	public void write(String fileName, String s) throws IOException {

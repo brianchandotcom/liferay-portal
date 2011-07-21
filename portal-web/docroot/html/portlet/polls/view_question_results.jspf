@@ -128,6 +128,7 @@ for (int i = 0; i < choices.size(); i++) {
 		<br />
 
 		<liferay-ui:header
+			showBackURL="false"
 			title="actual-votes"
 		/>
 

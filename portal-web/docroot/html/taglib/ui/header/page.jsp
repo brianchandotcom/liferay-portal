@@ -32,7 +32,7 @@ if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);"
 %>
 
 <div class="taglib-header <%= (cssClass != null) ? cssClass : "" %>">
-	<c:if test="<%= Validator.isNotNull(backURL) %>">
+	<c:if test="<%= showBackURL && Validator.isNotNull(backURL)  %>">
 		<span class="header-back-to">
 			<a href="<%= backURL %>" id="<%= namespace %>TabsBack"><%= backLabel %></a>
 		</span>

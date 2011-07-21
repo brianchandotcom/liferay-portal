@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Date;
@@ -49,6 +50,12 @@ public class FileVersionProxyBean
 
 	public long getCompanyId() {
 		return _fileVersion.getCompanyId();
+	}
+
+	public InputStream getContentStream(boolean count)
+		throws PortalException, SystemException {
+
+		return _fileVersion.getContentStream(count);
 	}
 
 	public Date getCreateDate() {

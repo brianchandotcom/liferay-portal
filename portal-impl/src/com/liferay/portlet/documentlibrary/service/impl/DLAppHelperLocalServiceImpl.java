@@ -119,12 +119,12 @@ public class DLAppHelperLocalServiceImpl
 			folder.getUuid(), DLSyncConstants.EVENT_DELETE);
 	}
 
-	public void getFileAsStream(long userId, FileEntry fileEntry)
+	public void getFileAsStream(long userId, FileEntry fileEntry, boolean count)
 		throws PortalException, SystemException {
 
 		// File rank
 
-		if (userId > 0) {
+		if (userId > 0 && count) {
 			dlFileRankLocalService.updateFileRank(
 				fileEntry.getGroupId(), fileEntry.getCompanyId(), userId,
 				fileEntry.getFileEntryId(), new ServiceContext());
@@ -132,7 +132,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// File read count
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && count) {
 			assetEntryLocalService.incrementViewCounter(
 				userId, DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());

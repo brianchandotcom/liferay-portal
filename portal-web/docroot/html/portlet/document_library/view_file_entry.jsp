@@ -256,11 +256,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
 
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry);
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
 						if (supportedAudio) {
-							if (AudioProcessor.hasAudio(fileEntry)) {
+							if (AudioProcessor.hasAudio(fileEntry, fileVersion.getVersion())) {
 								previewFileCount = 1;
 							}
 

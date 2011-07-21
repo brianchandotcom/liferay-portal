@@ -126,6 +126,8 @@ public interface File {
 
 	public void touch(String fileName) throws IOException;
 
+	public void unzip(java.io.File source, java.io.File destination);
+
 	public void write(String fileName, String s) throws IOException;
 
 	public void write(String fileName, String s, boolean lazy)

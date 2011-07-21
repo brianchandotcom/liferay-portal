@@ -1,7 +1,19 @@
-.dockbar {
+.portlet-dockbar, .portlet-staging-bar {
 }
 
-.dockbar-ready .dockbar {
+.portlet-dockbar {
+}
+
+.dockbar, .staging-bar {
+}
+
+.dockbar-ready .dockbar, .staging-ready .staging-bar, .live-view .staging-bar {
+}
+
+.dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar {
+}
+
+.dockbar {
 }
 
 .dockbar:after {
@@ -63,25 +75,41 @@ html > .lfr-dockbar-pinned {
 
 /* ---------- Staging Dockbar ---------- */
 
-.layout-revision-container {
+.variation-selector {
+}
+
+.layout-revision-container {	}
+
+	.current-version {	}
+
+	.current-version-pointer img {	}
+
+	.layout-variation-name {	}
+
+	.layout-revision-current {	}
+
+	.real-date {	}
+
+	.taglib-workflow-status .workflow-status {	}
+	}
 }
 
 .layout-revision-container-root {
 }
 
-.layout-revision {
+.staging-details {
 }
 
-.layout-revision-current {
+.staging .staging-details {
 }
 
-.layout-revision-head {
+.live-view .staging-details {
 }
 
-.layout-revision-current.layout-revision-head {
+.staging .staging-tabview-list {
 }
 
-.layout-revision-container .lfr-menu-list {
+.live-view .staging-tabview-list {
 }
 
 /* ---------- Menus ---------- */
@@ -191,21 +219,6 @@ html > .lfr-dockbar-pinned {
 .dockbar .my-places .menu-button span {
 }
 
-.dockbar .staging-options .menu-button span {
-}
-
-.dockbar .toggle-customized-view .menu-button {
-}
-
-.dockbar .toggle-customized-view .menu-button span {
-}
-
-.dockbar .toggle-customized-view.false span {
-}
-
-.dockbar .toggle-customized-view.update .menu-button span {
-}
-
 .dockbar-messages-container {
 }
 
@@ -230,13 +243,19 @@ html > .lfr-dockbar-pinned {
 .add-content-menu a.lfr-portlet-used {
 }
 
-.manage-content-menu li a {
+.manage-content-menu li a, .manage-content-menu li .disabled {
 }
 
 .manage-content-menu .manage-page a {
 }
 
 .manage-content-menu .manage-site-content a {
+}
+
+.manage-content-menu .manage-site-memberships a {
+}
+
+.manage-content-menu .manage-page-customization a, .manage-content-menu .manage-page-customization .disabled {
 }
 
 .manage-content-menu .page-layout a {
@@ -248,5 +267,19 @@ html > .lfr-dockbar-pinned {
 .manage-content-menu .settings a {
 }
 
-.toggle-customized-view-menu .reset-customized-view a {
+/* ---------- Customization Bar ---------- */
+
+.page-customization-bar {
+}
+
+.controls-hidden .page-customization-bar {
+}
+
+.page-customization-bar .customized-icon {
+}
+
+.page-customization-bar .page-customization-actions {
+}
+
+.page-customization-bar .page-customization-actions a {
 }

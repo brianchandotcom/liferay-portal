@@ -282,6 +282,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/jasper.jar</file-name>
+		<version>6.0.32</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/jass.jar</file-name>
 		<version></version>
 		<project-name>Jass</project-name>

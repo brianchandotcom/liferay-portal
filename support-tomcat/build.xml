@@ -16,7 +16,7 @@
 		<mkdir dir="classes" />
 
 		<path id="web-lib.classpath">
-			<fileset dir="${project.dir}/lib/development" includes="catalina.jar,tomcat-coyote.jar" />
+			<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-coyote.jar" />
 		</path>
 
 		<javac

@@ -239,9 +239,10 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	}
 
 	public void removeCache(String className) {
+		_portalCaches.remove(className);
+
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_portalCaches.remove(groupKey);
 		_multiVMPool.removeCache(groupKey);
 	}
 
@@ -300,16 +301,16 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	private PortalCache _getPortalCache(
 		String className, boolean createIfAbsent) {
 
-		String groupKey = _GROUP_KEY_PREFIX.concat(className);
-
-		PortalCache portalCache = _portalCaches.get(groupKey);
+		PortalCache portalCache = _portalCaches.get(className);
 
 		if ((portalCache == null) && createIfAbsent) {
+			String groupKey = _GROUP_KEY_PREFIX.concat(className);
+
 			portalCache = _multiVMPool.getCache(
 				groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			PortalCache previousPortalCache = _portalCaches.putIfAbsent(
-				groupKey, portalCache);
+				className, portalCache);
 
 			if (previousPortalCache != null) {
 				portalCache = previousPortalCache;

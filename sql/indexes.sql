@@ -368,6 +368,7 @@ create unique index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master
 
 create index IX_30616AAA on LayoutPrototype (companyId);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
+create index IX_CEF72136 on LayoutPrototype (uuid_);
 
 create index IX_314B621A on LayoutRevision (layoutSetBranchId);
 create index IX_A9AC086E on LayoutRevision (layoutSetBranchId, head);
@@ -381,6 +382,7 @@ create index IX_9329C9D6 on LayoutRevision (plid);
 
 create index IX_A40B8BEC on LayoutSet (groupId);
 create unique index IX_48550691 on LayoutSet (groupId, privateLayout);
+create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid);
 
 create index IX_8FF5D6EA on LayoutSetBranch (groupId);
 create index IX_C4079FD3 on LayoutSetBranch (groupId, privateLayout);

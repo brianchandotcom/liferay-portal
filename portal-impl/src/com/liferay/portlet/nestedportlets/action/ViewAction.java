@@ -17,6 +17,7 @@ package com.liferay.portlet.nestedportlets.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -108,11 +109,16 @@ public class ViewAction extends PortletAction {
 
 			processColumnMatcher.reset();
 
-			content = processColumnMatcher.replaceAll("$1\\${$2}$3");
+			StringBundler sb = new StringBundler(4);
 
-			velocityTemplateId =
-				theme.getThemeId() + LayoutTemplateConstants.CUSTOM_SEPARATOR +
-					layoutTemplateId;
+			sb.append(theme.getThemeId());
+			sb.append(LayoutTemplateConstants.CUSTOM_SEPARATOR);
+			sb.append(renderResponse.getNamespace());
+			sb.append(layoutTemplateId);
+
+			velocityTemplateId = sb.toString();
+
+			content = processColumnMatcher.replaceAll("$1\\${$2}$3");
 
 			Matcher columnIdMatcher = _columnIdPattern.matcher(content);
 

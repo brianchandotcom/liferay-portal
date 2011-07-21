@@ -143,7 +143,7 @@ public class JSONWebServiceConfigurator extends FindClass {
 	protected void onEntry(FindClass.EntryData entryData) throws Exception {
 		String className = entryData.getName();
 
-		if (className.endsWith("Impl")) {
+		if (className.endsWith("Impl") || className.endsWith("Service")) {
 			if (_checkBytecodeSignature) {
 				InputStream inputStream = entryData.openInputStream();
 
@@ -160,8 +160,7 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 	private boolean _isJSONWebServiceClass(Class<?> clazz) {
 		if (!clazz.isAnonymousClass() && !clazz.isArray() && !clazz.isEnum() &&
-			!clazz.isInterface() && !clazz.isLocalClass() &&
-			!clazz.isPrimitive() &&
+			!clazz.isLocalClass() && !clazz.isPrimitive() &&
 			!(clazz.isMemberClass() ^
 				Modifier.isStatic(clazz.getModifiers()))) {
 
@@ -186,8 +185,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 			utilClassName = utilClassName.substring(
 				0, utilClassName.length() - 4);
 
-			utilClassName += "Util";
 		}
+
+		utilClassName += "Util";
 
 		utilClassName = StringUtil.replace(utilClassName, ".impl.", ".");
 

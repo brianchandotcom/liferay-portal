@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import java.io.InputStream;
+
 import java.util.Date;
 
 /**
@@ -28,6 +30,9 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 	public String getChangeLog();
 
 	public long getCompanyId();
+
+	public InputStream getContentStream(boolean count)
+		throws PortalException, SystemException;
 
 	public Date getCreateDate();
 

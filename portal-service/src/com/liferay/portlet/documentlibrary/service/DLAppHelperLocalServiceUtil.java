@@ -87,10 +87,11 @@ public class DLAppHelperLocalServiceUtil {
 	}
 
 	public static void getFileAsStream(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		boolean count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().getFileAsStream(userId, fileEntry);
+		getService().getFileAsStream(userId, fileEntry, count);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(

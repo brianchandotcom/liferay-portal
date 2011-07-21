@@ -531,7 +531,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		dlAppHelperLocalService.getFileAsStream(
-			userId, new LiferayFileEntry(dlFileEntry));
+			userId, new LiferayFileEntry(dlFileEntry), count);
 
 		return DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),

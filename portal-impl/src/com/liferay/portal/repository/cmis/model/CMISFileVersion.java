@@ -30,6 +30,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Calendar;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.data.ContentStream;
 
 /**
  * @author Alexander Chow
@@ -63,6 +65,14 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	@Override
 	public long getCompanyId() {
 		return _cmisRepository.getCompanyId();
+	}
+
+	public InputStream getContentStream(boolean count)
+		throws PortalException, SystemException {
+
+		ContentStream contentStream = _document.getContentStream();
+
+		return contentStream.getStream();
 	}
 
 	public Date getCreateDate() {
@@ -130,7 +140,9 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public Date getModifiedDate() {
-		return getCreateDate();
+		Calendar modificationDate = _document.getLastModificationDate();
+
+		return modificationDate.getTime();
 	}
 
 	@Override
@@ -167,7 +179,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public Date getStatusDate() {
-		return null;
+		return getModifiedDate();
 	}
 
 	public String getTitle() {

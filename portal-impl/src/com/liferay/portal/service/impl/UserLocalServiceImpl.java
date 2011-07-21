@@ -1732,6 +1732,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Returns the user with the screen name.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  screenName the user's screen name
+	 * @return the user with the screen name, or <code>null</code> if a user
+	 *         with the screen name could not be found
+	 */
 	public User fetchUserByScreenName(long companyId, String screenName)
 		throws SystemException {
 

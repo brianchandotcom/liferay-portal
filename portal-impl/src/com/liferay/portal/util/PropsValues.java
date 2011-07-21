@@ -1098,6 +1098,8 @@ public class PropsValues {
 
 	public static final String RESOURCE_REPOSITORIES_ROOT = PropsUtil.get(PropsKeys.RESOURCE_REPOSITORIES_ROOT);
 
+	public static final String[] REST_PROXY_DOMAINS_ALLOWED = PropsUtil.getArray(PropsKeys.REST_PROXY_DOMAINS_ALLOWED);
+
 	public static final String ROBOTS_TXT_WITH_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITH_SITEMAP);
 
 	public static final String ROBOTS_TXT_WITHOUT_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITHOUT_SITEMAP);

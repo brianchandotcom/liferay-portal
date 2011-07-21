@@ -24,12 +24,14 @@ CalEvent event = (CalEvent)request.getAttribute(WebKeys.CALENDAR_EVENT);
 Recurrence recurrence = null;
 
 int recurrenceType = ParamUtil.getInteger(request, "recurrenceType", Recurrence.NO_RECURRENCE);
+
 if (event.getRepeating()) {
 	recurrence = event.getRecurrenceObj();
 	recurrenceType = recurrence.getFrequency();
 }
 
 int endDateType = ParamUtil.getInteger(request, "endDateType");
+
 if ((event.getRepeating()) && (recurrence != null)) {
 	if (recurrence.getUntil() != null) {
 		endDateType = 2;
@@ -40,6 +42,10 @@ if ((event.getRepeating()) && (recurrence != null)) {
 }
 
 request.setAttribute("view_event.jsp-event", event);
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalEvent.class.getName(), event.getEventId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 %>
 
 <liferay-ui:header

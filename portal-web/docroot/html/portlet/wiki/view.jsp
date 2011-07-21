@@ -109,6 +109,12 @@ AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.ge
 if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
+
+if (wikiPage != null) {
+	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+}
 %>
 
 <c:choose>

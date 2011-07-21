@@ -26,6 +26,10 @@ long entryId = entry.getEntryId();
 BookmarksFolder folder = entry.getFolder();
 
 request.setAttribute("view_entry.jsp-entry", entry);
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 %>
 
 <liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />

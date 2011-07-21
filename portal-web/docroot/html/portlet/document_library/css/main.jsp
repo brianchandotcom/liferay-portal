@@ -321,7 +321,7 @@
 		.overlay.document-action a {
 			display: block;
 			float: right;
-			min-height: 20px;
+			min-height: 15px;
 		}
 
 		&:hover, &.hover {
@@ -329,6 +329,29 @@
 		}
 
 		&:hover .overlay, &.hover .overlay, &.selected .document-selector {
+			clip: auto;
+		}
+	}
+
+	.folder-display-style li {
+		.overlay {
+			clip: rect(0 0 0 0);
+
+			&.document-action {
+                display: block;
+				position: absolute;
+				right: 30px;
+				top: 5px;
+
+				a {
+					display: block;
+					float: right;
+					min-height: 15px;
+				}
+			}
+		}
+
+		&:hover .overlay, &.hover .overlay {
 			clip: auto;
 		}
 	}
@@ -528,7 +551,7 @@
 			position: absolute;
 			right: 2px;
 			top: 5px;
-			width: 16px;
+			width: 10px;
 
 			.expand-folder-arrow {
 				left: 2px;

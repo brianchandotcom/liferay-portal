@@ -201,7 +201,7 @@ public class SQLServerLimitStringUtil {
 	private static final Pattern _distinctPattern = Pattern.compile(
 		" DISTINCT ", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _qualifiedColumnPattern = Pattern.compile(
-		"\\w+\\.(\\w+)");
+		"\\w+\\.([\\w\\*]+)");
 	private static final Pattern _selectPattern = Pattern.compile(
 		"SELECT ", Pattern.CASE_INSENSITIVE);
 

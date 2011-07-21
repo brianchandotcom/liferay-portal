@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.support.tomcat.jasper.runtime;
+
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.Tag;
+
+import org.apache.jasper.Constants;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
+
+	@Override
+	public Tag get(Class tagClass) throws JspException {
+		Tag tag = _tagPool.poll();
+
+		if (tag == null) {
+			try {
+				tag = (Tag)tagClass.newInstance();
+			}
+			catch (Exception e) {
+				throw new JspException(e);
+			}
+		}
+
+		return tag;
+	}
+
+	@Override
+	public void release() {
+		Tag tag;
+
+		while ((tag = _tagPool.poll()) != null) {
+			tag.release();
+		}
+	}
+
+	@Override
+	public void reuse(Tag tag) {
+		if (_counter.get() < _maxSize) {
+			_counter.getAndIncrement();
+			_tagPool.offer(tag);
+		}
+
+		tag.release();
+	}
+
+	@Override
+	protected void init(ServletConfig config) {
+		_maxSize = GetterUtil.getInteger(
+			getOption(config, OPTION_MAXSIZE, null), Constants.MAX_POOL_SIZE);
+	}
+
+	private AtomicInteger _counter = new AtomicInteger();
+	private int _maxSize;
+	private Queue<Tag> _tagPool = new ConcurrentLinkedQueue<Tag>();
+
+}

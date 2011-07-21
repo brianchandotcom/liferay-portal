@@ -30,7 +30,7 @@ assetEntryQuery.setStart(start);
 List<AssetEntry> results = new ArrayList<AssetEntry>();
 int total = 0;
 
-if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (mainJournalArticle != null)) {
+if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinkedAssetEntryId() > 0)) {
 	if (assetVocabularyId > 0) {
 		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 

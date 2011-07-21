@@ -102,6 +102,8 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
@@ -2011,7 +2013,13 @@ public class ServicePreAction extends Action {
 				JournalArticle mainJournalArticle =
 					JournalArticleServiceUtil.getArticle(mainJournalArticleId);
 
-				themeDisplay.setMainJournalArticle(mainJournalArticle);
+				AssetEntry layoutAssetEntry =
+					AssetEntryLocalServiceUtil.getEntry(
+						JournalArticle.class.getName(),
+						mainJournalArticle.getResourcePrimKey());
+
+				request.setAttribute(
+					WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 			}
 			catch (NoSuchArticleException nsae) {
 				if (_log.isWarnEnabled()) {

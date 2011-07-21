@@ -143,15 +143,13 @@ if (showOnlyLayoutAssets) {
 	assetEntryQuery.setLayout(layout);
 }
 
-JournalArticle mainJournalArticle = null;
-
 if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
-	mainJournalArticle = themeDisplay.getMainJournalArticle();
+	if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) != null) {
+		AssetEntry mainAssetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
 
-	if (mainJournalArticle != null) {
-		AssetEntry mainAssetEntry = AssetEntryLocalServiceUtil.getEntry(JournalArticle.class.getName(), mainJournalArticle.getResourcePrimKey());
-
-		assetEntryQuery.setLinkedAssetEntryId(mainAssetEntry.getEntryId());
+		if (mainAssetEntry != null) {
+			assetEntryQuery.setLinkedAssetEntryId(mainAssetEntry.getEntryId());
+		}
 	}
 }
 

@@ -26,10 +26,6 @@
 	vertical-align: top;
 }
 
-.lfr-search-combobox .aui-field-element {
-	border-width: 0;
-}
-
 .lfr-search-combobox:after {
 	clear: both;
 	content: "";

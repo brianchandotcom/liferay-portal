@@ -36,6 +36,7 @@
 <%@ page import="com.liferay.portal.repository.util.RepositoryFactoryUtil" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %>
 <%@ page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %>
@@ -147,6 +148,7 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 	folderColumns = ArrayUtil.append(folderColumns, "action");
 }
 
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 int fileEntriesPerPage = PrefsParamUtil.getInteger(preferences, request, "fileEntriesPerPage", SearchContainer.DEFAULT_DELTA);
 
 String defaultFileEntryColumns = "name,size";

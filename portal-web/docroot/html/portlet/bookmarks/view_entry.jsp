@@ -26,6 +26,10 @@ long entryId = entry.getEntryId();
 BookmarksFolder folder = entry.getFolder();
 
 request.setAttribute("view_entry.jsp-entry", entry);
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 %>
 
 <liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
@@ -84,12 +88,14 @@ request.setAttribute("view_entry.jsp-entry", entry);
 			</div>
 		</div>
 
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= BookmarksEntry.class.getName() %>"
-				classPK="<%= entryId %>"
-			/>
-		</div>
+		<c:if test="<%= enableRelatedAssets %>">
+			<div class="entry-links">
+				<liferay-ui:asset-links
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</div>
+		</c:if>
 
 		<div class="lfr-asset-ratings">
 			<liferay-ui:ratings

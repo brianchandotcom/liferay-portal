@@ -33,6 +33,8 @@ boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
 request.setAttribute("view.jsp-showIconLabel", true);
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 %>
 
 <c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -157,7 +159,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 			<br />
 
-			<c:if test='<%= showAssetLinks %>' >
+			<c:if test='<%= enableRelatedAssets %>' >
 				<liferay-ui:asset-links
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"

@@ -50,6 +50,10 @@ if (portletDisplay.isWebDAVEnabled()) {
 
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/image_gallery" + sb.toString();
 }
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(IGImage.class.getName(), image.getImageId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 %>
 
 <liferay-util:include page="/html/portlet/image_gallery/top_links.jsp" />

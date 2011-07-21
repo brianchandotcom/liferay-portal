@@ -295,6 +295,8 @@ String editorContent = emailBody;
 
 				<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
 				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">

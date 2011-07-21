@@ -81,6 +81,7 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enablePageRatings", null), true);
 boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);

@@ -365,6 +365,15 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 </c:if>
 
 <c:if test="<%= (articleDisplay != null) %>">
+	<c:if test="<%= enableRelatedAssets %>">
+		<div class="entry-links">
+			<liferay-ui:asset-links
+				className="<%= JournalArticle.class.getName() %>"
+				classPK="<%= articleDisplay.getResourcePrimKey() %>"
+			/>
+		</div>
+	</c:if>
+
 	<c:if test="<%= enableRatings %>">
 		<div class="taglib-ratings-wrapper">
 			<liferay-ui:ratings

@@ -40,6 +40,8 @@ AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.cla
 request.setAttribute("view_entry_content.jsp-entry", entry);
 
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 %>
 
 <liferay-ui:header

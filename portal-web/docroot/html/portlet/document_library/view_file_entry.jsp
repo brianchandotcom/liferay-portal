@@ -109,6 +109,10 @@ if (portletDisplay.isWebDAVEnabled()) {
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
 request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
+
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), assetClassPK);
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -217,12 +221,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</span>
 					</c:if>
 
-					<div class="entry-links">
-						<liferay-ui:asset-links
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= assetClassPK %>"
-						/>
-					</div>
+					<c:if test="<%= enableRelatedAssets %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								className="<%= DLFileEntryConstants.getClassName() %>"
+								classPK="<%= assetClassPK %>"
+							/>
+						</div>
+					</c:if>
 
 					<span class="document-description">
 						<%= HtmlUtil.escape(fileVersion.getDescription()) %>

@@ -96,6 +96,8 @@
 
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
+	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
 	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
@@ -109,8 +111,6 @@
 
 <aui:fieldset label="show-metadata">
 	<br />
-
-	<aui:input name="preferences--showAssetLinks--" type="checkbox" value="<%= showAssetLinks %>" />
 
 	<aui:input name="preferences--metadataFields--" type="hidden" />
 

@@ -296,6 +296,8 @@ else if (tabs2.equals("page-updated-email")) {
 		</c:when>
 		<c:when test='<%= tabs2.equals("display-settings") %>'>
 			<aui:fieldset>
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 				<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED || PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
 					<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED %>">
 						<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= enablePageRatings %>" />

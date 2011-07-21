@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
@@ -35,10 +34,6 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -78,9 +73,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				updateOrganizationPermissions(actionRequest);
 			}
 			else if (cmd.equals("role_permissions")) {
-
-				// This is the only possible command in permissions version 6
-
 				updateRolePermissions(actionRequest);
 			}
 			else if (cmd.equals("user_group_permissions")) {
@@ -321,41 +313,6 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
 				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 				selResource, resourcePrimKey, roleId, actionIds);
-		}
-
-		// This really shouldn't be here
-
-		if (Validator.isNotNull(modelResource)) {
-			long groupId = 0;
-			PermissionedModel model = null;
-
-			// NEEDS FIX
-
-			if (modelResource.equals(
-				"com.liferay.portlet.bookmarks.model.BookmarksEntry")) {
-
-				BookmarksEntry bookmarksEntry =
-					BookmarksEntryLocalServiceUtil.getBookmarksEntry(
-					Long.valueOf(resourcePrimKey));
-				groupId = bookmarksEntry.getGroupId();
-				model = bookmarksEntry;
-			}
-			else if (modelResource.equals(
-				"com.liferay.portlet.bookmarks.model.BookmarksFolder")) {
-
-				BookmarksFolder bookmarksFolder =
-					BookmarksFolderLocalServiceUtil.getBookmarksFolder(
-					Long.valueOf(resourcePrimKey));
-				groupId = bookmarksFolder.getGroupId();
-				model = bookmarksFolder;
-			}
-
-//			if (model != null) {
-//				long companyId = themeDisplay.getCompanyId();
-//
-//				ResourceBlockLocalServiceUtil.updateResourceBlockId(
-//					companyId, groupId, model, modelResource, resourcePrimKey);
-//			}
 		}
 	}
 

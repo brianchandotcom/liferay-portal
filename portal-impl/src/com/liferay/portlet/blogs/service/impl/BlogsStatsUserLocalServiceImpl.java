@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
@@ -177,7 +178,11 @@ public class BlogsStatsUserLocalServiceImpl
 			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 
 		if (entryCount == 0) {
-			blogsStatsUserPersistence.removeByG_U(groupId, userId);
+			try {
+				blogsStatsUserPersistence.removeByG_U(groupId, userId);
+			}
+			catch (NoSuchStatsUserException nssue) {
+			}
 
 			return;
 		}

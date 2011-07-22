@@ -184,6 +184,14 @@ AUI().add(
 				layoutHandler.on('drag:start', A.bind(Layout._onPortletDragStart, Layout));
 			},
 
+			closeNestedPortlets: function(portlet) {
+				var nestedPortlets = portlet.all('.portlet-boundary');
+
+				nestedPortlets.each(function(portlet) {
+				    Liferay.Portlet.close(portlet, true);
+				});
+			},
+
 			getActiveDropContainer: function() {
 				var options = Layout.options;
 
@@ -528,6 +536,10 @@ AUI().add(
 				var column = portlet.ancestor(Layout.options.dropContainer);
 
 				Layout.updateCurrentPortletInfo(portlet);
+
+				if (portlet.test('.portlet-nested-portlets')) {
+					Layout.closeNestedPortlets(portlet);					
+				}
 
 				event.column = column;
 			},

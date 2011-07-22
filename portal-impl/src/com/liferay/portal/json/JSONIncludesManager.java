@@ -69,19 +69,8 @@ public class JSONIncludesManager {
 
 		List<String> list = new ArrayList<String>();
 
-		boolean strict = false;
-
 		while (type != null) {
-			JSON jsonAnnotation = type.getAnnotation(JSON.class);
-
-			if ((jsonAnnotation != null) && jsonAnnotation.strict()) {
-				_scanFieldsAndMethods(list, type, true);
-
-				strict = true;
-			}
-			else if (strict) {
-				_scanFieldsAndMethods(list, type, true);
-			}
+			_scanFieldsAndMethods(list, type, true);
 
 			type = type.getSuperclass();
 		}

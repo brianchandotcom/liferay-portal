@@ -16,12 +16,14 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutBranchModel;
+import com.liferay.portal.model.LayoutBranchSoap;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -33,6 +35,9 @@ import java.io.Serializable;
 import java.lang.reflect.Proxy;
 
 import java.sql.Types;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The base model implementation for the LayoutBranch service. Represents a row in the &quot;LayoutBranch&quot; database table, with each column mapped to a property of this class.
@@ -47,6 +52,7 @@ import java.sql.Types;
  * @see com.liferay.portal.model.LayoutBranchModel
  * @generated
  */
+@JSON(strict = true)
 public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	implements LayoutBranchModel {
 	/*
@@ -67,7 +73,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			{ "description", Types.VARCHAR },
 			{ "master", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (LayoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description VARCHAR(75) null,master BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (LayoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -78,6 +84,45 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutBranch"),
 			true);
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static LayoutBranch toModel(LayoutBranchSoap soapModel) {
+		LayoutBranch model = new LayoutBranchImpl();
+
+		model.setLayoutBranchId(soapModel.getLayoutBranchId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setLayoutSetBranchId(soapModel.getLayoutSetBranchId());
+		model.setPlid(soapModel.getPlid());
+		model.setName(soapModel.getName());
+		model.setDescription(soapModel.getDescription());
+		model.setMaster(soapModel.getMaster());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<LayoutBranch> toModels(LayoutBranchSoap[] soapModels) {
+		List<LayoutBranch> models = new ArrayList<LayoutBranch>(soapModels.length);
+
+		for (LayoutBranchSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
 
 	public Class<?> getModelClass() {
 		return LayoutBranch.class;
@@ -109,6 +154,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	@JSON
 	public long getLayoutBranchId() {
 		return _LayoutBranchId;
 	}
@@ -117,6 +163,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_LayoutBranchId = LayoutBranchId;
 	}
 
+	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -125,6 +172,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_groupId = groupId;
 	}
 
+	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -133,6 +181,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_companyId = companyId;
 	}
 
+	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -149,6 +198,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_userUuid = userUuid;
 	}
 
+	@JSON
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -162,6 +212,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_userName = userName;
 	}
 
+	@JSON
 	public long getLayoutSetBranchId() {
 		return _layoutSetBranchId;
 	}
@@ -180,6 +231,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalLayoutSetBranchId;
 	}
 
+	@JSON
 	public long getPlid() {
 		return _plid;
 	}
@@ -198,6 +250,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalPlid;
 	}
 
+	@JSON
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -211,6 +264,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_name = name;
 	}
 
+	@JSON
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -224,6 +278,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_description = description;
 	}
 
+	@JSON
 	public boolean getMaster() {
 		return _master;
 	}

@@ -102,40 +102,6 @@ public class LayoutRevisionServiceHttp {
 		}
 	}
 
-	public static void deleteLayoutRevisions(HttpPrincipal httpPrincipal,
-		long layoutSetBranchId, long layoutBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class.getName(),
-					"deleteLayoutRevisions",
-					_deleteLayoutRevisionsParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					layoutSetBranchId, layoutBranchId, plid);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionServiceHttp.class);
 	private static final Class<?>[] _addLayoutRevisionParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, long.class, boolean.class,
@@ -147,8 +113,5 @@ public class LayoutRevisionServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteLayoutRevisionsParameterTypes1 = new Class[] {
-			long.class, long.class, long.class
 		};
 }

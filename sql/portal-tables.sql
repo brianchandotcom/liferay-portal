@@ -951,7 +951,7 @@ create table LayoutBranch (
 	layoutSetBranchId LONG,
 	plid LONG,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	master BOOLEAN
 );
 

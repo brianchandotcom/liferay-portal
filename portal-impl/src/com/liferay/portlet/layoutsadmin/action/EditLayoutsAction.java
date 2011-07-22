@@ -146,9 +146,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				SitesUtil.deleteLayout(actionRequest, actionResponse);
 			}
-			else if (cmd.equals("add_layout_branch")) {
-				addLayoutBranch(actionRequest);
-			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
 			}
@@ -157,9 +154,6 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (cmd.equals("delete_layout_revision")) {
 				deleteLayoutRevision(actionRequest);
-			}
-			else if (cmd.equals("delete_layout_branch")) {
-				deleteLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
@@ -335,25 +329,6 @@ public class EditLayoutsAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void addLayoutBranch(ActionRequest actionRequest)
-		throws Exception {
-
-		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "mergeLayoutRevisionId");
-		String name = ParamUtil.getString(
-			actionRequest, "name",
-			LayoutBranchConstants.MASTER_BRANCH_NAME);
-		String description = ParamUtil.getString(
-			actionRequest, "description",
-			LayoutBranchConstants.MASTER_BRANCH_DESCRIPTION);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		LayoutBranchLocalServiceUtil.addLayoutBranch(
-			layoutRevisionId, name, description, false, serviceContext);
-	}
-
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
@@ -491,21 +466,7 @@ public class EditLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected void deleteLayoutBranch(ActionRequest actionRequest)
-		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		LayoutRevisionServiceUtil.deleteLayoutRevisions(
-			layoutSetBranchId, layoutBranchId, themeDisplay.getPlid());
-	}
 
 	protected void deleteThemeSettings(
 		UnicodeProperties typeSettingsProperties, String device) {

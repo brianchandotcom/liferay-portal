@@ -16,41 +16,44 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * The interface for the layout revision remote service.
+ * The interface for the layout branch remote service.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see LayoutRevisionServiceUtil
- * @see com.liferay.portal.service.base.LayoutRevisionServiceBaseImpl
- * @see com.liferay.portal.service.impl.LayoutRevisionServiceImpl
+ * @see LayoutBranchServiceUtil
+ * @see com.liferay.portal.service.base.LayoutBranchServiceBaseImpl
+ * @see com.liferay.portal.service.impl.LayoutBranchServiceImpl
  * @generated
  */
-@JSONWebService
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface LayoutRevisionService {
+public interface LayoutBranchService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutRevisionServiceUtil} to access the layout revision remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutRevisionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link LayoutBranchServiceUtil} to access the layout branch remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutBranchServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.LayoutRevision addLayoutRevision(
-		long userId, long layoutSetBranchId, long layoutBranchId,
-		long parentLayoutRevisionId, boolean head, long plid,
-		boolean privateLayout, java.lang.String name, java.lang.String title,
-		java.lang.String description, java.lang.String keywords,
-		java.lang.String robots, java.lang.String typeSettings,
-		boolean iconImage, long iconImageId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String wapThemeId,
-		java.lang.String wapColorSchemeId, java.lang.String css,
+	public com.liferay.portal.model.LayoutBranch addLayoutBranch(
+		long layoutRevisionId, java.lang.String name,
+		java.lang.String description, boolean master,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutBranch(long layoutBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.LayoutBranch updateLayoutBranch(
+		long layoutBranchId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

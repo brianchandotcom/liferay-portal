@@ -57,14 +57,6 @@ public class LayoutRevisionServiceUtil {
 			wapColorSchemeId, css, serviceContext);
 	}
 
-	public static void deleteLayoutRevisions(long layoutSetBranchId,
-		long layoutBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.deleteLayoutRevisions(layoutSetBranchId, layoutBranchId, plid);
-	}
-
 	public static LayoutRevisionService getService() {
 		if (_service == null) {
 			_service = (LayoutRevisionService)PortalBeanLocatorUtil.locate(LayoutRevisionService.class.getName());

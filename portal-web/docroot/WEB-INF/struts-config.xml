@@ -664,6 +664,11 @@
 
 		<!-- Group Pages -->
 
+		<action path="/group_pages/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
+			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
+			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
+		</action>
+
 		<action path="/group_pages/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
@@ -703,9 +708,9 @@
 
 		<action path="/group_pages/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
 
-		<action path="/group_pages/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+		<action path="/group_pages/view_layout_branches" forward="portlet.staging_bar.view_layout_branches" />
 
-		<action path="/group_pages/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
+		<action path="/group_pages/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
 		<!-- IFrame -->
 
@@ -947,6 +952,11 @@
 
 		<!-- Layouts Admin -->
 
+		<action path="/layouts_admin/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
+			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
+			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
+		</action>
+
 		<action path="/layouts_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
@@ -988,9 +998,9 @@
 
 		<action path="/layouts_admin/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
 
-		<action path="/layouts_admin/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+		<action path="/layouts_admin/view_layout_branches" forward="portlet.staging_bar.view_layout_branches" />
 
-		<action path="/layouts_admin/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
+		<action path="/layouts_admin/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
 		<!-- Login -->
 
@@ -1724,6 +1734,11 @@
 
 		<!-- Staging Bar -->
 
+		<action path="/staging_bar/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
+			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
+			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
+		</action>
+
 		<action path="/staging_bar/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
@@ -1741,9 +1756,9 @@
 
 		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
 
-		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
+		<action path="/staging_bar/view_layout_branches" forward="portlet.staging_bar.view_layout_branches" />
 
-		<action path="/staging_bar/view_root_layout_revisions" forward="portlet.staging_bar.view_root_layout_revisions" />
+		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
 		<!-- Update Manager -->
 

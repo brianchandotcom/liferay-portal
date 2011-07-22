@@ -271,8 +271,12 @@
 		<field name="userName" type="String" />
 		<field name="layoutSetBranchId" type="long" />
 		<field name="plid" type="long" />
-		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="master" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutPrototype">

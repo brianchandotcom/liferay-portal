@@ -33,7 +33,6 @@ if (layoutSetBranchId > 0) {
 
 	<portlet:actionURL var="editLayoutSetBranchURL">
 		<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= editLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm3">

@@ -61,6 +61,10 @@
 		}
 	}
 
+	.layout-set-branch-results, .layout-branch-results {
+		min-height: 300px;
+	}
+
 	.staging-bar {
 		background-color: #888;
 
@@ -71,7 +75,7 @@
 		.staging-tabview-content {
 			border-bottom: 1px solid #636364;
 			color: #EEE;
-			padding: 1em;
+			padding: 0.5em 1em;
 
 			.staging-icon {
 				float: left;
@@ -97,62 +101,68 @@
 				.variations-tabview-list {
 					margin-top: 1em;
 				}
-			}
 
-			.layout-title {
-				font-size: 1.2em;
+				.variations-tabview-content {
+					overflow: hidden;
 
-				label {
-					float: left;
-				}
+					.layout-branch-description {
+						font-style: italic;
+					}
 
-				.layout-breadcrumb {
-					font-size: 1em;
-
-					.breadcrumbs a {
+					.manage-page-variations a {
 						color: #EEE;
 					}
 
-					.breadcrumbs-horizontal {
-						margin-bottom: 0;
-						overflow: hidden;
-						padding-left: 0.5em;
+					.layout-actions:after {
+						clear: both;
+						content: ".";
+						display: block;
+						height: 0;
+						visibility: hidden;
+					}
 
-						li {
-							background-image: url(<%= themeImagesPath %>/arrows/09_right.png);
+					.layout-revision-details {
+						float: left;
+					}
 
-							&.last {
-								background-image: none;
-								font-weight: bold;
-								position: relative;
-								text-decoration: none;
-								top: -0.2em;
+					.layout-revision-id {
+						font-size: 0.6em;
+					}
+				}
+
+				.layout-title {
+					font-size: 1.2em;
+
+					label {
+						float: left;
+					}
+
+					.layout-breadcrumb {
+						font-size: 1em;
+
+						.breadcrumbs a {
+							color: #EEE;
+						}
+
+						.breadcrumbs-horizontal {
+							margin-bottom: 0;
+							overflow: hidden;
+							padding-left: 0.5em;
+
+							li {
+								background-image: url(<%= themeImagesPath %>/arrows/09_right.png);
+
+								&.last {
+									background-image: none;
+									font-weight: bold;
+									position: relative;
+									text-decoration: none;
+									top: -0.2em;
+								}
 							}
 						}
 					}
 				}
-			}
-
-			.layout-actions {
-				.manage-page-variations a {
-					color: #EEE;
-				}
-			}
-
-			.layout-actions:after {
-				clear: both;
-				content: ".";
-				display: block;
-				height: 0;
-				visibility: hidden;
-			}
-
-			.layout-revision-details {
-				float: left;
-			}
-
-			.layout-revision-id {
-				font-size: 0.6em;
 			}
 
 			.last-publication-variation-details {

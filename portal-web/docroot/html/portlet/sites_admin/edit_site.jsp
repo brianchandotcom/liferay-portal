@@ -92,19 +92,22 @@ String[][] categorySections = {mainSections, seoSections, advancedSections};
 </c:if>
 
 <%
+boolean localizeTitle = true;
 String title = "new-site";
 
 if (group != null) {
+	localizeTitle= false;
 	title = group.getDescriptiveName();
 }
 else if (layoutSetPrototype != null) {
+	localizeTitle= false;
 	title = layoutSetPrototype.getName(locale);
 }
 %>
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
+	localizeTitle="<%= localizeTitle %>"
 	title="<%= title %>"
 />
 

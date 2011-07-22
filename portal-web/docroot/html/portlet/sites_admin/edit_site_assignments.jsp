@@ -63,6 +63,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	<c:when test="<%= selUser == null %>">
 		<liferay-ui:header
 			backURL="<%= redirect %>"
+			localizeTitle="<%= false %>"
 			title='<%= group.getDescriptiveName() + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
 		/>
 

@@ -30,10 +30,12 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ListUtil {
 
@@ -86,7 +88,7 @@ public class ListUtil {
 
 	public static <E> List<E> fromArray(E[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<E>();
+			return Collections.emptyList();
 		}
 
 		return new ArrayList<E>(Arrays.asList(array));
@@ -99,7 +101,7 @@ public class ListUtil {
 		}
 
 		if ((c == null) || c.isEmpty()) {
-			return new ArrayList<E>();
+			return Collections.emptyList();
 		}
 
 		List<E> list = new ArrayList<E>(c.size());
@@ -123,7 +125,7 @@ public class ListUtil {
 
 	public static List<String> fromFile(File file) throws IOException {
 		if (!file.exists()) {
-			return new ArrayList<String>();
+			return Collections.emptyList();
 		}
 
 		List<String> list = new ArrayList<String>();
@@ -144,6 +146,34 @@ public class ListUtil {
 
 	public static List<String> fromFile(String fileName) throws IOException {
 		return fromFile(new File(fileName));
+	}
+
+	public static <E> List<E> fromMapKeys(Map<E, ?> map) {
+		if ((map == null) || map.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<E> list = new ArrayList<E>(map.size());
+
+		for (Map.Entry<E, ?> entry : map.entrySet()) {
+			list.add(entry.getKey());
+		}
+
+		return list;
+	}
+
+	public static <E> List<E> fromMapValues(Map<?, E> map) {
+		if ((map == null) || map.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<E> list = new ArrayList<E>(map.size());
+
+		for (Map.Entry<?, E> entry : map.entrySet()) {
+			list.add(entry.getValue());
+		}
+
+		return list;
 	}
 
 	public static List<String> fromString(String s) {
@@ -202,7 +232,7 @@ public class ListUtil {
 
 	public static List<Boolean> toList(boolean[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Boolean>();
+			return Collections.emptyList();
 		}
 
 		List<Boolean> list = new ArrayList<Boolean>(array.length);
@@ -216,7 +246,7 @@ public class ListUtil {
 
 	public static List<Double> toList(double[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Double>();
+			return Collections.emptyList();
 		}
 
 		List<Double> list = new ArrayList<Double>(array.length);
@@ -230,7 +260,7 @@ public class ListUtil {
 
 	public static <E> List<E> toList(E[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<E>();
+			return Collections.emptyList();
 		}
 
 		return new ArrayList<E>(Arrays.asList(array));
@@ -238,7 +268,7 @@ public class ListUtil {
 
 	public static List<Float> toList(float[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Float>();
+			return Collections.emptyList();
 		}
 
 		List<Float> list = new ArrayList<Float>(array.length);
@@ -252,7 +282,7 @@ public class ListUtil {
 
 	public static List<Integer> toList(int[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Integer>();
+			return Collections.emptyList();
 		}
 
 		List<Integer> list = new ArrayList<Integer>(array.length);
@@ -266,7 +296,7 @@ public class ListUtil {
 
 	public static List<Long> toList(long[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Long>();
+			return Collections.emptyList();
 		}
 
 		List<Long> list = new ArrayList<Long>(array.length);
@@ -280,7 +310,7 @@ public class ListUtil {
 
 	public static List<Short> toList(short[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new ArrayList<Short>();
+			return Collections.emptyList();
 		}
 
 		List<Short> list = new ArrayList<Short>(array.length);

@@ -35,7 +35,7 @@ public class PersistedModelLocalServiceRegistryImpl
 	}
 
 	public List<PersistedModelLocalService> getPersistedModelLocalServices() {
-		return ListUtil.fromCollection(_persistedModelLocalServices.values());
+		return ListUtil.fromMapValues(_persistedModelLocalServices);
 	}
 
 	public void register(

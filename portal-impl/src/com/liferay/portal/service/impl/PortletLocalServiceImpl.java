@@ -469,7 +469,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public List<Portlet> getPortlets() {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
-		return ListUtil.fromCollection(portletsPool.values());
+		return ListUtil.fromMapValues(portletsPool);
 	}
 
 	public List<Portlet> getPortlets(long companyId) throws SystemException {
@@ -482,7 +482,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Map<String, Portlet> portletsPool = _getPortletsPool(companyId);
 
-		List<Portlet> portlets = ListUtil.fromCollection(portletsPool.values());
+		List<Portlet> portlets = ListUtil.fromMapValues(portletsPool);
 
 		if (!showSystem || !showPortal) {
 			Iterator<Portlet> itr = portlets.iterator();

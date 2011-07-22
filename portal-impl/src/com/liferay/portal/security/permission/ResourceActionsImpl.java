@@ -217,7 +217,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	public List<String> getModelNames() {
-		return ListUtil.fromCollection(_modelPortletResources.keySet());
+		return ListUtil.fromMapKeys(_modelPortletResources);
 	}
 
 	public List<String> getModelPortletResources(String name) {
@@ -321,7 +321,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	public List<String> getPortletNames() {
-		return ListUtil.fromCollection(_portletModelResources.keySet());
+		return ListUtil.fromMapKeys(_portletModelResources);
 	}
 
 	public List<String> getPortletResourceActions(Portlet portlet) {

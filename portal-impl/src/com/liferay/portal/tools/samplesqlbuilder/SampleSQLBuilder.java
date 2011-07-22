@@ -187,7 +187,7 @@ public class SampleSQLBuilder {
 
 			StringBundler sb = new StringBundler();
 
-			List<String> keys = ListUtil.fromCollection(arguments.keySet());
+			List<String> keys = ListUtil.fromMapKeys(arguments);
 
 			Collections.sort(keys);
 

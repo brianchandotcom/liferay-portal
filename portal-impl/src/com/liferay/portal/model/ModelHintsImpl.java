@@ -365,7 +365,7 @@ public class ModelHintsImpl implements ModelHints {
 				if (!fieldValidators.isEmpty()) {
 					fields.put(
 						fieldName + _VALIDATORS_SUFFIX,
-						ListUtil.fromCollection(fieldValidators.values()));
+						ListUtil.fromMapValues(fieldValidators));
 				}
 			}
 		}

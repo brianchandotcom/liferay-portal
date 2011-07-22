@@ -29,7 +29,7 @@ import java.util.TreeMap;
 public class WorkflowHandlerRegistryImpl implements WorkflowHandlerRegistry {
 
 	public List<WorkflowHandler> getScopeableWorkflowHandlers() {
-		return ListUtil.fromCollection(_scopeableWorkflowHandlerMap.values());
+		return ListUtil.fromMapValues(_scopeableWorkflowHandlerMap);
 	}
 
 	public WorkflowHandler getWorkflowHandler(String className) {
@@ -37,7 +37,7 @@ public class WorkflowHandlerRegistryImpl implements WorkflowHandlerRegistry {
 	}
 
 	public List<WorkflowHandler> getWorkflowHandlers() {
-		return ListUtil.fromCollection(_workflowHandlerMap.values());
+		return ListUtil.fromMapValues(_workflowHandlerMap);
 	}
 
 	public void register(WorkflowHandler workflowHandler) {

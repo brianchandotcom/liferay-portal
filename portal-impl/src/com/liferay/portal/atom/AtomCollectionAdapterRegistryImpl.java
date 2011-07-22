@@ -36,7 +36,7 @@ public class AtomCollectionAdapterRegistryImpl
 	}
 
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapters() {
-		return ListUtil.fromCollection(_atomCollectionAdapters.values());
+		return ListUtil.fromMapValues(_atomCollectionAdapters);
 	}
 
 	public void register(AtomCollectionAdapter<?> atomCollectionAdapter)

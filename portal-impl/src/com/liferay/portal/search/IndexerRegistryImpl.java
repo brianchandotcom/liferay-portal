@@ -32,7 +32,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	public List<Indexer> getIndexers() {
-		return ListUtil.fromCollection(_indexers.values());
+		return ListUtil.fromMapValues(_indexers);
 	}
 
 	public void register(String className, Indexer indexerInstance) {

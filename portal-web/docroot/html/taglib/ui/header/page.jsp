@@ -31,7 +31,6 @@ if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);"
 }
 
 String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : title;
-
 %>
 
 <div class="taglib-header <%= (cssClass != null) ? cssClass : "" %>">

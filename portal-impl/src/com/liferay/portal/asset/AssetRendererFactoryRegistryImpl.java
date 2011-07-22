@@ -40,8 +40,7 @@ public class AssetRendererFactoryRegistryImpl
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {
-		return ListUtil.fromCollection(
-		_assetRenderFactoriesMapByClassName.values());
+		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
 	}
 
 	public long[] getClassNameIds() {

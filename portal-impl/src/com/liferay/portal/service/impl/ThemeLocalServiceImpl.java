@@ -161,8 +161,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	public List<Theme> getThemes(long companyId) {
-		List<Theme> themes = ListUtil.fromCollection(
-			_getThemes(companyId).values());
+		List<Theme> themes = ListUtil.fromMapValues(_getThemes(companyId));
 
 		return ListUtil.sort(themes);
 	}
@@ -193,7 +192,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	public List<Theme> getWARThemes() {
-		List<Theme> themes = ListUtil.fromCollection(_themes.values());
+		List<Theme> themes = ListUtil.fromMapValues(_themes);
 
 		Iterator<Theme> itr = themes.iterator();
 

@@ -246,8 +246,7 @@ public class InputTag extends BaseInputTag {
 			(Map<String, List<ValidatorTag>>)request.getAttribute(
 				"aui:form:validatorTagsMap");
 
-		List<ValidatorTag> validatorTags = ListUtil.fromCollection(
-			_validators.values());
+		List<ValidatorTag> validatorTags = ListUtil.fromMapValues(_validators);
 
 		validatorTagsMap.put(_forLabel, validatorTags);
 	}

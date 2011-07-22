@@ -940,7 +940,7 @@ public class LayoutTypePortletImpl
 		removeModePrintPortletId(portletId);
 	}
 
-	public void removeNestedColumns(String portletId) {
+	public void removeNestedColumns(String portletNamespace) {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
@@ -950,7 +950,7 @@ public class LayoutTypePortletImpl
 
 			String key = entry.getKey();
 
-			if (!key.startsWith(portletId)) {
+			if (!key.startsWith(portletNamespace)) {
 				newTypeSettingsProperties.setProperty(key, entry.getValue());
 			}
 		}
@@ -964,7 +964,7 @@ public class LayoutTypePortletImpl
 				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
 
 		String[] nestedColumnIdsArray = ArrayUtil.removeByPrefix(
-			StringUtil.split(nestedColumnIds), portletId);
+			StringUtil.split(nestedColumnIds), portletNamespace);
 
 		getTypeSettingsProperties().setProperty(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS,
@@ -1636,6 +1636,8 @@ public class LayoutTypePortletImpl
 		}
 
 		if (portlet.getRootPortletId().equals(PortletKeys.NESTED_PORTLETS)) {
+			String portletNamespace = PortalUtil.getPortletNamespace(portletId);
+
 			UnicodeProperties typeSettingsProperties =
 				getTypeSettingsProperties();
 
@@ -1644,7 +1646,7 @@ public class LayoutTypePortletImpl
 
 				String key = entry.getKey();
 
-				if (key.startsWith(portlet.getPortletId())) {
+				if (key.startsWith(portletNamespace)) {
 					String portletIds = entry.getValue();
 
 					String[] portletIdsArray = StringUtil.split(portletIds);
@@ -1655,7 +1657,7 @@ public class LayoutTypePortletImpl
 				}
 			}
 
-			removeNestedColumns(portletId);
+			removeNestedColumns(portletNamespace);
 		}
 
 		if (_enablePortletLayoutListener) {

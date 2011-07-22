@@ -231,6 +231,7 @@ public class HookHotDeployListener
 		"servlet.service.events.pre",
 		"session.phishing.protected.attributes",
 		"session.store.password",
+		"social.bookmark.*",
 		"terms.of.use.required",
 		"theme.css.fast.load",
 		"theme.images.fast.load",

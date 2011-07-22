@@ -108,8 +108,8 @@ public class DiscussionTag extends IncludeTag {
 		request.setAttribute("liferay-ui:discussion:formAction", _formAction);
 		request.setAttribute("liferay-ui:discussion:formName", _formName);
 		request.setAttribute(
-				"liferay-ui:discussion:hideControls",
-				String.valueOf(_hideControls));
+			"liferay-ui:discussion:hideControls",
+			String.valueOf(_hideControls));
 		request.setAttribute(
 			"liferay-ui:discussion:permissionClassName", permissionClassName);
 		request.setAttribute(

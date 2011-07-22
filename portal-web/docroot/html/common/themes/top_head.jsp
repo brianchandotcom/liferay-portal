@@ -26,6 +26,7 @@
 <link href="<%= themeDisplay.getPathThemeImages() %>/<%= PropsValues.THEME_SHORTCUT_ICON %>" rel="Shortcut Icon" />
 
 <%-- Available Translations --%>
+
 <%
 boolean canonical = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("canonical"), false);
 

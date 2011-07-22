@@ -811,7 +811,7 @@ public class PortalImpl implements Portal {
 
 		return actualURL;
 	}
-	
+
 	public String getAlternateURL(
 			HttpServletRequest request, String url, Locale locale)
 		throws PortalException, SystemException {
@@ -962,24 +962,24 @@ public class PortalImpl implements Portal {
 
 		return userId;
 	}
-	
+
 	public String getCanonicalURL(HttpServletRequest request) 
 		throws PortalException, SystemException{
 
 		String canonicalURL = getCurrentCompleteURL(request);
+
+		Enumeration<String> enu = request.getParameterNames();
+
+		while (enu.hasMoreElements()) {
+			String param = enu.nextElement();
 	
-		Enumeration pars = request.getParameterNames();
-	
-		while (pars.hasMoreElements()) {
-			String par = (String) pars.nextElement();
-			if (par.matches("_.*_redirect$")) {
-				canonicalURL = HttpUtil.removeParameter(canonicalURL, par);
+			if (param.matches("_.*_redirect$")) {
+				canonicalURL = HttpUtil.removeParameter(canonicalURL, param);
 			}
 		}
 	
 		return getCanonicalAlternateURL(
 			request, canonicalURL, LocaleUtil.getDefault());
-	
 	}
 	
 	/**
@@ -5050,7 +5050,7 @@ public class PortalImpl implements Portal {
 
 		return filteredPortlets;
 	}
-	
+
 	protected String getCanonicalAlternateURL(
 			HttpServletRequest request, String originalURL, Locale locale)
 		throws PortalException, SystemException {
@@ -5060,7 +5060,7 @@ public class PortalImpl implements Portal {
 	
 		Layout layout = themeDisplay.getLayout();
 	
-		String layoutURL = PortalUtil.getLayoutFriendlyURL(
+		String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
 			layout, themeDisplay, locale);
 	
 		int pos = originalURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
@@ -5075,25 +5075,28 @@ public class PortalImpl implements Portal {
 		else{
 			originalURL = StringPool.BLANK;
 		}
+
+		Group group = layout.getGroup();
 	
-		String friendlyGroupURL = layout.getGroup().getFriendlyURL();
+		String groupFriendlyURL = group.getFriendlyURL();
 	
 		String serverHost = StringPool.BLANK;
 		
-		int posFriendlyGroup = layoutURL.indexOf(friendlyGroupURL);
+		int posFriendlyGroup = layoutFriendlyURL.indexOf(groupFriendlyURL);
 		
 		if (posFriendlyGroup != -1) {
 			serverHost = PortalUtil.getPortalURL(request);
 		}
 		
 		if (layout.isFirstParent() && Validator.isNull(originalURL)) {
-			String absolutGroupFriendlyURL = layoutURL.substring(
-				0,layoutURL.indexOf(layout.getFriendlyURL()));
+			String absolutGroupFriendlyURL = layoutFriendlyURL.substring(
+				0, layoutFriendlyURL.indexOf(layout.getFriendlyURL()));
 			
 			originalURL = serverHost.concat(absolutGroupFriendlyURL);
 		}
 		else{
-			originalURL = serverHost.concat(layoutURL).concat(originalURL);
+			originalURL = serverHost.concat(layoutFriendlyURL).concat(
+				originalURL);
 		}
 	
 		return originalURL;

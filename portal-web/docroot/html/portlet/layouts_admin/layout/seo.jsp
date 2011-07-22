@@ -68,7 +68,6 @@ if (selLayout != null) {
 			<aui:option selected='<%= changeFrequency.equals("never") %>' label="never" />
 		</aui:select>
 	</aui:fieldset>
-
 </c:if>
 
 <aui:fieldset>

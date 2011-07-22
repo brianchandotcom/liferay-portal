@@ -193,7 +193,7 @@ public class PortalUtil {
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
 	}
-	
+
 	public static String getAlternateURL(
 			HttpServletRequest request, String url, Locale locale) 
 		throws PortalException, SystemException{
@@ -247,7 +247,7 @@ public class PortalUtil {
 
 		return getPortal().getBasicAuthUserId(request, companyId);
 	}
-	
+
 	public static String getCanonicalURL(
 			HttpServletRequest request) 
 		throws PortalException, SystemException{

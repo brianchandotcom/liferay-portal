@@ -201,6 +201,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<liferay-ui:header
 				backLabel="<%= parentCategoryName %>"
 				backURL="<%= backURL.toString() %>"
+				localizeTitle="<%= false %>"
 				title="<%= category.getName() %>"
 			/>
 		</c:if>

@@ -139,8 +139,11 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 <%
 String header = LanguageUtil.get(pageContext, "new-document");
 
+boolean localizeTitle = true;
+
 if (fileVersion != null) {
 	header = fileVersion.getTitle();
+	localizeTitle= false;
 }
 else if (dlFileEntryType != null) {
 	header = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName()});
@@ -149,6 +152,7 @@ else if (dlFileEntryType != null) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= localizeTitle %>"
 	title="<%= header %>"
 />
 

@@ -104,6 +104,7 @@ else if (layoutSetPrototype != null) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= title %>"
 />
 

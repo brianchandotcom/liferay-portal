@@ -33,6 +33,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= (passwordPolicy == null) ? true : false %>"
 	title='<%= (passwordPolicy == null) ? "new-password-policy" : passwordPolicy.getName() %>'
 />
 

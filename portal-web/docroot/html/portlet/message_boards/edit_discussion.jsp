@@ -58,6 +58,7 @@ if (message != null) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= (message != null) ? false : true %>"
 	title='<%= (message != null) ? message.getSubject() : "new-message" %>'
 />
 

@@ -65,6 +65,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= productEntry.getName() %>"
 />
 

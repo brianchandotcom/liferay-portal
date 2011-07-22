@@ -150,6 +150,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 			<c:otherwise>
 				<liferay-ui:header
 					backURL="<%= redirect %>"
+					localizeTitle="<%= false %>"
 					title="<%= HtmlUtil.unescape(selResourceDescription) %>"
 				/>
 			</c:otherwise>

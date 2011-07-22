@@ -57,6 +57,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= (productEntry != null) ? false : true %>"
 	title='<%= (productEntry != null) ? productEntry.getName() : "new-product" %>'
 />
 

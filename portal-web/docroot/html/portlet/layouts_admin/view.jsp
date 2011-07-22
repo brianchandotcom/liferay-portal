@@ -23,6 +23,7 @@
 		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
 			<liferay-ui:header
 				backURL="<%= backURL %>"
+				localizeTitle="<%= false %>"
 				title="<%= liveGroup.getDescriptiveName() %>"
 			/>
 		</c:if>

@@ -36,6 +36,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 
 <c:if test="<%= folder != null %>">
 	<liferay-ui:header
+		localizeTitle="<%= false %>"
 		title="<%= entry.getName() %>"
 	/>
 </c:if>

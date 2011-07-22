@@ -75,6 +75,7 @@
 		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 			<liferay-ui:header
 				backURL="<%= backURL %>"
+				localizeTitle="<%= false %>"
 				title="<%= userOrganization.getName() %>"
 			/>
 
@@ -92,6 +93,7 @@
 
 		<liferay-ui:header
 			backURL="<%= backURL %>"
+			localizeTitle="<%= false %>"
 			title="<%= role.getTitle(locale) %>"
 		/>
 
@@ -107,6 +109,7 @@
 
 		<liferay-ui:header
 			backURL="<%= backURL %>"
+			localizeTitle="<%= false %>"
 			title="<%= userGroup.getName() %>"
 		/>
 

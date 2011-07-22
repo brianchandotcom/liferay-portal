@@ -31,6 +31,7 @@ portletURL.setParameter("modelResource", modelResource);
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= modelResourceName %>"
 />
 

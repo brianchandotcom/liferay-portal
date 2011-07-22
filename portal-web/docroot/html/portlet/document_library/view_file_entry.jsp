@@ -137,6 +137,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
 		title="<%= fileEntry.getTitle() %>"
 	/>
 </c:if>

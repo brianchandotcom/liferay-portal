@@ -31,6 +31,7 @@ long licenseId = BeanParamUtil.getLong(license, request, "licenseId");
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= (license != null) ? false : true %>"
 	title='<%= (license != null) ? license.getName() : "new-license" %>'
 />
 

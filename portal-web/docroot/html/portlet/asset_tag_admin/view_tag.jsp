@@ -26,6 +26,7 @@ List<AssetTagProperty> tagProperties = AssetTagPropertyServiceUtil.getTagPropert
 
 <div class="view-tag">
 	<liferay-ui:header
+		localizeTitle="<%= false %>"
 		title="<%= tag.getName() %>"
 	/>
 

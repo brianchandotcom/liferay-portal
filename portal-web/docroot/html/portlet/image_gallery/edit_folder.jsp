@@ -40,6 +40,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", I
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (folder != null) ? false : true %>"
 		title='<%= (folder != null) ? folder.getName() : "new-folder" %>'
 	/>
 

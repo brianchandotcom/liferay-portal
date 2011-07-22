@@ -111,6 +111,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 	<liferay-ui:header
 		backURL="<%= backURL %>"
+		localizeTitle="<%= (event != null) ? false : true %>"
 		title='<%= (event != null) ? event.getTitle() : "new-event" %>'
 	/>
 

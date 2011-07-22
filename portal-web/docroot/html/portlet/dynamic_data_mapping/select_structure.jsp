@@ -24,6 +24,7 @@
 
 	<liferay-ui:header
 		title="<%= scopeStructureName %>"
+		localizeTitle="<%= false %>"
 	/>
 
 	<liferay-ui:search-form

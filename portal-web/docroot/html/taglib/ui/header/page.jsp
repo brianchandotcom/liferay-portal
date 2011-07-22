@@ -29,6 +29,9 @@ else {
 if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
 	backURL = HtmlUtil.escape(HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL)));
 }
+
+String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : title;
+
 %>
 
 <div class="taglib-header <%= (cssClass != null) ? cssClass : "" %>">
@@ -42,10 +45,10 @@ if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);"
 		<span>
 			<c:choose>
 				<c:when test="<%= escapeXml %>">
-					<%= HtmlUtil.escape(LanguageUtil.get(pageContext, title)) %>
+					<%= HtmlUtil.escape(headerTitle) %>
 				</c:when>
 				<c:otherwise>
-					<%= LanguageUtil.get(pageContext, title) %>
+					<%= headerTitle %>
 				</c:otherwise>
 			</c:choose>
 		</span>

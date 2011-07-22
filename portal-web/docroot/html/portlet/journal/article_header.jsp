@@ -40,17 +40,20 @@ if ((article != null) && Validator.isNotNull(toLanguageId)) {
 	redirect = null;
 }
 
+boolean localizeTitle = true;
 String title = "new-web-content";
 
 if (classNameId > 0) {
 	title = "structure-default-values";
 }
 else if (article != null) {
+	localizeTitle = false;
 	title = article.getTitle(locale);
 }
 %>
 
 <liferay-ui:header
 	backURL="<%= article != null ? redirect : backURL %>"
+	localizeTitle="<%= localizeTitle %>"
 	title="<%= title %>"
 />

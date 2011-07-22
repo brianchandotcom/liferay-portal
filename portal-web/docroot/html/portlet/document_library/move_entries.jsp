@@ -97,7 +97,7 @@ else if (!folders.isEmpty()) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= LanguageUtil.get(pageContext, "move-files") %>'
+		title='<%= "move-files" %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />

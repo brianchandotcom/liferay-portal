@@ -61,6 +61,7 @@ if (workflowEnabled) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (folder != null) ? false : true %>"
 		title='<%= (folder != null) ? folder.getName() : "new-folder" %>'
 	/>
 

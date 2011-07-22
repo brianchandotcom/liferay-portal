@@ -23,7 +23,7 @@ WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <liferay-ui:header
-	title='<%= LanguageUtil.get(pageContext, "recent-changes") %>'
+	title='<%= "recent-changes" %>'
 />
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">

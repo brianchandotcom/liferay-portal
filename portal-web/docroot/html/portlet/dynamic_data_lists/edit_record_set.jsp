@@ -49,6 +49,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= (recordSet != null) ? false : true %>"
 	title='<%= (recordSet != null) ? recordSet.getName(locale) : "new-list" %>'
 />
 

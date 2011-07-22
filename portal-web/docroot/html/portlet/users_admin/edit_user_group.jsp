@@ -36,6 +36,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 	<liferay-ui:header
 		backURL="<%= backURL %>"
+		localizeTitle="<%= (userGroup == null) ? true : false %>"
 		title='<%= (userGroup == null) ? "new-user-group" : userGroup.getName() %>'
 	/>
 

@@ -766,7 +766,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLSync",
 	{
-		getDLSyncUpdate: true
+		getDLSyncUpdate: true,
+		getRepositories: true
 	}
 );
 

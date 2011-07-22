@@ -81,5 +81,19 @@ public class DLSyncServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLSyncSoap[] getRepositories()
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Group> returnValue = DLSyncServiceUtil.getRepositories();
+
+			return com.liferay.portlet.documentlibrary.model.DLSyncSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DLSyncServiceSoap.class);
 }

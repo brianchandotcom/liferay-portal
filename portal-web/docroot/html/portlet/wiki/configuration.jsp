@@ -110,7 +110,7 @@ else if (tabs2.equals("page-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-wiki" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
+						[$SITE_NAME$]
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
@@ -184,7 +184,7 @@ else if (tabs2.equals("page-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-wiki" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
+						[$SITE_NAME$]
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />

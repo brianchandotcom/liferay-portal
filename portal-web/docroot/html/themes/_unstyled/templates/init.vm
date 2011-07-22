@@ -191,10 +191,11 @@
 
 	#set ($page_javascript = $typeSettingsProperties.getProperty("javascript"))
 
-	#set ($community_name = $htmlUtil.escape($page_group.getDescriptiveName()))
+	#set ($site_name = $htmlUtil.escape($page_group.getDescriptiveName()))
+	#set ($community_name = $site_name)
 
 	#if	($page_group.getName() == "Guest")
-		#set ($css_class = $css_class + " guest-community")
+		#set ($css_class = $css_class + " guest-site")
 	#end
 
 	#if	($is_signed_in)
@@ -218,16 +219,20 @@
 	$my_places_portlet_url.setParameter("groupId", "$page.getGroupId()")
 	$my_places_portlet_url.setParameter("privateLayout", "false")
 
-	#set ($community_default_public_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	#set ($site_default_public_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	#set ($community_default_public_url = $site_default_public_url )
 
 	$my_places_portlet_url.setParameter("privateLayout", "true")
 
-	#set ($community_default_private_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	#set ($site_default_private_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	#set ($community_default_private_url = $site_default_private_url)
 
-	#set ($community_default_url = $community_default_public_url)
+	#set ($site_default_url = $site_default_public_url)
+	#set ($community_default_url = $site_default_url )
 
 	#if ($layout.isPrivateLayout())
-		#set ($community_default_url = $community_default_private_url)
+		#set ($site_default_url = $site_default_private_url)
+		#set ($community_default_url = $site_default_url)
 	#end
 #end
 

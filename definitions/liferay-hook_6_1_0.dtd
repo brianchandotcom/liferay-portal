@@ -65,10 +65,8 @@ login.events.pre
 logout.events.post
 logout.events.pre
 mail.hook.impl
-my.places.show.community.private.sites.with.no.layouts
-my.places.show.community.public.sites.with.no.layouts
-my.places.show.organization.private.sites.with.no.layouts
-my.places.show.organization.public.sites.with.no.layouts
+my.places.show.private.sites.with.no.layouts
+my.places.show.public.sites.with.no.layouts
 my.places.show.user.private.sites.with.no.layouts
 my.places.show.user.public.sites.with.no.layouts
 passwords.passwordpolicytoolkit.generator

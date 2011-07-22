@@ -39,7 +39,7 @@ public class RolesAdminImpl implements RolesAdmin {
 			cssClassName = "lfr-role-regular";
 		}
 		else if (type == RoleConstants.TYPE_SITE) {
-			cssClassName = "lfr-role-community";
+			cssClassName = "lfr-role-site";
 		}
 		else if (role.isTeam()) {
 			cssClassName = "lfr-role-team";

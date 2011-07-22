@@ -47,14 +47,14 @@ import java.util.Map;
 public class RoleFinderImpl
 	extends BasePersistenceImpl<Role> implements RoleFinder {
 
-	public static String COUNT_BY_COMMUNITY =
-		RoleFinder.class.getName() + ".countByCommunity";
+	public static String COUNT_BY_SITE =
+		RoleFinder.class.getName() + ".countBySite";
 
 	public static String COUNT_BY_ORGANIZATION =
 		RoleFinder.class.getName() + ".countByOrganization";
 
-	public static String COUNT_BY_ORGANIZATION_COMMUNITY =
-		RoleFinder.class.getName() + ".countByOrganizationCommunity";
+	public static String COUNT_BY_ORGANIZATION_SITE =
+		RoleFinder.class.getName() + ".countByOrganizationSite";
 
 	public static String COUNT_BY_USER =
 		RoleFinder.class.getName() + ".countByUser";
@@ -62,8 +62,8 @@ public class RoleFinderImpl
 	public static String COUNT_BY_USER_GROUP =
 		RoleFinder.class.getName() + ".countByUserGroup";
 
-	public static String COUNT_BY_USER_GROUP_COMMUNITY =
-		RoleFinder.class.getName() + ".countByUserGroupCommunity";
+	public static String COUNT_BY_USER_GROUP_SITE =
+		RoleFinder.class.getName() + ".countByUserGroupSite";
 
 	public static String COUNT_BY_U_G_R =
 		RoleFinder.class.getName() + ".countByU_G_R";
@@ -644,17 +644,17 @@ public class RoleFinderImpl
 			StringBundler sb = new StringBundler(13);
 
 			sb.append("(");
-			sb.append(CustomSQLUtil.get(COUNT_BY_COMMUNITY));
+			sb.append(CustomSQLUtil.get(COUNT_BY_SITE));
 			sb.append(") UNION (");
 			sb.append(CustomSQLUtil.get(COUNT_BY_ORGANIZATION));
 			sb.append(") UNION (");
-			sb.append(CustomSQLUtil.get(COUNT_BY_ORGANIZATION_COMMUNITY));
+			sb.append(CustomSQLUtil.get(COUNT_BY_ORGANIZATION_SITE));
 			sb.append(") UNION (");
 			sb.append(CustomSQLUtil.get(COUNT_BY_USER));
 			sb.append(") UNION (");
 			sb.append(CustomSQLUtil.get(COUNT_BY_USER_GROUP));
 			sb.append(") UNION (");
-			sb.append(CustomSQLUtil.get(COUNT_BY_USER_GROUP_COMMUNITY));
+			sb.append(CustomSQLUtil.get(COUNT_BY_USER_GROUP_SITE));
 			sb.append(")");
 
 			_countByR_U = sb.toString();

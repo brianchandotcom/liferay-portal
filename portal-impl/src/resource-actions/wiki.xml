@@ -10,9 +10,9 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults>
+			<site-member-defaults>
 				<action-key>VIEW</action-key>
-			</community-defaults>
+			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
 			</guest-defaults>
@@ -29,7 +29,7 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults />
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -48,7 +48,7 @@
 				<action-key>ADD_NODE</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
-			<community-defaults />
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_NODE</action-key>
@@ -72,12 +72,12 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults>
+			<site-member-defaults>
 				<action-key>ADD_ATTACHMENT</action-key>
 				<action-key>ADD_PAGE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
-			</community-defaults>
+			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
 			</guest-defaults>
@@ -113,12 +113,12 @@
 				<action-key>UPDATE_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults>
+			<site-member-defaults>
 				<action-key>ADD_DISCUSSION</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-			</community-defaults>
+			</site-member-defaults>
 			<guest-defaults>
 				<action-key>ADD_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>

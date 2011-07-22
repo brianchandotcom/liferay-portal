@@ -270,7 +270,7 @@ public class PropsValues {
 
 	public static final int COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE), CookieKeys.MAX_AGE);
 
-	public static final boolean COMPANY_SECURITY_COMMUNITY_LOGO = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_COMMUNITY_LOGO));
+	public static final boolean COMPANY_SECURITY_SITE_LOGO = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_SITE_LOGO));
 
 	public static final boolean COMPANY_SECURITY_SEND_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_SEND_PASSWORD));
 
@@ -898,13 +898,9 @@ public class PropsValues {
 
 	public static final int MY_PLACES_MAX_ELEMENTS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MY_PLACES_MAX_ELEMENTS));
 
-	public static boolean MY_PLACES_SHOW_COMMUNITY_PRIVATE_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_COMMUNITY_PRIVATE_SITES_WITH_NO_LAYOUTS));
+	public static boolean MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS));
 
-	public static boolean MY_PLACES_SHOW_COMMUNITY_PUBLIC_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_COMMUNITY_PUBLIC_SITES_WITH_NO_LAYOUTS));
-
-	public static boolean MY_PLACES_SHOW_ORGANIZATION_PRIVATE_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_ORGANIZATION_PRIVATE_SITES_WITH_NO_LAYOUTS));
-
-	public static boolean MY_PLACES_SHOW_ORGANIZATION_PUBLIC_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_ORGANIZATION_PUBLIC_SITES_WITH_NO_LAYOUTS));
+	public static boolean MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS));
 
 	public static boolean MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS));
 

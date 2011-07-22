@@ -54,11 +54,11 @@ body #banner .logo a {
 	float: left;
 }
 
-.current-community {
+.current-site {
 	display: none;
 }
 
-.logo .current-community {
+.logo .current-site {
 	background: #A6AFBE url(../images/dock/my_places_public.png) no-repeat 15px 50%;
 	color: #FFF;
 	display: block;
@@ -85,11 +85,11 @@ body #banner .logo a {
 	top: 1.4em;
 }
 
-.guest-community .logo .current-community {
+.guest-site .logo .current-site {
 	display: none;
 }
 
-.private-page .logo .current-community {
+.private-page .logo .current-site {
 	background-image: url(../images/dock/my_places_private.png);
 }
 
@@ -338,7 +338,7 @@ body #banner .logo a {
 	box-shadow: 1px 1px 0 #FFF;
 }
 
-.logo .current-community {
+.logo .current-site {
 	-moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;

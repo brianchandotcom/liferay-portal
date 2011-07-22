@@ -212,8 +212,8 @@ public class MembershipRequestLocalServiceImpl
 			if (replierUserId != 0) {
 				notify(
 					membershipRequest.getUserId(), membershipRequest,
-					PropsKeys.COMMUNITIES_EMAIL_MEMBERSHIP_REPLY_SUBJECT,
-					PropsKeys.COMMUNITIES_EMAIL_MEMBERSHIP_REPLY_BODY);
+					PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_SUBJECT,
+					PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY);
 			}
 		}
 		catch (IOException ioe) {
@@ -300,11 +300,11 @@ public class MembershipRequestLocalServiceImpl
 
 		String fromName = PrefsPropsUtil.getString(
 			membershipRequest.getCompanyId(),
-			PropsKeys.COMMUNITIES_EMAIL_FROM_NAME);
+			PropsKeys.SITES_EMAIL_FROM_NAME);
 
 		String fromAddress = PrefsPropsUtil.getString(
 			membershipRequest.getCompanyId(),
-			PropsKeys.COMMUNITIES_EMAIL_FROM_ADDRESS);
+			PropsKeys.SITES_EMAIL_FROM_ADDRESS);
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
@@ -334,7 +334,7 @@ public class MembershipRequestLocalServiceImpl
 		subject = StringUtil.replace(
 			subject,
 			new String[] {
-				"[$COMMUNITY_NAME$]",
+				"[$SITE_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",
@@ -368,7 +368,7 @@ public class MembershipRequestLocalServiceImpl
 			body,
 			new String[] {
 				"[$COMMENTS$]",
-				"[$COMMUNITY_NAME$]",
+				"[$SITE_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",
@@ -420,8 +420,8 @@ public class MembershipRequestLocalServiceImpl
 		for (Long userId : userIds) {
 			notify(
 				userId, membershipRequest,
-				PropsKeys.COMMUNITIES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT,
-				PropsKeys.COMMUNITIES_EMAIL_MEMBERSHIP_REQUEST_BODY);
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT,
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY);
 		}
 	}
 

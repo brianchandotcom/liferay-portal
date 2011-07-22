@@ -226,7 +226,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subject = StringUtil.replace(
 			subject,
 			new String[] {
-				"[$COMMUNITY_NAME$]",
+				"[$SITE_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",
@@ -273,7 +273,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		body = StringUtil.replace(
 			body,
 			new String[] {
-				"[$COMMUNITY_NAME$]",
+				"[$SITE_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",

@@ -26,7 +26,7 @@ String timeZoneId = ParamUtil.getString(request, "timeZoneId", user2.getTimeZone
 String languageId = ParamUtil.getString(request, "languageId", user2.getLanguageId());
 String availableLocales = StringUtil.merge(languageIds);
 
-boolean companySecurityCommunityLogo = company.isCommunityLogo();
+boolean companySecurityCommunityLogo = company.isSiteLogo();
 boolean deleteLogo = ParamUtil.getBoolean(request, "deleteLogo");
 
 String defaultRegularThemeId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_REGULAR_THEME_ID, PropsValues.DEFAULT_REGULAR_THEME_ID);
@@ -61,7 +61,7 @@ String defaultControlPanelThemeId = PrefsPropsUtil.getString(company.getCompanyI
 <h3><liferay-ui:message key="logo" /></h3>
 
 <aui:fieldset>
-	<aui:input inlineLabel="left" label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_COMMUNITY_LOGO + "--" %>' type="checkbox" value="<%= companySecurityCommunityLogo %>" />
+	<aui:input inlineLabel="left" label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>' type="checkbox" value="<%= companySecurityCommunityLogo %>" />
 
 	<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editCompanyLogoURL">
 		<portlet:param name="struts_action" value="/portal_settings/edit_company_logo" />

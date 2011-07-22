@@ -138,7 +138,7 @@ else if (tabs2.equals("message-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
+						[$SITE_NAME$]
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
@@ -224,7 +224,7 @@ else if (tabs2.equals("message-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
+						[$SITE_NAME$]
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />

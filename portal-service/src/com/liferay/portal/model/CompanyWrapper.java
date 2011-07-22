@@ -412,9 +412,9 @@ public class CompanyWrapper implements Company {
 		return _company.isAutoLogin();
 	}
 
-	public boolean isCommunityLogo()
+	public boolean isSiteLogo()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _company.isCommunityLogo();
+		return _company.isSiteLogo();
 	}
 
 	public boolean isSendPassword()

@@ -972,7 +972,7 @@
 				(ResourcePermission.scope = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByCommunity">
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countBySite">
 		<![CDATA[
 			SELECT
 				DISTINCT Groups_Roles.roleId
@@ -1003,7 +1003,7 @@
 				(Users_Orgs.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganizationCommunity">
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganizationSite">
 		<![CDATA[
 			SELECT
 				DISTINCT Groups_Roles.roleId
@@ -1048,7 +1048,7 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupCommunity">
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupSite">
 		<![CDATA[
 			SELECT
 				DISTINCT Groups_Roles.roleId

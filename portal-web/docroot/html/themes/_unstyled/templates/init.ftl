@@ -194,10 +194,11 @@
 		<#assign page_javascript = typeSettingsProperties["javascript"]! />
 	</#if>
 
-	<#assign community_name = htmlUtil.escape(page_group.getDescriptiveName()) />
+	<#assign site_name = htmlUtil.escape(page_group.getDescriptiveName()) />
+	<#assign community_name =  site_name/>
 
 	<#if page_group.getName() = "Guest">
-		<#assign css_class = css_class + " guest-community" />
+		<#assign css_class = css_class + " guest-site" />
 	</#if>
 
 	<#if is_signed_in>
@@ -221,16 +222,20 @@
 	${my_places_portlet_url.setParameter("groupId", "${page.getGroupId()}")}
 	${my_places_portlet_url.setParameter("privateLayout", "false")}
 
-	<#assign community_default_public_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	<#assign site_default_public_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	<#assign community_default_public_url = site_default_public_url />
 
 	${my_places_portlet_url.setParameter("privateLayout", "true")}
 
-	<#assign community_default_private_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	<#assign site_default_private_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	<#assign community_default_private_url = site_default_private_url />
 
-	<#assign community_default_url = community_default_public_url />
+	<#assign site_default_url = community_default_public_url />
+	<#assign community_default_url = site_default_url />
 
 	<#if layout.isPrivateLayout()>
-		<#assign community_default_url = community_default_private_url />
+		<#assign site_default_url = site_default_private_url />
+		<#assign community_default_url = site_default_url />
 	</#if>
 </#if>
 

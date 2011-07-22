@@ -345,17 +345,17 @@ public interface PropsKeys {
 
 	public static final String COMMUNITIES_CONTROL_PANEL_MEMBERS_VISIBLE = "communities.control.panel.members.visible";
 
-	public static final String COMMUNITIES_EMAIL_FROM_ADDRESS = "communities.email.from.address";
+	public static final String SITES_EMAIL_FROM_ADDRESS = "sites.email.from.address";
 
-	public static final String COMMUNITIES_EMAIL_FROM_NAME = "communities.email.from.name";
+	public static final String SITES_EMAIL_FROM_NAME = "sites.email.from.name";
 
-	public static final String COMMUNITIES_EMAIL_MEMBERSHIP_REPLY_BODY = "communities.email.membership.reply.body";
+	public static final String SITES_EMAIL_MEMBERSHIP_REPLY_BODY = "sites.email.membership.reply.body";
 
-	public static final String COMMUNITIES_EMAIL_MEMBERSHIP_REPLY_SUBJECT = "communities.email.membership.reply.subject";
+	public static final String SITES_EMAIL_MEMBERSHIP_REPLY_SUBJECT = "sites.email.membership.reply.subject";
 
-	public static final String COMMUNITIES_EMAIL_MEMBERSHIP_REQUEST_BODY = "communities.email.membership.request.body";
+	public static final String SITES_EMAIL_MEMBERSHIP_REQUEST_BODY = "sites.email.membership.request.body";
 
-	public static final String COMMUNITIES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT = "communities.email.membership.request.subject";
+	public static final String SITES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT = "sites.email.membership.request.subject";
 
 	public static final String COMPANY_DEFAULT_HOME_URL = "company.default.home.url";
 
@@ -375,7 +375,7 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE = "company.security.auto.login.max.age";
 
-	public static final String COMPANY_SECURITY_COMMUNITY_LOGO = "company.security.community.logo";
+	public static final String COMPANY_SECURITY_SITE_LOGO = "company.security.site.logo";
 
 	public static final String COMPANY_SECURITY_SEND_PASSWORD = "company.security.send.password";
 
@@ -1337,13 +1337,9 @@ public interface PropsKeys {
 
 	public static final String MY_PLACES_MAX_ELEMENTS = "my.places.max.elements";
 
-	public static final String MY_PLACES_SHOW_COMMUNITY_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.community.private.sites.with.no.layouts";
+	public static final String MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.community.private.sites.with.no.layouts";
 
-	public static final String MY_PLACES_SHOW_COMMUNITY_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.places.show.community.public.sites.with.no.layouts";
-
-	public static final String MY_PLACES_SHOW_ORGANIZATION_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.organization.private.sites.with.no.layouts";
-
-	public static final String MY_PLACES_SHOW_ORGANIZATION_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.places.show.organization.public.sites.with.no.layouts";
+	public static final String MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.places.show.community.public.sites.with.no.layouts";
 
 	public static final String MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.user.private.sites.with.no.layouts";
 

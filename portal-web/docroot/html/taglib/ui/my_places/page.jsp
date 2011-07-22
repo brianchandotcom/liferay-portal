@@ -16,7 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
 
 <%
@@ -31,7 +30,6 @@ List<Group> myPlaces = user.getMyPlaces(max);
 
 <c:if test="<%= !myPlaces.isEmpty() %>">
 	<ul class="taglib-my-places">
-
 		<%
 		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.MY_PLACES, plid, PortletRequest.ACTION_PHASE);
 
@@ -43,7 +41,6 @@ List<Group> myPlaces = user.getMyPlaces(max);
 		for (Group myPlace : myPlaces) {
 			myPlace = myPlace.toEscapedModel();
 
-			boolean organizationSite = myPlace.isOrganization();
 			boolean regularSite = myPlace.isRegularSite();
 			boolean userSite = myPlace.isUser();
 			int publicLayoutsPageCount = myPlace.getPublicLayoutsPageCount();
@@ -54,28 +51,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 			String publicAddPageHREF = null;
 			String privateAddPageHREF = null;
 
-			if (organizationSite) {
-				organization = OrganizationLocalServiceUtil.getOrganization(myPlace.getOrganizationId());
-
-				if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.MANAGE_LAYOUTS)) {
-					PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_PLACES, plid, PortletRequest.ACTION_PHASE);
-
-					addPageURL.setWindowState(WindowState.NORMAL);
-					addPageURL.setPortletMode(PortletMode.VIEW);
-
-					addPageURL.setParameter("struts_action", "/my_places/edit_layouts");
-					addPageURL.setParameter("redirect", currentURL);
-					addPageURL.setParameter("groupId", String.valueOf(myPlace.getGroupId()));
-					addPageURL.setParameter("privateLayout", Boolean.FALSE.toString());
-
-					publicAddPageHREF = addPageURL.toString();
-
-					addPageURL.setParameter("privateLayout", Boolean.TRUE.toString());
-
-					privateAddPageHREF = addPageURL.toString();
-				}
-			}
-			else if (regularSite) {
+			if (regularSite) {
 				if (PortalPermissionUtil.contains(permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 					privateAddPageHREF = themeDisplay.getURLControlPanel();
 				}
@@ -138,11 +114,8 @@ List<Group> myPlaces = user.getMyPlaces(max);
 			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER, true);
 
 			if (publicLayoutsPageCount == 0) {
-				if (organizationSite) {
-					showPublicPlace = PropsValues.MY_PLACES_SHOW_ORGANIZATION_PUBLIC_SITES_WITH_NO_LAYOUTS;
-				}
-				else if (regularSite) {
-					showPublicPlace = PropsValues.MY_PLACES_SHOW_COMMUNITY_PUBLIC_SITES_WITH_NO_LAYOUTS;
+				if (regularSite) {
+					showPublicPlace = PropsValues.MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
 				}
 				else if (userSite) {
 					showPublicPlace = PropsValues.MY_PLACES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
@@ -156,11 +129,8 @@ List<Group> myPlaces = user.getMyPlaces(max);
 			boolean showPrivatePlace = true;
 
 			if (privateLayoutsPageCount == 0) {
-				if (organizationSite) {
-					showPrivatePlace = PropsValues.MY_PLACES_SHOW_ORGANIZATION_PRIVATE_SITES_WITH_NO_LAYOUTS;
-				}
-				else if (regularSite) {
-					showPrivatePlace = PropsValues.MY_PLACES_SHOW_COMMUNITY_PRIVATE_SITES_WITH_NO_LAYOUTS;
+				if (regularSite) {
+					showPrivatePlace = PropsValues.MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
 				}
 				else if (userSite) {
 					showPrivatePlace = PropsValues.MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
@@ -208,7 +178,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 							}
 						}
 
-						String cssClass = "public-community";
+						String cssClass = "public-site";
 
 						if (firstSite) {
 							cssClass += " first";
@@ -219,7 +189,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 						}
 
 						if (selectedSite) {
-							cssClass += " current-community";
+							cssClass += " current-site";
 						}
 
 						if (selectedPlace) {
@@ -234,10 +204,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 									<%
 									String siteName = StringPool.BLANK;
 
-									if (organizationSite) {
-										siteName = HtmlUtil.escape(organization.getName());
-									}
-									else if (userSite) {
+									if (userSite) {
 										siteName = LanguageUtil.get(pageContext, "my-public-pages");
 									}
 									else if (myPlace.getName().equals(GroupConstants.GUEST)) {
@@ -266,14 +233,14 @@ List<Group> myPlaces = user.getMyPlaces(max);
 							selectedPlace = layout.isPrivateLayout() && (layout.getGroupId() == myPlace.getGroupId());
 						}
 
-						cssClass = "private-community";
+						cssClass = "private-site";
 
 						if (myPlace.isControlPanel()) {
 							cssClass += " control-panel";
 						}
 
 						if (selectedSite) {
-							cssClass += " current-community";
+							cssClass += " current-site";
 						}
 
 						if (selectedPlace) {
@@ -288,10 +255,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 									<%
 									String siteName = StringPool.BLANK;
 
-									if (organizationSite) {
-										siteName = HtmlUtil.escape(organization.getName());
-									}
-									else if (userSite) {
+									if (userSite) {
 										siteName = LanguageUtil.get(pageContext, "my-private-pages");
 									}
 									else if (myPlace.getName().equals(GroupConstants.GUEST)) {
@@ -323,13 +287,10 @@ List<Group> myPlaces = user.getMyPlaces(max);
 						}
 						%>
 
-						<li class="<%= selectedSite ? "current-community" : "" %>">
+						<li class="<%= selectedSite ? "current-site" : "" %>">
 							<h3>
 								<a href="javascript:;">
 									<c:choose>
-										<c:when test="<%= organizationSite %>">
-											<%= HtmlUtil.escape(organization.getName()) %>
-										</c:when>
 										<c:when test="<%= userSite %>">
 											<liferay-ui:message key="my-site" />
 										</c:when>
@@ -358,7 +319,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 										<a href="<%= publicLayoutsPageCount > 0 ? HtmlUtil.escape(portletURL.toString()) : "javascript:;" %>"
 
 										<c:if test="<%= userSite %>">
-											id="my-community-public-pages"
+											id="my-site-public-pages"
 										</c:if>
 
 										<c:if test="<%= publicLayoutsPageCount > 0 %>">
@@ -389,7 +350,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 										<a href="<%= privateLayoutsPageCount > 0 ? HtmlUtil.escape(portletURL.toString()) : "javascript:;" %>"
 
 										<c:if test="<%= userSite %>">
-											id="my-community-private-pages"
+											id="my-site-private-pages"
 										</c:if>
 
 										<c:if test="<%= privateLayoutsPageCount > 0 %>">

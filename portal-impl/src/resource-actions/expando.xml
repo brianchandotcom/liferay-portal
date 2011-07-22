@@ -11,7 +11,7 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults />
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -32,7 +32,7 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults />
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>

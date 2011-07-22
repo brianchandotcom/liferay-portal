@@ -1299,7 +1299,7 @@ public class ServicePreAction extends Action {
 		if (layout != null) {
 			layoutSet = layout.getLayoutSet();
 
-			if (company.isCommunityLogo()) {
+			if (company.isSiteLogo()) {
 				long logoId = 0;
 
 				if (layoutSet.isLogo()) {

@@ -180,15 +180,15 @@ public class EditCompanyAction extends PortletAction {
 		CompanyServiceUtil.updateDisplay(
 			company.getCompanyId(), languageId, timeZoneId);
 
-		boolean communityLogo = ParamUtil.getBoolean(
+		boolean siteLogo = ParamUtil.getBoolean(
 			actionRequest,
-			"settings--" + PropsKeys.COMPANY_SECURITY_COMMUNITY_LOGO + "--");
+			"settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--");
 
 		CompanyServiceUtil.updateSecurity(
 			company.getCompanyId(), company.getAuthType(),
 			company.isAutoLogin(), company.isSendPassword(),
 			company.isStrangers(), company.isStrangersWithMx(),
-			company.isStrangersVerify(), communityLogo);
+			company.isStrangersVerify(), siteLogo);
 
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeBlogs;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeComunnityProperties;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeGroup;
@@ -68,6 +69,7 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeResourcePermission.class);
 		upgrade(UpgradeScheduler.class);
 		upgrade(UpgradeScopes.class);
+		upgrade(UpgradeComunnityProperties.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeUserName.class);
 		upgrade(UpgradeVirtualHost.class);

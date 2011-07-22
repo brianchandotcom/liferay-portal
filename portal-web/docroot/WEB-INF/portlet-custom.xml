@@ -221,7 +221,7 @@
 				<value>Jedi Master=250</value>
 				<value>Jedi Council Member=500</value>
 				<value>Yoda=1000</value>
-				<value>Moderator=community-role:Message Boards Administrator</value>
+				<value>Moderator=site-role:Message Boards Administrator</value>
 				<value>Moderator=organization:Message Boards Administrator</value>
 				<value>Moderator=organization-role:Message Boards Administrator</value>
 				<value>Moderator=regular-role:Message Boards Administrator</value>

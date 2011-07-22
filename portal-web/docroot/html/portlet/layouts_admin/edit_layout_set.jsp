@@ -52,7 +52,7 @@ else {
 
 String[] mainSections = PropsValues.LAYOUT_SET_FORM_UPDATE;
 
-if (!company.isCommunityLogo()) {
+if (!company.isSiteLogo()) {
 	mainSections = ArrayUtil.remove(mainSections, "logo");
 }
 

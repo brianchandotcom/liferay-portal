@@ -130,7 +130,7 @@ public interface CompanyService {
 
 	public void updateSecurity(long companyId, java.lang.String authType,
 		boolean autoLogin, boolean sendPassword, boolean strangers,
-		boolean strangersWithMx, boolean strangersVerify, boolean communityLogo)
+		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

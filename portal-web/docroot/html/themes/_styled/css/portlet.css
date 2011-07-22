@@ -461,7 +461,7 @@ body.portlet {
 		background-image: url(../images/common/user_icon.png);
 	}
 
-	&.lfr-role-community .col-1 {
+	&.lfr-role-site .col-1 {
 		background-image: url(../images/common/site_icon.png);
 	}
 

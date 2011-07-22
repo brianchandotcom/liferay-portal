@@ -11,9 +11,9 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults>
+			<site-member-defaults>
 				<action-key>VIEW</action-key>
-			</community-defaults>
+			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
 			</guest-defaults>
@@ -34,7 +34,7 @@
 				<action-key>EXPORT_ALL_EVENTS</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
-			<community-defaults />
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_EVENT</action-key>
@@ -57,10 +57,10 @@
 				<action-key>UPDATE_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<community-defaults>
+			<site-member-defaults>
 				<action-key>ADD_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>
-			</community-defaults>
+			</site-member-defaults>
 			<guest-defaults>
 				<action-key>ADD_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>

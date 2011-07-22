@@ -195,7 +195,7 @@ public class SubscriptionSender implements Serializable {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			setContextAttribute(
-				"[$COMMUNITY_NAME$]", group.getDescriptiveName());
+				"[$SITE_NAME$]", group.getDescriptiveName());
 		}
 
 		if ((userId > 0) && Validator.isNotNull(_contextUserPrefix)) {

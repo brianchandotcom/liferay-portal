@@ -209,7 +209,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	public void updateSecurity(
 			long companyId, String authType, boolean autoLogin,
 			boolean sendPassword, boolean strangers, boolean strangersWithMx,
-			boolean strangersVerify, boolean communityLogo)
+			boolean strangersVerify, boolean siteLogo)
 		throws PortalException, SystemException {
 
 		if (!roleLocalService.hasUserRole(
@@ -220,7 +220,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 		companyLocalService.updateSecurity(
 			companyId, authType, autoLogin, sendPassword, strangers,
-			strangersWithMx, strangersVerify, communityLogo);
+			strangersWithMx, strangersVerify, siteLogo);
 	}
 
 }

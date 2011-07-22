@@ -875,7 +875,19 @@ public class ResourceActionsImpl implements ResourceActions {
 			getActions(actionsMap, name));
 
 		Element groupDefaultsElement = getPermissionsChildElement(
-			parentElement, "community-defaults");
+			parentElement, "site-member-defaults");
+
+		if (groupDefaultsElement == null) {
+			groupDefaultsElement = getPermissionsChildElement(
+				parentElement, "community-defaults");
+
+			if (_log.isWarnEnabled() && groupDefaultsElement != null) {
+				_log.warn(
+					"The use of the element community-defaults is " +
+						"deprecated and will be deleted in future versions" +
+							". Use the site-defaults element instead.");
+			}
+		}
 
 		groupDefaultActions.addAll(readActionKeys(groupDefaultsElement));
 

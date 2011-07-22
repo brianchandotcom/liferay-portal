@@ -28,7 +28,7 @@ The portlet-name element is the name of the portlet.
 The permissions define the default permissions granted and unsupported to
 community members, guests users, and layout managers.
 -->
-<!ELEMENT permissions (supports, community-defaults?, guest-defaults?,
+<!ELEMENT permissions (supports, (community-defaults|site-member-defaults)?, guest-defaults?,
 guest-unsupported?, layout-manager?, owner-defaults?) >
 
 <!--
@@ -46,9 +46,17 @@ is "VIEW", then the key in Language.properties will be "action.VIEW".
 
 <!--
 The community-defaults element specifies the actions that community members are
+permitted to perform by default. This element is deprecated and will be deleted
+in future versions. Use site-member-defaults instead
+-->
+
+<!ELEMENT community-defaults (action-key*) >
+
+<!--
+The site-defaults element specifies the actions that site members are
 permitted to perform by default.
 -->
-<!ELEMENT community-defaults (action-key*) >
+<!ELEMENT site-member-defaults (action-key*) >
 
 <!--
 The guest-defaults element specifies the actions that guest users are permitted

@@ -375,6 +375,10 @@ public class IncludeTag extends AttributesTagSupport {
 	protected void setAttributes(HttpServletRequest request) {
 	}
 
+	protected void setCalledSetAttributes(boolean calledSetAttributes) {
+		_calledSetAttributes = calledSetAttributes;
+	}
+
 	protected boolean themeResourceExists(String page)
 		throws Exception {
 

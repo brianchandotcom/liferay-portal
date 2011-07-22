@@ -6,17 +6,14 @@
 			INNER JOIN
 				(
 					SELECT
-						primKey
+						scope, primKey, roleId
 					FROM
 						ResourcePermission
 					WHERE
 						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 						(ResourcePermission.name = '[$CLASS_NAME$]') AND
 						(
-							(
-								[$ROLE_IDS$] AND
-								(MOD(ResourcePermission.actionIds, 2) = 1)
-							)
+							(MOD(ResourcePermission.actionIds, 2) = 1)
 							OR [$OWNER_CHECK$]
 						)
 				)

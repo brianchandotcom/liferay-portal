@@ -219,45 +219,51 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		long[] roleIds = getRoleIds(groupIds);
-
-		StringBundler roleIdsSQL = new StringBundler();
-
-		if (roleIds.length == 0) {
-			roleIds = _NO_ROLE_IDS;
-		}
-
-		for (int i = 0; i < roleIds.length; i++) {
-			if (i == 0) {
-				roleIdsSQL.append("(");
-			}
-			else if (i > 0) {
-				roleIdsSQL.append(" OR ");
-			}
-
-			roleIdsSQL.append("ResourcePermission.roleId = ");
-			roleIdsSQL.append(roleIds[i]);
-
-			if (i == (roleIds.length - 1)) {
-				roleIdsSQL.append(")");
-			}
-		}
-
 		StringBundler primKeysSQL = new StringBundler();
 
-		primKeysSQL.append("(RP.primKey = CAST_TEXT(");
+		primKeysSQL.append("(RP.scope = 4 AND RP.primKey = CAST_TEXT(");
 		primKeysSQL.append(classPKField);
-		primKeysSQL.append(")");
+		primKeysSQL.append(") AND (");
 
-		if (groupIds.length > 1) {
-			for (long groupId : groupIds) {
-				primKeysSQL.append(" OR RP.primKey = '");
-				primKeysSQL.append(groupId);
-				primKeysSQL.append("'");
+		for (int j = 0; j < groupIds.length; j++) {
+			long groupId = groupIds[j];
+
+			if (!permissionChecker.hasPermission(
+					groupId, className, 0, ActionKeys.VIEW)) {
+
+				if (j > 0) {
+					primKeysSQL.append(" OR ");
+				}
+
+				primKeysSQL.append("(");
+
+				long[] roleIds = getRoleIds(groupId);
+
+				if (roleIds.length == 0) {
+					roleIds = _NO_ROLE_IDS;
+				}
+
+				for (int i = 0; i < roleIds.length; i++) {
+					if (i > 0) {
+						primKeysSQL.append(" OR ");
+					}
+
+					primKeysSQL.append("RP.roleId = ");
+					primKeysSQL.append(roleIds[i]);
+				}
+
+				primKeysSQL.append(") AND ");
 			}
+
+			primKeysSQL.append("(");
+			primKeysSQL.append(
+				classPKField.substring(0, classPKField.lastIndexOf('.')));
+			primKeysSQL.append(".groupId = ");
+			primKeysSQL.append(groupId);
+			primKeysSQL.append(")");
 		}
 
-		primKeysSQL.append(")");
+		primKeysSQL.append("))");
 
 		permissionJoin = StringUtil.replace(
 			permissionJoin,
@@ -265,15 +271,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				"[$CLASS_NAME$]",
 				"[$COMPANY_ID$]",
 				"OR [$OWNER_CHECK$]",
-				"[$PRIM_KEYS$]",
-				"[$ROLE_IDS$]"
+				"[$PRIM_KEYS$]"
 			},
 			new String[] {
 				className,
 				String.valueOf(permissionChecker.getCompanyId()),
 				ownerSQL.toString(),
-				primKeysSQL.toString(),
-				roleIdsSQL.toString()
+				primKeysSQL.toString()
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

@@ -76,12 +76,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				return false;
+			if (isEnabled(groupId)) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	public String replacePermissionCheck(

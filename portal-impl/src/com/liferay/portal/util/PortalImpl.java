@@ -812,6 +812,13 @@ public class PortalImpl implements Portal {
 		return actualURL;
 	}
 
+	public String getAlternateURL(
+			HttpServletRequest request, String url, Locale locale)
+		throws PortalException, SystemException {
+	
+		return getCanonicalAlternateURL(request, url, locale);
+	}
+
 	public Set<String> getAuthTokenIgnoreActions() {
 		return _authTokenIgnoreActions;
 	}
@@ -956,6 +963,25 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
+	public String getCanonicalURL(HttpServletRequest request) 
+		throws PortalException, SystemException{
+
+		String canonicalURL = getCurrentCompleteURL(request);
+
+		Enumeration<String> enu = request.getParameterNames();
+
+		while (enu.hasMoreElements()) {
+			String param = enu.nextElement();
+	
+			if (param.matches("_.*_redirect$")) {
+				canonicalURL = HttpUtil.removeParameter(canonicalURL, param);
+			}
+		}
+	
+		return getCanonicalAlternateURL(
+			request, canonicalURL, LocaleUtil.getDefault());
+	}
+	
 	/**
 	 * @deprecated {@link #getCDNHost(boolean)}
 	 */
@@ -5023,6 +5049,57 @@ public class PortalImpl implements Portal {
 		}
 
 		return filteredPortlets;
+	}
+
+	protected String getCanonicalAlternateURL(
+			HttpServletRequest request, String originalURL, Locale locale)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	
+		Layout layout = themeDisplay.getLayout();
+	
+		String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
+			layout, themeDisplay, locale);
+	
+		int pos = originalURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+	
+		if (pos == -1) {
+			pos = originalURL.indexOf(StringPool.QUESTION);
+		}
+		
+		if (pos != -1) {
+			originalURL = originalURL.substring(pos);
+		}
+		else{
+			originalURL = StringPool.BLANK;
+		}
+
+		Group group = layout.getGroup();
+	
+		String groupFriendlyURL = group.getFriendlyURL();
+	
+		String serverHost = StringPool.BLANK;
+		
+		int posFriendlyGroup = layoutFriendlyURL.indexOf(groupFriendlyURL);
+		
+		if (posFriendlyGroup != -1) {
+			serverHost = PortalUtil.getPortalURL(request);
+		}
+		
+		if (layout.isFirstParent() && Validator.isNull(originalURL)) {
+			String absolutGroupFriendlyURL = layoutFriendlyURL.substring(
+				0, layoutFriendlyURL.indexOf(layout.getFriendlyURL()));
+			
+			originalURL = serverHost.concat(absolutGroupFriendlyURL);
+		}
+		else{
+			originalURL = serverHost.concat(layoutFriendlyURL).concat(
+				originalURL);
+		}
+	
+		return originalURL;
 	}
 
 	protected long getDefaultScopeGroupId(long companyId)

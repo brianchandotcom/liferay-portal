@@ -240,6 +240,22 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
+	 * Returns the alternate URL of a page, to distinguish it from it canonical
+	 * 
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant 
+	 * @param   url the canonical URL previously obtained
+	 * @param   locale the locale of the translated page
+	 * @return  the alternate URL
+	 * @throws  PortalException if a friendly url or the group cannot be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
+	public String getAlternateURL(
+			HttpServletRequest request, String url, Locale locale) 
+		throws PortalException, SystemException;
+	
+	/**
 	 * Returns the set of struts actions that should not be checked for an
 	 * authentication token.
 	 *
@@ -328,6 +344,20 @@ public interface Portal {
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the canonical URL of a page, to distinguish it among its
+	 * translations
+	 * 
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant 
+	 * @return  the canonical URL
+	 * @throws  PortalException if a friendly url or the group cannot be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
+	public String getCanonicalURL(HttpServletRequest request) 
+		throws PortalException, SystemException;
+	
 	/**
 	 * @deprecated Replaced by the more general {@link #getCDNHost(boolean)}
 	 */

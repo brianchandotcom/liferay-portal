@@ -205,6 +205,16 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</copy>
 
 		<if>
+			<and>
+				<equals arg1="${use.tomcat.bundled.juli}" arg2="true" />
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</and>
+			<then>
+				<delete file="${app.server.lib.portal.dir}/tomcat-juli.jar" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
 				<loadfile property="domain.xml.content" srcfile="${app.server.glassfish.instance.dir}/config/domain.xml" />

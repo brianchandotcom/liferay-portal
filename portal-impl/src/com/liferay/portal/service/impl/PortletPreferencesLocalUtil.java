@@ -16,10 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.BasePreferencesImpl;
 
 import java.io.Serializable;
@@ -42,7 +38,7 @@ public class PortletPreferencesLocalUtil {
 	}
 
 	protected static void clearPreferencesPool(long ownerId, int ownerType) {
-		Serializable key = _encodeKey(ownerId, ownerType);
+		Serializable key = new PreferencesPoolKey(ownerId, ownerType);
 
 		_portalCache.remove(key);
 	}
@@ -50,7 +46,7 @@ public class PortletPreferencesLocalUtil {
 	protected static Map<String, BasePreferencesImpl> getPreferencesPool(
 		long ownerId, int ownerType) {
 
-		Serializable key = _encodeKey(ownerId, ownerType);
+		Serializable key = new PreferencesPoolKey(ownerId, ownerType);
 
 		Map<String, BasePreferencesImpl> preferencesPool =
 			(Map<String, BasePreferencesImpl>)_portalCache.get(key);
@@ -64,16 +60,37 @@ public class PortletPreferencesLocalUtil {
 		return preferencesPool;
 	}
 
-	private static Serializable _encodeKey(long ownerId, int ownerType) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				CACHE_NAME);
+	private static class PreferencesPoolKey implements Serializable {
 
-		cacheKeyGenerator.append(StringUtil.toHexString(ownerId));
-		cacheKeyGenerator.append(StringPool.POUND);
-		cacheKeyGenerator.append(StringUtil.toHexString(ownerType));
+		public PreferencesPoolKey(long ownerId, int ownerType) {
+			_ownerId = ownerId;
+			_ownerType = ownerType;
+		}
 
-		return cacheKeyGenerator.finish();
+		public boolean equals(Object obj) {
+			// No need to test null or instanceof, since this is a private
+			// class, we can ensure to use it right.
+
+			PreferencesPoolKey preferencesPoolKey = (PreferencesPoolKey)obj;
+
+			if ((preferencesPoolKey._ownerId == _ownerId) &&
+				(preferencesPoolKey._ownerType == _ownerType)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public int hashCode() {
+			return (int)(_ownerId * 11 + _ownerType);
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _ownerId;
+		private final int _ownerType;
+
 	}
 
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(

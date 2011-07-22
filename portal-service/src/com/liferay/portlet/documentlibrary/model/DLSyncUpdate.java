@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.json.JSON;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Michael Young
  */
+@JSON
 public class DLSyncUpdate {
 
 	public DLSyncUpdate(List<DLSync> dlSyncs, Date lastAccessDate) {
@@ -27,6 +30,7 @@ public class DLSyncUpdate {
 		_lastAccessDate = lastAccessDate;
 	}
 
+	@JSON
 	public List<DLSync> getDLSyncs() {
 		return _dlSyncs;
 	}

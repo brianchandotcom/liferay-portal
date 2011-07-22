@@ -3028,6 +3028,28 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/tomcat-jdbc.jar</file-name>
+		<version>1.1.0.1</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/tomcat-juli.jar</file-name>
+		<version>7.0.19</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/truezip.jar</file-name>
 		<version>6.7 RC1</version>
 		<project-name>TrueZIP</project-name>

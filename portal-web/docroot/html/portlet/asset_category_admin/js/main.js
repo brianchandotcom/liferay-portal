@@ -369,6 +369,12 @@ AUI().add(
 										instance._vocabularyFormAdd.reset();
 									}
 
+									var autoFields = A.one('#extraFields').getData('autofieldsInstance');
+
+									if (autoFields) {
+										autoFields.reset();
+									}
+
 									instance._hideFloatingPanels(event);
 								}
 							}

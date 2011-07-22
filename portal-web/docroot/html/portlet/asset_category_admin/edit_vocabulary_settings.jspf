@@ -134,6 +134,8 @@ if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
 			fieldIndexes: '<portlet:namespace />indexes'
 		}
 	).render();
+
+	A.one('#extraFields').setData('autofieldsInstance', autoFields);
 </aui:script>
 
 <%!

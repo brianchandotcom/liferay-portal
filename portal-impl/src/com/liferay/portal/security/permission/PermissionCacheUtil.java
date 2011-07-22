@@ -151,7 +151,7 @@ public class PermissionCacheUtil {
 
 		CacheKeyGenerator cacheKeyGenerator =
 			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				PERMISSION_CHECKER_BAG_CACHE_NAME);
+				PERMISSION_CACHE_NAME);
 
 		cacheKeyGenerator.append(StringUtil.toHexString(userId));
 		cacheKeyGenerator.append(String.valueOf(checkGuest));

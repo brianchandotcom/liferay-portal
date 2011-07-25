@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -216,9 +217,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		validate(subject, body);
-
 		long messageId = counterLocalService.increment();
+
+		body = SanitizerUtil.sanitize(
+			user.getCompanyId(), groupId, userId, MBMessage.class.getName(),
+			messageId, "text/" + format, body);
+
+		validate(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -1257,6 +1262,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 		Date now = new Date();
+
+		body = SanitizerUtil.sanitize(
+			message.getCompanyId(), message.getGroupId(), userId,
+			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
+			body);
 
 		validate(subject, body);
 

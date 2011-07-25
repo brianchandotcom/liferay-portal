@@ -106,7 +106,9 @@ if (folder != null) {
 
 	<br />
 
-	<liferay-ui:header title="documents" />
+	<liferay-ui:header
+		title="documents"
+	/>
 
 	<%
 	headerNames.clear();

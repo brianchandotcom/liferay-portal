@@ -210,7 +210,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <br /><br />
 
-<liferay-ui:header title="plugin-repository" />
+<liferay-ui:header
+	title="plugin-repository"
+/>
 
 <table class="lfr-table">
 <tr>
@@ -233,7 +235,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <br />
 
-<liferay-ui:header title="screenshots" />
+<liferay-ui:header
+	title="screenshots"
+/>
 
 <table class="lfr-table">
 

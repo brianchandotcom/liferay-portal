@@ -26,9 +26,7 @@ String portletURLString = portletURL.toString();
 
 <c:choose>
 	<c:when test="<%= PropsValues.LIVE_USERS_ENABLED && PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>">
-		<liferay-ui:header
-			title="live-sessions"
-		/>
+		<liferay-ui:header title="live-sessions" />
 
 		<liferay-ui:search-container
 			headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"

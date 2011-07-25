@@ -18,9 +18,7 @@
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
-<liferay-ui:header
-	title="all-pages"
-/>
+<liferay-ui:header title="all-pages" />
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
 	<liferay-util:param name="type" value="all_pages" />

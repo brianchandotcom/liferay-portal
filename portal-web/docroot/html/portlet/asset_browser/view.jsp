@@ -29,9 +29,7 @@ portletURL.setParameter("struts_action", "/portlet_configuration/search");
 portletURL.setParameter("typeSelection", typeSelection);
 %>
 
-<liferay-ui:header
-	title='<%= LanguageUtil.get(pageContext, "select") + StringPool.COLON + StringPool.SPACE + ResourceActionsUtil.getModelResource(locale, typeSelection) %>'
-/>
+<liferay-ui:header title='<%= LanguageUtil.get(pageContext, "select") + StringPool.COLON + StringPool.SPACE + ResourceActionsUtil.getModelResource(locale, typeSelection) %>' />
 
 <div class="asset-search">
 	<liferay-portlet:renderURL varImpl="searchURL">

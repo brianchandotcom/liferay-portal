@@ -37,9 +37,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 	TemplateSearch searchContainer = new TemplateSearch(renderRequest, 10, portletURL);
 	%>
 
-	<liferay-ui:header
-		title="templates"
-	/>
+	<liferay-ui:header title="templates" />
 
 	<liferay-ui:search-form
 		page="/html/portlet/journal/template_search.jsp"

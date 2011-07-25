@@ -110,8 +110,6 @@
 		</div>
 	</c:when>
 	<c:when test="<%= showTabs && showSubfolders && !portletName.equals(PortletKeys.DOCUMENT_LIBRARY) %>">
-		<liferay-ui:header
-			title="documents-home"
-		/>
+		<liferay-ui:header title="documents-home" />
 	</c:when>
 </c:choose>

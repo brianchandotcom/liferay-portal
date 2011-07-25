@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -46,7 +47,8 @@ import org.apache.commons.lang.time.StopWatch;
 public class JSONWebServiceConfigurator extends FindClass {
 
 	public JSONWebServiceConfigurator() {
-		setIncludedJars("*portal-impl.jar", "*_wl_cls_gen.jar");
+		setIncludedJars(
+			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar");
 	}
 
 	public void configure(ClassLoader classLoader) throws PortalException {
@@ -88,10 +90,15 @@ public class JSONWebServiceConfigurator extends FindClass {
 			File portalImplJarFile = new File(
 				PortalUtil.getPortalLibDir(), "portal-impl.jar");
 
-			if (portalImplJarFile.exists()) {
-				classPathFiles = new File[1];
+			File portalServiceJarFile = new File(
+				PortalUtil.getGlobalLibDir(), "portal-service.jar");
+
+			if (portalImplJarFile.exists() && portalServiceJarFile.exists()) {
+				classPathFiles = new File[2];
 
 				classPathFiles[0] = portalImplJarFile;
+				classPathFiles[1] = portalServiceJarFile;
+
 			}
 			else {
 				classPathFiles = ClassLoaderUtil.getDefaultClasspath(
@@ -143,7 +150,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 	protected void onEntry(FindClass.EntryData entryData) throws Exception {
 		String className = entryData.getName();
 
-		if (className.endsWith("Impl") || className.endsWith("Service")) {
+		if (className.endsWith("ServiceImpl")
+			|| className.endsWith("Service")) {
+
 			if (_checkBytecodeSignature) {
 				InputStream inputStream = entryData.openInputStream();
 
@@ -156,6 +165,32 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 			_onJSONWebServiceClass(className);
 		}
+	}
+
+	private boolean _hasAnnotatedServiceImpl(String className) {
+
+		int lastDotNdx = className.lastIndexOf('.');
+
+		StringBundler implClassName = new StringBundler(4);
+
+		implClassName.append(className.substring(0, lastDotNdx));
+		implClassName.append(".impl");
+		implClassName.append(className.substring(lastDotNdx));
+		implClassName.append("Impl");
+
+		Class implClass = null;
+
+		try {
+			implClass = _classLoader.loadClass(implClassName.toString());
+		}
+		catch (ClassNotFoundException e) {
+			return false;
+		}
+
+		boolean hasClassLevelAnnotation =
+			implClass.getAnnotation(JSONWebService.class) != null;
+
+		return hasClassLevelAnnotation;
 	}
 
 	private boolean _isJSONWebServiceClass(Class<?> clazz) {
@@ -202,6 +237,10 @@ public class JSONWebServiceConfigurator extends FindClass {
 		Class<?> actionClass = _classLoader.loadClass(className);
 
 		if (!_isJSONWebServiceClass(actionClass)) {
+			return;
+		}
+		
+		if (actionClass.isInterface() && _hasAnnotatedServiceImpl(className)) {
 			return;
 		}
 

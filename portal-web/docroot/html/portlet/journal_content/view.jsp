@@ -390,9 +390,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 		%>
 
 		<c:if test="<%= discussionMessagesCount > 0 %>">
-			<liferay-ui:header
-				title="comments"
-			/>
+			<liferay-ui:header title="comments" />
 		</c:if>
 
 		<portlet:actionURL var="discussionURL">

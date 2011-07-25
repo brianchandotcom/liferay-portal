@@ -35,9 +35,7 @@ if (folder != null) {
 %>
 
 <aui:form method="post" name="fm">
-	<liferay-ui:header
-		title="folders"
-	/>
+	<liferay-ui:header title="folders" />
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 

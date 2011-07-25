@@ -35,9 +35,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 	StructureSearch searchContainer = new StructureSearch(renderRequest, 10, portletURL);
 	%>
 
-	<liferay-ui:header
-		title="structures"
-	/>
+	<liferay-ui:header title="structures" />
 
 	<liferay-ui:search-form
 		page="/html/portlet/journal/structure_search.jsp"

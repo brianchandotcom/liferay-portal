@@ -29,9 +29,7 @@ if (category != null) {
 %>
 
 <aui:form method="post" name="fm">
-	<liferay-ui:header
-		title="message-boards-home"
-	/>
+	<liferay-ui:header title="message-boards-home" />
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 

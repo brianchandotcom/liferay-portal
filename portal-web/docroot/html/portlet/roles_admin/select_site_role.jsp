@@ -52,9 +52,7 @@ if (step == 1) {
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="groupId" type="hidden" />
 
-			<liferay-ui:header
-				title="site-roles"
-			/>
+			<liferay-ui:header title="site-roles" />
 
 			<div class="portlet-msg-info">
 				<liferay-ui:message key="please-select-a-site-to-which-you-will-assign-a-site-role" />

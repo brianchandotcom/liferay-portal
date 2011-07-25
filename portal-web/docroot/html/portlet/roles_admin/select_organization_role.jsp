@@ -52,9 +52,7 @@ if (step == 1) {
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="organizationId" type="hidden" />
 
-			<liferay-ui:header
-				title="organization-roles"
-			/>
+			<liferay-ui:header title="organization-roles" />
 
 			<div class="portlet-msg-info">
 				<liferay-ui:message key="please-select-an-organization-to-which-you-will-assign-an-organization-role" />

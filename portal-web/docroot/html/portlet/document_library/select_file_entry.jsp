@@ -110,7 +110,9 @@ if (folder != null) {
 		<br />
 	</c:if>
 
-	<liferay-ui:header title="documents" />
+	<liferay-ui:header
+		title="documents"
+	/>
 
 	<%
 	headerNames.clear();

@@ -61,6 +61,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			comboPooledDataSource.close();
 		}
+		else if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+			org.apache.tomcat.jdbc.pool.DataSource tomcatDataSource =
+				(org.apache.tomcat.jdbc.pool.DataSource)dataSource;
+
+			tomcatDataSource.close();
+		}
 	}
 
 	public DataSource initDataSource(Properties properties) throws Exception {

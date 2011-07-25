@@ -59,8 +59,8 @@ if (url != null) {
 	x = url.indexOf("&#");
 
 	if (x != -1) {
-		url = url.substring(0, x);
 		anchor = url.substring(x, url.length());
+		url = url.substring(0, x);
 	}
 
 	if (!url.contains(StringPool.QUESTION)) {

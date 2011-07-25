@@ -282,6 +282,7 @@ public class DocumentConversionUtil {
 
 		return _documentConverter;
 	}
+
 	private boolean _isRemoteOpenOfficeHost(String host) {
 		if (Validator.isNotNull(host) && !host.equals(_LOCALHOST_IP) &&
 			!host.startsWith(_LOCALHOST)) {
@@ -292,6 +293,7 @@ public class DocumentConversionUtil {
 			return false;
 		}
 	}
+
 	private void _populateConversionsMap(String documentFamily) {
 		Filter filter = new Filter(documentFamily);
 

@@ -374,7 +374,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 		</div>
 	</c:if>
 
-	<c:if test="<%= enableRatings %>">
+	<c:if test="<%= enableRatings && !print %>">
 		<div class="taglib-ratings-wrapper">
 			<liferay-ui:ratings
 				className="<%= JournalArticle.class.getName() %>"
@@ -403,7 +403,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 			className="<%= JournalArticle.class.getName() %>"
 			classPK="<%= articleDisplay.getResourcePrimKey() %>"
 			formAction="<%= discussionURL %>"
-			ratingsEnabled="<%= enableCommentRatings %>"
+			hideControls="<%= print %>"
+			ratingsEnabled="<%= enableCommentRatings && !print %>"
 			redirect="<%= currentURL %>"
 			subject="<%= articleDisplay.getTitle() %>"
 			userId="<%= articleDisplay.getUserId() %>"

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.KMPSearch;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.DynamicCSSUtil;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.servlet.ServletResponseUtil;
@@ -202,7 +204,7 @@ public class StripFilter extends BasePortalFilter {
 	}
 
 	protected void processCSS(
-			CharBuffer charBuffer, Writer writer)
+			HttpServletResponse response, CharBuffer charBuffer, Writer writer)
 		throws IOException {
 
 		outputOpenTag(charBuffer, writer, _MARKER_STYLE_OPEN);
@@ -234,6 +236,22 @@ public class StripFilter extends BasePortalFilter {
 			minifiedContent = _minifierCache.get(key);
 
 			if (minifiedContent == null) {
+				try {
+					content = DynamicCSSUtil.parseSass(key, content);
+				}
+				catch (ScriptingException se) {
+					_log.error("Error on " + key, se);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(content);
+					}
+
+					if (response != null) {
+						response.setStatus(
+							HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					}
+				}
+
 				minifiedContent = MinifierUtil.minifyCss(content);
 
 				boolean skipCache = false;
@@ -301,7 +319,7 @@ public class StripFilter extends BasePortalFilter {
 					new UnsyncByteArrayOutputStream();
 
 				strip(
-					oldCharBuffer,
+					response, oldCharBuffer,
 					new OutputStreamWriter(unsyncByteArrayOutputStream));
 
 				response.setContentLength(unsyncByteArrayOutputStream.size());
@@ -309,7 +327,7 @@ public class StripFilter extends BasePortalFilter {
 				unsyncByteArrayOutputStream.writeTo(response.getOutputStream());
 			}
 			else {
-				strip(oldCharBuffer, response.getWriter());
+				strip(response, oldCharBuffer, response.getWriter());
 			}
 		}
 		else {
@@ -487,7 +505,8 @@ public class StripFilter extends BasePortalFilter {
 		return skipped;
 	}
 
-	protected void strip(CharBuffer charBuffer, Writer writer)
+	protected void strip(
+			HttpServletResponse response, CharBuffer charBuffer, Writer writer)
 		throws IOException {
 
 		skipWhiteSpace(charBuffer, writer, false);
@@ -524,7 +543,7 @@ public class StripFilter extends BasePortalFilter {
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_STYLE_OPEN)) {
-					processCSS(charBuffer, writer);
+					processCSS(response, charBuffer, writer);
 
 					continue;
 				}

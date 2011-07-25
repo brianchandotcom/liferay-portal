@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.DynamicCSSUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -344,7 +345,7 @@ public class MinifierFilter extends BasePortalFilter {
 					_log.info("Minifying CSS " + file);
 				}
 
-				minifiedContent = minifyCss(request, file);
+				minifiedContent = minifyCss(request, response, file);
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -381,7 +382,8 @@ public class MinifierFilter extends BasePortalFilter {
 				minifiedContent = stringResponse.getString();
 
 				if (minifierType.equals("css")) {
-					minifiedContent = minifyCss(request, minifiedContent);
+					minifiedContent = minifyCss(
+						request, response, realPath, minifiedContent);
 				}
 				else if (minifierType.equals("js")) {
 					minifiedContent = minifyJavaScript(minifiedContent);
@@ -400,17 +402,35 @@ public class MinifierFilter extends BasePortalFilter {
 		}
 	}
 
-	protected String minifyCss(HttpServletRequest request, File file)
+	protected String minifyCss(
+			HttpServletRequest request, HttpServletResponse response, File file)
 		throws IOException {
 
 		String content = FileUtil.read(file);
 
 		content = aggregateCss(file.getParent(), content);
 
-		return minifyCss(request, content);
+		return minifyCss(request, response, file.getAbsolutePath(), content);
 	}
 
-	protected String minifyCss(HttpServletRequest request, String content) {
+	protected String minifyCss(
+		HttpServletRequest request, HttpServletResponse response,
+		String cssRealPath, String content) {
+
+		try {
+			content = DynamicCSSUtil.parseSass(cssRealPath, content);
+		}
+		catch (Exception e) {
+			_log.error("Error on " + cssRealPath, e);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(content);
+			}
+
+			response.setStatus(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+
 		String browserId = ParamUtil.getString(request, "browserId");
 
 		if (!browserId.equals(BrowserSniffer.BROWSER_ID_IE)) {

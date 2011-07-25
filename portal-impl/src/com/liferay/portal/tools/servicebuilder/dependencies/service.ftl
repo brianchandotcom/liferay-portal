@@ -2,6 +2,9 @@ package ${packagePath}.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+<#if entity.hasRemoteService() && sessionTypeName != "Local">
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+</#if>
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,9 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @see ${packagePath}.service.impl.${entity.name}ServiceImpl
  * @generated
  */
+</#if>
+<#if entity.hasRemoteService() && sessionTypeName != "Local">
+@JSONWebService
 </#if>
 public interface ${entity.name}${sessionTypeName}Service <#if (sessionTypeName == "Local") && entity.hasColumns()>extends PersistedModelLocalService</#if> {
 

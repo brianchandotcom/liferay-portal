@@ -16,32 +16,53 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class CookieUtil {
 
 	public static String get(HttpServletRequest request, String name) {
-		Cookie[] cookies = request.getCookies();
+		Map<String, Cookie> cookieMap =
+			(Map<String, Cookie>)request.getAttribute(_COOKIE_MAP);
 
-		if (cookies == null) {
+		if (cookieMap == null) {
+			Cookie[] cookies = request.getCookies();
+
+			if (cookies == null) {
+				cookieMap = Collections.emptyMap();
+			}
+			else {
+				cookieMap = new HashMap<String, Cookie>(cookies.length * 4 / 3);
+
+				for (Cookie cookie : cookies) {
+					String cookieName =
+						GetterUtil.getString(cookie.getName()).toUpperCase();
+
+					cookieMap.put(cookieName, cookie);
+				}
+			}
+
+			request.setAttribute(_COOKIE_MAP, cookieMap);
+		}
+
+		Cookie cookie = cookieMap.get(name.toUpperCase());
+
+		if (cookie == null) {
 			return null;
 		}
-
-		for (int i = 0; i < cookies.length; i++) {
-			Cookie cookie = cookies[i];
-
-			String cookieName = GetterUtil.getString(cookie.getName());
-
-			if (cookieName.equalsIgnoreCase(name)) {
-				return cookie.getValue();
-			}
+		else {
+			return cookie.getValue();
 		}
-
-		return null;
 	}
+
+	private static final String _COOKIE_MAP = "_COOKIE_MAP";
 
 }

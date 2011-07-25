@@ -69,6 +69,7 @@ if (choiceName > 0) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (question != null) ? false : true %>"
 		title='<%= (question != null) ? question.getTitle(locale) : "new-question" %>'
 	/>
 

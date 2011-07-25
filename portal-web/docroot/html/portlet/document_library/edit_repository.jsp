@@ -40,6 +40,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (repository != null) ? false : true %>"
 		title='<%= (repository != null) ? repository.getName() : "new-repository" %>'
 	/>
 

@@ -39,6 +39,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
 		title='<%= LanguageUtil.format(pageContext, "request-membership-for-x", group.getDescriptiveName()) %>'
 	/>
 

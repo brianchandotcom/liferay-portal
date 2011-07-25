@@ -47,6 +47,7 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 
 	<liferay-ui:header
 		backURL="<%= backURL %>"
+		localizeTitle="<%= (entry != null) ? false : true %>"
 		title='<%= (entry != null) ? entry.getName() : "new-bookmark" %>'
 	/>
 

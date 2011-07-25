@@ -39,6 +39,7 @@ catch (NoSuchTagPropertyException nstpe) {
 
 <liferay-ui:header
 	escapeXml="<%= false %>"
+	localizeTitle="<%= false %>"
 	title="<%= LanguageUtil.format(pageContext, title, HtmlUtil.escape(tagName)) %>"
 />
 

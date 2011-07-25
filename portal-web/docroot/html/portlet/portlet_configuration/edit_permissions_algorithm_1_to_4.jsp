@@ -122,6 +122,7 @@ request.setAttribute("edit_permissions_algorithm_1_to_4.jsp-portletURL", portlet
 			<c:otherwise>
 				<liferay-ui:header
 					backURL="<%= redirect %>"
+					localizeTitle="<%= false %>"
 					title="<%= selResourceDescription %>"
 				/>
 			</c:otherwise>

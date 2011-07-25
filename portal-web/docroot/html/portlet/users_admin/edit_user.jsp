@@ -171,6 +171,7 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= (selUser == null) ? true : false %>"
 	title='<%= (selUser == null) ? "new-user" : selUser.getFullName() %>'
 />
 

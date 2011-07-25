@@ -53,6 +53,7 @@ if (fileEntryType != null) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (fileEntryType != null) ? false : true %>"
 		title='<%= (fileEntryType != null) ? fileEntryType.getName() : "new-document-type" %>'
 	/>
 

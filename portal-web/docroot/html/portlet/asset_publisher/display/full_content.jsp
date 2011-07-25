@@ -41,6 +41,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	<c:if test="<%= showAssetTitle %>">
 		<liferay-ui:header
 			backURL="<%= print ? null : redirect %>"
+			localizeTitle="<%= false %>"
 			title="<%= title %>"
 		/>
 	</c:if>

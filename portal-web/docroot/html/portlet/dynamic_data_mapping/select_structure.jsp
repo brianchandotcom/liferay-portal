@@ -23,6 +23,7 @@
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 
 	<liferay-ui:header
+		localizeTitle="<%= false %>"
 		title="<%= scopeStructureName %>"
 	/>
 

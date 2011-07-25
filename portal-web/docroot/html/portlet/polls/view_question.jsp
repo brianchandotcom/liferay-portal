@@ -54,6 +54,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 	<aui:fieldset>
  		<liferay-ui:header
 			backURL="<%= redirect %>"
+			localizeTitle="<%= false %>"
 			title="<%= question.getTitle(locale) %>"
 		/>
 

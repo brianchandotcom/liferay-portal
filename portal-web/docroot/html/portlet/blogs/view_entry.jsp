@@ -46,6 +46,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= entry.getTitle() %>"
 />
 

@@ -117,6 +117,7 @@ int userGroupIdsPos = ParamUtil.getInteger(request, "userGroupIdsPos");
 		%>
 
 		<liferay-ui:header
+			localizeTitle="<%= false %>"
 			title="<%= userGroup.getName() %>"
 		/>
 

@@ -41,7 +41,8 @@ long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.IG_IMAGE_MAX_SIZE) / 1024;
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= image != null ? image.getName() : "new-image" %>'
+	localizeTitle="<%= (image != null) ? false : true %>"
+	title='<%= (image != null) ? image.getName() : "new-image" %>'
 />
 
 <c:if test="<%= image == null %>">

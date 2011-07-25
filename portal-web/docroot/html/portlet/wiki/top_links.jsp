@@ -48,8 +48,9 @@ portletURL.setParameter("nodeName", node.getName());
 
 <c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">
 	<liferay-ui:header
-		title="<%= node.getName() %>"
 		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
+		title="<%= node.getName() %>"
 	/>
 </c:if>
 

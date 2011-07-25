@@ -92,6 +92,7 @@ if (template == null) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (template != null) ? false : true %>"
 		title='<%= (template != null) ? template.getName() : "new-template" %>'
 	/>
 

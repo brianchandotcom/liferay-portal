@@ -76,6 +76,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 	<liferay-ui:header
 		backLabel="<%= parentFolderName %>"
 		backURL="<%= backURL.toString() %>"
+		localizeTitle="<%= false %>"
 		title="<%= image.getName() %>"
 	/>
 

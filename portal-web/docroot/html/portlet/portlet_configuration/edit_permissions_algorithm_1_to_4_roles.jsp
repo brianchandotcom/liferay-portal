@@ -142,6 +142,7 @@ else if (tabs2.equals("site-roles")) {
 		%>
 
 		<liferay-ui:header
+			localizeTitle="<%= false %>"
 			title="<%= role.getTitle(locale) %>"
 		/>
 

@@ -19,7 +19,7 @@
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <liferay-ui:header
-	title='<%= LanguageUtil.get(pageContext, "orphan-pages") %>'
+	title='<%= "orphan-pages" %>'
 />
 
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">

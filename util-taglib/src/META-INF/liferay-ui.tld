@@ -745,6 +745,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>localizeTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showBackURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -27,6 +27,7 @@ List<AssetCategoryProperty> categoryProperties = AssetCategoryPropertyServiceUti
 
 <div class="view-category">
 	<liferay-ui:header
+		localizeTitle="<%= false %>"
 		title="<%= category.getTitle(locale) %>"
 	/>
 

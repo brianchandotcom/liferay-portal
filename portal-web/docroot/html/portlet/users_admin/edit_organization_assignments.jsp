@@ -50,6 +50,7 @@ request.setAttribute("edit_organization_assignments.jsp-portletURL", portletURL)
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= organization.getName() %>"
 />
 

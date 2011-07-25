@@ -141,6 +141,7 @@ if (feed != null) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (feed != null) ? false : true %>"
 		title='<%= (feed != null) ? feed.getName() : "new-feed" %>'
 	/>
 

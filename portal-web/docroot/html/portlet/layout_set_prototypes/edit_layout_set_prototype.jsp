@@ -43,6 +43,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= (layoutSetPrototype.isNew()) ? true : false %>"
 	title='<%= (layoutSetPrototype.isNew()) ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
 />
 

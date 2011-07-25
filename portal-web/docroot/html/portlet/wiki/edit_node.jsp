@@ -35,6 +35,7 @@ long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (node != null) ? false : true %>"
 		title='<%= (node != null) ? node.getName() : "new-wiki-node" %>'
 	/>
 

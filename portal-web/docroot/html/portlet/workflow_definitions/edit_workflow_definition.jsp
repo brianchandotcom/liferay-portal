@@ -40,6 +40,7 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= (workflowDefinition == null) ? true : false %>"
 	title='<%= (workflowDefinition == null) ? "new-workflow-definition" : workflowDefinition.getName() %>'
 />
 

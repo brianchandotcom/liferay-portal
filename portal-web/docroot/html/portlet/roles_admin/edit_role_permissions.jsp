@@ -81,6 +81,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		<liferay-ui:header
 			backURL="<%= backURL %>"
+			localizeTitle="<%= false %>"
 			title="<%= role.getTitle(locale) %>"
 		/>
 

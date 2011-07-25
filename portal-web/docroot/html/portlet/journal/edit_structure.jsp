@@ -102,6 +102,7 @@ int tabIndex = 1;
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= (structure != null) ? false : true %>"
 		title='<%= (structure != null) ? structure.getName() : "new-structure" %>'
 	/>
 

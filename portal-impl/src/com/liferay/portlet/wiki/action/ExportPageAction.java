@@ -115,10 +115,10 @@ public class ExportPageAction extends PortletAction {
 		}
 		catch (Exception e) {
 			String host = PrefsPropsUtil.getString(
-					PropsKeys.OPENOFFICE_SERVER_HOST);
+				PropsKeys.OPENOFFICE_SERVER_HOST);
 
 			if (Validator.isNotNull(host) && !host.equals(_LOCALHOST_IP) &&
-			!host.startsWith(_LOCALHOST)) {
+				!host.startsWith(_LOCALHOST)) {
 
 				StringBundler sb = new StringBundler(3);
 				sb.append("Conversion using a remote OpenOffice instance is ");

@@ -90,7 +90,7 @@ if (folder != null) {
 
 <div class="body-row">
 	<div class="folder-display-style" data-folderId="<%= folderId %>" id="<portlet:namespace />folderContainer">
-		<ul>
+		<ul class="lfr-component">
 			<c:choose>
 				<c:when test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID && showRootFolder) %>">
 
@@ -136,12 +136,12 @@ if (folder != null) {
 						<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 						<c:if test="<%= (foldersCount > 0) %>">
-							<a href="<%= viewDocumentsHomeURL.toString() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeFoldersURL.toString() %>" class="expand-folder">
+							<a class="expand-folder" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeFoldersURL.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
 								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="" />
 							</a>
 						</c:if>
 
-						<a href="<%= viewDocumentsHomeURL.toString() %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %> class="browse-folder">
+						<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
 							<liferay-ui:icon image="../aui/home" message="" />
 
 							<%= LanguageUtil.get(pageContext, "documents-home") %>
@@ -166,7 +166,7 @@ if (folder != null) {
 					</liferay-portlet:resourceURL>
 
 					<li class="folder <%= navigation.equals("recent-documents") ? "selected" : StringPool.BLANK %>">
-						<a href="<%= viewRecentDocumentsURL.toString() %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewRecentDocumentsEntriesURL.toString() %>" class="browse-folder">
+						<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewRecentDocumentsEntriesURL.toString() %>" href="<%= viewRecentDocumentsURL.toString() %>">
 							<liferay-ui:icon image="../aui/clock" message="" />
 
 							<%= LanguageUtil.get(pageContext, "recent-documents") %>
@@ -191,7 +191,7 @@ if (folder != null) {
 					</liferay-portlet:resourceURL>
 
 					<li class="folder <%= navigation.equals("my-documents") ? "selected" : StringPool.BLANK %>">
-						<a href="<%= viewMyDocumentsURL.toString() %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %>" class="browse-folder">
+						<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %>" href="<%= viewMyDocumentsURL.toString() %>">
 							<liferay-ui:icon image="../aui/person" message="" />
 
 							<%= LanguageUtil.get(pageContext, "my-documents") %>
@@ -222,7 +222,7 @@ if (folder != null) {
 						</liferay-portlet:resourceURL>
 
 						<li class="folder file-entry-type">
-							<a href="<%= viewBasicFileEntryTypeURL.toString() %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewBasicFileEntryTypeEntriesURL.toString() %>" class="browse-folder">
+							<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewBasicFileEntryTypeEntriesURL.toString() %>" href="<%= viewBasicFileEntryTypeURL.toString() %>">
 								<liferay-ui:icon image="copy" message="" />
 
 								<%= LanguageUtil.get(pageContext, "basic-document") %>
@@ -253,7 +253,7 @@ if (folder != null) {
 						</liferay-portlet:resourceURL>
 
 						<li class="folder file-entry-type">
-							<a href="<%= viewFileEntryTypeURL.toString() %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFileEntryTypeEntriesURL.toString() %>" class="browse-folder">
+							<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFileEntryTypeEntriesURL.toString() %>" href="<%= viewFileEntryTypeURL.toString() %>">
 								<liferay-ui:icon message="" image="copy" />
 
 								<%= fileEntryType.getName() %>
@@ -299,12 +299,12 @@ if (folder != null) {
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= mountFoldersCount > 0 %>">
-								<a data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" class="expand-folder" href="<%= viewURL.toString() %>">
+								<a class="expand-folder" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" href="<%= viewURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" />
 								</a>
 							</c:if>
 
-							<a data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>" class="browse-folder">
+							<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>">
 								<liferay-ui:icon image="drive" />
 
 								<%= mountFolder.getName() %>
@@ -344,11 +344,11 @@ if (folder != null) {
 					</liferay-portlet:resourceURL>
 
 					<li class="folder">
-						<a data-direction-right="<%= Boolean.TRUE.toString() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" class="expand-folder" href="<%= viewURL.toString() %>">
+						<a class="expand-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" href="<%= viewURL.toString() %>">
 							<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" />
 						</a>
 
-						<a data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>" class="browse-folder">
+						<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>">
 							<liferay-ui:icon src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' />
 
 							<%= LanguageUtil.get(pageContext, "up") %>
@@ -392,12 +392,12 @@ if (folder != null) {
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= foldersCount > 0 %>">
-								<a data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" class="expand-folder" href="<%= viewURL.toString() %>">
+								<a class="expand-folder" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" href="<%= viewURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" />
 								</a>
 							</c:if>
 
-							<a data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>" class="browse-folder">
+							<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>">
 								<liferay-ui:icon image="folder" />
 
 								<%= curFolder.getName() %>

@@ -334,20 +334,18 @@
 	}
 
 	.folder-display-style li {
-		.overlay {
-			clip: rect(0 0 0 0);
+		.overlay.document-action {
+			display: block;
+			overflow: hidden;
+			position: absolute;
+			right: 15px;
+			top: 5px;
+			width: 25px;
 
-			&.document-action {
-                display: block;
-				position: absolute;
-				right: 30px;
-				top: 5px;
-
-				a {
-					display: block;
-					float: right;
-					min-height: 15px;
-				}
+			a {
+				display: block;
+				float: right;
+				min-height: 15px;
 			}
 		}
 
@@ -368,7 +366,7 @@
 		display: none;
 	}
 
-	.document-display-style, .lfr-search-container {
+	.document-display-style, .lfr-search-container, .folder-display-style li {
 		.overlay {
 			clip: rect(0 0 0 0);
 		}
@@ -548,8 +546,10 @@
 	.aui-liferaylistview-content {
 		ul .expand-folder {
 			height: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
 			position: absolute;
-			right: 2px;
+			right: 0;
 			top: 5px;
 			width: 10px;
 
@@ -558,13 +558,6 @@
 				position: absolute;
 				top: 1px;
 			}
-		}
-
-		ul, li {
-			display: block;
-			list-style: none outside none;
-			margin: 0;
-			padding: 0;
 		}
 
 		li a {

@@ -271,10 +271,6 @@
 					for (Portlet portlet : portlets) {
 						if (portlet.isActive() && !portlet.isInstanceable()) {
 							String portletId = portlet.getPortletId();
-
-							if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT) && (portletId.equals(PortletKeys.GROUP_PAGES) || portletId.equals(PortletKeys.SITE_SETTINGS))) {
-								continue;
-							}
 					%>
 
 							<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>">

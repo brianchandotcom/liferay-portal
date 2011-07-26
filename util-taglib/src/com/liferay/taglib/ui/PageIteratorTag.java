@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,15 +72,10 @@ public class PageIteratorTag extends IncludeTag {
 	}
 
 	public void setUrl(String url) {
-		_url = url;
-		_urlAnchor = StringPool.BLANK;
+		String[] array = PortalUtil.stripURLAnchor(url, StringPool.POUND);
 
-		int pos = _url.indexOf(CharPool.POUND);
-
-		if (pos != -1) {
-			_url = url.substring(0, pos);
-			_urlAnchor = url.substring(pos, url.length());
-		}
+		_url = array[0];
+		_urlAnchor = array[1];
 
 		if (_url.indexOf(CharPool.QUESTION) == -1) {
 			_url += "?";

@@ -243,6 +243,7 @@ String taglibOnSubmit = "event.preventDefault(); " + renderResponse.getNamespace
 	</liferay-util:buffer>
 
 	<liferay-ui:form-navigator
+		backURL="<%= backURL %>"
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		htmlBottom="<%= htmlBottom %>"

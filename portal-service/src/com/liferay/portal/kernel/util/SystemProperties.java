@@ -12,13 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
-
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemEnv;
-import com.liferay.portal.kernel.util.Validator;
+package com.liferay.portal.kernel.util;
 
 import java.io.InputStream;
 

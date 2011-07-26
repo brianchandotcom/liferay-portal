@@ -117,6 +117,18 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static void addPageAttachment(long nodeId, java.lang.String title,
+		java.lang.String fileName, byte[] bytes) throws RemoteException {
+		try {
+			WikiPageServiceUtil.addPageAttachment(nodeId, title, fileName, bytes);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -161,6 +173,20 @@ public class WikiPageServiceSoap {
 		throws RemoteException {
 		try {
 			WikiPageServiceUtil.deletePageAttachment(nodeId, title, fileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteTempPageAttachment(long nodeId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.deleteTempPageAttachment(nodeId, fileName,
+				tempFolderName);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -271,6 +297,21 @@ public class WikiPageServiceSoap {
 			java.lang.String returnValue = WikiPageServiceUtil.getPagesRSS(companyId,
 					nodeId, title, max, type, version, displayStyle, feedURL,
 					entryURL, LocaleUtil.fromLanguageId(locale));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String[] getTempPageAttachmentNames(long nodeId,
+		java.lang.String tempFolderName) throws RemoteException {
+		try {
+			java.lang.String[] returnValue = WikiPageServiceUtil.getTempPageAttachmentNames(nodeId,
+					tempFolderName);
 
 			return returnValue;
 		}

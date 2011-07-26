@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.util.SystemProperties;
 
 import java.io.File;
 import java.io.FileInputStream;

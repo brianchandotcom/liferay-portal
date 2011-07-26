@@ -23,6 +23,10 @@ public interface Constants {
 
 	public static final String ADD = "add";
 
+	public static final String ADD_TEMP = "add_temp";
+
+	public static final String ADD_MULTIPLE = "add_multiple";
+
 	public static final String APPROVE = "approve";
 
 	public static final String ASSIGN = "assign";
@@ -42,6 +46,8 @@ public interface Constants {
 	public static final String DEACTIVATE = "deactivate";
 
 	public static final String DELETE = "delete";
+
+	public static final String DELETE_TEMP = "delete_temp";
 
 	public static final String DELETE_TRANSLATION = "delete_translation";
 

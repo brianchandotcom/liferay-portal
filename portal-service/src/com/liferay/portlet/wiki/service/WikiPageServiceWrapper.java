@@ -56,6 +56,23 @@ public class WikiPageServiceWrapper implements WikiPageService {
 		_wikiPageService.addPageAttachments(nodeId, title, files);
 	}
 
+	public void addPageAttachment(long nodeId, java.lang.String title,
+		java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.addPageAttachment(nodeId, title, fileName, bytes);
+	}
+
+	public java.lang.String addTempPageAttachment(long nodeId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		return _wikiPageService.addTempPageAttachment(nodeId, fileName,
+			tempFolderName, file);
+	}
+
 	public void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -82,6 +99,14 @@ public class WikiPageServiceWrapper implements WikiPageService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageService.deletePageAttachment(nodeId, title, fileName);
+	}
+
+	public void deleteTempPageAttachment(long nodeId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.deleteTempPageAttachment(nodeId, fileName,
+			tempFolderName);
 	}
 
 	public com.liferay.portlet.wiki.model.WikiPage getDraftPage(long nodeId,
@@ -136,6 +161,14 @@ public class WikiPageServiceWrapper implements WikiPageService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
 			type, version, displayStyle, feedURL, entryURL, locale);
+	}
+
+	public java.lang.String[] getTempPageAttachmentNames(long nodeId,
+		java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getTempPageAttachmentNames(nodeId,
+			tempFolderName);
 	}
 
 	public void movePage(long nodeId, java.lang.String title,

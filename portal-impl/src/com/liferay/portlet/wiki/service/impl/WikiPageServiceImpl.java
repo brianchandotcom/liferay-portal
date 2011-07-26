@@ -56,6 +56,9 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -108,6 +111,28 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, files);
 	}
 
+	public void addPageAttachment(
+			long nodeId, String title, String fileName,	byte[] bytes)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		wikiPageLocalService.addPageAttachment(
+			getUserId(), nodeId, title, fileName, bytes);
+	}
+
+	public String addTempPageAttachment(
+			long nodeId, String fileName, String tempFolderName, File file)
+		throws IOException, PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		return wikiPageLocalService.addTempPageAttachment(
+			getUserId(), fileName, tempFolderName, file);
+	}
+
 	public void changeParent(
 			long nodeId, String title, String newParentTitle,
 			ServiceContext serviceContext)
@@ -148,6 +173,17 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
 		wikiPageLocalService.deletePageAttachment(nodeId, title, fileName);
+	}
+
+	public void deleteTempPageAttachment(
+			long nodeId, String fileName, String tempFolderName)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		wikiPageLocalService.deleteTempPageAttachment(
+			getUserId(), fileName, tempFolderName);
 	}
 
 	public WikiPage getDraftPage(long nodeId, String title)
@@ -256,6 +292,17 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		return exportToRSS(
 			companyId, title, description, type, version, displayStyle, feedURL,
 			entryURL, pages, diff, locale);
+	}
+
+	public String[] getTempPageAttachmentNames(
+			long nodeId, String tempFolderName)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		return wikiPageLocalService.getTempPageAttachmentNames(
+			getUserId(), tempFolderName);
 	}
 
 	public void movePage(

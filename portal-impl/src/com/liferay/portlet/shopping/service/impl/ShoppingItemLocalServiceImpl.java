@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -46,7 +47,6 @@ import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 import com.liferay.portlet.shopping.model.ShoppingItemPriceConstants;
 import com.liferay.portlet.shopping.service.base.ShoppingItemLocalServiceBaseImpl;
 import com.liferay.util.PwdGenerator;
-import com.liferay.util.SystemProperties;
 
 import java.io.File;
 import java.io.FileOutputStream;

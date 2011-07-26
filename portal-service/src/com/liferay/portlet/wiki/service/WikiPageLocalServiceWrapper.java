@@ -290,6 +290,14 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService {
 			modifiedDate, fileName, inputStream);
 	}
 
+	public void addPageAttachment(long userId, long nodeId,
+		java.lang.String title, java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.addPageAttachment(userId, nodeId, title,
+			fileName, bytes);
+	}
+
 	public void addPageAttachments(long userId, long nodeId,
 		java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, byte[]>> files)
@@ -330,6 +338,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService {
 			guestPermissions);
 	}
 
+	public java.lang.String addTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		return _wikiPageLocalService.addTempPageAttachment(userId, fileName,
+			tempFolderName, file);
+	}
+
 	public void changeParent(long userId, long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -368,6 +386,14 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageLocalService.deletePages(nodeId);
+	}
+
+	public void deleteTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.deleteTempPageAttachment(userId, fileName,
+			tempFolderName);
 	}
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildren(
@@ -573,6 +599,14 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService {
 	public int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageLocalService.getRecentChangesCount(nodeId);
+	}
+
+	public java.lang.String[] getTempPageAttachmentNames(long userId,
+		java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageLocalService.getTempPageAttachmentNames(userId,
+			tempFolderName);
 	}
 
 	public boolean hasDraftPage(long nodeId, java.lang.String title)

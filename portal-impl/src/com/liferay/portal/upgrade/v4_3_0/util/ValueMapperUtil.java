@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v4_3_0.util;
 
 import com.liferay.portal.kernel.upgrade.util.ValueMapper;
-import com.liferay.util.SystemProperties;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 /**
  * @author Brian Wing Shun Chan

@@ -369,7 +369,7 @@ AUI().add(
 										instance._vocabularyFormAdd.reset();
 									}
 
-									var autoFields = A.one('#extraFields').getData('autofieldsInstance');
+									var autoFields = A.one('#' + instance._prefixedPortletId + 'extraFields').getData('autofieldsInstance');
 
 									if (autoFields) {
 										autoFields.reset();

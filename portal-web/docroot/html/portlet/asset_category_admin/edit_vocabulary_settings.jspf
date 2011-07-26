@@ -46,8 +46,8 @@ if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
 
 <aui:input cssClass="vocabulary-checkbox" helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 
-<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="vocabularyExtraFieldsPanelContainer" persistState="<%= true %>" title="associated-asset-types">
-	<aui:fieldset id="extraFields">
+<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="vocabularyExtraFieldsPanelContainer" persistState="<%= true %>" title="associated-asset-types">
+	<aui:fieldset id='<%= renderResponse.getNamespace() + "extraFields" %>'>
 
 		<%
 		List<String> indexes = new ArrayList<String>();
@@ -128,14 +128,16 @@ if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
 </liferay-ui:panel>
 
 <aui:script use="liferay-auto-fields">
+	var extraFields = A.one('#<portlet:namespace />extraFields');
+
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: '#extraFields',
+			contentBox: extraFields,
 			fieldIndexes: '<portlet:namespace />indexes'
 		}
 	).render();
 
-	A.one('#extraFields').setData('autofieldsInstance', autoFields);
+	extraFields.setData('autofieldsInstance', autoFields);
 </aui:script>
 
 <%!

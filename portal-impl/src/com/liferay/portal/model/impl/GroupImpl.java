@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -409,46 +410,61 @@ public class GroupImpl extends GroupBaseImpl {
 	public boolean isStagedPortlet(String portletId) {
 		portletId = PortletConstants.getRootPortletId(portletId);
 
+		String typeSettingsProperty = getTypeSettingsProperty(
+			StagingConstants.STAGED_PORTLET.concat(portletId));
+
+		if (Validator.isNotNull(typeSettingsProperty)) {
+			return GetterUtil.getBoolean(typeSettingsProperty);
+		}
+
 		try {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-			String portletDataHandler = portlet.getPortletDataHandlerClass();
+			String portletDataHandlerClass =
+				portlet.getPortletDataHandlerClass();
 
-			Portlet StagedPortlet = null;
-			String StagedPortletDataHandler = null;
-			String StagedPortletId = null;
+			if (Validator.isNull(portletDataHandlerClass)) {
+				return true;
+			}
+
+			Portlet stagedPortlet = null;
+			String stagedPortletDataHandlerClass = null;
+			String stagedPortletId = null;
 
 			String typeSettings = getTypeSettings();
 
-			int beginIndex = 0;
-			int endIndex = 0;
 			int count = 0;
+			int end = 0;
+			int start = 0;
 
 			while (count < typeSettings.lastIndexOf(
 					StagingConstants.STAGED_PORTLET)) {
 
-				beginIndex = typeSettings.indexOf(
+				start = typeSettings.indexOf(
 					StagingConstants.STAGED_PORTLET, count) +
 					StagingConstants.STAGED_PORTLET.length();
 
-				endIndex = typeSettings.indexOf(StringPool.EQUAL, beginIndex);
+				end = typeSettings.indexOf(StringPool.EQUAL, start);
 
-				StagedPortletId= typeSettings.substring(beginIndex, endIndex);
+				stagedPortletId = typeSettings.substring(start, end);
 
-				StagedPortlet = PortletLocalServiceUtil.getPortletById(
-					StagedPortletId);
+				stagedPortlet = PortletLocalServiceUtil.getPortletById(
+					stagedPortletId);
 
-				StagedPortletDataHandler =
-					StagedPortlet.getPortletDataHandlerClass();
+				stagedPortletDataHandlerClass =
+					stagedPortlet.getPortletDataHandlerClass();
 
-				if (StagedPortletDataHandler.equals(portletDataHandler)) {
+				if (portletDataHandlerClass.equals(
+						stagedPortletDataHandlerClass)) {
+
 					return GetterUtil.getBoolean(
 						getTypeSettingsProperty(
 							StagingConstants.STAGED_PORTLET.concat(
-								StagedPortletId)), true);
+								stagedPortletId)),
+							true);
 				}
 
-				count = endIndex + 1;
+				count = end + 1;
 			}
 		}
 		catch (Exception e) {

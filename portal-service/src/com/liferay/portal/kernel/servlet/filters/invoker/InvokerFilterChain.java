@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 
 import java.io.IOException;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class InvokerFilterChain implements FilterChain {
 
@@ -47,6 +48,10 @@ public class InvokerFilterChain implements FilterChain {
 	}
 
 	public void addFilter(Filter filter) {
+		if (_filters == null) {
+			_filters = new ArrayList<Filter>();
+		}
+
 		_filters.add(filter);
 	}
 
@@ -54,7 +59,7 @@ public class InvokerFilterChain implements FilterChain {
 		InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
 			filterChain);
 
-		invokerFilterChain._filters.addAll(_filters);
+		invokerFilterChain._filters = _filters;
 
 		return invokerFilterChain;
 	}
@@ -63,14 +68,14 @@ public class InvokerFilterChain implements FilterChain {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		if (_filters.isEmpty()) {
+		if ((_filters == null) || (_index >= _filters.size())) {
 			_filterChain.doFilter(servletRequest, servletResponse);
 		}
 		else {
 			HttpServletRequest request = (HttpServletRequest)servletRequest;
 			HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-			Filter filter = _filters.remove();
+			Filter filter = _filters.get(_index++);
 
 			boolean filterEnabled = true;
 
@@ -206,6 +211,7 @@ public class InvokerFilterChain implements FilterChain {
 
 	private ClassLoader _contextClassLoader;
 	private FilterChain _filterChain;
-	private Queue<Filter> _filters = new LinkedList<Filter>();
+	private List<Filter> _filters;
+	private int _index;
 
 }

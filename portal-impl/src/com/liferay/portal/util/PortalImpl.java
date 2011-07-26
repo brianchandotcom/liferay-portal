@@ -95,6 +95,8 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.Ticket;
+import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
@@ -117,6 +119,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -3696,7 +3699,38 @@ public class PortalImpl implements Portal {
 			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
 			actionName.equals("addFile")) {
 
-			//alwaysAllowDoAsUser = true;
+			String token = ParamUtil.getString(request, "ticket");
+			String doAsUserIdString = ParamUtil.getString(
+				request, "doAsUserId");
+
+			try {
+				Ticket ticket = TicketLocalServiceUtil.getTicket(token);
+
+				long doAsUserId = getDoAsUserId(
+					request, doAsUserIdString, true);
+
+				if (ticket.getClassName().equals(User.class.getName()) &&
+					ticket.getClassPK() == doAsUserId &&
+					ticket.getType() == TicketConstants.TYPE_IMPERSONATE) {
+
+					if (!ticket.isExpired()) {
+						alwaysAllowDoAsUser = true;
+
+						Date expirationDate = new Date(
+							System.currentTimeMillis() +
+							PropsValues.SESSION_TIMEOUT * 60 * 1000);
+
+						ticket.setExpirationDate(expirationDate);
+
+						TicketLocalServiceUtil.updateTicket(ticket, false);
+					}
+					else {
+						TicketLocalServiceUtil.deleteTicket(ticket);
+					}
+				}
+			}
+			catch (Exception e) {
+			}
 		}
 
 		if ((!PropsValues.PORTAL_JAAS_ENABLE &&

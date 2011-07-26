@@ -98,6 +98,17 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 	}
 </aui:script>
 
+<%
+Date expirationDate = new Date(System.currentTimeMillis() + PropsValues.SESSION_TIMEOUT * 60 * 1000);
+
+ServiceContext serviceContext = new ServiceContext();
+
+Ticket ticket = TicketLocalServiceUtil.addTicket(
+	user.getCompanyId(), User.class.getName(), user.getUserId(),
+	TicketConstants.TYPE_IMPERSONATE, null, expirationDate,
+	serviceContext);	
+%>
+
 <aui:script use="liferay-upload">
 	new Liferay.Upload(
 		{
@@ -107,7 +118,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 			fallbackContainer: '#<portlet:namespace />fallback',
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> / 1024,
 			namespace: '<portlet:namespace />',
-			uploadFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
+			uploadFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticket=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
 	);
 </aui:script>

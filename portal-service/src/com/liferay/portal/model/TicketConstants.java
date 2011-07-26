@@ -24,4 +24,5 @@ public class TicketConstants {
 
 	public static final int TYPE_PASSWORD = 2;
 
+	public static final int TYPE_IMPERSONATE = 3;
 }

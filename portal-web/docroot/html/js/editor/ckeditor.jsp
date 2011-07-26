@@ -37,18 +37,11 @@ if (!ckEditorConfigFileName.equals("ckconfig.jsp")) {
 	useCustomDataProcessor = true;
 }
 
-StringBundler configParamsSB = new StringBundler();
+Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
+Map<String, String> fileBrowseParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowseParams");
 
-Map<String, String> configParams = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
-
-if (configParams != null) {
-	for (Map.Entry<String, String> configParam : configParams.entrySet()) {
-		configParamsSB.append(StringPool.AMPERSAND);
-		configParamsSB.append(configParam.getKey());
-		configParamsSB.append(StringPool.EQUAL);
-		configParamsSB.append(HttpUtil.encodeURL(configParam.getValue()));
-	}
-}
+String configParams = marshallParams(configParamsMap);
+String fileBrowseParams = marshallParams(fileBrowseParamsMap);
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
@@ -152,14 +145,27 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		}
 
 		<%
-		String connectorURL = HttpUtil.encodeURL(mainPath + "/portal/fckeditor?p_l_id=" + plid + "&p_p_id=" + HttpUtil.encodeURL(portletId) + "&doAsUserId=" + HttpUtil.encodeURL(doAsUserId) + "&doAsGroupId=" + HttpUtil.encodeURL(String.valueOf(doAsGroupId)));
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(mainPath);
+		sb.append("/portal/fckeditor?p_l_id=");
+		sb.append(plid);
+		sb.append("&p_p_id=");
+		sb.append(HttpUtil.encodeURL(portletId));
+		sb.append("&doAsUserId=");
+		sb.append(HttpUtil.encodeURL(doAsUserId));
+		sb.append("&doAsGroupId=");
+		sb.append(HttpUtil.encodeURL(String.valueOf(doAsGroupId)));
+		sb.append(fileBrowseParams);
+
+		String connectorURL = HttpUtil.encodeURL(sb.toString());
 		%>
 
 		CKEDITOR.replace(
 			'<%= name %>',
 			{
-				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= ckEditorConfigFileName %>?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %><%= configParamsSB.toString() %>',
-				filebrowserBrowseUrl: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %>',
+				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= ckEditorConfigFileName %>?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %><%= configParams %>',
+				filebrowserBrowseUrl: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %><%= fileBrowseParams %>',
 				filebrowserUploadUrl: null,
 				toolbar: '<%= TextFormatter.format(HtmlUtil.escape(toolbarSet), TextFormatter.M) %>'
 			}
@@ -236,3 +242,20 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		);
 	})();
 </aui:script>
+
+<%!
+public String marshallParams(Map<String, String> params) {
+	StringBundler sb = new StringBundler();
+
+	if (params != null) {
+		for (Map.Entry<String, String> configParam : params.entrySet()) {
+			sb.append(StringPool.AMPERSAND);
+			sb.append(configParam.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(HttpUtil.encodeURL(configParam.getValue()));
+		}
+	}
+
+	return sb.toString();
+}
+%>

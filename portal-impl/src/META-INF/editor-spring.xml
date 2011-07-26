@@ -10,6 +10,9 @@
 	<bean id="com.liferay.portal.editor.fckeditor.receiver.CommandReceiverFactory" class="com.liferay.portal.editor.fckeditor.receiver.CommandReceiverFactory">
 		<property name="commandReceivers">
 			<map key-type="java.lang.String" value-type="com.liferay.portal.editor.fckeditor.receiver.CommandReceiver">
+				<entry key="Attachment">
+					<bean class="com.liferay.portal.editor.fckeditor.receiver.impl.AttachmentCommandReceiver" />
+				</entry>
 				<entry key="Document">
 					<bean class="com.liferay.portal.editor.fckeditor.receiver.impl.DocumentCommandReceiver" />
 				</entry>

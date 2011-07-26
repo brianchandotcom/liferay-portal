@@ -222,6 +222,7 @@ boolean locked = SitesUtil.isLayoutSetLocked(selLayoutSet);
 								}
 
 								exportPopup.show();
+
 								exportPopup.io.start();
 							},
 							icon: 'arrowthick-1-b',
@@ -260,6 +261,7 @@ boolean locked = SitesUtil.isLayoutSetLocked(selLayoutSet);
 													importPopup.centered();
 
 													var form = importPopup.get('contentBox').one('#<portlet:namespace />fm1');
+
 													form.on(
 														'submit',
 														function(event) {
@@ -276,6 +278,7 @@ boolean locked = SitesUtil.isLayoutSetLocked(selLayoutSet);
 
 								importPopup.show();
 								importPopup.centered();
+
 								importPopup.io.start();
 							},
 							icon: 'arrowthick-1-t',

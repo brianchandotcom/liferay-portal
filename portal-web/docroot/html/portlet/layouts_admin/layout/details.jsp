@@ -166,12 +166,13 @@ StringBuilder friendlyURLBase = new StringBuilder();
 <aui:script use="aui-base">
 	var templateLink = A.one('#templateLink');
 
-	function toggleLayoutTypeFields (type) {
+	function toggleLayoutTypeFields(type) {
 		var currentType = 'layout-type-form-' + type;
 
 		A.all('.layout-type-form').each(
 			function(item, index, collection) {
 				var visible = item.hasClass(currentType);
+
 				var disabled = !visible;
 
 				item.toggle(visible);
@@ -181,13 +182,13 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		);
 
 		if (templateLink) {
-			templateLink.toggle(type == 'portlet')
+			templateLink.toggle(type == 'portlet');
 		}
 	}
 
 	toggleLayoutTypeFields('<%= selLayout.getType() %>');
 
-	var typeSelector = A.one("#<portlet:namespace />type");
+	var typeSelector = A.one('#<portlet:namespace />type');
 
 	if (typeSelector) {
 		typeSelector.on(

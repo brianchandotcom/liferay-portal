@@ -35,21 +35,31 @@ AUI().add(
 						instance.ratings.after('itemSelect', instance._itemSelect, instance);
 					},
 
+					_convertToIndex: function(score) {
+						var instance = this;
+
+						var scoreindex = -1;
+
+						if (score == 1.0) {
+							scoreindex = 0;
+						}
+						else if (score == -1.0) {
+							scoreindex = 1;
+						}
+
+						return scoreindex;
+					},
+
+					_fixScore: function(score) {
+						var instance = this;
+
+						return (score > 0) ? ('+' + score) : (score + '');
+					},
+
 					_getLabel: function(desc, totalEntries, ratingScore) {
 						var instance = this;
 
-						var labelScoreTpl = '{desc} ({totalEntries} {voteLabel}) {ratingScoreLabel}';
-
-						var ratingScoreLabel = '';
-
-						if (ratingScore || ratingScore == 0) {
-							ratingScoreLabelMessage = A.substitute(
-								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
-								[ratingScore, instance.get('size')]
-							);
-
-							ratingScoreLabel = '<span class="aui-helper-hidden-accessible">' + ratingScoreLabelMessage + '</span>';
-						}
+						var labelScoreTpl = '{desc} ({totalEntries} {voteLabel})';
 
 						var voteLabel = '';
 
@@ -64,7 +74,6 @@ AUI().add(
 							labelScoreTpl,
 							{
 								desc: desc,
-								ratingScoreLabel: ratingScoreLabel,
 								totalEntries: totalEntries,
 								voteLabel: voteLabel
 							}
@@ -116,25 +125,20 @@ AUI().add(
 						Liferay.Portal.ToolTip.show(el, stars + message);
 					},
 
-					_fixScore: function(score) {
+					_updateAverageScoreText: function(averageScore) {
 						var instance = this;
 
-						return (score > 0) ? ('+' + score) : (score + '');
-					},
+						var ratingScore = instance.ratingScore;
 
-					_convertToIndex: function(score) {
-						var instance = this;
+						var firstImage = ratingScore.get('boundingBox').one('img.aui-rating-element');
 
-						var scoreindex = -1;
+						if (firstImage) {
+							var msg = A.substitute(
+								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
+								[averageScore, instance.get('size')])
 
-						if (score == 1.0) {
-							scoreindex = 0;
+							firstImage.attr('alt', msg);
 						}
-						else if (score == -1.0) {
-							scoreindex = 1;
-						}
-
-						return scoreindex;
 					}
 				},
 
@@ -238,6 +242,8 @@ AUI().add(
 
 						ratingScore.set('label', label);
 						ratingScore.select(averageIndex);
+
+						instance._updateAverageScoreText(json.averageScore);
 					}
 				}
 			}
@@ -301,6 +307,8 @@ AUI().add(
 						var label = instance._getLabel(description, json.totalEntries);
 
 						instance.ratings.set('label', label);
+						
+						instance._updateAverageScoreText(json.averageScore);
 					}
 				}
 			}

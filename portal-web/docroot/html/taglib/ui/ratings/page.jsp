@@ -101,7 +101,7 @@ if (ratingsEntry != null) {
 						for (int i = 1; i <= numberOfStars; i++) {
 						%>
 
-							<a class="aui-rating-element <%= (i <= ratingsStats.getAverageScore()) ? "aui-rating-element-on" : StringPool.BLANK %>" href="javascript:;"></a>
+							<img alt="<%= (i == 1) ? LanguageUtil.format(pageContext, "the-average-rating-is-x-stars-out-of-x", new Object[]{ratingsStats.getAverageScore(), numberOfStars}) : StringPool.BLANK %>" class="aui-rating-element <%= (i <= ratingsStats.getAverageScore()) ? "aui-rating-element-on" : StringPool.BLANK %>" src="<%= themeDisplay.getPathThemeImages() %>/spacer.png" />
 
 						<%
 						}

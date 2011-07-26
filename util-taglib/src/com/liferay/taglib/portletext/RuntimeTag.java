@@ -24,6 +24,9 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
@@ -108,6 +111,18 @@ public class RuntimeTag extends TagSupport {
 			RuntimePortletUtil.processPortlet(
 				servletContext, request, response, renderRequest,
 				renderResponse, portletId, queryString, true);
+
+			Set<String> runtimePortletIds = (Set<String>)request.getAttribute(
+				WebKeys.RUNTIME_PORTLET_IDS);
+
+			if (runtimePortletIds == null) {
+				runtimePortletIds = new HashSet<String>();
+			}
+
+			runtimePortletIds.add(portletName);
+
+			request.setAttribute(
+				WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
 		}
 		finally {
 			request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);

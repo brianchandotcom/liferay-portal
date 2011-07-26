@@ -41,7 +41,7 @@ public class UpgradePermission extends UpgradeProcess {
 
 		updatePermissions("com.liferay.portlet.bookmarks", true, true);
 		updatePermissions("com.liferay.portlet.documentlibrary", false, true);
-		updatePermissions("com.liferay.portlet.imagegallery", true, false);
+		updatePermissions("com.liferay.portlet.imagegallery", true, true);
 		updatePermissions("com.liferay.portlet.messageboards", true, true);
 		updatePermissions("com.liferay.portlet.shopping", true, true);
 	}

@@ -32,7 +32,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 	<div class="event-selector">
 
 		<%
-		String taglibOnChange = "location.href = '" + portletURL + "&" + renderResponse.getNamespace() + "month=" + selMonth + "&" + renderResponse.getNamespace() + "day=" + selDay + "&" + renderResponse.getNamespace() + "year=" + selYear + "&" + renderResponse.getNamespace() + "eventType=' + this.value;";
+		String taglibOnChange = "location.href = '" + strippedURL + "&" + renderResponse.getNamespace() + "month=" + selMonth + "&" + renderResponse.getNamespace() + "day=" + selDay + "&" + renderResponse.getNamespace() + "year=" + selYear + "&" + renderResponse.getNamespace() + "eventType=' + this.value + '" + urlAnchor + "';";
 		%>
 
 		<aui:select changesContext="<%= true %>" label="" name="eventType" onChange="<%= taglibOnChange %>" title="events">
@@ -79,7 +79,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 			cal.add(Calendar.DATE, 7);
 			%>
 
-			<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
+			<a href="<%= strippedURL %>&<portlet:namespace />month=<%= cal.get(Calendar.MONTH) %>&<portlet:namespace />day=<%= cal.get(Calendar.DATE) %>&<portlet:namespace />year=<%= cal.get(Calendar.YEAR) %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) + urlAnchor %>">
 			<img alt="<liferay-ui:message key="next" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 			</a>
 		</td>

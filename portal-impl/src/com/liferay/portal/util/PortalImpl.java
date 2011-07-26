@@ -4710,6 +4710,19 @@ public class PortalImpl implements Portal {
 		portletPreferencesImpl.store();
 	}
 
+	public String[] stripURLAnchor(String url, String separator) {
+		String anchor = StringPool.BLANK;
+
+		int pos = url.indexOf(separator);
+
+		if (pos != -1) {
+			anchor = url.substring(pos);
+			url = url.substring(0, pos);
+		}
+
+		return new String[] {url, anchor};
+	}
+
 	public String transformCustomSQL(String sql) {
 		if ((_customSqlKeys == null) || (_customSqlValues == null)) {
 			_initCustomSQL();

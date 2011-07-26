@@ -178,14 +178,11 @@ public class HttpImpl implements Http {
 			return null;
 		}
 
-		String anchor = StringPool.BLANK;
+		String array[] = PortalUtil.stripURLAnchor(url, StringPool.POUND);
 
-		int pos = url.indexOf(CharPool.POUND);
+		url = array[0];
 
-		if (pos != -1) {
-			anchor = url.substring(pos);
-			url = url.substring(0, pos);
-		}
+		String anchor = array[1];
 
 		StringBundler sb = new StringBundler(7);
 
@@ -718,14 +715,11 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		String anchor = StringPool.BLANK;
+		String[] array = PortalUtil.stripURLAnchor(url, StringPool.POUND);
 
-		int anchorPos = url.indexOf(CharPool.POUND);
+		url = array[0];
 
-		if (anchorPos != -1) {
-			anchor = url.substring(anchorPos);
-			url = url.substring(0, anchorPos);
-		}
+		String anchor = array[1];
 
 		StringBundler sb = new StringBundler();
 

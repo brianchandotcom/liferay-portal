@@ -20,14 +20,14 @@
 		<table>
 		<tr>
 			<td>
-				<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear - 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
+				<a href="<%= strippedURL %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear - 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) + urlAnchor %>">
 				<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
 				</a>
 			</td>
 			<td>
 
 				<%
-				String taglibOnChange = "location.href = '" + portletURL + "&" + renderResponse.getNamespace() + "year=' + this.value;";
+				String taglibOnChange = "location.href = '" + strippedURL + "&" + renderResponse.getNamespace() + "year=' + this.value + '" + urlAnchor + "';";
 				%>
 
 				<aui:select changesContext="<%= true %>" label="" name="yearSelector" onChange="<%= taglibOnChange %>" title="year">
@@ -45,7 +45,7 @@
 				</aui:select>
 			</td>
 			<td>
-				<a href="<%= portletURL.toString() %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear + 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) %>">
+				<a href="<%= strippedURL %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear + 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) + urlAnchor %>">
 				<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 				</a>
 			</td>
@@ -55,7 +55,7 @@
 	<td align="right">
 
 		<%
-		taglibOnChange = "location.href = '" + portletURL + "&" + renderResponse.getNamespace() + "month=" + selMonth + "&" + renderResponse.getNamespace() + "day=" + selDay + "&" + renderResponse.getNamespace() + "year=" + selYear + "&" + renderResponse.getNamespace() + "eventType=' + this.value;";
+		taglibOnChange = "location.href = '" + strippedURL + "&" + renderResponse.getNamespace() + "month=" + selMonth + "&" + renderResponse.getNamespace() + "day=" + selDay + "&" + renderResponse.getNamespace() + "year=" + selYear + "&" + renderResponse.getNamespace() + "eventType=' + this.value + '" + urlAnchor + "';";
 		%>
 
 		<aui:select changesContext="<%= true %>" label="" name="eventType" onChange="<%= taglibOnChange %>" title="events">

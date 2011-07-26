@@ -69,7 +69,8 @@ if (choiceName > 0) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (question != null) ? question.getTitle(locale) : "new-question" %>'
+		localizeTitle="<%= (question == null) %>"
+		title='<%= (question == null) ? "new-question" : question.getTitle(locale) %>'
 	/>
 
 	<liferay-ui:error exception="<%= QuestionChoiceException.class %>" message="please-enter-valid-choices" />

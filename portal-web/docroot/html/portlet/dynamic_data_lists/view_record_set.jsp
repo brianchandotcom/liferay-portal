@@ -37,6 +37,7 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= recordSet.getName(locale) %>"
 />
 

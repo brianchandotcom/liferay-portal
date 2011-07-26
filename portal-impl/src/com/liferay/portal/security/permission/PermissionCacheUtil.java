@@ -16,10 +16,9 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -31,6 +30,7 @@ import org.apache.commons.collections.map.LRUMap;
 /**
  * @author Charles May
  * @author Michael Young
+ * @author Shuyang Zhou
  */
 public class PermissionCacheUtil {
 
@@ -58,7 +58,7 @@ public class PermissionCacheUtil {
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
 		PermissionCheckerBag bag = null;
 
-		Serializable key = _encodeKey(userId, groupId);
+		Serializable key = new BagKey(userId, groupId);
 
 		if (_localCacheAvailable) {
 			Map<String, Object> localCache = _localCache.get();
@@ -80,7 +80,7 @@ public class PermissionCacheUtil {
 
 		Boolean value = null;
 
-		Serializable key = _encodeKey(
+		Serializable key = new PermissionKey(
 			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
@@ -100,7 +100,7 @@ public class PermissionCacheUtil {
 		long userId, long groupId, PermissionCheckerBag bag) {
 
 		if (bag != null) {
-			Serializable key = _encodeKey(userId, groupId);
+			Serializable key = new BagKey(userId, groupId);
 
 			if (_localCacheAvailable) {
 				Map<Serializable, Object> localCache = _localCache.get();
@@ -119,7 +119,7 @@ public class PermissionCacheUtil {
 		String name, String primKey, String actionId, Boolean value) {
 
 		if (value != null) {
-			Serializable key = _encodeKey(
+			Serializable key = new PermissionKey(
 				userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 			if (_localCacheAvailable) {
@@ -134,36 +134,6 @@ public class PermissionCacheUtil {
 		return value;
 	}
 
-	private static Serializable _encodeKey(long userId, long groupId) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				PERMISSION_CHECKER_BAG_CACHE_NAME);
-
-		cacheKeyGenerator.append(StringUtil.toHexString(userId));
-		cacheKeyGenerator.append(StringUtil.toHexString(groupId));
-
-		return cacheKeyGenerator.finish();
-	}
-
-	private static Serializable _encodeKey(
-		long userId, boolean signedIn, boolean checkGuest, long groupId,
-		String name, String primKey, String actionId) {
-
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				PERMISSION_CHECKER_BAG_CACHE_NAME);
-
-		cacheKeyGenerator.append(StringUtil.toHexString(userId));
-		cacheKeyGenerator.append(String.valueOf(checkGuest));
-		cacheKeyGenerator.append(String.valueOf(signedIn));
-		cacheKeyGenerator.append(StringUtil.toHexString(groupId));
-		cacheKeyGenerator.append(name);
-		cacheKeyGenerator.append(primKey);
-		cacheKeyGenerator.append(actionId);
-
-		return cacheKeyGenerator.finish();
-	}
-
 	private static ThreadLocal<LRUMap> _localCache;
 	private static boolean _localCacheAvailable;
 	private static PortalCache _permissionCheckerBagPortalCache =
@@ -174,6 +144,93 @@ public class PermissionCacheUtil {
 		MultiVMPoolUtil.getCache(
 			PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+
+	private static class BagKey implements Serializable {
+
+		public BagKey(long userId, long groupId) {
+			_userId = userId;
+			_groupId = groupId;
+		}
+
+		public boolean equals(Object obj) {
+			BagKey bagKey = (BagKey)obj;
+
+			if ((bagKey._userId == _userId) && (bagKey._groupId == _groupId)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public int hashCode() {
+			return (int)(_userId * 11 + _groupId);
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _groupId;
+		private final long _userId;
+
+	}
+
+	private static class PermissionKey implements Serializable {
+
+		public PermissionKey(
+			long userId, boolean signedIn, boolean checkGuest, long groupId,
+			String name, String primKey, String actionId) {
+
+			_userId = userId;
+			_signedIn = signedIn;
+			_checkGuest = checkGuest;
+			_groupId = groupId;
+			_name = name;
+			_primKey = primKey;
+			_actionId = actionId;
+		}
+
+		public boolean equals(Object obj) {
+			PermissionKey permissionKey = (PermissionKey)obj;
+
+			if ((permissionKey._userId == _userId) &&
+				(permissionKey._signedIn == _signedIn) &&
+				(permissionKey._checkGuest == _checkGuest) &&
+				(permissionKey._groupId == _groupId) &&
+				Validator.equals(permissionKey._name, _name) &&
+				Validator.equals(permissionKey._primKey, _primKey) &&
+				Validator.equals(permissionKey._actionId, _actionId)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _userId);
+
+			hashCode = HashUtil.hash(hashCode, _signedIn);
+			hashCode = HashUtil.hash(hashCode, _checkGuest);
+			hashCode = HashUtil.hash(hashCode, _groupId);
+			hashCode = HashUtil.hash(hashCode, _name);
+			hashCode = HashUtil.hash(hashCode, _primKey);
+			hashCode = HashUtil.hash(hashCode, _actionId);
+
+			return hashCode;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final String _actionId;
+		private final boolean _checkGuest;
+		private final long _groupId;
+		private final String _name;
+		private final String _primKey;
+		private final boolean _signedIn;
+		private final long _userId;
+
+	}
 
 	static {
 		if (PropsValues.PERMISSIONS_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {

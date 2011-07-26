@@ -56,12 +56,10 @@ if (url != null) {
 
 	// Strip anchor
 
-	x = url.indexOf("&#");
+	String[] urlArray = PortalUtil.stripURLAnchor(url, "&#");
 
-	if (x != -1) {
-		url = url.substring(0, x);
-		anchor = url.substring(x, url.length());
-	}
+	anchor = urlArray[1];
+	url = urlArray[0];
 
 	if (!url.contains(StringPool.QUESTION)) {
 		separator = StringPool.QUESTION;

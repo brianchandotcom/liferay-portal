@@ -4,19 +4,21 @@
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
 			INNER JOIN
-				ResourcePermission ON
-					(
+				(
+					SELECT
+						scope, primKey, roleId
+					FROM
+						ResourcePermission
+					WHERE
 						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 						(ResourcePermission.name = '[$CLASS_NAME$]') AND
-						[$PRIM_KEYS$] AND
 						(
-							(
-								[$ROLE_IDS$] AND
-								(MOD(ResourcePermission.actionIds, 2) = 1)
-							)
+							(MOD(ResourcePermission.actionIds, 2) = 1)
 							OR [$OWNER_CHECK$]
 						)
-					)
+				)
+			InlineSQLResourcePermission ON
+				[$PRIM_KEYS$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByGroupId">
@@ -970,20 +972,6 @@
 				(ResourcePermission.scope = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByCommunity">
-		<![CDATA[
-			SELECT
-				DISTINCT Groups_Roles.roleId
-			FROM
-				Groups_Roles
-			INNER JOIN
-				Users_Groups ON
-					(Users_Groups.groupId = Groups_Roles.groupId)
-			WHERE
-				(Groups_Roles.roleId = ?) AND
-				(Users_Groups.userId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganization">
 		<![CDATA[
 			SELECT
@@ -1001,7 +989,7 @@
 				(Users_Orgs.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganizationCommunity">
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganizationSite">
 		<![CDATA[
 			SELECT
 				DISTINCT Groups_Roles.roleId
@@ -1016,6 +1004,20 @@
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_Orgs.userId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countBySite">
+		<![CDATA[
+			SELECT
+				DISTINCT Groups_Roles.roleId
+			FROM
+				Groups_Roles
+			INNER JOIN
+				Users_Groups ON
+					(Users_Groups.groupId = Groups_Roles.groupId)
+			WHERE
+				(Groups_Roles.roleId = ?) AND
+				(Users_Groups.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUser">
@@ -1046,7 +1048,7 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupCommunity">
+	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupSite">
 		<![CDATA[
 			SELECT
 				DISTINCT Groups_Roles.roleId

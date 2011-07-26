@@ -28,7 +28,7 @@ List<Portlet> portlets = new ArrayList<Portlet>();
 for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-	if ((portlet != null) && portlet.isInclude() && portlet.isActive() && portlet.hasAddPortletPermission(user.getUserId())) {
+	if ((portlet != null) && portlet.isInclude() && portlet.isActive() && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
 		portlets.add(portlet);
 	}
 }
@@ -77,7 +77,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 													boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
 													boolean portletLocked = (!portletInstanceable && portletUsed);
 
-													if (!PortletPermissionUtil.contains(permissionChecker, plid, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
+													if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
 														continue;
 													}
 												%>
@@ -425,7 +425,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 							},
 							on: {
 								success: function(event, id, obj) {
-									window.location.reload();
+									window.location.href = themeDisplay.getLayoutURL();
 								}
 							}
 						}

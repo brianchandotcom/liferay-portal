@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
@@ -95,6 +96,8 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.Ticket;
+import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
@@ -117,6 +120,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceCodeLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -3696,7 +3700,12 @@ public class PortalImpl implements Portal {
 			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
 			actionName.equals("addFile")) {
 
-			alwaysAllowDoAsUser = true;
+			try {
+				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		if ((!PropsValues.PORTAL_JAAS_ENABLE &&
@@ -4710,6 +4719,19 @@ public class PortalImpl implements Portal {
 		portletPreferencesImpl.store();
 	}
 
+	public String[] stripURLAnchor(String url, String separator) {
+		String anchor = StringPool.BLANK;
+
+		int pos = url.indexOf(separator);
+
+		if (pos != -1) {
+			anchor = url.substring(pos);
+			url = url.substring(0, pos);
+		}
+
+		return new String[] {url, anchor};
+	}
+
 	public String transformCustomSQL(String sql) {
 		if ((_customSqlKeys == null) || (_customSqlValues == null)) {
 			_initCustomSQL();
@@ -5132,6 +5154,59 @@ public class PortalImpl implements Portal {
 
 			return 0;
 		}
+	}
+
+	protected boolean isAlwaysAllowDoAsUser(HttpServletRequest request)
+		throws Exception {
+
+		String token = ParamUtil.getString(request, "ticket");
+
+		Ticket ticket = TicketLocalServiceUtil.getTicket(token);
+
+		String className = ticket.getClassName();
+
+		if (!className.equals(User.class.getName())) {
+			return false;
+		}
+
+		long doAsUserId = 0;
+
+		try {
+			Company company = getCompany(request);
+
+			String doAsUserIdString = ParamUtil.getString(
+				request, "doAsUserId");
+
+			if (Validator.isNotNull(doAsUserIdString)) {
+				doAsUserId = GetterUtil.getLong(
+					Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		if ((ticket.getClassPK() != doAsUserId) ||
+			(ticket.getType() != TicketConstants.TYPE_IMPERSONATE)) {
+
+			return false;
+		}
+
+		if (ticket.isExpired()) {
+			TicketLocalServiceUtil.deleteTicket(ticket);
+
+			return false;
+		}
+
+		Date expirationDate = new Date(
+			System.currentTimeMillis() +
+				PropsValues.SESSION_TIMEOUT * Time.MINUTE);
+
+		ticket.setExpirationDate(expirationDate);
+
+		TicketLocalServiceUtil.updateTicket(ticket, false);
+
+		return true;
 	}
 
 	protected void notifyPortalPortEventListeners(int portalPort) {

@@ -276,6 +276,12 @@ public class UserGroupLocalServiceUtil {
 			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
+	public static void addUserUserGroups(long userId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addUserUserGroups(userId, userGroupIds);
+	}
+
 	public static void clearUserUserGroups(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().clearUserUserGroups(userId);

@@ -722,6 +722,13 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 						includes="resin.jar,script-10.jar"
 					/>
 				</copy>
+
+				<delete>
+					<fileset
+						dir="${app.server.lib.portal.dir}"
+						includes="tomcat-juli.jar"
+					/>
+				</delete>
 			</then>
 		</if>
 

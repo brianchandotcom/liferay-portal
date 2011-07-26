@@ -227,11 +227,11 @@ public class CompanyServiceSoap {
 	public static void updateSecurity(long companyId,
 		java.lang.String authType, boolean autoLogin, boolean sendPassword,
 		boolean strangers, boolean strangersWithMx, boolean strangersVerify,
-		boolean communityLogo) throws RemoteException {
+		boolean siteLogo) throws RemoteException {
 		try {
 			CompanyServiceUtil.updateSecurity(companyId, authType, autoLogin,
 				sendPassword, strangers, strangersWithMx, strangersVerify,
-				communityLogo);
+				siteLogo);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

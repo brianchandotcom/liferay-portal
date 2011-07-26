@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -23,8 +24,29 @@ import java.util.Collection;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public interface PortletPermission {
+
+	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException;
+
+	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException;
+
+	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException;
+
+	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException;
 
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
@@ -49,6 +71,46 @@ public interface PortletPermission {
 	public void check(
 			PermissionChecker permissionChecker, String portletId,
 			String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId, boolean strict)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId, boolean strict)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
 		throws PortalException, SystemException;
 
 	public boolean contains(

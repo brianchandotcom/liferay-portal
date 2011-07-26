@@ -76,14 +76,10 @@
 			<bean class="com.liferay.portal.dao.shard.ShardSqlUpdateFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.dao.shard.ShardAdvice" class="com.liferay.portal.dao.shard.ShardAdvice">
-		<property name="shardDataSourceTargetSource" ref="shardDataSourceTargetSource" />
-		<property name="shardSessionFactoryTargetSource" ref="shardSessionFactoryTargetSource" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.dao.shard.ShardUtil" class="com.liferay.portal.kernel.dao.shard.ShardUtil">
 		<property name="shard">
 			<bean class="com.liferay.portal.dao.shard.ShardImpl">
-				<property name="shardAdvice" ref="com.liferay.portal.dao.shard.ShardAdvice" />
+				<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
 			</bean>
 		</property>
 	</bean>
@@ -94,20 +90,40 @@
 		<property name="shardSessionFactoryTargetSource" ref="shardSessionFactoryTargetSource" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
-	<aop:config>
-		<aop:aspect ref="com.liferay.portal.dao.shard.ShardAdvice">
-			<aop:around pointcut="bean(com.liferay.portal.service.CompanyLocalService)" method="invokeCompanyService" />
-			<aop:around pointcut="bean(com.liferay.portal.service.PortletLocalService)" method="invokePortletService" />
-			<aop:around pointcut="bean(*Persistence) || bean(*Finder)" method="invokePersistence" />
-			<aop:around pointcut="execution(void com.liferay.portal.convert.messaging.ConvertProcessMessageListener.receive(..))" method="invokeGlobally" />
-			<aop:around pointcut="execution(void com.liferay.portal.events.StartupHelper.updateIndexes())" method="invokeGlobally" />
-			<aop:around pointcut="execution(void com.liferay.portal.events.StartupHelper.upgradeProcess(int))" method="invokeGlobally" />
-			<aop:around pointcut="execution(void com.liferay.portal.events.StartupHelper.verifyProcess(boolean))" method="invokeIteratively" />
-			<aop:around pointcut="execution(void com.liferay.portal.service.ReleaseLocalService.createTablesAndPopulate())" method="invokeGlobally" />
-			<aop:around pointcut="execution(void com.liferay.portal.service.ServiceComponentLocalService.upgradeDB(..))" method="invokeGlobally" />
-			<aop:around pointcut="execution(* com.liferay.portal.service.AccountLocalService.getAccount(long, long))" method="invokeByParameter" />
-			<aop:around pointcut="execution(* com.liferay.portal.service.ResourceCodeLocalService.checkResourceCodes(long, String))" method="invokeByParameter" />
-			<aop:around pointcut="execution(* com.liferay.portal.service.UserLocalService.searchCount(..))" method="invokeByParameter" />
-		</aop:aspect>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardAdvice" class="com.liferay.portal.dao.shard.advice.ShardAdvice">
+		<property name="shardDataSourceTargetSource" ref="shardDataSourceTargetSource" />
+		<property name="shardSessionFactoryTargetSource" ref="shardSessionFactoryTargetSource" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardCompanyAdvice" class="com.liferay.portal.dao.shard.advice.ShardCompanyAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardPortletAdvice" class="com.liferay.portal.dao.shard.advice.ShardPortletAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardPersistenceAdvice" class="com.liferay.portal.dao.shard.advice.ShardPersistenceAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" class="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardIterativelyAdvice" class="com.liferay.portal.dao.shard.advice.ShardIterativelyAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<bean id="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" class="com.liferay.portal.dao.shard.advice.ShardParameterAdvice">
+		<property name="shardAdvice" ref="com.liferay.portal.dao.shard.advice.ShardAdvice" />
+	</bean>
+	<aop:config proxy-target-class="false">
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardCompanyAdvice" pointcut="bean(com.liferay.portal.service.CompanyLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardPortletAdvice" pointcut="bean(com.liferay.portal.service.PortletLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardPersistenceAdvice" pointcut="bean(*Persistence) || bean(*Finder)" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.convert.messaging.ConvertProcessMessageListener.receive(..))" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.events.StartupHelper.updateIndexes())" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.events.StartupHelper.upgradeProcess(int))" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardIterativelyAdvice" pointcut="execution(void com.liferay.portal.events.StartupHelper.verifyProcess(boolean))" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.service.ReleaseLocalService.createTablesAndPopulate())" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.service.ServiceComponentLocalService.upgradeDB(..))" />		
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" pointcut="execution(* com.liferay.portal.service.AccountLocalService.getAccount(long, long))" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" pointcut="execution(* com.liferay.portal.service.ResourceCodeLocalService.checkResourceCodes(long, String))" />
+		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" pointcut="execution(* com.liferay.portal.service.UserLocalService.searchCount(..))" />
 	</aop:config>
 </beans>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
@@ -176,19 +177,29 @@ public class BlogsStatsUserLocalServiceImpl
 		int entryCount = blogsEntryPersistence.countByG_U_S(
 			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 
+		if (entryCount == 0) {
+			try {
+				blogsStatsUserPersistence.removeByG_U(groupId, userId);
+			}
+			catch (NoSuchStatsUserException nssue) {
+			}
+
+			return;
+		}
+
 		BlogsStatsUser statsUser = getStatsUser(groupId, userId);
 
 		statsUser.setEntryCount(entryCount);
 
+		BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_S_First(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED,
+			new EntryDisplayDateComparator());
+
+		Date lastDisplayDate = blogsEntry.getDisplayDate();
+
+		Date lastPostDate = statsUser.getLastPostDate();
+
 		if (displayDate != null) {
-			BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_S_First(
-				groupId, userId, WorkflowConstants.STATUS_APPROVED,
-				new EntryDisplayDateComparator());
-
-			Date lastDisplayDate = blogsEntry.getDisplayDate();
-
-			Date lastPostDate = statsUser.getLastPostDate();
-
 			if (lastPostDate == null) {
 				statsUser.setLastPostDate(displayDate);
 			}
@@ -198,6 +209,9 @@ public class BlogsStatsUserLocalServiceImpl
 			else if (lastDisplayDate.before(lastPostDate)) {
 				statsUser.setLastPostDate(lastDisplayDate);
 			}
+		}
+		else if (lastDisplayDate.before(lastPostDate)) {
+			statsUser.setLastPostDate(lastDisplayDate);
 		}
 
 		blogsStatsUserPersistence.update(statsUser, false);

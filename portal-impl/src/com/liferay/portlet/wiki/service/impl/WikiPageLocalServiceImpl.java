@@ -678,7 +678,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		return ListUtil.fromCollection(pages.values());
+		return ListUtil.fromMapValues(pages);
 	}
 
 	public WikiPage getPage(long resourcePrimKey)

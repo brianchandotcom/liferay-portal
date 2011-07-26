@@ -27,8 +27,10 @@ import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -171,6 +173,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return groupLocalService.getUserOrganizationsGroups(userId, start, end);
 	}
 
+	public List<Group> getUserPlaces() throws PortalException, SystemException {
+		return getUserPlaces(null, QueryUtil.ALL_POS);
+	}
+
+	public List<Group> getUserPlaces(String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlaces(getGuestOrUserId(), classNames, max);
+	}
+
 	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
 		throws PortalException, SystemException {
 
@@ -196,7 +208,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
-			groupParams.put("usersGroups", new Long(getUserId()));
+			groupParams.put("usersGroups", new Long(userId));
 
 			userPlaces.addAll(
 				groupLocalService.search(
@@ -209,7 +221,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			LinkedHashMap<String, Object> organizationParams =
 				new LinkedHashMap<String, Object>();
 
-			organizationParams.put("usersOrgs", new Long(getUserId()));
+			organizationParams.put("usersOrgs", new Long(userId));
 
 			List<Organization> userOrgs = organizationLocalService.search(
 				user.getCompanyId(),
@@ -241,8 +253,20 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.getUserId() != userId) {
+			try {
+				permissionChecker = PermissionCheckerFactoryUtil.create(
+					user, true);
+			}
+			catch (Exception e) {
+				throw new PrincipalException(e);
+			}
+		}
+
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.VIEW_CONTROL_PANEL)) {
+				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			Group controlPanelGroup = groupLocalService.getGroup(
 				user.getCompanyId(), GroupConstants.CONTROL_PANEL);

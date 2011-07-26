@@ -162,6 +162,7 @@ int organizationIdsPos = ParamUtil.getInteger(request, "organizationIdsPos");
 		%>
 
 		<liferay-ui:header
+			localizeTitle="<%= false %>"
 			title="<%= organization.getName() %>"
 		/>
 

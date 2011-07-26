@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -76,12 +77,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				return false;
+			if (isEnabled(groupId)) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	public String replacePermissionCheck(
@@ -219,45 +220,53 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		long[] roleIds = getRoleIds(groupIds);
+		StringBundler sb = new StringBundler();
 
-		StringBundler roleIdsSQL = new StringBundler();
+		sb.append("(InlineSQLResourcePermission.scope = ");
+		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+		sb.append(" AND ");
+		sb.append("InlineSQLResourcePermission.primKey = CAST_TEXT(");
+		sb.append(classPKField);
+		sb.append(") AND (");
 
-		if (roleIds.length == 0) {
-			roleIds = _NO_ROLE_IDS;
+		for (int j = 0; j < groupIds.length; j++) {
+			long groupId = groupIds[j];
+
+			if (!permissionChecker.hasPermission(
+					groupId, className, 0, ActionKeys.VIEW)) {
+
+				if (j > 0) {
+					sb.append(" OR ");
+				}
+
+				sb.append("(");
+
+				long[] roleIds = getRoleIds(groupId);
+
+				if (roleIds.length == 0) {
+					roleIds = _NO_ROLE_IDS;
+				}
+
+				for (int i = 0; i < roleIds.length; i++) {
+					if (i > 0) {
+						sb.append(" OR ");
+					}
+
+					sb.append("InlineSQLResourcePermission.roleId = ");
+					sb.append(roleIds[i]);
+				}
+
+				sb.append(") AND ");
+			}
+
+			sb.append("(");
+			sb.append(classPKField.substring(0, classPKField.lastIndexOf('.')));
+			sb.append(".groupId = ");
+			sb.append(groupId);
+			sb.append(")");
 		}
 
-		for (int i = 0; i < roleIds.length; i++) {
-			if (i == 0) {
-				roleIdsSQL.append("(");
-			}
-			else if (i > 0) {
-				roleIdsSQL.append(" OR ");
-			}
-
-			roleIdsSQL.append("ResourcePermission.roleId = ");
-			roleIdsSQL.append(roleIds[i]);
-
-			if (i == (roleIds.length - 1)) {
-				roleIdsSQL.append(")");
-			}
-		}
-
-		StringBundler primKeysSQL = new StringBundler();
-
-		primKeysSQL.append("(ResourcePermission.primKey = CAST_TEXT(");
-		primKeysSQL.append(classPKField);
-		primKeysSQL.append(")");
-
-		if (groupIds.length > 1) {
-			for (long groupId : groupIds) {
-				primKeysSQL.append(" OR ResourcePermission.primKey = '");
-				primKeysSQL.append(groupId);
-				primKeysSQL.append("'");
-			}
-		}
-
-		primKeysSQL.append(")");
+		sb.append("))");
 
 		permissionJoin = StringUtil.replace(
 			permissionJoin,
@@ -265,15 +274,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				"[$CLASS_NAME$]",
 				"[$COMPANY_ID$]",
 				"OR [$OWNER_CHECK$]",
-				"[$PRIM_KEYS$]",
-				"[$ROLE_IDS$]"
+				"[$PRIM_KEYS$]"
 			},
 			new String[] {
 				className,
 				String.valueOf(permissionChecker.getCompanyId()),
 				ownerSQL.toString(),
-				primKeysSQL.toString(),
-				roleIdsSQL.toString()
+				sb.toString()
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

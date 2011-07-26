@@ -91,6 +91,7 @@ public class UpgradePortletPreferences
 		updatePortalPreferences();
 		updatePortletPreferences();
 		updatePortletPreferencesOwner();
+		upgrade(UpgradeCommunityProperties.class);
 	}
 
 	protected long getOwnerId(long plid) throws Exception {

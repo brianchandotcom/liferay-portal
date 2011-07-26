@@ -97,7 +97,9 @@ if (folder != null) {
 
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
-	<liferay-ui:header title="images" />
+	<liferay-ui:header
+		title="images"
+	/>
 
 	<%
 	headerNames.clear();

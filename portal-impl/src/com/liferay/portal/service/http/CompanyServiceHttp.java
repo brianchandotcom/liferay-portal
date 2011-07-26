@@ -576,7 +576,7 @@ public class CompanyServiceHttp {
 	public static void updateSecurity(HttpPrincipal httpPrincipal,
 		long companyId, java.lang.String authType, boolean autoLogin,
 		boolean sendPassword, boolean strangers, boolean strangersWithMx,
-		boolean strangersVerify, boolean communityLogo)
+		boolean strangersVerify, boolean siteLogo)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -585,7 +585,7 @@ public class CompanyServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, authType, autoLogin, sendPassword, strangers,
-					strangersWithMx, strangersVerify, communityLogo);
+					strangersWithMx, strangersVerify, siteLogo);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);

@@ -51,6 +51,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= false %>"
 	title="<%= role.getTitle(locale) %>"
 />
 

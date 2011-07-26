@@ -191,12 +191,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 			PropsValues.COMPANY_SECURITY_AUTO_LOGIN);
 	}
 
-	public boolean isCommunityLogo() throws SystemException {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_COMMUNITY_LOGO,
-			PropsValues.COMPANY_SECURITY_COMMUNITY_LOGO);
-	}
-
 	public boolean isSendPassword() throws SystemException {
 		return PrefsPropsUtil.getBoolean(
 			getCompanyId(), PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
@@ -207,6 +201,12 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return PrefsPropsUtil.getBoolean(
 			getCompanyId(), PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
 			PropsValues.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK);
+	}
+
+	public boolean isSiteLogo() throws SystemException {
+		return PrefsPropsUtil.getBoolean(
+			getCompanyId(), PropsKeys.COMPANY_SECURITY_SITE_LOGO,
+			PropsValues.COMPANY_SECURITY_SITE_LOGO);
 	}
 
 	public boolean isStrangers() throws SystemException {

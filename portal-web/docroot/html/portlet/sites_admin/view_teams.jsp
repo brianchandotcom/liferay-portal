@@ -40,6 +40,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	localizeTitle="<%= false %>"
 	title='<%= group.getDescriptiveName() + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
 />
 

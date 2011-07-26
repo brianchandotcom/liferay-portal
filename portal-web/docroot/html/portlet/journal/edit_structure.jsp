@@ -102,7 +102,8 @@ int tabIndex = 1;
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (structure != null) ? structure.getName() : "new-structure" %>'
+		localizeTitle="<%= (structure == null) %>"
+		title='<%= (structure == null) ? "new-structure" : structure.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateStructureElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -336,81 +338,98 @@ public class MinifierFilter extends BasePortalFilter {
 
 			return cacheDataFile;
 		}
-		else {
-			String minifiedContent = null;
 
-			if (realPath.endsWith(_CSS_EXTENSION)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Minifying CSS " + file);
-				}
+		String minifiedContent = null;
 
-				minifiedContent = minifyCss(request, file);
-
-				response.setContentType(ContentTypes.TEXT_CSS);
-
-				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
-			}
-			else if (realPath.endsWith(_JAVASCRIPT_EXTENSION)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Minifying JavaScript " + file);
-				}
-
-				minifiedContent = minifyJavaScript(file);
-
-				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
-
-				FileUtil.write(
-					cacheContentTypeFile, ContentTypes.TEXT_JAVASCRIPT);
-			}
-			else if (realPath.endsWith(_JSP_EXTENSION)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Minifying JSP " + file);
-				}
-
-				StringServletResponse stringResponse =
-					new StringServletResponse(response);
-
-				processFilter(
-					MinifierFilter.class, request, stringResponse, filterChain);
-
-				CacheResponseUtil.setHeaders(
-					response, stringResponse.getHeaders());
-
-				response.setContentType(stringResponse.getContentType());
-
-				minifiedContent = stringResponse.getString();
-
-				if (minifierType.equals("css")) {
-					minifiedContent = minifyCss(request, minifiedContent);
-				}
-				else if (minifierType.equals("js")) {
-					minifiedContent = minifyJavaScript(minifiedContent);
-				}
-
-				FileUtil.write(
-					cacheContentTypeFile, stringResponse.getContentType());
-			}
-			else {
-				return null;
+		if (realPath.endsWith(_CSS_EXTENSION)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Minifying CSS " + file);
 			}
 
-			FileUtil.write(cacheDataFile, minifiedContent);
+			minifiedContent = minifyCss(request, response, file);
 
-			return minifiedContent;
+			response.setContentType(ContentTypes.TEXT_CSS);
+
+			FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
 		}
+		else if (realPath.endsWith(_JAVASCRIPT_EXTENSION)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Minifying JavaScript " + file);
+			}
+
+			minifiedContent = minifyJavaScript(file);
+
+			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+			FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_JAVASCRIPT);
+		}
+		else if (realPath.endsWith(_JSP_EXTENSION)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Minifying JSP " + file);
+			}
+
+			StringServletResponse stringResponse = new StringServletResponse(
+				response);
+
+			processFilter(
+				MinifierFilter.class, request, stringResponse, filterChain);
+
+			CacheResponseUtil.setHeaders(response, stringResponse.getHeaders());
+
+			response.setContentType(stringResponse.getContentType());
+
+			minifiedContent = stringResponse.getString();
+
+			if (minifierType.equals("css")) {
+				minifiedContent = minifyCss(
+					request, response, realPath, minifiedContent);
+			}
+			else if (minifierType.equals("js")) {
+				minifiedContent = minifyJavaScript(minifiedContent);
+			}
+
+			FileUtil.write(
+				cacheContentTypeFile, stringResponse.getContentType());
+		}
+		else {
+			return null;
+		}
+
+		FileUtil.write(cacheDataFile, minifiedContent);
+
+		return minifiedContent;
 	}
 
-	protected String minifyCss(HttpServletRequest request, File file)
+	protected String minifyCss(
+			HttpServletRequest request, HttpServletResponse response, File file)
 		throws IOException {
 
 		String content = FileUtil.read(file);
 
 		content = aggregateCss(file.getParent(), content);
 
-		return minifyCss(request, content);
+		return minifyCss(request, response, file.getAbsolutePath(), content);
 	}
 
-	protected String minifyCss(HttpServletRequest request, String content) {
+	protected String minifyCss(
+		HttpServletRequest request, HttpServletResponse response,
+		String cssRealPath, String content) {
+
+		try {
+			content = DynamicCSSUtil.parseSass(cssRealPath, content);
+		}
+		catch (Exception e) {
+			_log.error("Unable to parse SASS on CSS " + cssRealPath, e);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(content);
+			}
+
+			response.setHeader(
+				HttpHeaders.CACHE_CONTROL,
+				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+		}
+
 		String browserId = ParamUtil.getString(request, "browserId");
 
 		if (!browserId.equals(BrowserSniffer.BROWSER_ID_IE)) {

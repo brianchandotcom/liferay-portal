@@ -361,10 +361,12 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static java.io.InputStream getFileAsStream(long userId,
-		long fileEntryId, java.lang.String version, boolean count)
+		long fileEntryId, java.lang.String version, boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileAsStream(userId, fileEntryId, version, count);
+		return getService()
+				   .getFileAsStream(userId, fileEntryId, version,
+			incrementCounter);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(

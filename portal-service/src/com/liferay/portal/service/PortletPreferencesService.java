@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * @see com.liferay.portal.service.impl.PortletPreferencesServiceImpl
  * @generated
  */
+@JSONWebService
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface PortletPreferencesService {
@@ -45,20 +47,21 @@ public interface PortletPreferencesService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId,
-		java.lang.String portletId, long portletItemId,
-		javax.portlet.PortletPreferences preferences)
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
+		long portletItemId, javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId,
-		java.lang.String portletId,
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
 		com.liferay.portal.model.PortletItem portletItem,
 		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreArchivedPreferences(long groupId, java.lang.String name,
-		java.lang.String portletId, javax.portlet.PortletPreferences preferences)
+		com.liferay.portal.model.Layout layout, java.lang.String portletId,
+		javax.portlet.PortletPreferences preferences)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

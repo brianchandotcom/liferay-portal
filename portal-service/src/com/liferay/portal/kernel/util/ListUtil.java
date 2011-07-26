@@ -30,10 +30,12 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ListUtil {
 
@@ -144,6 +146,34 @@ public class ListUtil {
 
 	public static List<String> fromFile(String fileName) throws IOException {
 		return fromFile(new File(fileName));
+	}
+
+	public static <E> List<E> fromMapKeys(Map<E, ?> map) {
+		if ((map == null) || map.isEmpty()) {
+			return new ArrayList<E>();
+		}
+
+		List<E> list = new ArrayList<E>(map.size());
+
+		for (Map.Entry<E, ?> entry : map.entrySet()) {
+			list.add(entry.getKey());
+		}
+
+		return list;
+	}
+
+	public static <E> List<E> fromMapValues(Map<?, E> map) {
+		if ((map == null) || map.isEmpty()) {
+			return new ArrayList<E>();
+		}
+
+		List<E> list = new ArrayList<E>(map.size());
+
+		for (Map.Entry<?, E> entry : map.entrySet()) {
+			list.add(entry.getValue());
+		}
+
+		return list;
 	}
 
 	public static List<String> fromString(String s) {

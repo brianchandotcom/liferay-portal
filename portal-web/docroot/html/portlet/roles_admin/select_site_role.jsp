@@ -136,7 +136,9 @@ if (step == 1) {
 			<aui:input name="step" type="hidden" value="2" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 
-			<liferay-ui:header title="site-roles" />
+			<liferay-ui:header
+				title="site-roles"
+			/>
 
 			<%
 			Group group = GroupServiceUtil.getGroup(groupId);

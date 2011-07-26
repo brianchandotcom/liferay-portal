@@ -53,7 +53,8 @@ if (fileEntryType != null) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (fileEntryType != null) ? fileEntryType.getName() : "new-document-type" %>'
+		localizeTitle="<%= (fileEntryType == null) %>"
+		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName() %>'
 	/>
 
 	<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />

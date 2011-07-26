@@ -36,7 +36,8 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= (entry != null) ? entry.getTitle() : "new-blog-entry" %>'
+	localizeTitle="<%= (entry == null) %>"
+	title='<%= (entry == null) ? "new-blog-entry" : entry.getTitle() %>'
 />
 
 <portlet:actionURL var="editEntryURL">

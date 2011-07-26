@@ -125,6 +125,7 @@ int userIdsPos = ParamUtil.getInteger(request, "userIdsPos");
 		%>
 
 		<liferay-ui:header
+			localizeTitle="<%= false %>"
 			title="<%= user2.getFullName() %>"
 		/>
 

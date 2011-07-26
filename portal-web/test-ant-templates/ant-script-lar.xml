@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-${test.ant.script.command}" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../build-test.xml" />
+
+	<target name="test-${test.ant.script.command}-glassfish-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="db2-9.7" />
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+
+		<antcall target="prepare-db2">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-hsql-firefox">
+		<antcall target="prepare-hsql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-mysql-google-chrome">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.browser" value="googlechrome" />
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.browser" value="googlechrome" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-mysql-internet-explorer">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.browser" value="iehta" />
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.browser" value="iehta" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-oracle-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="oracle-10.2.0.1.0" />
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+
+		<antcall target="prepare-oracle">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-postgresql-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-8.4.2-1" />
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+
+		<antcall target="prepare-postgresql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sql-server-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sql-server-2005-sp2" />
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+
+		<antcall target="prepare-sql-server">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+
+		<antcall target="prepare-sybase">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.host.db}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-weblogic-10.3-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-websphere-6.1-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+</project>

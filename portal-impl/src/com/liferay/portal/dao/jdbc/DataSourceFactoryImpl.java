@@ -27,8 +27,14 @@ import com.liferay.util.PwdGenerator;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import java.lang.management.ManagementFactory;
+
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 
 import javax.naming.InitialContext;
 
@@ -37,11 +43,14 @@ import javax.sql.DataSource;
 import jodd.bean.BeanUtil;
 
 import org.apache.commons.dbcp.BasicDataSourceFactory;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.apache.tomcat.jdbc.pool.jmx.ConnectionPool;
 
 import uk.org.primrose.pool.datasource.GenericDataSourceFactory;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class DataSourceFactoryImpl implements DataSourceFactory {
 
@@ -51,6 +60,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				(ComboPooledDataSource)dataSource;
 
 			comboPooledDataSource.close();
+		}
+		else if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+			org.apache.tomcat.jdbc.pool.DataSource tomcatDataSource =
+				(org.apache.tomcat.jdbc.pool.DataSource)dataSource;
+
+			tomcatDataSource.close();
 		}
 	}
 
@@ -95,12 +110,19 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			dataSource = initDataSourceDBCP(properties);
 		}
-		else {
+		else if (liferayPoolProvider.equalsIgnoreCase("primrose")) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Initializing Primrose data source");
 			}
 
 			dataSource = initDataSourcePrimrose(properties);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Initializing Tomcat data source");
+			}
+
+			dataSource = initDataSourceTomcat(properties);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -146,7 +168,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
-
 			String value = properties.getProperty(key);
 
 			// Map org.apache.commons.dbcp.BasicDataSource to C3PO
@@ -163,29 +184,25 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			// Ignore Liferay properties
 
-			if (key.equalsIgnoreCase("jndi.name") ||
-				key.equalsIgnoreCase("liferay.pool.provider")) {
-
+			if (isPropertyLiferay(key)) {
 				continue;
 			}
 
 			// Ignore DBCP properties
 
-			if (key.equalsIgnoreCase("defaultTransactionIsolation") ||
-				key.equalsIgnoreCase("maxActive") ||
-				key.equalsIgnoreCase("minIdle") ||
-				key.equalsIgnoreCase("removeAbandonedTimeout")) {
-
+			if (isPropertyDBCP(key)) {
 				continue;
 			}
 
 			// Ignore Primrose properties
 
-			if (key.equalsIgnoreCase("base") ||
-				key.equalsIgnoreCase("connectionTransactionIsolation") ||
-				key.equalsIgnoreCase("idleTime") ||
-				key.equalsIgnoreCase("numberOfConnectionsToInitializeWith")) {
+			if (isPropertyPrimrose(key)) {
+				continue;
+			}
 
+			// Ignore Tomcat
+
+			if (isPropertyTomcat(key)) {
 				continue;
 			}
 
@@ -244,6 +261,141 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		return genericDataSourceFactory.loadPool(poolName, properties);
 	}
+
+	protected DataSource initDataSourceTomcat(Properties properties)
+		throws Exception {
+
+		PoolProperties poolProperties = new PoolProperties();
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			// Ignore Liferay properties
+
+			if (isPropertyLiferay(key)) {
+				continue;
+			}
+
+			// Ignore C3P0 properties
+
+			if (isPropertyC3PO(key)) {
+				continue;
+			}
+
+			// Ignore Primrose properties
+
+			if (isPropertyPrimrose(key)) {
+				continue;
+			}
+
+			try {
+				BeanUtil.setProperty(poolProperties, key, value);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Property " + key + " is not a valid Tomcat JDBC " +
+							"Connection Pool property");
+				}
+			}
+		}
+
+		String poolName = PwdGenerator.getPassword(PwdGenerator.KEY2, 8);
+
+		poolProperties.setName(poolName);
+
+		org.apache.tomcat.jdbc.pool.DataSource dataSource =
+			new org.apache.tomcat.jdbc.pool.DataSource(poolProperties);
+
+		if (poolProperties.isJmxEnabled()) {
+			org.apache.tomcat.jdbc.pool.ConnectionPool jdbcConnectionPool =
+				dataSource.createPool();
+
+			ConnectionPool jmxConnectionPool = jdbcConnectionPool.getJmxPool();
+
+			MBeanServer mBeanServer =
+				ManagementFactory.getPlatformMBeanServer();
+
+			ObjectName objectName = new ObjectName(
+				_TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX + poolName);
+
+			mBeanServer.registerMBean(jmxConnectionPool, objectName);
+		}
+
+		return dataSource;
+	}
+
+	protected boolean isPropertyC3PO(String key) {
+		if (key.equalsIgnoreCase("acquireIncrement") ||
+			key.equalsIgnoreCase("connectionCustomizerClassName") ||
+			key.equalsIgnoreCase("idleConnectionTestPeriod") ||
+			key.equalsIgnoreCase("maxIdleTime") ||
+			key.equalsIgnoreCase("maxPoolSize") ||
+			key.equalsIgnoreCase("minPoolSize") ||
+			key.equalsIgnoreCase("numHelperThreads") ||
+			key.equalsIgnoreCase("preferredTestQuery")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isPropertyDBCP(String key) {
+		if (key.equalsIgnoreCase("defaultTransactionIsolation") ||
+			key.equalsIgnoreCase("maxActive") ||
+			key.equalsIgnoreCase("minIdle") ||
+			key.equalsIgnoreCase("removeAbandonedTimeout")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isPropertyLiferay(String key) {
+		if (key.equalsIgnoreCase("jndi.name") ||
+			key.equalsIgnoreCase("liferay.pool.provider")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isPropertyPrimrose(String key) {
+		if (key.equalsIgnoreCase("base") ||
+			key.equalsIgnoreCase("connectionTransactionIsolation") ||
+			key.equalsIgnoreCase("idleTime") ||
+			key.equalsIgnoreCase("numberOfConnectionsToInitializeWith")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isPropertyTomcat(String key) {
+		if (key.equalsIgnoreCase("fairQueue") ||
+			key.equalsIgnoreCase("jdbcInterceptors") ||
+			key.equalsIgnoreCase("jmxEnabled") ||
+			key.equalsIgnoreCase("timeBetweenEvictionRunsMillis") ||
+			key.equalsIgnoreCase("useEquals")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static final String _TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX =
+		"TomcatJDBCPool:type=ConnectionPool,name=";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryImpl.class);

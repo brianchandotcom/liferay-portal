@@ -75,7 +75,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 								continue;
 							}
 
-							if ((role.getType() == RoleConstants.TYPE_SITE) && !_isCommunityPortlet(portlet.getPortletId())) {
+							if ((role.getType() == RoleConstants.TYPE_SITE) && !_isSitePortlet(portlet.getPortletId())) {
 								continue;
 							}
 
@@ -251,7 +251,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 </aui:form>
 
 <%!
-private static final String[] _COMMUNITY_PORTLETS = {
+private static final String[] _SITE_PORTLETS = {
 	PortletKeys.SITES_ADMIN,
 };
 
@@ -269,8 +269,8 @@ private static final String[] _PORTAL_PORTLETS = {
 	PortletKeys.USERS_ADMIN
 };
 
-private boolean _isCommunityPortlet(String portletId) {
-	return ArrayUtil.contains(_COMMUNITY_PORTLETS, portletId);
+private boolean _isSitePortlet(String portletId) {
+	return ArrayUtil.contains(_SITE_PORTLETS, portletId);
 }
 
 private boolean _isCurrent(String url, String portletResource, boolean showModelResources) {

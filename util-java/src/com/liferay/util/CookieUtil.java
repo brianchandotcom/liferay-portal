@@ -16,32 +16,64 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class CookieUtil {
 
 	public static String get(HttpServletRequest request, String name) {
+		Map<String, Cookie> cookieMap = _getCookieMap(request);
+
+		Cookie cookie = cookieMap.get(name.toUpperCase());
+
+		if (cookie == null) {
+			return null;
+		}
+		else {
+			return cookie.getValue();
+		}
+	}
+
+	private static Map<String, Cookie> _getCookieMap(
+		HttpServletRequest request) {
+
+		Map<String, Cookie> cookieMap =
+			(Map<String, Cookie>)request.getAttribute(
+				CookieUtil.class.getName());
+
+		if (cookieMap != null) {
+			return cookieMap;
+		}
+
 		Cookie[] cookies = request.getCookies();
 
 		if (cookies == null) {
-			return null;
+			cookieMap = Collections.emptyMap();
 		}
+		else {
+			cookieMap = new HashMap<String, Cookie>(cookies.length * 4 / 3);
 
-		for (int i = 0; i < cookies.length; i++) {
-			Cookie cookie = cookies[i];
+			for (Cookie cookie : cookies) {
+				String cookieName = GetterUtil.getString(
+					cookie.getName());
 
-			String cookieName = GetterUtil.getString(cookie.getName());
+				cookieName = cookieName.toUpperCase();
 
-			if (cookieName.equalsIgnoreCase(name)) {
-				return cookie.getValue();
+				cookieMap.put(cookieName, cookie);
 			}
 		}
 
-		return null;
+		request.setAttribute(CookieUtil.class.getName(), cookieMap);
+
+		return cookieMap;
 	}
 
 }

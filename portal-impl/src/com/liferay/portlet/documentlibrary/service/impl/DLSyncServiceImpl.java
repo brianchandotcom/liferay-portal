@@ -38,8 +38,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Michael Young
@@ -52,7 +52,7 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 
 		Date now = new Date();
 
-		Collection<DLSync> dlSyncs = null;
+		List<DLSync> dlSyncs = null;
 
 		if (lastAccessDate != null) {
 			dlSyncs = dlSyncPersistence.findByC_M_R(

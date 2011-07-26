@@ -909,8 +909,8 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	*
 	* @param companyId the primary key of the user's company
 	* @param screenName the user's screen name
-	* @return the user with the screen name, or null if a user with the screen
-	name could not be found
+	* @return the user with the screen name, or <code>null</code> if a user
+	with the screen name could not be found
 	*/
 	public com.liferay.portal.model.User fetchUserByScreenName(long companyId,
 		java.lang.String screenName)

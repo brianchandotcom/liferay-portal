@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.util.SystemProperties;
 
 import com.xuggle.mediatool.IMediaReader;
@@ -148,7 +147,7 @@ public class VideoProcessor implements DLProcessor {
 			}
 
 			String id = DLUtil.getTempFileId(
-				fileVersion.getFileEntryId(),	fileVersion.getVersion());
+				fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 			File previewFile = _getPreviewFile(id);
 
@@ -158,11 +157,8 @@ public class VideoProcessor implements DLProcessor {
 				File tmpFile = _getVideoTmpFile(id, fileVersion.getExtension());
 
 				try {
-					InputStream inputStream =
-						DLFileEntryLocalServiceUtil.getFileAsStream(
-							fileVersion.getUserId(),
-							fileVersion.getFileEntryId(),
-							fileVersion.getVersion(), false);
+					InputStream inputStream = fileVersion.getContentStream(
+						false);
 
 					FileUtil.write(tmpFile, inputStream);
 
@@ -285,7 +281,11 @@ public class VideoProcessor implements DLProcessor {
 
 		sb.append(_PREVIEW_PATH);
 		sb.append(id);
-		sb.append("_tmp");
+
+		if (PREVIEW_TYPE.equals(targetExtension)) {
+			sb.append("_tmp");
+		}
+
 		sb.append(StringPool.PERIOD);
 		sb.append(targetExtension);
 

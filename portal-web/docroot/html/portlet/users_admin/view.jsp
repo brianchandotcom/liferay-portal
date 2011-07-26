@@ -54,17 +54,23 @@ String portletURLString = portletURL.toString();
 
 	<c:choose>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-ui:header title="organizations" />
+			<liferay-ui:header
+				title="organizations"
+			/>
 
 			<%@ include file="/html/portlet/users_admin/view_flat_organizations.jspf" %>
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USER_GROUPS) %>">
-			<liferay-ui:header title="user-groups" />
+			<liferay-ui:header
+				title="user-groups"
+			/>
 
 			<%@ include file="/html/portlet/users_admin/view_flat_user_groups.jspf" %>
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-			<liferay-ui:header title="users" />
+			<liferay-ui:header
+				title="users"
+			/>
 
 			<%
 			boolean organizationContextView = false;

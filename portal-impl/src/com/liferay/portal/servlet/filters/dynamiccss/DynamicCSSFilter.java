@@ -14,35 +14,27 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.scripting.ruby.RubyExecutor;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.SystemProperties;
 import com.liferay.util.servlet.ServletResponseUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.File;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -56,6 +48,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DynamicCSSFilter extends BasePortalFilter {
 
+	public static final boolean ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(DynamicCSSFilter.class.getName()));
+
 	@Override
 	public void init(FilterConfig filterConfig) {
 		super.init(filterConfig);
@@ -64,27 +59,11 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		_servletContextName = GetterUtil.getString(
 			_servletContext.getServletContextName());
 
-		String rootDir = WebDirDetector.getRootDir(
-			PortalClassLoaderUtil.getClassLoader());
-
-		_rubyScriptFile = new File(rootDir + "WEB-INF/sass/main.rb");
-
-		try {
-
-			// Ruby executor needs to warm up when requiring Sass. Always breaks
-			// the first time without this block.
-
-			_rubyExecutor.eval(
-				null, new HashMap<String, Object>(), null,
-				"require 'rubygems'\nrequire 'sass'");
-		}
-		catch (ScriptingException se) {
-			_log.error(se, se);
-		}
-
 		if (Validator.isNull(_servletContextName)) {
 			_tempDir += "/portal";
 		}
+
+		DynamicCSSUtil.init();
 	}
 
 	protected Object getDynamicContent(
@@ -149,15 +128,23 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 			return cacheDataFile;
 		}
-		else {
-			String dynamicContent = null;
 
+		String dynamicContent = null;
+
+		String content = null;
+
+		String cssRealPath = (String)request.getAttribute(
+			WebKeys.CSS_REAL_PATH);
+
+		try {
 			if (realPath.endsWith(_CSS_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Parsing SASS on CSS " + file);
 				}
 
-				dynamicContent = parseSass(request, FileUtil.read(file));
+				content = FileUtil.read(file);
+
+				dynamicContent = DynamicCSSUtil.parseSass(cssRealPath, content);
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -180,7 +167,9 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 				response.setContentType(stringResponse.getContentType());
 
-				dynamicContent = parseSass(request, stringResponse.getString());
+				content = stringResponse.getString();
+
+				dynamicContent = DynamicCSSUtil.parseSass(cssRealPath, content);
 
 				FileUtil.write(
 					cacheContentTypeFile, stringResponse.getContentType());
@@ -188,46 +177,27 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			else {
 				return null;
 			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to parse SASS on CSS " + cssRealPath, e);
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(content);
+			}
+
+			response.setHeader(
+				HttpHeaders.CACHE_CONTROL,
+				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+		}
+
+		if (dynamicContent != null) {
 			FileUtil.write(cacheDataFile, dynamicContent);
-
-			return dynamicContent;
 		}
-	}
-
-	protected String parseSass(
-			HttpServletRequest request, String content)
-		throws ScriptingException {
-
-		Map<String, Object> inputObjects = new HashMap<String, Object>();
-
-		inputObjects.put("content", content);
-
-		String cssRealPath = (String)request.getAttribute(
-			WebKeys.CSS_REAL_PATH);
-
-		inputObjects.put(
-			"cssRealPath", cssRealPath);
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
-			unsyncByteArrayOutputStream);
-
-		inputObjects.put("out", unsyncPrintWriter);
-
-		_rubyExecutor.eval(null, inputObjects, null, _rubyScriptFile);
-
-		unsyncPrintWriter.flush();
-
-		String parsedContent = unsyncByteArrayOutputStream.toString();
-
-		if (Validator.isNotNull(parsedContent)) {
-			return parsedContent;
+		else {
+			dynamicContent = content;
 		}
 
-		return content;
+		return dynamicContent;
 	}
 
 	@Override
@@ -271,8 +241,6 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
 
-	private RubyExecutor _rubyExecutor = new RubyExecutor();
-	private File _rubyScriptFile;
 	private ServletContext _servletContext;
 	private String _servletContextName;
 	private String _tempDir = _TEMP_DIR;

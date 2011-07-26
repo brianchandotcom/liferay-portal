@@ -282,6 +282,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/jasper.jar</file-name>
+		<version>6.0.32</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/jass.jar</file-name>
 		<version></version>
 		<project-name>Jass</project-name>
@@ -2124,7 +2135,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd.jar</file-name>
-		<version>3.2.7 B1</version>
+		<version>3.2.7 B2</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>
@@ -2135,7 +2146,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd-wot.jar</file-name>
-		<version>3.2.7 B1</version>
+		<version>3.2.7 B2</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>
@@ -3010,6 +3021,28 @@
 		<version>0.9</version>
 		<project-name>Tika</project-name>
 		<project-url>http://tika.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/tomcat-jdbc.jar</file-name>
+		<version>1.1.0.1</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/tomcat-juli.jar</file-name>
+		<version>7.0.19</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>

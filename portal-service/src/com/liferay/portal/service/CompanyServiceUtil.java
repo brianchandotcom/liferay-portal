@@ -164,12 +164,12 @@ public class CompanyServiceUtil {
 	public static void updateSecurity(long companyId,
 		java.lang.String authType, boolean autoLogin, boolean sendPassword,
 		boolean strangers, boolean strangersWithMx, boolean strangersVerify,
-		boolean communityLogo)
+		boolean siteLogo)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.updateSecurity(companyId, authType, autoLogin, sendPassword,
-			strangers, strangersWithMx, strangersVerify, communityLogo);
+			strangers, strangersWithMx, strangersVerify, siteLogo);
 	}
 
 	public static CompanyService getService() {

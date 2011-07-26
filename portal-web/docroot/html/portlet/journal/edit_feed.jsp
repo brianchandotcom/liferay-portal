@@ -141,7 +141,8 @@ if (feed != null) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (feed != null) ? feed.getName() : "new-feed" %>'
+		localizeTitle="<%= (feed == null) %>"
+		title='<%= (feed == null) ? "new-feed" : feed.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFeedIdException.class %>" message="please-enter-a-unique-id" />

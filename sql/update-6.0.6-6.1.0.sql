@@ -380,6 +380,10 @@ update Role_ set name = 'Organization User' where name = 'Organization Member';
 alter table Ticket add type_ INTEGER;
 alter table Ticket add extraInfo TEXT null;
 
+COMMIT_TRANSACTION;
+
+update Ticket set type_ = 3;
+
 alter table User_ add emailAddressVerified BOOLEAN;
 alter table User_ add status int;
 

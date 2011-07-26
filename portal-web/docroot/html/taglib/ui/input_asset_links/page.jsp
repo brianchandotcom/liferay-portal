@@ -28,8 +28,36 @@ List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 
 if (classPK > 0) {
 	assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+}
 
-	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+String assetLinkSearchContainerPrimaryKeys = ParamUtil.getString(request, "assetLinkSearchContainerPrimaryKeys");
+
+if (Validator.isNull(assetLinkSearchContainerPrimaryKeys) && SessionErrors.isEmpty(portletRequest)) {
+	if (assetEntry != null) {
+		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+	}
+}
+else {
+	String[] assetEntriesPrimaryKeys = StringUtil.split(assetLinkSearchContainerPrimaryKeys);
+
+	for (String assetEntryPrimaryKey :  assetEntriesPrimaryKeys) {
+		long assetEntryId = GetterUtil.getLong(assetEntryPrimaryKey);
+
+		AssetEntry assetEntry2 = AssetEntryServiceUtil.getEntry(assetEntryId);
+
+		AssetLink assetLink = AssetLinkLocalServiceUtil.createAssetLink(0);
+
+		if (assetEntry != null) {
+			assetLink.setEntryId1(assetEntry.getEntryId());
+		}
+		else {
+			assetLink.setEntryId1(0);
+		}
+
+		assetLink.setEntryId2(assetEntry2.getEntryId());
+
+		assetLinks.add(assetLink);
+	}
 }
 
 Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
@@ -97,7 +125,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 		<%
 		AssetEntry assetLinkEntry = null;
 
-		if (assetLink.getEntryId1() == assetEntry.getEntryId()) {
+		if ((assetEntry == null) || (assetLink.getEntryId1() == assetEntry.getEntryId())) {
 			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
 		}
 		else {

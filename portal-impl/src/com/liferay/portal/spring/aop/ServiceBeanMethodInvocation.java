@@ -45,7 +45,9 @@ public class ServiceBeanMethodInvocation
 		_method = method;
 		_arguments = arguments;
 
-		_method.setAccessible(true);
+		if (!_method.isAccessible()) {
+			_method.setAccessible(true);
+		}
 	}
 
 	@Override

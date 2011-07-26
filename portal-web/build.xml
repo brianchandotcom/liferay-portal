@@ -324,9 +324,10 @@
 
 				creoleParserContent = creoleParserContent.substring(0, x) + sb.toString() + creoleParserContent.substring(y);
 
-				// Add support for whitespace in headers
+				// Add support for whitespace in headings
 
-				creoleParserContent = creoleParserContent.replace("regex: '(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "regex: '(^|\\\\n)[ \\\\t]*={' + i + '}(?:[ \\\\t]*(?![=]))'");
+				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
+				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
 
 				// Register Creole parser
 

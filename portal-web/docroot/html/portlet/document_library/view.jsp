@@ -331,7 +331,7 @@ if (folder != null) {
 	var listView = new Liferay.ListView(
 		{
 			itemAttributes: ['data-direction-right', 'data-refresh-entries', 'data-refresh-folders', 'data-resource-url'],
-			itemSelector: '.folder a',
+			itemSelector: '.folder .browse-folder, .folder .expand-folder',
 			srcNode: '#<portlet:namespace />folderContainer'
 		}
 	).render();

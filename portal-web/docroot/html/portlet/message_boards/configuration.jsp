@@ -138,12 +138,6 @@ else if (tabs2.equals("message-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
-					<dt>
 						[$MAILING_LIST_ADDRESS$]
 					</dt>
 					<dd>
@@ -166,6 +160,12 @@ else if (tabs2.equals("message-updated-email")) {
 					</dt>
 					<dd>
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
 				</dl>
 			</div>
@@ -222,12 +222,6 @@ else if (tabs2.equals("message-updated-email")) {
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
 					<dt>
 						[$FROM_ADDRESS$]
@@ -288,6 +282,12 @@ else if (tabs2.equals("message-updated-email")) {
 					</dt>
 					<dd>
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
 					<dt>
 						[$TO_ADDRESS$]

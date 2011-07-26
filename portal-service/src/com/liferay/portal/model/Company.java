@@ -82,13 +82,13 @@ public interface Company extends CompanyModel, PersistedModel {
 	public boolean isAutoLogin()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean isCommunityLogo()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public boolean isSendPassword()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isSendPasswordResetLink()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public boolean isSiteLogo()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isStrangers()

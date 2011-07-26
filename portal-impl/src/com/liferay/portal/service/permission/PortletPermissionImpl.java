@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -29,6 +30,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collection;
@@ -36,10 +38,62 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortletPermissionImpl implements PortletPermission {
 
 	public static final boolean DEFAULT_STRICT = false;
+
+	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		if (!contains(
+				permissionChecker, 0, layout, portletId, actionId,
+				DEFAULT_STRICT)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		if (!contains(
+				permissionChecker, 0, layout, portletId, actionId, strict)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		if (!contains(
+				permissionChecker, groupId, layout, portletId, actionId,
+				DEFAULT_STRICT)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		if (!contains(
+				permissionChecker, groupId, layout, portletId, actionId,
+				strict)) {
+
+			throw new PrincipalException();
+		}
+	}
 
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
@@ -93,6 +147,177 @@ public class PortletPermissionImpl implements PortletPermission {
 	}
 
 	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, layout, portlet, actionId, DEFAULT_STRICT);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
+			String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, 0, layout, portlet, actionId, strict);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, layout, portletId, actionId, DEFAULT_STRICT);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, 0, layout, portletId, actionId, strict);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, groupId, layout, portlet, actionId,
+			DEFAULT_STRICT);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			Portlet portlet, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		if (portlet.isUndeployedPortlet()) {
+			return false;
+		}
+
+		boolean value = contains(
+			permissionChecker, groupId, layout, portlet.getPortletId(),
+			actionId, strict);
+
+		if (value) {
+			return true;
+		}
+		else {
+			if (portlet.isSystem() && actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(
+			permissionChecker, groupId, layout, portletId, actionId,
+			DEFAULT_STRICT);
+	}
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict)
+		throws PortalException, SystemException {
+
+		String name = null;
+		String primKey = null;
+
+		if (layout == null) {
+			name = portletId;
+			primKey = portletId;
+
+			return permissionChecker.hasPermission(
+				groupId, name, primKey, actionId);
+		}
+
+		groupId = layout.getGroupId();
+		name = PortletConstants.getRootPortletId(portletId);
+		primKey = getPrimaryKey(layout.getPlid(), portletId);
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, groupId, name, groupId, name, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
+
+		if ((layout.isPrivateLayout() &&
+			 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
+			(layout.isPublicLayout() &&
+			 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
+
+			if (actionId.equals(ActionKeys.CONFIGURATION)) {
+				Group group = GroupLocalServiceUtil.getGroup(
+					layout.getGroupId());
+
+				if (group.isUser()) {
+					return false;
+				}
+			}
+		}
+
+		if (actionId.equals(ActionKeys.VIEW)) {
+			Group group = GroupLocalServiceUtil.getGroup(
+				layout.getGroupId());
+
+			if (group.isControlPanel()) {
+				return true;
+			}
+		}
+
+		if (strict) {
+			return permissionChecker.hasPermission(
+				groupId, name, primKey, actionId);
+		}
+
+		if (LayoutPermissionUtil.contains(
+				permissionChecker, groupId, layout.isPrivateLayout(),
+				layout.getLayoutId(), ActionKeys.UPDATE) &&
+			hasLayoutManagerPermission(portletId, actionId)) {
+
+			return true;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			layout.getCompanyId(), portletId);
+
+		if (layoutTypePortlet.isCustomizedView() &&
+			layoutTypePortlet.isPortletCustomizable(portletId) &&
+			LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+			else if (actionId.equals(ActionKeys.CONFIGURATION) &&
+					 portlet.isPreferencesUniquePerLayout()) {
+
+				return true;
+			}
+		}
+
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
+	}
+
+	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			Collection<Portlet> portlets, String actionId)
 		throws PortalException, SystemException {
@@ -114,8 +339,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			Portlet portlet, String actionId)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, groupId, plid, portlet, actionId,
+			permissionChecker, groupId, layout, portlet, actionId,
 			DEFAULT_STRICT);
 	}
 
@@ -124,25 +351,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			Portlet portlet, String actionId, boolean strict)
 		throws PortalException, SystemException {
 
-		if (portlet.isUndeployedPortlet()) {
-			return false;
-		}
+		Layout layout = getLayout(plid);
 
-		boolean value = contains(
-			permissionChecker, groupId, plid, portlet.getPortletId(), actionId,
-			strict);
-
-		if (value) {
-			return true;
-		}
-		else {
-			if (portlet.isSystem() && actionId.equals(ActionKeys.VIEW)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+		return contains(
+			permissionChecker, groupId, layout, portlet, actionId, strict);
 	}
 
 	public boolean contains(
@@ -150,8 +362,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String portletId, String actionId)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, groupId, plid, portletId, actionId,
+			permissionChecker, groupId, layout, portletId, actionId,
 			DEFAULT_STRICT);
 	}
 
@@ -160,64 +374,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String portletId, String actionId, boolean strict)
 		throws PortalException, SystemException {
 
-		String name = null;
-		String primKey = null;
+		Layout layout = getLayout(plid);
 
-		if (plid > 0) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			groupId = layout.getGroupId();
-			name = PortletConstants.getRootPortletId(portletId);
-			primKey = getPrimaryKey(plid, portletId);
-
-			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, groupId, name, groupId, name, actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-
-			if ((layout.isPrivateLayout() &&
-				 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
-				(layout.isPublicLayout() &&
-				 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
-
-				if (actionId.equals(ActionKeys.CONFIGURATION)) {
-					Group group = GroupLocalServiceUtil.getGroup(
-						layout.getGroupId());
-
-					if (group.isUser()) {
-						return false;
-					}
-				}
-			}
-
-			if (actionId.equals(ActionKeys.VIEW)) {
-				Group group = GroupLocalServiceUtil.getGroup(
-					layout.getGroupId());
-
-				if (group.isControlPanel()) {
-					return true;
-				}
-			}
-
-			if (!strict) {
-				if (LayoutPermissionUtil.contains(
-						permissionChecker, groupId, layout.isPrivateLayout(),
-						layout.getLayoutId(), ActionKeys.UPDATE) &&
-					hasLayoutManagerPermission(portletId, actionId)) {
-
-					return true;
-				}
-			}
-		}
-		else {
-			name = portletId;
-			primKey = portletId;
-		}
-
-		return permissionChecker.hasPermission(
-			groupId, name, primKey, actionId);
+		return contains(
+			permissionChecker, groupId, layout, portletId, actionId, strict);
 	}
 
 	public boolean contains(
@@ -225,8 +385,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, plid, portlet, actionId, DEFAULT_STRICT);
+			permissionChecker, layout, portlet, actionId, DEFAULT_STRICT);
 	}
 
 	public boolean contains(
@@ -234,8 +396,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String actionId, boolean strict)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, 0, plid, portlet, actionId, strict);
+			permissionChecker, 0, layout, portlet, actionId, strict);
 	}
 
 	public boolean contains(
@@ -243,8 +407,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, plid, portletId, actionId, DEFAULT_STRICT);
+			permissionChecker, layout, portletId, actionId, DEFAULT_STRICT);
 	}
 
 	public boolean contains(
@@ -252,8 +418,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String actionId, boolean strict)
 		throws PortalException, SystemException {
 
+		Layout layout = getLayout(plid);
+
 		return contains(
-			permissionChecker, 0, plid, portletId, actionId, strict);
+			permissionChecker, 0, layout, portletId, actionId, strict);
 	}
 
 	public boolean contains(
@@ -280,6 +448,18 @@ public class PortletPermissionImpl implements PortletPermission {
 
 			return false;
 		}
+	}
+
+	protected Layout getLayout(long plid) {
+		Layout layout = null;
+
+		try {
+			layout  = LayoutLocalServiceUtil.getLayout(plid);
+		}
+		catch (Exception e) {
+		}
+
+		return layout;
 	}
 
 	protected boolean hasLayoutManagerPermissionImpl(

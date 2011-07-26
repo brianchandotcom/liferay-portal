@@ -127,9 +127,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	private static final ThreadLocal<Map<ThreadLocal<?>, Object>>
 		_shortLivedThreadLocals = new MapThreadLocal();
 
-	private final int _hashCode;
-	private final boolean _shortLived;
-
 	private static class MapThreadLocal
 		extends ThreadLocal<Map<ThreadLocal<?>, Object>> {
 
@@ -139,5 +136,8 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		}
 
 	}
+
+	private final int _hashCode;
+	private final boolean _shortLived;
 
 }

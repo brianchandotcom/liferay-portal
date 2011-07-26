@@ -17,6 +17,7 @@
 <c:if test="<%= Validator.isNotNull(title) %>">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
 </c:if>

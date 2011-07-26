@@ -41,6 +41,10 @@ public class HeaderTag extends IncludeTag {
 		request.setAttribute("liferay-ui:header:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:header:escapeXml", String.valueOf(_escapeXml));
+		request.setAttribute(
+			"liferay-ui:header:localizeTitle", String.valueOf(_localizeTitle));
+		request.setAttribute(
+			"liferay-ui:header:showBackURL", String.valueOf(_showBackURL));
 		request.setAttribute("liferay-ui:header:title", _title);
 	}
 
@@ -50,6 +54,8 @@ public class HeaderTag extends IncludeTag {
 		_backURL = null;
 		_cssClass = null;
 		_escapeXml = true;
+		_localizeTitle = true;
+		_showBackURL = true;
 		_title = null;
 	}
 
@@ -79,6 +85,14 @@ public class HeaderTag extends IncludeTag {
 		_escapeXml = escapeXml;
 	}
 
+	public void setLocalizeTitle(boolean localizeTitle) {
+		_localizeTitle = localizeTitle;
+	}
+
+	public void setShowBackURL(boolean showBackURL) {
+		_showBackURL = showBackURL;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -91,6 +105,8 @@ public class HeaderTag extends IncludeTag {
 	private String _backURL;
 	private String _cssClass;
 	private boolean _escapeXml = true;
+	private boolean _localizeTitle = true;
+	private boolean _showBackURL = true;
 	private String _title;
 
 }

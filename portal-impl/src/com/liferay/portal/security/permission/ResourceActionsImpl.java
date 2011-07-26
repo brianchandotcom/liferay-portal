@@ -69,6 +69,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Daeyoung Song
+ * @author Raymond Augé
  */
 public class ResourceActionsImpl implements ResourceActions {
 
@@ -216,7 +217,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	public List<String> getModelNames() {
-		return ListUtil.fromCollection(_modelPortletResources.keySet());
+		return ListUtil.fromMapKeys(_modelPortletResources);
 	}
 
 	public List<String> getModelPortletResources(String name) {
@@ -320,7 +321,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	public List<String> getPortletNames() {
-		return ListUtil.fromCollection(_portletModelResources.keySet());
+		return ListUtil.fromMapKeys(_portletModelResources);
 	}
 
 	public List<String> getPortletResourceActions(Portlet portlet) {
@@ -685,6 +686,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			actions.add(ActionKeys.CONFIGURATION);
 		}
 
+		if (!actions.contains(ActionKeys.PERMISSIONS)) {
+			actions.add(ActionKeys.PERMISSIONS);
+		}
+
 		if (!actions.contains(ActionKeys.VIEW)) {
 			actions.add(ActionKeys.VIEW);
 		}
@@ -711,6 +716,10 @@ public class ResourceActionsImpl implements ResourceActions {
 	protected void checkPortletLayoutManagerActions(List<String> actions) {
 		if (!actions.contains(ActionKeys.CONFIGURATION)) {
 			actions.add(ActionKeys.CONFIGURATION);
+		}
+
+		if (!actions.contains(ActionKeys.PERMISSIONS)) {
+			actions.add(ActionKeys.PERMISSIONS);
 		}
 
 		if (!actions.contains(ActionKeys.PREFERENCES)) {
@@ -866,7 +875,18 @@ public class ResourceActionsImpl implements ResourceActions {
 			getActions(actionsMap, name));
 
 		Element groupDefaultsElement = getPermissionsChildElement(
-			parentElement, "community-defaults");
+			parentElement, "site-member-defaults");
+
+		if (groupDefaultsElement == null) {
+			groupDefaultsElement = getPermissionsChildElement(
+				parentElement, "community-defaults");
+
+			if (_log.isWarnEnabled() && (groupDefaultsElement != null)) {
+				_log.warn(
+					"The community-defaults element is deprecated. Use the " +
+						"site-defaults element instead.");
+			}
+		}
 
 		groupDefaultActions.addAll(readActionKeys(groupDefaultsElement));
 

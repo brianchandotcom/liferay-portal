@@ -104,6 +104,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		<aui:layout>
 			<c:if test="<%= folder != null %>">
 				<liferay-ui:header
+					localizeTitle="<%= false %>"
 					title="<%= folder.getName() %>"
 				/>
 			</c:if>

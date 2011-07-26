@@ -91,9 +91,11 @@ if (selPortlet.hasMultipleMimeTypes()) {
 	request.setAttribute("liferay-ui:tabs:url" + pos++, supportedClientsURL.toString());
 }
 
-tabs1Names += ",permissions";
+if (PortletPermissionUtil.contains(permissionChecker, layout, portletResource, ActionKeys.PERMISSIONS)) {
+	tabs1Names += ",permissions";
 
-request.setAttribute("liferay-ui:tabs:url" + pos++, permissionsURL.toString());
+	request.setAttribute("liferay-ui:tabs:url" + pos++, permissionsURL.toString());
+}
 
 if (!selPortlet.getPublicRenderParameters().isEmpty()) {
 	tabs1Names += ",communication";

@@ -417,6 +417,10 @@ public class CustomSQL {
 	public String replaceKeywords(
 		String sql, String field, boolean last, int[] values) {
 
+		if ((values != null) && (values.length == 1)) {
+			return sql;
+		}
+
 		StringBundler oldSql = new StringBundler(4);
 
 		oldSql.append("(");
@@ -456,6 +460,10 @@ public class CustomSQL {
 
 	public String replaceKeywords(
 		String sql, String field, boolean last, long[] values) {
+
+		if ((values != null) && (values.length == 1)) {
+			return sql;
+		}
 
 		StringBundler oldSql = new StringBundler(4);
 
@@ -498,7 +506,7 @@ public class CustomSQL {
 		String sql, String field, String operator, boolean last,
 		String[] values) {
 
-		if (values.length == 0) {
+		if ((values != null) && (values.length <= 1)) {
 			return sql;
 		}
 

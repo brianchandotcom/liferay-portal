@@ -24,12 +24,14 @@ CalEvent event = (CalEvent)request.getAttribute(WebKeys.CALENDAR_EVENT);
 Recurrence recurrence = null;
 
 int recurrenceType = ParamUtil.getInteger(request, "recurrenceType", Recurrence.NO_RECURRENCE);
+
 if (event.getRepeating()) {
 	recurrence = event.getRecurrenceObj();
 	recurrenceType = recurrence.getFrequency();
 }
 
 int endDateType = ParamUtil.getInteger(request, "endDateType");
+
 if ((event.getRepeating()) && (recurrence != null)) {
 	if (recurrence.getUntil() != null) {
 		endDateType = 2;
@@ -39,12 +41,17 @@ if ((event.getRepeating()) && (recurrence != null)) {
 	}
 }
 
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalEvent.class.getName(), event.getEventId());
+
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+
 request.setAttribute("view_event.jsp-event", event);
 %>
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	escapeXml="<%= true %>"
+	localizeTitle="<%= false %>"
 	title="<%= event.getTitle() %>"
 />
 
@@ -213,12 +220,14 @@ request.setAttribute("view_event.jsp-event", event);
 			/>
 		</span>
 
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= CalEvent.class.getName() %>"
-				classPK="<%= event.getEventId() %>"
-			/>
-		</div>
+		<c:if test="<%= enableRelatedAssets %>">
+			<div class="entry-links">
+				<liferay-ui:asset-links
+					className="<%= CalEvent.class.getName() %>"
+					classPK="<%= event.getEventId() %>"
+				/>
+			</div>
+		</c:if>
 
 		<c:if test="<%= enableRatings %>">
 			<div class="entry-ratings">

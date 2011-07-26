@@ -308,7 +308,7 @@ public interface DLFileEntryLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
-		java.lang.String version, boolean count)
+		java.lang.String version, boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

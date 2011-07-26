@@ -52,6 +52,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
 

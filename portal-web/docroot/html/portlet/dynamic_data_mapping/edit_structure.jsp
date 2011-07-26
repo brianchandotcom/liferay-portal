@@ -46,9 +46,11 @@ String script = BeanParamUtil.getString(structure, request, "xsd");
 	<liferay-ui:error exception="<%= StructureXsdException.class %>" message="please-enter-a-valid-xsd" />
 
 	<%
+	boolean localizeTitle = true;
 	String title = "new-structure";
 
 	if (structure != null) {
+		localizeTitle = false;
 		title = structure.getName(locale);
 	}
 	else if (Validator.isNotNull(scopeStructureName)) {
@@ -57,8 +59,9 @@ String script = BeanParamUtil.getString(structure, request, "xsd");
 	%>
 
 	<liferay-ui:header
-		title="<%= title %>"
 		backURL="<%= backURL %>"
+		localizeTitle="<%= localizeTitle %>"
+		title="<%= title %>"
 	/>
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />

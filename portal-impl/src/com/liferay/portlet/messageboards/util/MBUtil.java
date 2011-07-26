@@ -748,8 +748,8 @@ public class MBUtil {
 		long groupId = statsUser.getGroupId();
 		long userId = statsUser.getUserId();
 
-		if (entityType.equals("community-role") ||
-			entityType.equals("organization-role")) {
+		if (entityType.equals("organization-role") ||
+			entityType.equals("site-role")) {
 
 			Role role = RoleLocalServiceUtil.getRole(companyId, entityValue);
 

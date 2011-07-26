@@ -61,7 +61,8 @@ if (workflowEnabled) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (folder != null) ? folder.getName() : "new-folder" %>'
+		localizeTitle="<%= (folder == null) %>"
+		title='<%= (folder == null) ? "new-folder" : folder.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />

@@ -404,11 +404,10 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 
 	public void updateSecurity(long companyId, java.lang.String authType,
 		boolean autoLogin, boolean sendPassword, boolean strangers,
-		boolean strangersWithMx, boolean strangersVerify, boolean communityLogo)
+		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_companyLocalService.updateSecurity(companyId, authType, autoLogin,
-			sendPassword, strangers, strangersWithMx, strangersVerify,
-			communityLogo);
+			sendPassword, strangers, strangersWithMx, strangersVerify, siteLogo);
 	}
 
 	public CompanyLocalService getWrappedCompanyLocalService() {

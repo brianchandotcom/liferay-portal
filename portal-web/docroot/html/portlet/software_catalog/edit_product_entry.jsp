@@ -57,7 +57,8 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title='<%= (productEntry != null) ? productEntry.getName() : "new-product" %>'
+	localizeTitle="<%= (productEntry == null) %>"
+	title='<%= (productEntry == null) ? "new-product" : productEntry.getName() %>'
 />
 
 <liferay-ui:error exception="<%= DuplicateProductEntryModuleIdException.class %>" message="please-enter-a-unique-site-id-and-artifact-id-combination" />
@@ -209,7 +210,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <br /><br />
 
-<liferay-ui:header title="plugin-repository" />
+<liferay-ui:header
+	title="plugin-repository"
+/>
 
 <table class="lfr-table">
 <tr>
@@ -232,7 +235,9 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <br />
 
-<liferay-ui:header title="screenshots" />
+<liferay-ui:header
+	title="screenshots"
+/>
 
 <table class="lfr-table">
 

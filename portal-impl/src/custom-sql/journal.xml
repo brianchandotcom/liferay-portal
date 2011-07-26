@@ -49,7 +49,6 @@
 			WHERE
 				(classNameId = ?) AND
 				(status = ?) AND
-				(expirationDate >= ?) AND
 				(expirationDate <= ?)
 		]]>
 	</sql>

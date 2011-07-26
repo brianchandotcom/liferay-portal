@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.cal.DayAndPosition" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.calendar.EventDurationException" %>
 <%@ page import="com.liferay.portlet.calendar.EventEndDateException" %>
@@ -55,6 +57,7 @@ String tabs1Default = preferences.getValue("tabs1Default", tabs1NamesArray[0]);
 String summaryTabOrientation = preferences.getValue("summaryTabOrientation", "horizontal");
 boolean summaryTabShowMiniMonth = GetterUtil.getBoolean(preferences.getValue("summaryTabShowMiniMonth", "true"));
 boolean summaryTabShowTodaysEvents = GetterUtil.getBoolean(preferences.getValue("summaryTabShowTodaysEvents", "true"));
+boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = PropsValues.CALENDAR_EVENT_RATINGS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
 boolean enableComments = PropsValues.CALENDAR_EVENT_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null), true);
 

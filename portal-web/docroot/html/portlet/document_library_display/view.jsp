@@ -121,6 +121,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 			<c:if test="<%= (folder != null) && (folder.getFolderId() != defaultFolderId) %>">
 				<liferay-ui:header
 					backURL="<%= redirect %>"
+					localizeTitle="<%= false %>"
 					title="<%= folder.getName() %>"
 				/>
 			</c:if>

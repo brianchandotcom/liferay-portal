@@ -182,7 +182,9 @@ if (step == 1) {
 			<aui:input name="step" type="hidden" value="2" />
 			<aui:input name="organizationId" type="hidden" value="<%= String.valueOf(organizationId) %>" />
 
-			<liferay-ui:header title="organization-roles" />
+			<liferay-ui:header
+				title="organization-roles"
+			/>
 
 			<%
 			Organization organization = OrganizationServiceUtil.getOrganization(organizationId);

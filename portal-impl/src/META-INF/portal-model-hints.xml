@@ -1893,7 +1893,6 @@
 		</field>
 		<field name="body" type="String">
 			<hint-collection name="CLOB" />
-			<sanitize content-type="text/html" modes="ALL" />
 			<validator name="required" />
 		</field>
 		<field name="format" type="String" />

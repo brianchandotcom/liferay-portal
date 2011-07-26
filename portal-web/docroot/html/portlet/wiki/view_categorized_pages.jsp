@@ -41,6 +41,7 @@ if (categoryId != 0) {
 
 <liferay-ui:header
 	escapeXml="<%= false %>"
+	localizeTitle="<%= false %>"
 	title='<%= LanguageUtil.format(pageContext, "pages-with-x-x", new String[] {vocabularyName, categoryName}) %>'
 />
 

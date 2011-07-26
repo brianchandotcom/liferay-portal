@@ -99,7 +99,7 @@ public class PortletColumnLogic extends RuntimeLogic {
 		}
 
 		if (layoutTypePortlet.isTemplateCustomizable(columnId) &&
-			layoutTypePortlet.isCustomizable(columnId)) {
+			layoutTypePortlet.isColumnCustomizable(columnId)) {
 
 			columnCssClass += " customizable";
 		}

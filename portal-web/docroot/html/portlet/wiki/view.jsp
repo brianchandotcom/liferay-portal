@@ -109,6 +109,12 @@ AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.ge
 if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
+
+if (wikiPage != null) {
+	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+}
 %>
 
 <c:choose>
@@ -139,6 +145,7 @@ if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 <liferay-ui:header
 	backLabel="<%= parentTitle %>"
 	backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
+	localizeTitle="<%= false %>"
 	title="<%= title %>"
 />
 
@@ -297,12 +304,14 @@ if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 		</div>
 	</div>
 
-	<div class="entry-links">
-		<liferay-ui:asset-links
-			className="<%= WikiPage.class.getName() %>"
-			classPK="<%= wikiPage.getResourcePrimKey() %>"
-		/>
-	</div>
+	<c:if test="<%= enableRelatedAssets %>">
+		<div class="entry-links">
+			<liferay-ui:asset-links
+				className="<%= WikiPage.class.getName() %>"
+				classPK="<%= wikiPage.getResourcePrimKey() %>"
+			/>
+		</div>
+	</c:if>
 
 	<c:if test="<%= enablePageRatings %>">
 		<div class="page-ratings">

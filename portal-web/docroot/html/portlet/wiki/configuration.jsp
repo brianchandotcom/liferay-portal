@@ -110,12 +110,6 @@ else if (tabs2.equals("page-updated-email")) {
 						<liferay-ui:message key="the-company-name-associated-with-the-wiki" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
-					</dd>
-					<dt>
 						[$PAGE_USER_ADDRESS$]
 					</dt>
 					<dd>
@@ -132,6 +126,12 @@ else if (tabs2.equals("page-updated-email")) {
 					</dt>
 					<dd>
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
 					</dd>
 				</dl>
 			</div>
@@ -182,12 +182,6 @@ else if (tabs2.equals("page-updated-email")) {
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-company-name-associated-with-the-wiki" />
-					</dd>
-					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
 					</dd>
 					<dt>
 						[$DIFFS_URL$]
@@ -280,6 +274,12 @@ else if (tabs2.equals("page-updated-email")) {
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
 					</dd>
 					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
+					</dd>
+					<dt>
 						[$TO_ADDRESS$]
 					</dt>
 					<dd>
@@ -296,6 +296,8 @@ else if (tabs2.equals("page-updated-email")) {
 		</c:when>
 		<c:when test='<%= tabs2.equals("display-settings") %>'>
 			<aui:fieldset>
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 				<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED || PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
 					<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED %>">
 						<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= enablePageRatings %>" />

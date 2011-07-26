@@ -90,14 +90,6 @@ public class DBUpgrader {
 			throw new RuntimeException(msg);
 		}
 
-		// Update company key
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Update company key");
-		}
-
-		_updateCompanyKey();
-
 		// Upgrade build
 
 		if (_log.isDebugEnabled()) {
@@ -105,6 +97,16 @@ public class DBUpgrader {
 		}
 
 		StartupHelperUtil.upgradeProcess(buildNumber);
+
+		// Update company key
+
+		if (StartupHelperUtil.isUpgraded()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Update company key");
+			}
+
+			_updateCompanyKey();
+		}
 
 		// Class names
 

@@ -88,6 +88,18 @@ String editorContent = emailBody;
 
 				<dl>
 					<dt>
+						[$BLOGS_ENTRY_USER_ADDRESS$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-blog-entry" />
+					</dd>
+					<dt>
+						[$BLOGS_ENTRY_USER_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-user-who-added-the-blog-entry" />
+					</dd>
+					<dt>
 						[$COMPANY_ID$]
 					</dt>
 					<dd>
@@ -106,28 +118,16 @@ String editorContent = emailBody;
 						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
 					</dd>
 					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
-						[$BLOGS_ENTRY_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-blog-entry" />
-					</dd>
-					<dt>
 						[$PORTLET_NAME$]
 					</dt>
 					<dd>
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
 					</dd>
 				</dl>
 			</div>
@@ -180,30 +180,6 @@ String editorContent = emailBody;
 
 				<dl>
 					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
-					</dd>
-					<dt>
-						[$COMMUNITY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
-					</dd>
-					<dt>
 						[$BLOGS_ENTRY_USER_ADDRESS$]
 					</dt>
 					<dd>
@@ -220,6 +196,24 @@ String editorContent = emailBody;
 					</dt>
 					<dd>
 						<liferay-ui:message key="the-blog-entry-url" />
+					</dd>
+					<dt>
+						[$COMPANY_ID$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-id-associated-with-the-blog" />
+					</dd>
+					<dt>
+						[$COMPANY_MX$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-mx-associated-with-the-blog" />
+					</dd>
+					<dt>
+						[$COMPANY_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-name-associated-with-the-blog" />
 					</dd>
 					<dt>
 						[$FROM_ADDRESS$]
@@ -244,6 +238,12 @@ String editorContent = emailBody;
 					</dt>
 					<dd>
 						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-blog" />
 					</dd>
 					<dt>
 						[$TO_ADDRESS$]
@@ -294,6 +294,8 @@ String editorContent = emailBody;
 				</aui:select>
 
 				<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
+
+				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
 
 				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 

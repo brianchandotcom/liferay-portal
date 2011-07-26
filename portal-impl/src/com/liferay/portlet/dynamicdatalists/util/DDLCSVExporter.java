@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -60,7 +61,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			sb.append(CharPool.COMMA);
 		}
 
-		sb.setIndex(sb.length() - 1);
+		sb.setIndex(sb.index() - 1);
 		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
@@ -76,11 +77,11 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 				Serializable value = field.getValue();
 
-				sb.append(value);
+				sb.append(CSVUtil.encode(value));
 				sb.append(CharPool.COMMA);
 			}
 
-			sb.setIndex(sb.length() - 1);
+			sb.setIndex(sb.index() - 1);
 			sb.append(StringPool.NEW_LINE);
 		}
 

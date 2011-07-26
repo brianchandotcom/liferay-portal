@@ -518,20 +518,23 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	public InputStream getFileAsStream(
-			long userId, long fileEntryId, String version, boolean count)
+			long userId, long fileEntryId, String version,
+			boolean incrementCounter)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && count) {
+		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
+			incrementCounter) {
+
 			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
 
 			dlFileEntryPersistence.update(dlFileEntry, false);
 		}
 
 		dlAppHelperLocalService.getFileAsStream(
-			userId, new LiferayFileEntry(dlFileEntry));
+			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
 
 		return DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),

@@ -32,6 +32,8 @@ String title = (String)request.getAttribute("view.jsp-title");
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
 request.setAttribute("view.jsp-showIconLabel", true);
 %>
 
@@ -39,6 +41,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	<c:if test="<%= showAssetTitle %>">
 		<liferay-ui:header
 			backURL="<%= print ? null : redirect %>"
+			localizeTitle="<%= false %>"
 			title="<%= title %>"
 		/>
 	</c:if>
@@ -157,7 +160,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 			<br />
 
-			<c:if test='<%= showAssetLinks %>' >
+			<c:if test="<%= enableRelatedAssets %>">
 				<liferay-ui:asset-links
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"

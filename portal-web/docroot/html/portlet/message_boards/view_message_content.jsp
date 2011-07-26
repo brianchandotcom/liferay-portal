@@ -41,6 +41,7 @@ String threadView = messageDisplay.getThreadView();
 <liferay-ui:header
 	backLabel='<%= (category != null) ? category.getName() : "message-boards-home" %>'
 	backURL="<%= backURL.toString() %>"
+	localizeTitle="<%= false %>"
 	title="<%= message.getSubject() %>"
 />
 

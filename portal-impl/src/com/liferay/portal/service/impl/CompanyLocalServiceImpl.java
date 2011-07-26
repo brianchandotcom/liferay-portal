@@ -746,7 +746,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public void updateSecurity(
 			long companyId, String authType, boolean autoLogin,
 			boolean sendPassword, boolean strangers, boolean strangersWithMx,
-			boolean strangersVerify, boolean communityLogo)
+			boolean strangersVerify, boolean siteLogo)
 		throws SystemException {
 
 		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
@@ -771,8 +771,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
 				String.valueOf(strangersVerify));
 			preferences.setValue(
-				PropsKeys.COMPANY_SECURITY_COMMUNITY_LOGO,
-				String.valueOf(communityLogo));
+				PropsKeys.COMPANY_SECURITY_SITE_LOGO,
+				String.valueOf(siteLogo));
 
 			preferences.store();
 		}

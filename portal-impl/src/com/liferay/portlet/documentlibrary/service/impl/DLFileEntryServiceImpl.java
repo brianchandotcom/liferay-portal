@@ -169,6 +169,17 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getGuestOrUserId(), fileEntryId, version);
 	}
 
+	public InputStream getFileAsStream(
+			long fileEntryId, String version, boolean incrementCounter)
+		throws PortalException, SystemException {
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
+		return dlFileEntryLocalService.getFileAsStream(
+			getGuestOrUserId(), fileEntryId, version, incrementCounter);
+	}
+
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)

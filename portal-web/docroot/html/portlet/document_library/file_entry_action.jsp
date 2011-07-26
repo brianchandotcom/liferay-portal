@@ -132,6 +132,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 					<liferay-security:permissionsURL
 						modelResource="<%= DLFileEntryConstants.getClassName() %>"
 						modelResourceDescription="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>"
+						redirect="<%= currentURL %>"
 						resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 						var="permissionsURL"
 					/>
@@ -219,6 +220,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 					<liferay-security:permissionsURL
 						modelResource="<%= DLFileShortcut.class.getName() %>"
 						modelResourceDescription="<%= fileEntry.getTitle() %>"
+						redirect="<%= currentURL %>"
 						resourcePrimKey="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>"
 						var="shortcutPermissionsURL"
 					/>

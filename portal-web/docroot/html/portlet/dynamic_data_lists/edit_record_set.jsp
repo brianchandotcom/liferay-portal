@@ -49,7 +49,8 @@ if (Validator.isNotNull(ddmStructureId)) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= (recordSet != null) ? recordSet.getName(locale) : "new-list" %>'
+	localizeTitle="<%= (recordSet == null) %>"
+	title='<%= (recordSet == null) ? "new-list" : recordSet.getName(locale) %>'
 />
 
 <portlet:actionURL var="editRecordSetURL">

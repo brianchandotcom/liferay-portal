@@ -226,7 +226,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subject = StringUtil.replace(
 			subject,
 			new String[] {
-				"[$COMMUNITY_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",
@@ -244,11 +243,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				"[$REPORTED_USER_URL$]",
 				"[$REPORTER_USER_ADDRESS$]",
 				"[$REPORTER_USER_NAME$]",
+				"[$SITE_NAME$]",
 				"[$TO_ADDRESS$]",
 				"[$TO_NAME$]"
 			},
 			new String[] {
-				groupName,
 				String.valueOf(company.getCompanyId()),
 				company.getMx(),
 				company.getName(),
@@ -266,6 +265,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				reportedUserURL,
 				reporterEmailAddress,
 				reporterUserName,
+				groupName,
 				toAddress,
 				toName
 			});
@@ -273,7 +273,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		body = StringUtil.replace(
 			body,
 			new String[] {
-				"[$COMMUNITY_NAME$]",
 				"[$COMPANY_ID$]",
 				"[$COMPANY_MX$]",
 				"[$COMPANY_NAME$]",
@@ -291,11 +290,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				"[$REPORTED_USER_URL$]",
 				"[$REPORTER_USER_ADDRESS$]",
 				"[$REPORTER_USER_NAME$]",
+				"[$SITE_NAME$]",
 				"[$TO_ADDRESS$]",
 				"[$TO_NAME$]"
 			},
 			new String[] {
-				groupName,
 				String.valueOf(company.getCompanyId()),
 				company.getMx(),
 				company.getName(),
@@ -313,6 +312,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				reportedUserURL,
 				reporterEmailAddress,
 				reporterUserName,
+				groupName,
 				toAddress,
 				toName
 			});

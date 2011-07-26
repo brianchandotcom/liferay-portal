@@ -74,7 +74,7 @@ public class PortletURLAction extends Action {
 		long doAsUserId = ParamUtil.getLong(request, "doAsUserId");
 		String doAsUserLanguageId = ParamUtil.getString(
 			request, "doAsUserLanguageId");
-		boolean encrypt = ParamUtil.getBoolean(request, "encrypt");
+		//boolean encrypt = ParamUtil.getBoolean(request, "encrypt");
 		boolean escapeXml = ParamUtil.getBoolean(request, "escapeXml");
 		String lifecycle = ParamUtil.getString(request, "lifecycle");
 		String name = ParamUtil.getString(request, "name");
@@ -109,7 +109,7 @@ public class PortletURLAction extends Action {
 			portletURL.setDoAsUserLanguageId(doAsUserLanguageId);
 		}
 
-		portletURL.setEncrypt(encrypt);
+		//portletURL.setEncrypt(encrypt);
 		portletURL.setEscapeXml(escapeXml);
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE) &&

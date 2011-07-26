@@ -34,6 +34,7 @@ catch (Exception e) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	localizeTitle="<%= (company2 == null) %>"
 	title='<%= (company2 == null) ? "new-portal-instance" : company2.getName() %>'
 />
 

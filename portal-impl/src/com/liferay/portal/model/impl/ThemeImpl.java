@@ -133,8 +133,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	public List<ColorScheme> getColorSchemes() {
-		List<ColorScheme> colorSchemes = ListUtil.fromCollection(
-			_colorSchemesMap.values());
+		List<ColorScheme> colorSchemes = ListUtil.fromMapValues(
+			_colorSchemesMap);
 
 		return ListUtil.sort(colorSchemes);
 	}

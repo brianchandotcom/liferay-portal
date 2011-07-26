@@ -77,8 +77,9 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	%>
 
 	<liferay-ui:header
-		title="<%= title %>"
 		backURL="<%= backURL %>"
+		localizeTitle="<%= false %>"
+		title="<%= title %>"
 	/>
 
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />

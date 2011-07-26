@@ -84,6 +84,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
+	localizeTitle="<%= false %>"
 	title="<%= headerTitle %>"
 />
 

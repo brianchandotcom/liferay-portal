@@ -47,7 +47,7 @@ LayoutBranch layoutBranch = null;
 	</aui:button-row>
 </c:if>
 
-<div class="layout-branch-results">
+<div class="branch-results">
 	<liferay-ui:search-container>
 		<liferay-ui:search-container-results
 			results="<%= layoutRevisions %>"

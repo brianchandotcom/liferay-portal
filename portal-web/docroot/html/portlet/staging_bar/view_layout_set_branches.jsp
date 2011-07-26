@@ -46,7 +46,7 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</aui:button-row>
 </c:if>
 
-<div class="layout-set-branch-results">
+<div class="branch-results">
 	<liferay-ui:search-container>
 		<liferay-ui:search-container-results
 			results="<%= layoutSetBranches %>"

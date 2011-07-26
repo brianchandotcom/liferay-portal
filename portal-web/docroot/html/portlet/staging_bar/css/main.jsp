@@ -61,7 +61,7 @@
 		}
 	}
 
-	.layout-set-branch-results, .layout-branch-results {
+	.branch-results {
 		min-height: 300px;
 	}
 
@@ -210,6 +210,7 @@
 			}
 
 			.layout-revision-toolbar {
+				float: left;
 				padding-left: 1em;
 			}
 		}

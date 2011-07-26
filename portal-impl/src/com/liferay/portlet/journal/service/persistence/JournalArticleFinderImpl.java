@@ -319,14 +319,11 @@ public class JournalArticleFinderImpl
 	}
 
 	public List<JournalArticle> findByExpirationDate(
-			long classNameId, int status, Date expirationDateLT,
-			Date expirationDateGT)
+			long classNameId, int status, Date expirationDateLT)
 		throws SystemException {
 
 		Timestamp expirationDateLT_TS = CalendarUtil.getTimestamp(
 			expirationDateLT);
-		Timestamp expirationDateGT_TS = CalendarUtil.getTimestamp(
-			expirationDateGT);
 
 		Session session = null;
 
@@ -351,7 +348,6 @@ public class JournalArticleFinderImpl
 				qPos.add(status);
 			}
 
-			qPos.add(expirationDateGT_TS);
 			qPos.add(expirationDateLT_TS);
 
 			return q.list();

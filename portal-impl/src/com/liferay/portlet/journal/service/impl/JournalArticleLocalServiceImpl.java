@@ -407,8 +407,7 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articles =
 			journalArticleFinder.findByExpirationDate(
-				0, WorkflowConstants.STATUS_APPROVED, now,
-				new Date(now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL));
+				0, WorkflowConstants.STATUS_APPROVED, now);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expiring " + articles.size() + " articles");

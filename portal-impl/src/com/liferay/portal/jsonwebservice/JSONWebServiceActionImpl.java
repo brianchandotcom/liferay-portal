@@ -55,27 +55,16 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return new JSONRPCResponse(jsonRpcRequest, result, exception);
 	}
 
-	private void _injectServiceContext(Object[] parameters) {
-		String[] parameterNames =
-			_jsonWebServiceActionConfig.getParameterNames();
+	private Object _createDefaultParameterValue(
+		String parameterName, Class<?> parameterType) {
 
-		Class<?>[] parameterTypes =
-			_jsonWebServiceActionConfig.getParameterTypes();
-
-		for (int i = 0; i < parameterNames.length; i++) {
-			if (parameters[i] != null) {
-				continue;
-			}
-
-			String parameterName = parameterNames[i];
-			Class<?> parameterType = parameterTypes[i];
-
-			if (parameterName.equals("serviceContext") &&
+		if (parameterName.equals("serviceContext") &&
 				parameterType.equals(ServiceContext.class)) {
 
-				parameters[i] = new ServiceContext();
-			}
+			return new ServiceContext();
 		}
+
+		return null;
 	}
 
 	private Object _invokeActionMethod() throws Exception {
@@ -84,8 +73,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Class<?> actionClass = _jsonWebServiceActionConfig.getActionClass();
 
 		Object[] parameters = _prepareParameters();
-
-		_injectServiceContext(parameters);
 
 		return actionMethod.invoke(actionClass, parameters);
 	}
@@ -110,7 +97,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			if (value != null) {
 				Class<?> parameterType = parameterTypes[i];
 
-				parameterValue = ReflectUtil.castType(value, parameterType);
+				if (value == Void.TYPE) {
+
+					parameterValue = _createDefaultParameterValue(
+						parameterName, parameterType);
+
+				}
+				else {
+					parameterValue = ReflectUtil.castType(value, parameterType);
+				}
 			}
 
 			parameters[i] = parameterValue;

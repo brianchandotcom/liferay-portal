@@ -39,6 +39,8 @@ public class JSONWebServiceActionParameters {
 
 		_jsonRpcRequest = jsonRpcRequest;
 
+		_addDefaultParameters();
+
 		_collectDefaultsFromRequestAttributes(request);
 
 		_collectFromPath(pathParameters);
@@ -66,6 +68,10 @@ public class JSONWebServiceActionParameters {
 		}
 
 		return names;
+	}
+
+	private void _addDefaultParameters() {
+		_parameters.put("serviceContext", Void.TYPE);	// lazy marker
 	}
 
 	private void _collectDefaultsFromRequestAttributes(

@@ -202,9 +202,12 @@ public class JSONWebServiceActionsManagerImpl
 				parameterNames, jsonWebServiceActionConfigParameterNames);
 
 			if (count > max) {
-				max = count;
 
-				index = i;
+				if (count >= jsonWebServiceActionConfigParameterNames.length) {
+					max = count;
+
+					index = i;
+				}
 			}
 		}
 

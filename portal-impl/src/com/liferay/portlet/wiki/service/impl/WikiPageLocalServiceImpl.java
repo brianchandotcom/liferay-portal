@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -119,9 +120,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		validate(title, nodeId, content, format);
-
 		long pageId = counterLocalService.increment();
+
+		content = SanitizerUtil.sanitize(
+			user.getCompanyId(), node.getGroupId(), userId,
+			WikiPage.class.getName(), pageId, "text/" + format, content);
+
+		validate(title, nodeId, content, format);
 
 		long resourcePrimKey =
 			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
@@ -1152,9 +1157,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(nodeId, content, format);
-
 		WikiPage oldPage = null;
+
+		long pageId = 0;
 
 		try {
 			oldPage = wikiPagePersistence.findByN_T_First(nodeId, title, null);
@@ -1165,6 +1170,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				content, summary, minorEdit, format, true, parentTitle,
 				redirectTitle, serviceContext);
 		}
+
+		if (oldPage.isApproved()) {
+			pageId = counterLocalService.increment();
+		}
+		else {
+			pageId = oldPage.getPageId();
+		}
+
+		content = SanitizerUtil.sanitize(
+			user.getCompanyId(), oldPage.getGroupId(), userId,
+			WikiPage.class.getName(), pageId, "text/" + format, content);
+
+		validate(nodeId, content, format);
 
 		double oldVersion = oldPage.getVersion();
 
@@ -1183,8 +1201,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (oldPage.isApproved()) {
 			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
-
-			long pageId = counterLocalService.increment();
 
 			page = wikiPagePersistence.create(pageId);
 		}

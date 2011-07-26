@@ -1529,6 +1529,7 @@
 		<struts-path>wiki_admin</struts-path>
 		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>17.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>

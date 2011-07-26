@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -11,25 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.util;
+<%@ include file="/html/portlet/init.jsp" %>
 
-/**
- * @author Brian Wing Shun Chan
- */
-public class PortletCategoryKeys {
+<%@ page import="com.liferay.portlet.marketplace.util.MarketplaceConstants" %>
 
-	public static final String CONTENT = "content";
+<%
+String iFrameURL = MarketplaceConstants.MARKETPLACE_URL_HOME;
 
-	public static final String MARKETPLACE = "marketplace";
-
-	public static final String MY = "my";
-
-	public static final String PORTAL = "portal";
-
-	public static final String SERVER = "server";
-
-	public static final String[] ALL =
-		{MARKETPLACE, MY, CONTENT, PORTAL, SERVER};
-
+if (portletName.equals(PortletKeys.MARKETPLACE_MANAGER)) {
+	iFrameURL = MarketplaceConstants.MARKETPLACE_URL_MANAGE_APPS;
 }
+%>

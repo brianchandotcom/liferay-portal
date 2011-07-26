@@ -857,6 +857,14 @@
 		<put name="portlet_content" value="/portlet/maps/view.jsp" />
 	</definition>
 
+	<!-- Marketplace -->
+
+	<definition name="portlet.marketplace" extends="portlet" />
+
+	<definition name="portlet.marketplace.view" extends="portlet.marketplace">
+		<put name="portlet_content" value="/portlet/marketplace/view.jsp" />
+	</definition>
+
 	<!-- Message Boards -->
 
 	<definition name="portlet.message_boards" extends="portlet" />

@@ -3706,8 +3706,19 @@ public class PortalImpl implements Portal {
 			try {
 				Ticket ticket = TicketLocalServiceUtil.getTicket(token);
 
-				long doAsUserId = getDoAsUserId(
-					request, doAsUserIdString, true);
+				long doAsUserId = 0;
+
+				try {
+					Company company = getCompany(request);
+
+					if (Validator.isNotNull(doAsUserIdString)) {
+						doAsUserId = GetterUtil.getLong(
+							Encryptor.decrypt(
+								company.getKeyObj(), doAsUserIdString));
+					}
+				}
+				catch (Exception e) {
+				}
 
 				if (ticket.getClassName().equals(User.class.getName()) &&
 					ticket.getClassPK() == doAsUserId &&

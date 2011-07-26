@@ -5,6 +5,8 @@ AUI().add(
 
 		var EMPTY_FN = Lang.emptyFn;
 
+		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
+
 		var Ratings = A.Component.create(
 			{
 				ATTRS: {
@@ -38,28 +40,32 @@ AUI().add(
 					_convertToIndex: function(score) {
 						var instance = this;
 
-						var scoreindex = -1;
+						var scoreIndex = -1;
 
 						if (score == 1.0) {
-							scoreindex = 0;
+							scoreIndex = 0;
 						}
 						else if (score == -1.0) {
-							scoreindex = 1;
+							scoreIndex = 1;
 						}
 
-						return scoreindex;
+						return scoreIndex;
 					},
 
 					_fixScore: function(score) {
 						var instance = this;
 
-						return (score > 0) ? ('+' + score) : (score + '');
+						var prefix = '';
+
+						if (score > 0) {
+							prefix = '+';
+						}
+
+						return prefix + score;
 					},
 
 					_getLabel: function(desc, totalEntries, ratingScore) {
 						var instance = this;
-
-						var labelScoreTpl = '{desc} ({totalEntries} {voteLabel})';
 
 						var voteLabel = '';
 
@@ -70,8 +76,8 @@ AUI().add(
 							voteLabel = Liferay.Language.get('votes');
 						}
 
-						return A.substitute(
-							labelScoreTpl,
+						return Lang.sub(
+							TPL_LABEL_SCORE,
 							{
 								desc: desc,
 								totalEntries: totalEntries,
@@ -109,6 +115,8 @@ AUI().add(
 
 						var ratingScore = instance.ratingScore;
 
+						var message = '';
+
 						var stars = ratingScore.get('selectedIndex') + 1;
 
 						if (stars == 1) {
@@ -118,11 +126,7 @@ AUI().add(
 							message = Liferay.Language.get('stars');
 						}
 
-						message = ' ' + message;
-
-						var el = event.currentTarget.getDOM();
-
-						Liferay.Portal.ToolTip.show(el, stars + message);
+						Liferay.Portal.ToolTip.show(event.currentTarget, stars + ' ' + message);
 					},
 
 					_updateAverageScoreText: function(averageScore) {
@@ -133,11 +137,12 @@ AUI().add(
 						var firstImage = ratingScore.get('boundingBox').one('img.aui-rating-element');
 
 						if (firstImage) {
-							var msg = A.substitute(
+							var averageRatingText = Lang.sub(
 								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
-								[averageScore, instance.get('size')])
+								[averageScore, instance.get('size')]
+							);
 
-							firstImage.attr('alt', msg);
+							firstImage.attr('alt', averageRatingText);
 						}
 					}
 				},
@@ -259,6 +264,7 @@ AUI().add(
 
 						if (themeDisplay.isSignedIn()) {
 							var description = instance._fixScore(instance.get('totalScore'));
+
 							var totalEntries = instance.get('totalEntries');
 							var averageScore = instance.get('averageScore');
 							var size = instance.get('size');
@@ -307,8 +313,6 @@ AUI().add(
 						var label = instance._getLabel(description, json.totalEntries);
 
 						instance.ratings.set('label', label);
-						
-						instance._updateAverageScoreText(json.averageScore);
 					}
 				}
 			}

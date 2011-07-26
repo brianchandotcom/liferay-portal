@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -247,8 +248,9 @@ public class StripFilter extends BasePortalFilter {
 					}
 
 					if (response != null) {
-						response.setStatus(
-							HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+						response.setHeader(
+							HttpHeaders.CACHE_CONTROL,
+							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 					}
 				}
 

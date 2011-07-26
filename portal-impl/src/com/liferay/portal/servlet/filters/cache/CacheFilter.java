@@ -428,7 +428,11 @@ public class CacheFilter extends BasePortalFilter {
 			// twice because the user could have been authenticated after the
 			// initial test.
 
+			String cacheControl = GetterUtil.getString(
+				byteBufferResponse.getHeader(HttpHeaders.CACHE_CONTROL));
+
 			if ((byteBufferResponse.getStatus() == HttpServletResponse.SC_OK) &&
+				!cacheControl.contains("no-cache") &&
 				isCacheableRequest(request) &&
 				isCacheableResponse(byteBufferResponse)) {
 

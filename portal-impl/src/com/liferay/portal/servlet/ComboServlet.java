@@ -16,6 +16,7 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -225,8 +226,9 @@ public class ComboServlet extends HttpServlet {
 							_log.debug(stringFileContent);
 						}
 
-						response.setStatus(
-							HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+						response.setHeader(
+							HttpHeaders.CACHE_CONTROL,
+							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 					}
 
 					stringFileContent = MinifierUtil.minifyCss(

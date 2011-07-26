@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -424,7 +425,9 @@ public class MinifierFilter extends BasePortalFilter {
 				_log.debug(content);
 			}
 
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setHeader(
+				HttpHeaders.CACHE_CONTROL,
+				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 		}
 
 		String browserId = ParamUtil.getString(request, "browserId");

@@ -27,7 +27,9 @@ public class ReflectionUtil {
 
 		Field field = clazz.getDeclaredField(name);
 
-		field.setAccessible(true);
+		if (!field.isAccessible()) {
+			field.setAccessible(true);
+		}
 
 		return field;
 	}
@@ -38,7 +40,9 @@ public class ReflectionUtil {
 
 		Method method = clazz.getDeclaredMethod(name, parameterTypes);
 
-		method.setAccessible(true);
+		if (!method.isAccessible()) {
+			method.setAccessible(true);
+		}
 
 		return method;
 	}

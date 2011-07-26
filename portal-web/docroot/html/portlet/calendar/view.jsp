@@ -28,8 +28,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 String[] array = PortalUtil.stripURLAnchor(portletURL.toString(), "&#");
 
-String urlAnchor = array[1];
 String strippedURL = array[0];
+String urlAnchor = array[1];
 %>
 
 <aui:form method="post" name="fm">

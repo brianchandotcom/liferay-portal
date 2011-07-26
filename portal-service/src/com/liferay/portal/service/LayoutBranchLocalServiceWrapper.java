@@ -265,12 +265,31 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 			name, description, master, serviceContext);
 	}
 
+	public java.util.List<com.liferay.portal.model.LayoutBranch> getLayoutBranches(
+		long layoutSetBranchId, long plid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutBranchLocalService.getLayoutBranches(layoutSetBranchId,
+			plid, start, end, orderByComparator);
+	}
+
 	public com.liferay.portal.model.LayoutBranch getMasterLayoutBranch(
 		long layoutSetBranchId, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutBranchLocalService.getMasterLayoutBranch(layoutSetBranchId,
 			plid);
+	}
+
+	public com.liferay.portal.model.LayoutBranch updateLayoutBranch(
+		long layoutBranchId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutBranchLocalService.updateLayoutBranch(layoutBranchId,
+			name, description, serviceContext);
 	}
 
 	public LayoutBranchLocalService getWrappedLayoutBranchLocalService() {

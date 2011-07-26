@@ -52,6 +52,7 @@ import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.LayoutBranchLocalService;
+import com.liferay.portal.service.LayoutBranchService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portal.service.LayoutPrototypeService;
@@ -1145,6 +1146,24 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 	public void setLayoutBranchLocalService(
 		LayoutBranchLocalService layoutBranchLocalService) {
 		this.layoutBranchLocalService = layoutBranchLocalService;
+	}
+
+	/**
+	 * Returns the layout branch remote service.
+	 *
+	 * @return the layout branch remote service
+	 */
+	public LayoutBranchService getLayoutBranchService() {
+		return layoutBranchService;
+	}
+
+	/**
+	 * Sets the layout branch remote service.
+	 *
+	 * @param layoutBranchService the layout branch remote service
+	 */
+	public void setLayoutBranchService(LayoutBranchService layoutBranchService) {
+		this.layoutBranchService = layoutBranchService;
 	}
 
 	/**
@@ -3864,6 +3883,8 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 	protected LayoutFinder layoutFinder;
 	@BeanReference(type = LayoutBranchLocalService.class)
 	protected LayoutBranchLocalService layoutBranchLocalService;
+	@BeanReference(type = LayoutBranchService.class)
+	protected LayoutBranchService layoutBranchService;
 	@BeanReference(type = LayoutBranchPersistence.class)
 	protected LayoutBranchPersistence layoutBranchPersistence;
 	@BeanReference(type = LayoutPrototypeLocalService.class)

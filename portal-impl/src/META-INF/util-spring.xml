@@ -413,6 +413,11 @@
 			<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" class="com.liferay.portal.service.permission.LayoutBranchPermissionUtil">
+		<property name="layoutBranchPermission">
+			<bean class="com.liferay.portal.service.permission.LayoutBranchPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.service.permission.LayoutPermissionUtil" class="com.liferay.portal.service.permission.LayoutPermissionUtil">
 		<property name="layoutPermission">
 			<bean class="com.liferay.portal.service.permission.LayoutPermissionImpl" />

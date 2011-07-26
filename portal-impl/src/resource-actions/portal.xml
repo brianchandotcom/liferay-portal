@@ -293,7 +293,6 @@
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>DELETE_LAYOUT_BRANCH</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
@@ -312,7 +311,6 @@
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>DELETE_LAYOUT_BRANCH</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
@@ -321,6 +319,26 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH_STAGING</action-key>
 				<action-key>PUBLISH_TO_REMOTE</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.model.LayoutBranch</model-name>
+		<portlet-ref>
+			<portlet-name>134</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</supports>
+			<community-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>

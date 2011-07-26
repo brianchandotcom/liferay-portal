@@ -15,7 +15,7 @@
 	visibility: visible;
 }
 
-.dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar {
+.dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar, .portal-popup .portlet-dockbar, .portal-popup .portlet-staging-bar {
 	background: none;
 	border-width: 0;
 }

@@ -110,6 +110,15 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "LayoutBranch",
+	{
+		addLayoutBranch: true,
+		deleteLayoutBranch: true,
+		updateLayoutBranch: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutPrototype",
 	{
 		addLayoutPrototype: true,
@@ -123,8 +132,7 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutRevision",
 	{
-		addLayoutRevision: true,
-		deleteLayoutRevisions: true
+		addLayoutRevision: true
 	}
 );
 

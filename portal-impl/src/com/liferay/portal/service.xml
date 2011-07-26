@@ -537,7 +537,7 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
-	<entity name="LayoutBranch" local-service="true" remote-service="false">
+	<entity name="LayoutBranch" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -563,7 +563,12 @@
 
 		<!-- Finder methods -->
 
-		<finder name="L_P_M" return-type="LayoutBranch" unique="true">
+		<finder name="L_P" return-type="Collection">
+			<finder-column name="layoutSetBranchId" />
+			<finder-column name="plid" />
+		</finder>
+
+		<finder name="L_P_M" return-type="LayoutBranch">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
 			<finder-column name="master" />

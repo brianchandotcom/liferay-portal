@@ -185,6 +185,8 @@ if (layout != null) {
 
 						<%
 						LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
+
+						LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
 						%>
 
 						<div class="layout-set-branch-info">
@@ -209,12 +211,12 @@ if (layout != null) {
 								<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />
 
 								<liferay-util:buffer var="managePageVariationsLink">
-									<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="layoutRevisionsURL">
-										<portlet:param name="struts_action" value="/staging_bar/view_root_layout_revisions" />
+									<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="layoutBranchesURL">
+										<portlet:param name="struts_action" value="/staging_bar/view_layout_branches" />
 										<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
 									</portlet:renderURL>
 
-									<liferay-ui:icon cssClass="manage-page-variations" id="manageLayoutRevisions" image="configuration" label="<%= true %>" message="manage-page-variations" url="<%= layoutRevisionsURL %>" />
+									<liferay-ui:icon cssClass="manage-page-variations" id="manageLayoutRevisions" image="configuration" label="<%= true %>" message="manage-page-variations" url="<%= layoutBranchesURL %>" />
 
 									<aui:script use="aui-base">
 										var layoutRevisionsLink = A.one('#<portlet:namespace />manageLayoutRevisions');
@@ -263,6 +265,7 @@ if (layout != null) {
 											<%
 											for (int i = 0; i < layoutRevisions.size(); i ++) {
 												LayoutRevision rootRevision = layoutRevisions.get(i);
+												LayoutBranch curLayoutBranch = rootRevision.getLayoutBranch();
 
 												boolean selected = (rootRevision.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 
@@ -289,7 +292,7 @@ if (layout != null) {
 												<li class="<%= cssClass %>">
 													<span class="aui-tab-content">
 														<span class="aui-tab-label">
-															<aui:a href="<%= selected ? null : rootRevisionURL %>" label="<%= rootRevision.getLayoutBranch().getName() %>" />
+															<aui:a href="<%= selected ? null : rootRevisionURL %>" label="<%= curLayoutBranch.getName() %>" />
 														</span>
 													</span>
 												</li>
@@ -309,6 +312,9 @@ if (layout != null) {
 									</c:if>
 
 									<div class="aui-tabview-content variations-tabview-content">
+										<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
+											<div class="layout-branch-description"><%= layoutBranch.getDescription() %></div>
+										</c:if>
 
 										<%
 										request.setAttribute("view.jsp-layoutRevision", layoutRevision);

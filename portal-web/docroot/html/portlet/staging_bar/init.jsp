@@ -21,6 +21,7 @@
 <%@ page import="com.liferay.portal.LayoutSetBranchNameException" %>
 <%@ page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %>
 <%@ page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" %>
 <%@ page import="com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator" %>
 <%@ page import="com.liferay.portal.util.comparator.LayoutRevisionIdComparator" %>

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -812,22 +811,20 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
-		if (!LDAPSettingsUtil.isExportEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
+		addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
 
-			addUserGroupsNotAddedByLDAPImport(
-				user.getUserId(), newUserGroupIds);
-
-			UserGroupLocalServiceUtil.setUserUserGroups(
-				user.getUserId(),
-				ArrayUtil.toArray(
-					newUserGroupIds.toArray(new Long[newUserGroupIds.size()])));
+		for (long newUserGroupId : newUserGroupIds) {
+			UserLocalServiceUtil.addUserGroupUsers(
+				newUserGroupId, new long[] {user.getUserId()});
 		}
-		else {
-			long[] userIds = new long[] {user.getUserId()};
 
-			for (long newUserGroupId : newUserGroupIds) {
-				UserLocalServiceUtil.addUserGroupUsers(newUserGroupId, userIds);
+		List<UserGroup> userUserGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
+
+		for (UserGroup userGroup : userUserGroups) {
+			if (!newUserGroupIds.contains(userGroup.getUserGroupId())) {
+				UserLocalServiceUtil.deleteUserGroupUser(
+					userGroup.getUserGroupId(), user.getUserId());
 			}
 		}
 	}
@@ -974,6 +971,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 								userGroupId);
 					}
 
+					UserLocalServiceUtil.addUserGroupUsers(
+						userGroupId, new long[] {user.getUserId()});
+
 					newUserIds.add(user.getUserId());
 				}
 			}
@@ -982,9 +982,15 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
-		UserLocalServiceUtil.setUserGroupUsers(
-			userGroupId,
-			ArrayUtil.toArray(newUserIds.toArray(new Long[newUserIds.size()])));
+		List<User> userGroupUsers = UserLocalServiceUtil.getUserGroupUsers(
+			userGroupId);
+
+		for (User user : userGroupUsers) {
+			if (!newUserIds.contains(user.getUserId())) {
+				UserLocalServiceUtil.deleteUserGroupUser(
+					userGroupId, user.getUserId());
+			}
+		}
 	}
 
 	protected void populateExpandoAttributes(

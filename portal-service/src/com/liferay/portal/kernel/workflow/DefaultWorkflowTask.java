@@ -32,6 +32,14 @@ import java.util.Map;
  */
 public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 
+	public void addWorkflowTaskForm(WorkflowTaskForm workflowTaskForm) {
+		if (_workflowTaskForms == null) {
+			_workflowTaskForms = new ArrayList<WorkflowTaskForm>();
+		}
+
+		_workflowTaskForms.add(workflowTaskForm);
+	}
+
 	public long getAssigneeUserId() {
 		if (!isAssignedToSingleUser()) {
 			return -1;
@@ -89,6 +97,10 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		}
 
 		return _workflowTaskAssignees;
+	}
+
+	public List<WorkflowTaskForm> getWorkflowTaskForms() {
+		return _workflowTaskForms;
 	}
 
 	public long getWorkflowTaskId() {
@@ -180,10 +192,20 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		Collection<WorkflowTaskAssignee> workflowTaskAssignees) {
 
 		if (_workflowTaskAssignees == null) {
-			_workflowTaskAssignees  = new ArrayList<WorkflowTaskAssignee>();
+			_workflowTaskAssignees = new ArrayList<WorkflowTaskAssignee>();
 		}
 
 		_workflowTaskAssignees.addAll(workflowTaskAssignees);
+	}
+
+	public void setWorkflowTaskForms(
+		Collection<WorkflowTaskForm> workflowTaskForms) {
+
+		if (_workflowTaskAssignees == null) {
+			_workflowTaskForms = new ArrayList<WorkflowTaskForm>();
+		}
+
+		_workflowTaskForms.addAll(workflowTaskForms);
 	}
 
 	public void setWorkflowTaskId(long workflowTaskId) {
@@ -202,6 +224,7 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 	private int _workflowDefinitionVersion;
 	private long _workflowInstanceId;
 	private List<WorkflowTaskAssignee> _workflowTaskAssignees;
+	private List<WorkflowTaskForm> _workflowTaskForms;
 	private long _workflowTaskId;
 
 }

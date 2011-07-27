@@ -88,6 +88,15 @@ if (group != null) {
 						<c:if test="<%= (publicLayoutSetPrototype != null) %>">
 							<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
 						</c:if>
+						
+						<aui:field-wrapper label="public-pages">
+							<c:choose>
+								<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
+									<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_SITES %>">
+										<portlet:param name="struts_action" value="/my_sites/view" />
+										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+									</liferay-portlet:actionURL>
 
 						<c:choose>
 							<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
@@ -138,6 +147,15 @@ if (group != null) {
 						<c:if test="<%= (privateLayoutSetPrototype != null) %>">
 							<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
 						</c:if>
+						
+						<aui:field-wrapper label="private-pages">
+							<c:choose>
+								<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
+									<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_SITES %>">
+										<portlet:param name="struts_action" value="/my_sites/view" />
+										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+									</liferay-portlet:actionURL>
 
 						<c:choose>
 							<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">

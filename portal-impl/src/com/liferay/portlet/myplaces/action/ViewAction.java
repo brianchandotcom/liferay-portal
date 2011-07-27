@@ -128,7 +128,7 @@ public class ViewAction extends PortletAction {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		return mapping.findForward("portlet.my_places.view");
+		return mapping.findForward("portlet.my_sites.view");
 	}
 
 	protected List<Layout> getLayouts(long groupId, String privateLayoutParam)

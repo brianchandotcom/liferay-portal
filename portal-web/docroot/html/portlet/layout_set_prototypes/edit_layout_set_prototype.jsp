@@ -70,8 +70,8 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		<c:if test="<%= !layoutSetPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">
-				<liferay-portlet:actionURL var="viewURL" portletName="<%= PortletKeys.MY_PLACES %>">
-					<portlet:param name="struts_action" value="/my_places/view" />
+				<liferay-portlet:actionURL var="viewURL" portletName="<%= PortletKeys.MY_SITES %>">
+					<portlet:param name="struts_action" value="/my_sites/view" />
 					<portlet:param name="groupId" value="<%= String.valueOf(layoutSetPrototype.getGroup().getGroupId()) %>" />
 					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:actionURL>

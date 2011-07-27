@@ -19,25 +19,25 @@
 <%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
 
 <%
-int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_places:max"));
+int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_sites:max"));
 
 if (max <= 0) {
-	max = PropsValues.MY_PLACES_MAX_ELEMENTS;
+	max = PropsValues.MY_SITES_MAX_ELEMENTS;
 }
 
-List<Group> myPlaces = user.getMyPlaces(max);
+List<Group> myPlaces = user.getMySites(max);
 %>
 
 <c:if test="<%= !myPlaces.isEmpty() %>">
-	<ul class="taglib-my-places">
+	<ul class="taglib-my-sites">
 
 		<%
-		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.MY_PLACES, plid, PortletRequest.ACTION_PHASE);
+		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.MY_SITES, plid, PortletRequest.ACTION_PHASE);
 
 		portletURL.setWindowState(WindowState.NORMAL);
 		portletURL.setPortletMode(PortletMode.VIEW);
 
-		portletURL.setParameter("struts_action", "/my_places/view");
+		portletURL.setParameter("struts_action", "/my_sites/view");
 
 		for (Group myPlace : myPlaces) {
 			myPlace = myPlace.toEscapedModel();
@@ -57,12 +57,12 @@ List<Group> myPlaces = user.getMyPlaces(max);
 					privateAddPageHREF = themeDisplay.getURLControlPanel();
 				}
 				else if (GroupPermissionUtil.contains(permissionChecker, myPlace.getGroupId(), ActionKeys.MANAGE_LAYOUTS)) {
-					PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_PLACES, plid, PortletRequest.ACTION_PHASE);
+					PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_SITES, plid, PortletRequest.ACTION_PHASE);
 
 					addPageURL.setWindowState(WindowState.NORMAL);
 					addPageURL.setPortletMode(PortletMode.VIEW);
 
-					addPageURL.setParameter("struts_action", "/my_places/edit_layouts");
+					addPageURL.setParameter("struts_action", "/my_sites/edit_layouts");
 					addPageURL.setParameter("redirect", currentURL);
 					addPageURL.setParameter("groupId", String.valueOf(myPlace.getGroupId()));
 					addPageURL.setParameter("privateLayout", Boolean.FALSE.toString());
@@ -116,10 +116,10 @@ List<Group> myPlaces = user.getMyPlaces(max);
 
 			if (publicLayoutsPageCount == 0) {
 				if (regularSite) {
-					showPublicPlace = PropsValues.MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
+					showPublicPlace = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
 				}
 				else if (userSite) {
-					showPublicPlace = PropsValues.MY_PLACES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
+					showPublicPlace = PropsValues.MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
 
 					if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE || (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole)) {
 						showPublicPlace = false;
@@ -131,10 +131,10 @@ List<Group> myPlaces = user.getMyPlaces(max);
 
 			if (privateLayoutsPageCount == 0) {
 				if (regularSite) {
-					showPrivatePlace = PropsValues.MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
+					showPrivatePlace = PropsValues.MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
 				}
 				else if (userSite) {
-					showPrivatePlace = PropsValues.MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
+					showPrivatePlace = PropsValues.MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
 
 					if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE || (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED && !hasPowerUserRole)) {
 						showPrivatePlace = false;
@@ -145,7 +145,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 
 			<c:if test="<%= showPublicPlace || showPrivatePlace %>">
 				<c:choose>
-					<c:when test='<%= PropsValues.MY_PLACES_DISPLAY_STYLE.equals("simple") %>'>
+					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("simple") %>'>
 
 						<%
 						portletURL.setParameter("groupId", String.valueOf(myPlace.getGroupId()));
@@ -216,7 +216,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 									}
 									%>
 
-									<%@ include file="/html/taglib/ui/my_places/page_site_name.jspf" %>
+									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
 									<c:if test="<%= privateLayoutsPageCount > 0 %>">
 										<span class="site-type"><liferay-ui:message key="public" /></span>
@@ -267,7 +267,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 									}
 									%>
 
-									<%@ include file="/html/taglib/ui/my_places/page_site_name.jspf" %>
+									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
 									<c:if test="<%= publicLayoutsPageCount > 0 %>">
 										<span class="site-type"><liferay-ui:message key="private" /></span>
@@ -276,7 +276,7 @@ List<Group> myPlaces = user.getMyPlaces(max);
 							</li>
 						</c:if>
 					</c:when>
-					<c:when test='<%= PropsValues.MY_PLACES_DISPLAY_STYLE.equals("classic") %>'>
+					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("classic") %>'>
 
 						<%
 						boolean selectedSite = false;

@@ -64,7 +64,7 @@
 	border-radius: 1px 4px 4px 1px;
 }
 
-.aui-tabview-list, .aui-tab-active, body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;

@@ -73,22 +73,6 @@
 
 /* ---------- Extras ---------- */
 
-.aui-tab-active:after {
-	border: 10px solid;
-	border-bottom-width: 0;
-	border-color: #333 transparent transparent;
-	bottom: -7px;
-	content: '-';
-	display: block;
-	height: 0;
-	left: 50%;
-	margin-left: -10px;
-	position: absolute;
-	text-indent: -9999px;
-	width: 0;
-	z-index: 20;
-}
-
 .lfr-title-scope-selector {
 	-moz-border-radius-bottomleft: 4px;
 	-webkit-border-bottom-left-radius: 4px;

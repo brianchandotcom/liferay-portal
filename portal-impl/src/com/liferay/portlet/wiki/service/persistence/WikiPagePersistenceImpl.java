@@ -635,12 +635,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						com.liferay.portlet.wiki.model.WikiPage.class.getName(),
 						pageId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						wikiPage.getTitle(), null));
-
-				wikiPage.setContent(SanitizerUtil.sanitize(companyId, groupId,
-						userId,
-						com.liferay.portlet.wiki.model.WikiPage.class.getName(),
-						pageId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						wikiPage.getContent(), null));
 			}
 			catch (SanitizerException se) {
 				throw new SystemException(se);

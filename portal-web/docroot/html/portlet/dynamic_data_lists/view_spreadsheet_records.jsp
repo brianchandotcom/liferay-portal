@@ -88,13 +88,21 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, 0, 1000, null);
 
-	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size()) - records.size();
+	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size());
 	%>
 
 	var recordset = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
 
+	var records = <%= DDLUtil.getRecordsJSONArray(records) %>;
+
+	records.sort(
+		function(a, b) {
+			return (a.displayIndex - b.displayIndex);
+		}
+	);
+
 	A.Array.each(
-		<%= DDLUtil.getRecordsJSONArray(records) %>,
+		records,
 		function(item, index, collection) {
 			recordset.splice(item.displayIndex, 0, item);
 		}

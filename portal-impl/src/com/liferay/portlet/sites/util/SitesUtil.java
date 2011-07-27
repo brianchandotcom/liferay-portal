@@ -33,6 +33,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -202,7 +203,11 @@ public class SitesUtil {
 				response);
 		}
 
-		LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
+		LayoutServiceUtil.deleteLayout(
+			groupId, privateLayout, layoutId, serviceContext);
 	}
 
 	public static void deleteLayout(

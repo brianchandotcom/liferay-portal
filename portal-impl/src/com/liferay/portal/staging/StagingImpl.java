@@ -16,6 +16,7 @@ package com.liferay.portal.staging;
 
 import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
@@ -1565,23 +1566,29 @@ public class StagingImpl implements Staging {
 			portalPreferences, layoutSetBranchId, plid);
 
 		if (layoutBranchId <= 0) {
-			LayoutBranch layoutBranch =
-				LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
-					layoutSetBranchId, plid);
+			try {
+				LayoutBranch layoutBranch =
+					LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
+						layoutSetBranchId, plid);
 
-			layoutBranchId = layoutBranch.getLayoutBranchId();
-		}
-
-		try {
-			LayoutRevision layoutRevision =
-				LayoutRevisionLocalServiceUtil.getLayoutRevision(
-					layoutSetBranchId, layoutBranchId, plid);
-
-			if (layoutRevision != null) {
-				layoutRevisionId = layoutRevision.getLayoutRevisionId();
+				layoutBranchId = layoutBranch.getLayoutBranchId();
+			}
+			catch(NoSuchLayoutBranchException nlbe) {
 			}
 		}
-		catch (PortalException pe) {
+
+		if (layoutBranchId > 0) {
+			try {
+				LayoutRevision layoutRevision =
+					LayoutRevisionLocalServiceUtil.getLayoutRevision(
+						layoutSetBranchId, layoutBranchId, plid);
+
+				if (layoutRevision != null) {
+					layoutRevisionId = layoutRevision.getLayoutRevisionId();
+				}
+			}
+			catch (PortalException pe) {
+			}
 		}
 
 		return layoutRevisionId;

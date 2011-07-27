@@ -218,7 +218,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			type, hidden, friendlyURL, serviceContext);
 	}
 
-	public void deleteLayout(Layout layout, boolean updateLayoutSet)
+	public void deleteLayout(
+			Layout layout, boolean updateLayoutSet,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Child layouts
@@ -228,7 +230,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getLayoutId());
 
 		for (Layout childLayout : childLayouts) {
-			deleteLayout(childLayout, updateLayoutSet);
+			deleteLayout(childLayout, updateLayoutSet, serviceContext);
 		}
 
 		// Portlet preferences
@@ -303,25 +305,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
-	public void deleteLayout(long plid)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		deleteLayout(layout, true);
+		deleteLayout(layout, true, serviceContext);
 	}
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		deleteLayout(layout, true);
+		deleteLayout(layout, true, serviceContext);
 	}
 
-	public void deleteLayouts(long groupId, boolean privateLayout)
+	public void deleteLayouts(
+			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layouts
@@ -331,7 +335,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			try {
-				deleteLayout(layout, false);
+				deleteLayout(layout, false, serviceContext);
 			}
 			catch (NoSuchLayoutException nsle) {
 			}
@@ -746,7 +750,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	public void setLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			long[] layoutIds)
+			long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (layoutIds == null) {
@@ -786,7 +790,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			if (!layoutIdsSet.contains(layout.getLayoutId())) {
-				deleteLayout(layout, true);
+				deleteLayout(layout, true, serviceContext);
 			}
 			else {
 				newLayoutIdsSet.add(layout.getLayoutId());

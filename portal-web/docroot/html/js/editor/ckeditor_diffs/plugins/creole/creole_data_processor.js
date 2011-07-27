@@ -132,6 +132,8 @@
 
 			instance._endResult = null;
 
+			instance._listsStack = [];
+
 			return endResult;
 		},
 
@@ -216,25 +218,11 @@
 				}
 			}
 			else if (tagName == TAG_UNORDERED_LIST || tagName == TAG_ORDERED_LIST) {
-				if (instance._ulLevel > 1) {
-					if (!instance._isLastItemNewLine()) {
-						instance._endResult.push(NEW_LINE);
-					}
+				instance._listsStack.pop();
+
+				if (!instance._isLastItemNewLine()) {
+					instance._endResult.push(NEW_LINE);
 				}
-				else {
-					var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(instance._endResult.slice(-2).join(''));
-					var count = 0;
-
-					if (newLinesAtEnd) {
-						count = newLinesAtEnd[1].length;
-					}
-
-					while (count++ < 2) {
-						instance._endResult.push(NEW_LINE);
-					}
-				}
-
-				instance._ulLevel--;
 			}
 			else if (tagName == TAG_PRE) {
 				if (!instance._isLastItemNewLine()) {
@@ -384,28 +372,17 @@
 		_handleListItem: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			var parentNode = element.parentNode;
-			var tagName = parentNode.tagName.toLowerCase();
-			var listItemTag = TAG_ORDERED_LIST_ITEM;
-
-			if (tagName === TAG_UNORDERED_LIST) {
-				listItemTag = TAG_UNORDERED_LIST_ITEM;
-			}
-
-			var res = new Array(instance._ulLevel + 1);
-			res = res.join(listItemTag);
-
 			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
 				listTagsIn.push(NEW_LINE);
 			}
 
-			listTagsIn.push(res, SPACE);
+			listTagsIn.push(instance._listsStack.join(''));
 		},
 
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			instance._ulLevel++;
+			instance._listsStack.push(TAG_ORDERED_LIST_ITEM);
 		},
 
 		_handleParagraph: function(element, listTagsIn, listTagsOut) {
@@ -501,7 +478,7 @@
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			instance._ulLevel++;
+			instance._listsStack.push(TAG_UNORDERED_LIST_ITEM);
 		},
 
 		_isDataAvailable: function() {
@@ -548,8 +525,8 @@
 
 		_endResult: null,
 
-		_skipParse: false,
+		_listsStack: [],
 
-		_ulLevel: 0
+		_skipParse: false
 	};
 })();

@@ -187,6 +187,10 @@ AUI().add(
 
 						var translationManager = instance.translationManager;
 
+						var editingLocale = translationManager.get('editingLocale');
+
+						instance._updateFieldsLocalizationMap(editingLocale);
+
 						var root = instance._createDynamicNode(
 							'root',
 							{

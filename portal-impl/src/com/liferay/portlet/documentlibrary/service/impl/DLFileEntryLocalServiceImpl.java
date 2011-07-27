@@ -159,21 +159,6 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
-		// Resources
-
-		if (serviceContext.getAddGroupPermissions() ||
-			serviceContext.getAddGuestPermissions()) {
-
-			addFileEntryResources(
-				dlFileEntry, serviceContext.getAddGroupPermissions(),
-				serviceContext.getAddGuestPermissions());
-		}
-		else {
-			addFileEntryResources(
-				dlFileEntry, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
-		}
-
 		// File version
 
 		DLFileVersion dlFileVersion = addFileVersion(
@@ -222,6 +207,29 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext);
 
 		return dlFileEntry;
+	}
+
+	public void addFileEntryResources(
+			DLFileEntry dlFileEntry, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addResources(
+			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+			dlFileEntry.getFileEntryId(), false, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public void addFileEntryResources(
+			DLFileEntry dlFileEntry, String[] groupPermissions,
+			String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addModelResources(
+			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+			dlFileEntry.getFileEntryId(), groupPermissions, guestPermissions);
 	}
 
 	public void cancelCheckOut(long userId, long fileEntryId)
@@ -933,29 +941,6 @@ public class DLFileEntryLocalServiceImpl
 		else {
 			return false;
 		}
-	}
-
-	protected void addFileEntryResources(
-			DLFileEntry dlFileEntry, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addResources(
-			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), false, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	protected void addFileEntryResources(
-			DLFileEntry dlFileEntry, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addModelResources(
-			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), groupPermissions, guestPermissions);
 	}
 
 	protected void addFileEntryResources(

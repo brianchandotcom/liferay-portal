@@ -276,6 +276,24 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 			is, size, serviceContext);
 	}
 
+	public void addFileEntryResources(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.addFileEntryResources(dlFileEntry,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	public void addFileEntryResources(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.addFileEntryResources(dlFileEntry,
+			groupPermissions, guestPermissions);
+	}
+
 	public void cancelCheckOut(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

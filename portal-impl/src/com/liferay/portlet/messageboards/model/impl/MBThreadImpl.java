@@ -14,9 +14,13 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,6 +44,15 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return null;
+	}
+
+	public String getRootMessageUuid()
+		throws PortalException, SystemException {
+
+		MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(
+			getRootMessageId());
+
+		return rootMessage.getUuid();
 	}
 
 	public boolean hasLock(long userId) {

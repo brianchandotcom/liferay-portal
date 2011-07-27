@@ -376,6 +376,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Asset
 
+		assetEntryLocalService.updateEntry(
+			userId, thread.getGroupId(), MBThread.class.getName(),
+			thread.getThreadId(), thread.getRootMessageUuid(), null, null,
+			false, null, null, null, null, ContentTypes.TEXT_HTML,
+			String.valueOf(thread.getThreadId()), null, null, null, null, 0, 0,
+			null, false);
+
 		updateAsset(
 			userId, message, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
@@ -892,7 +899,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		return getMessageDisplay(message, status, threadView, false);
+		return getMessageDisplay(userId, message, status, threadView, false);
 	}
 
 	public int getDiscussionMessagesCount(
@@ -1024,18 +1031,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	public MBMessageDisplay getMessageDisplay(
-			long messageId, int status, String threadView,
+			long userId, long messageId, int status, String threadView,
 			boolean includePrevAndNext)
 		throws PortalException, SystemException {
 
 		MBMessage message = getMessage(messageId);
 
 		return getMessageDisplay(
-			message, status, threadView, includePrevAndNext);
+			userId, message, status, threadView, includePrevAndNext);
 	}
 
 	public MBMessageDisplay getMessageDisplay(
-			MBMessage message, int status, String threadView,
+			long userId, MBMessage message, int status, String threadView,
 			boolean includePrevAndNext)
 		throws PortalException, SystemException {
 
@@ -1067,8 +1074,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
-			mbThreadLocalService.updateThread(
-				thread.getThreadId(), thread.getViewCount() + 1);
+			mbThreadLocalService.incrementViewCounter(
+				userId, thread.getThreadId());
 		}
 
 		MBThread previousThread = null;
@@ -1489,8 +1496,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					if (!message.isAnonymous() && !user.isDefaultUser()) {
 						int activityType = MBActivityKeys.ADD_MESSAGE;
 						long receiverUserId = 0;
-						MBMessage socialEquityLogMessage = message;
-						String actionId = ActionKeys.ADD_MESSAGE;
 
 						MBMessage parentMessage =
 							mbMessagePersistence.fetchByPrimaryKey(
@@ -1501,20 +1506,24 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							receiverUserId = parentMessage.getUserId();
 
 							if (receiverUserId != userId) {
-								socialEquityLogMessage = parentMessage;
-								actionId = ActionKeys.REPLY_TO_MESSAGE;
+								socialEquityLogLocalService.addEquityLogs(
+									userId, MBMessage.class.getName(),
+									parentMessage.getMessageId(),
+									ActionKeys.REPLY_TO_MESSAGE,
+									StringPool.BLANK);
 							}
+						}
+						else {
+							socialEquityLogLocalService.addEquityLogs(
+								userId, MBThread.class.getName(),
+								thread.getThreadId(), ActionKeys.ADD_THREAD,
+								StringPool.BLANK);
 						}
 
 						socialActivityLocalService.addActivity(
 							userId, message.getGroupId(),
 							MBMessage.class.getName(), message.getMessageId(),
 							activityType, StringPool.BLANK, receiverUserId);
-
-						socialEquityLogLocalService.addEquityLogs(
-							userId, MBMessage.class.getName(),
-							socialEquityLogMessage.getMessageId(), actionId,
-							StringPool.BLANK);
 					}
 				}
 				else {

@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -151,6 +154,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			mbCategoryPersistence.update(category, false);
 		}
+
+		// Asset
+		assetEntryLocalService.deleteEntry(
+			Thread.class.getName(), thread.getThreadId());
 
 		// Thread
 
@@ -385,6 +392,31 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	public void incrementViewCounter(long userId, long threadId)
+		throws PortalException, SystemException {
+
+		mbThreadLocalService.incrementViewCounter(userId, threadId, 1);
+	}
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	public void incrementViewCounter(long userId, long threadId, int increment)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		thread.incrementViewCount(increment);
+
+		mbThreadPersistence.update(thread, false);
+
+		// Social
+
+		if ((userId > 0) && (thread.getRootMessageUserId() != userId)) {
+			socialEquityLogLocalService.addEquityLogs(
+				userId, MBThread.class.getName(), thread.getThreadId(),
+				ActionKeys.VIEW, StringPool.BLANK);
+		}
+	}
+
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
@@ -582,6 +614,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	/**
+	 * 	@deprecated {@link #incrementViewCounter(long, long, int)}
+	 */
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {
 

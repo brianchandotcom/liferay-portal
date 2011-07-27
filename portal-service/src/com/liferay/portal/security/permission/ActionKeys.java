@@ -112,6 +112,8 @@ public class ActionKeys {
 
 	public static final String ADD_TEMPLATE = "ADD_TEMPLATE";
 
+	public static final String ADD_THREAD = "ADD_THREAD";
+
 	public static final String ADD_TO_PAGE = "ADD_TO_PAGE";
 
 	public static final String ADD_TOPIC = "ADD_TOPIC";

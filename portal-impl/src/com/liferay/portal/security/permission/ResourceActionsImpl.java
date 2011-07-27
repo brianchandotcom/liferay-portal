@@ -992,28 +992,33 @@ public class ResourceActionsImpl implements ResourceActions {
 			portletResources.add(portletName);
 		}
 
-		List<String> supportsActions = readSupportsActions(
-			modelResourceElement, _modelResourceActions, name);
+		Element permissionsElement = modelResourceElement.element(
+			"permissions");
 
-		checkModelActions(supportsActions);
+		if (permissionsElement != null) {
+			List<String> supportsActions = readSupportsActions(
+				modelResourceElement, _modelResourceActions, name);
 
-		setActions(_modelResourceActions, name, supportsActions);
+			checkModelActions(supportsActions);
 
-		readGroupDefaultActions(
-			modelResourceElement, _modelResourceGroupDefaultActions, name);
+			setActions(_modelResourceActions, name, supportsActions);
 
-		List<String> guestDefaultActions = readGuestDefaultActions(
-			modelResourceElement, _modelResourceGuestDefaultActions, name);
+			readGroupDefaultActions(
+				modelResourceElement, _modelResourceGroupDefaultActions, name);
 
-		readGuestUnsupportedActions(
-			modelResourceElement, _modelResourceGuestUnsupportedActions, name,
-			guestDefaultActions);
+			List<String> guestDefaultActions = readGuestDefaultActions(
+				modelResourceElement, _modelResourceGuestDefaultActions, name);
 
-		setActions(
-			_modelResourceGuestDefaultActions, name, guestDefaultActions);
+			readGuestUnsupportedActions(
+				modelResourceElement, _modelResourceGuestUnsupportedActions,
+				name, guestDefaultActions);
 
-		readOwnerDefaultActions(
-			modelResourceElement, _modelResourceOwnerDefaultActions, name);
+			setActions(
+				_modelResourceGuestDefaultActions, name, guestDefaultActions);
+
+			readOwnerDefaultActions(
+				modelResourceElement, _modelResourceOwnerDefaultActions, name);
+		}
 
 		readSocialEquity(modelResourceElement, name);
 	}

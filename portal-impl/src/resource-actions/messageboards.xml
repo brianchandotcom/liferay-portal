@@ -160,14 +160,6 @@
 				<participation-lifespan>30</participation-lifespan>
 			</social-equity-mapping>-->
 			<social-equity-mapping>
-				<action-key>ADD_MESSAGE</action-key>
-				<participation-value>5</participation-value>
-				<participation-lifespan>30</participation-lifespan>
-				<social-activity-mapping class="com.liferay.portlet.messageboards.social.MBActivityKeys">
-					ADD_MESSAGE
-				</social-activity-mapping>
-			</social-equity-mapping>
-			<social-equity-mapping>
 				<action-key>ADD_VOTE</action-key>
 				<information-value>5</information-value>
 				<information-lifespan>30</information-lifespan>
@@ -186,6 +178,19 @@
 				<information-lifespan>36500</information-lifespan>
 				<participation-value>2</participation-value>
 				<participation-lifespan>36500</participation-lifespan>
+			</social-equity-mapping>
+		</social-equity>
+	</model-resource>
+		<model-resource>
+		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
+		<portlet-ref>
+			<portlet-name>19</portlet-name>
+		</portlet-ref>
+		<social-equity>
+			<social-equity-mapping>
+				<action-key>ADD_THREAD</action-key>
+				<participation-value>5</participation-value>
+				<participation-lifespan>30</participation-lifespan>
 			</social-equity-mapping>
 			<social-equity-mapping>
 				<action-key>VIEW</action-key>

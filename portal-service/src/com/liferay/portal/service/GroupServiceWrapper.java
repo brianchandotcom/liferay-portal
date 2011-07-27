@@ -106,10 +106,10 @@ public class GroupServiceWrapper implements GroupService {
 		return _groupService.getUserOrganizationsGroups(userId, start, end);
 	}
 
-	public java.util.List<com.liferay.portal.model.Group> getUserPlaces()
+	public java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _groupService.getUserPlaces();
+		return _groupService.getUserSites();
 	}
 
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(

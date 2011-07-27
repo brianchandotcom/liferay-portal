@@ -39,7 +39,7 @@
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-	List<Group> myPlaces = user.getMyPlaces();
+	List<Group> myPlaces = user.getMySites();
 
 	if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
 		myPlaces = ListUtil.copy(myPlaces);

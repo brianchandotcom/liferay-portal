@@ -27,7 +27,7 @@ public class EntityColumn implements Cloneable {
 	public EntityColumn(String name) {
 		this(
 			name, null, null, false, false, null, null, null, true, true, null,
-			null, null, null, true, true, false, false);
+			null, null, null, true, true, false, false, false);
 	}
 
 	public EntityColumn(
@@ -36,7 +36,7 @@ public class EntityColumn implements Cloneable {
 		String mappingTable, boolean caseSensitive, boolean orderByAscending,
 		String comparator, String arrayableOperator, String idType,
 		String idParam, boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean jsonEnabled, boolean counter) {
 
 		_name = name;
 		_dbName = dbName;
@@ -58,18 +58,19 @@ public class EntityColumn implements Cloneable {
 		_lazy = lazy;
 		_localized = localized;
 		_jsonEnabled = jsonEnabled;
+		_counter = counter;
 	}
 
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
 		boolean filterPrimary, String ejbName, String mappingKey,
 		String mappingTable, String idType, String idParam, boolean convertNull,
-		boolean lazy, boolean localized, boolean jsonEnabled) {
+		boolean lazy, boolean localized, boolean jsonEnabled, boolean counter) {
 
 		this(
 			name, dbName, type, primary, filterPrimary, ejbName, mappingKey,
 			mappingTable, true, true, null, null, idType, idParam, convertNull,
-			lazy, localized, jsonEnabled);
+			lazy, localized, jsonEnabled, counter);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class EntityColumn implements Cloneable {
 			getEJBName(), getMappingKey(), getMappingTable(), isCaseSensitive(),
 			isOrderByAscending(), getComparator(), getArrayableOperator(),
 			getIdType(), getIdParam(), isConvertNull(), isLazy(), isLocalized(),
-			isJsonEnabled());
+			isJsonEnabled(), isCounter());
 	}
 
 	@Override
@@ -228,6 +229,10 @@ public class EntityColumn implements Cloneable {
 
 	public boolean isConvertNull() {
 		return _convertNull;
+	}
+
+	public boolean isCounter() {
+		return _counter;
 	}
 
 	public boolean isFetchFinderPath() {
@@ -383,6 +388,7 @@ public class EntityColumn implements Cloneable {
 	private boolean _caseSensitive;
 	private String _comparator;
 	private boolean _convertNull;
+	private boolean _counter;
 	private String _dbName;
 	private String _ejbName;
 	private boolean _fetchFinderPath;

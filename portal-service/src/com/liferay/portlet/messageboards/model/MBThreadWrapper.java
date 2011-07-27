@@ -201,12 +201,46 @@ public class MBThreadWrapper implements MBThread {
 	}
 
 	/**
+	* Decrements the value of view count in this message boards thread by a
+	* given value.
+	*
+	* @param decrement the value to decrement view count by
+	*/
+	public void decrementViewCount() {
+		_mbThread.decrementViewCount();
+	}
+
+	/**
+	* Decrements the value of view count in this message boards thread by 1
+	*/
+	public void decrementViewCount(int decrement) {
+		_mbThread.decrementViewCount(decrement);
+	}
+
+	/**
 	* Returns the view count of this message boards thread.
 	*
 	* @return the view count of this message boards thread
 	*/
 	public int getViewCount() {
 		return _mbThread.getViewCount();
+	}
+
+	/**
+	* Increments the value of view count in this message boards thread by a
+	* given value.
+	*
+	* @param increment the value to increment view count by
+	*/
+	public void incrementViewCount() {
+		_mbThread.incrementViewCount();
+	}
+
+	/**
+	* Increments the value of view count in this message boards thread by 1.
+	*/
+	public void incrementViewCount(int increment) {
+		_mbThread.incrementViewCount(increment);
 	}
 
 	/**

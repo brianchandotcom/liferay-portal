@@ -346,7 +346,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		if (entry != null) {
-			entry.setViewCount(entry.getViewCount() + increment);
+			entry.incrementViewCount(increment);
 
 			assetEntryPersistence.update(entry, false);
 

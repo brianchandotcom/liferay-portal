@@ -337,6 +337,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	}
 
 	<#list entity.regularColList as column>
+		<#if column.counter>
+			public void decrement${column.methodName}() {
+				decrement${column.methodName}(1);
+			}
+
+			public void decrement${column.methodName}(int decrement) {
+				_${column.name} = _${column.name} - decrement;
+			}
+		</#if>
+		
 		<#if column.name == "classNameId">
 			public String getClassName() {
 				if (getClassNameId() <= 0) {
@@ -419,6 +429,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			public Map<Locale, String> get${column.methodName}Map() {
 				return LocalizationUtil.getLocalizationMap(get${column.methodName}());
+			}
+		</#if>
+
+		<#if column.counter>
+			public void increment${column.methodName}() {
+				increment${column.methodName}(1);
+			}
+
+			public void increment${column.methodName}(int increment) {
+				_${column.name} = _${column.name} + increment;
 			}
 		</#if>
 

@@ -305,6 +305,7 @@ element is true, then the json-enabled value in the column element is true.
 	lazy CDATA #IMPLIED
 	localized CDATA #IMPLIED
 	json-enabled CDATA #IMPLIED
+	counter CDATA #IMPLIED
 >
 
 <!--

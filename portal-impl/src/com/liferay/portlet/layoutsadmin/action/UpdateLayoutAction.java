@@ -23,15 +23,22 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -43,6 +50,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -150,6 +159,7 @@ public class UpdateLayoutAction extends JSONAction {
 		String description = StringPool.BLANK;
 		String type = LayoutConstants.TYPE_PORTLET;
 		boolean hidden = false;
+		boolean locked = ParamUtil.getBoolean(request, "locked");
 		String friendlyURL = StringPool.BLANK;
 		long layoutPrototypeId = ParamUtil.getLong(
 			request, "layoutPrototypeId");
@@ -169,7 +179,7 @@ public class UpdateLayoutAction extends JSONAction {
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
 				description, layoutPrototypeLayout.getType(),
-				false, friendlyURL, serviceContext);
+				false, locked, friendlyURL, serviceContext);
 
 			LayoutServiceUtil.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -183,7 +193,40 @@ public class UpdateLayoutAction extends JSONAction {
 		else {
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
-				description, type, hidden, friendlyURL, serviceContext);
+				description, type, hidden, false, friendlyURL, serviceContext);
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isLayoutSetPrototype()) {
+				LayoutSetPrototype layoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+						group.getClassPK());
+
+				List<LayoutSet> heirLayoutSets =
+					LayoutSetLocalServiceUtil.
+						getLayoutSetsByLayoutSetPrototypeUuid(
+							layoutSetPrototype.getUuid());
+
+				serviceContext.setUuid(layout.getUuid());
+
+				for (LayoutSet layoutSet : heirLayoutSets) {
+					Layout addedLayout = LayoutServiceUtil.addLayout(
+						layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+						parentLayoutId, name, title, description, type, hidden,
+						locked, friendlyURL, serviceContext);
+
+					addedLayout.setModifiedDate(layout.getModifiedDate());
+
+					UnicodeProperties typeSettings =
+						addedLayout.getTypeSettingsProperties();
+
+					typeSettings.put(
+						"layoutSetPrototypeLastCopyDate",
+						String.valueOf(layout.getModifiedDate().getTime()));
+
+					LayoutLocalServiceUtil.updateLayout(addedLayout);
+				}
+			}
 		}
 
 		LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);

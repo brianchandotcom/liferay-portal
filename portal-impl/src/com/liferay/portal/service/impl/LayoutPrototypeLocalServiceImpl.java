@@ -81,7 +81,8 @@ public class LayoutPrototypeLocalServiceImpl
 			userId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			String.valueOf(layoutPrototype.getLayoutPrototypeId()), null, null,
-			LayoutConstants.TYPE_PORTLET, false, "/layout", serviceContext);
+			LayoutConstants.TYPE_PORTLET, false, false, "/layout",
+			serviceContext);
 
 		return layoutPrototype;
 	}
@@ -120,6 +121,12 @@ public class LayoutPrototypeLocalServiceImpl
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 
 		deleteLayoutPrototype(layoutPrototype);
+	}
+
+	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
+		throws PortalException, SystemException {
+
+		return layoutPrototypePersistence.findByUuid_First(uuid, null);
 	}
 
 	public List<LayoutPrototype> search(

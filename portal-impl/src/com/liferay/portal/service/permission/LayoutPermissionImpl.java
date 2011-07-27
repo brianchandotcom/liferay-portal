@@ -29,6 +29,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 /**
  * @author Charles May
@@ -86,6 +87,18 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 		}
 
+		try {
+			Group group = layout.getGroup();
+
+			if (!group.isLayoutSetPrototype() &&
+				attemptToModifyLockedLayout(layout, actionId)) {
+
+				return false;
+			}
+		}
+		catch (Exception e) {
+		}
+
 		if (GroupPermissionUtil.contains(
 				permissionChecker, layout.getGroupId(),
 				ActionKeys.MANAGE_LAYOUTS)) {
@@ -136,6 +149,14 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		throws PortalException, SystemException {
 
 		if (layoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+					groupId, privateLayout, layoutId);
+
+			if (attemptToModifyLockedLayout(layout, actionId)) {
+				return false;
+			}
+
 			if (GroupPermissionUtil.contains(
 					permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS)) {
 
@@ -149,6 +170,10 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 
+			if (attemptToModifyLockedLayout(layout, actionId)) {
+				return false;
+			}
+
 			return contains(permissionChecker, layout, actionId);
 		}
 	}
@@ -160,6 +185,19 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		return contains(permissionChecker, layout, actionId);
+	}
+
+	protected boolean attemptToModifyLockedLayout(
+		Layout layout, String actionId) {
+
+		if (SitesUtil.isLayoutLocked(layout) &&
+			(ActionKeys.CUSTOMIZE.equals(actionId) ||
+				ActionKeys.UPDATE.equals(actionId))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

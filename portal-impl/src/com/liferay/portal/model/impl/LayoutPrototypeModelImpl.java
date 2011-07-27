@@ -67,6 +67,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	 */
 	public static final String TABLE_NAME = "LayoutPrototype";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "layoutPrototypeId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -74,7 +75,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 			{ "settings_", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (layoutPrototypeId LONG not null primary key,companyId LONG,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -95,6 +96,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	public static LayoutPrototype toModel(LayoutPrototypeSoap soapModel) {
 		LayoutPrototype model = new LayoutPrototypeImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setLayoutPrototypeId(soapModel.getLayoutPrototypeId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setName(soapModel.getName());
@@ -150,6 +152,20 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	@JSON
@@ -335,6 +351,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	public Object clone() {
 		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
 
+		layoutPrototypeImpl.setUuid(getUuid());
 		layoutPrototypeImpl.setLayoutPrototypeId(getLayoutPrototypeId());
 		layoutPrototypeImpl.setCompanyId(getCompanyId());
 		layoutPrototypeImpl.setName(getName());
@@ -399,6 +416,14 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	public CacheModel<LayoutPrototype> toCacheModel() {
 		LayoutPrototypeCacheModel layoutPrototypeCacheModel = new LayoutPrototypeCacheModel();
 
+		layoutPrototypeCacheModel.uuid = getUuid();
+
+		String uuid = layoutPrototypeCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			layoutPrototypeCacheModel.uuid = null;
+		}
+
 		layoutPrototypeCacheModel.layoutPrototypeId = getLayoutPrototypeId();
 
 		layoutPrototypeCacheModel.companyId = getCompanyId();
@@ -434,9 +459,11 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{layoutPrototypeId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", layoutPrototypeId=");
 		sb.append(getLayoutPrototypeId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -454,12 +481,16 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutPrototype");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>layoutPrototypeId</column-name><column-value><![CDATA[");
 		sb.append(getLayoutPrototypeId());
@@ -494,6 +525,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			LayoutPrototype.class
 		};
+	private String _uuid;
 	private long _layoutPrototypeId;
 	private long _companyId;
 	private String _name;

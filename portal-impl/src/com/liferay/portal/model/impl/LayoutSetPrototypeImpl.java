@@ -60,6 +60,12 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		return _settingsProperties;
 	}
 
+	public String getSettingsProperty(String key) {
+		UnicodeProperties settingsProperties = getSettingsProperties();
+
+		return settingsProperties.getProperty(key);
+	}
+
 	@Override
 	public void setSettings(String settings) {
 		_settingsProperties = null;

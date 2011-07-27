@@ -43,7 +43,8 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setCss(model.getCss());
 		soapModel.setPageCount(model.getPageCount());
 		soapModel.setSettings(model.getSettings());
-		soapModel.setLayoutSetPrototypeId(model.getLayoutSetPrototypeId());
+		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
+		soapModel.setLayoutSetPrototypeLinkEnabled(model.getLayoutSetPrototypeLinkEnabled());
 
 		return soapModel;
 	}
@@ -208,12 +209,25 @@ public class LayoutSetSoap implements Serializable {
 		_settings = settings;
 	}
 
-	public long getLayoutSetPrototypeId() {
-		return _layoutSetPrototypeId;
+	public String getLayoutSetPrototypeUuid() {
+		return _layoutSetPrototypeUuid;
 	}
 
-	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
-		_layoutSetPrototypeId = layoutSetPrototypeId;
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
+		_layoutSetPrototypeUuid = layoutSetPrototypeUuid;
+	}
+
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
 	private long _layoutSetId;
@@ -229,5 +243,6 @@ public class LayoutSetSoap implements Serializable {
 	private String _css;
 	private int _pageCount;
 	private String _settings;
-	private long _layoutSetPrototypeId;
+	private String _layoutSetPrototypeUuid;
+	private boolean _layoutSetPrototypeLinkEnabled;
 }

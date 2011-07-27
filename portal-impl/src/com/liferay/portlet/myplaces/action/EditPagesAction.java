@@ -75,6 +75,7 @@ public class EditPagesAction extends PortletAction {
 			String description = StringPool.BLANK;
 			String type = LayoutConstants.TYPE_PORTLET;
 			boolean hidden = false;
+			boolean locked = false;
 			String friendlyURL = StringPool.BLANK;
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -82,7 +83,7 @@ public class EditPagesAction extends PortletAction {
 
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
-				description, type, hidden, friendlyURL, serviceContext);
+				description, type, hidden, locked, friendlyURL, serviceContext);
 		}
 
 		if (layout != null) {

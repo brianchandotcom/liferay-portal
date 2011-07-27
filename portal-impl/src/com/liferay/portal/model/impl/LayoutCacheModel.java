@@ -31,7 +31,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,8 +85,10 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 		sb.append(css);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", layoutPrototypeId=");
-		sb.append(layoutPrototypeId);
+		sb.append(", layoutPrototypeUuid=");
+		sb.append(layoutPrototypeUuid);
+		sb.append(", layoutPrototypeLinkEnabled=");
+		sb.append(layoutPrototypeLinkEnabled);
 		sb.append("}");
 
 		return sb.toString();
@@ -221,7 +223,15 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 		}
 
 		layoutImpl.setPriority(priority);
-		layoutImpl.setLayoutPrototypeId(layoutPrototypeId);
+
+		if (layoutPrototypeUuid == null) {
+			layoutImpl.setLayoutPrototypeUuid(StringPool.BLANK);
+		}
+		else {
+			layoutImpl.setLayoutPrototypeUuid(layoutPrototypeUuid);
+		}
+
+		layoutImpl.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 
 		layoutImpl.resetOriginalValues();
 
@@ -254,5 +264,6 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 	public String wapColorSchemeId;
 	public String css;
 	public int priority;
-	public long layoutPrototypeId;
+	public String layoutPrototypeUuid;
+	public boolean layoutPrototypeLinkEnabled;
 }

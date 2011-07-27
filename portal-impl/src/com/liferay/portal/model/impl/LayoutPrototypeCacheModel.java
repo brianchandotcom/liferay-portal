@@ -29,9 +29,11 @@ import com.liferay.portal.model.LayoutPrototype;
 public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{layoutPrototypeId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", layoutPrototypeId=");
 		sb.append(layoutPrototypeId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -50,6 +52,13 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype> {
 
 	public LayoutPrototype toEntityModel() {
 		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
+
+		if (uuid == null) {
+			layoutPrototypeImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			layoutPrototypeImpl.setUuid(uuid);
+		}
 
 		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPrototypeImpl.setCompanyId(companyId);
@@ -82,6 +91,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype> {
 		return layoutPrototypeImpl;
 	}
 
+	public String uuid;
 	public long layoutPrototypeId;
 	public long companyId;
 	public String name;

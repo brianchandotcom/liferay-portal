@@ -40,7 +40,8 @@ public class LayoutSetPrototypeServiceImpl
 
 	public LayoutSetPrototype addLayoutSetPrototype(
 			Map<Locale, String> nameMap, String description,
-			boolean active, ServiceContext serviceContext)
+			boolean active, boolean allowModifications,
+			boolean allowLayoutAddition, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(
@@ -50,7 +51,7 @@ public class LayoutSetPrototypeServiceImpl
 
 		return layoutSetPrototypeLocalService.addLayoutSetPrototype(
 			user.getUserId(), user.getCompanyId(), nameMap, description,
-			active, serviceContext);
+			active, allowModifications, allowLayoutAddition, serviceContext);
 	}
 
 	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
@@ -99,14 +100,16 @@ public class LayoutSetPrototypeServiceImpl
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
+			String description, boolean active, boolean allowModifications,
+			boolean allowLayoutAddition, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.UPDATE);
 
 		return layoutSetPrototypeLocalService.updateLayoutSetPrototype(
-			layoutSetPrototypeId, nameMap, description, active, serviceContext);
+			layoutSetPrototypeId, nameMap, description, active,
+			allowModifications, allowLayoutAddition, serviceContext);
 	}
 
 	public LayoutSetPrototype updateLayoutSetPrototype(

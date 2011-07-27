@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <%
 Group group = null;
@@ -40,7 +40,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<a href="javascript:;"><img alt='<liferay-ui:message key="pin-the-dockbar" />' src="<%= HtmlUtil.escape(themeDisplay.getPathThemeImages()) %>/spacer.png" /></a>
 		</li>
 
-		<c:if test="<%= (group != null) && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
+		<c:if test="<%= (group != null) && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
 			<li class="add-content has-submenu" id="<portlet:namespace />addContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -51,7 +51,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<div class="aui-menu add-content-menu aui-overlaycontext-hidden" id="<portlet:namespace />addContentContainer">
 					<div class="aui-menu-content">
 						<ul>
-							<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && !group.isLayoutPrototype() %>">
+							<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype() %>">
 								<li class="first add-page">
 									<a href="javascript:;" id="addPage">
 										<liferay-ui:message key="page" />
@@ -65,42 +65,44 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 										<div class="aui-menugroup-content">
 											<span class="aui-menu-label"><liferay-ui:message key="applications" /></span>
 
-											<ul>
+											<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
+												<ul>
 
-												<%
-												int j = 0;
+													<%
+													int j = 0;
 
-												for (int i = 0; i < portlets.size(); i++) {
-													Portlet portlet = portlets.get(i);
+													for (int i = 0; i < portlets.size(); i++) {
+														Portlet portlet = portlets.get(i);
 
-													boolean portletInstanceable = portlet.isInstanceable();
-													boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
-													boolean portletLocked = (!portletInstanceable && portletUsed);
+														boolean portletInstanceable = portlet.isInstanceable();
+														boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
+														boolean portletLocked = (!portletInstanceable && portletUsed);
 
 													if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
 														continue;
 													}
 												%>
 
-													<li class="<%= (j == 0) ? "first" : "" %>">
-														<a class="app-shortcut <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>" data-portlet-id="<%= portlet.getPortletId() %>" href="javascript:;" <c:if test="<%= portletLocked %>">tabIndex="-1"</c:if>>
-															<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
+														<li class="<%= (j == 0) ? "first" : "" %>">
+															<a class="app-shortcut <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>" data-portlet-id="<%= portlet.getPortletId() %>" href="javascript:;" <c:if test="<%= portletLocked %>">tabIndex="-1"</c:if>>
+																<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
 
-															<%= PortalUtil.getPortletTitle(portlet.getPortletId(), locale) %>
+																<%= PortalUtil.getPortletTitle(portlet.getPortletId(), locale) %>
+															</a>
+														</li>
+
+													<%
+														j++;
+													}
+													%>
+
+													<li class="add-application last more-applications">
+														<a href="javascript:;" id="<portlet:namespace />addApplication">
+															<liferay-ui:message key="more" />&hellip;
 														</a>
 													</li>
-
-												<%
-													j++;
-												}
-												%>
-
-												<li class="add-application last more-applications">
-													<a href="javascript:;" id="<portlet:namespace />addApplication">
-														<liferay-ui:message key="more" />&hellip;
-													</a>
-												</li>
-											</ul>
+												</ul>
+											</c:if>
 										</div>
 									</div>
 								</li>
@@ -134,9 +136,9 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
+							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon()  && !group.isLayoutSetPrototype() %>">
 								<li class="manage-page-customization">
-									<aui:a cssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' id="manageCustomization" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
+									<aui:a cssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' id="manageCustomization" label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
 								</li>
 							</c:if>
 
@@ -168,10 +170,10 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				</div>
 			</li>
 
-			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
+			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon()  && !group.isLayoutSetPrototype() %>">
 				<div class="aui-helper-hidden layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 					<span title='<liferay-ui:message key="customizable-help" />'>
-						<aui:input helpMessage='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-customizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
+						<aui:input helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-customizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
 					</span>
 				</div>
 			</c:if>
@@ -434,6 +436,14 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			);
 		}
 	</aui:script>
+</c:if>
+
+<c:if test="<%= themeDisplay.isShowPageSettingsIcon() && SitesUtil.isLayoutLocked(layoutTypePortlet) %>">
+	<div class="page-customization-bar">
+		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
+
+		<liferay-ui:message key="this-page-is-locked-by-the-template" />
+	</div>
 </c:if>
 
 <aui:script position="inline" use="liferay-dockbar">

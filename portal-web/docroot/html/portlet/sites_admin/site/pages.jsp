@@ -21,9 +21,46 @@ Group group = (Group)request.getAttribute("site.group");
 LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("site.layoutSetPrototype");
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+LayoutSet privateLayoutSet = null;
+LayoutSet publicLayoutSet = null;
+
+LayoutSetPrototype privateLayoutSetPrototype = null;
+LayoutSetPrototype publicLayoutSetPrototype = null;
+
+if (group != null) {
+	if (group.getPrivateLayoutsPageCount() > 0) {
+		try {
+			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), true);
+
+			String uuid = privateLayoutSet.getLayoutSetPrototypeUuid();
+
+			if (uuid != null) {
+				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(uuid);
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+	if (group.getPublicLayoutsPageCount() > 0) {
+		try {
+			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false);
+
+			String uuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+
+			if (uuid != null) {
+				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(uuid);
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+}
 %>
 
 <aui:fieldset>
+	<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
+
 	<c:choose>
 		<c:when test="<%= (group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null)) %>">
 			<aui:fieldset label="public-pages">
@@ -48,29 +85,31 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 						</aui:select>
 					</c:when>
 					<c:otherwise>
-						<aui:field-wrapper label="public-pages">
-							<c:choose>
-								<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
-									<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-										<portlet:param name="struts_action" value="/my_places/view" />
-										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-									</liferay-portlet:actionURL>
+						<c:if test="<%= (publicLayoutSetPrototype != null) %>">
+							<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-the-template-x" />
+						</c:if>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-public-pages"
-										method="get"
-										target="_blank"
-										url="<%= publicPagesURL.toString() %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
-								</c:otherwise>
-							</c:choose>
-						</aui:field-wrapper>
+						<c:choose>
+							<c:when test="<%= (group != null) && (group.getPublicLayoutsPageCount() > 0) %>">
+								<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
+									<portlet:param name="struts_action" value="/my_places/view" />
+									<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+									<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+								</liferay-portlet:actionURL>
+
+								<liferay-ui:icon
+									image="view"
+									label="<%= true %>"
+									message="open-public-pages"
+									method="get"
+									target="_blank"
+									url="<%= publicPagesURL.toString() %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</aui:fieldset>
@@ -96,29 +135,31 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 						</aui:select>
 					</c:when>
 					<c:otherwise>
-						<aui:field-wrapper label="private-pages">
-							<c:choose>
-								<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
-									<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-										<portlet:param name="struts_action" value="/my_places/view" />
-										<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-									</liferay-portlet:actionURL>
+						<c:if test="<%= (privateLayoutSetPrototype != null) %>">
+							<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-the-template-x" />
+						</c:if>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-private-pages"
-										method="get"
-										target="_blank"
-										url="<%= privatePagesURL.toString() %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
-								</c:otherwise>
-							</c:choose>
-						</aui:field-wrapper>
+						<c:choose>
+							<c:when test="<%= (group != null) && (group.getPrivateLayoutsPageCount() > 0) %>">
+								<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
+									<portlet:param name="struts_action" value="/my_places/view" />
+									<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+									<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+								</liferay-portlet:actionURL>
+
+								<liferay-ui:icon
+									image="view"
+									label="<%= true %>"
+									message="open-private-pages"
+									method="get"
+									target="_blank"
+									url="<%= privatePagesURL.toString() %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</aui:fieldset>
@@ -150,12 +191,6 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 					%>
 
 				</aui:select>
-
-				<aui:field-wrapper name="site-template-relationship">
-					<aui:input checked="<%= true %>" inlineLabel="right" label="cloned" name="siteTemplateRelationship" type="radio" value="cloned" />
-
-					<aui:input inlineLabel="right" label="inherited" name="siteTemplateRelationship" type="radio" value="inherited" />
-				</aui:field-wrapper>
 			</aui:fieldset>
 
 		</c:when>
@@ -165,16 +200,10 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 
 				<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
-				<aui:select label="visibility" name="privateLayoutSetPrototype">
+				<aui:select label="visibility" name="layoutSetVisibility">
 					<aui:option label="public" value="0" />
 					<aui:option label="private" value="1" />
 				</aui:select>
-
-				<aui:field-wrapper name="site-template-relationship">
-					<aui:input checked="<%= true %>" inlineLabel="right" label="cloned" name="siteTemplateRelationship" type="radio" value="cloned" />
-
-					<aui:input inlineLabel="right" label="inherited" name="siteTemplateRelationship" type="radio" value="inherited" />
-				</aui:field-wrapper>
 			</aui:fieldset>
 		</c:when>
 	</c:choose>

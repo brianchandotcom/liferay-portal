@@ -615,6 +615,7 @@ public class EditLayoutsAction extends PortletAction {
 			LocalizationUtil.getLocalizationMap(actionRequest, "robots");
 		String type = ParamUtil.getString(uploadRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadRequest, "hidden");
+		boolean locked = ParamUtil.getBoolean(uploadRequest, "locked");
 		String friendlyURL = ParamUtil.getString(uploadRequest, "friendlyURL");
 		boolean iconImage = ParamUtil.getBoolean(uploadRequest, "iconImage");
 		byte[] iconBytes = FileUtil.getBytes(
@@ -648,7 +649,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
-					parentLayout.getType(), hidden, friendlyURL,
+					parentLayout.getType(), hidden, locked, friendlyURL,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -672,7 +673,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
-					layoutPrototypeLayout.getType(), false, friendlyURL,
+					layoutPrototypeLayout.getType(), false, locked, friendlyURL,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -695,7 +696,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap, type,
-					hidden, friendlyURL, serviceContext);
+					hidden, locked, friendlyURL, serviceContext);
 			}
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
@@ -712,7 +713,7 @@ public class EditLayoutsAction extends PortletAction {
 			layout = LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-				type, hidden, friendlyURL, Boolean.valueOf(iconImage),
+				type, hidden, locked, friendlyURL, Boolean.valueOf(iconImage),
 				iconBytes, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();

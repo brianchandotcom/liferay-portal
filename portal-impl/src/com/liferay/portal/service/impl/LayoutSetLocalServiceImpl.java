@@ -141,6 +141,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			virtualHost.getLayoutSetId());
 	}
 
+	public List<LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
+			String layoutSetPrototypeUuid)
+		throws SystemException {
+
+		return layoutSetPersistence.findByLayoutSetPrototypeUuid(
+			layoutSetPrototypeUuid);
+	}
+
 	public void updateLogo(
 			long groupId, boolean privateLayout, boolean logo, File file)
 		throws PortalException, SystemException {

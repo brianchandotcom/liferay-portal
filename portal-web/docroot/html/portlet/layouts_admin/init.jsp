@@ -47,6 +47,7 @@
 <%@ page import="com.liferay.portal.kernel.staging.StagingConstants" %>
 <%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%@ page import="com.liferay.portal.lar.LayoutExporter" %>
+<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
 <%@ page import="com.liferay.portal.plugin.PluginUtil" %>
 <%@ page import="com.liferay.portal.service.permission.GroupPermissionUtil" %>
 <%@ page import="com.liferay.portal.util.CustomJspRegistryUtil" %>

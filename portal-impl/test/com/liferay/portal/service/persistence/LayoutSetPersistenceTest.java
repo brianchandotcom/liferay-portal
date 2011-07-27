@@ -91,7 +91,9 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 
 		newLayoutSet.setSettings(randomString());
 
-		newLayoutSet.setLayoutSetPrototypeId(nextLong());
+		newLayoutSet.setLayoutSetPrototypeUuid(randomString());
+
+		newLayoutSet.setLayoutSetPrototypeLinkEnabled(randomBoolean());
 
 		_persistence.update(newLayoutSet, false);
 
@@ -117,8 +119,10 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingLayoutSet.getPageCount(),
 			newLayoutSet.getPageCount());
 		assertEquals(existingLayoutSet.getSettings(), newLayoutSet.getSettings());
-		assertEquals(existingLayoutSet.getLayoutSetPrototypeId(),
-			newLayoutSet.getLayoutSetPrototypeId());
+		assertEquals(existingLayoutSet.getLayoutSetPrototypeUuid(),
+			newLayoutSet.getLayoutSetPrototypeUuid());
+		assertEquals(existingLayoutSet.getLayoutSetPrototypeLinkEnabled(),
+			newLayoutSet.getLayoutSetPrototypeLinkEnabled());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -270,7 +274,9 @@ public class LayoutSetPersistenceTest extends BasePersistenceTestCase {
 
 		layoutSet.setSettings(randomString());
 
-		layoutSet.setLayoutSetPrototypeId(nextLong());
+		layoutSet.setLayoutSetPrototypeUuid(randomString());
+
+		layoutSet.setLayoutSetPrototypeLinkEnabled(randomBoolean());
 
 		_persistence.update(layoutSet, false);
 

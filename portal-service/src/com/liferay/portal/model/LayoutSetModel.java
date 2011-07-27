@@ -258,18 +258,41 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	public void setSettings(String settings);
 
 	/**
-	 * Returns the layout set prototype ID of this layout set.
+	 * Returns the layout set prototype uuid of this layout set.
 	 *
-	 * @return the layout set prototype ID of this layout set
+	 * @return the layout set prototype uuid of this layout set
 	 */
-	public long getLayoutSetPrototypeId();
+	@AutoEscape
+	public String getLayoutSetPrototypeUuid();
 
 	/**
-	 * Sets the layout set prototype ID of this layout set.
+	 * Sets the layout set prototype uuid of this layout set.
 	 *
-	 * @param layoutSetPrototypeId the layout set prototype ID of this layout set
+	 * @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set
 	 */
-	public void setLayoutSetPrototypeId(long layoutSetPrototypeId);
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid);
+
+	/**
+	 * Returns the layout set prototype link enabled of this layout set.
+	 *
+	 * @return the layout set prototype link enabled of this layout set
+	 */
+	public boolean getLayoutSetPrototypeLinkEnabled();
+
+	/**
+	 * Returns <code>true</code> if this layout set is layout set prototype link enabled.
+	 *
+	 * @return <code>true</code> if this layout set is layout set prototype link enabled; <code>false</code> otherwise
+	 */
+	public boolean isLayoutSetPrototypeLinkEnabled();
+
+	/**
+	 * Sets whether this layout set is layout set prototype link enabled.
+	 *
+	 * @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set
+	 */
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled);
 
 	public boolean isNew();
 

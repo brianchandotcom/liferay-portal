@@ -615,7 +615,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setWapColorSchemeId(layout.getWapColorSchemeId());
 		layoutImpl.setCss(layout.getCss());
 		layoutImpl.setPriority(layout.getPriority());
-		layoutImpl.setLayoutPrototypeId(layout.getLayoutPrototypeId());
+		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
+		layoutImpl.setLayoutPrototypeLinkEnabled(layout.isLayoutPrototypeLinkEnabled());
 
 		return layoutImpl;
 	}

@@ -822,18 +822,41 @@ public interface LayoutModel extends BaseModel<Layout> {
 	public void setPriority(int priority);
 
 	/**
-	 * Returns the layout prototype ID of this layout.
+	 * Returns the layout prototype uuid of this layout.
 	 *
-	 * @return the layout prototype ID of this layout
+	 * @return the layout prototype uuid of this layout
 	 */
-	public long getLayoutPrototypeId();
+	@AutoEscape
+	public String getLayoutPrototypeUuid();
 
 	/**
-	 * Sets the layout prototype ID of this layout.
+	 * Sets the layout prototype uuid of this layout.
 	 *
-	 * @param layoutPrototypeId the layout prototype ID of this layout
+	 * @param layoutPrototypeUuid the layout prototype uuid of this layout
 	 */
-	public void setLayoutPrototypeId(long layoutPrototypeId);
+	public void setLayoutPrototypeUuid(String layoutPrototypeUuid);
+
+	/**
+	 * Returns the layout prototype link enabled of this layout.
+	 *
+	 * @return the layout prototype link enabled of this layout
+	 */
+	public boolean getLayoutPrototypeLinkEnabled();
+
+	/**
+	 * Returns <code>true</code> if this layout is layout prototype link enabled.
+	 *
+	 * @return <code>true</code> if this layout is layout prototype link enabled; <code>false</code> otherwise
+	 */
+	public boolean isLayoutPrototypeLinkEnabled();
+
+	/**
+	 * Sets whether this layout is layout prototype link enabled.
+	 *
+	 * @param layoutPrototypeLinkEnabled the layout prototype link enabled of this layout
+	 */
+	public void setLayoutPrototypeLinkEnabled(
+		boolean layoutPrototypeLinkEnabled);
 
 	public boolean isNew();
 

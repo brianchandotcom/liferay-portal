@@ -15,6 +15,7 @@
 package com.liferay.portal.action;
 
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.util.LogoutSessionThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,6 +99,7 @@ public class LogoutAction extends Action {
 				request, response);
 
 			request.setAttribute(WebKeys.LOGOUT, true);
+			LogoutSessionThreadLocal.setLogoutSession(Boolean.TRUE);
 
 			return mapping.findForward(ActionConstants.COMMON_REFERER);
 		}

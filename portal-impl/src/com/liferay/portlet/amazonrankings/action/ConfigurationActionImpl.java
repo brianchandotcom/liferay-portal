@@ -15,7 +15,7 @@
 package com.liferay.portlet.amazonrankings.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String[] isbns = StringUtil.split(
 			getParameter(actionRequest, "isbns").toUpperCase(),
-			StringPool.SPACE);
+			CharPool.SPACE);
 
 		Arrays.sort(isbns);
 

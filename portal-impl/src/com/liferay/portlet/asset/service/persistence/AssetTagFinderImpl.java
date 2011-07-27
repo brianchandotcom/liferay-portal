@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -458,7 +459,7 @@ public class AssetTagFinderImpl
 	protected void setJoin(QueryPos qPos, String[] tagProperties) {
 		for (String tagProperty : tagProperties) {
 			String[] tagPropertyParts = StringUtil.split(
-				tagProperty, StringPool.COLON);
+				tagProperty, CharPool.COLON);
 
 			String key = StringPool.BLANK;
 

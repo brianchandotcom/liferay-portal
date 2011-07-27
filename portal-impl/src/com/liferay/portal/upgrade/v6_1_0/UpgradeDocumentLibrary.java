@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.DLFileVersionTable;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -281,7 +281,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long lockId = rs.getLong("lockId");
 				String key = rs.getString("key_");
 
-				String[] keyArray = StringUtil.split(key, StringPool.POUND);
+				String[] keyArray = StringUtil.split(key, CharPool.POUND);
 
 				if (keyArray.length != 3) {
 					continue;

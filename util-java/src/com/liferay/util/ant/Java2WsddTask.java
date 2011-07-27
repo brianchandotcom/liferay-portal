@@ -14,6 +14,7 @@
 
 package com.liferay.util.ant;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -58,7 +59,7 @@ public class Java2WsddTask {
 
 		String packagePath = className.substring(0, pos);
 
-		String[] packagePaths = StringUtil.split(packagePath, ".");
+		String[] packagePaths = StringUtil.split(packagePath, '.');
 
 		String namespace = "urn:";
 
@@ -193,7 +194,7 @@ public class Java2WsddTask {
 					Attribute valueAttribute = element.attribute("value");
 
 					String[] values = StringUtil.split(
-						valueAttribute.getValue(), StringPool.SPACE);
+						valueAttribute.getValue(), CharPool.SPACE);
 
 					Arrays.sort(values);
 

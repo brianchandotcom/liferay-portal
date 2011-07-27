@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -136,7 +136,7 @@ public class JournalRSSUtil {
 			queryString);
 
 		if (url.startsWith("/documents/")) {
-			String[] pathArray = StringUtil.split(url, StringPool.SLASH);
+			String[] pathArray = StringUtil.split(url, CharPool.SLASH);
 
 			long groupId = GetterUtil.getLong(pathArray[2]);
 			long folderId = GetterUtil.getLong(pathArray[3]);

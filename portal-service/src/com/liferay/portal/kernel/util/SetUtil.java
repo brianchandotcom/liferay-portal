@@ -123,7 +123,7 @@ public class SetUtil {
 	}
 
 	public static Set<String> fromString(String s) {
-		return fromArray(StringUtil.split(s, StringPool.NEW_LINE));
+		return fromArray(StringUtil.splitLines(s));
 	}
 
 }

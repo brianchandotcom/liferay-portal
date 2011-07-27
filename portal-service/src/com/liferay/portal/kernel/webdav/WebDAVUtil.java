@@ -263,7 +263,7 @@ public class WebDAVUtil {
 	public static String[] getPathArray(String path, boolean fixTrailing) {
 		path = HttpUtil.fixPath(path, true, fixTrailing);
 
-		return StringUtil.split(path, StringPool.SLASH);
+		return StringUtil.split(path, CharPool.SLASH);
 	}
 
 	public static String getResourceName(String[] pathArray) {

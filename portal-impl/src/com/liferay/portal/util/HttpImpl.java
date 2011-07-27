@@ -441,7 +441,7 @@ public class HttpImpl implements Http {
 			return StringPool.BLANK;
 		}
 
-		String[] parts = StringUtil.split(url, StringPool.QUESTION);
+		String[] parts = StringUtil.split(url, CharPool.QUESTION);
 
 		if (parts.length == 2) {
 			String[] params = null;
@@ -450,11 +450,11 @@ public class HttpImpl implements Http {
 				params = StringUtil.split(parts[1], "&amp;");
 			}
 			else {
-				params = StringUtil.split(parts[1], StringPool.AMPERSAND);
+				params = StringUtil.split(parts[1], CharPool.AMPERSAND);
 			}
 
 			for (String param : params) {
-				String[] kvp = StringUtil.split(param, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(param, CharPool.EQUAL);
 
 				if ((kvp.length == 2) && kvp[0].equals(name)) {
 					return kvp[1];
@@ -582,7 +582,7 @@ public class HttpImpl implements Http {
 			String token = st.nextToken();
 
 			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(token, CharPool.EQUAL);
 
 				String key = kvp[0];
 
@@ -732,7 +732,7 @@ public class HttpImpl implements Http {
 			String token = st.nextToken();
 
 			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(token, CharPool.EQUAL);
 
 				String key = kvp[0];
 

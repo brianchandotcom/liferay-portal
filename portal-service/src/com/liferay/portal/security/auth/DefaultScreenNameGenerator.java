@@ -111,8 +111,7 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 	}
 
 	private static final String[] _ADMIN_RESERVED_SCREEN_NAMES =
-		StringUtil.split(
-			PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES),
-			StringPool.NEW_LINE);
+		StringUtil.splitLines(
+			PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
 
 }

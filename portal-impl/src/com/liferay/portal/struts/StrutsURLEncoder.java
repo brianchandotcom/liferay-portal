@@ -45,7 +45,7 @@ public class StrutsURLEncoder implements URLEncoder {
 	public static void setParameters(
 		LiferayPortletURL liferayPortletURL, String queryString) {
 
-		String[] params = StringUtil.split(queryString, "&");
+		String[] params = StringUtil.split(queryString, '&');
 
 		for (int i = 0; i < params.length; i++) {
 			int pos = params[i].indexOf("=");

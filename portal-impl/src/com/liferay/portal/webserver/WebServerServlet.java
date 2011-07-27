@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -97,7 +98,7 @@ public class WebServerServlet extends HttpServlet {
 
 			String path = HttpUtil.fixPath(request.getPathInfo());
 
-			String[] pathArray = StringUtil.split(path, StringPool.SLASH);
+			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 			if (pathArray.length == 0) {
 				return true;
@@ -158,7 +159,7 @@ public class WebServerServlet extends HttpServlet {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			String path = HttpUtil.fixPath(request.getPathInfo());
-			String[] pathArray = StringUtil.split(path, StringPool.SLASH);
+			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 			if (pathArray.length == 0) {
 				sendGroups(

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -357,7 +357,7 @@ public class PermissionExporter {
 				permissionsMap.entrySet()) {
 
 			String[] permissionParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 
 			String resourceName = permissionParts[0];
 			long resourcePK = GetterUtil.getLong(permissionParts[1]);

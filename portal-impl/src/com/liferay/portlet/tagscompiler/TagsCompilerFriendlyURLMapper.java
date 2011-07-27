@@ -53,7 +53,7 @@ public class TagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
 		int y = friendlyURLPath.length();
 
 		String[] entries = StringUtil.split(
-			friendlyURLPath.substring(x + 1, y), StringPool.SLASH);
+			friendlyURLPath.substring(x + 1, y), CharPool.SLASH);
 
 		if (entries.length > 0) {
 			StringBundler sb = new StringBundler(entries.length * 2 - 1);

@@ -16,6 +16,7 @@ package com.liferay.util.xml;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -82,7 +83,7 @@ public class BeanToXMLUtil {
 
 	public static String getClassNameWithoutPackage(String className) {
 		String[] classNameArray = StringUtil.split(
-			className, StringPool.PERIOD);
+			className, CharPool.PERIOD);
 
 		String classNameWithoutPackage =
 			classNameArray[classNameArray.length - 1];

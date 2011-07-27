@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,7 +144,7 @@ public abstract class BaseBooleanQueryImpl
 
 	protected String[] parseKeywords(String values) {
 		if (!values.contains(StringPool.QUOTE)) {
-			return StringUtil.split(values, StringPool.SPACE);
+			return StringUtil.split(values, CharPool.SPACE);
 		}
 
 		List<String> keywords = new ArrayList<String>();

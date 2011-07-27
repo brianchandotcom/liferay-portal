@@ -77,7 +77,7 @@ public class SharepointUtil {
 	}
 
 	public static String[] getPathArray(String path) {
-		return StringUtil.split(path, StringPool.SLASH);
+		return StringUtil.split(path, CharPool.SLASH);
 	}
 
 	public static SharepointStorage getStorage(String path) {

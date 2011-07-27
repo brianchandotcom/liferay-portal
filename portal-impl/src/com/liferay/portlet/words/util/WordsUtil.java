@@ -75,9 +75,9 @@ public class WordsUtil {
 	}
 
 	private WordsUtil() {
-		_dictionaryList = ListUtil.fromArray(StringUtil.split(
-			ContentUtil.get("com/liferay/portlet/words/dependencies/words.txt"),
-			"\n"));
+		_dictionaryList = ListUtil.fromArray(StringUtil.splitLines(
+			ContentUtil.get(
+				"com/liferay/portlet/words/dependencies/words.txt")));
 
 		_dictionaryList = new UnmodifiableList<String>(_dictionaryList);
 

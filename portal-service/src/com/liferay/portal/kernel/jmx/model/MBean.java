@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.jmx.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -103,7 +104,7 @@ public class MBean implements Serializable {
 			_path = new ArrayList<String>(parts.length);
 
 			for (String part : parts) {
-				String[] kvp = StringUtil.split(part, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(part, CharPool.EQUAL);
 
 				if (kvp.length != 2) {
 					_log.error("Invalid MBean name syntax " + _mBeanName);

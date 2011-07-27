@@ -581,7 +581,7 @@ public class JavadocBuilder {
 		List<String> includes = new ArrayList<String>();
 
 		if (Validator.isNotNull(limit) && !limit.startsWith("$")) {
-			String[] limitArray = StringUtil.split(limit, "/");
+			String[] limitArray = StringUtil.split(limit, '/');
 
 			for (String curLimit : limitArray) {
 				includes.add(
@@ -670,7 +670,7 @@ public class JavadocBuilder {
 
 		String oldContent = _fileUtil.read(file);
 
-		String[] lines = StringUtil.split(oldContent, "\n");
+		String[] lines = StringUtil.splitLines(oldContent);
 
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));
@@ -770,7 +770,7 @@ public class JavadocBuilder {
 			oldContent = _fileUtil.read(file);
 		}
 
-		String[] lines = StringUtil.split(oldContent, "\n");
+		String[] lines = StringUtil.splitLines(oldContent);
 
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));

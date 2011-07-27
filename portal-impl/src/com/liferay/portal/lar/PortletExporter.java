@@ -329,7 +329,7 @@ public class PortletExporter {
 				assetCategoryUuidsMap.entrySet()) {
 
 			String[] assetCategoryEntryParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 
 			String className = assetCategoryEntryParts[0];
 			long classPK = GetterUtil.getLong(assetCategoryEntryParts[1]);
@@ -436,7 +436,7 @@ public class PortletExporter {
 
 		for (Map.Entry<String, String[]> entry : assetLinkUuidsMap.entrySet()) {
 			String[] assetLinkNameParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 			String[] targetAssetEntryUuids = entry.getValue();
 
 			String sourceAssetEntryUuid = assetLinkNameParts[0];
@@ -467,7 +467,7 @@ public class PortletExporter {
 
 		for (Map.Entry<String, String[]> entry : assetTagNamesMap.entrySet()) {
 			String[] assetTagNameParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 
 			String className = assetTagNameParts[0];
 			String classPK = assetTagNameParts[1];
@@ -536,7 +536,7 @@ public class PortletExporter {
 				commentsMap.entrySet()) {
 
 			String[] commentParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 
 			String className = commentParts[0];
 			String classPK = commentParts[1];
@@ -1065,7 +1065,7 @@ public class PortletExporter {
 				ratingsEntriesMap.entrySet()) {
 
 			String[] ratingsEntryParts = StringUtil.split(
-				entry.getKey(), StringPool.POUND);
+				entry.getKey(), CharPool.POUND);
 
 			String className = ratingsEntryParts[0];
 			String classPK = ratingsEntryParts[1];

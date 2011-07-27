@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -24,17 +23,17 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropsValues {
 
-	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES), StringPool.NEW_LINE);
+	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));
 
-	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES), StringPool.NEW_LINE);
+	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES));
 
-	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES), StringPool.NEW_LINE);
+	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES));
 
-	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES), StringPool.NEW_LINE);
+	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
 
-	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES), StringPool.NEW_LINE);
+	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
 
-	public static final String[] ADMIN_RESERVED_SCREEN_NAMES = StringUtil.split(PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES), StringPool.NEW_LINE);
+	public static final String[] ADMIN_RESERVED_SCREEN_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
 
 	public static final boolean ADMIN_SYNC_DEFAULT_ASSOCIATIONS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS));
 
@@ -1012,11 +1011,11 @@ public class PropsValues {
 
 	public static final boolean PLUGIN_NOTIFICATIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_ENABLED));
 
-	public static final String[] PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED = StringUtil.split(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED), StringPool.NEW_LINE);
+	public static final String[] PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED));
 
-	public static final String[] PLUGIN_REPOSITORIES_TRUSTED = StringUtil.split(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_TRUSTED), StringPool.NEW_LINE);
+	public static final String[] PLUGIN_REPOSITORIES_TRUSTED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_TRUSTED));
 
-	public static final String[] PLUGIN_REPOSITORIES_UNTRUSTED = StringUtil.split(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED), StringPool.NEW_LINE);
+	public static final String[] PLUGIN_REPOSITORIES_UNTRUSTED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED));
 
 	public static final String[] PLUGIN_TYPES = PropsUtil.getArray(PropsKeys.PLUGIN_TYPES);
 

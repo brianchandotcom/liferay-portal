@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.memcached;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.InetSocketAddress;
@@ -60,7 +60,7 @@ public class DefaultMemcachedClientFactory implements MemcachedClientFactory {
 
 	public void setAddresses(List<String> addresses) {
 		for (String address : addresses) {
-			String[] hostAndPort = StringUtil.split(address, StringPool.COLON);
+			String[] hostAndPort = StringUtil.split(address, CharPool.COLON);
 
 			String hostName = hostAndPort[0];
 

@@ -34,7 +34,7 @@ AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTe
 
 		<aui:input name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 
-		<aui:select label="my-places" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= true %>">
+		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= true %>">
 			<c:if test="<%= themeDisplay.getCompanyGroupId() != scopeGroupId %>">
 				<aui:option label="global" selected="<%= displayTerms.getGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 			</c:if>

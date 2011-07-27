@@ -141,58 +141,58 @@ html > .lfr-dockbar-pinned {
 .manage-layouts {
 }
 
-.my-places-menu {
+.my-sites-menu {
 }
 
-.my-places-menu ul {
+.my-sites-menu ul {
 }
 
-.my-places-menu ul, .my-places-menu li {
+.my-sites-menu ul, .my-sites-menu li {
 }
 
-.my-places-menu a {
+.my-sites-menu a {
 }
 
-.my-places-menu .control-panel a {
+.my-sites-menu .control-panel a {
 }
 
-.my-places-menu .current-site {
+.my-sites-menu .current-site {
 }
 
-.my-places-menu .current-site a {
+.my-sites-menu .current-site a {
 }
 
-.my-places-menu .current-site .site-type {
+.my-sites-menu .current-site .site-type {
 }
 
-.my-places-menu .current-site a:hover, .my-places-menu a:hover .site-type {
+.my-sites-menu .current-site a:hover, .my-sites-menu a:hover .site-type {
 }
 
-.my-places-menu .site-name {
+.my-sites-menu .site-name {
 }
 
-.my-places-menu .site-type {
+.my-sites-menu .site-type {
 }
 
-.ie7 .my-places-menu .site-type {
+.ie7 .my-sites-menu .site-type {
 }
 
-.my-places-menu a:hover .site-type {
+.my-sites-menu a:hover .site-type {
 }
 
-.ie7 .my-places-menu a {
+.ie7 .my-sites-menu a {
 }
 
-.ie7 .my-places-menu .site-name {
+.ie7 .my-sites-menu .site-name {
 }
 
-.ie7 .my-places-menu .site-type {
+.ie7 .my-sites-menu .site-type {
 }
 
-.ie6 .my-places-menu {
+.ie6 .my-sites-menu {
 }
 
-.ie6 .my-places-menu a {
+.ie6 .my-sites-menu a {
 }
 
 .dockbar .toggle-controls a {
@@ -216,7 +216,7 @@ html > .lfr-dockbar-pinned {
 .dockbar .manage-content .menu-button span {
 }
 
-.dockbar .my-places .menu-button span {
+.dockbar .my-sites .menu-button span {
 }
 
 .dockbar-messages-container {

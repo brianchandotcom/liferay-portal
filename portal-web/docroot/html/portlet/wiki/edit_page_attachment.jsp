@@ -145,68 +145,74 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 	<aui:button type="submit" />
 </aui:form>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateMultiplePageAttachments',
 		function() {
+			var A = AUI();
+			var Lang = A.Lang;
+
 			var selectedFileNameContainer = A.one('#<portlet:namespace />selectedFileNameContainer');
 
-			selectedFileNameContainer.empty();
+			var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
 
-			A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]').each(
-				function(item, index, collection) {
-					var val = item.val();
+			var values = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]:checked').val();
 
-					if (item.get('checked')) {
-						var selectedFileName = A.Node.create('<input id="<portlet:namespace />selectedFileName' + index + '" name="<portlet:namespace />selectedFileName" type="hidden" value="' + val + '" />');
+			var buffer = [];
+			var dataBuffer = [];
+			var length = values.length;
 
-						selectedFileNameContainer.append(selectedFileName);
-					}
-				}
-			);
+			for (var i = 0; i < length; i++) {
+				dataBuffer[0] = i;
+				dataBuffer[1] = values[i];
+
+				buffer[i] = Lang.sub(inputTpl, dataBuffer);
+			}
+
+			selectedFileNameContainer.html(buffer.join(''));
 
 			A.io.request(
 				document.<portlet:namespace />fm2.action,
 				{
+					dataType: 'json',
+					form: {
+						id: document.<portlet:namespace />fm2
+					},
 					after: {
 						success: function(event, id, obj) {
 							var jsonArray = this.get('responseData');
 
 							for (var i = 0; i < jsonArray.length; i++) {
-								var fileName = jsonArray[i].fileName;
-								var added = jsonArray[i].added;
+								var item = jsonArray[i];
 
-								var checkBox = A.one('input[data-fileName=' + fileName + ']');
+								var checkBox = A.one('input[data-fileName=' + item.fileName + ']');
 
-								checkBox.set('checked', false);
+								checkBox.attr('checked', false);
+								checkBox.hide();
 
-								checkBox.addClass('aui-helper-hidden');
+								var li = checkBox.ancestor();
 
-								var li = checkBox.get('parentNode');
+								li.removeClass('selectable').removeClass('selected');
 
-								if (added) {
-									li.removeClass('selectable').removeClass('selected').addClass('file-saved');
+								var cssClass = null;
+								var childHTML = null;
 
-									var successMessage = A.Node.create('<span class="success-message"><%= LanguageUtil.get(pageContext, "successfully-saved") %></span>')
+								if (item.added) {
+									cssClass = 'file-saved';
 
-									li.appendChild(successMessage);
+									childHTML = '<span class="success-message"><%= LanguageUtil.get(pageContext, "successfully-saved") %></span>';
 								}
 								else {
-									var errorMessage = jsonArray[i].errorMessage;
+									cssClass = 'upload-error';
 
-									li.removeClass('selectable').removeClass('selected').addClass('upload-error');
-
-									var errorMessageContainer = A.Node.create('<span class="error-message">' + errorMessage + '</span>')
-
-									li.appendChild(errorMessageContainer);
+									childHTML = '<span class="error-message">' + item.errorMessage + '</span>';
 								}
+
+								li.addClass(cssClass);
+								li.append(childHTML);
 							}
 						}
-					},
-					dataType: 'json',
-					form: {
-						id: document.<portlet:namespace />fm2
 					}
 				}
 			);

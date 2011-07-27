@@ -315,40 +315,6 @@
 	top: 5px;
 }
 
-/* ---------- Tabs ---------- */
-
-.aui-tabview-list {
-	border: 1px solid #C8C9CA;
-	padding: 4px;
-
-	.toggle {
-		float: right;
-	}
-}
-
-.aui-tab {
-	background: transparent;
-	border-width: 0;
-	font-weight: bold;
-}
-
-.aui-tab-content {
-	padding: 3px 10px;
-}
-
-.aui-tab-active {
-	background: #333;
-	padding: 0;
-	position: relative;
-	z-index: 10;
-
-	&, & a {
-		color: #FFF;
-		text-decoration: none;
-		text-shadow: -1px -1px #000;
-	}
-}
-
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {

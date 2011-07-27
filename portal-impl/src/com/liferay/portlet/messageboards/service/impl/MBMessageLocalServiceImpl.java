@@ -1267,11 +1267,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			body);
 		Date now = new Date();
 
-		body = SanitizerUtil.sanitize(
-			message.getCompanyId(), message.getGroupId(), userId,
-			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
-			body);
-
 		validate(subject, body);
 
 		message.setModifiedDate(serviceContext.getModifiedDate(now));

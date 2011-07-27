@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -414,8 +415,8 @@ public class GroupImpl extends GroupBaseImpl {
 		String typeSettingsProperty = getTypeSettingsProperty(
 			StagingConstants.STAGED_PORTLET.concat(portletId));
 
-		if (typeSettingsProperty != null) {
-			return (GetterUtil.getBoolean(typeSettingsProperty));
+		if (Validator.isNotNull(typeSettingsProperty)) {
+			return GetterUtil.getBoolean(typeSettingsProperty);
 		}
 
 		try {
@@ -424,7 +425,7 @@ public class GroupImpl extends GroupBaseImpl {
 			String portletDataHandlerClass =
 				portlet.getPortletDataHandlerClass();
 
-			if (portletDataHandlerClass == null) {
+			if (Validator.isNull(portletDataHandlerClass)) {
 				return true;
 			}
 

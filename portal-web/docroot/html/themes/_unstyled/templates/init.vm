@@ -211,22 +211,24 @@
 		#set ($css_class = $css_class + " private-page")
 	#end
 
-	#set ($my_places_portlet_url = $portletURLFactory.create($request, "49", $page.getPlid(), "ACTION_PHASE"))
+	#set ($my_sites_portlet_url = $portletURLFactory.create($request, "49", $page.getPlid(), "ACTION_PHASE"))
 
-	$my_places_portlet_url.setWindowState("normal")
-	$my_places_portlet_url.setPortletMode("view")
+	#set ($my_places_portlet_url = $my_sites_portlet_url)
 
-	$my_places_portlet_url.setParameter("struts_action", "/my_places/view")
-	$my_places_portlet_url.setParameter("groupId", "$page.getGroupId()")
-	$my_places_portlet_url.setParameter("privateLayout", "false")
+	$my_sites_portlet_url.setWindowState("normal")
+	$my_sites_portlet_url.setPortletMode("view")
 
-	#set ($site_default_public_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	$my_sites_portlet_url.setParameter("struts_action", "/my_sites/view")
+	$my_sites_portlet_url.setParameter("groupId", "$page.getGroupId()")
+	$my_sites_portlet_url.setParameter("privateLayout", "false")
+
+	#set ($site_default_public_url = $htmlUtil.escape($my_sites_portlet_url.toString()))
 
 	#set ($community_default_public_url = $site_default_public_url)
 
-	$my_places_portlet_url.setParameter("privateLayout", "true")
+	$my_sites_portlet_url.setParameter("privateLayout", "true")
 
-	#set ($site_default_private_url = $htmlUtil.escape($my_places_portlet_url.toString()))
+	#set ($site_default_private_url = $htmlUtil.escape($my_sites_portlet_url.toString()))
 
 	#set ($community_default_private_url = $site_default_private_url)
 
@@ -288,12 +290,16 @@
 	#set ($staging_text = $languageUtil.get($locale, "staging"))
 #end
 
-## ---------- My places ---------- ##
+## ---------- My sites ---------- ##
 
-#set ($show_my_places = $user.hasMyPlaces())
+#set ($show_my_sites = $user.hasMySites())
 
-#if ($show_my_places)
-	#set ($my_places_text = $languageUtil.get($locale, "my-places"))
+#set ($show_my_places = $show_my_sites)
+
+#if ($show_my_sites)
+	#set ($my_sites_text = $languageUtil.get($locale, "my-sites"))
+
+	#set ($my_places_text = $my_sites_text)
 #end
 
 ## ---------- Includes ---------- ##

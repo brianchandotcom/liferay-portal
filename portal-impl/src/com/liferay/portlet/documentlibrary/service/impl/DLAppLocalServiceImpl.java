@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -73,8 +74,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		InputStream is = null;
+
 		try {
-			InputStream is = null;
 			long size = 0;
 
 			if (file == null) {
@@ -91,6 +93,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new FileSizeException();
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException e) {
+				}
+			}
 		}
 	}
 
@@ -540,8 +551,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		InputStream is = null;
+
 		try {
-			InputStream is = null;
 			long size = 0;
 
 			if ((file != null) && file.exists()) {
@@ -555,6 +567,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException();
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException e) {
+				}
+			}
 		}
 	}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -480,6 +481,22 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapUser.getServiceContext());
 	}
 
+	protected void addUserGroupsNotAddedByLDAPImport(
+			long userId, List<Long> userGroupIds)
+		throws Exception {
+
+		List<UserGroup> userGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(userId);
+
+		for (UserGroup userGroup : userGroups) {
+			if (!userGroupIds.contains(userGroup.getUserGroupId()) &&
+				!userGroup.isAddedByLDAPImport()) {
+
+				userGroupIds.add(userGroup.getUserGroupId());
+			}
+		}
+	}
+
 	protected String escapeValue(String value) {
 		return StringUtil.replace(value, "\\,", "\\\\,");
 	}
@@ -644,9 +661,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
-	protected void importGroup(
+	protected List<Long> importGroup(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			String fullGroupDN, User user, Properties groupMappings)
+			String fullGroupDN, User user, Properties groupMappings,
+			List<Long> newUserGroupIds)
 		throws Exception {
 
 		String userGroupIdKey = null;
@@ -705,9 +723,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					"Adding " + user.getUserId() + " to group " + userGroupId);
 			}
 
-			UserGroupLocalServiceUtil.addUserUserGroups(
-				user.getUserId(), new long[] {userGroupId});
+			newUserGroupIds.add(userGroupId);
 		}
+
+		return newUserGroupIds;
 	}
 
 	protected void importGroups(
@@ -716,23 +735,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			Properties groupMappings)
 		throws Exception {
 
-		if (!LDAPSettingsUtil.isExportEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
-
-			List<UserGroup> userGroups =
-				UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
-
-			UserGroupLocalServiceUtil.clearUserUserGroups(user.getUserId());
-
-			for (UserGroup userGroup : userGroups) {
-				if (!userGroup.isAddedByLDAPImport()) {
-
-					UserGroupLocalServiceUtil.addUserUserGroups(
-						user.getUserId(),
-						new long[] {userGroup.getUserGroupId()});
-				}
-			}
-		}
+		List<Long> newUserGroupIds = new ArrayList<Long>();
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER_ENABLED)) {
@@ -781,9 +784,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					String fullGroupDN = PortalLDAPUtil.getNameInNamespace(
 						ldapServerId, companyId, searchResult);
 
-					importGroup(
+					newUserGroupIds = importGroup(
 						ldapServerId, companyId, ldapContext, fullGroupDN, user,
-						groupMappings);
+						groupMappings, newUserGroupIds);
 				}
 			}
 		}
@@ -803,9 +806,28 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			for (int i = 0; i < userGroupAttribute.size(); i++) {
 				String fullGroupDN = (String)userGroupAttribute.get(i);
 
-				importGroup(
+				newUserGroupIds = importGroup(
 					ldapServerId, companyId, ldapContext, fullGroupDN, user,
-					groupMappings);
+					groupMappings, newUserGroupIds);
+			}
+		}
+
+		if (!LDAPSettingsUtil.isExportEnabled(companyId) ||
+			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
+
+			addUserGroupsNotAddedByLDAPImport(
+				user.getUserId(), newUserGroupIds);
+
+			UserGroupLocalServiceUtil.setUserUserGroups(
+				user.getUserId(),
+				ArrayUtil.toArray(
+					newUserGroupIds.toArray(new Long[newUserGroupIds.size()])));
+		}
+		else {
+			long[] userIds = new long[] {user.getUserId()};
+
+			for (long newUserGroupId : newUserGroupIds) {
+				UserLocalServiceUtil.addUserGroupUsers(newUserGroupId, userIds);
 			}
 		}
 	}
@@ -921,7 +943,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			long userGroupId, Attribute attribute)
 		throws Exception {
 
-		UserLocalServiceUtil.clearUserGroupUsers(userGroupId);
+		List<Long> newUserIds = new ArrayList<Long>(attribute.size());
 
 		for (int i = 0; i < attribute.size(); i++) {
 			String fullUserDN = (String)attribute.get(i);
@@ -952,14 +974,17 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 								userGroupId);
 					}
 
-					UserLocalServiceUtil.addUserGroupUsers(
-						userGroupId, new long[] {user.getUserId()});
+					newUserIds.add(user.getUserId());
 				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to load user " + userAttributes, e);
 			}
 		}
+
+		UserLocalServiceUtil.setUserGroupUsers(
+			userGroupId,
+			ArrayUtil.toArray(newUserIds.toArray(new Long[newUserIds.size()])));
 	}
 
 	protected void populateExpandoAttributes(

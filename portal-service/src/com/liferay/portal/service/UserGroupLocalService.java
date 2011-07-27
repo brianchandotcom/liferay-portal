@@ -240,10 +240,6 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void addUserUserGroups(long userId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public void clearUserUserGroups(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

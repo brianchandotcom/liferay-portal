@@ -109,20 +109,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
-	public void addUserUserGroups(long userId, long[] userGroupIds)
-		throws PortalException, SystemException {
-
-		copyUserGroupLayouts(userGroupIds, userId);
-
-		userPersistence.addUserGroups(userId, userGroupIds);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
-
-		indexer.reindex(userId);
-
-		PermissionCacheUtil.clearCache();
-	}
-
 	public void clearUserUserGroups(long userId) throws SystemException {
 		userPersistence.clearUserGroups(userId);
 

@@ -2470,7 +2470,6 @@
 			<hint name="display-height">475</hint>
 			<hint name="display-width">99%</hint>
 			<hint name="check-tab">true</hint>
-			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="summary" type="String">
 			<hint-collection name="TEXTAREA" />

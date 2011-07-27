@@ -479,21 +479,6 @@ AUI().add(
 
 				if (fields && fields.size() > 1) {
 					if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-field-and-all-its-children'))) {
-						var children = source.all('.structure-field');
-
-						if (children) {
-							A.each(
-								children,
-								function(item, index, collection) {
-									item = instance.getFieldInstance(item);
-
-									if (item) {
-										item.destroy();
-									}
-								}
-							);
-						}
-
 						var fieldInstance = instance.getFieldInstance(source);
 
 						fieldInstance.destroy();
@@ -2982,11 +2967,23 @@ AUI().add(
 					destructor: function() {
 						var instance = this;
 
+						var source = instance.get('source');
+
+						var children = source.all('.structure-field');
+
+						children.each(
+							function(item, index, collection) {
+								var fieldInstance = instance.getFieldInstance(item);
+
+								if (fieldInstance) {
+									fieldInstance.destroy();
+								}
+							}
+						);
+
 						var fieldType = instance.get('fieldType');
 
 						if (fieldType == 'text_area') {
-							var source = instance.get('source');
-
 							var textarea = source.one('textarea');
 
 							if (textarea) {

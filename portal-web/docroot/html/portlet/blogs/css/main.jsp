@@ -157,3 +157,7 @@
 		border-width: 0;
 	}
 }
+
+.social-boomarks-options {
+	margin-left: 2em;
+}

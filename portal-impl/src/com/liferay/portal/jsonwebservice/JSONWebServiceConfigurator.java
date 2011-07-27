@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jodd.io.findfile.FindClass;
+import jodd.io.findfile.FindFile;
+import jodd.io.findfile.WildcardFindFile;
 
 import jodd.util.ClassLoaderUtil;
 
@@ -49,7 +51,8 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 	public JSONWebServiceConfigurator() {
 		setIncludedJars(
-			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar");
+			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar",
+			"*-portlet-service.jar");
 	}
 
 	public void configure(ClassLoader classLoader) throws PortalException {
@@ -63,6 +66,8 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 			File classPathFile = null;
 
+			File libDir = null;
+
 			int pos = servicePropertiesPath.indexOf("_wl_cls_gen.jar!");
 
 			if (pos != -1) {
@@ -70,18 +75,26 @@ public class JSONWebServiceConfigurator extends FindClass {
 					0, pos + 15);
 
 				classPathFile = new File(wlClsGenJarPath);
+
+				libDir = new File(classPathFile.getParent());
 			}
 			else {
 				File servicePropertiesFile = new File(servicePropertiesPath);
 
-				File webInfDir = servicePropertiesFile.getParentFile();
+				classPathFile = servicePropertiesFile.getParentFile();
 
-				classPathFile = webInfDir;
+				libDir = new File(classPathFile.getParent(), "lib");
+
 			}
 
-			classPathFiles = new File[1];
+			classPathFiles = new File[2];
 
 			classPathFiles[0] = classPathFile;
+
+			FindFile findFile = new WildcardFindFile(
+				libDir, "*-portlet-service.jar");
+
+			classPathFiles[1] = findFile.nextFile();
 		}
 		else {
 			Thread currentThread = Thread.currentThread();

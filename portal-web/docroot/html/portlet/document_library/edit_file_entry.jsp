@@ -267,57 +267,60 @@ else if (dlFileEntryType != null) {
 		<div class='<%= ((folder == null) || folder.isSupportsMetadata()) ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />metadata">
 			<aui:input name="description" />
 
-			<%
-			List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, true);
-			%>
+			<c:if test="<%= (folder != null) && (folder.getModel() instanceof DLFolder) %>">
 
-			<c:choose>
-				<c:when test="<%= !cmd.equals(Constants.ADD) %>">
-					<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
+				<%
+				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, true);
+				%>
 
-						<%
-						for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
-						%>
+				<c:choose>
+					<c:when test="<%= !cmd.equals(Constants.ADD) %>">
+						<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
 
-							<aui:option label="<%= curDLFileEntryType.getName() %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+							<%
+							for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
+							%>
 
-						<%
+								<aui:option label="<%= curDLFileEntryType.getName() %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+					</c:otherwise>
+				</c:choose>
+
+				<%
+				if (fileEntryTypeId > 0) {
+					try {
+						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+						for (DDMStructure ddmStructure : ddmStructures) {
+							Fields fields = null;
+
+							try {
+								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+								fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+							}
+							catch (Exception e) {
+							}
+				%>
+
+							<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
+
+				<%
 						}
-						%>
-
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-				</c:otherwise>
-			</c:choose>
-
-			<%
-			if (fileEntryTypeId > 0) {
-				try {
-					List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-					for (DDMStructure ddmStructure : ddmStructures) {
-						Fields fields = null;
-
-						try {
-							DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-							fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
-						}
-						catch (Exception e) {
-						}
-			%>
-
-						<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
-
-			<%
+					}
+					catch (Exception e) {
 					}
 				}
-				catch (Exception e) {
-				}
-			}
-			%>
+				%>
+			</c:if>
 
 			<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 				<liferay-ui:custom-attribute-list

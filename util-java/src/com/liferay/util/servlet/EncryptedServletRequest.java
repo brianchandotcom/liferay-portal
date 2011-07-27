@@ -22,7 +22,6 @@ import com.liferay.util.EncryptorException;
 import java.security.Key;
 
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,11 +39,11 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 		_params = new HashMap<String, String[]>();
 		_key = key;
 
-		Enumeration<String> enu = getParameterNames();
+		Map<String, String[]> parameters = request.getParameterMap();
 
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-			String[] values = super.getParameterValues(name);
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
 			for (int i = 0; i < values.length; i++) {
 				if (Validator.isNotNull(values[i])) {

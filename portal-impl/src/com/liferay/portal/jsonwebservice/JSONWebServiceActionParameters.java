@@ -114,18 +114,33 @@ public class JSONWebServiceActionParameters {
 		String[] pathParametersParts = StringUtil.split(
 			pathParameters, CharPool.SLASH);
 
-		int length = (pathParametersParts.length / 2) * 2;
+		int i = 0;
 
-		for (int i = 0; i < length;) {
+		while (i < pathParametersParts.length) {
 			String name = pathParametersParts[i];
+
+			if (name.length() == 0) {
+				i++;
+
+				continue;
+			}
+
+			String value = null;
+
+			if (name.startsWith(StringPool.DASH)) {
+				name = name.substring(1);
+			}
+			else {
+				i++;
+
+				value = pathParametersParts[i];
+			}
 
 			name = jodd.util.StringUtil.wordsToCamelCase(name, CharPool.DASH);
 
-			String value = pathParametersParts[i + 1];
-
 			_parameters.put(name, value);
 
-			i += 2;
+			i++;
 		}
 	}
 
@@ -165,6 +180,20 @@ public class JSONWebServiceActionParameters {
 	}
 
 	private JSONRPCRequest _jsonRpcRequest;
-	private Map<String, Object> _parameters = new HashMap<String, Object>();
+	private Map<String, Object> _parameters = new HashMap<String, Object>() {
+
+		@Override
+		public Object put(String key, Object value) {
+
+			if (key.startsWith(StringPool.DASH)) {
+				key = key.substring(1);
+
+				value = null;
+			}
+
+			return super.put(key, value);
+		}
+
+	};
 
 }

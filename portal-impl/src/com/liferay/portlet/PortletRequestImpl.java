@@ -631,16 +631,16 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					request, plid, _portletName, renderParameters);
 			}
 
-			Enumeration<String> enu = request.getParameterNames();
+			Map<String, String[]> parameters = request.getParameterMap();
 
-			while (enu.hasMoreElements()) {
-				String name = enu.nextElement();
+			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+				String name = entry.getKey();
 
 				if (isInvalidParameter(name)) {
 					continue;
 				}
 
-				String[] values = request.getParameterValues(name);
+				String[] values = entry.getValue();
 
 				if (themeDisplay.isLifecycleRender()) {
 					renderParameters.put(name, values);

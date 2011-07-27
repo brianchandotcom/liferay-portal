@@ -371,8 +371,7 @@ public class DDMStructureLocalServiceImpl
 			char[] charArray = name.toCharArray();
 
 			for (int i = 0; i < charArray.length; i++) {
-				if (!Validator.isChar(charArray[i]) &&
-					!Validator.isDigit(charArray[i]) &&
+				if (!Character.isLetterOrDigit(charArray[i]) &&
 					(charArray[i] != CharPool.DASH) &&
 					(charArray[i] != CharPool.UNDERLINE)) {
 

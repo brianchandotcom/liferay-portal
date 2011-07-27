@@ -784,15 +784,14 @@ public class ParamUtil {
 	}
 
 	public static void print(HttpServletRequest request) {
-		Enumeration<String> enu = request.getParameterNames();
+		Map<String, String[]> parameters = request.getParameterMap();
 
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
-
-			String[] values = request.getParameterValues(param);
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
 			for (int i = 0; i < values.length; i++) {
-				System.out.println(param + "[" + i + "] = " + values[i]);
+				System.out.println(name + "[" + i + "] = " + values[i]);
 			}
 		}
 	}

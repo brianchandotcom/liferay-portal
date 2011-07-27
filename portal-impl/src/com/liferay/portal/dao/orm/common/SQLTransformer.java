@@ -18,18 +18,32 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class SQLTransformer {
 
 	public static String transform(String sql) {
 		return _instance._transform(sql);
+	}
+
+	public static String transformFromHqlToJpql(String sql) {
+		return _instance._transformFromHqlToJpql(sql);
+	}
+
+	public static String transformFromJpqlToHql(String sql) {
+		return _instance._transformFromJpqlToHql(sql);
 	}
 
 	private SQLTransformer() {
@@ -181,6 +195,7 @@ public class SQLTransformer {
 		else if (_vendorSQLServer || _vendorSybase) {
 			newSQL = _replaceMod(newSQL);
 		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Original SQL " + sql);
 			_log.debug("Modified SQL " + newSQL);
@@ -188,6 +203,86 @@ public class SQLTransformer {
 
 		return newSQL;
 	}
+
+	private String _transformFromHqlToJpql(String sql) {
+		String newSQL = _transformedSqls.get(sql);
+
+		if (newSQL != null) {
+			return newSQL;
+		}
+
+		newSQL = _transform(sql);
+
+		newSQL = _transformPositionalParams(newSQL);
+
+		newSQL = StringUtil.replace(
+			newSQL, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
+		newSQL = StringUtil.replace(
+			newSQL, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
+
+		_transformedSqls.put(sql, newSQL);
+
+		return newSQL;
+	}
+
+	private String _transformFromJpqlToHql(String sql) {
+		String newSQL = _transformedSqls.get(sql);
+
+		if (newSQL != null) {
+			return newSQL;
+		}
+
+		newSQL = _transform(sql);
+
+		Matcher matcher = _jpqlCountPattern.matcher(newSQL);
+
+		if (matcher.find()) {
+			String countExpression = matcher.group(1);
+			String entityAlias = matcher.group(3);
+
+			if (entityAlias.equals(countExpression)) {
+				newSQL = matcher.replaceFirst(_HQL_COUNT_SQL);
+			}
+		}
+
+		_transformedSqls.put(sql, newSQL);
+
+		return newSQL;
+	}
+
+	private String _transformPositionalParams(String queryString) {
+		if (queryString.indexOf(CharPool.QUESTION) == -1) {
+			return queryString;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		int i = 1;
+		int from = 0;
+		int to = 0;
+
+		while ((to = queryString.indexOf(CharPool.QUESTION, from)) != -1) {
+			sb.append(queryString.substring(from, to));
+			sb.append(StringPool.QUESTION);
+			sb.append(i++);
+
+			from = to + 1;
+		}
+
+		sb.append(queryString.substring(from, queryString.length()));
+
+		return sb.toString();
+	}
+
+	private static final String _HQL_COMPOSITE_ID_MARKER = "\\.id\\.";
+
+	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
+
+	private static final String _HQL_NOT_EQUALS = "!=";
+
+	private static final String _JPQL_DOT_SEPARTOR = ".";
+
+	private static final String _JPQL_NOT_EQUALS = "<>";
 
 	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
 
@@ -201,10 +296,14 @@ public class SQLTransformer {
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	private static Pattern _jpqlCountPattern = Pattern.compile(
+		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
 	private static Pattern _modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _negativeComparisonPattern = Pattern.compile(
 		"(!=)?( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+	private static Map<String, String> _transformedSqls =
+		new ConcurrentHashMap<String, String>();
 	private static Pattern _unionAllPattern = Pattern.compile(
 		"SELECT \\* FROM(.*)TEMP_TABLE(.*)", Pattern.CASE_INSENSITIVE);
 

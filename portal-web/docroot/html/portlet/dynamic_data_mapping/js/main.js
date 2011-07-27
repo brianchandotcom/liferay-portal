@@ -508,7 +508,16 @@ AUI().add(
 
 						str = A.Text.AccentFold.fold(str);
 
-						return str.replace(/\W+/g, STR_SPACE).replace(/^\W+|\W+$/g, STR_BLANK).replace(/ /g, '_');
+						A.each(
+							str,
+							function(item, index, collection) {
+								if (!A.Text.Unicode.test(item, "L") && !A.Text.Unicode.test(item, "N")) {
+									str = str.replace(item, STR_SPACE);
+								}
+							}
+						);
+
+						return str.replace(/ /g, '_');
 					},
 
 					_onClickSettingsButton: function(event) {
@@ -765,6 +774,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-validator', 'liferay-translation-manager', 'text']
+		requires: ['aui-form-builder', 'aui-form-validator', 'liferay-translation-manager', 'aui-text']
 	}
 );

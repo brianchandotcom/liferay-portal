@@ -97,19 +97,18 @@ public class ServiceContextFactory {
 		Map<String, Serializable> attributes =
 			new HashMap<String, Serializable>();
 
-		Enumeration<String> enu = request.getParameterNames();
+		Map<String, String[]> parameters = request.getParameterMap();
 
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
-
-			String[] values = request.getParameterValues(param);
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
 			if ((values != null) && (values.length > 0)) {
 				if (values.length == 1) {
-					attributes.put(param, values[0]);
+					attributes.put(name, values[0]);
 				}
 				else {
-					attributes.put(param, values);
+					attributes.put(name, values);
 				}
 			}
 		}
@@ -120,7 +119,7 @@ public class ServiceContextFactory {
 
 		Map<String, String> headerMap = new HashMap<String, String>();
 
-		enu = request.getHeaderNames();
+		Enumeration<String> enu = request.getHeaderNames();
 
 		while (enu.hasMoreElements()) {
 			String header = enu.nextElement();

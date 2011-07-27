@@ -63,7 +63,7 @@ try {
 		modelString = sb.toString();
 	}
 
-	String[] parts = StringUtil.split(resourcePermission.getName(), StringPool.PERIOD);
+	String[] parts = StringUtil.split(resourcePermission.getName(), CharPool.PERIOD);
 
 	resourceTitle = parts[parts.length - 1] + ", " + resourcePermission.getPrimKey();
 }

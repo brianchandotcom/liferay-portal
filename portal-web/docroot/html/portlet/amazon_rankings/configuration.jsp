@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 
-isbns = StringUtil.split(ParamUtil.getString(request, "isbns", isbnsString), StringPool.SPACE);
+isbns = StringUtil.split(ParamUtil.getString(request, "isbns", isbnsString), CharPool.SPACE);
 
 isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 %>

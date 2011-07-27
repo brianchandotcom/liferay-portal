@@ -148,10 +148,10 @@ RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(originalReques
 if (Validator.isNotNull(queryString)) {
 	DynamicServletRequest dynamicRequest = (DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
 
-	String[] params = StringUtil.split(queryString, StringPool.AMPERSAND);
+	String[] params = StringUtil.split(queryString, CharPool.AMPERSAND);
 
 	for (int i = 0; i < params.length; i++) {
-		String[] kvp = StringUtil.split(params[i], StringPool.EQUAL);
+		String[] kvp = StringUtil.split(params[i], CharPool.EQUAL);
 
 		if (kvp.length > 1) {
 			dynamicRequest.setParameter(kvp[0], kvp[1]);

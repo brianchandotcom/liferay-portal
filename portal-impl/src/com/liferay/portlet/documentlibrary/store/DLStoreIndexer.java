@@ -178,10 +178,8 @@ public class DLStoreIndexer extends BaseIndexer {
 			long[] assetCategoryIds = fileModel.getAssetCategoryIds();
 
 			if (assetCategoryIds == null) {
-				assetCategoryIds =
-					AssetCategoryLocalServiceUtil.getCategoryIds(
-						DLFileEntry.class.getName(),
-					fileEntry.getFileEntryId());
+				assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
+					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 			}
 
 			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
@@ -192,7 +190,7 @@ public class DLStoreIndexer extends BaseIndexer {
 				assetCategoryNames =
 					AssetCategoryLocalServiceUtil.getCategoryNames(
 						DLFileEntry.class.getName(),
-					fileEntry.getFileEntryId());
+						fileEntry.getFileEntryId());
 			}
 
 			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);

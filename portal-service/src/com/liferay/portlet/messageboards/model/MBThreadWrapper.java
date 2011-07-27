@@ -547,6 +547,12 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.getLock();
 	}
 
+	public java.lang.String getRootMessageUuid()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.getRootMessageUuid();
+	}
+
 	public boolean hasLock(long userId) {
 		return _mbThread.hasLock(userId);
 	}

@@ -4439,11 +4439,13 @@ public class ServiceBuilder {
 				columnElement.attributeValue("localized"));
 			boolean colJsonEnabled = GetterUtil.getBoolean(
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
+			boolean counter = GetterUtil.getBoolean(
+				columnElement.attributeValue("counter"), false);
 
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, filterPrimary,
 				collectionEntity, mappingKey, mappingTable, idType, idParam,
-				convertNull, lazy, localized, colJsonEnabled);
+				convertNull, lazy, localized, colJsonEnabled, counter);
 
 			if (primary) {
 				pkList.add(col);

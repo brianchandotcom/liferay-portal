@@ -84,6 +84,21 @@ public interface ${entity.name}Model extends
 	public void setPrimaryKey(${entity.PKClassName} primaryKey);
 
 	<#list entity.regularColList as column>
+		<#if column.counter>
+			/**
+			 * Decrements the value of ${column.humanName} in this ${entity.humanName} by a
+			 * given value.
+			 *
+			 * @param decrement the value to decrement ${column.humanName} by
+			 */
+			public void decrement${column.methodName}();
+
+			/**
+			 * Decrements the value of ${column.humanName} in this ${entity.humanName} by 1
+			 */
+			public void decrement${column.methodName}(int decrement);
+		</#if>
+		
 		<#if column.name == "classNameId">
 			/**
 			 * Returns the fully qualified class name of this ${entity.humanName}.
@@ -161,6 +176,21 @@ public interface ${entity.name}Model extends
 			 * @return the locales and localized ${column.humanNames} of this ${entity.humanName}
 			 */
 			public Map<Locale, String> get${column.methodName}Map();
+		</#if>
+
+		<#if column.counter>
+			/**
+		 	* Increments the value of ${column.humanName} in this ${entity.humanName} by a
+		 	* given value.
+		 	*
+		 	* @param increment the value to increment ${column.humanName} by
+		 	*/
+			public void increment${column.methodName}();
+
+			/**
+			 * Increments the value of ${column.humanName} in this ${entity.humanName} by 1.
+			 */
+			public void increment${column.methodName}(int increment);
 		</#if>
 
 		<#if column.type == "boolean">

@@ -89,6 +89,8 @@ public class LiferayLocalRepository
 			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
 			mimeType, title, description, changeLog, is, size, serviceContext);
 
+		addFileEntryResources(dlFileEntry, serviceContext);
+
 		return new LiferayFileEntry(dlFileEntry);
 	}
 

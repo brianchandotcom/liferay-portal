@@ -14,11 +14,14 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portal.service.RepositoryService;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -94,6 +97,26 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return _repositoryId;
 	}
 
+	protected void addFileEntryResources(
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Resources
+
+		if (serviceContext.getAddGroupPermissions() ||
+			serviceContext.getAddGuestPermissions()) {
+
+			dlFileEntryLocalService.addFileEntryResources(
+				dlFileEntry, serviceContext.getAddGroupPermissions(),
+				serviceContext.getAddGuestPermissions());
+		}
+		else {
+			dlFileEntryLocalService.addFileEntryResources(
+				dlFileEntry, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
+	}
 	protected long getGroupId() {
 		return _groupId;
 	}

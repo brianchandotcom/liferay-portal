@@ -284,6 +284,26 @@ public class DLFileEntryLocalServiceUtil {
 			mimeType, title, description, changeLog, is, size, serviceContext);
 	}
 
+	public static void addFileEntryResources(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addFileEntryResources(dlFileEntry, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addFileEntryResources(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addFileEntryResources(dlFileEntry, groupPermissions,
+			guestPermissions);
+	}
+
 	public static void cancelCheckOut(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

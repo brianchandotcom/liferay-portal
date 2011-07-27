@@ -101,6 +101,14 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var recordSet = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
 
+	var records = <%= DDLUtil.getRecordsJSONArray(records) %>;
+
+	records.sort(
+		function(a, b) {
+			return (a.displayIndex - b.displayIndex);
+		}
+	);
+
 	A.Array.each(
 		records,
 		function(item, index, collection) {

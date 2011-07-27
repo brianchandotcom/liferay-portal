@@ -39,6 +39,7 @@
 	content: ".";
 	display: block;
 	height: 0;
+	visibility: hidden;
 }
 
 .ie .taglib-social-bookmarks ul {

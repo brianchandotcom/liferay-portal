@@ -304,6 +304,7 @@ String editorContent = emailBody;
 
 					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 				</c:if>
+
 				<aui:fieldset>
 					<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
 					

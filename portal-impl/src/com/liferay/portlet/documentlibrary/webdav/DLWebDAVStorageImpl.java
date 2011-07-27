@@ -666,25 +666,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			String extension = FileUtil.getExtension(title);
 
-			if (contentLength > 0) {
-				if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-					contentType = MimeTypesUtil.getContentType(
-						request.getInputStream(), title);
-				}
-			}
-			else {
+			file = FileUtil.createTempFile(extension);
 
-				// Chunked transfers have a content length of 0
+			FileUtil.write(file, request.getInputStream());
 
-				file = FileUtil.createTempFile(extension);
+			if (contentType.equals(
+					ContentTypes.APPLICATION_OCTET_STREAM)) {
 
-				FileUtil.write(file, request.getInputStream());
-
-				if (contentType.equals(
-						ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-					contentType = MimeTypesUtil.getContentType(file);
-				}
+				contentType = MimeTypesUtil.getContentType(file);
 			}
 
 			try {
@@ -704,30 +693,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				serviceContext.setAssetTagNames(assetTagNames);
 
-				if (contentLength > 0) {
-					DLAppServiceUtil.updateFileEntry(
-						fileEntryId, title, contentType, title, description,
-						changeLog, false, request.getInputStream(),
-						contentLength, serviceContext);
-				}
-				else {
-					DLAppServiceUtil.updateFileEntry(
-						fileEntryId, title, contentType, title, description,
-						changeLog, false, file, serviceContext);
-				}
+				DLAppServiceUtil.updateFileEntry(
+					fileEntryId, title, contentType, title, description,
+					changeLog, false, file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
-				if (contentLength > 0) {
-					DLAppServiceUtil.addFileEntry(
-						groupId, parentFolderId, contentType, title,
-						description, changeLog, request.getInputStream(),
-						contentLength, serviceContext);
-				}
-				else {
-					DLAppServiceUtil.addFileEntry(
-						groupId, parentFolderId, contentType, title,
-						description, changeLog, file, serviceContext);
-				}
+				DLAppServiceUtil.addFileEntry(
+					groupId, parentFolderId, contentType, title,
+					description, changeLog, file, serviceContext);
 			}
 
 			if (_log.isInfoEnabled()) {

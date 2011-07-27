@@ -189,11 +189,11 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 					new HashMap<String, String[]>();
 
 				String[] queryParamsArray = StringUtil.split(
-					queryString, StringPool.AMPERSAND);
+					queryString, CharPool.AMPERSAND);
 
 				for (int i = 0; i < queryParamsArray.length; i++) {
 					String[] nameValuePair = StringUtil.split(
-						queryParamsArray[i], StringPool.EQUAL);
+						queryParamsArray[i], CharPool.EQUAL);
 
 					String name = nameValuePair[0];
 					String value = StringPool.BLANK;

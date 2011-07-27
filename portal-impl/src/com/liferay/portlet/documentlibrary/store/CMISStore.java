@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -76,7 +77,7 @@ public class CMISStore extends BaseStore {
 
 		Folder folder = getRepositoryFolder(companyId, repositoryId);
 
-		String[] dirNames = StringUtil.split(dirName, StringPool.SLASH);
+		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
 
 		for (String curDirName : dirNames) {
 			Folder subFolder = getFolder(folder, curDirName);
@@ -214,7 +215,7 @@ public class CMISStore extends BaseStore {
 
 		Folder folder = getRepositoryFolder(companyId, repositoryId);
 
-		String[] dirNames = StringUtil.split(dirName, StringPool.SLASH);
+		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
 
 		for (String curDirName : dirNames) {
 			Folder subFolder = getFolder(folder, curDirName);
@@ -546,7 +547,7 @@ public class CMISStore extends BaseStore {
 
 		Folder versioningFolder = repositoryFolder;
 
-		String[] dirNames = StringUtil.split(fileName, StringPool.SLASH);
+		String[] dirNames = StringUtil.split(fileName, CharPool.SLASH);
 
 		for (String dirName : dirNames) {
 			Folder subFolder = getFolder(versioningFolder, dirName);

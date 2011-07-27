@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
@@ -265,10 +264,9 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 		PortletPreferences preferences = getPreferences();
 
-		String[] questions = StringUtil.split(
+		String[] questions = StringUtil.splitLines(
 			LocalizationUtil.getPreferencesValue(
-				preferences, "reminderQueries", languageId, false),
-			StringPool.NEW_LINE);
+				preferences, "reminderQueries", languageId, false));
 
 		return SetUtil.fromArray(questions);
 	}

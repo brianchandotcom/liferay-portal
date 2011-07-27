@@ -17,7 +17,6 @@ package com.liferay.portlet.iframe.action;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
@@ -47,8 +46,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			setPreference(actionRequest, "src", src);
 		}
 
-		String[] htmlAttributes = StringUtil.split(
-			getParameter(actionRequest, "htmlAttributes"), StringPool.NEW_LINE);
+		String[] htmlAttributes = StringUtil.splitLines(
+			getParameter(actionRequest, "htmlAttributes"));
 
 		for (String htmlAttribute : htmlAttributes) {
 			int pos = htmlAttribute.indexOf(CharPool.EQUAL);

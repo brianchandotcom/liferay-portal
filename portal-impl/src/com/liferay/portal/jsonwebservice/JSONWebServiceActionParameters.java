@@ -112,7 +112,7 @@ public class JSONWebServiceActionParameters {
 		}
 
 		String[] pathParametersParts = StringUtil.split(
-			pathParameters, StringPool.SLASH);
+			pathParameters, CharPool.SLASH);
 
 		int length = (pathParametersParts.length / 2) * 2;
 

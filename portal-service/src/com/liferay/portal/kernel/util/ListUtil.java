@@ -177,7 +177,7 @@ public class ListUtil {
 	}
 
 	public static List<String> fromString(String s) {
-		return fromArray(StringUtil.split(s, StringPool.NEW_LINE));
+		return fromArray(StringUtil.splitLines(s));
 	}
 
 	public static <E> boolean remove(List<E> list, E element) {

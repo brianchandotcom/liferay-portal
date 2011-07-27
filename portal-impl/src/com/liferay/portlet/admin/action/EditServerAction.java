@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -225,7 +226,7 @@ public class EditServerAction extends PortletAction {
 
 				if (parameters[i].contains(StringPool.EQUAL)) {
 					String[] parameterPair = StringUtil.split(
-						parameters[i], StringPool.EQUAL);
+						parameters[i], CharPool.EQUAL);
 
 					parameter =
 						className + StringPool.PERIOD + parameterPair[0];

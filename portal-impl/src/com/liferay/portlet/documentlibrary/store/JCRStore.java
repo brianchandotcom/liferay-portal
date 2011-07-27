@@ -78,7 +78,7 @@ public class JCRStore extends BaseStore {
 				throw new DuplicateDirectoryException(dirName);
 			}
 			else {
-				String[] dirNameArray = StringUtil.split(dirName, "/");
+				String[] dirNameArray = StringUtil.split(dirName, '/');
 
 				Node dirNode = repositoryNode;
 

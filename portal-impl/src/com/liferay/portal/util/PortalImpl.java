@@ -702,7 +702,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String domain = StringUtil.split(
-			HttpUtil.getDomain(url), StringPool.COLON)[0];
+			HttpUtil.getDomain(url), CharPool.COLON)[0];
 
 		try {
 			CompanyLocalServiceUtil.getCompanyByVirtualHost(domain);
@@ -852,7 +852,7 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		String[] parts = StringUtil.split(modelName, StringPool.PERIOD);
+		String[] parts = StringUtil.split(modelName, CharPool.PERIOD);
 
 		if ((parts.length <= 2) || !parts[parts.length - 2].equals("model")) {
 			return null;
@@ -927,7 +927,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String[] loginAndPassword = StringUtil.split(
-			credentials, StringPool.COLON);
+			credentials, CharPool.COLON);
 
 		String login = loginAndPassword[0].trim();
 
@@ -1510,7 +1510,7 @@ public class PortalImpl implements Portal {
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
 
-				values = StringUtil.split(values[0], StringPool.NEW_LINE);
+				values = StringUtil.splitLines(values[0]);
 			}
 
 			value = GetterUtil.getDoubleValues(values);
@@ -1524,7 +1524,7 @@ public class PortalImpl implements Portal {
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
 
-				values = StringUtil.split(values[0], StringPool.NEW_LINE);
+				values = StringUtil.splitLines(values[0]);
 			}
 
 			value = GetterUtil.getFloatValues(values);
@@ -1538,7 +1538,7 @@ public class PortalImpl implements Portal {
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
 
-				values = StringUtil.split(values[0], StringPool.NEW_LINE);
+				values = StringUtil.splitLines(values[0]);
 			}
 
 			value = GetterUtil.getIntegerValues(values);
@@ -1552,7 +1552,7 @@ public class PortalImpl implements Portal {
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
 
-				values = StringUtil.split(values[0], StringPool.NEW_LINE);
+				values = StringUtil.splitLines(values[0]);
 			}
 
 			value = GetterUtil.getLongValues(values);
@@ -1566,7 +1566,7 @@ public class PortalImpl implements Portal {
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
 
-				values = StringUtil.split(values[0], StringPool.NEW_LINE);
+				values = StringUtil.splitLines(values[0]);
 			}
 
 			value = GetterUtil.getShortValues(values);

@@ -189,7 +189,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 
 			String fileName = StringUtil.replace(
 				diskFileItem.getName(), CharPool.BACK_SLASH, CharPool.SLASH);
-			String[] fileNameArray = StringUtil.split(fileName, "/");
+			String[] fileNameArray = StringUtil.split(fileName, '/');
 			fileName = fileNameArray[fileNameArray.length - 1];
 
 			String contentType = diskFileItem.getContentType();

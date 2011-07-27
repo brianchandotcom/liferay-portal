@@ -508,9 +508,8 @@ public class InstallPluginAction extends PortletAction {
 	protected void unignorePackages(ActionRequest actionRequest)
 		throws Exception {
 
-		String[] pluginPackagesUnignored = StringUtil.split(
-			ParamUtil.getString(actionRequest, "pluginPackagesUnignored"),
-			StringPool.NEW_LINE);
+		String[] pluginPackagesUnignored = StringUtil.splitLines(
+			ParamUtil.getString(actionRequest, "pluginPackagesUnignored"));
 
 		String[] pluginPackagesIgnored = PrefsPropsUtil.getStringArray(
 			PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED,

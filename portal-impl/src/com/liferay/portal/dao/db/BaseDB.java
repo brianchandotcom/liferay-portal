@@ -492,7 +492,7 @@ public abstract class BaseDB implements DB {
 		throws IOException;
 
 	protected String[] buildColumnNameTokens(String line) {
-		String[] words = StringUtil.split(line, " ");
+		String[] words = StringUtil.split(line, ' ');
 
 		if (words.length == 7) {
 			words[5] = "not null;";
@@ -506,7 +506,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildColumnTypeTokens(String line) {
-		String[] words = StringUtil.split(line, " ");
+		String[] words = StringUtil.split(line, ' ');
 
 		String nullable = "";
 

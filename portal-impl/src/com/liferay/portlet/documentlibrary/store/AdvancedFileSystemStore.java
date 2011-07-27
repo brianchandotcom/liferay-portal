@@ -139,7 +139,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	}
 
 	protected int getDepth(String path) {
-		String[] fragments = StringUtil.split(path, StringPool.SLASH);
+		String[] fragments = StringUtil.split(path, CharPool.SLASH);
 
 		return fragments.length;
 	}

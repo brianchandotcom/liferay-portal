@@ -74,7 +74,7 @@ public class TCKAction extends Action {
 			}
 
 			for (int i = 0; i < portletIds.length; i++) {
-				String[] nameAndWar = StringUtil.split(portletIds[i], "/");
+				String[] nameAndWar = StringUtil.split(portletIds[i], '/');
 
 				portletIds[i] = PortalUtil.getJsSafePortletId(
 					nameAndWar[1] + PortletConstants.WAR_SEPARATOR +

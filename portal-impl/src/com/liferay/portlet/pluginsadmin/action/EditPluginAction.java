@@ -84,7 +84,7 @@ public class EditPluginAction extends PortletAction {
 		String pluginType = ParamUtil.getString(actionRequest, "pluginType");
 
 		String[] rolesArray = StringUtil.split(
-			ParamUtil.getString(actionRequest, "roles"), "\n");
+			ParamUtil.getString(actionRequest, "roles"), '\n');
 
 		Arrays.sort(rolesArray);
 

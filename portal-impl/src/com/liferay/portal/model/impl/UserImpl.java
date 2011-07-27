@@ -541,7 +541,7 @@ public class UserImpl extends UserBaseImpl {
 		return company.hasCompanyMx(emailAddress);
 	}
 
-	public boolean hasMyPlaces() throws PortalException, SystemException {
+	public boolean hasMySites() throws PortalException, SystemException {
 		if (isDefaultUser()) {
 			return false;
 		}

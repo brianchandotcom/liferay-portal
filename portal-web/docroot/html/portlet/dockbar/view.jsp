@@ -242,7 +242,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</ul>
 
 	<ul class="aui-toolbar user-toolbar">
-		<c:if test="<%= user.hasMyPlaces() %>">
+		<c:if test="<%= user.hasMySites() %>">
 			<li class="my-sites has-submenu" id="<portlet:namespace />mySites">
 				<a class="menu-button" href="javascript:;">
 					<span>

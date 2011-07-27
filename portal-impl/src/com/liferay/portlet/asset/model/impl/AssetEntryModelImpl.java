@@ -603,9 +603,25 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_priority = priority;
 	}
 
+	public void decrementViewCount() {
+		decrementViewCount(1);
+	}
+
+	public void decrementViewCount(int decrement) {
+		_viewCount = _viewCount - decrement;
+	}
+
 	@JSON
 	public int getViewCount() {
 		return _viewCount;
+	}
+
+	public void incrementViewCount() {
+		incrementViewCount(1);
+	}
+
+	public void incrementViewCount(int increment) {
+		_viewCount = _viewCount + increment;
 	}
 
 	public void setViewCount(int viewCount) {

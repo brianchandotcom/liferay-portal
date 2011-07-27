@@ -175,11 +175,37 @@ public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
 	public void setMessageCount(int messageCount);
 
 	/**
+	 * Decrements the value of view count in this message boards thread by a
+	 * given value.
+	 *
+	 * @param decrement the value to decrement view count by
+	 */
+	public void decrementViewCount();
+
+	/**
+	 * Decrements the value of view count in this message boards thread by 1
+	 */
+	public void decrementViewCount(int decrement);
+
+	/**
 	 * Returns the view count of this message boards thread.
 	 *
 	 * @return the view count of this message boards thread
 	 */
 	public int getViewCount();
+
+	/**
+	 * Increments the value of view count in this message boards thread by a
+	 * given value.
+	 *
+	 * @param increment the value to increment view count by
+	 */
+	public void incrementViewCount();
+
+	/**
+	 * Increments the value of view count in this message boards thread by 1.
+	 */
+	public void incrementViewCount(int increment);
 
 	/**
 	 * Sets the view count of this message boards thread.

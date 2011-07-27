@@ -511,11 +511,37 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public void setPriority(double priority);
 
 	/**
+	 * Decrements the value of view count in this asset entry by a
+	 * given value.
+	 *
+	 * @param decrement the value to decrement view count by
+	 */
+	public void decrementViewCount();
+
+	/**
+	 * Decrements the value of view count in this asset entry by 1
+	 */
+	public void decrementViewCount(int decrement);
+
+	/**
 	 * Returns the view count of this asset entry.
 	 *
 	 * @return the view count of this asset entry
 	 */
 	public int getViewCount();
+
+	/**
+	 * Increments the value of view count in this asset entry by a
+	 * given value.
+	 *
+	 * @param increment the value to increment view count by
+	 */
+	public void incrementViewCount();
+
+	/**
+	 * Increments the value of view count in this asset entry by 1.
+	 */
+	public void incrementViewCount(int increment);
 
 	/**
 	 * Sets the view count of this asset entry.

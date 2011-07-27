@@ -621,12 +621,46 @@ public class AssetEntryWrapper implements AssetEntry {
 	}
 
 	/**
+	* Decrements the value of view count in this asset entry by a
+	* given value.
+	*
+	* @param decrement the value to decrement view count by
+	*/
+	public void decrementViewCount() {
+		_assetEntry.decrementViewCount();
+	}
+
+	/**
+	* Decrements the value of view count in this asset entry by 1
+	*/
+	public void decrementViewCount(int decrement) {
+		_assetEntry.decrementViewCount(decrement);
+	}
+
+	/**
 	* Returns the view count of this asset entry.
 	*
 	* @return the view count of this asset entry
 	*/
 	public int getViewCount() {
 		return _assetEntry.getViewCount();
+	}
+
+	/**
+	* Increments the value of view count in this asset entry by a
+	* given value.
+	*
+	* @param increment the value to increment view count by
+	*/
+	public void incrementViewCount() {
+		_assetEntry.incrementViewCount();
+	}
+
+	/**
+	* Increments the value of view count in this asset entry by 1.
+	*/
+	public void incrementViewCount(int increment) {
+		_assetEntry.incrementViewCount(increment);
 	}
 
 	/**

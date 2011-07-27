@@ -114,6 +114,7 @@
 <%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocalizationUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.LogoutSessionThreadLocal" %>
 <%@ page import="com.liferay.portal.kernel.util.LongWrapper" %>
 <%@ page import="com.liferay.portal.kernel.util.MathUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ObjectValuePair" %>

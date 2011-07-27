@@ -32,3 +32,11 @@
 
 	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
 </script>
+
+<%
+Boolean logoutSession = LogoutSessionThreadLocal.isLogoutSession();
+if (logoutSession) {
+	LogoutSessionThreadLocal.removeLogoutSession();
+	session.invalidate();
+}
+%>

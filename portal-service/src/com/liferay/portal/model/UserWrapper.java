@@ -1141,10 +1141,10 @@ public class UserWrapper implements User {
 		return _user.hasCompanyMx(emailAddress);
 	}
 
-	public boolean hasMyPlaces()
+	public boolean hasMySites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _user.hasMyPlaces();
+		return _user.hasMySites();
 	}
 
 	public boolean hasOrganization()

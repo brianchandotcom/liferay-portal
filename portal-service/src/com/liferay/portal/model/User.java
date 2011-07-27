@@ -178,7 +178,7 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean hasMyPlaces()
+	public boolean hasMySites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

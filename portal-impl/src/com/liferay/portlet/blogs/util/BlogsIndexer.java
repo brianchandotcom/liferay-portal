@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +56,21 @@ public class BlogsIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long entryClassPK,
+			String actionId)
+		throws Exception {
+
+		return BlogsEntryPermission.contains(
+			permissionChecker, entryClassPK, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean isFilterSearch() {
+		return _FILTER_SEARCH;
 	}
 
 	@Override
@@ -182,5 +200,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(companyId, documents);
 	}
+
+	private static final boolean _FILTER_SEARCH = true;
 
 }

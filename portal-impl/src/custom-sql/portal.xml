@@ -17,7 +17,7 @@
 							OR [$OWNER_CHECK$]
 						)
 				)
-			AS InlineSQLResourcePermission ON
+			InlineSQLResourcePermission ON
 				[$PRIM_KEYS$]
 		]]>
 	</sql>

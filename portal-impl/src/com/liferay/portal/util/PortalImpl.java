@@ -3634,27 +3634,28 @@ public class PortalImpl implements Portal {
 	public User getUser(HttpServletRequest request)
 		throws PortalException, SystemException {
 
-		long userId = getUserId(request);
-
-		if (userId <= 0) {
-
-			// Portlet WARs may have the correct remote user and not have the
-			// correct user id because the user id is saved in the session
-			// and may not be accessible by the portlet WAR's session. This
-			// behavior is inconsistent across different application servers.
-
-			String remoteUser = request.getRemoteUser();
-
-			if (remoteUser == null) {
-				return null;
-			}
-
-			userId = GetterUtil.getLong(remoteUser);
-		}
-
 		User user = (User)request.getAttribute(WebKeys.USER);
 
 		if (user == null) {
+			long userId = getUserId(request);
+
+			if (userId <= 0) {
+
+				// Portlet WARs may have the correct remote user and not have
+				// the correct user id because the user id is saved in the
+				// session and may not be accessible by the portlet WAR's
+				// session. This behavior is inconsistent across different
+				// application servers.
+
+				String remoteUser = request.getRemoteUser();
+
+				if (remoteUser == null) {
+					return null;
+				}
+
+				userId = GetterUtil.getLong(remoteUser);
+			}
+
 			user = UserLocalServiceUtil.getUserById(userId);
 
 			request.setAttribute(WebKeys.USER, user);

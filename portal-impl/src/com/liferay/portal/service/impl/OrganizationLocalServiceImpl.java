@@ -74,7 +74,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Julio Camarero
  * @author Hugo Huijser
- * @author Juan FernÃ¡ndez
+ * @author Juan Fernández
  */
 public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {

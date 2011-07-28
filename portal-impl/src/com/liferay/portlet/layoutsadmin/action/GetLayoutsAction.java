@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
@@ -89,7 +90,14 @@ public class GetLayoutsAction extends JSONAction {
 					LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 						layoutSetBranchId);
 
+				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
 				jsonObject.put("layoutSetBranchId", layoutSetBranchId);
+				jsonObject.put(
+					"layoutSetBranchName", layoutSetBranch.getName());
+				jsonObject.put(
+					"layoutBranchId", layoutBranch.getLayoutBranchId());
+				jsonObject.put("layoutBranchName", layoutBranch.getName());
 				jsonObject.put(
 					"layoutSetBranchName", layoutSetBranch.getName());
 				jsonObject.put(

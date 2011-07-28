@@ -141,7 +141,7 @@ AUI().add(
 					},
 
 					_defaultItemChosen: function(event) {
-						this.set('item', event.details[0]);
+						this.set('item', event.item);
 					},
 
 					_moveContainer: function() {
@@ -167,7 +167,12 @@ AUI().add(
 
 						event.preventDefault();
 
-						instance.fire(EVENT_ITEM_CHOSEN, event.currentTarget);
+						instance.fire(
+							EVENT_ITEM_CHOSEN,
+							{
+								item: event.currentTarget
+							}
+						);
 					},
 
 					_onTransitionCompleted: function() {

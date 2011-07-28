@@ -205,10 +205,12 @@ if (folder != null) {
 </span>
 
 <aui:script use="aui-paginator,liferay-list-view,liferay-history-manager">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL">
-	</liferay-portlet:resourceURL>
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
 	var AObject = A.Object;
+	var Lang = A.Lang;
+
+	var owns = AObject.owns;
 
 	var EVENT_DATA_REQUEST = '<portlet:namespace />dataRequest';
 
@@ -216,11 +218,9 @@ if (folder != null) {
 
 	var INVALID_VALUE = A.Attribute.INVALID_VALUE;
 
-	var owns = AObject.owns;
+	var SRC_HISTORY = 0;
 
-	var Lang = A.Lang;
-
-	var DEFAULT_PARAMS = {
+	var defaultParams = {
 		'<portlet:namespace />struts_action': '/document_library/view',
 		'<portlet:namespace />displayStyle': '<%= HtmlUtil.escapeJS(displayStyle) %>',
 		'<portlet:namespace />folderId': '<%= folderId %>',
@@ -229,8 +229,6 @@ if (folder != null) {
 		'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
 		'<portlet:namespace />viewFolders': <%= Boolean.TRUE.toString() %>
 	};
-
-	var SRC_HISTORY = 0;
 
 	var entriesContainer = A.one('#<portlet:namespace />documentContainer');
 
@@ -311,7 +309,6 @@ if (folder != null) {
 			);
 		}
 	}
-
 
 	function afterListViewItemChange(event) {
 		var selFolder = A.one('.folder.selected');
@@ -395,16 +392,8 @@ if (folder != null) {
 				{
 					autoLoad: false,
 					after: {
-						success: function(event, id, obj){
-							var instance = this;
-
-							sendIOResponse.call(instance, true);
-						},
-						failure: function(event, id, obj){
-							var instance = this;
-
-							sendIOResponse.call(instance, false);
-						}
+						success: sendIOResponse,
+						failure: sendIOResponse
 					}
 				}
 			);
@@ -434,9 +423,9 @@ if (folder != null) {
 		if (!AObject.isEmpty(initialState)) {
 			AObject.each(
 				initialState,
-				function(value, key, collection) {
-					if (key.indexOf('<portlet:namespace />') == 0) {
-						DEFAULT_PARAMS[key] = value;
+				function(item, index, collection) {
+					if (index.indexOf('<portlet:namespace />') == 0) {
+						defaultParams[index] = item;
 					}
 				}
 			);
@@ -445,7 +434,7 @@ if (folder != null) {
 		Liferay.fire(
 			EVENT_DATA_REQUEST,
 			{
-				requestParams: DEFAULT_PARAMS
+				requestParams: defaultParams
 			}
 		);
 	}
@@ -459,19 +448,12 @@ if (folder != null) {
 
 		if (content) {
 			setBreadcrumb(content);
-
 			setButtons(content);
-
 			setEntries(content);
-
 			setFileEntrySearch(content);
-
 			setFolders(content);
-
 			setParentFolderTitle(content);
-
 			syncDisplayStyleToolbar(content);
-
 			setSearchResults(content);
 		}
 	}
@@ -567,23 +549,26 @@ if (folder != null) {
 		}
 	}
 
-	function sendIOResponse(result) {
+	function sendIOResponse(event) {
 		var instance = this;
 
 		var data = instance.get('data');
 		var reponseData = instance.get('responseData');
 
-		var event = result ? EVENT_DATA_RETRIEVE_SUCCESS : '<portlet:namespace />dataRetrieveFailure';
+		var eventType = '<portlet:namespace />dataRetrieveFailure';
+
+		if (event.type.indexOf('success') > -1) {
+			eventType = EVENT_DATA_RETRIEVE_SUCCESS;
+		}
 
 		Liferay.fire(
-			event,
+			eventType,
 			{
 				data: data,
 				responseData: reponseData
 			}
 		);
 	}
-
 
 	function syncDisplayStyleToolbar(content) {
 		var displayStyleToolbar = displayStyleToolbarNode.getData('displayStyleToolbar');
@@ -594,7 +579,6 @@ if (folder != null) {
 		displayStyleToolbar.item(1).StateInteraction.set('active', displayStyle === 'descriptive');
 		displayStyleToolbar.item(2).StateInteraction.set('active', displayStyle === 'list');
 	}
-
 
 	function updatePaginatorValues(event) {
 		var requestParams = event.requestParams;

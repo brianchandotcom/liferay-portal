@@ -40,11 +40,9 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 </div>
 
 <aui:script>
-	var EVENT_DATA_REQUEST = '<portlet:namespace />dataRequest';
-
 	function <portlet:namespace />searchFileEntry() {
 		Liferay.fire(
-			EVENT_DATA_REQUEST,
+			'<portlet:namespace />dataRequest',
 			{
 				requestParams: {
 					'<portlet:namespace />struts_action': '/document_library/search',

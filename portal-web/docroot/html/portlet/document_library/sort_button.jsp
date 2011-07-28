@@ -74,9 +74,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	/>
 </liferay-ui:icon-menu>
 
-<aui:script use="aui-base">
-	var documentLibraryContainer = A.one('#<portlet:namespace />documentLibraryContainer');
-
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />sortEntries',

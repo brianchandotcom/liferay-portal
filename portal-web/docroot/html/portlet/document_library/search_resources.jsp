@@ -274,22 +274,9 @@ int total = 0;
 	%>
 
 	<aui:script>
-		var EVENT_DATA_REQUEST = '<portlet:namespace />dataRequest';
-
-		var A = AUI();
-
-		Liferay.fire(
-			'viewEntriesLoaded',
-			{
-				page: <%= end / (end - start) %>,
-				rowsPerPage:  <%= (end - start) %>,
-				total: <%= total %>
-			}
-		);
-
 		function <portlet:namespace />changeSearchFolder() {
 			Liferay.fire(
-				EVENT_DATA_REQUEST,
+				'<portlet:namespace />dataRequest',
 				{
 					requestParams: {
 						'<portlet:namespace />struts_action': '/document_library/search',
@@ -301,11 +288,22 @@ int total = 0;
 			);
 		}
 
+		Liferay.fire(
+			'viewEntriesLoaded',
+			{
+				page: <%= end / (end - start) %>,
+				rowsPerPage:  <%= (end - start) %>,
+				total: <%= total %>
+			}
+		);
+	</aui:script>
+
+	<aui:script use="aui-base">
 		A.one('#<portlet:namespace />closeSearch').on(
 			'click',
 			function(event) {
 				Liferay.fire(
-					EVENT_DATA_REQUEST,
+					'<portlet:namespace />dataRequest',
 					{
 						requestParams: {
 							'<portlet:namespace />struts_action': '/document_library/view',

@@ -55,27 +55,36 @@ String keywords = ParamUtil.getString(request, "keywords");
 		updateDisplayStyle(config);
 	}
 
+	function updateDisplayStyle(config) {
+		var displayStyle = config['<portlet:namespace />displayStyle'];
+
+		displayStyleToolbar.item(0).StateInteraction.set('active', (displayStyle === 'icon'));
+		displayStyleToolbar.item(1).StateInteraction.set('active', (displayStyle === 'descriptive'));
+		displayStyleToolbar.item(2).StateInteraction.set('active', (displayStyle === 'list'));
+
+		Liferay.fire(
+			'<portlet:namespace />dataRequest',
+			{
+				requestParams: config
+			}
+		);
+	}
+
 	var displayStyleToolbar = new A.Toolbar(
 		{
 			activeState: true,
 			boundingBox: buttonRow,
 			children: [
 				{
-					handler: function(event) {
-						onButtonClick('icon');
-					},
+					handler: A.bind(onButtonClick, null, 'icon'),
 					icon: 'display-icon'
 				},
 				{
-					handler: function(event) {
-						onButtonClick('descriptive');
-					},
+					handler: A.bind(onButtonClick, null, 'descriptive'),
 					icon: 'display-descriptive'
 				},
 				{
-					handler: function(event) {
-						onButtonClick('list');
-					},
+					handler: A.bind(onButtonClick, null, 'list'),
 					icon: 'display-list'
 				}
 			]
@@ -97,19 +106,4 @@ String keywords = ParamUtil.getString(request, "keywords");
 	displayStyleToolbar.item(index).StateInteraction.set('active', true);
 
 	buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
-
-	function updateDisplayStyle(config) {
-		var displayStyle = config['<portlet:namespace />displayStyle'];
-
-		displayStyleToolbar.item(0).StateInteraction.set('active', displayStyle === 'icon');
-		displayStyleToolbar.item(1).StateInteraction.set('active', displayStyle === 'descriptive');
-		displayStyleToolbar.item(2).StateInteraction.set('active', displayStyle === 'list');
-
-		Liferay.fire(
-			'<portlet:namespace />dataRequest',
-			{
-				requestParams: config
-			}
-		);
-	}
 </aui:script>

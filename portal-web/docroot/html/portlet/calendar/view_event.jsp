@@ -287,7 +287,7 @@ PortalUtil.setPageDescription(event.getDescription(), request);
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(CalEvent.class.getName(), event.getEventId());
 
-PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"), request);
+PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 
 PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(event.getTitle()), currentURL);
 %>

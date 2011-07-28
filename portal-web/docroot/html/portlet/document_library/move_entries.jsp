@@ -168,7 +168,7 @@ else if (!folders.isEmpty()) {
 		</div>
 	</c:if>
 
-	<aui:input name="folderIds" type="hidden" value='<%= ListUtil.toString(validMoveFolders, "folderId") %>' />
+	<aui:input name="folderIds" type="hidden" value='<%= ListUtil.toString(validMoveFolders, Folder.FOLDERID_ACCESSOR) %>' />
 
 	<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
 		<div class="move-list-info">
@@ -235,7 +235,7 @@ else if (!folders.isEmpty()) {
 		</div>
 	</c:if>
 
-	<aui:input name="fileEntryIds" type="hidden" value='<%= ListUtil.toString(validMoveFileEntries, "fileEntryId") %>' />
+	<aui:input name="fileEntryIds" type="hidden" value='<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILEENTRYID_ACCESSOR) %>' />
 
 	<aui:fieldset>
 

@@ -111,7 +111,7 @@ if (layout != null) {
 			function() {
 				new Liferay.Navigation(
 					{
-						layoutIds: [<%= ListUtil.toString(layouts, "layoutId") %>],
+						layoutIds: [<%= ListUtil.toString(layouts, Layout.LAYOUTID_ACCESSOR) %>],
 						navBlock: navBlock,
 						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>
 					}

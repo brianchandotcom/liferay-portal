@@ -31,7 +31,7 @@ String contentCallback = GetterUtil.getString((String)request.getAttribute("life
 if (Validator.isNotNull(className) && (classPK > 0)) {
 	List<AssetTag> tags = AssetTagServiceUtil.getTags(className, classPK);
 
-	curTags = ListUtil.toString(tags, "name");
+	curTags = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
 }
 
 String curTagsParam = request.getParameter(hiddenInput);

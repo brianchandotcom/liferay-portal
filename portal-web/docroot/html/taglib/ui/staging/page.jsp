@@ -17,12 +17,19 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String cssClass = "staging-icon-menu " + GetterUtil.getString((String) request.getAttribute("liferay-ui:staging:cssClass"));
 boolean extended = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:extended"));
 long groupId = GetterUtil.getLong((String) request.getAttribute("liferay-ui:staging:groupId"));
+String icon = GetterUtil.getString((String) request.getAttribute("liferay-ui:staging:icon"));
 long layoutSetBranchId = GetterUtil.getLong((String) request.getAttribute("liferay-ui:staging:layoutSetBranchId"));
+String message = GetterUtil.getString((String) request.getAttribute("liferay-ui:staging:message"));
 boolean privateLayout = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:privateLayout"));
 long selPlid = GetterUtil.getLong((String) request.getAttribute("liferay-ui:staging:selPlid"));
 boolean showManageBranches = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:staging:showManageBranches"));
+
+if (Validator.isNotNull(icon)) {
+	icon = themeDisplay.getPathThemeImages() + icon;
+}
 
 LayoutSetBranch layoutSetBranch = null;
 List<LayoutSetBranch> layoutSetBranches = null;
@@ -87,7 +94,7 @@ layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(staging
 
 <c:if test="<%= stagingGroup != null %>">
 	<span class="staging-icon-menu-container">
-		<liferay-ui:icon-menu align="auto" cssClass="staging-icon-menu" direction="down" extended="<%= extended %>" icon='<%= extended ? themeDisplay.getPathThemeImages() + "/dockbar/staging.png" : StringPool.BLANK %>' message='<%= extended ? "staging" : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu align="auto" cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon='<%= extended ? icon : StringPool.BLANK %>' message='<%= extended ? message : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
 			<c:if test="<%= (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
 
 				<%

@@ -358,6 +358,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntry.class);
+
+		fileEntryIds.put(
+			fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
+
 		Map<String, String> fileEntryTitles =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				FileEntry.class.getName() + ".title");
@@ -689,6 +696,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			groupId = folder.getRepositoryId();
 		}
 
+		Map<Long, Long> fileEntryPKs =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntry.class);
+
+		long fileEntryId = MapUtil.getLong(
+			fileEntryPKs, fileShortcut.getToFileEntryId(),
+			fileShortcut.getToFileEntryId());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			fileShortcutElement, fileShortcut, _NAMESPACE);
 
@@ -704,19 +719,17 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				serviceContext.setUuid(fileShortcut.getUuid());
 
 				importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-					userId, groupId, folderId, fileShortcut.getToFileEntryId(),
-					serviceContext);
+					userId, groupId, folderId, fileEntryId, serviceContext);
 			}
 			else {
 				importedFileShortcut = DLAppLocalServiceUtil.updateFileShortcut(
 					userId, existingFileShortcut.getFileShortcutId(), folderId,
-					fileShortcut.getToFileEntryId(), serviceContext);
+					fileEntryId, serviceContext);
 			}
 		}
 		else {
 			importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-				userId, groupId, folderId, fileShortcut.getToFileEntryId(),
-				serviceContext);
+				userId, groupId, folderId, fileEntryId, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(

@@ -145,26 +145,18 @@ long assetClassPK = 0;
 			<aui:script use="aui-base">
 				var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
 
-				commonFileMetadataContainer.delegate(
+				var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
+
+				groupSelectorMenu.delegate(
 					'click',
 					function(event) {
 						event.preventDefault();
-
-						commonFileMetadataContainer.plug(A.LoadingMask);
-
-						commonFileMetadataContainer.loadingmask.show();
 
 						var documentTypePanel = A.one('#documentTypePanel');
 
 						documentTypePanel.load(
 							event.currentTarget.attr('href') + ' #documentTypePanel',
 							{
-								after: {
-									complete: function(event, id, obj) {
-										commonFileMetadataContainer.loadingmask.hide();
-									}
-								},
-								showLoading: false,
 								where: 'outer'
 							}
 						);

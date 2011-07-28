@@ -28,7 +28,7 @@
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.7);
 }
 
-.my-places-menu .current-site a {
+.my-sites-menu .current-site a {
 	-moz-box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);
 	-webkit-box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);
 	box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);

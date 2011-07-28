@@ -161,12 +161,12 @@ String[][] categorySections = {mainSections};
 						},
 					</c:if>
 
-					<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-						<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.MY_PLACES %>" var="viewPagesURL">
-							<portlet:param name="struts_action" value="/my_places/view" />
-							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						</liferay-portlet:actionURL>
+				<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
+					<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.MY_SITES %>" var="viewPagesURL">
+						<portlet:param name="struts_action" value="/my_sites/view" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					</liferay-portlet:actionURL>
 
 						{
 							handler: function(event) {

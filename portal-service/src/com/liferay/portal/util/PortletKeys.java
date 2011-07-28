@@ -120,7 +120,7 @@ public class PortletKeys {
 
 	public static final String MY_PAGES = "140";
 
-	public static final String MY_PLACES = "49";
+	public static final String MY_SITES = "49";
 
 	public static final String MY_WORKFLOW_INSTANCES = "158";
 

@@ -105,7 +105,7 @@ public interface GroupService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlaces()
+	public java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

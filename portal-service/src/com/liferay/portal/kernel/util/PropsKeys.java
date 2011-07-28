@@ -1321,17 +1321,17 @@ public interface PropsKeys {
 
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
-	public static final String MY_PLACES_DISPLAY_STYLE = "my.places.display.style";
+	public static final String MY_SITES_DISPLAY_STYLE = "my.sites.display.style";
 
-	public static final String MY_PLACES_MAX_ELEMENTS = "my.places.max.elements";
+	public static final String MY_SITES_MAX_ELEMENTS = "my.sites.max.elements";
 
-	public static final String MY_PLACES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.community.private.sites.with.no.layouts";
+	public static final String MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.sites.show.private.sites.with.no.layouts";
 
-	public static final String MY_PLACES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.places.show.community.public.sites.with.no.layouts";
+	public static final String MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.sites.show.public.sites.with.no.layouts";
 
-	public static final String MY_PLACES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.places.show.user.private.sites.with.no.layouts";
+	public static final String MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS = "my.sites.show.user.private.sites.with.no.layouts";
 
-	public static final String MY_PLACES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.places.show.user.public.sites.with.no.layouts";
+	public static final String MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.sites.show.user.public.sites.with.no.layouts";
 
 	public static final String NAVIGATION_DISPLAY_STYLE_OPTIONS = "navigation.display.style.options";
 

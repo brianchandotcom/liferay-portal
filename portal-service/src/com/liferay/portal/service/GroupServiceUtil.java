@@ -117,10 +117,10 @@ public class GroupServiceUtil {
 		return getService().getUserOrganizationsGroups(userId, start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces()
+	public static java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserPlaces();
+		return getService().getUserSites();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(

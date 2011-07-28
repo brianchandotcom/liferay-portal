@@ -173,7 +173,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return groupLocalService.getUserOrganizationsGroups(userId, start, end);
 	}
 
-	public List<Group> getUserPlaces() throws PortalException, SystemException {
+	public List<Group> getUserSites() throws PortalException, SystemException {
 		return getUserPlaces(null, QueryUtil.ALL_POS);
 	}
 

@@ -503,7 +503,7 @@
 	<portlet>
 		<portlet-name>49</portlet-name>
 		<icon>/html/icons/default.png</icon>
-		<struts-path>my_places</struts-path>
+		<struts-path>my_sites</struts-path>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<show-portlet-access-denied>false</show-portlet-access-denied>

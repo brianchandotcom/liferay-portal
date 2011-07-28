@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MyPlacesTag extends IncludeTag {
+public class MySitesTag extends IncludeTag {
 
 	public void setMax(int max) {
 		_max = max;
@@ -39,10 +39,10 @@ public class MyPlacesTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:my_places:max", String.valueOf(_max));
+		request.setAttribute("liferay-ui:my_sites:max", String.valueOf(_max));
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/my_places/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/my_sites/page.jsp";
 
 	private int _max;
 

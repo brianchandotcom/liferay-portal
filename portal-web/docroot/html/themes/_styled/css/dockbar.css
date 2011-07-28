@@ -246,59 +246,59 @@ html > .lfr-dockbar-pinned {
 	left: 60px !important;
 }
 
-.my-places-menu {
+.my-sites-menu {
 	max-width: 350px;
 }
 
-.my-places-menu ul {
+.my-sites-menu ul {
 	list-style: none;
 }
 
-.my-places-menu ul, .my-places-menu li {
+.my-sites-menu ul, .my-sites-menu li {
 	display: block;
 	margin: 0;
 	padding: 0;
 }
 
-.my-places-menu a {
+.my-sites-menu a {
 	display: block;
 	overflow: hidden;
 	text-align: right;
 	white-space: nowrap;
 }
 
-.my-places-menu .control-panel a {
+.my-sites-menu .control-panel a {
 	background: url(../images/dock/control_panel.png) no-repeat 3px 50%;
 	padding-left: 25px;
 }
 
-.my-places-menu .current-site {
+.my-sites-menu .current-site {
 	border: solid #1D4280;
 	border-width: 1px 0;
 }
 
-.my-places-menu .current-site a {
+.my-sites-menu .current-site a {
 	background: #3068BA url(../images/arrows/01_right.png) no-repeat scroll 2px 30%;
 	color: #FFF;
 	padding-left: 20px;
 	text-shadow: 1px 1px #333;
 }
 
-.my-places-menu .current-site .site-type {
+.my-sites-menu .current-site .site-type {
 	color: #FFF;
 }
 
-.my-places-menu .current-site a:hover, .my-places-menu a:hover .site-type {
+.my-sites-menu .current-site a:hover, .my-sites-menu a:hover .site-type {
 	color: #FFF;
 	text-shadow: 1px 1px #333;
 }
 
-.my-places-menu .site-name {
+.my-sites-menu .site-name {
 	cursor: pointer;
 	float: left;
 }
 
-.my-places-menu .site-type {
+.my-sites-menu .site-type {
 	color: #777;
 	float: right;
 	font-size: 0.8em;
@@ -306,32 +306,32 @@ html > .lfr-dockbar-pinned {
 	margin-left: 10px;
 }
 
-.ie7 .my-places-menu .site-type {
+.ie7 .my-sites-menu .site-type {
 	float: none;
 }
 
-.my-places-menu a:hover .site-type {
+.my-sites-menu a:hover .site-type {
 	color: #FFF;
 }
 
-.ie7 .my-places-menu a {
+.ie7 .my-sites-menu a {
 	overflow: visible;
 	text-align: left;
 }
 
-.ie7 .my-places-menu .site-name {
+.ie7 .my-sites-menu .site-name {
 	float: none;
 }
 
-.ie7 .my-places-menu .site-type {
+.ie7 .my-sites-menu .site-type {
 	float: none;
 }
 
-.ie6 .my-places-menu {
+.ie6 .my-sites-menu {
 	width: 200px;
 }
 
-.ie6 .my-places-menu a {
+.ie6 .my-sites-menu a {
 	height: 1%;
 }
 
@@ -368,7 +368,7 @@ html > .lfr-dockbar-pinned {
 	background-image: url(../images/dockbar/settings.png);
 }
 
-.dockbar .my-places .menu-button span {
+.dockbar .my-sites .menu-button span {
 	background-image: url(../images/dockbar/places.png);
 }
 

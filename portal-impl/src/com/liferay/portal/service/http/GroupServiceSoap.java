@@ -231,10 +231,10 @@ public class GroupServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.GroupSoap[] getUserPlaces()
+	public static com.liferay.portal.model.GroupSoap[] getUserSites()
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.model.Group> returnValue = GroupServiceUtil.getUserPlaces();
+			java.util.List<com.liferay.portal.model.Group> returnValue = GroupServiceUtil.getUserSites();
 
 			return com.liferay.portal.model.GroupSoap.toSoapModels(returnValue);
 		}

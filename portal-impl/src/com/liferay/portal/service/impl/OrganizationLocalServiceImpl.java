@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -68,11 +68,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The implementation of the organization local service.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Julio Camarero
  * @author Hugo Huijser
- * @author Juan Fernández
+ * @author Juan FernÃ¡ndez
  */
 public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {
@@ -440,12 +442,13 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns the primary key of the organization with the name.
+	 * Returns the organization with the name.
 	 *
 	 * @param  companyId the primary key of the organization's company
 	 * @param  name the organization's name
-	 * @return the primary key of the organization with the name, or
-	 *         <code>0</code> if the organization could not be found
+	 * @return the organization with the name
+	 * @throws PortalException if the organization with the name could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Organization getOrganization(long companyId, String name)
@@ -790,8 +793,8 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  organizationId the primary key of the organization
-	 * @return <code>true</code> if the organization is associated with the
-	 *         group; <code>false</code> otherwise
+	 * @return <code>true</code> if the organization belongs to the group;
+	 *         <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasGroupOrganization(long groupId, long organizationId)
@@ -806,8 +809,8 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  passwordPolicyId the primary key of the password policy
 	 * @param  organizationId the primary key of the organization
-	 * @return <code>true</code> if the password policy is assigned to the
-	 *         organization; <code>false</code> otherwise
+	 * @return <code>true</code> if the password policy has been assigned to
+	 *         the organization; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasPasswordPolicyOrganization(

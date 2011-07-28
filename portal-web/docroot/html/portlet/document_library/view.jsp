@@ -63,19 +63,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:layout cssClass="view">
 		<aui:column columnWidth="<%= 20 %>" cssClass="navigation-pane" first="<%= true %>">
-			<div class="lfr-header-row">
-				<div class="lfr-header-row-content" id="<portlet:namespace />parentFolderTitleContainer">
-					<div class="parent-folder-title" id="<portlet:namespace />parentFolderTitle"></div>
-				</div>
-			</div>
-
-			<div class="portlet-msg-error aui-helper-hidden" id="<portlet:namespace />errorContainer">
-				<liferay-ui:message key="your-request-failed-to-complete" />
-			</div>
-
-			<div class="body-row">
-				<div id="<portlet:namespace />folderContainer"></div>
-			</div>
+			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
 		</aui:column>
 
 		<aui:column columnWidth="<%= showFolderMenu ? 80 : 100 %>" cssClass="context-pane" last="<%= true %>">
@@ -109,7 +97,9 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
 
-				<div class="document-container" id="<portlet:namespace />documentContainer"></div>
+				<div class="document-container" id="<portlet:namespace />documentContainer">
+					<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
+				</div>
 
 				<div class="document-entries-paginator"></div>
 			</aui:form>
@@ -214,57 +204,468 @@ if (folder != null) {
 	<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
 </span>
 
-<aui:script use="aui-paginator,liferay-list-view">
-	<liferay-portlet:resourceURL varImpl="paginationURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
-		<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-		<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
-		<portlet:param name="showSiblings" value="<%= Boolean.TRUE.toString() %>" />
+<aui:script use="aui-paginator,liferay-list-view,liferay-history-manager">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL">
 	</liferay-portlet:resourceURL>
 
-	paginationURL = '<%= paginationURL %>';
+	var AObject = A.Object;
+
+	var EVENT_DATA_REQUEST = '<portlet:namespace />dataRequest';
+
+	var EVENT_DATA_RETRIEVE_SUCCESS = '<portlet:namespace />dataRetrieveSuccess';
+
+	var INVALID_VALUE = A.Attribute.INVALID_VALUE;
+
+	var owns = AObject.owns;
 
 	var Lang = A.Lang;
 
+	var DEFAULT_PARAMS = {
+		'<portlet:namespace />struts_action': '/document_library/view',
+		'<portlet:namespace />displayStyle': '<%= HtmlUtil.escapeJS(displayStyle) %>',
+		'<portlet:namespace />folderId': '<%= folderId %>',
+		'<portlet:namespace />showSiblings': <%= Boolean.TRUE.toString() %>,
+		'<portlet:namespace />viewBreadcrumb': <%= Boolean.TRUE.toString() %>,
+		'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
+		'<portlet:namespace />viewFolders': <%= Boolean.TRUE.toString() %>
+	};
+
+	var SRC_HISTORY = 0;
+
+	var entriesContainer = A.one('#<portlet:namespace />documentContainer');
+
+	var documentLibraryContainer = A.one('#<portlet:namespace />documentLibraryContainer');
+
+	var displayStyleToolbarNode = A.one('#<portlet:namespace />displayStyleToolbar');
+
+	var History = Liferay.HistoryManager;
+
+	var ioRequest;
+
+	function addHistoryState(data) {
+		var historyState = A.clone(data);
+
+		var currentHistoryState = History.get();
+
+		AObject.each(
+			currentHistoryState,
+			function(index, item, collection) {
+				if (!owns(historyState, item)) {
+					historyState[item] = null;
+				}
+			}
+		);
+
+		if (!AObject.isEmpty(historyState)) {
+			History.add(historyState);
+		}
+	}
+
+	function afterDataRequest(event) {
+		var requestParams = event.requestParams;
+
+		var data = {
+			'<portlet:namespace />folderId': '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
+			'<portlet:namespace />displayStyle': History.get('<portlet:namespace />displayStyle') || '<%= HtmlUtil.escape(displayStyle) %>',
+			'<portlet:namespace />viewFolders': <%= Boolean.TRUE.toString() %>
+		};
+
+		if (!AObject.isEmpty(requestParams)) {
+			A.mix(data, requestParams, true);
+		}
+
+		documentLibraryContainer.loadingmask.show();
+
+		if (event.src !== SRC_HISTORY) {
+			addHistoryState(data);
+		}
+
+		ioRequest = getIORequest();
+
+		ioRequest.set('data', data);
+
+		ioRequest.start();
+	}
+
+	function afterStateChange(event) {
+		var state = History.get();
+
+		var requestParams = {};
+
+		AObject.each(
+			state,
+			function(value, key, collection) {
+				if (key.indexOf('<portlet:namespace />') == 0) {
+					requestParams[key] = value;
+				}
+			}
+		);
+
+		if (!AObject.isEmpty(requestParams)) {
+			Liferay.fire(
+				EVENT_DATA_REQUEST,
+				{
+					requestParams: requestParams,
+					src: SRC_HISTORY
+				}
+			);
+		}
+	}
+
+
+	function afterListViewItemChange(event) {
+		var selFolder = A.one('.folder.selected');
+
+		if (selFolder) {
+			selFolder.removeClass('selected');
+		}
+
+		var item = event.newVal;
+
+		item.ancestor('.folder').addClass('selected');
+
+		var dataDirectionRight = item.attr('data-direction-right');
+		var dataFileEntryTypeId = item.attr('data-file-entry-type-id');
+		var dataFolderId = item.attr('data-folder-id');
+		var dataNavigation = item.attr('data-navigation');
+		var dataRefreshEntries = item.attr('data-refresh-entries');
+		var dataRefreshFolders = item.attr('data-refresh-folders');
+		var dataShowSiblings = item.attr('data-show-siblings');
+		var dataShowRootFolder = item.attr('data-show-root-folder');
+
+		var direction = 'left';
+
+		if (dataDirectionRight) {
+			direction = 'right';
+		}
+
+		listView.set('direction', direction);
+
+		var config = {
+			'<portlet:namespace />struts_action': '/document_library/view',
+			'<portlet:namespace />end': <%= SearchContainer.DEFAULT_DELTA %>,
+			'<portlet:namespace />start': 0,
+			'<portlet:namespace />refreshEntries': dataRefreshEntries,
+			'<portlet:namespace />viewAddButton': <%= Boolean.TRUE.toString() %>,
+			'<portlet:namespace />viewBreadcrumb': <%= Boolean.TRUE.toString() %>,
+			'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
+			'<portlet:namespace />viewFileEntrySearch': <%= Boolean.TRUE.toString() %>,
+		};
+
+		if (dataFolderId) {
+			config['<portlet:namespace />folderId'] = dataFolderId;
+		}
+
+		if (dataNavigation) {
+			config['<portlet:namespace />navigation'] = dataNavigation;
+		}
+
+		if (dataRefreshEntries) {
+			config['<portlet:namespace />viewEntries'] = dataRefreshEntries;
+		}
+
+		if (dataShowSiblings) {
+			config['<portlet:namespace />showSiblings'] = dataShowSiblings;
+		}
+
+		if (dataShowRootFolder) {
+			config['<portlet:namespace />showRootFolder'] = dataShowRootFolder;
+		}
+
+		if (dataFileEntryTypeId) {
+			config['<portlet:namespace />fileEntryTypeId'] = dataFileEntryTypeId;
+		}
+
+		if (dataRefreshFolders) {
+			config['<portlet:namespace />refreshFolders'] = dataRefreshFolders;
+		}
+
+		Liferay.fire(
+			EVENT_DATA_REQUEST,
+			{
+				requestParams: config
+			}
+		);
+	}
+
+	function getIORequest() {
+		if (!ioRequest) {
+			ioRequest = A.io.request(
+				'<%= mainURL %>',
+				{
+					autoLoad: false,
+					after: {
+						success: function(event, id, obj){
+							var instance = this;
+
+							sendIOResponse.call(instance, true);
+						},
+						failure: function(event, id, obj){
+							var instance = this;
+
+							sendIOResponse.call(instance, false);
+						}
+					}
+				}
+			);
+		}
+
+		return ioRequest;
+	}
+
+	function getResultsStartEnd(page, rowsPerPage) {
+		if (!Lang.isValue(page)) {
+			page = entryPaginator.get('page') - 1 || 0;
+		}
+
+		if (!Lang.isValue(rowsPerPage)) {
+			rowsPerPage = entryPaginator.get('rowsPerPage');
+		}
+
+		var start = page * rowsPerPage;
+		var end = start + rowsPerPage;
+
+		return [start, end];
+	}
+
+	function mainEntry() {
+		var initialState = History.get();
+
+		if (!AObject.isEmpty(initialState)) {
+			AObject.each(
+				initialState,
+				function(value, key, collection) {
+					if (key.indexOf('<portlet:namespace />') == 0) {
+						DEFAULT_PARAMS[key] = value;
+					}
+				}
+			);
+		}
+
+		Liferay.fire(
+			EVENT_DATA_REQUEST,
+			{
+				requestParams: DEFAULT_PARAMS
+			}
+		);
+	}
+
+	function onDataRetrieveSuccess(event) {
+		var responseData = event.responseData;
+
+		documentLibraryContainer.loadingmask.hide();
+
+		var content = A.Node.create(responseData);
+
+		if (content) {
+			setBreadcrumb(content);
+
+			setButtons(content);
+
+			setEntries(content);
+
+			setFileEntrySearch(content);
+
+			setFolders(content);
+
+			setParentFolderTitle(content);
+
+			syncDisplayStyleToolbar(content);
+
+			setSearchResults(content);
+		}
+	}
+
+	function setBreadcrumb(content) {
+		var breadcrumb = content.one('#<portlet:namespace />breadcrumb');
+
+		if (breadcrumb) {
+			var breadcrumbContainer = A.one('#<portlet:namespace />breadcrumbContainer');
+
+			breadcrumbContainer.setContent(breadcrumb);
+		}
+	}
+
+	function setButtons(content) {
+		var addButton = content.one('#<portlet:namespace />addButton');
+
+		if (addButton) {
+			var addButtonContainer = A.one('#<portlet:namespace />addButtonContainer');
+
+			addButtonContainer.plug(A.Plugin.ParseContent);
+			addButtonContainer.setContent(addButton);
+		}
+
+		var displayStyleButtons = content.one('#<portlet:namespace />displayStyleButtons');
+
+		if (displayStyleButtons) {
+			displayStyleToolbarNode.empty();
+
+			var displayStyleButtonsContainer = A.one('#<portlet:namespace />displayStyleButtonsContainer');
+
+			displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
+			displayStyleButtonsContainer.setContent(displayStyleButtons);
+		}
+
+		var sortButton = content.one('#<portlet:namespace />sortButton');
+
+		if (sortButton) {
+			var sortButtonContainer = A.one('#<portlet:namespace />sortButtonContainer');
+
+			sortButtonContainer.setContent(sortButton);
+		}
+	}
+
+	function setEntries(content) {
+		var entries = content.one('#<portlet:namespace />entries');
+
+		if (entries) {
+			entriesContainer.plug(A.Plugin.ParseContent);
+			entriesContainer.setContent(entries);
+		}
+	}
+
+	function setFileEntrySearch(content) {
+		var fileEntrySearch = content.one('#<portlet:namespace />fileEntrySearch');
+
+		if (fileEntrySearch) {
+			var fileEntrySearchContainer = A.one('#<portlet:namespace />fileEntrySearchContainer');
+
+			fileEntrySearchContainer.plug(A.Plugin.ParseContent);
+			fileEntrySearchContainer.setContent(fileEntrySearch);
+		}
+	}
+
+	function setFolders(content) {
+		var folders = content.one('#<portlet:namespace />folderContainer');
+
+		if (folders) {
+			var refreshFolders = folders.attr('data-refresh-folders');
+
+			if (refreshFolders) {
+				listView.set('data', folders);
+			}
+		}
+	}
+
+	function setParentFolderTitle(content) {
+		var parentFolderTitle = content.one('#<portlet:namespace />parentFolderTitle');
+
+		if (parentFolderTitle) {
+			var parentFolderTitleContainer = A.one('#<portlet:namespace />parentFolderTitleContainer');
+
+			parentFolderTitleContainer.setContent(parentFolderTitle);
+		}
+	}
+
+	function setSearchResults(content) {
+		var searchResults = content.one('#<portlet:namespace />searchResults');
+
+		if (searchResults) {
+			entriesContainer.plug(A.Plugin.ParseContent);
+			entriesContainer.setContent(searchResults);
+		}
+	}
+
+	function sendIOResponse(result) {
+		var instance = this;
+
+		var data = instance.get('data');
+		var reponseData = instance.get('responseData');
+
+		var event = result ? EVENT_DATA_RETRIEVE_SUCCESS : '<portlet:namespace />dataRetrieveFailure';
+
+		Liferay.fire(
+			event,
+			{
+				data: data,
+				responseData: reponseData
+			}
+		);
+	}
+
+
+	function syncDisplayStyleToolbar(content) {
+		var displayStyleToolbar = displayStyleToolbarNode.getData('displayStyleToolbar');
+
+		var displayStyle = History.get('<portlet:namespace />displayStyle') || 'icon';
+
+		displayStyleToolbar.item(0).StateInteraction.set('active', displayStyle === 'icon');
+		displayStyleToolbar.item(1).StateInteraction.set('active', displayStyle === 'descriptive');
+		displayStyleToolbar.item(2).StateInteraction.set('active', displayStyle === 'list');
+	}
+
+
+	function updatePaginatorValues(event) {
+		var requestParams = event.requestParams;
+
+		if (requestParams && !owns(requestParams, '<portlet:namespace />start') && !owns(requestParams, '<portlet:namespace />end')) {
+			var startEndParams = getResultsStartEnd();
+
+			A.mix(
+				requestParams,
+				{
+					'<portlet:namespace />start': startEndParams[0],
+					'<portlet:namespace />end': startEndParams[1]
+				},
+				true
+			)
+		}
+	}
+
 	var entryPaginator = new A.Paginator(
 		{
-			alwaysVisible: false,
 			circular: false,
 			containers: '.document-entries-paginator',
 			firstPageLinkLabel: '<<',
 			lastPageLinkLabel: '>>',
-			maxPageLinks: <%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES * 2 %>,
 			nextPageLinkLabel: '>',
-			page: <%= end / (end - start) %>,
 			prevPageLinkLabel: '<',
-			rowsPerPage: <%= end - start %>,
-			rowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			on: {
-				changeRequest: function(event) {
-					var state = event.state;
-
-					var before = state.before;
-
-					var page = state.page;
-					var rowsPerPage = state.rowsPerPage;
-
-					if (!before ||
-						((page != before.page) || (rowsPerPage != before.rowsPerPage))) {
-
-						loadEntriesData(page, rowsPerPage);
-					}
-				}
-			}
+			rowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			rowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>]
 		}
 	).render();
+
+	entryPaginator.on(
+		'changeRequest',
+		function(event) {
+			var state = event.state;
+
+			var startEndParams = getResultsStartEnd();
+
+			var requestParams = getIORequest().get('data');
+
+			A.mix(
+				requestParams,
+				{
+					'<portlet:namespace />start': startEndParams[0],
+					'<portlet:namespace />end': startEndParams[1],
+					'<portlet:namespace />refreshFolders': false
+				},
+				true
+			);
+
+			Liferay.fire(
+				EVENT_DATA_REQUEST,
+				{
+					requestParams: requestParams
+				}
+			);
+		}
+	);
+
+	Liferay.on(EVENT_DATA_REQUEST, updatePaginatorValues);
+
+	Liferay.on(EVENT_DATA_RETRIEVE_SUCCESS, onDataRetrieveSuccess);
 
 	Liferay.on(
 		'viewEntriesLoaded',
 		function(event) {
 			entryPaginator.setState(
 				{
-					total: event.total,
-					page: event.page
+					page: event.page,
+					rowsPerPage: event.rowsPerPage,
+					total: event.total
 				}
 			);
 
@@ -272,243 +673,54 @@ if (folder != null) {
 		}
 	);
 
-	function loadEntriesData(page, rowsPerPage) {
-		page = Lang.isValue(page) ? page : entryPaginator.get('page');
-		rowsPerPage = Lang.isValue(rowsPerPage) ? rowsPerPage : entryPaginator.get('rowsPerPage');
-
-		currentPage = (page || 1) - 1;
-
-		var start = currentPage * rowsPerPage;
-		var end = start + rowsPerPage;
-
-		var data = {
-			start : start,
-			end : end
-		};
-
-		var requestUrl = paginationURL;
-
-		var entriesContainer = A.one('#<portlet:namespace />documentContainer');
-
-		entriesContainer.plug(A.LoadingMask);
-
-		entriesContainer.loadingmask.toggle();
-
-		A.io.request(
-			requestUrl,
-			{
-				data: data,
-				on: {
-					success: function(event, id, obj) {
-						entriesContainer.unplug(A.LoadingMask);
-
-						var responseData = this.get('responseData');
-
-						var content = A.Node.create(responseData);
-
-						var folders = content.one('#<portlet:namespace />folderContainer');
-
-						var currentFolders = listView.get('data');
-
-						var currentFolderId = currentFolders && currentFolders.attr('data-folderId');
-
-						var folderId = folders && folders.attr('data-folderId');
-
-						if (folders && (folderId != currentFolderId)) {
-							listView.set('data', folders);
-						}
-
-						var entries = content.one('#<portlet:namespace />entries')
-
-						entriesContainer.plug(A.Plugin.ParseContent);
-						entriesContainer.setContent(entries);
-					}
-				}
-			}
-		);
-	}
+	Liferay.after(EVENT_DATA_REQUEST, afterDataRequest);
 
 	var listView = new Liferay.ListView(
 		{
-			itemAttributes: ['data-direction-right', 'data-refresh-entries', 'data-refresh-folders', 'data-resource-url'],
-			itemSelector: '.folder .browse-folder, .folder .expand-folder',
+			itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
 			srcNode: '#<portlet:namespace />folderContainer'
 		}
 	).render();
 
-	listView.on(
-		'itemChosen',
-		function(event) {
-			var item = event.item;
-			var attributes = event.attributes;
-
-			var dataDirectionRight = attributes['data-direction-right'];
-			var dataRefreshEntries = attributes['data-refresh-entries'];
-			var dataRefreshFolders = attributes['data-refresh-folders'];
-			var dataResourceUrl = attributes['data-resource-url'];
-
-			var entriesContainer = A.one('#<portlet:namespace />documentContainer');
-
-			entriesContainer.plug(A.LoadingMask);
-
-			entriesContainer.loadingmask.toggle();
-
-			A.io.request(
-				dataResourceUrl,
-				{
-					after: {
-						success: function(event, id, obj) {
-							entriesContainer.unplug(A.LoadingMask);
-
-							var selFolder = A.one('.folder.selected');
-
-							if (selFolder) {
-								selFolder.removeClass('selected');
-							}
-
-							var responseData = this.get('responseData');
-
-							var content = A.Node.create(responseData);
-
-							item.ancestor('.folder').addClass('selected');
-
-							var direction = 'left';
-
-							if (dataDirectionRight) {
-								direction = 'right';
-							}
-
-							listView.set('direction', direction);
-
-							if (dataRefreshEntries) {
-								var addButtonContainer = A.one('#<portlet:namespace />addButtonContainer');
-								var addButton = content.one('#<portlet:namespace />addButton')
-
-								addButtonContainer.plug(A.Plugin.ParseContent);
-								addButtonContainer.setContent(addButton);
-
-								A.one('#<portlet:namespace />displayStyleToolbar').empty();
-
-								var displayStyleButtonsContainer = A.one('#<portlet:namespace />displayStyleButtonsContainer');
-								var displayStyleButtons = content.one('#<portlet:namespace />displayStyleButtons');
-
-								displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
-								displayStyleButtonsContainer.setContent(displayStyleButtons);
-
-								var fileEntrySearchContainer = A.one('#<portlet:namespace />fileEntrySearchContainer');
-								var fileEntrySearch = content.one('#<portlet:namespace />fileEntrySearch');
-
-								fileEntrySearchContainer.plug(A.Plugin.ParseContent);
-								fileEntrySearchContainer.setContent(fileEntrySearch);
-
-								var parentFolderTitleContainer = A.one('#<portlet:namespace />parentFolderTitleContainer');
-								var parentFolderTitle = content.one('#<portlet:namespace />parentFolderTitle');
-
-								if (parentFolderTitle) {
-									parentFolderTitleContainer.setContent(parentFolderTitle);
-								}
-
-								var breadcrumbContainer = A.one('#<portlet:namespace />breadcrumbContainer');
-
-								var breadcrumb = content.one('#<portlet:namespace />breadcrumb');
-
-								breadcrumbContainer.setContent(breadcrumb);
-
-								var entries = content.one('#<portlet:namespace />entries');
-
-								entriesContainer.setContent(entries);
-							}
-
-							if (dataRefreshFolders) {
-								var foldersContent = content.one('#<portlet:namespace />folderContainer');
-
-								if (foldersContent) {
-									listView.set('data', foldersContent);
-								}
-							}
-						}
-					}
-				}
-			);
-		}
-	);
+	listView.after('itemChange', afterListViewItemChange);
 
 	A.one('#<portlet:namespace />documentLibraryContainer').delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			var requestUrl = event.currentTarget.attr('data-resource-url');
-
-			if (!requestUrl) {
-				requestUrl = event.currentTarget.attr('href');
-			}
-
-			var entriesContainer = A.one('#<portlet:namespace />documentContainer');
-
-			entriesContainer.plug(A.LoadingMask);
-
-			entriesContainer.loadingmask.toggle();
-
-			A.io.request(
-				requestUrl,
+			Liferay.fire(
+				EVENT_DATA_REQUEST,
 				{
-					after: {
-						success: function(event, id, obj) {
-							entriesContainer.unplug(A.LoadingMask);
-
-							var selFolder = A.one('.folder.selected');
-
-							if (selFolder) {
-								selFolder.removeClass('selected');
-							}
-
-							var responseData = this.get('responseData');
-
-							var content = A.Node.create(responseData);
-
-							var folders = content.one('#<portlet:namespace />folderContainer');
-
-							listView.set('data', folders);
-
-							var addButtonContainer = A.one('#<portlet:namespace />addButtonContainer');
-							var addButton = content.one('#<portlet:namespace />addButton');
-
-							addButtonContainer.plug(A.Plugin.ParseContent);
-							addButtonContainer.setContent(addButton);
-
-							A.one('#<portlet:namespace />displayStyleToolbar').empty();
-
-							var displayStyleButtonsContainer = A.one('#<portlet:namespace />displayStyleButtonsContainer');
-							var displayStyleButtons = content.one('#<portlet:namespace />displayStyleButtons');
-
-							displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
-							displayStyleButtonsContainer.setContent(displayStyleButtons);
-
-							var fileEntrySearchContainer = A.one('#<portlet:namespace />fileEntrySearchContainer');
-							var fileEntrySearch = content.one('#<portlet:namespace />fileEntrySearch');
-
-							fileEntrySearchContainer.plug(A.Plugin.ParseContent);
-							fileEntrySearchContainer.setContent(fileEntrySearch);
-
-							var parentFolderTitleContainer = A.one('#<portlet:namespace />parentFolderTitleContainer');
-							var parentFolderTitle = content.one('#<portlet:namespace />parentFolderTitle');
-
-							parentFolderTitleContainer.setContent(parentFolderTitle);
-
-							var breadcrumbContainer = A.one('#<portlet:namespace />breadcrumbContainer');
-							var breadcrumb = content.one('#<portlet:namespace />breadcrumb');
-
-							breadcrumbContainer.setContent(breadcrumb);
-
-							var entries = content.one('#<portlet:namespace />entries');
-
-							entriesContainer.setContent(entries);
-						}
+					requestParams: {
+						'<portlet:namespace />struts_action': '/document_library/view',
+						'<portlet:namespace />action': 'browseFolder',
+						'<portlet:namespace />end': entryPaginator.get('rowsPerPage'),
+						'<portlet:namespace />folderId': event.currentTarget.attr('data-folder-id'),
+						'<portlet:namespace />refreshFolders': event.currentTarget.attr('data-refresh-folders'),
+						'<portlet:namespace />showSiblings': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />start': 0,
+						'<portlet:namespace />viewAddButton': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewBreadcrumb': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewFileEntrySearch': <%= Boolean.TRUE.toString() %>
 					}
 				}
 			);
 		},
 		'a[data-folder=true], #<portlet:namespace />breadcrumbContainer a'
 	);
+
+	History.after('stateChange', afterStateChange);
+
+	documentLibraryContainer.plug(A.LoadingMask);
+
+	if (!History.HTML5) {
+		var state = History.get();
+
+		if (!AObject.isEmpty(state)) {
+			mainEntry();
+		}
+	}
 </aui:script>

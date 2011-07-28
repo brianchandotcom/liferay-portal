@@ -327,7 +327,9 @@ for (int i = 0; i < results.size(); i++) {
 					Map<String,Object> data = new HashMap<String,Object>();
 
 					data.put("folder", true);
+					data.put("folder-id", curFolder.getFolderId());
 					data.put("resource-url", viewEntriesURL);
+					data.put("refresh-folders", true);
 
 					TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
@@ -384,7 +386,7 @@ for (int i = 0; i < results.size(); i++) {
 		'viewEntriesLoaded',
 		{
 			page: <%= end / (end - start) %>,
-			paginationURL: '<%= paginationURL %>',
+			rowsPerPage: <%= (end - start) %>,
 			total: <%= total %>
 		}
 	);

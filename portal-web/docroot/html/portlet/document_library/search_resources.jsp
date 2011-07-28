@@ -52,9 +52,14 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
 }
+
+int start = ParamUtil.getInteger(request, "start");
+int end = ParamUtil.getInteger(request, "end", SearchContainer.DEFAULT_DELTA);
+
+int total = 0;
 %>
 
-<div id="<portlet:namespace />entries">
+<div id="<portlet:namespace />searchResults">
 	<div class="search-info">
 		<span class="keywords">
 			<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {keywords, folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-in-every-folder", keywords) %>
@@ -134,26 +139,18 @@ if (Validator.isNull(displayStyle)) {
 
 				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-				searchContext.setAttribute("paginationType", "more");
-				searchContext.setEnd(searchContainer.getEnd());
+				searchContext.setAttribute("paginationType", "regular");
+				searchContext.setEnd(end);
 				searchContext.setFolderIds(folderIdsArray);
 				searchContext.setKeywords(keywords);
-				searchContext.setStart(searchContainer.getStart());
+				searchContext.setStart(start);
 
 				results = indexer.search(searchContext);
 
-				int total = results.getLength();
+				total = results.getLength();
 
 				searchContainer.setTotal(total);
-				%>
 
-				<c:if test='<%= !displayStyle.equals("list") && (results.getLength() > 0) %>'>
-					<div class="taglib-search-iterator-page-iterator-top">
-						<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
-					</div>
-				</c:if>
-
-				<%
 				List resultRows = searchContainer.getResultRows();
 
 				for (int i = 0; i < results.getDocs().length; i++) {
@@ -263,11 +260,6 @@ if (Validator.isNull(displayStyle)) {
 			}
 			%>
 
-			<c:if test='<%= !displayStyle.equals("list") && (results.getLength() > 0) %>'>
-				<div class="taglib-search-iterator-page-iterator-top">
-					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
-				</div>
-			</c:if>
 		</aui:form>
 	</div>
 
@@ -281,96 +273,45 @@ if (Validator.isNull(displayStyle)) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
 	%>
 
-	<aui:script use="aui-base">
-		<portlet:resourceURL var="changeSearchFolder">
-			<portlet:param name="struts_action" value="/document_library/search" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			<portlet:param name="searchFolderId" value="<%= (folder != null) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
-			<portlet:param name="keywords" value="<%= keywords %>" />
-		</portlet:resourceURL>
+	<aui:script>
+		var EVENT_DATA_REQUEST = '<portlet:namespace />dataRequest';
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />changeSearchFolder',
-			function() {
+		var A = AUI();
 
-				var documentContainer = A.one('#<portlet:namespace />documentContainer');
-
-				documentContainer.plug(A.LoadingMask);
-
-				documentContainer.loadingmask.toggle();
-
-				A.io.request(
-					'<%= changeSearchFolder.toString() %>',
-					{
-						after: {
-							success: function(event, id, obj) {
-								documentContainer.unplug(A.LoadingMask);
-
-								var responseData = this.get('responseData');
-
-								var content = A.Node.create(responseData);
-
-								A.one('#<portlet:namespace />displayStyleToolbar').empty();
-
-								var displayStyleButtonsContainer = A.one('#<portlet:namespace />displayStyleButtonsContainer');
-								var displayStyleButtons = content.one('#<portlet:namespace />displayStyleButtons');
-
-								displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
-								displayStyleButtonsContainer.setContent(displayStyleButtons);
-
-								var entries = content.one('#<portlet:namespace />entries');
-
-								documentContainer.setContent(entries);
-							}
-						}
-					}
-				);
-			},
-			['aui-base,aui-io']
+		Liferay.fire(
+			'viewEntriesLoaded',
+			{
+				page: <%= end / (end - start) %>,
+				rowsPerPage:  <%= (end - start) %>,
+				total: <%= total %>
+			}
 		);
-	</aui:script>
 
-	<aui:script use="aui-io">
-		<portlet:resourceURL var="closeSearch">
-			<portlet:param name="struts_action" value="/document_library/view" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
-			<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:resourceURL>
+		function <portlet:namespace />changeSearchFolder() {
+			Liferay.fire(
+				EVENT_DATA_REQUEST,
+				{
+					requestParams: {
+						'<portlet:namespace />struts_action': '/document_library/search',
+						'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
+						'<portlet:namespace />searchFolderId': '<%= (folder != null) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>',
+						'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value
+					}
+				}
+			);
+		}
 
 		A.one('#<portlet:namespace />closeSearch').on(
 			'click',
 			function(event) {
-				var documentContainer = A.one('#<portlet:namespace />documentContainer');
-
-				documentContainer.plug(A.LoadingMask);
-
-				documentContainer.loadingmask.toggle();
-
-				A.io.request(
-					'<%= closeSearch.toString() %>',
+				Liferay.fire(
+					EVENT_DATA_REQUEST,
 					{
-						after: {
-							success: function(event, id, obj) {
-								documentContainer.unplug(A.LoadingMask);
-
-								var responseData = this.get('responseData');
-
-								var content = A.Node.create(responseData);
-
-								A.one('#<portlet:namespace />displayStyleToolbar').empty();
-
-								var displayStyleButtonsContainer = A.one('#<portlet:namespace />displayStyleButtonsContainer');
-								var displayStyleButtons = content.one('#<portlet:namespace />displayStyleButtons');
-
-								displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
-								displayStyleButtonsContainer.setContent(displayStyleButtons);
-
-								var entries = content.one('#<portlet:namespace />entries');
-
-								documentContainer.setContent(entries);
-							}
+						requestParams: {
+							'<portlet:namespace />struts_action': '/document_library/view',
+							'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
+							'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
+							'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
 						}
 					}
 				);

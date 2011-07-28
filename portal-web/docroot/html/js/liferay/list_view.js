@@ -39,7 +39,12 @@ AUI().add(
 						value: STR_LEFT
 					},
 
-					itemChosen: {
+					item: {
+						validator: Lang.isObject,
+						value: null
+					},
+
+					itemChosenEvent: {
 						validator: isString,
 						value: 'click'
 					},
@@ -47,12 +52,6 @@ AUI().add(
 					itemSelector: {
 						validator: isString,
 						value: null
-					},
-
-					itemAttributes: {
-						setter: A.Array,
-						validator: '_validateItemAttributes',
-						value: 'href'
 					},
 
 					transitionConfig: {
@@ -78,6 +77,13 @@ AUI().add(
 						var instance = this;
 
 						instance._transitionCompleteProxy = A.bind(instance._onTransitionCompleted, instance);
+
+						instance.publish(
+							EVENT_ITEM_CHOSEN,
+							{
+								defaultFn: instance._defaultItemChosen
+							}
+						);
 					},
 
 					renderUI: function() {
@@ -97,10 +103,10 @@ AUI().add(
 
 						var contentBox = instance.get(CONTENT_BOX);
 
-						var itemChosenEvent = instance.get(EVENT_ITEM_CHOSEN);
+						var itemChosenEvent = instance.get('itemChosenEvent');
 						var itemSelector = instance.get('itemSelector');
 
-						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosen, itemSelector, instance);
+						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosenEvent, itemSelector, instance);
 
 						instance.after('dataChange', instance._afterDataChange);
 					},
@@ -134,6 +140,10 @@ AUI().add(
 						}
 					},
 
+					_defaultItemChosen: function(event) {
+						this.set('item', event.details[0]);
+					},
+
 					_moveContainer: function() {
 						var instance = this;
 
@@ -152,35 +162,12 @@ AUI().add(
 						dataContainer.transition(transitionConfig, instance._transitionCompleteProxy);
 					},
 
-					_onItemChosen: function(event) {
+					_onItemChosenEvent: function(event) {
 						var instance = this;
 
-						var itemAttributes = instance.get('itemAttributes');
+						event.preventDefault();
 
-						if (itemAttributes) {
-							event.preventDefault();
-
-							var attributesData = {};
-
-							var target = event.currentTarget;
-
-							A.Array.each(
-								itemAttributes,
-								function(item, index, collection) {
-									var attributeData = target.getAttribute(item);
-
-									attributesData[item] = attributeData;
-								}
-							);
-
-							instance.fire(
-								EVENT_ITEM_CHOSEN,
-								{
-									item: target,
-									attributes: attributesData
-								}
-							);
-						}
+						instance.fire(EVENT_ITEM_CHOSEN, event.currentTarget);
 					},
 
 					_onTransitionCompleted: function() {
@@ -244,10 +231,6 @@ AUI().add(
 					_validateDirection: function(value) {
 						return value === STR_BOTTOM || value === STR_LEFT ||
 							value === STR_RIGHT || value === STR_TOP;
-					},
-
-					_validateItemAttributes: function(value) {
-						return isString(value) || Lang.isArray(value);
 					}
 				}
 			}

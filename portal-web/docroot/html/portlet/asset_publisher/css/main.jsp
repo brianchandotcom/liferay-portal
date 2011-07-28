@@ -206,6 +206,15 @@
 	.taglib-asset-tags-summary {
 		float: left;
 	}
+	
+	.taglib-social-bookmarks {
+		clear: both;
+		margin-top: 1.5em;
+
+		ul {
+			padding: 1em;
+		}
+	}
 
 	.title-list {
 		.asset-actions {
@@ -307,4 +316,8 @@
 			height: 1%;
 		}
 	}
+}
+
+.social-boomarks-options {
+	margin-left: 2em;
 }

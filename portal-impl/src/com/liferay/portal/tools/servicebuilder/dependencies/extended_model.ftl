@@ -1,5 +1,6 @@
 package ${packagePath}.model;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -65,6 +66,26 @@ public interface ${entity.name} extends
 			</#list>
 
 			;
+		</#if>
+	</#list>
+
+	<#if entity.hasUuidAccessor()>
+		public static final Accessor<${entity.name}, String> UUID_ACCESSOR =
+				new Accessor<${entity.name}, String>() {
+					public String get(${entity.name} ${entity.varName}) {
+						return ${entity.varName}.getUuid();
+					}
+				};
+	</#if>
+
+	<#list entity.columnList as column>
+		<#if column.isAccessor()>
+			public static final Accessor<${entity.name}, ${column.typeAutoBoxing}> ${column.name?upper_case}_ACCESSOR =
+				new Accessor<${entity.name}, ${column.typeAutoBoxing}>() {
+					public ${column.typeAutoBoxing} get(${entity.name} ${entity.varName}) {
+						return ${entity.varName}.get${column.methodName}();
+					}
+				};
 		</#if>
 	</#list>
 

@@ -851,7 +851,7 @@ public class ServiceBuilder {
 			if (pos == -1) {
 				throw new RuntimeException(
 					"Cannot find " + name + " in " +
-						ListUtil.toString(_ejbList, "name"));
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
 			entity = _ejbList.get(pos);
@@ -4349,6 +4349,8 @@ public class ServiceBuilder {
 
 		boolean uuid = GetterUtil.getBoolean(
 			entityElement.attributeValue("uuid"));
+		boolean uuidAccessor = GetterUtil.getBoolean(
+			entityElement.attributeValue("uuid-accessor"));
 		boolean localService = GetterUtil.getBoolean(
 			entityElement.attributeValue("local-service"));
 		boolean remoteService = GetterUtil.getBoolean(
@@ -4411,6 +4413,8 @@ public class ServiceBuilder {
 			String columnType = columnElement.attributeValue("type");
 			boolean primary = GetterUtil.getBoolean(
 				columnElement.attributeValue("primary"));
+			boolean accessor = GetterUtil.getBoolean(
+				columnElement.attributeValue("accessor"));
 			boolean filterPrimary = GetterUtil.getBoolean(
 				columnElement.attributeValue("filter-primary"));
 			String collectionEntity = columnElement.attributeValue("entity");
@@ -4441,9 +4445,9 @@ public class ServiceBuilder {
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
 
 			EntityColumn col = new EntityColumn(
-				columnName, columnDBName, columnType, primary, filterPrimary,
-				collectionEntity, mappingKey, mappingTable, idType, idParam,
-				convertNull, lazy, localized, colJsonEnabled);
+				columnName, columnDBName, columnType, primary, accessor,
+				filterPrimary, collectionEntity, mappingKey, mappingTable,
+				idType, idParam, convertNull, lazy, localized, colJsonEnabled);
 
 			if (primary) {
 				pkList.add(col);
@@ -4693,11 +4697,11 @@ public class ServiceBuilder {
 		_ejbList.add(
 			new Entity(
 				_packagePath, _portletName, _portletShortName, ejbName,
-				humanName, table, alias, uuid, localService, remoteService,
-				persistenceClass, finderClass, dataSource, sessionFactory,
-				txManager, cacheEnabled, jsonEnabled, pkList, regularColList,
-				blobList, collectionList, columnList, order, finderList,
-				referenceList, txRequiredList));
+				humanName, table, alias, uuid, uuidAccessor, localService,
+				remoteService, persistenceClass, finderClass, dataSource,
+				sessionFactory, txManager, cacheEnabled, jsonEnabled, pkList,
+				regularColList, blobList, collectionList, columnList, order,
+				finderList, referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name) throws Exception {

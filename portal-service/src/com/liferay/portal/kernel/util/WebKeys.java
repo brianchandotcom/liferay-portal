@@ -97,6 +97,8 @@ public interface WebKeys {
 
 	public static final String RENDER_PORTLET_RESOURCE = "RENDER_PORTLET_RESOURCE";
 
+	public static final String RUNTIME_PORTLET_IDS = "RUNTIME_PORTLET_IDS";
+
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
 
 	public static final String SEARCH_CONTAINER_RESULT_ROW = "SEARCH_CONTAINER_RESULT_ROW";

@@ -1,0 +1,129 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Set<String> runtimePortletIds = (Set<String>)request.getAttribute(WebKeys.RUNTIME_PORTLET_IDS);
+
+List<Portlet> runtimePortlets = new ArrayList<Portlet>();
+
+if (runtimePortletIds != null) {
+	Iterator<String> runtimePortletIdsItr = runtimePortletIds.iterator();
+
+	while (runtimePortletIdsItr.hasNext()) {
+		String runtimePortletId = runtimePortletIdsItr.next();
+
+		String runtimeRootPortletId = PortletConstants.getRootPortletId(runtimePortletId);
+
+		runtimePortlets.add(PortletLocalServiceUtil.getPortletById(runtimeRootPortletId));
+	}
+}
+%>
+
+<c:if test="<%= !runtimePortlets.isEmpty() %>">
+
+	<%-- Runtime Portlet CSS References --%>
+
+	<%
+	Set<String> headerPortalCssSet = new LinkedHashSet<String>();
+
+	for (Portlet portlet : runtimePortlets) {
+		for (String headerPortalCss : portlet.getHeaderPortalCss()) {
+			if (!HttpUtil.hasProtocol(headerPortalCss)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, rootPortlet.getTimestamp());
+			}
+
+			if (!headerPortalCssSet.contains(headerPortalCss)) {
+				headerPortalCssSet.add(headerPortalCss);
+	%>
+
+				<link href="<%= HtmlUtil.escape(headerPortalCss) %>" rel="stylesheet" type="text/css" />
+
+	<%
+			}
+		}
+	}
+
+	Set<String> headerPortletCssSet = new LinkedHashSet<String>();
+
+	for (Portlet portlet : runtimePortlets) {
+		for (String headerPortletCss : portlet.getHeaderPortletCss()) {
+			if (!HttpUtil.hasProtocol(headerPortletCss)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				headerPortletCss = PortalUtil.getStaticResourceURL(request, portlet.getStaticResourcePath() + headerPortletCss, rootPortlet.getTimestamp());
+			}
+
+			if (!headerPortletCssSet.contains(headerPortletCss)) {
+				headerPortletCssSet.add(headerPortletCss);
+	%>
+
+				<link href="<%= HtmlUtil.escape(headerPortletCss) %>" rel="stylesheet" type="text/css" />
+
+	<%
+			}
+		}
+	}
+	%>
+
+	<%-- Portlet JavaScript References --%>
+
+	<%
+	Set<String> headerPortalJavaScriptSet = new LinkedHashSet<String>();
+
+	for (Portlet portlet : runtimePortlets) {
+		for (String headerPortalJavaScript : portlet.getHeaderPortalJavaScript()) {
+			if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				headerPortalJavaScript = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalJavaScript, rootPortlet.getTimestamp());
+			}
+
+			if (!headerPortalJavaScriptSet.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
+				headerPortalJavaScriptSet.add(headerPortalJavaScript);
+	%>
+
+				<script src="<%= HtmlUtil.escape(headerPortalJavaScript) %>" type="text/javascript"></script>
+
+	<%
+			}
+		}
+	}
+
+	Set<String> headerPortletJavaScriptSet = new LinkedHashSet<String>();
+
+	for (Portlet portlet : runtimePortlets) {
+		for (String headerPortletJavaScript : portlet.getHeaderPortletJavaScript()) {
+			if (!HttpUtil.hasProtocol(headerPortletJavaScript)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				headerPortletJavaScript = PortalUtil.getStaticResourceURL(request, portlet.getStaticResourcePath() + headerPortletJavaScript, rootPortlet.getTimestamp());
+			}
+
+			if (!headerPortletJavaScriptSet.contains(headerPortletJavaScript)) {
+				headerPortletJavaScriptSet.add(headerPortletJavaScript);
+	%>
+
+				<script src="<%= HtmlUtil.escape(headerPortletJavaScript) %>" type="text/javascript"></script>
+
+	<%
+			}
+		}
+	}
+	%>
+
+</c:if>

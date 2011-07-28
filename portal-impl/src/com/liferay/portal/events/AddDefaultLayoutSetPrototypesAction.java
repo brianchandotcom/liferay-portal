@@ -108,8 +108,11 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
+		ServiceContext serviceContext = new ServiceContext();
+
 		LayoutLocalServiceUtil.deleteLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			serviceContext);
 
 		return layoutSetPrototype.getLayoutSet();
 	}

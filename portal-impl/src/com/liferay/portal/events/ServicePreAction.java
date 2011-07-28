@@ -393,7 +393,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), true);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), true, serviceContext);
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
@@ -401,7 +404,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), false);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), false, serviceContext);
 	}
 
 	protected Object[] getDefaultLayout(

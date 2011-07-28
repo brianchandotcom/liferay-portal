@@ -16,7 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.staging.LayoutStagingUtil" %>
 <%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%@ page import="com.liferay.portal.LayoutSetBranchNameException" %>
 <%@ page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %>

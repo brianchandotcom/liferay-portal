@@ -67,17 +67,19 @@ public class LayoutServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteLayout(long plid)
+	public static void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayout(plid);
+		getService().deleteLayout(plid, serviceContext);
 	}
 
 	public static void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId)
+		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteLayout(groupId, privateLayout, layoutId);
+		getService()
+			.deleteLayout(groupId, privateLayout, layoutId, serviceContext);
 	}
 
 	public static byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -240,11 +242,13 @@ public class LayoutServiceUtil {
 	}
 
 	public static void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds)
+		long parentLayoutId, long[] layoutIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
-			.setLayouts(groupId, privateLayout, parentLayoutId, layoutIds);
+			.setLayouts(groupId, privateLayout, parentLayoutId, layoutIds,
+			serviceContext);
 	}
 
 	public static void unschedulePublishToLive(long groupId,

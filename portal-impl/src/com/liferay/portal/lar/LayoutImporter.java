@@ -192,6 +192,9 @@ public class LayoutImporter {
 			stopWatch.start();
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		LayoutCache layoutCache = new LayoutCache();
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -276,9 +279,6 @@ public class LayoutImporter {
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			if (layoutSetPrototypeInherited) {
 				if (publishToRemote) {
-					ServiceContext serviceContext =
-						ServiceContextThreadLocal.getServiceContext();
-
 					importLayoutSetPrototype(
 						portletDataContext, user, layoutSetPrototypeUuid,
 						serviceContext);
@@ -517,7 +517,8 @@ public class LayoutImporter {
 
 		if (deleteMissingLayouts) {
 			deleteMissingLayouts(
-				groupId, privateLayout, newLayoutIds, previousLayouts);
+				groupId, privateLayout, newLayoutIds, previousLayouts,
+				serviceContext);
 		}
 
 		// Page count
@@ -580,7 +581,7 @@ public class LayoutImporter {
 
 	protected void deleteMissingLayouts(
 			long groupId, boolean privateLayout, Set<Long> newLayoutIds,
-			List<Layout> previousLayouts)
+			List<Layout> previousLayouts, ServiceContext serviceContext)
 		throws Exception {
 
 		// Layouts
@@ -594,7 +595,8 @@ public class LayoutImporter {
 		for (Layout layout : previousLayouts) {
 			if (!newLayoutIds.contains(layout.getLayoutId())) {
 				try {
-					LayoutLocalServiceUtil.deleteLayout(layout, false);
+					LayoutLocalServiceUtil.deleteLayout(
+						layout, false, serviceContext);
 				}
 				catch (NoSuchLayoutException nsle) {
 				}

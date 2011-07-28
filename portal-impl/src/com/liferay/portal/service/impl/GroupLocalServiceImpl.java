@@ -386,14 +386,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Layout sets
 
+		ServiceContext serviceContext = new ServiceContext();
+
 		try {
-			layoutSetLocalService.deleteLayoutSet(group.getGroupId(), true);
+			layoutSetLocalService.deleteLayoutSet(
+				group.getGroupId(), true, serviceContext);
 		}
 		catch (NoSuchLayoutSetException nslse) {
 		}
 
 		try {
-			layoutSetLocalService.deleteLayoutSet(group.getGroupId(), false);
+			layoutSetLocalService.deleteLayoutSet(
+				group.getGroupId(), false, serviceContext);
 		}
 		catch (NoSuchLayoutSetException nslse) {
 		}

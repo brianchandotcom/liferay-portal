@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.manage-layout-set-branches-tab, .manage-page-variations {
-		margin-left: 1em;
-	}
-
 	.staging-tabview-list {
 		border-color: #555;
 		border-width: 0 0 1px;

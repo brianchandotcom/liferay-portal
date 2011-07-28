@@ -237,6 +237,12 @@ public class DLFileEntryLocalServiceImpl
 
 		boolean hasLock = hasFileEntryLock(userId, fileEntryId);
 
+		boolean isCheckedOut = isFileEntryCheckedOut(fileEntryId);
+
+		if (!isCheckedOut) {
+			return;
+		}
+
 		if (!hasLock) {
 			lockFileEntry(userId, fileEntryId);
 		}

@@ -41,6 +41,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
+ * The implementation of the organization remote service.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Julio Camarero
@@ -503,6 +505,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	/**
 	 * Updates the organization with additional parameters.
 	 *
+	 * @param  organizationId the primary key of the organization
 	 * @param  parentOrganizationId the primary key of the organization's parent
 	 *         organization
 	 * @param  name the organization's name

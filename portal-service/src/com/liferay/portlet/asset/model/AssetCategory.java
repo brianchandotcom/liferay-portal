@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -41,4 +42,22 @@ public interface AssetCategory extends AssetCategoryModel, PersistedModel {
 		boolean useDefault);
 
 	public boolean isRootCategory();
+
+	public static final Accessor<AssetCategory, String> UUID_ACCESSOR = new Accessor<AssetCategory, String>() {
+			public String get(AssetCategory assetCategory) {
+				return assetCategory.getUuid();
+			}
+		};
+
+	public static final Accessor<AssetCategory, Long> CATEGORYID_ACCESSOR = new Accessor<AssetCategory, Long>() {
+			public Long get(AssetCategory assetCategory) {
+				return assetCategory.getCategoryId();
+			}
+		};
+
+	public static final Accessor<AssetCategory, String> NAME_ACCESSOR = new Accessor<AssetCategory, String>() {
+			public String get(AssetCategory assetCategory) {
+				return assetCategory.getName();
+			}
+		};
 }

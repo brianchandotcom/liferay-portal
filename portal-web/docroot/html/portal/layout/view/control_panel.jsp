@@ -19,6 +19,14 @@
 <%
 String ppid = ParamUtil.getString(request, "p_p_id");
 
+String controlPanelCategory = themeDisplay.getControlPanelCategory();
+
+if (PortletCategoryKeys.CONTENT.equals(controlPanelCategory) && Validator.isNull(ppid)) {
+	List<Portlet> siteContentPortlets =	PortalUtil.getControlPanelPortlets(PortletCategoryKeys.CONTENT, themeDisplay);
+
+	ppid = PortletPermissionUtil.firstContains(themeDisplay.getPermissionChecker(), scopeGroupId, plid, siteContentPortlets, ActionKeys.VIEW);
+}
+
 if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	String portletResource = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "portletResource");
 

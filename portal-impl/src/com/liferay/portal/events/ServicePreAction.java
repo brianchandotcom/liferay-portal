@@ -1683,8 +1683,6 @@ public class ServicePreAction extends Action {
 		String siteContentURL = urlControlPanel;
 
 		siteContentURL = HttpUtil.addParameter(
-			siteContentURL, "p_p_id", PortletKeys.RECENT_CONTENT);
-		siteContentURL = HttpUtil.addParameter(
 			siteContentURL, "controlPanelCategory",
 			PortletCategoryKeys.CONTENT);
 

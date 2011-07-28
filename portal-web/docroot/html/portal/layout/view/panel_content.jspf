@@ -15,7 +15,7 @@
 --%>
 
 <%
-if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax())) {
+if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax() || Validator.isNotNull(controlPanelCategory))) {
 	String velocityTemplateId = null;
 
 	String content = null;
@@ -30,7 +30,7 @@ if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp
 
 		content = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
 	}
-	else {
+	else if (layoutTypePortlet.hasStateMax()) {
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
 		PortletURL portletURL = new PortletURLImpl(request, ppid, plid, PortletRequest.ACTION_PHASE);
@@ -45,6 +45,21 @@ if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp
 		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
 
 		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
+	}
+	else {
+		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
+
+		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
+
+		Set<String> runtimePortletIds = (Set<String>)request.getAttribute(WebKeys.RUNTIME_PORTLET_IDS);
+
+		if (runtimePortletIds == null) {
+			runtimePortletIds = new HashSet<String>();
+		}
+
+		runtimePortletIds.add(ppid);
+
+		request.setAttribute(WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
 	}
 
 	RuntimePortletUtil.processTemplate(application, request, response, pageContext, out, ppid, velocityTemplateId, content);

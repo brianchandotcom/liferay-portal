@@ -432,6 +432,23 @@ public class PortletPermissionImpl implements PortletPermission {
 		return contains(permissionChecker, 0, portletId, actionId);
 	}
 
+	public String firstContains(
+			PermissionChecker permissionChecker, long groupId, long plid,
+			Collection<Portlet> portlets, String actionId)
+		throws PortalException, SystemException {
+
+		for (Portlet portlet : portlets) {
+			if (contains(
+					permissionChecker, groupId, 0, portlet.getPortletId(),
+					ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+
+				return portlet.getPortletId();
+			}
+		}
+
+		return null;
+	}
+
 	public String getPrimaryKey(long plid, String portletId) {
 		return String.valueOf(plid).concat(
 			PortletConstants.LAYOUT_SEPARATOR).concat(portletId);

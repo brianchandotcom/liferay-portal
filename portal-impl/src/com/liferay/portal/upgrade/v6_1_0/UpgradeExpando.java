@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 
@@ -32,8 +33,111 @@ public class UpgradeExpando extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateDefaultData();
 		updateTypeSettingsIndexable();
 		updateTypeSettingsSelection();
+	}
+
+	protected void updateDefaultData() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select columnId, defaultData from ExpandoColumn " +
+					"where type_ = " + ExpandoColumnConstants.STRING_ARRAY);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long columnId = rs.getLong("columnId");
+				String defaultData = rs.getString("defaultData");
+
+				defaultData = StringUtil.replace(defaultData, "\\", "\\\\");
+
+				updateDefaultData(columnId, defaultData);
+
+				updateExpandoValue(columnId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateDefaultData(long columnId, String defaultData)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update ExpandoColumn set defaultData = ? where columnId = ?");
+
+			ps.setString(1, defaultData);
+			ps.setLong(2, columnId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateExpandoValue(long columnId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select data_, valueId from ExpandoValue where columnId = "
+					+ columnId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long valueId = rs.getLong("valueId");
+				String data = rs.getString("data_");
+
+				data = StringUtil.replace(data, "\\", "\\\\");
+
+				updateExpandoValue(valueId, data);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateExpandoValue(long valueId, String data)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update ExpandoValue set data_ = ? where valueId = ?");
+
+			ps.setString(1, data);
+			ps.setLong(2, valueId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
 	protected void updateTypeSettings(long columnId, String typeSettings)

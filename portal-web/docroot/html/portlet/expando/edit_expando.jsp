@@ -73,8 +73,6 @@ portletURL.setParameter("modelResource", modelResource);
 	<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 
-	<aui:model-context bean="<%= column %>" model="<%= ExpandoColumn.class %>" />
-
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= column != null %>">

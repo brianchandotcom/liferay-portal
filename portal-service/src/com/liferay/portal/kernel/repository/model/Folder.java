@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Date;
@@ -82,5 +83,12 @@ public interface Folder extends RepositoryModel<Folder> {
 	public boolean isSupportsShortcuts();
 
 	public boolean isSupportsSocial();
+
+	public static final Accessor<Folder, Long> FOLDERID_ACCESSOR =
+		new Accessor<Folder, Long>() {
+			public Long get(Folder folder) {
+				return folder.getFolderId();
+			}
+		};
 
 }

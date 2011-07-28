@@ -544,7 +544,8 @@ public class LayoutImporter {
 			if (Validator.isNotNull(articleId)) {
 				Map<String, String> articleIds =
 					(Map<String, String>)portletDataContext.
-						getNewPrimaryKeysMap(JournalArticle.class);
+						getNewPrimaryKeysMap(
+							JournalArticle.class + ".articleId");
 
 				typeSettingsProperties.setProperty(
 					"article-id",

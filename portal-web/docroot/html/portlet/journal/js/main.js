@@ -1239,6 +1239,7 @@ AUI().add(
 				Liferay.Util.openWindow(
 					{
 						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							stack: false,
 							width: 680
 						},

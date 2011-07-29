@@ -44,7 +44,7 @@ if ((runtimePortletIds != null) && !runtimePortletIds.isEmpty()) {
 		}
 	}
 
-	runtimePortlets = portlets;
+	portlets = runtimePortlets;
 %>
 
 	<%-- Portlet CSS References --%>

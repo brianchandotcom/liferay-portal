@@ -1180,6 +1180,84 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	public List<MBMessage> getUserDiscussionMessages(
+			long userId, long classNameId, long classPK, int status, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.findByU_C_C(
+				userId, classNameId, classPK, start, end, obc);
+		}
+		else {
+			return mbMessagePersistence.findByU_C_C_S(
+				userId, classNameId, classPK, status, start, end, obc);
+		}
+	}
+
+	public List<MBMessage> getUserDiscussionMessages(
+			long userId, long[] classNameIds, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.findByU_C(
+				userId, classNameIds, start, end, obc);
+		}
+		else {
+			return mbMessagePersistence.findByU_C_S(
+				userId, classNameIds, status, start, end, obc);
+		}
+	}
+
+	public List<MBMessage> getUserDiscussionMessages(
+			long userId, String className, long classPK, int status, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return getUserDiscussionMessages(
+			userId, classNameId, classPK, status, start, end, obc);
+	}
+
+	public int getUserDiscussionMessagesCount(
+			long userId, long classNameId, long classPK, int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.countByU_C_C(
+				userId, classNameId, classPK);
+		}
+		else {
+			return mbMessagePersistence.countByU_C_C_S(
+				userId, classNameId, classPK, status);
+		}
+	}
+
+	public int getUserDiscussionMessagesCount(
+			long userId, long[] classNameIds, int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.countByU_C(userId, classNameIds);
+		}
+		else {
+			return mbMessagePersistence.countByU_C_S(
+				userId, classNameIds, status);
+		}
+	}
+
+	public int getUserDiscussionMessagesCount(
+			long userId, String className, long classPK, int status)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return getUserDiscussionMessagesCount(
+			userId, classNameId, classPK, status);
+	}
+
 	public void subscribeMessage(long userId, long messageId)
 		throws PortalException, SystemException {
 

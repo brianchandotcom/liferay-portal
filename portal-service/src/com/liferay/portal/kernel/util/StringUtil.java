@@ -273,14 +273,11 @@ public class StringUtil {
 			return s;
 		}
 
-		StringBundler sb = null;
-
 		if (queryTerms.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * queryTerms.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
 
 		for (int i = 0; i < queryTerms.length; i++) {
 			sb.append(Pattern.quote(queryTerms[i].trim()));
@@ -356,14 +353,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -397,14 +391,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -426,14 +417,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -455,14 +443,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -484,14 +469,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -513,14 +495,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -542,14 +521,11 @@ public class StringUtil {
 			return null;
 		}
 
-		StringBundler sb = null;
-
 		if (array.length == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * array.length - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			sb.append(String.valueOf(array[i]).trim());
@@ -1700,14 +1676,11 @@ public class StringUtil {
 
 		StringTokenizer st = new StringTokenizer(s);
 
-		StringBundler sb = null;
-
 		if (st.countTokens() == 0) {
-			sb = new StringBundler();
+			return StringPool.BLANK;
 		}
-		else {
-			sb = new StringBundler(2 * st.countTokens() - 1);
-		}
+
+		StringBundler sb = new StringBundler(2 * st.countTokens() - 1);
 
 		while (st.hasMoreTokens()) {
 			String token = st.nextToken();

@@ -69,11 +69,7 @@ String[][] categorySections = {mainSections};
 	<div class="lfr-header-row-content">
 		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 
-		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutToolbar" %>'>
-			<c:if test="<%= stagingGroupId > 0 %>">
-				<liferay-ui:staging groupId="<%= groupId %>" privateLayout="<%= privateLayout %>" selPlid="<%= selPlid %>" showManageBranches="<%= true %>" />
-			</c:if>
-		</aui:button-row>
+		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutToolbar" %>' />
 	</div>
 </div>
 

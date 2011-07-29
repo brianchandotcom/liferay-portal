@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -37,11 +39,19 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
@@ -52,6 +62,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -68,6 +79,37 @@ public class DLStoreIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	protected void addFileEntryTypeAttributes(
+			Document document, DLFileVersion dlFileVersion)
+		throws PortalException, SystemException {
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				dlFileVersion.getFileEntryTypeId());
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Fields fields = null;
+
+			try {
+				DLFileEntryMetadata fileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
+
+				fields = StorageEngineUtil.getFields(
+					fileEntryMetadata.getDDMStorageId());
+			}
+			catch (Exception e) {
+			}
+
+			if (fields != null) {
+				DDMIndexerUtil.addAttributes(document, ddmStructure, fields);
+			}
+		}
 	}
 
 	@Override
@@ -91,18 +133,18 @@ public class DLStoreIndexer extends BaseIndexer {
 		long folderId = DLFolderConstants.getFolderId(
 			fileModel.getGroupId(), fileModel.getRepositoryId());
 
-		DLFileEntry fileEntry = null;
+		DLFileEntry dlFileEntry = null;
 
 		try {
 			if (fileModel.getFileEntryId() > 0) {
-				fileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 					fileModel.getFileEntryId());
 			}
 			else {
-				fileEntry = DLFileEntryLocalServiceUtil.getFileEntryByName(
+				dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntryByName(
 					fileModel.getGroupId(), folderId, fileModel.getFileName());
 
-				fileModel.setFileEntryId(fileEntry.getFileEntryId());
+				fileModel.setFileEntryId(dlFileEntry.getFileEntryId());
 			}
 		}
 		catch (NoSuchFileEntryException nsfe) {
@@ -145,7 +187,7 @@ public class DLStoreIndexer extends BaseIndexer {
 
 					if (ArrayUtil.contains(
 							ignoreExtensions,
-							StringPool.PERIOD + fileEntry.getExtension())) {
+							StringPool.PERIOD + dlFileEntry.getExtension())) {
 
 						indexContent = false;
 					}
@@ -181,7 +223,7 @@ public class DLStoreIndexer extends BaseIndexer {
 				assetCategoryIds =
 					AssetCategoryLocalServiceUtil.getCategoryIds(
 						DLFileEntry.class.getName(),
-					fileEntry.getFileEntryId());
+					dlFileEntry.getFileEntryId());
 			}
 
 			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
@@ -192,7 +234,7 @@ public class DLStoreIndexer extends BaseIndexer {
 				assetCategoryNames =
 					AssetCategoryLocalServiceUtil.getCategoryNames(
 						DLFileEntry.class.getName(),
-					fileEntry.getFileEntryId());
+					dlFileEntry.getFileEntryId());
 			}
 
 			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
@@ -201,7 +243,7 @@ public class DLStoreIndexer extends BaseIndexer {
 
 			if (assetTagNames == null) {
 				assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+					DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 			}
 
 			document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
@@ -210,7 +252,7 @@ public class DLStoreIndexer extends BaseIndexer {
 
 			if (indexContent) {
 				try {
-					document.addFile(Field.CONTENT, is, fileEntry.getTitle());
+					document.addFile(Field.CONTENT, is, dlFileEntry.getTitle());
 				}
 				catch (IOException ioe) {
 					throw new SearchException(
@@ -218,11 +260,11 @@ public class DLStoreIndexer extends BaseIndexer {
 				}
 			}
 
-			document.addText(Field.DESCRIPTION, fileEntry.getDescription());
+			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(
 				Field.ENTRY_CLASS_NAME, DLFileEntry.class.getName());
 			document.addKeyword(
-				Field.ENTRY_CLASS_PK, fileEntry.getFileEntryId());
+				Field.ENTRY_CLASS_PK, dlFileEntry.getFileEntryId());
 			document.addKeyword(Field.FOLDER_ID, folderId);
 			document.addKeyword(
 				Field.GROUP_ID, getParentGroupId(fileModel.getGroupId()));
@@ -230,7 +272,7 @@ public class DLStoreIndexer extends BaseIndexer {
 			Date modifiedDate = fileModel.getModifiedDate();
 
 			if (modifiedDate == null) {
-				modifiedDate = fileEntry.getModifiedDate();
+				modifiedDate = dlFileEntry.getModifiedDate();
 			}
 
 			document.addDate(Field.MODIFIED_DATE, modifiedDate);
@@ -240,44 +282,48 @@ public class DLStoreIndexer extends BaseIndexer {
 			String properties = fileModel.getProperties();
 
 			if (properties == null) {
-				properties = fileEntry.getLuceneProperties();
+				properties = dlFileEntry.getLuceneProperties();
 			}
 
 			document.addText(Field.PROPERTIES, properties);
 
 			document.addKeyword(Field.SCOPE_GROUP_ID, fileModel.getGroupId());
 
-			DLFileVersion fileVersion = fileEntry.getFileVersion();
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-			document.addKeyword(Field.STATUS, fileVersion.getStatus());
+			document.addKeyword(Field.STATUS, dlFileVersion.getStatus());
 
-			document.addText(Field.TITLE, fileEntry.getTitle());
+			document.addText(Field.TITLE, dlFileEntry.getTitle());
 
 			long userId = fileModel.getUserId();
 
 			if (userId == 0) {
-				userId = fileEntry.getUserId();
+				userId = dlFileEntry.getUserId();
 			}
 
 			document.addKeyword(Field.USER_ID, userId);
 
 			String userName = PortalUtil.getUserName(
-				userId, fileEntry.getUserName());
+				userId, dlFileEntry.getUserName());
 
 			document.addKeyword(Field.USER_NAME, userName, true);
 
-			document.addKeyword("extension", fileEntry.getExtension());
+			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
-				"fileEntryTypeId", fileEntry.getFileEntryTypeId());
+				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
 			document.addKeyword("path", fileModel.getFileName());
 			document.addKeyword("repositoryId", fileModel.getRepositoryId());
 
 			ExpandoBridge expandoBridge =
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					fileModel.getCompanyId(), DLFileEntry.class.getName(),
-					fileVersion.getFileVersionId());
+					dlFileVersion.getFileVersionId());
 
 			ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
+
+			if (dlFileEntry.getFileEntryTypeId() > 0) {
+				addFileEntryTypeAttributes(document, dlFileVersion);
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Document " + fileModel + " indexed successfully");

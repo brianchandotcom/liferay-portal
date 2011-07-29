@@ -558,6 +558,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
+		<property name="DDMIndexer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil">
 		<property name="DDMXML">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl" />

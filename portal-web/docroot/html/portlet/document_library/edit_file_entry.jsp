@@ -267,7 +267,7 @@ else if (dlFileEntryType != null) {
 		<div class='<%= ((folder == null) || folder.isSupportsMetadata()) ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />metadata">
 			<aui:input name="description" />
 
-			<c:if test="<%= (folder != null) && (folder.getModel() instanceof DLFolder) %>">
+			<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
 				<%
 				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, true);

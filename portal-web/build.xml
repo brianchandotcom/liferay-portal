@@ -504,6 +504,74 @@
 					<replacevalue><![CDATA[return 'javascript:void(location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\')' ;]]></replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
+					<replacetoken><![CDATA[default :]]></replacetoken>
+					<replacevalue><![CDATA[
+		// Liferay
+
+		case 203 :
+			alert( 'An unexpected error occurred.' ) ;
+			break ;
+		case 204 :
+			alert( 'You cannot upload into the root folder.' ) ;
+			break ;
+		case 205:
+			alert( 'Please enter a valid image name.' );
+			break ;
+		case 206:
+			alert( 'Please enter a valid file name.' );
+			break ;
+		case 207:
+			alert( 'You do not have the permission to upload to this folder.' );
+			break ;
+		case 208:
+			alert( 'File size exceeds upload limit.' );
+			break ;
+		case 209:
+			alert( 'An internal server error occured.' );
+			break ;
+
+		default :]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
+					<replacetoken><![CDATA[<body>]]></replacetoken>
+					<replacevalue><![CDATA[<body bottommargin="0" topmargin="0">]]></replacevalue>
+				</replace>
+
+				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
+					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
+					replace="// Liferay\1\1var aTypes = [\1\2['Document','Document'],\1\2['Image','Image'],\1\2['Page','Page']\1] ;"
+					flags="s"
+				/>
+
+				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
+					match="(&lt;select id=&quot;cmbType.*\>)\r?(\n)[^\n]*\n(\t*&lt;\/select\>)"
+					replace="\1\2\3"
+					flags="s"
+				/>
+
+				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html"
+					match="(\t*)// Get the optional [^;]*?;\r?(\n).*?sFileSize \) \) ;"
+					replace="\1// Liferay\2\2\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize ) ) ;"
+					flags="s"
+				/>
+
+				<replace dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/">
+					<include name="**/*.html"/>
+					<replacetoken><![CDATA[<html>]]></replacetoken>
+					<replacevalue><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">]]></replacevalue>
+				</replace>
+
+				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html"
+					match="(if \( oConnector.ShowAllTypes \)\r?(\n)\t*oConnector.ResourceType = ')File(')"
+					replace="// Liferay\2\2\1Document\3"
+					flags="s"
+				/>
+
+				<fixcrlf includes="**/*.html" srcdir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay" eol="unix" />
+
 				<mkdir dir="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay" />
 
 				<copy todir="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay">

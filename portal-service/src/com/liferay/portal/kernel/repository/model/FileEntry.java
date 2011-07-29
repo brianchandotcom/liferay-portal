@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -138,5 +139,12 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public boolean isSupportsMetadata();
 
 	public boolean isSupportsSocial();
+
+	public static final Accessor<FileEntry, Long> FILEENTRYID_ACCESSOR =
+		new Accessor<FileEntry, Long>() {
+			public Long get(FileEntry fileEntry) {
+				return fileEntry.getFileEntryId();
+			}
+		};
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.plugin;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 import java.io.Serializable;
 
 /**
@@ -44,6 +46,13 @@ public class License implements Serializable {
 	public void setUrl(String url) {
 		_url = url;
 	}
+
+	public static final Accessor<License, String> NAME_ACCESSOR =
+		new Accessor<License, String>() {
+			public String get(License license) {
+				return license.getName();
+			}
+		};
 
 	private String _name;
 	private boolean _osiApproved;

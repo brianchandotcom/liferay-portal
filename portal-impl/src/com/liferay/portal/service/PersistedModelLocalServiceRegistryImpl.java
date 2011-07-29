@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
 public class PersistedModelLocalServiceRegistryImpl
 	implements PersistedModelLocalServiceRegistry {
@@ -36,6 +37,23 @@ public class PersistedModelLocalServiceRegistryImpl
 
 	public List<PersistedModelLocalService> getPersistedModelLocalServices() {
 		return ListUtil.fromMapValues(_persistedModelLocalServices);
+	}
+
+	public boolean isPermissionedModelLocalService(String className) {
+		PersistedModelLocalService persistedModelLocalService =
+			getPersistedModelLocalService(className);
+
+		if (persistedModelLocalService == null) {
+			return false;
+		}
+
+		if (persistedModelLocalService instanceof
+			PermissionedModelLocalService) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public void register(

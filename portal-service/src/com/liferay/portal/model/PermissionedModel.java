@@ -12,27 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.service;
-
-import java.util.List;
+package com.liferay.portal.model;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Connor McKay
  */
-public interface PersistedModelLocalServiceRegistry {
+public interface PermissionedModel extends PersistedModel {
 
-	public PersistedModelLocalService getPersistedModelLocalService(
-		String className);
+	public long getResourceBlockId();
 
-	public List<PersistedModelLocalService> getPersistedModelLocalServices();
-
-	public boolean isPermissionedModelLocalService(String className);
-
-	public void register(
-		String className,
-		PersistedModelLocalService persistedModelLocalService);
-
-	public void unregister(String className);
+	public void setResourceBlockId(long resourceBlockId);
 
 }

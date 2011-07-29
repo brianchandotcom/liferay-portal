@@ -614,6 +614,15 @@ public class Entity {
 		return true;
 	}
 
+	public boolean isPermissionedModel() {
+		if (hasColumn("resourceBlockId")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isPortalReference() {
 		return _portalReference;
 	}

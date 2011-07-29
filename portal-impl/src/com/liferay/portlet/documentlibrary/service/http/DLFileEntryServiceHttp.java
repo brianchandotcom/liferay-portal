@@ -56,8 +56,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 public class DLFileEntryServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
-		long folderId, java.lang.String mimeType, java.lang.String title,
+		long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
+		long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -67,8 +70,9 @@ public class DLFileEntryServiceHttp {
 					"addFileEntry", _addFileEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					repositoryId, folderId, mimeType, title, description,
-					changeLog, is, size, serviceContext);
+					repositoryId, folderId, sourceFileName, mimeType, title,
+					description, changeLog, fileEntryTypeId, fieldsMap, is,
+					size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1013,7 +1017,8 @@ public class DLFileEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, boolean majorVersion,
+		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1024,7 +1029,8 @@ public class DLFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
-					changeLog, majorVersion, is, size, serviceContext);
+					changeLog, majorVersion, fileEntryTypeId, fieldsMap, is,
+					size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1094,7 +1100,8 @@ public class DLFileEntryServiceHttp {
 	private static final Class<?>[] _addFileEntryParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.io.InputStream.class, long.class,
+			java.lang.String.class, java.lang.String.class, long.class,
+			java.util.Map.class, java.io.InputStream.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _cancelCheckOutParameterTypes1 = new Class[] {
@@ -1184,8 +1191,9 @@ public class DLFileEntryServiceHttp {
 	private static final Class<?>[] _updateFileEntryParameterTypes27 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, java.io.InputStream.class,
-			long.class, com.liferay.portal.service.ServiceContext.class
+			java.lang.String.class, boolean.class, long.class,
+			java.util.Map.class, java.io.InputStream.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes28 = new Class[] {
 			long.class, java.lang.String.class

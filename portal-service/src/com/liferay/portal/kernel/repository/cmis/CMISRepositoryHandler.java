@@ -41,14 +41,14 @@ import java.util.Map;
 public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	public FileEntry addFileEntry(
-			long folderId, String mimeType, String title, String description,
-			String changeLog, InputStream is, long size,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return _baseCmisRepository.addFileEntry(
-			folderId, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, serviceContext);
 	}
 
 	public Folder addFolder(

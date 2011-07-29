@@ -29,6 +29,7 @@ import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.WebDAVPropsLocalService;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.service.base.PrincipalBean;
 import com.liferay.portal.service.persistence.GroupFinder;
@@ -39,6 +40,7 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
+import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -1006,6 +1008,44 @@ public abstract class DLFolderServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the workflow definition link local service.
+	 *
+	 * @return the workflow definition link local service
+	 */
+	public WorkflowDefinitionLinkLocalService getWorkflowDefinitionLinkLocalService() {
+		return workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Sets the workflow definition link local service.
+	 *
+	 * @param workflowDefinitionLinkLocalService the workflow definition link local service
+	 */
+	public void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+		this.workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Returns the workflow definition link persistence.
+	 *
+	 * @return the workflow definition link persistence
+	 */
+	public WorkflowDefinitionLinkPersistence getWorkflowDefinitionLinkPersistence() {
+		return workflowDefinitionLinkPersistence;
+	}
+
+	/**
+	 * Sets the workflow definition link persistence.
+	 *
+	 * @param workflowDefinitionLinkPersistence the workflow definition link persistence
+	 */
+	public void setWorkflowDefinitionLinkPersistence(
+		WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence) {
+		this.workflowDefinitionLinkPersistence = workflowDefinitionLinkPersistence;
+	}
+
+	/**
 	 * Returns the workflow instance link local service.
 	 *
 	 * @return the workflow instance link local service
@@ -1248,6 +1288,10 @@ public abstract class DLFolderServiceBaseImpl extends PrincipalBean
 	protected WebDAVPropsLocalService webDAVPropsLocalService;
 	@BeanReference(type = WebDAVPropsPersistence.class)
 	protected WebDAVPropsPersistence webDAVPropsPersistence;
+	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
+	protected WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
+	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
+	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkLocalService.class)
 	protected WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)

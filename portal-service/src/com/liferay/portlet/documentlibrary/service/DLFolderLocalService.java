@@ -247,8 +247,9 @@ public interface DLFolderLocalService extends PersistedModelLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -366,20 +367,27 @@ public interface DLFolderLocalService extends PersistedModelLocalService {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
 		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

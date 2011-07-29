@@ -15,8 +15,6 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.DuplicateLockException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,19 +55,12 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -324,8 +315,6 @@ public class EditFileEntryAction extends PortletAction {
 		String contentType = MimeTypesUtil.getContentType(selectedFileName);
 		String description = ParamUtil.getString(actionRequest, "description");
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
-		long fileEntryTypeId = ParamUtil.getLong(
-			actionRequest, "fileEntryTypeId");
 
 		File file = null;
 
@@ -340,17 +329,9 @@ public class EditFileEntryAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
-			HashMap<String, Fields> fieldsMap = getFieldsMap(
-				actionRequest, fileEntryTypeId);
-
-			serviceContext.setAttribute("fieldsMap", fieldsMap);
-
-			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
-			serviceContext.setAttribute("sourceFileName", selectedFileName);
-
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				repositoryId, folderId, contentType, selectedFileName,
-				description, changeLog, file, serviceContext);
+				repositoryId, folderId, selectedFileName, contentType,
+				selectedFileName, description, changeLog, file, serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, DLFileEntry.class.getName(),
@@ -543,48 +524,6 @@ public class EditFileEntryAction extends PortletAction {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	protected HashMap<String, Fields> getFieldsMap(
-			ActionRequest actionRequest, long fileEntryTypeId)
-		throws PortalException, SystemException {
-
-		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
-
-		if (fileEntryTypeId <= 0) {
-			return fieldsMap;
-		}
-
-		DLFileEntryType fileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
-
-		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			String namespace = String.valueOf(
-				ddmStructure.getStructureId());
-
-			Set<String> fieldNames = ddmStructure.getFieldNames();
-
-			Fields fields = new Fields();
-
-			for (String name : fieldNames) {
-				Field field = new Field();
-
-				field.setName(name);
-
-				String value = ParamUtil.getString(
-					actionRequest, namespace + name);
-
-				field.setValue(value);
-
-				fields.put(field);
-			}
-
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
-		}
-
-		return fieldsMap;
-	}
-
 	protected void moveFileEntries(ActionRequest actionRequest)
 		throws Exception {
 
@@ -638,8 +577,6 @@ public class EditFileEntryAction extends PortletAction {
 		String title = ParamUtil.getString(uploadRequest, "title");
 		String description = ParamUtil.getString(uploadRequest, "description");
 		String changeLog = ParamUtil.getString(uploadRequest, "changeLog");
-		long fileEntryTypeId = ParamUtil.getLong(
-			uploadRequest, "fileEntryTypeId");
 		boolean majorVersion = ParamUtil.getBoolean(
 			uploadRequest, "majorVersion");
 
@@ -654,17 +591,6 @@ public class EditFileEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		if (fileEntryTypeId != -1) {
-			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
-		}
-
-		serviceContext.setAttribute("sourceFileName", sourceFileName);
-
-		HashMap<String, Fields> fieldsMap = getFieldsMap(
-			actionRequest, fileEntryTypeId);
-
-		serviceContext.setAttribute("fieldsMap", fieldsMap);
-
 		FileEntry fileEntry = null;
 
 		if (cmd.equals(Constants.ADD)) {
@@ -675,8 +601,8 @@ public class EditFileEntryAction extends PortletAction {
 			// Add file entry
 
 			fileEntry = DLAppServiceUtil.addFileEntry(
-				repositoryId, folderId, contentType, title, description,
-				changeLog, file, serviceContext);
+				repositoryId, folderId, sourceFileName, contentType, title,
+				description, changeLog, file, serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, DLFileEntry.class.getName(),

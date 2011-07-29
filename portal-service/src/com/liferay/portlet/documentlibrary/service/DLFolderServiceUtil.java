@@ -38,14 +38,15 @@ public class DLFolderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long groupId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addFolder(groupId, repositoryId, parentFolderId, name,
-			description, serviceContext);
+				   .addFolder(groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, serviceContext);
 	}
 
 	public static void deleteFolder(long folderId)
@@ -223,11 +224,16 @@ public class DLFolderServiceUtil {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolder(folderId, name, description, serviceContext);
+				   .updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
 	}
 
 	public static boolean verifyInheritableLock(long folderId,

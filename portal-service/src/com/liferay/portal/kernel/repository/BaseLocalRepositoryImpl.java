@@ -48,9 +48,9 @@ public class BaseLocalRepositoryImpl implements LocalRepository {
 	}
 
 	public FileEntry addFileEntry(
-		long userId, long folderId, String mimeType, String title,
-		String description, String changeLog, InputStream is, long size,
-		ServiceContext serviceContext) {
+		long userId, long folderId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog, InputStream is,
+		long size, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

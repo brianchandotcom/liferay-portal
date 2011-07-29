@@ -265,15 +265,18 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		long userId, long groupId, long repositoryId, long folderId,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.addFileEntry(userId, groupId,
-			repositoryId, folderId, mimeType, title, description, changeLog,
-			is, size, serviceContext);
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, fileEntryTypeId, fieldsMap, is, size,
+			serviceContext);
 	}
 
 	public void addFileEntryResources(
@@ -336,6 +339,16 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlFileEntryLocalService.convertExtraSettings(keys);
+	}
+
+	public void copyFileEntryMetadata(long companyId, long fileEntryTypeId,
+		long fileEntryId, long fromFileVersionId, long toFileVersionId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.copyFileEntryMetadata(companyId,
+			fileEntryTypeId, fileEntryId, fromFileVersionId, toFileVersionId,
+			serviceContext);
 	}
 
 	public void deleteFileEntries(long groupId, long folderId)
@@ -531,13 +544,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 		long userId, long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		boolean majorVersion, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.updateFileEntry(userId, fileEntryId,
 			sourceFileName, mimeType, title, description, changeLog,
-			majorVersion, is, size, serviceContext);
+			majorVersion, fileEntryTypeId, fieldsMap, is, size, serviceContext);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(

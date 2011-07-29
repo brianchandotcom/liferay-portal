@@ -17,8 +17,6 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.servlet.ImageServletToken;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 
@@ -34,7 +32,7 @@ public class ImageServletTokenImpl implements ImageServletToken {
 	}
 
 	public String getToken(long imageId) {
-		String key = _encodeKey(imageId);
+		Long key = imageId;
 
 		String token = (String)_portalCache.get(key);
 
@@ -48,9 +46,7 @@ public class ImageServletTokenImpl implements ImageServletToken {
 	}
 
 	public void resetToken(long imageId) {
-		String key = _encodeKey(imageId);
-
-		_portalCache.remove(key);
+		_portalCache.remove(imageId);
 
 		// Journal content
 
@@ -67,11 +63,6 @@ public class ImageServletTokenImpl implements ImageServletToken {
 
 	private String _createToken(long imageId) {
 		return String.valueOf(System.currentTimeMillis());
-	}
-
-	private String _encodeKey(long imageId) {
-		return CACHE_NAME.concat(StringPool.POUND).concat(
-			StringUtil.toHexString(imageId));
 	}
 
 	private MultiVMPool _multiVMPool;

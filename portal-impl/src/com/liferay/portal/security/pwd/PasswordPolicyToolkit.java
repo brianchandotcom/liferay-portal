@@ -25,7 +25,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.words.util.WordsUtil;
+import com.liferay.portal.util.WordsUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Arrays;

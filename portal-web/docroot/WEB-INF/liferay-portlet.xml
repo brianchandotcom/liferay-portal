@@ -451,17 +451,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>37</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>words</struts-path>
-		<use-default-template>false</use-default-template>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-words</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>39</portlet-name>
 		<icon>/html/icons/rss.png</icon>
 		<struts-path>rss</struts-path>

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.captcha.simplecaptcha;
 
-import com.liferay.portlet.words.util.WordsUtil;
+import com.liferay.portal.util.WordsUtil;
 
 import nl.captcha.text.producer.TextProducer;
 

@@ -2188,12 +2188,6 @@
 			<forward name="portlet.wiki.view_node" path="portlet.wiki.view_tagged_pages" />
 		</action>
 
-		<!-- Words -->
-
-		<action path="/words/view" type="com.liferay.portlet.words.action.ViewAction">
-			<forward name="portlet.words.view" path="portlet.words.view" />
-		</action>
-
 		<!-- Workflow Definitions -->
 
 		<action path="/workflow_definitions/edit_workflow_definition" type="com.liferay.portlet.workflowdefinitions.action.EditWorkflowDefinitionAction">

@@ -1133,6 +1133,7 @@
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.usersadmin.UsersControlPanelEntry</control-panel-entry-class>
+		<atom-collection-adapter>com.liferay.portlet.usersadmin.atom.UserAtomCollectionAdapter</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.LayoutCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.OrganizationCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.UserCustomAttributesDisplay</custom-attributes-display>

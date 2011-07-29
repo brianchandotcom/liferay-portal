@@ -42,14 +42,14 @@ public class LocalRepositoryProxyBean
 	}
 
 	public FileEntry addFileEntry(
-			long userId, long folderId, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = _localRepository.addFileEntry(
-			userId, folderId, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}

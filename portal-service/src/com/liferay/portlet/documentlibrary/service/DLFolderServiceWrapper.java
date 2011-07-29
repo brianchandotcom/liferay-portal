@@ -29,12 +29,13 @@ public class DLFolderServiceWrapper implements DLFolderService {
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long groupId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderService.addFolder(groupId, repositoryId,
+		return _dlFolderService.addFolder(groupId, repositoryId, mountPoint,
 			parentFolderId, name, description, serviceContext);
 	}
 
@@ -209,10 +210,14 @@ public class DLFolderServiceWrapper implements DLFolderService {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderService.updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
 			serviceContext);
 	}
 

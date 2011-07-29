@@ -57,7 +57,7 @@ public class RepositoryTest extends TestCase {
 			new ServiceContext());
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			getGroupId(), getGroupId(),
+			getGroupId(), getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
 			new ServiceContext());
 
@@ -114,14 +114,16 @@ public class RepositoryTest extends TestCase {
 			LocalRepository localRepository =
 				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
 
+			String name1 =
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) +
+					".txt";
+
 			FileEntry fileEntry1 = localRepository.addFileEntry(
 				TestPropsValues.USER_ID,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ContentTypes.TEXT_PLAIN,
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) +
-					".txt",
-				StringPool.BLANK, StringPool.BLANK, inputStream,
-				_TEST_CONTENT.length(), new ServiceContext());
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name1,
+				ContentTypes.TEXT_PLAIN, name1, StringPool.BLANK,
+				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
+				new ServiceContext());
 
 			fileEntryIds[i] = fileEntry1.getFileEntryId();
 
@@ -133,9 +135,11 @@ public class RepositoryTest extends TestCase {
 
 			folderIds[i] = folder.getFolderId();
 
+			String name2 = String.valueOf(folderIds[i]) + ".txt";
+
 			FileEntry fileEntry2 = localRepository.addFileEntry(
-				TestPropsValues.USER_ID, folderIds[i], ContentTypes.TEXT_PLAIN,
-				String.valueOf(folderIds[i]) + ".txt", StringPool.BLANK,
+				TestPropsValues.USER_ID, folderIds[i], name2,
+				ContentTypes.TEXT_PLAIN, name2, StringPool.BLANK,
 				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
 				new ServiceContext());
 

@@ -272,14 +272,15 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addFolder(userId, groupId, repositoryId, parentFolderId,
-			name, description, serviceContext);
+				   .addFolder(userId, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, serviceContext);
 	}
 
 	public static void deleteAll(long groupId)
@@ -435,33 +436,44 @@ public class DLFolderLocalServiceUtil {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFolder(folderId, parentFolderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
 			serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolder(folderId, name, description, serviceContext);
+				   .updateFolder(folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
 		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFolderAndFileEntryTypes(folderId, parentFolderId,
-			name, description, serviceContext);
+			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
+			overrideFileEntryTypes, serviceContext);
 	}
 
 	public static void updateLastPostDate(long folderId,

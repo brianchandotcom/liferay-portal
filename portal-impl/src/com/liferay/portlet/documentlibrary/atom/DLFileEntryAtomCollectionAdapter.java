@@ -205,8 +205,9 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
-			groupId, repositoryId, folderId, mimeType, title, summary, null,
-			contentInputStream, contentDecoded.length, serviceContext);
+			groupId, repositoryId, folderId, title, mimeType, title, summary,
+			null, 0, null, contentInputStream, contentDecoded.length,
+			serviceContext);
 
 		return dlFileEntry;
 	}
@@ -249,8 +250,9 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
-			groupId, repositoryId, folderId, mimeType, title, description, null,
-			contentInputStream, content.length, serviceContext);
+			groupId, repositoryId, folderId, title, mimeType, title,
+			description, null, 0, null, contentInputStream, content.length,
+			serviceContext);
 
 		return dlFileEntry;
 	}
@@ -275,8 +277,8 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			title, mimeType, title, summary, null, true, contentInputStream,
-			contentDecoded.length, serviceContext);
+			title, mimeType, title, summary, null, true, 0, null,
+			contentInputStream, contentDecoded.length, serviceContext);
 	}
 
 	@Override
@@ -301,8 +303,8 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			slug, mimeType, title, description, null, true, contentInputStream,
-			content.length, serviceContext);
+			slug, mimeType, title, description, null, true, 0, null,
+			contentInputStream, content.length, serviceContext);
 	}
 
 	static final String _COLLECTION_NAME = "files";

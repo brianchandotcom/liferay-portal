@@ -119,19 +119,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		String viewFullContentURLString = viewFullContentURL.toString();
 
 		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
-		
 		%>
-		
-		<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
-			<liferay-ui:social-bookmarks
-					displayStyle="<%= socialBookmarksDisplayStyle %>"
-					target="_blank"					
-					title="<%= assetEntry.getTitle() %>"
-					url="<%= viewFullContentURL.toString() %>"
-				/>
-		</c:if>
-		
+
 		<div class="asset-content">
+			<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
+				<liferay-ui:social-bookmarks
+						displayStyle="<%= socialBookmarksDisplayStyle %>"
+						target="_blank"
+						title="<%= assetEntry.getTitle() %>"
+						url="<%= viewFullContentURL.toString() %>"
+					/>
+			</c:if>
 
 			<%
 			String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
@@ -152,7 +150,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					/>
 				</div>
 			</c:if>
-			
+
 			<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom")%>'>		
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= socialBookmarksDisplayStyle %>"

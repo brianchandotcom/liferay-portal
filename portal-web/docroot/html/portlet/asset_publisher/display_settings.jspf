@@ -103,7 +103,7 @@
 	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
 
 	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
-	
+
 	<aui:fieldset>
 		<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
 

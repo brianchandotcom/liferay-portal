@@ -206,7 +206,7 @@
 	.taglib-asset-tags-summary {
 		float: left;
 	}
-	
+
 	.taglib-social-bookmarks {
 		clear: both;
 		margin-top: 1.5em;

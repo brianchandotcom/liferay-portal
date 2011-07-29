@@ -435,6 +435,10 @@ create index IX_75B95071 on MBMessage (threadId);
 create index IX_A7038CD7 on MBMessage (threadId, parentMessageId);
 create index IX_9DC8E57 on MBMessage (threadId, status);
 create index IX_7A040C32 on MBMessage (userId);
+create index IX_59F9CE5C on MBMessage (userId, classNameId);
+create index IX_ABEB6D07 on MBMessage (userId, classNameId, classPK);
+create index IX_4A4BB4ED on MBMessage (userId, classNameId, classPK, status);
+create index IX_3321F142 on MBMessage (userId, classNameId, status);
 create index IX_C57B16BC on MBMessage (uuid_);
 create unique index IX_8D12316E on MBMessage (uuid_, groupId);
 

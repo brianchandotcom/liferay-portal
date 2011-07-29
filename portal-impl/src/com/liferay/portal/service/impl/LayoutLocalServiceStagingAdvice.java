@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +54,24 @@ import org.aopalliance.intercept.MethodInvocation;
 public class LayoutLocalServiceStagingAdvice
 	extends LayoutLocalServiceImpl implements MethodInterceptor {
 
+	@Override
+	public void deleteLayout(
+			Layout layout, boolean updateLayoutSet,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			serviceContext, "layoutSetBranchId");
+
+		if (layoutSetBranchId > 0) {
+			layoutRevisionLocalService.deleteLayoutRevisions(
+				layoutSetBranchId, layout.getPlid());
+		}
+		else {
+			super.deleteLayout(layout, updateLayoutSet, serviceContext);
+		}
+	}
+
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Method method = methodInvocation.getMethod();
 
@@ -70,7 +89,14 @@ public class LayoutLocalServiceStagingAdvice
 
 		Object returnValue = null;
 
-		if (methodName.equals("updateLayout") && (arguments.length == 16)) {
+		if (methodName.equals("deleteLayout") && (arguments.length == 3)) {
+			deleteLayout(
+				(Layout)arguments[0], (Boolean)arguments[1],
+				(ServiceContext)arguments[2]);
+		}
+		else if (methodName.equals("updateLayout") &&
+				 (arguments.length == 16)) {
+
 			returnValue = updateLayout(
 				(Long)arguments[0], (Boolean)arguments[1], (Long)arguments[2],
 				(Long)arguments[3], (Map<Locale, String>)arguments[4],
@@ -427,6 +453,7 @@ public class LayoutLocalServiceStagingAdvice
 		new HashSet<String>();
 
 	static {
+		_layoutLocalServiceStagingAdviceMethodNames.add("deleteLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("getLayouts");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLookAndFeel");

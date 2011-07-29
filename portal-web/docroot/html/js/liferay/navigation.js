@@ -15,6 +15,7 @@ AUI().add(
 		 * Required
 		 * hasPermission {boolean}: Whether the current user has permission to modify the navigation
 		 * layoutIds {array}: The displayable layout ids.
+		 * layoutSetBranchId {String}: The id of the layout set branch (when branching is enabled).
 		 * navBlock {string|object}: A selector or DOM element of the navigation.
 		 */
 
@@ -47,6 +48,10 @@ AUI().add(
 
 					layoutIds: {
 						value: []
+					},
+
+					layoutSetBranchId: {
+						value: 0
 					},
 
 					navBlock: {
@@ -525,6 +530,7 @@ AUI().add(
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 								groupId: themeDisplay.getParentGroupId(),
 								layoutId: tab._LFR_layoutId,
+								layoutSetBranchId: instance.get('layoutSetBranchId'),
 								privateLayout: themeDisplay.isPrivateLayout()
 							};
 

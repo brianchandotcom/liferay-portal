@@ -39,7 +39,7 @@ TemplateDisplayTerms displayTerms = (TemplateDisplayTerms)searchContainer.getDis
 		<aui:input name="<%= displayTerms.DESCRIPTION %>" type="text" size="20" value="<%= displayTerms.getDescription() %>" />
 
 		<c:if test='<%= strutsAction.equalsIgnoreCase("/journal/select_template") %>'>
-			<aui:select label="my-places" name="<%= displayTerms.GROUP_IDS %>">
+			<aui:select label="my-sites" name="<%= displayTerms.GROUP_IDS %>">
 				<c:if test="<%= themeDisplay.getCompanyGroupId() != scopeGroupId %>">
 					<aui:option label="" value="<%= displayTerms.getGroupIds(renderRequest) %>" />
 					<aui:option label="global" selected="<%= displayTerms.getGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />

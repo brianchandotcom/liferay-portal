@@ -96,23 +96,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			type, hidden, friendlyURL, locked, serviceContext);
 	}
 
-	public void deleteLayout(long plid)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), plid, ActionKeys.DELETE);
 
-		layoutLocalService.deleteLayout(plid);
+		layoutLocalService.deleteLayout(plid, serviceContext);
 	}
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), groupId, privateLayout, layoutId,
 			ActionKeys.DELETE);
 
-		layoutLocalService.deleteLayout(groupId, privateLayout, layoutId);
+		layoutLocalService.deleteLayout(
+			groupId, privateLayout, layoutId, serviceContext);
 	}
 
 	public byte[] exportLayouts(
@@ -429,14 +432,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	public void setLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			long[] layoutIds)
+			long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
 
 		layoutLocalService.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds);
+			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	public void unschedulePublishToLive(

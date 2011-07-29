@@ -273,15 +273,18 @@ public class DLFileEntryLocalServiceUtil {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		long userId, long groupId, long repositoryId, long folderId,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addFileEntry(userId, groupId, repositoryId, folderId,
-			mimeType, title, description, changeLog, is, size, serviceContext);
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, fieldsMap, is, size, serviceContext);
 	}
 
 	public static void addFileEntryResources(
@@ -347,6 +350,17 @@ public class DLFileEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().convertExtraSettings(keys);
+	}
+
+	public static void copyFileEntryMetadata(long companyId,
+		long fileEntryTypeId, long fileEntryId, long fromFileVersionId,
+		long toFileVersionId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.copyFileEntryMetadata(companyId, fileEntryTypeId, fileEntryId,
+			fromFileVersionId, toFileVersionId, serviceContext);
 	}
 
 	public static void deleteFileEntries(long groupId, long folderId)
@@ -539,14 +553,16 @@ public class DLFileEntryLocalServiceUtil {
 		long userId, long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		boolean majorVersion, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFileEntry(userId, fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, is, size,
-			serviceContext);
+			mimeType, title, description, changeLog, majorVersion,
+			fileEntryTypeId, fieldsMap, is, size, serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(

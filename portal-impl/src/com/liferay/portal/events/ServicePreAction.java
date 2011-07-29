@@ -393,7 +393,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), true);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), true, serviceContext);
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
@@ -401,7 +404,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), false);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), false, serviceContext);
 	}
 
 	protected Object[] getDefaultLayout(
@@ -1610,11 +1616,19 @@ public class ServicePreAction extends Action {
 
 			Portlet groupPagesPortlet = PortletLocalServiceUtil.getPortletById(
 				PortletKeys.GROUP_PAGES);
+
+			siteContentPortlets.remove(groupPagesPortlet);
+
+			Portlet siteMembershipsAdminPortlet =
+				PortletLocalServiceUtil.getPortletById(
+					PortletKeys.SITE_MEMBERSHIPS_ADMIN);
+
+			siteContentPortlets.remove(siteMembershipsAdminPortlet);
+
 			Portlet siteSettingsPortlet =
 				PortletLocalServiceUtil.getPortletById(
 					PortletKeys.SITE_SETTINGS);
 
-			siteContentPortlets.remove(groupPagesPortlet);
 			siteContentPortlets.remove(siteSettingsPortlet);
 
 			showSiteContentIcon = PortletPermissionUtil.contains(
@@ -1668,8 +1682,6 @@ public class ServicePreAction extends Action {
 
 		String siteContentURL = urlControlPanel;
 
-		siteContentURL = HttpUtil.addParameter(
-			siteContentURL, "p_p_id", PortletKeys.RECENT_CONTENT);
 		siteContentURL = HttpUtil.addParameter(
 			siteContentURL, "controlPanelCategory",
 			PortletCategoryKeys.CONTENT);

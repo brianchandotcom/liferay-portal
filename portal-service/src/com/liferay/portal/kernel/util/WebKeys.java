@@ -83,6 +83,8 @@ public interface WebKeys {
 
 	public static final String PORTLET_PREFERENCES_MAP = "PORTLET_PREFERENCES_MAP";
 
+	public static final String PORTLET_RESOURCE_STATIC_URLS = "PORTLET_RESOURCE_STATIC_URLS";
+
 	public static final String REDIRECT = "REDIRECT";
 
 	public static final String RENDER_PORTLET = "RENDER_PORTLET";
@@ -96,6 +98,8 @@ public interface WebKeys {
 	public static final String RENDER_PORTLET_QUERY_STRING = "RENDER_PORTLET_QUERY_STRING";
 
 	public static final String RENDER_PORTLET_RESOURCE = "RENDER_PORTLET_RESOURCE";
+
+	public static final String RUNTIME_PORTLET_IDS = "LIFERAY_SHARED_RUNTIME_PORTLET_IDS";
 
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
 

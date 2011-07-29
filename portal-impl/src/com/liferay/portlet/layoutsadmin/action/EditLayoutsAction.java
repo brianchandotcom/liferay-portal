@@ -499,8 +499,8 @@ public class EditLayoutsAction extends PortletAction {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		LayoutRevisionLocalServiceUtil.addLayoutRevision(
-			serviceContext.getUserId(), layoutBranchId,
-			incompleteLayoutRevision.getLayoutSetBranchId(),
+			serviceContext.getUserId(),
+			incompleteLayoutRevision.getLayoutSetBranchId(), layoutBranchId,
 			incompleteLayoutRevision.getLayoutRevisionId(), false,
 			incompleteLayoutRevision.getPlid(),
 			incompleteLayoutRevision.isPrivateLayout(),
@@ -578,8 +578,11 @@ public class EditLayoutsAction extends PortletAction {
 		long[] layoutIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "layoutIds"), 0L);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds);
+			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	protected Object[] updateLayout(

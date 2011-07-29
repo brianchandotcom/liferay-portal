@@ -81,11 +81,7 @@ String[][] categorySections = {mainSections};
 	<portlet:param name="struts_action" value="/manage_pages/edit_layouts" />
 </portlet:actionURL>
 
-<%
-String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout(" + (incomplete ? "'enable'" : StringPool.BLANK) + ");";
-%>
-
-<aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= taglibOnSubmit %>'>
+<aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>' />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -96,11 +92,27 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
+	<c:if test="<%= layoutRevision != null && !incomplete%>">
+		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
+	</c:if>
+
 	<c:choose>
 		<c:when test="<%= incomplete %>">
-			<liferay-ui:message arguments="<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x" /> <aui:button type="submit" value="enable" />
+			<liferay-ui:message arguments="<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
 
 			<aui:input name="incompleteLayoutRevisionId" value="<%= layoutRevision.getLayoutRevisionId() %>" type="hidden" />
+
+			<%
+			String taglibEnableOnClick = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout('enable');";
+
+			String taglibDeleteOnClick = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout('" + Constants.DELETE + "');";
+			%>
+
+			<aui:button-row>
+				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranchName) %>' />
+
+				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
+			</aui:button-row>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
@@ -150,75 +162,64 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 							var popup = null;
 
 							var layoutToolbar = new A.Toolbar(
-										{
-											activeState: false,
-											boundingBox: buttonRow,
-											children: [
-												<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
-													{
-														handler: function(event) {
-															if (!popup) {
-																var content = A.one('#<portlet:namespace />addLayout');
+								{
+									activeState: false,
+									boundingBox: buttonRow,
+									children: [
+										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
+											{
+												handler: function(event) {
+													if (!popup) {
+														var content = A.one('#<portlet:namespace />addLayout');
 
-																popup = new A.Dialog(
-																	{
-																		bodyContent: content.show(),
-																		centered: true,
-																		title: '<liferay-ui:message key="add-child-page" />',
-																		modal: true,
-																		width: 500
-																	}
-																).render();
-															}
-
-															popup.show();
-
-															Liferay.Util.focusFormField(content.one('input:text'));
-														},
-														icon: 'circle-plus',
-														label: '<liferay-ui:message key="add-child-page" />'
-													},
-												</c:if>
-												{
-													handler: function(event) {
-														Liferay.Util.openWindow(
+														popup = new A.Dialog(
 															{
-																cache: false,
-																dialog: {
-																	width: 700
-																},
-																id: '<portlet:namespace /><%= selPlid %>_permissions',
-																title: '<liferay-ui:message key="permissions" />',
-																uri: '<%= permissionURL %>'
+																bodyContent: content.show(),
+																centered: true,
+																title: '<liferay-ui:message key="add-child-page" />',
+																modal: true,
+																width: 500
 															}
-														);
-													},
-													icon: 'key',
-													label: '<liferay-ui:message key="permissions" />'
-												},
-												{
-													handler: function(event) {
-														<c:choose>
-															<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
-																alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
-															</c:when>
-															<c:otherwise>
-																if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-																	document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-																	document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
-																	submitForm(document.<portlet:namespace />fm);
-																}
-															</c:otherwise>
-														</c:choose>
-													},
-													icon: 'circle-minus',
-													label: '<liferay-ui:message key="delete" />'
-												}
-											]
-										}
-									).render();
+														).render();
+													}
 
-									buttonRow.setData('layoutToolbar', layoutToolbar);
+													popup.show();
+
+													Liferay.Util.focusFormField(content.one('input:text'));
+												},
+												icon: 'circle-plus',
+												label: '<liferay-ui:message key="add-child-page" />'
+											},
+										</c:if>
+										{
+											handler: function(event) {
+												Liferay.Util.openWindow(
+													{
+														cache: false,
+														dialog: {
+															width: 700
+														},
+														id: '<portlet:namespace /><%= selPlid %>_permissions',
+														title: '<liferay-ui:message key="permissions" />',
+														uri: '<%= permissionURL %>'
+													}
+												);
+											},
+											icon: 'key',
+											label: '<liferay-ui:message key="permissions" />'
+										},
+										{
+											handler: function(event) {
+												<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
+											},
+											icon: 'circle-minus',
+											label: '<liferay-ui:message key="delete" />'
+										}
+									]
+								}
+							).render();
+
+							buttonRow.setData('layoutToolbar', layoutToolbar);
 						</aui:script>
 					</c:otherwise>
 				</c:choose>
@@ -235,18 +236,42 @@ String taglibOnSubmit = "event.preventDefault(); " + liferayPortletResponse.getN
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveLayout(action) {
-		if (action) {
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveLayout',
+		function(action) {
+			var A = AUI();
+
+			action = action || '<%= Constants.UPDATE %>';
+
+			if (action == '<%= Constants.DELETE %>') {
+				<c:choose>
+					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
+						alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
+
+						return false;
+					</c:when>
+					<c:otherwise>
+						if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+							return false;
+						}
+
+						<c:if test="<%= layoutRevision == null || incomplete %>">
+							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			}
+			else {
+				document.<portlet:namespace />fm.<portlet:namespace />redirect.value += Liferay.Util.getHistoryParam('<portlet:namespace />');
+			}
+
 			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = action;
-		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'update';
-		}
 
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value += Liferay.Util.getHistoryParam('<portlet:namespace />');
-
-		submitForm(document.<portlet:namespace />fm);
-	}
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['aui-base']
+	);
 </aui:script>
 
 <%!

@@ -29,36 +29,41 @@ public class DLAppServiceWrapper implements DLAppService {
 	}
 
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, byte[] bytes,
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog, byte[] bytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppService.addFileEntry(repositoryId, folderId, mimeType,
-			title, description, changeLog, bytes, serviceContext);
+		return _dlAppService.addFileEntry(repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, bytes,
+			serviceContext);
 	}
 
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, java.io.File file,
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppService.addFileEntry(repositoryId, folderId, mimeType,
-			title, description, changeLog, file, serviceContext);
+		return _dlAppService.addFileEntry(repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, file,
+			serviceContext);
 	}
 
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
-		long repositoryId, long folderId, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, java.io.InputStream is, long size,
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppService.addFileEntry(repositoryId, folderId, mimeType,
-			title, description, changeLog, is, size, serviceContext);
+		return _dlAppService.addFileEntry(repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, is, size,
+			serviceContext);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(

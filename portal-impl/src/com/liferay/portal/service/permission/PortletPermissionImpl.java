@@ -246,6 +246,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		Group group = layout.getGroup();
 
+		groupId = group.getGroupId();
+
 		name = PortletConstants.getRootPortletId(portletId);
 		primKey = getPrimaryKey(layout.getPlid(), portletId);
 
@@ -257,8 +259,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, group.getGroupId(), name, group.getGroupId(),
-			name, actionId);
+			permissionChecker, groupId, name, groupId, name, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

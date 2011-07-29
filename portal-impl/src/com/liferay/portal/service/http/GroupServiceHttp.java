@@ -451,13 +451,13 @@ public class GroupServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+	public static java.util.List<com.liferay.portal.model.Group> getUserSites(
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
-					"getUserPlaces", _getUserPlacesParameterTypes11);
+					"getUserSites", _getUserSitesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -877,9 +877,7 @@ public class GroupServiceHttp {
 	private static final Class<?>[] _getUserOrganizationsGroupsParameterTypes10 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getUserPlacesParameterTypes11 = new Class[] {
-			
-		};
+	private static final Class<?>[] _getUserSitesParameterTypes11 = new Class[] {  };
 	private static final Class<?>[] _getUserPlacesParameterTypes12 = new Class[] {
 			java.lang.String[].class, int.class
 		};

@@ -248,6 +248,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="U_C" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" arrayable-operator="OR" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -279,6 +283,16 @@
 			<finder-column name="categoryId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="U_C_C" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="U_C_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_C_S" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -288,6 +302,12 @@
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
 			<finder-column name="threadId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="U_C_C_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="status" />
 		</finder>
 

@@ -61,11 +61,11 @@ body.orange, .orange .portlet {
 	color: #34322C;
 }
 
-.orange .my-places-menu .current-site {
+.orange .my-sites-menu .current-site {
 	border-color: #81641D;
 }
 
-.orange .my-places-menu .current-site a {
+.orange .my-sites-menu .current-site a {
 	background-color: #BB8F30;
 	color: #FFF;
 }

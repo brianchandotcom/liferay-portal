@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.tika.detect.DefaultDetector;
@@ -44,11 +45,24 @@ public class MimeTypesImpl implements MimeTypes {
 	}
 
 	public String getContentType(File file) {
+		InputStream is = null;
+
 		try {
-			return getContentType(new FileInputStream(file), file.getName());
+			is = new FileInputStream(file);
+
+			return getContentType(is, file.getName());
 		}
 		catch (FileNotFoundException fnfe) {
 			return getContentType(file.getName());
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
 		}
 	}
 

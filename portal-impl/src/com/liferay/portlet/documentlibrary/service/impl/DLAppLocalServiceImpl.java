@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -51,8 +52,9 @@ import java.util.List;
 public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	public FileEntry addFileEntry(
-			long userId, long repositoryId, long folderId, String mimeType,
-			String title, String description, String changeLog, byte[] bytes,
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, byte[] bytes,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -63,18 +65,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
 		return addFileEntry(
-			userId, repositoryId, folderId, mimeType, title, description,
-			changeLog, is, bytes.length, serviceContext);
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, bytes.length, serviceContext);
 	}
 
 	public FileEntry addFileEntry(
-			long userId, long repositoryId, long folderId, String mimeType,
-			String title, String description, String changeLog, File file,
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		InputStream is = null;
+
 		try {
-			InputStream is = null;
 			long size = 0;
 
 			if (file == null) {
@@ -86,18 +90,28 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			}
 
 			return addFileEntry(
-				userId, repositoryId, folderId, mimeType, title, description,
-				changeLog, is, size, serviceContext);
+				userId, repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, is, size, serviceContext);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new FileSizeException();
 		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+		}
 	}
 
 	public FileEntry addFileEntry(
-			long userId, long repositoryId, long folderId, String mimeType,
-			String title, String description, String changeLog, InputStream is,
-			long size, ServiceContext serviceContext)
+			long userId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (is == null) {
@@ -108,8 +122,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		FileEntry fileEntry = localRepository.addFileEntry(
-			userId, folderId, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
 
 		DLProcessorRegistryUtil.trigger(fileEntry);
 
@@ -540,8 +554,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		InputStream is = null;
+
 		try {
-			InputStream is = null;
 			long size = 0;
 
 			if ((file != null) && file.exists()) {
@@ -555,6 +570,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException();
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
 		}
 	}
 

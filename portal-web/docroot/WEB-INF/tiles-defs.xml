@@ -931,10 +931,6 @@
 		<put name="portlet_content" value="/portlet/my_account/view.jsp" />
 	</definition>
 
-	<!-- My Places -->
-
-	<definition name="portlet.my_places.view" path="/portlet/my_places/view.jsp" />
-
 	<!-- My Sites -->
 
 	<definition name="portlet.my_sites" extends="portlet" />

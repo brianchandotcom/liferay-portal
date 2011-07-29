@@ -214,22 +214,24 @@
 		<#assign css_class = css_class + " private-page" />
 	</#if>
 
-	<#assign my_places_portlet_url = portletURLFactory.create(request, "49", page.getPlid(), "ACTION_PHASE") />
+	<#assign my_sites_portlet_url = portletURLFactory.create(request, "49", page.getPlid(), "ACTION_PHASE") />
 
-	${my_places_portlet_url.setWindowState("normal")}
-	${my_places_portlet_url.setPortletMode("view")}
+	<#assign my_places_portlet_url = my_sites_portlet_url />
 
-	${my_places_portlet_url.setParameter("struts_action", "/my_places/view")}
-	${my_places_portlet_url.setParameter("groupId", "${page.getGroupId()}")}
-	${my_places_portlet_url.setParameter("privateLayout", "false")}
+	${my_sites_portlet_url.setWindowState("normal")}
+	${my_sites_portlet_url.setPortletMode("view")}
 
-	<#assign site_default_public_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	${my_sites_portlet_url.setParameter("struts_action", "/my_sites/view")}
+	${my_sites_portlet_url.setParameter("groupId", "${page.getGroupId()}")}
+	${my_sites_portlet_url.setParameter("privateLayout", "false")}
+
+	<#assign site_default_public_url = htmlUtil.escape(my_sites_portlet_url.toString()) />
 
 	<#assign community_default_public_url = site_default_public_url />
 
-	${my_places_portlet_url.setParameter("privateLayout", "true")}
+	${my_sites_portlet_url.setParameter("privateLayout", "true")}
 
-	<#assign site_default_private_url = htmlUtil.escape(my_places_portlet_url.toString()) />
+	<#assign site_default_private_url = htmlUtil.escape(my_sites_portlet_url.toString()) />
 
 	<#assign community_default_private_url = site_default_private_url />
 
@@ -289,12 +291,16 @@
 	<#assign staging_text = languageUtil.get(locale, "staging") />
 </#if>
 
-<#-- ---------- My places ---------- -->
+<#-- ---------- My sites ---------- -->
 
-<#assign show_my_places = user.hasMyPlaces() />
+<#assign show_my_sites = user.hasMySites() />
 
-<#if show_my_places>
-	<#assign my_places_text = languageUtil.get(locale, "my-places") />
+<#assign show_my_places = show_my_sites />
+
+<#if show_my_sites>
+	<#assign my_sites_text = languageUtil.get(locale, "my-sites") />
+
+	<#assign my_places_text = my_sites_text />
 </#if>
 
 <#-- ---------- Includes ---------- -->

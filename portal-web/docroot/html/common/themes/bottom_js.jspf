@@ -49,8 +49,12 @@
 <%
 Group group = null;
 
+LayoutRevision layoutRevision = null;
+
 if (layout != null) {
 	group = layout.getGroup();
+
+	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 }
 %>
 
@@ -112,6 +116,11 @@ if (layout != null) {
 				new Liferay.Navigation(
 					{
 						layoutIds: [<%= ListUtil.toString(layouts, "layoutId") %>],
+
+						<c:if test="<%= layoutRevision != null %>">
+							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
+						</c:if>
+
 						navBlock: navBlock,
 						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>
 					}

@@ -223,7 +223,7 @@ public class EditGroupAction extends PortletAction {
 
 		long userId = PortalUtil.getUserId(actionRequest);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
@@ -234,31 +234,31 @@ public class EditGroupAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
 
-		Group group = null;
+		Group liveGroup = null;
 
-		if (groupId <= 0) {
+		if (liveGroupId <= 0) {
 
 			// Add group
 
-			group = GroupServiceUtil.addGroup(
+			liveGroup = GroupServiceUtil.addGroup(
 				name, description, type, friendlyURL, true, active,
 				serviceContext);
 
 			LiveUsers.joinGroup(
-				themeDisplay.getCompanyId(), group.getGroupId(), userId);
+				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
 		}
 		else {
 
 			// Update group
 
-			group = GroupServiceUtil.updateGroup(
-				groupId, name, description, type, friendlyURL, active,
+			liveGroup = GroupServiceUtil.updateGroup(
+				liveGroupId, name, description, type, friendlyURL, active,
 				serviceContext);
 
 			if (type == GroupConstants.TYPE_SITE_OPEN) {
 				List<MembershipRequest> membershipRequests =
 					MembershipRequestLocalServiceUtil.search(
-						groupId, MembershipRequestConstants.STATUS_PENDING,
+						liveGroupId, MembershipRequestConstants.STATUS_PENDING,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				for (MembershipRequest membershipRequest : membershipRequests) {
@@ -279,7 +279,7 @@ public class EditGroupAction extends PortletAction {
 		// Settings
 
 		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
+			liveGroup.getTypeSettingsProperties();
 
 		String customJspServletContextName = ParamUtil.getString(
 			actionRequest, "customJspServletContextName");
@@ -307,13 +307,13 @@ public class EditGroupAction extends PortletAction {
 			actionRequest, "privateVirtualHost");
 
 		LayoutSetServiceUtil.updateVirtualHost(
-			group.getGroupId(), false, publicVirtualHost);
+			liveGroup.getGroupId(), false, publicVirtualHost);
 
 		LayoutSetServiceUtil.updateVirtualHost(
-			group.getGroupId(), true, privateVirtualHost);
+			liveGroup.getGroupId(), true, privateVirtualHost);
 
-		if (group.hasStagingGroup()) {
-			Group stagingGroup = group.getStagingGroup();
+		if (liveGroup.hasStagingGroup()) {
+			Group stagingGroup = liveGroup.getStagingGroup();
 
 			publicVirtualHost = ParamUtil.getString(
 				actionRequest, "stagingPublicVirtualHost");
@@ -332,8 +332,8 @@ public class EditGroupAction extends PortletAction {
 				stagingGroup.getGroupId(), friendlyURL);
 		}
 
-		group = GroupServiceUtil.updateGroup(
-			group.getGroupId(), typeSettingsProperties.toString());
+		liveGroup = GroupServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
 		// Layout set prototypes
 
@@ -362,13 +362,13 @@ public class EditGroupAction extends PortletAction {
 			(privateLayoutSetPrototypeId > 0)) {
 
 			SitesUtil.applyLayoutSetPrototypes(
-				group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
-				serviceContext);
+				liveGroup, publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId, serviceContext);
 		}
 
 		// Staging
 
-		StagingUtil.updateStaging(actionRequest, group);
+		StagingUtil.updateStaging(actionRequest, liveGroup);
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;

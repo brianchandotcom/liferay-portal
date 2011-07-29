@@ -72,7 +72,7 @@ String[][] categorySections = {mainSections};
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 								<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 								<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(liveGroupId) %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 								<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
 							</liferay-util:include>
 						</div>
@@ -162,8 +162,8 @@ String[][] categorySections = {mainSections};
 					</c:if>
 
 					<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-						<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.MY_PLACES %>" var="viewPagesURL">
-							<portlet:param name="struts_action" value="/my_places/view" />
+						<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.MY_SITES %>" var="viewPagesURL">
+							<portlet:param name="struts_action" value="/my_sites/view" />
 							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						</liferay-portlet:actionURL>
@@ -245,7 +245,7 @@ String[][] categorySections = {mainSections};
 										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 										<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 										<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-										<portlet:param name="privateLayout" value="<%= String.valueOf(liveGroupId) %>" />
+										<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="redirectWindowState" value="<%= liferayPortletRequest.getWindowState().toString() %>" />
 										<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />

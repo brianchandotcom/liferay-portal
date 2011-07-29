@@ -63,8 +63,8 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 					<c:choose>
 						<c:when test="<%= (organization != null) && (organization.getPublicLayoutsPageCount() > 0) %>">
 
-							<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-								<portlet:param name="struts_action" value="/my_places/view" />
+							<liferay-portlet:actionURL var="publicPagesURL" portletName="<%= PortletKeys.MY_SITES %>">
+								<portlet:param name="struts_action" value="/my_sites/view" />
 								<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
 								<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 							</liferay-portlet:actionURL>
@@ -107,8 +107,8 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 				<aui:field-wrapper label="private-pages">
 					<c:choose>
 						<c:when test="<%= (organization != null) && (organization.getPrivateLayoutsPageCount() > 0) %>">
-							<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_PLACES %>">
-								<portlet:param name="struts_action" value="/my_places/view" />
+							<liferay-portlet:actionURL var="privatePagesURL" portletName="<%= PortletKeys.MY_SITES %>">
+								<portlet:param name="struts_action" value="/my_sites/view" />
 								<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
 								<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 							</liferay-portlet:actionURL>

@@ -65,10 +65,10 @@ login.events.pre
 logout.events.post
 logout.events.pre
 mail.hook.impl
-my.places.show.private.sites.with.no.layouts
-my.places.show.public.sites.with.no.layouts
-my.places.show.user.private.sites.with.no.layouts
-my.places.show.user.public.sites.with.no.layouts
+my.sites.show.private.sites.with.no.layouts
+my.sites.show.public.sites.with.no.layouts
+my.sites.show.user.private.sites.with.no.layouts
+my.sites.show.user.public.sites.with.no.layouts
 passwords.passwordpolicytoolkit.generator
 passwords.passwordpolicytoolkit.static
 portlet.add.default.resource.check.enabled

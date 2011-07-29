@@ -39,24 +39,24 @@
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-	List<Group> myPlaces = user.getMyPlaces();
+	List<Group> mySites = user.getMySites();
 
 	if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
-		myPlaces = ListUtil.copy(myPlaces);
+		mySites = ListUtil.copy(mySites);
 
-		myPlaces.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
+		mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
 	}
 
-	int total = myPlaces.size();
+	int total = mySites.size();
 
 	searchContainer.setTotal(total);
 
-	searchContainer.setResults(myPlaces);
+	searchContainer.setResults(mySites);
 
 	List resultRows = searchContainer.getResultRows();
 
-	for (int i = 0; i < myPlaces.size(); i++) {
-		Group group = myPlaces.get(i);
+	for (int i = 0; i < mySites.size(); i++) {
+		Group group = mySites.get(i);
 
 		ResultRow row = new ResultRow(group, group.getGroupId(), i);
 

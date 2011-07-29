@@ -80,9 +80,9 @@ import java.util.List;
 public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, byte[] bytes,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			byte[] bytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (bytes == null) {
@@ -92,14 +92,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
 		return addFileEntry(
-			repositoryId, folderId, mimeType, title, description, changeLog, is,
-			bytes.length, serviceContext);
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, bytes.length, serviceContext);
 	}
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -115,8 +115,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 
 			return addFileEntry(
-				repositoryId, folderId, mimeType, title, description, changeLog,
-				is, size, serviceContext);
+				repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, is, size, serviceContext);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new FileSizeException();
@@ -124,9 +124,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (is == null) {
@@ -137,8 +137,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, serviceContext);
 
 		DLProcessorRegistryUtil.trigger(fileEntry);
 

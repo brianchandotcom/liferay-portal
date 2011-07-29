@@ -3634,6 +3634,12 @@ public class PortalImpl implements Portal {
 	public User getUser(HttpServletRequest request)
 		throws PortalException, SystemException {
 
+		User user = (User)request.getAttribute(WebKeys.USER);
+
+		if (user != null) {
+			return user;
+		}
+
 		long userId = getUserId(request);
 
 		if (userId <= 0) {
@@ -3652,13 +3658,9 @@ public class PortalImpl implements Portal {
 			userId = GetterUtil.getLong(remoteUser);
 		}
 
-		User user = (User)request.getAttribute(WebKeys.USER);
+		user = UserLocalServiceUtil.getUserById(userId);
 
-		if (user == null) {
-			user = UserLocalServiceUtil.getUserById(userId);
-
-			request.setAttribute(WebKeys.USER, user);
-		}
+		request.setAttribute(WebKeys.USER, user);
 
 		return user;
 	}

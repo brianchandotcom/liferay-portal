@@ -325,7 +325,8 @@ public class LoginUtil {
 		companyIdCookie.setPath(StringPool.SLASH);
 
 		Cookie idCookie = new Cookie(
-			CookieKeys.ID, UserLocalServiceUtil.encryptUserId(userIdString));
+			CookieKeys.ID,
+			Encryptor.encrypt(company.getKeyObj(), userIdString));
 
 		if (Validator.isNotNull(domain)) {
 			idCookie.setDomain(domain);

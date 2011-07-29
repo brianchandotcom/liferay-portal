@@ -32,6 +32,8 @@ import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesThreadLocal;
 
+import java.io.Serializable;
+
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
@@ -171,13 +173,11 @@ public class PortalPreferencesLocalServiceImpl
 			String defaultPreferences)
 		throws SystemException {
 
-		Map<String, BasePreferencesImpl> preferencesPool =
+		Map<Serializable, BasePreferencesImpl> preferencesPool =
 			PortletPreferencesLocalUtil.getPreferencesPool(ownerId, ownerType);
 
-		String key = String.valueOf(companyId);
-
 		PortalPreferencesImpl portalPreferencesImpl =
-			(PortalPreferencesImpl)preferencesPool.get(key);
+			(PortalPreferencesImpl)preferencesPool.get(companyId);
 
 		if (portalPreferencesImpl == null) {
 			PortalPreferences portalPreferences =
@@ -202,7 +202,7 @@ public class PortalPreferencesLocalServiceImpl
 					portalPreferences.getPreferences());
 
 			synchronized (preferencesPool) {
-				preferencesPool.put(key, portalPreferencesImpl);
+				preferencesPool.put(companyId, portalPreferencesImpl);
 			}
 		}
 

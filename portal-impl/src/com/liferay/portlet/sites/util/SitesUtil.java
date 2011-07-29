@@ -38,6 +38,7 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -240,6 +241,9 @@ public class SitesUtil {
 
 		Group layoutSetGroup = layoutSet.getGroup();
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
 		if (layoutSetGroup.isLayoutSetPrototype()) {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
@@ -258,12 +262,14 @@ public class SitesUtil {
 					(isLayoutLocked(linkedLayout) ||
 					 isLayoutToBeUpdatedFromTemplate(linkedLayout))) {
 
-					LayoutServiceUtil.deleteLayout(linkedLayout.getPlid());
+					LayoutServiceUtil.deleteLayout(
+						linkedLayout.getPlid(), serviceContext);
 				}
 			}
 		}
 
-		LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId);
+		LayoutServiceUtil.deleteLayout(
+			groupId, privateLayout, layoutId, serviceContext);
 	}
 
 	public static void deleteLayout(

@@ -304,6 +304,23 @@ String editorContent = emailBody;
 
 					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 				</c:if>
+
+				<aui:fieldset>
+					<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
+
+					<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
+						<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
+							<aui:option label="simple" selected='<%= socialBookmarksDisplayStyle.equals("simple") %>' />
+							<aui:option label="vertical" selected='<%= socialBookmarksDisplayStyle.equals("vertical") %>' />
+							<aui:option label="horizontal" selected='<%= socialBookmarksDisplayStyle.equals("horizontal") %>' />
+						</aui:select>
+
+						<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">
+							<aui:option label="top" selected='<%= socialBookmarksDisplayPosition.equals("top") %>' />
+							<aui:option label="bottom" selected='<%= socialBookmarksDisplayPosition.equals("bottom") %>' />
+						</aui:select>
+					</div>
+				</aui:fieldset>
 			</aui:fieldset>
 
 		</c:when>
@@ -371,6 +388,8 @@ String editorContent = emailBody;
 		},
 		['liferay-util-list-fields']
 	);
+
+	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
 </aui:script>
 
 <%!

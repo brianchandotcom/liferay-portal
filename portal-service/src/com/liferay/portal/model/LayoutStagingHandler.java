@@ -160,34 +160,54 @@ public class LayoutStagingHandler implements InvocationHandler {
 		long layoutRevisionId = ParamUtil.getLong(
 			serviceContext, "layoutRevisionId");
 
-		if (layoutRevisionId <= 0) {
-			User user = UserLocalServiceUtil.getUser(
-				serviceContext.getUserId());
+		if (layoutSetBranchId > 0) {
+			if (layoutRevisionId <= 0) {
+				User user = UserLocalServiceUtil.getUser(
+					serviceContext.getUserId());
 
-			layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
-				user, layoutSetBranchId, layout.getPlid());
+				layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
+					user, layoutSetBranchId, layout.getPlid());
 
-			if (layoutRevisionId > 0) {
-				try {
-					layoutRevision =
-						LayoutRevisionLocalServiceUtil.getLayoutRevision(
-							layoutRevisionId);
+				if (layoutRevisionId > 0) {
+					try {
+						layoutRevision =
+							LayoutRevisionLocalServiceUtil.getLayoutRevision(
+								layoutRevisionId);
 
-					if (layoutRevision.getStatus() !=
-							WorkflowConstants.STATUS_INACTIVE) {
+						if (layoutRevision.getStatus() !=
+								WorkflowConstants.STATUS_INACTIVE) {
 
-						return layoutRevision;
+							return layoutRevision;
+						}
+
+						StagingUtil.setRecentLayoutRevisionId(
+							user, layoutSetBranchId, layout.getPlid(),
+							LayoutRevisionConstants.
+								DEFAULT_PARENT_LAYOUT_REVISION_ID);
+
+						layoutRevisionId =
+							StagingUtil.getRecentLayoutRevisionId(
+								user, layoutSetBranchId, layout.getPlid());
 					}
-
-					StagingUtil.setRecentLayoutRevisionId(
-						user, layoutSetBranchId, layout.getPlid(),
-						LayoutRevisionConstants.
-							DEFAULT_PARENT_LAYOUT_REVISION_ID);
-
-					layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
-						user, layoutSetBranchId, layout.getPlid());
+					catch (NoSuchLayoutRevisionException nslre) {
+					}
 				}
-				catch (NoSuchLayoutRevisionException nslre) {
+			}
+
+			try {
+				return LayoutRevisionLocalServiceUtil.getLayoutRevision(
+					layoutSetBranchId, layout.getPlid(), true);
+			}
+			catch (NoSuchLayoutRevisionException nslre) {
+				List<LayoutRevision> layoutRevisions =
+					LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(
+						layoutSetBranchId,
+						LayoutRevisionConstants.
+							DEFAULT_PARENT_LAYOUT_REVISION_ID,
+						layout.getPlid());
+
+				if (!layoutRevisions.isEmpty()) {
+					return layoutRevisions.get(0);
 				}
 			}
 		}
@@ -198,22 +218,6 @@ public class LayoutStagingHandler implements InvocationHandler {
 					layoutRevisionId);
 			}
 			catch (NoSuchLayoutRevisionException nslre) {
-			}
-		}
-
-		try {
-			return LayoutRevisionLocalServiceUtil.getLayoutRevision(
-				layoutSetBranchId, layout.getPlid(), true);
-		}
-		catch (NoSuchLayoutRevisionException nslre) {
-			List<LayoutRevision> layoutRevisions =
-				LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(
-					layoutSetBranchId,
-					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-					layout.getPlid());
-
-			if (!layoutRevisions.isEmpty()) {
-				return layoutRevisions.get(0);
 			}
 		}
 

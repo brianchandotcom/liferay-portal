@@ -1677,8 +1677,8 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>my-places</name>
-		<tag-class>com.liferay.taglib.ui.MyPlacesTag</tag-class>
+		<name>my-sites</name>
+		<tag-class>com.liferay.taglib.ui.MySitesTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>max</name>

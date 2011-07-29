@@ -242,17 +242,17 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</ul>
 
 	<ul class="aui-toolbar user-toolbar">
-		<c:if test="<%= user.hasMyPlaces() %>">
-			<li class="my-places has-submenu" id="<portlet:namespace />myPlaces">
+		<c:if test="<%= user.hasMySites() %>">
+			<li class="my-sites has-submenu" id="<portlet:namespace />mySites">
 				<a class="menu-button" href="javascript:;">
 					<span>
 						<liferay-ui:message key="go-to" />
 					</span>
 				</a>
 
-				<div class="aui-menu my-places-menu aui-overlaycontext-hidden" id="<portlet:namespace />myPlacesContainer">
+				<div class="aui-menu my-sites-menu aui-overlaycontext-hidden" id="<portlet:namespace />mySitesContainer">
 					<div class="aui-menu-content">
-						<liferay-ui:my-places />
+						<liferay-ui:my-sites />
 					</div>
 				</div>
 			</li>

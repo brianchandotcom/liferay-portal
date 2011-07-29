@@ -46,7 +46,7 @@ import com.liferay.taglib.theme.WrapPortletTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
-import com.liferay.taglib.ui.MyPlacesTag;
+import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.SearchTag;
 import com.liferay.taglib.ui.StagingTag;
@@ -96,7 +96,9 @@ public class VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean, String, long, String, Boolean, Boolean, long, long, Boolean, String)}
+	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean,
+	 *             String, long, String, Boolean, Boolean, long, long, Boolean,
+	 *             String)}
 	 */
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
@@ -203,12 +205,12 @@ public class VelocityTaglib {
 		return breadcrumbTag;
 	}
 
-	public MyPlacesTag getMyPlacesTag() throws Exception {
-		MyPlacesTag myPlacesTag = new MyPlacesTag();
+	public MySitesTag getMySitesTag() throws Exception {
+		MySitesTag mySitesTag = new MySitesTag();
 
-		setUp(myPlacesTag);
+		setUp(mySitesTag);
 
-		return myPlacesTag;
+		return mySitesTag;
 	}
 
 	public PngImageTag getPngImageTag() throws Exception {
@@ -435,22 +437,36 @@ public class VelocityTaglib {
 		MetaTagsTag.doTag(_servletContext, _request, _response);
 	}
 
+	/**
+	 * @deprecated {@link #mySites}
+	 */
 	public void myPlaces() throws Exception {
-		MyPlacesTag myPlacesTag = new MyPlacesTag();
-
-		setUp(myPlacesTag);
-
-		myPlacesTag.runTag();
+		mySites();
 	}
 
+	/**
+	 * @deprecated {@link #mySites(int)}
+	 */
 	public void myPlaces(int max) throws Exception {
-		MyPlacesTag myPlacesTag = new MyPlacesTag();
+		mySites(max);
+	}
 
-		setUp(myPlacesTag);
+	public void mySites() throws Exception {
+		MySitesTag mySitesTag = new MySitesTag();
 
-		myPlacesTag.setMax(max);
+		setUp(mySitesTag);
 
-		myPlacesTag.runTag();
+		mySitesTag.runTag();
+	}
+
+	public void mySites(int max) throws Exception {
+		MySitesTag mySitesTag = new MySitesTag();
+
+		setUp(mySitesTag);
+
+		mySitesTag.setMax(max);
+
+		mySitesTag.runTag();
 	}
 
 	public void permissionsURL(
@@ -480,7 +496,8 @@ public class VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean, long, String, Boolean, Boolean, long, long, Boolean, String)}
+	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean,
+	 *             long, String, Boolean, Boolean, long, long, Boolean, String)}
 	 */
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,

@@ -1704,6 +1704,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getCompanyId(), 0, User.class.getName(), user.getUserId());
 	}
 
+	public void deleteUserGroupUser(long userGroupId, long userId)
+		throws PortalException, SystemException {
+
+		userGroupPersistence.removeUser(userGroupId, userId);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+
+		indexer.reindex(userId);
+
+		PermissionCacheUtil.clearCache();
+	}
+
 	/**
 	 * Encrypts the primary key of the user. Used when encrypting the user's
 	 * credentials for storage in an automatic login cookie.

@@ -648,11 +648,11 @@
 	</portlet>
 	<portlet>
 		<portlet-name>49</portlet-name>
-		<display-name>My Places</display-name>
+		<display-name>My Sites</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
-			<value>/my_places/view</value>
+			<value>/my_sites/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

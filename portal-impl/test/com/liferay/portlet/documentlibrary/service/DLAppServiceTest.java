@@ -168,10 +168,11 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		serviceContext.setAddGuestPermissions(true);
 
 		try {
+			String name = "Bytes-null.txt";
 			byte[] bytes = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, ContentTypes.TEXT_PLAIN, "Bytes-null.txt",
+				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, bytes, serviceContext);
 
 			String newName = "Bytes-changed.txt";
@@ -187,10 +188,11 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		}
 
 		try {
+			String name = "File-null.txt";
 			File file = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, ContentTypes.TEXT_PLAIN, "File-null.txt",
+				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, file, serviceContext);
 
 			String newName = "File-changed.txt";
@@ -206,10 +208,11 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		}
 
 		try {
+			String name = "IS-null.txt";
 			InputStream is = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, ContentTypes.TEXT_PLAIN, "IS-null.txt",
+				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, is, 0, serviceContext);
 
 			String newName = "IS-changed.txt";
@@ -259,8 +262,8 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DLAppServiceUtil.addFileEntry(
-			_groupId, folderId, ContentTypes.TEXT_PLAIN, fileName, description,
-			changeLog, bytes, serviceContext);
+			_groupId, folderId, fileName, ContentTypes.TEXT_PLAIN, fileName,
+			description, changeLog, bytes, serviceContext);
 	}
 
 	protected void search(boolean rootFolder, String keywords)

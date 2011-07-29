@@ -17,6 +17,8 @@ package com.liferay.portlet.sitesadmin;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
 
@@ -24,6 +26,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Jorge Ferrer
+ * @author Sergio González
  */
 public class SitesControlPanelEntry extends BaseControlPanelEntry {
 
@@ -47,6 +50,20 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isVisible(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String controlPanelCategory = themeDisplay.getControlPanelCategory();
+
+		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
+			return false;
+		}
+
+		return super.isVisible(portlet, category, themeDisplay);
 	}
 
 }

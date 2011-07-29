@@ -60,7 +60,11 @@ if (layout != null) {
 		ppid = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "portletResource");
 
 		if (Validator.isNotNull(ppid)) {
-			portlets.add(PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid));
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
+
+			if (portlet != null) {
+				portlets.add(portlet);
+			}
 		}
 	}
 	else if (layout.isTypePortlet()) {
@@ -70,7 +74,7 @@ if (layout != null) {
 			if (Validator.isNotNull(ppid)) {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
 
-				if (!portlets.contains(portlet)) {
+				if ((portlet != null) && !portlets.contains(portlet)) {
 					portlets.add(portlet);
 				}
 			}
@@ -79,11 +83,11 @@ if (layout != null) {
 	else if ((layout.isTypeControlPanel() || layout.isTypePanel()) && Validator.isNotNull(ppid)) {
 		portlets = new ArrayList<Portlet>();
 
-		portlets.add(PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid));
-	}
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
 
-	if (themeDisplay.isShowStagingIcon()) {
-		portlets.add(PortletLocalServiceUtil.getPortletById(company.getCompanyId(), PortletKeys.STAGING_BAR));
+		if (portlet != null) {
+			portlets.add(portlet);
+		}
 	}
 
 	request.setAttribute(WebKeys.LAYOUT_PORTLETS, portlets);
@@ -92,53 +96,7 @@ if (layout != null) {
 
 <%-- Portlet CSS References --%>
 
-<c:if test="<%= portlets != null %>">
-
-	<%
-	Set<String> headerPortalCssSet = new LinkedHashSet<String>();
-
-	for (Portlet portlet : portlets) {
-		for (String headerPortalCss : portlet.getHeaderPortalCss()) {
-			if (!HttpUtil.hasProtocol(headerPortalCss)) {
-				Portlet rootPortlet = portlet.getRootPortlet();
-
-				headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, rootPortlet.getTimestamp());
-			}
-
-			if (!headerPortalCssSet.contains(headerPortalCss)) {
-				headerPortalCssSet.add(headerPortalCss);
-	%>
-
-				<link href="<%= HtmlUtil.escape(headerPortalCss) %>" rel="stylesheet" type="text/css" />
-
-	<%
-			}
-		}
-	}
-
-	Set<String> headerPortletCssSet = new LinkedHashSet<String>();
-
-	for (Portlet portlet : portlets) {
-		for (String headerPortletCss : portlet.getHeaderPortletCss()) {
-			if (!HttpUtil.hasProtocol(headerPortletCss)) {
-				Portlet rootPortlet = portlet.getRootPortlet();
-
-				headerPortletCss = PortalUtil.getStaticResourceURL(request, portlet.getStaticResourcePath() + headerPortletCss, rootPortlet.getTimestamp());
-			}
-
-			if (!headerPortletCssSet.contains(headerPortletCss)) {
-				headerPortletCssSet.add(headerPortletCss);
-	%>
-
-				<link href="<%= HtmlUtil.escape(headerPortletCss) %>" rel="stylesheet" type="text/css" />
-
-	<%
-			}
-		}
-	}
-	%>
-
-</c:if>
+<%@ include file="/html/common/themes/top_portlet_resources_css.jspf" %>
 
 <%-- Portal JavaScript References --%>
 
@@ -147,53 +105,7 @@ if (layout != null) {
 
 <%-- Portlet JavaScript References --%>
 
-<c:if test="<%= portlets != null %>">
-
-	<%
-	Set<String> headerPortalJavaScriptSet = new LinkedHashSet<String>();
-
-	for (Portlet portlet : portlets) {
-		for (String headerPortalJavaScript : portlet.getHeaderPortalJavaScript()) {
-			if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
-				Portlet rootPortlet = portlet.getRootPortlet();
-
-				headerPortalJavaScript = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalJavaScript, rootPortlet.getTimestamp());
-			}
-
-			if (!headerPortalJavaScriptSet.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
-				headerPortalJavaScriptSet.add(headerPortalJavaScript);
-	%>
-
-				<script src="<%= HtmlUtil.escape(headerPortalJavaScript) %>" type="text/javascript"></script>
-
-	<%
-			}
-		}
-	}
-
-	Set<String> headerPortletJavaScriptSet = new LinkedHashSet<String>();
-
-	for (Portlet portlet : portlets) {
-		for (String headerPortletJavaScript : portlet.getHeaderPortletJavaScript()) {
-			if (!HttpUtil.hasProtocol(headerPortletJavaScript)) {
-				Portlet rootPortlet = portlet.getRootPortlet();
-
-				headerPortletJavaScript = PortalUtil.getStaticResourceURL(request, portlet.getStaticResourcePath() + headerPortletJavaScript, rootPortlet.getTimestamp());
-			}
-
-			if (!headerPortletJavaScriptSet.contains(headerPortletJavaScript)) {
-				headerPortletJavaScriptSet.add(headerPortletJavaScript);
-	%>
-
-				<script src="<%= HtmlUtil.escape(headerPortletJavaScript) %>" type="text/javascript"></script>
-
-	<%
-			}
-		}
-	}
-	%>
-
-</c:if>
+<%@ include file="/html/common/themes/top_portlet_resources_js.jspf" %>
 
 <%-- Raw Text --%>
 

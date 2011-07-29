@@ -262,8 +262,11 @@ public class UpdateLayoutAction extends JSONAction {
 		long[] layoutIds = StringUtil.split(
 			ParamUtil.getString(request, "layoutIds"), 0L);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
 		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds);
+			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	protected void updateName(HttpServletRequest request) throws Exception {

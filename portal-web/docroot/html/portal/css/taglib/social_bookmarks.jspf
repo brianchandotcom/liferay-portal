@@ -25,13 +25,6 @@
 .js .taglib-social-bookmarks.visible .show-bookmarks {
 }
 
-.js .taglib-social-bookmarks ul {
-	border: 1px solid #828F95;
-	border-left: none;
-	border-right: none;
-	display: none;
-}
-
 .js .taglib-social-bookmarks.visible ul {
 	display: block;
 }

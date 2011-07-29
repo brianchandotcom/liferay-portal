@@ -27,9 +27,15 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
+
+import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -97,6 +103,34 @@ public class LayoutsRemotePublisherMessageListener
 			PermissionCheckerFactoryUtil.create(user, false);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setPathMain(PortalUtil.getPathMain());
+		serviceContext.setSignedIn(!user.isDefaultUser());
+		serviceContext.setUserId(user.getUserId());
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String param = entry.getKey();
+			String[] values = entry.getValue();
+
+			if ((values != null) && (values.length > 0)) {
+				if (values.length == 1) {
+					attributes.put(param, values[0]);
+				}
+				else {
+					attributes.put(param, values);
+				}
+			}
+		}
+
+		serviceContext.setAttributes(attributes);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
 			StagingUtil.copyRemoteLayouts(

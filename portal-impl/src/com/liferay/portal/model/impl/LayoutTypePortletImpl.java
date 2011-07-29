@@ -132,19 +132,6 @@ public class LayoutTypePortletImpl
 		return null;
 	}
 
-	private boolean _customizedView;
-
-	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-		PropsValues.INDEX_DATE_FORMAT_PATTERN);
-
-	private boolean _enablePortletLayoutListener = true;
-
-	private PortalPreferences _portalPreferences;
-
-	private Layout _templateLayout;
-
-	private boolean _updatePermission;
-
 	public LayoutTypePortletImpl(Layout layout) {
 		super(layout);
 
@@ -1709,5 +1696,13 @@ public class LayoutTypePortletImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutTypePortletImpl.class);
+
+	private boolean _customizedView;
+	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+		PropsValues.INDEX_DATE_FORMAT_PATTERN);
+	private boolean _enablePortletLayoutListener = true;
+	private PortalPreferences _portalPreferences;
+	private Layout _templateLayout;
+	private boolean _updatePermission;
 
 }

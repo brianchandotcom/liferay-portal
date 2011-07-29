@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -36,10 +38,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -80,14 +84,20 @@ public class LiferayRepository
 	}
 
 	public FileEntry addFileEntry(
-			long folderId, String mimeType, String title, String description,
-			String changeLog, InputStream is, long size,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		long fileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "fileEntryTypeId", -1L);
+		Map<String, Fields> fieldsMap = getFieldsMap(
+			serviceContext, fileEntryTypeId);
+
 		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
-			getGroupId(), getRepositoryId(), toFolderId(folderId), mimeType,
-			title, description, changeLog, is, size, serviceContext);
+			getGroupId(), getRepositoryId(), toFolderId(folderId),
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, fieldsMap, is, size, serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);
 
@@ -99,9 +109,11 @@ public class LiferayRepository
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		boolean mountPoint = ParamUtil.getBoolean(serviceContext, "mountPoint");
+
 		DLFolder dlFolder = dlFolderService.addFolder(
-			getGroupId(), getRepositoryId(), toFolderId(parentFolderId), title,
-			description, serviceContext);
+			getGroupId(), getRepositoryId(), mountPoint,
+			toFolderId(parentFolderId), title, description, serviceContext);
 
 		return new LiferayFolder(dlFolder);
 	}
@@ -465,9 +477,15 @@ public class LiferayRepository
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		long fileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "fileEntryTypeId", -1L);
+		Map<String, Fields> fieldsMap = getFieldsMap(
+			serviceContext, fileEntryTypeId);
+
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			changeLog, majorVersion, fileEntryTypeId, fieldsMap, is, size,
+			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -477,8 +495,16 @@ public class LiferayRepository
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		long defaultFileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "defaultFileEntryTypeId");
+		SortedArrayList<Long> fileEntryTypeIds = getLongList(
+			serviceContext, "fileEntryTypeSearchContainerPrimaryKeys");
+		boolean overrideFileEntryTypes = ParamUtil.getBoolean(
+			serviceContext, "overrideFileEntryTypes");
+
 		DLFolder dlFolder = dlFolderService.updateFolder(
-			toFolderId(folderId), title, description, serviceContext);
+			toFolderId(folderId), title, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 
 		return new LiferayFolder(dlFolder);
 	}

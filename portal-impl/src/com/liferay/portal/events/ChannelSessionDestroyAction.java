@@ -28,34 +28,41 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ChannelSessionDestroyAction extends SessionAction {
 
 	@Override
 	public void run(HttpSession session) {
 		try {
-			Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
+			User user = (User)session.getAttribute(WebKeys.USER);
 
-			if (userId != null) {
-				User user = UserLocalServiceUtil.getUser(userId);
+			if (user == null) {
+				Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
 
-				if (!user.isDefaultUser()) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Destroying channel " + user.getUserId());
-					}
+				if (userId != null) {
+					user = UserLocalServiceUtil.getUser(userId);
+				}
+			}
 
-					try {
-						ChannelHubManagerUtil.destroyChannel(
-							user.getCompanyId(), user.getUserId());
-					}
-					catch (ChannelException ce) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"User channel " + userId +
-									" is already unregistered",
-								ce);
-						}
-					}
+ 			if ((user == null) || user.isDefaultUser()) {
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Destroying channel " + user.getUserId());
+			}
+
+			try {
+				ChannelHubManagerUtil.destroyChannel(
+					user.getCompanyId(), user.getUserId());
+			}
+			catch (ChannelException ce) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"User channel " + user.getUserId() +
+							" is already unregistered",
+						ce);
 				}
 			}
 		}

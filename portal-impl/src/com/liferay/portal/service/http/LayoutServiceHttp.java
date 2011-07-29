@@ -141,14 +141,16 @@ public class LayoutServiceHttp {
 		}
 	}
 
-	public static void deleteLayout(HttpPrincipal httpPrincipal, long plid)
+	public static void deleteLayout(HttpPrincipal httpPrincipal, long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class.getName(),
 					"deleteLayout", _deleteLayoutParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, plid);
+			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
+					serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -173,7 +175,8 @@ public class LayoutServiceHttp {
 	}
 
 	public static void deleteLayout(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, long layoutId)
+		boolean privateLayout, long layoutId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -181,7 +184,7 @@ public class LayoutServiceHttp {
 					"deleteLayout", _deleteLayoutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, layoutId);
+					privateLayout, layoutId, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -776,7 +779,8 @@ public class LayoutServiceHttp {
 	}
 
 	public static void setLayouts(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, long parentLayoutId, long[] layoutIds)
+		boolean privateLayout, long parentLayoutId, long[] layoutIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -784,7 +788,7 @@ public class LayoutServiceHttp {
 					"setLayouts", _setLayoutsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, parentLayoutId, layoutIds);
+					privateLayout, parentLayoutId, layoutIds, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1246,10 +1250,11 @@ public class LayoutServiceHttp {
 			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutParameterTypes2 = new Class[] {
-			long.class
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutParameterTypes3 = new Class[] {
-			long.class, boolean.class, long.class
+			long.class, boolean.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _exportLayoutsParameterTypes4 = new Class[] {
 			long.class, boolean.class, long[].class, java.util.Map.class,
@@ -1313,7 +1318,8 @@ public class LayoutServiceHttp {
 			java.util.Date.class, java.lang.String.class
 		};
 	private static final Class<?>[] _setLayoutsParameterTypes19 = new Class[] {
-			long.class, boolean.class, long.class, long[].class
+			long.class, boolean.class, long.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _unschedulePublishToLiveParameterTypes20 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class

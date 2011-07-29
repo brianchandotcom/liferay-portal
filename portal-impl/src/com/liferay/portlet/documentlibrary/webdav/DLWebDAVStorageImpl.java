@@ -187,7 +187,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			}
 
 			DLAppServiceUtil.addFileEntry(
-				groupId, parentFolderId, mimeType, title, description,
+				groupId, parentFolderId, title, mimeType, title, description,
 				changeLog, file, serviceContext);
 
 			return status;
@@ -382,8 +382,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				serviceContext.setAddGuestPermissions(true);
 
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-					groupId, parentFolderId, contentType, title, description,
-					changeLog, file, serviceContext);
+					groupId, parentFolderId, title, contentType, title,
+					description, changeLog, file, serviceContext);
 
 				resource = toResource(webDavRequest, fileEntry, false);
 			}
@@ -651,8 +651,6 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String title = WebDAVUtil.getResourceName(pathArray);
 			String description = StringPool.BLANK;
 			String changeLog = StringPool.BLANK;
-			long contentLength = GetterUtil.getLong(
-				request.getHeader(HttpHeaders.CONTENT_LENGTH));
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -666,25 +664,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			String extension = FileUtil.getExtension(title);
 
-			if (contentLength > 0) {
-				if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-					contentType = MimeTypesUtil.getContentType(
-						request.getInputStream(), title);
-				}
-			}
-			else {
+			file = FileUtil.createTempFile(extension);
 
-				// Chunked transfers have a content length of 0
+			FileUtil.write(file, request.getInputStream());
 
-				file = FileUtil.createTempFile(extension);
-
-				FileUtil.write(file, request.getInputStream());
-
-				if (contentType.equals(
-						ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-					contentType = MimeTypesUtil.getContentType(file);
-				}
+			if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+				contentType = MimeTypesUtil.getContentType(file);
 			}
 
 			try {
@@ -704,30 +689,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				serviceContext.setAssetTagNames(assetTagNames);
 
-				if (contentLength > 0) {
-					DLAppServiceUtil.updateFileEntry(
-						fileEntryId, title, contentType, title, description,
-						changeLog, false, request.getInputStream(),
-						contentLength, serviceContext);
-				}
-				else {
-					DLAppServiceUtil.updateFileEntry(
-						fileEntryId, title, contentType, title, description,
-						changeLog, false, file, serviceContext);
-				}
+				DLAppServiceUtil.updateFileEntry(
+					fileEntryId, title, contentType, title, description,
+					changeLog, false, file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
-				if (contentLength > 0) {
-					DLAppServiceUtil.addFileEntry(
-						groupId, parentFolderId, contentType, title,
-						description, changeLog, request.getInputStream(),
-						contentLength, serviceContext);
-				}
-				else {
-					DLAppServiceUtil.addFileEntry(
-						groupId, parentFolderId, contentType, title,
-						description, changeLog, file, serviceContext);
-				}
+				DLAppServiceUtil.addFileEntry(
+					groupId, parentFolderId, title, contentType, title,
+					description, changeLog, file, serviceContext);
 			}
 
 			if (_log.isInfoEnabled()) {

@@ -512,9 +512,9 @@ AUI().add(
 
 				instance.addMenu(
 					{
-						boundingBox: '#' + namespace + 'myPlacesContainer',
-						name: 'myPlaces',
-						trigger: '#' + namespace + 'myPlaces'
+						boundingBox: '#' + namespace + 'mySitesContainer',
+						name: 'mySites',
+						trigger: '#' + namespace + 'mySites'
 					}
 				);
 

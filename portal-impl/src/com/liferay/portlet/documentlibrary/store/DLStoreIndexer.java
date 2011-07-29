@@ -122,160 +122,178 @@ public class DLStoreIndexer extends BaseIndexer {
 		InputStream is = null;
 
 		try {
-			Store hook = StoreFactory.getInstance();
-
-			if (PropsValues.DL_FILE_INDEXING_MAX_SIZE == 0) {
-				indexContent = false;
-			}
-			else if (PropsValues.DL_FILE_INDEXING_MAX_SIZE != -1) {
-				long size = hook.getFileSize(
-					fileModel.getCompanyId(), fileModel.getRepositoryId(),
-					fileModel.getFileName());
-
-				if (size > PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
-					indexContent = false;
-				}
-			}
-
-			if (indexContent) {
-				String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
-					PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS,
-					StringPool.COMMA);
-
-				if (ArrayUtil.contains(
-						ignoreExtensions,
-						StringPool.PERIOD + fileEntry.getExtension())) {
-
-					indexContent = false;
-				}
-			}
-
-			if (indexContent) {
-				is = hook.getFileAsStream(
-					fileModel.getCompanyId(), fileModel.getRepositoryId(),
-					fileModel.getFileName());
-			}
-		}
-		catch (Exception e) {
-		}
-
-		if (indexContent && (is == null)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Document " + fileModel + " does not have any content");
-			}
-
-			return null;
-		}
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			fileModel.getPortletId(), fileModel.getRepositoryId(),
-			fileModel.getFileName());
-
-		long[] assetCategoryIds = fileModel.getAssetCategoryIds();
-
-		if (assetCategoryIds == null) {
-			assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-		}
-
-		document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
-
-		String[] assetCategoryNames = fileModel.getAssetCategoryNames();
-
-		if (assetCategoryNames == null) {
-			assetCategoryNames = AssetCategoryLocalServiceUtil.getCategoryNames(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-		}
-
-		document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
-
-		String[] assetTagNames = fileModel.getAssetTagNames();
-
-		if (assetTagNames == null) {
-			assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-		}
-
-		document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
-
-		document.addKeyword(Field.COMPANY_ID, fileModel.getCompanyId());
-
-		if (indexContent) {
 			try {
-				document.addFile(Field.CONTENT, is, fileEntry.getTitle());
+				Store hook = StoreFactory.getInstance();
+
+				if (PropsValues.DL_FILE_INDEXING_MAX_SIZE == 0) {
+					indexContent = false;
+				}
+				else if (PropsValues.DL_FILE_INDEXING_MAX_SIZE != -1) {
+					long size = hook.getFileSize(
+						fileModel.getCompanyId(), fileModel.getRepositoryId(),
+						fileModel.getFileName());
+
+					if (size > PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
+						indexContent = false;
+					}
+				}
+
+				if (indexContent) {
+					String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
+						PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS,
+						StringPool.COMMA);
+
+					if (ArrayUtil.contains(
+							ignoreExtensions,
+							StringPool.PERIOD + fileEntry.getExtension())) {
+
+						indexContent = false;
+					}
+				}
+
+				if (indexContent) {
+					is = hook.getFileAsStream(
+						fileModel.getCompanyId(), fileModel.getRepositoryId(),
+						fileModel.getFileName());
+				}
 			}
-			catch (IOException ioe) {
-				throw new SearchException(
-					"Cannot extract text from file" + fileModel);
+			catch (Exception e) {
+			}
+
+			if (indexContent && (is == null)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Document " + fileModel + " does not have any content");
+				}
+
+				return null;
+			}
+
+			Document document = new DocumentImpl();
+
+			document.addUID(
+				fileModel.getPortletId(), fileModel.getRepositoryId(),
+				fileModel.getFileName());
+
+			long[] assetCategoryIds = fileModel.getAssetCategoryIds();
+
+			if (assetCategoryIds == null) {
+				assetCategoryIds =
+					AssetCategoryLocalServiceUtil.getCategoryIds(
+						DLFileEntry.class.getName(),
+					fileEntry.getFileEntryId());
+			}
+
+			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
+
+			String[] assetCategoryNames = fileModel.getAssetCategoryNames();
+
+			if (assetCategoryNames == null) {
+				assetCategoryNames =
+					AssetCategoryLocalServiceUtil.getCategoryNames(
+						DLFileEntry.class.getName(),
+					fileEntry.getFileEntryId());
+			}
+
+			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
+
+			String[] assetTagNames = fileModel.getAssetTagNames();
+
+			if (assetTagNames == null) {
+				assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+			}
+
+			document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
+
+			document.addKeyword(Field.COMPANY_ID, fileModel.getCompanyId());
+
+			if (indexContent) {
+				try {
+					document.addFile(Field.CONTENT, is, fileEntry.getTitle());
+				}
+				catch (IOException ioe) {
+					throw new SearchException(
+						"Cannot extract text from file" + fileModel);
+				}
+			}
+
+			document.addText(Field.DESCRIPTION, fileEntry.getDescription());
+			document.addKeyword(
+				Field.ENTRY_CLASS_NAME, DLFileEntry.class.getName());
+			document.addKeyword(
+				Field.ENTRY_CLASS_PK, fileEntry.getFileEntryId());
+			document.addKeyword(Field.FOLDER_ID, folderId);
+			document.addKeyword(
+				Field.GROUP_ID, getParentGroupId(fileModel.getGroupId()));
+
+			Date modifiedDate = fileModel.getModifiedDate();
+
+			if (modifiedDate == null) {
+				modifiedDate = fileEntry.getModifiedDate();
+			}
+
+			document.addDate(Field.MODIFIED_DATE, modifiedDate);
+
+			document.addKeyword(Field.PORTLET_ID, fileModel.getPortletId());
+
+			String properties = fileModel.getProperties();
+
+			if (properties == null) {
+				properties = fileEntry.getLuceneProperties();
+			}
+
+			document.addText(Field.PROPERTIES, properties);
+
+			document.addKeyword(Field.SCOPE_GROUP_ID, fileModel.getGroupId());
+
+			DLFileVersion fileVersion = fileEntry.getFileVersion();
+
+			document.addKeyword(Field.STATUS, fileVersion.getStatus());
+
+			document.addText(Field.TITLE, fileEntry.getTitle());
+
+			long userId = fileModel.getUserId();
+
+			if (userId == 0) {
+				userId = fileEntry.getUserId();
+			}
+
+			document.addKeyword(Field.USER_ID, userId);
+
+			String userName = PortalUtil.getUserName(
+				userId, fileEntry.getUserName());
+
+			document.addKeyword(Field.USER_NAME, userName, true);
+
+			document.addKeyword("extension", fileEntry.getExtension());
+			document.addKeyword(
+				"fileEntryTypeId", fileEntry.getFileEntryTypeId());
+			document.addKeyword("path", fileModel.getFileName());
+			document.addKeyword("repositoryId", fileModel.getRepositoryId());
+
+			ExpandoBridge expandoBridge =
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					fileModel.getCompanyId(), DLFileEntry.class.getName(),
+					fileVersion.getFileVersionId());
+
+			ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Document " + fileModel + " indexed successfully");
+			}
+
+			return document;
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
 			}
 		}
-
-		document.addText(Field.DESCRIPTION, fileEntry.getDescription());
-		document.addKeyword(
-			Field.ENTRY_CLASS_NAME, DLFileEntry.class.getName());
-		document.addKeyword(Field.ENTRY_CLASS_PK, fileEntry.getFileEntryId());
-		document.addKeyword(Field.FOLDER_ID, folderId);
-		document.addKeyword(
-			Field.GROUP_ID, getParentGroupId(fileModel.getGroupId()));
-
-		Date modifiedDate = fileModel.getModifiedDate();
-
-		if (modifiedDate == null) {
-			modifiedDate = fileEntry.getModifiedDate();
-		}
-
-		document.addDate(Field.MODIFIED_DATE, modifiedDate);
-
-		document.addKeyword(Field.PORTLET_ID, fileModel.getPortletId());
-
-		String properties = fileModel.getProperties();
-
-		if (properties == null) {
-			properties = fileEntry.getLuceneProperties();
-		}
-
-		document.addText(Field.PROPERTIES, properties);
-
-		document.addKeyword(Field.SCOPE_GROUP_ID, fileModel.getGroupId());
-
-		DLFileVersion fileVersion = fileEntry.getFileVersion();
-
-		document.addKeyword(Field.STATUS, fileVersion.getStatus());
-
-		document.addText(Field.TITLE, fileEntry.getTitle());
-
-		long userId = fileModel.getUserId();
-
-		if (userId == 0) {
-			userId = fileEntry.getUserId();
-		}
-
-		document.addKeyword(Field.USER_ID, userId);
-
-		String userName = PortalUtil.getUserName(
-			userId, fileEntry.getUserName());
-
-		document.addKeyword(Field.USER_NAME, userName, true);
-
-		document.addKeyword("extension", fileEntry.getExtension());
-		document.addKeyword("fileEntryTypeId", fileEntry.getFileEntryTypeId());
-		document.addKeyword("path", fileModel.getFileName());
-		document.addKeyword("repositoryId", fileModel.getRepositoryId());
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			fileModel.getCompanyId(), DLFileEntry.class.getName(),
-			fileVersion.getFileVersionId());
-
-		ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + fileModel + " indexed successfully");
-		}
-
-		return document;
 	}
 
 	@Override

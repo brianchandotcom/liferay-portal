@@ -580,7 +580,11 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 
 				subsetDocs.add(subsetDocument);
 
-				Float subsetScore = hitDocs.getScore(i) / scoredFieldNamesCount;
+				Float subsetScore = hitDocs.getScore(i);
+
+				if (scoredFieldNamesCount > 0) {
+					subsetScore = subsetScore / scoredFieldNamesCount;
+				}
 
 				subsetScores.add(subsetScore);
 

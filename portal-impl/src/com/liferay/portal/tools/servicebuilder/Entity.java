@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.servicebuilder;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -25,6 +26,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class Entity {
 
@@ -34,6 +36,13 @@ public class Entity {
 		"liferaySessionFactory";
 
 	public static final String DEFAULT_TX_MANAGER = "liferayTransactionManager";
+
+	public static final Accessor<Entity, String> NAME_ACCESSOR =
+		new Accessor<Entity, String>() {
+			public String get(Entity entity) {
+				return entity.getName();
+			}
+		};
 
 	public static EntityColumn getColumn(
 		String name, List<EntityColumn> columnList) {
@@ -62,22 +71,22 @@ public class Entity {
 
 	public Entity(String name) {
 		this(
-			null, null, null, name,  null,null, null, false, false, true, null,
-			null, null, null, null, true, false, null, null, null, null, null,
-			null, null, null, null);
+			null, null, null, name,  null,null, null, false, false, false, true,
+			null, null, null, null, null, true, false, null, null, null, null,
+			null, null, null, null, null);
 	}
 
 	public Entity(
 		String packagePath, String portletName, String portletShortName,
 		String name, String humanName, String table, String alias, boolean uuid,
-		boolean localService, boolean remoteService, String persistenceClass,
-		String finderClass, String dataSource, String sessionFactory,
-		String txManager, boolean cacheEnabled, boolean jsonEnabled,
-		List<EntityColumn> pkList, List<EntityColumn> regularColList,
-		List<EntityColumn> blobList, List<EntityColumn> collectionList,
-		List<EntityColumn> columnList, EntityOrder order,
-		List<EntityFinder> finderList, List<Entity> referenceList,
-		List<String> txRequiredList) {
+		boolean uuidAccessor, boolean localService, boolean remoteService,
+		String persistenceClass, String finderClass, String dataSource,
+		String sessionFactory, String txManager, boolean cacheEnabled,
+		boolean jsonEnabled, List<EntityColumn> pkList,
+		List<EntityColumn> regularColList, List<EntityColumn> blobList,
+		List<EntityColumn> collectionList, List<EntityColumn> columnList,
+		EntityOrder order, List<EntityFinder> finderList,
+		List<Entity> referenceList, List<String> txRequiredList) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -88,6 +97,7 @@ public class Entity {
 		_table = table;
 		_alias = alias;
 		_uuid = uuid;
+		_uuidAccessor = uuidAccessor;
 		_localService = localService;
 		_remoteService = remoteService;
 		_persistenceClass = persistenceClass;
@@ -461,6 +471,10 @@ public class Entity {
 		return _uuid;
 	}
 
+	public boolean hasUuidAccessor() {
+		return _uuidAccessor;
+	}
+
 	public boolean isAttachedModel() {
 		if (hasColumn("classNameId") && hasColumn("classPK")) {
 			EntityColumn classNameIdCol = getColumn("classNameId");
@@ -676,5 +690,6 @@ public class Entity {
 	private String _txManager;
 	private List<String> _txRequiredList;
 	private boolean _uuid;
+	private boolean _uuidAccessor;
 
 }

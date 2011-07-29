@@ -24,12 +24,6 @@ Liferay = window.Liferay || {};
 		ajax: function(options, callback) {
 			var instance = this;
 
-			var type = 'POST';
-
-			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-				type = 'GET';
-			}
-
 			options.serviceParameters = Service.getParameters(options);
 			options.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
 
@@ -37,26 +31,27 @@ Liferay = window.Liferay || {};
 				cache: false,
 				data: options,
 				dataType: 'json',
-				on: {}
+				on: {
+					success: function(event, id, obj) {
+						var instance = this;
+
+						instance.destroy();
+
+						if (callback) {
+							callback.call(instance, instance.get('responseData'), obj);
+						}
+						else {
+							xHR = obj;
+						}
+					}
+				},
+				sync: !callback
 			};
 
 			var xHR = null;
 
 			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
 				config.method = 'GET';
-			}
-
-			if (callback) {
-				config.on.success = function(event, id, obj) {
-					callback.call(this, this.get('responseData'), obj);
-				};
-			}
-			else {
-				config.on.success = function(event, id, obj) {
-					xHR = obj;
-				};
-
-				config.sync = true;
 			}
 
 			A.io.request(instance.actionUrl, config);

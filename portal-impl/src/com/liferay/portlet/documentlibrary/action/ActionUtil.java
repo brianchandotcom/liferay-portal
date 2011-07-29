@@ -31,6 +31,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 import com.liferay.portlet.imagegallery.NoSuchFolderException;
 
 import java.util.ArrayList;
@@ -114,6 +115,10 @@ public class ActionUtil {
 
 			request.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+		}
+
+		if (fileEntry != null) {
+			RawMetadataProcessor.generateMetadata(fileEntry);
 		}
 	}
 

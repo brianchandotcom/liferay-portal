@@ -14,25 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.messaging;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-
-import java.io.InputStream;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 
 /**
  * @author Miguel Pastor
@@ -41,33 +26,9 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)message.getPayload();
+		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		DLFileVersion dlFileVersion =
-			DLFileVersionLocalServiceUtil.getLatestFileVersion(
-				dlFileEntry.getFileEntryId(), false);
-
-		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
-			dlFileVersion.getVersion());
-
-		Map<String, Fields> rawMetadataMap =
-			RawMetadataProcessorUtil.getRawMetadataMap(inputStream);
-
-		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getClassStructures(
-				PortalUtil.getClassNameId(DLFileEntry.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(dlFileEntry.getGroupId());
-		serviceContext.setUserId(dlFileEntry.getUserId());
-
-		DLFileEntryMetadataLocalServiceUtil.updateFileEntryMetadata(
-			dlFileEntry.getCompanyId(), ddmStructures, 0L,
-			dlFileEntry.getFileEntryId(), dlFileVersion.getFileVersionId(),
-			rawMetadataMap, serviceContext);
+		RawMetadataProcessor.saveMetadata(fileVersion);
 	}
 
 }

@@ -198,6 +198,10 @@
 			<finder-column name="DDMStructureId" />
 			<finder-column name="fileVersionId" />
 		</finder>
+        <finder name="F_V" return-type="DLFileEntryMetadata">
+			<finder-column name="fileEntryId" />
+			<finder-column name="fileVersionId" />
+		</finder>
 
 		<!-- References -->
 

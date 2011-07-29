@@ -739,6 +739,52 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
+	* Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
+	*
+	* @param fileEntryId the file entry ID
+	* @param fileVersionId the file version ID
+	* @return the matching document library file entry metadata
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata findByF_V(
+		long fileEntryId, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		return getPersistence().findByF_V(fileEntryId, fileVersionId);
+	}
+
+	/**
+	* Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param fileEntryId the file entry ID
+	* @param fileVersionId the file version ID
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchByF_V(
+		long fileEntryId, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByF_V(fileEntryId, fileVersionId);
+	}
+
+	/**
+	* Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param fileEntryId the file entry ID
+	* @param fileVersionId the file version ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchByF_V(
+		long fileEntryId, long fileVersionId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByF_V(fileEntryId, fileVersionId, retrieveFromCache);
+	}
+
+	/**
 	* Returns all the document library file entry metadatas.
 	*
 	* @return the document library file entry metadatas
@@ -845,6 +891,19 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
+	* Removes the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; from the database.
+	*
+	* @param fileEntryId the file entry ID
+	* @param fileVersionId the file version ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByF_V(long fileEntryId, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		getPersistence().removeByF_V(fileEntryId, fileVersionId);
+	}
+
+	/**
 	* Removes all the document library file entry metadatas from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -913,6 +972,19 @@ public class DLFileEntryMetadataUtil {
 	public static int countByD_F(long DDMStructureId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByD_F(DDMStructureId, fileVersionId);
+	}
+
+	/**
+	* Returns the number of document library file entry metadatas where fileEntryId = &#63; and fileVersionId = &#63;.
+	*
+	* @param fileEntryId the file entry ID
+	* @param fileVersionId the file version ID
+	* @return the number of matching document library file entry metadatas
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByF_V(long fileEntryId, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByF_V(fileEntryId, fileVersionId);
 	}
 
 	/**

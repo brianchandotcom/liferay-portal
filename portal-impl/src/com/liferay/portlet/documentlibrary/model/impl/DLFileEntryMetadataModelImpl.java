@@ -165,7 +165,17 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	}
 
 	public void setFileEntryId(long fileEntryId) {
+		if (!_setOriginalFileEntryId) {
+			_setOriginalFileEntryId = true;
+
+			_originalFileEntryId = _fileEntryId;
+		}
+
 		_fileEntryId = fileEntryId;
+	}
+
+	public long getOriginalFileEntryId() {
+		return _originalFileEntryId;
 	}
 
 	public long getFileVersionId() {
@@ -286,6 +296,10 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataModelImpl._setOriginalDDMStructureId = false;
 
+		dlFileEntryMetadataModelImpl._originalFileEntryId = dlFileEntryMetadataModelImpl._fileEntryId;
+
+		dlFileEntryMetadataModelImpl._setOriginalFileEntryId = false;
+
 		dlFileEntryMetadataModelImpl._originalFileVersionId = dlFileEntryMetadataModelImpl._fileVersionId;
 
 		dlFileEntryMetadataModelImpl._setOriginalFileVersionId = false;
@@ -395,6 +409,8 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	private boolean _setOriginalDDMStructureId;
 	private long _fileEntryTypeId;
 	private long _fileEntryId;
+	private long _originalFileEntryId;
+	private boolean _setOriginalFileEntryId;
 	private long _fileVersionId;
 	private long _originalFileVersionId;
 	private boolean _setOriginalFileVersionId;

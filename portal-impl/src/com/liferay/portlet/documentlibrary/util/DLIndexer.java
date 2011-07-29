@@ -39,18 +39,23 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreIndexer;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -138,8 +143,27 @@ public class DLIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, "fileEntryTypeId", false);
 		addSearchTerm(searchQuery, searchContext, "path", true);
 
+		// File entry types
+
+		Set<DDMStructure> ddmStructuresSet = new TreeSet<DDMStructure>();
+
+		for (long groupId : searchContext.getGroupIds()) {
+			List<DLFileEntryType> dlFileEntryTypes =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(groupId);
+
+			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+				ddmStructuresSet.addAll(dlFileEntryType.getDDMStructures());
+			}
+		}
+
+		for (DDMStructure ddmStructure : ddmStructuresSet) {
+			addSearchDDMStruture(searchQuery, searchContext, ddmStructure);
+		}
+
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
+
+		// Expando
 
 		if (params != null) {
 			String expandoAttributes = (String)params.get("expandoAttributes");
@@ -152,14 +176,14 @@ public class DLIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		DLFileEntry fileEntry = (DLFileEntry)obj;
+		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
 		FileModel fileModel = new FileModel();
 
-		fileModel.setCompanyId(fileEntry.getCompanyId());
-		fileModel.setFileName(fileEntry.getName());
+		fileModel.setCompanyId(dlFileEntry.getCompanyId());
+		fileModel.setFileName(dlFileEntry.getName());
 		fileModel.setPortletId(PORTLET_ID);
-		fileModel.setRepositoryId(fileEntry.getDataRepositoryId());
+		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
 
@@ -168,38 +192,38 @@ public class DLIndexer extends BaseIndexer {
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		DLFileEntry fileEntry = (DLFileEntry)obj;
+		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
 		FileModel fileModel = new FileModel();
 
 		long[] assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
 		fileModel.setAssetCategoryIds(assetCategoryIds);
 
 		String[] assetCategoryNames =
 			AssetCategoryLocalServiceUtil.getCategoryNames(
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
 		fileModel.setAssetCategoryNames(assetCategoryNames);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
 		fileModel.setAssetTagNames(assetTagNames);
 
-		fileModel.setCompanyId(fileEntry.getCompanyId());
-		fileModel.setCreateDate(fileEntry.getCreateDate());
-		fileModel.setFileEntryId(fileEntry.getFileEntryId());
-		fileModel.setFileName(fileEntry.getName());
-		fileModel.setGroupId(fileEntry.getGroupId());
-		fileModel.setModifiedDate(fileEntry.getModifiedDate());
+		fileModel.setCompanyId(dlFileEntry.getCompanyId());
+		fileModel.setCreateDate(dlFileEntry.getCreateDate());
+		fileModel.setFileEntryId(dlFileEntry.getFileEntryId());
+		fileModel.setFileName(dlFileEntry.getName());
+		fileModel.setGroupId(dlFileEntry.getGroupId());
+		fileModel.setModifiedDate(dlFileEntry.getModifiedDate());
 		fileModel.setPortletId(PORTLET_ID);
-		fileModel.setProperties(fileEntry.getLuceneProperties());
-		fileModel.setRepositoryId(fileEntry.getDataRepositoryId());
-		fileModel.setUserId(fileEntry.getUserId());
-		fileModel.setUserName(fileEntry.getUserName());
-		fileModel.setUserUuid(fileEntry.getUserUuid());
+		fileModel.setProperties(dlFileEntry.getLuceneProperties());
+		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
+		fileModel.setUserId(dlFileEntry.getUserId());
+		fileModel.setUserName(dlFileEntry.getUserName());
+		fileModel.setUserUuid(dlFileEntry.getUserUuid());
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
 
@@ -239,21 +263,22 @@ public class DLIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		DLFileEntry fileEntry = (DLFileEntry)obj;
+		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		Document document = getDocument(fileEntry);
+		Document document = getDocument(dlFileEntry);
 
 		if (document != null) {
-			SearchEngineUtil.updateDocument(fileEntry.getCompanyId(), document);
+			SearchEngineUtil.updateDocument(
+				dlFileEntry.getCompanyId(), document);
 		}
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 			classPK);
 
-		doReindex(fileEntry);
+		doReindex(dlFileEntry);
 	}
 
 	@Override
@@ -287,13 +312,13 @@ public class DLIndexer extends BaseIndexer {
 			long companyId, int folderStart, int folderEnd)
 		throws Exception {
 
-		List<DLFolder> folders = DLFolderLocalServiceUtil.getCompanyFolders(
+		List<DLFolder> dlFolders = DLFolderLocalServiceUtil.getCompanyFolders(
 			companyId, folderStart, folderEnd);
 
-		for (DLFolder folder : folders) {
+		for (DLFolder dlFolder : dlFolders) {
 			String portletId = PortletKeys.DOCUMENT_LIBRARY;
-			long groupId = folder.getGroupId();
-			long folderId = folder.getFolderId();
+			long groupId = dlFolder.getGroupId();
+			long folderId = dlFolder.getFolderId();
 
 			String[] newIds = {
 				String.valueOf(companyId), portletId,

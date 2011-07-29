@@ -213,7 +213,8 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
 		sb.append(field.getName());
 		sb.append("\" type=\"text\">");
-		sb.append("<meta-data><entry name=\"label\"><![CDATA[metadata.");
+		sb.append("<meta-data locale=\"en_US\">");
+		sb.append("<entry name=\"label\"><![CDATA[metadata.");
 		sb.append(name);
 		sb.append(StringPool.PERIOD);
 		sb.append(field.getName());
@@ -235,7 +236,9 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		sb.append("]]></name>");
 		sb.append("<description><![CDATA[");
 		sb.append(name);
-		sb.append("]]></description><root>");
+		sb.append("]]></description>");
+		sb.append(
+			"<root available-locales=\"en_US\" default-locale=\"en_US\">");
 
 		for (Field field : fields) {
 			sb.append(buildDLRawMetadataElementXML(name, field));

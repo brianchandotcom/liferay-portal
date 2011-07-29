@@ -108,7 +108,7 @@ if (!selectableTree) {
 					newNode.label = node.name;
 
 					if (node.layoutRevisionId) {
-						newNode.label += Lang.sub(' [{layoutSetBranchName} {layoutRevisionId}]', node);
+						newNode.label += Lang.sub(' [{layoutBranchName} {layoutRevisionId}]', node);
 
 						if (node.incomplete) {
 							newNode.label = [newNode.label, 'incomplete'].join('');

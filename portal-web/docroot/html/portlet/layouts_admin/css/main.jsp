@@ -299,6 +299,25 @@
 		}
 	}
 
+	.layoutset-branch {
+		color: #FFFFFF;
+		display: inline-block;
+		font-weight: bold;
+		padding: 0.3em;
+		text-shadow: 1px 1px #000;
+	}
+
+	.manage-pages-branch-menu.lfr-actions {
+		.lfr-trigger strong {
+			min-width: 0;
+
+		}
+
+		li img {
+				padding: 0;
+		}
+	}
+
 	.site-membership-type {
 		font-weight: bold;
 		padding: 0 0 15px;

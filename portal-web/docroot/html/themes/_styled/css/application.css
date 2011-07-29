@@ -430,6 +430,10 @@
 	text-decoration: none;
 }
 
+.lfr-menu-list ul li.disabled .taglib-icon {
+	color: #666;
+}
+
 .aui-menu-content li a.aui-focus, .lfr-menu-list ul .taglib-icon.aui-focus, .lfr-menu-expanded li a:focus {
 	background-color: #5B677D;
 	color: #FFF;

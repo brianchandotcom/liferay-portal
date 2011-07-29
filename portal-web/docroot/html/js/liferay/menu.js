@@ -59,6 +59,8 @@ AUI().add(
 
 		var SELECTOR_ANCHOR = 'a';
 
+		var SELECTOR_TEXT = 'a, span';
+
 		var SELECTOR_LIST_ITEM = 'li';
 
 		var SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
@@ -185,7 +187,7 @@ AUI().add(
 
 					var options = {
 						data: function(node) {
-							return trim(node.one(SELECTOR_ANCHOR).text());
+							return trim(node.one(SELECTOR_TEXT).text());
 						},
 						input: '#' + searchId,
 						nodes: '#' + listNode.guid() + ' > li'

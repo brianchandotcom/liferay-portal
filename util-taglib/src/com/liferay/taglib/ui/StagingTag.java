@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class StagingTag extends IncludeTag {
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setExtended(boolean extended) {
 		_extended = extended;
 	}
@@ -31,8 +35,16 @@ public class StagingTag extends IncludeTag {
 		_groupId = groupId;
 	}
 
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
 		_layoutSetBranchId = layoutSetBranchId;
+	}
+
+	public void setMessage(String message) {
+		_message = message;
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
@@ -54,13 +66,16 @@ public class StagingTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-ui:staging:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:staging:extended", String.valueOf(_extended));
 		request.setAttribute(
 			"liferay-ui:staging:groupId", String.valueOf(_groupId));
+		request.setAttribute("liferay-ui:staging:icon", _icon);
 		request.setAttribute(
 			"liferay-ui:staging:layoutSetBranchId",
 			String.valueOf(_layoutSetBranchId));
+		request.setAttribute("liferay-ui:staging:message", _message);
 		request.setAttribute(
 			"liferay-ui:staging:privateLayout", String.valueOf(_privateLayout));
 		request.setAttribute(
@@ -72,9 +87,12 @@ public class StagingTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/staging/page.jsp";
 
+	private String _cssClass;
 	private boolean _extended = true;
 	private long _groupId;
+	private String _icon = "/dockbar/staging.png";
 	private long _layoutSetBranchId;
+	private String _message = "staging";
 	private boolean _privateLayout;
 	private long _selPlid;
 	private boolean _showManageBranches;

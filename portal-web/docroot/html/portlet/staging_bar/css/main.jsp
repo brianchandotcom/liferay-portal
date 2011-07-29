@@ -51,6 +51,16 @@
 	}
 
 	.aui-tab-active {
+		.layoutset-branches-menu.lfr-actions {
+			li .taglib-text {
+				color: #FFFFFF;
+			}
+			.lfr-trigger strong {
+				padding: 0;
+				text-shadow: 1px 1px #000;
+			}
+		}
+
 		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
 			background-color: #EEE;
 			background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
@@ -60,6 +70,15 @@
 	.branch-results {
 		min-height: 300px;
 	}
+
+	.layoutset-branches-menu.lfr-actions {
+		float: none;
+
+		.lfr-trigger strong {
+			display: inline;
+		}
+	}
+
 
 	.staging-bar {
 		background-color: #888;
@@ -103,9 +122,10 @@
 
 					.layout-branch-description {
 						font-style: italic;
+						margin-bottom: 0.5em;
 					}
 
-					.manage-page-variations a {
+					.manage-layout-branches-tab a {
 						color: #EEE;
 					}
 

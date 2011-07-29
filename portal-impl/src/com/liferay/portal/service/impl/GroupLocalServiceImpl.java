@@ -379,10 +379,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		// Layout set branches
 
 		layoutSetBranchLocalService.deleteLayoutSetBranches(
-			group.getGroupId(), true);
+			group.getGroupId(), true, true);
 
 		layoutSetBranchLocalService.deleteLayoutSetBranches(
-			group.getGroupId(), false);
+			group.getGroupId(), false, true);
 
 		// Layout sets
 

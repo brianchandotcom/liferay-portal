@@ -115,7 +115,7 @@ if (layout != null) {
 			function() {
 				new Liferay.Navigation(
 					{
-						layoutIds: [<%= ListUtil.toString(layouts, "layoutId") %>],
+						layoutIds: [<%= ListUtil.toString(layouts, Layout.LAYOUTID_ACCESSOR) %>],
 
 						<c:if test="<%= layoutRevision != null %>">
 							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',

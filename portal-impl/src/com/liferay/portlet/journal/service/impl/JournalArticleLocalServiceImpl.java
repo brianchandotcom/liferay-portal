@@ -2301,7 +2301,8 @@ public class JournalArticleLocalServiceImpl
 								AssetLinkConstants.TYPE_RELATED);
 
 						long[] assetLinkEntryIds = StringUtil.split(
-							ListUtil.toString(assetLinks, "entryId2"), 0L);
+							ListUtil.toString(
+								assetLinks, AssetLink.ENTRYID2_ACCESSOR), 0L);
 
 						boolean visible = true;
 

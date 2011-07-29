@@ -512,7 +512,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	protected String[] getTagNames(List <AssetTag>tags) {
-		return StringUtil.split(ListUtil.toString(tags, "name"));
+		return StringUtil.split(
+			ListUtil.toString(tags, AssetTag.NAME_ACCESSOR));
 	}
 
 	protected void reindex(List<AssetEntry> entries) throws PortalException {

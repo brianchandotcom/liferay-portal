@@ -462,13 +462,15 @@ public class AssetCategoryLocalServiceImpl
 		return category;
 	}
 
-	protected long[] getCategoryIds(List <AssetCategory>categories) {
+	protected long[] getCategoryIds(List<AssetCategory> categories) {
 		return StringUtil.split(
-			ListUtil.toString(categories, "categoryId"), 0L);
+			ListUtil.toString(categories, AssetCategory.CATEGORYID_ACCESSOR),
+			0L);
 	}
 
 	protected String[] getCategoryNames(List<AssetCategory> categories) {
-		return StringUtil.split(ListUtil.toString(categories, "name"));
+		return StringUtil.split(
+			ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
 	}
 
 	protected void updateChildrenVocabularyId (

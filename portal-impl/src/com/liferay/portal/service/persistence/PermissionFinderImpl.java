@@ -442,8 +442,8 @@ public class PermissionFinderImpl
 		throws SystemException {
 
 		Object[] finderArgs = new Object[] {
-			ListUtil.toString(permissions, "permissionId"),
-			ListUtil.toString(roles, "roleId")
+			ListUtil.toString(permissions, Permission.PERMISSIONID_ACCESSOR),
+			ListUtil.toString(roles, Role.ROLEID_ACCESSOR)
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(

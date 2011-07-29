@@ -114,7 +114,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				href="<%= rowHREF %>"
 				index="<%= j %>"
 				name="<%= fileEntryColumn %>"
-				value='<%= ListUtil.toString(assetTags, "name", StringPool.COMMA_AND_SPACE) %>'
+				value='<%= ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE) %>'
 			/>
 		</c:when>
 	</c:choose>

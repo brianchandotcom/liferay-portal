@@ -843,6 +843,28 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockModelImpl">
+		<attributes>
+			<id name="resourceBlockId" />
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="name" />
+			<basic name="permissionsHash" />
+			<basic name="referenceCount" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl">
+		<id-class class="com.liferay.portal.service.persistence.ResourceBlockPermissionPK" />
+		<attributes>
+			<id name="resourceBlockId" />
+			<id name="roleId" />
+			<basic name="actionIds" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ResourceCodeModelImpl">
 		<attributes>
 			<id name="codeId" />
@@ -862,6 +884,18 @@
 			<basic name="primKey" />
 			<basic name="roleId" />
 			<basic name="ownerId" />
+			<basic name="actionIds" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.ResourceTypePermissionModelImpl">
+		<id-class class="com.liferay.portal.service.persistence.ResourceTypePermissionPK" />
+		<attributes>
+			<id name="companyId" />
+			<id name="groupId" />
+			<id name="name" />
+			<id name="roleId" />
 			<basic name="actionIds" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -3534,12 +3568,24 @@
 		<table name="ResourceAction" />
 		<attributes />
 	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceBlockImpl" name="ResourceBlock">
+		<table name="ResourceBlock" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceBlockPermissionImpl" name="ResourceBlockPermission">
+		<table name="ResourceBlockPermission" />
+		<attributes />
+	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourceCodeImpl" name="ResourceCode">
 		<table name="ResourceCode" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ResourcePermissionImpl" name="ResourcePermission">
 		<table name="ResourcePermission" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.ResourceTypePermissionImpl" name="ResourceTypePermission">
+		<table name="ResourceTypePermission" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.RoleImpl" name="Role">

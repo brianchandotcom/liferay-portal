@@ -681,6 +681,19 @@
 		<field name="actionId" type="String" />
 		<field name="bitwiseValue" type="long" />
 	</model>
+	<model name="com.liferay.portal.model.ResourceBlock">
+		<field name="resourceBlockId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="permissionsHash" type="String" />
+		<field name="referenceCount" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceBlockPermission">
+		<field name="resourceBlockId" type="long" />
+		<field name="roleId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
 	<model name="com.liferay.portal.model.ResourceCode">
 		<field name="codeId" type="long" />
 		<field name="companyId" type="long" />
@@ -701,6 +714,13 @@
 		</field>
 		<field name="roleId" type="long" />
 		<field name="ownerId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceTypePermission">
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.Role">

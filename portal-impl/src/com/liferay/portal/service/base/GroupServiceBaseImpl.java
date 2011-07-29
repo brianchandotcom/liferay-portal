@@ -88,11 +88,15 @@ import com.liferay.portal.service.RegionService;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceActionLocalService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourceBlockPermissionLocalService;
+import com.liferay.portal.service.ResourceBlockService;
 import com.liferay.portal.service.ResourceCodeLocalService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.ResourcePermissionService;
 import com.liferay.portal.service.ResourceService;
+import com.liferay.portal.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.RoleService;
 import com.liferay.portal.service.ServiceComponentLocalService;
@@ -169,11 +173,14 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.ServiceComponentPersistence;
@@ -2478,6 +2485,101 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the resource block local service.
+	 *
+	 * @return the resource block local service
+	 */
+	public ResourceBlockLocalService getResourceBlockLocalService() {
+		return resourceBlockLocalService;
+	}
+
+	/**
+	 * Sets the resource block local service.
+	 *
+	 * @param resourceBlockLocalService the resource block local service
+	 */
+	public void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+		this.resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	/**
+	 * Returns the resource block remote service.
+	 *
+	 * @return the resource block remote service
+	 */
+	public ResourceBlockService getResourceBlockService() {
+		return resourceBlockService;
+	}
+
+	/**
+	 * Sets the resource block remote service.
+	 *
+	 * @param resourceBlockService the resource block remote service
+	 */
+	public void setResourceBlockService(
+		ResourceBlockService resourceBlockService) {
+		this.resourceBlockService = resourceBlockService;
+	}
+
+	/**
+	 * Returns the resource block persistence.
+	 *
+	 * @return the resource block persistence
+	 */
+	public ResourceBlockPersistence getResourceBlockPersistence() {
+		return resourceBlockPersistence;
+	}
+
+	/**
+	 * Sets the resource block persistence.
+	 *
+	 * @param resourceBlockPersistence the resource block persistence
+	 */
+	public void setResourceBlockPersistence(
+		ResourceBlockPersistence resourceBlockPersistence) {
+		this.resourceBlockPersistence = resourceBlockPersistence;
+	}
+
+	/**
+	 * Returns the resource block permission local service.
+	 *
+	 * @return the resource block permission local service
+	 */
+	public ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+		return resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource block permission local service.
+	 *
+	 * @param resourceBlockPermissionLocalService the resource block permission local service
+	 */
+	public void setResourceBlockPermissionLocalService(
+		ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
+		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource block permission persistence.
+	 *
+	 * @return the resource block permission persistence
+	 */
+	public ResourceBlockPermissionPersistence getResourceBlockPermissionPersistence() {
+		return resourceBlockPermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource block permission persistence.
+	 *
+	 * @param resourceBlockPermissionPersistence the resource block permission persistence
+	 */
+	public void setResourceBlockPermissionPersistence(
+		ResourceBlockPermissionPersistence resourceBlockPermissionPersistence) {
+		this.resourceBlockPermissionPersistence = resourceBlockPermissionPersistence;
+	}
+
+	/**
 	 * Returns the resource code local service.
 	 *
 	 * @return the resource code local service
@@ -2589,6 +2691,44 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	public void setResourcePermissionFinder(
 		ResourcePermissionFinder resourcePermissionFinder) {
 		this.resourcePermissionFinder = resourcePermissionFinder;
+	}
+
+	/**
+	 * Returns the resource type permission local service.
+	 *
+	 * @return the resource type permission local service
+	 */
+	public ResourceTypePermissionLocalService getResourceTypePermissionLocalService() {
+		return resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource type permission local service.
+	 *
+	 * @param resourceTypePermissionLocalService the resource type permission local service
+	 */
+	public void setResourceTypePermissionLocalService(
+		ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
+		this.resourceTypePermissionLocalService = resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource type permission persistence.
+	 *
+	 * @return the resource type permission persistence
+	 */
+	public ResourceTypePermissionPersistence getResourceTypePermissionPersistence() {
+		return resourceTypePermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource type permission persistence.
+	 *
+	 * @param resourceTypePermissionPersistence the resource type permission persistence
+	 */
+	public void setResourceTypePermissionPersistence(
+		ResourceTypePermissionPersistence resourceTypePermissionPersistence) {
+		this.resourceTypePermissionPersistence = resourceTypePermissionPersistence;
 	}
 
 	/**
@@ -5152,6 +5292,16 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockLocalService.class)
+	protected ResourceBlockLocalService resourceBlockLocalService;
+	@BeanReference(type = ResourceBlockService.class)
+	protected ResourceBlockService resourceBlockService;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockPermissionLocalService.class)
+	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodeLocalService.class)
 	protected ResourceCodeLocalService resourceCodeLocalService;
 	@BeanReference(type = ResourceCodePersistence.class)
@@ -5164,6 +5314,10 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
+	@BeanReference(type = ResourceTypePermissionLocalService.class)
+	protected ResourceTypePermissionLocalService resourceTypePermissionLocalService;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 	@BeanReference(type = RoleService.class)

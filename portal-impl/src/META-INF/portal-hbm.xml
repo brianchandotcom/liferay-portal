@@ -49,8 +49,11 @@
 	<import class="com.liferay.portal.model.RepositoryEntry" />
 	<import class="com.liferay.portal.model.Resource" />
 	<import class="com.liferay.portal.model.ResourceAction" />
+	<import class="com.liferay.portal.model.ResourceBlock" />
+	<import class="com.liferay.portal.model.ResourceBlockPermission" />
 	<import class="com.liferay.portal.model.ResourceCode" />
 	<import class="com.liferay.portal.model.ResourcePermission" />
+	<import class="com.liferay.portal.model.ResourceTypePermission" />
 	<import class="com.liferay.portal.model.Role" />
 	<import class="com.liferay.portal.model.ServiceComponent" />
 	<import class="com.liferay.portal.model.Shard" />
@@ -785,6 +788,25 @@
 		<property name="actionId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bitwiseValue" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+	<class name="com.liferay.portal.model.impl.ResourceBlockImpl" table="ResourceBlock">
+		<cache usage="read-write" />
+		<id name="resourceBlockId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="permissionsHash" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="referenceCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.portal.model.impl.ResourceBlockPermissionImpl" table="ResourceBlockPermission">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPK">
+			<key-property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
 	<class name="com.liferay.portal.model.impl.ResourceCodeImpl" table="ResourceCode">
 		<cache usage="read-write" />
 		<id name="codeId" type="long">
@@ -805,6 +827,16 @@
 		<property name="primKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.ResourceTypePermissionPK">
+			<key-property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+			<key-property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RoleImpl" table="Role_">

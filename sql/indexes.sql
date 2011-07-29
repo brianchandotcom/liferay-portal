@@ -554,6 +554,13 @@ create unique index IX_354AA664 on RepositoryEntry (uuid_, groupId);
 create index IX_81F2DB09 on ResourceAction (name);
 create unique index IX_EDB9986E on ResourceAction (name, actionId);
 
+create index IX_DA30B086 on ResourceBlock (companyId, groupId, name);
+create unique index IX_AEEA209C on ResourceBlock (companyId, groupId, name, permissionsHash);
+create index IX_2D4CC782 on ResourceBlock (companyId, name);
+
+create index IX_4AB3756 on ResourceBlockPermission (resourceBlockId);
+create unique index IX_D63D20BB on ResourceBlockPermission (resourceBlockId, roleId);
+
 create index IX_717FDD47 on ResourceCode (companyId);
 create unique index IX_A32C097E on ResourceCode (companyId, name, scope);
 create index IX_AACAFF40 on ResourceCode (name);
@@ -565,6 +572,9 @@ create index IX_2200AA69 on ResourcePermission (companyId, name, scope, primKey)
 create unique index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey, roleId);
 create unique index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_A37A0588 on ResourcePermission (roleId);
+
+create index IX_7D81F66F on ResourceTypePermission (companyId, name, roleId);
+create index IX_A82690E2 on ResourceTypePermission (roleId);
 
 create index IX_2578FBD3 on Resource_ (codeId);
 create unique index IX_67DE7856 on Resource_ (codeId, primKey);

@@ -1462,6 +1462,31 @@ create table RepositoryEntry (
 	mappedId VARCHAR(75) null
 );
 
+create table ResourceBlock (
+	resourceBlockId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	name VARCHAR(75) null,
+	permissionsHash VARCHAR(75) null,
+	referenceCount LONG
+);
+
+create table ResourceBlockPermission (
+	resourceBlockId LONG not null,
+	roleId LONG not null,
+	actionIds LONG,
+	primary key (resourceBlockId, roleId)
+);
+
+create table ResourceTypePermission (
+	companyId LONG not null,
+	groupId LONG not null,
+	name VARCHAR(75) not null,
+	roleId LONG not null,
+	actionIds LONG,
+	primary key (companyId, groupId, name, roleId)
+);
+
 create table Resource_ (
 	resourceId LONG not null primary key,
 	codeId LONG,

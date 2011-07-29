@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("site.group");
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 Long liveGroupId = (Long)request.getAttribute("site.liveGroupId");
 
 String host = PortalUtil.getHost(request);
@@ -29,7 +29,7 @@ String publicSitemapUrl = sitemapUrl;
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, false);
 
 if (!host.equals(publicLayoutSet.getVirtualHostname())) {
-	publicSitemapUrl += "?groupId=" + group.getGroupId() + "&privateLayout=" + false;
+	publicSitemapUrl += "?groupId=" + liveGroup.getGroupId() + "&privateLayout=" + false;
 }
 
 String privateSitemapUrl = sitemapUrl;
@@ -37,7 +37,7 @@ String privateSitemapUrl = sitemapUrl;
 LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, true);
 
 if (!host.equals(privateLayoutSet.getVirtualHostname())) {
-	privateSitemapUrl += "?groupId=" + group.getGroupId() + "&privateLayout=" + true;
+	privateSitemapUrl += "?groupId=" + liveGroup.getGroupId() + "&privateLayout=" + true;
 }
 %>
 

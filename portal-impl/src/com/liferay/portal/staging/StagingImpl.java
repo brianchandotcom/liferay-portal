@@ -393,7 +393,7 @@ public class StagingImpl implements Staging {
 				(scopeGroup.getGroupId() != liveGroup.getGroupId())) {
 
 				String redirect = ParamUtil.getString(
-					portletRequest, "pagesRedirect");
+					portletRequest, "redirect");
 
 				redirect = HttpUtil.removeParameter(redirect, "refererPlid");
 
@@ -1227,8 +1227,10 @@ public class StagingImpl implements Staging {
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
-			disableStaging(
-				portletRequest, scopeGroup, liveGroup, serviceContext);
+			if (liveGroup.hasStagingGroup()) {
+				disableStaging(
+					portletRequest, scopeGroup, liveGroup, serviceContext);
+			}
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
 			enableLocalStaging(

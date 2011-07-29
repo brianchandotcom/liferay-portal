@@ -47,7 +47,7 @@ scoped variable is the type of the exception thrown.
 	&lt;when&gt; and &lt;otherwise&gt;
     </description>
     <name>choose</name>
-    <tag-class>org.apache.taglibs.standard.tag.common.core.ChooseTag</tag-class>
+    <tag-class>com.liferay.taglib.core.ChooseTag</tag-class>
     <body-content>JSP</body-content>
   </tag>
 
@@ -58,7 +58,7 @@ scoped variable is the type of the exception thrown.
 	scripting variable representing the evaluation of this condition
     </description>
     <name>if</name>
-    <tag-class>org.apache.taglibs.standard.tag.rt.core.IfTag</tag-class>
+    <tag-class>com.liferay.taglib.core.IfTag</tag-class>
     <body-content>JSP</body-content>
     <attribute>
         <description>
@@ -369,7 +369,7 @@ true.
         'false'
     </description>
     <name>otherwise</name>
-    <tag-class>org.apache.taglibs.standard.tag.common.core.OtherwiseTag</tag-class>
+    <tag-class>com.liferay.taglib.core.OtherwiseTag</tag-class>
     <body-content>JSP</body-content>
   </tag>
 
@@ -555,7 +555,7 @@ resource that belongs to a foreign context.
 	condition evalutes to 'true'
     </description>
     <name>when</name>
-    <tag-class>org.apache.taglibs.standard.tag.rt.core.WhenTag</tag-class>
+    <tag-class>com.liferay.taglib.core.WhenTag</tag-class>
     <body-content>JSP</body-content>
     <attribute>
         <description>

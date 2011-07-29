@@ -140,7 +140,7 @@ PortalUtil.setPageDescription(entry.getDescription(), request);
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId());
 
-PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"), request);
+PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 
 PortalUtil.addPortletBreadcrumbEntry(request, entry.getTitle(), currentURL);
 %>

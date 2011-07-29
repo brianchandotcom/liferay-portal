@@ -191,11 +191,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_assetCategoryUuidsMap.put(
 			getPrimaryKeyString(clazz, classPK),
-			StringUtil.split(ListUtil.toString(assetCategories, "uuid")));
+			StringUtil.split(ListUtil.toString(
+				assetCategories, AssetCategory.UUID_ACCESSOR)));
 		_assetCategoryIdsMap.put(
 			getPrimaryKeyString(clazz, classPK),
 			StringUtil.split(
-				ListUtil.toString(assetCategories, "categoryId"), 0L));
+				ListUtil.toString(
+					assetCategories, AssetCategory.CATEGORYID_ACCESSOR), 0L));
 	}
 
 	public void addAssetCategories(

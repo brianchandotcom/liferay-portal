@@ -1426,7 +1426,7 @@ public class DLFileEntryLocalServiceImpl
 			assetEntry.getEntryId());
 
 		long[] assetLinkIds = StringUtil.split(
-			ListUtil.toString(assetLinks, "linkId"), 0L);
+			ListUtil.toString(assetLinks, AssetLink.LINKID_ACCESSOR), 0L);
 
 		return updateAsset(
 			userId, dlFileEntry, dlFileVersion, assetCategoryIds, assetTagNames,

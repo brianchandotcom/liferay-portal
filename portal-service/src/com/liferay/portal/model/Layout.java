@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Layout service. Represents a row in the &quot;Layout&quot; database table, with each column mapped to a property of this class.
  *
@@ -171,4 +173,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+
+	public static final Accessor<Layout, Long> LAYOUTID_ACCESSOR = new Accessor<Layout, Long>() {
+			public Long get(Layout layout) {
+				return layout.getLayoutId();
+			}
+		};
 }

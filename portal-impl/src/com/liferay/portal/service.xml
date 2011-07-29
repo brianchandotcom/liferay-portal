@@ -465,7 +465,7 @@
 		<!-- Other fields -->
 
 		<column name="privateLayout" type="boolean" />
-		<column name="layoutId" type="long" />
+		<column name="layoutId" type="long" accessor="true" />
 		<column name="parentLayoutId" type="long" />
 		<column name="name" type="String" localized="true" />
 		<column name="title" type="String" localized="true" />
@@ -930,7 +930,7 @@
 		<column name="parentOrganizationId" type="long" />
 		<column name="leftOrganizationId" type="long" />
 		<column name="rightOrganizationId" type="long" />
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="type" type="String" />
 		<column name="recursable" type="boolean" />
 		<column name="regionId" type="long" />
@@ -1156,7 +1156,7 @@
 
 		<!-- PK fields -->
 
-		<column name="permissionId" type="long" primary="true" />
+		<column name="permissionId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 
@@ -1297,7 +1297,7 @@
 
 		<!-- Other fields -->
 
-		<column name="portletId" type="String" />
+		<column name="portletId" type="String" accessor="true" />
 		<column name="roles" type="String" />
 		<column name="active" type="boolean" />
 
@@ -1658,7 +1658,7 @@
 
 		<!-- PK fields -->
 
-		<column name="roleId" type="long" primary="true" />
+		<column name="roleId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 
@@ -1668,7 +1668,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" />
 		<column name="type" type="int" />
@@ -2015,7 +2015,7 @@
 		<!-- Other fields -->
 
 		<column name="parentUserGroupId" type="long" />
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
         <column name="publicLayoutSetPrototypeId" type="long" />
         <column name="privateLayoutSetPrototypeId" type="long" />
@@ -2080,8 +2080,8 @@
 		<!-- PK fields -->
 
 		<column name="userId" type="long" primary="true" />
-		<column name="groupId" type="long" primary="true" />
-		<column name="roleId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" accessor="true" />
+		<column name="roleId" type="long" primary="true" accessor="true" />
 
 		<!-- Finder methods -->
 

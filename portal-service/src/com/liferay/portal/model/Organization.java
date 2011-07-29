@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Organization service. Represents a row in the &quot;Organization_&quot; database table, with each column mapped to a property of this class.
  *
@@ -84,4 +86,10 @@ public interface Organization extends OrganizationModel, PersistedModel {
 	public boolean isParentable();
 
 	public boolean isRoot();
+
+	public static final Accessor<Organization, String> NAME_ACCESSOR = new Accessor<Organization, String>() {
+			public String get(Organization organization) {
+				return organization.getName();
+			}
+		};
 }

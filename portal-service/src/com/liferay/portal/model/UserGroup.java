@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the UserGroup service. Represents a row in the &quot;UserGroup&quot; database table, with each column mapped to a property of this class.
  *
@@ -48,4 +50,10 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 	public boolean hasPublicLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public static final Accessor<UserGroup, String> NAME_ACCESSOR = new Accessor<UserGroup, String>() {
+			public String get(UserGroup userGroup) {
+				return userGroup.getName();
+			}
+		};
 }

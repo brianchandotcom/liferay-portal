@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the UserGroupRole service. Represents a row in the &quot;UserGroupRole&quot; database table, with each column mapped to a property of this class.
  *
@@ -40,4 +42,16 @@ public interface UserGroupRole extends UserGroupRoleModel, PersistedModel {
 	public com.liferay.portal.model.User getUser()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public static final Accessor<UserGroupRole, Long> GROUPID_ACCESSOR = new Accessor<UserGroupRole, Long>() {
+			public Long get(UserGroupRole userGroupRole) {
+				return userGroupRole.getGroupId();
+			}
+		};
+
+	public static final Accessor<UserGroupRole, Long> ROLEID_ACCESSOR = new Accessor<UserGroupRole, Long>() {
+			public Long get(UserGroupRole userGroupRole) {
+				return userGroupRole.getRoleId();
+			}
+		};
 }

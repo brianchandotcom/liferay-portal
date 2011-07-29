@@ -234,6 +234,19 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_S",
 			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_U_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByU_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByU_C",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_C",
@@ -335,6 +348,38 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_FIND_BY_U_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByU_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByU_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_U_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByU_C_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByU_C_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_C_S",
@@ -365,6 +410,23 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_U_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
+			FINDER_CLASS_NAME_LIST, "findByU_C_C_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
+			MBMessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByU_C_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -599,6 +661,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						com.liferay.portlet.messageboards.model.MBMessage.class.getName(),
 						messageId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						mbMessage.getSubject(), null));
+
+				mbMessage.setBody(SanitizerUtil.sanitize(companyId, groupId,
+						userId,
+						com.liferay.portlet.messageboards.model.MBMessage.class.getName(),
+						messageId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						mbMessage.getBody(), null));
 			}
 			catch (SanitizerException se) {
 				throw new SystemException(se);
@@ -5726,6 +5794,518 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long classNameId)
+		throws SystemException {
+		return findByU_C(userId, classNameId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long classNameId, int start,
+		int end) throws SystemException {
+		return findByU_C(userId, classNameId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long classNameId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, classNameId,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_First(long userId, long classNameId,
+		OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		List<MBMessage> list = findByU_C(userId, classNameId, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_Last(long userId, long classNameId,
+		OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		int count = countByU_C(userId, classNameId);
+
+		List<MBMessage> list = findByU_C(userId, classNameId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param messageId the primary key of the current message-boards message
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage[] findByU_C_PrevAndNext(long messageId, long userId,
+		long classNameId, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		MBMessage mbMessage = findByPrimaryKey(messageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBMessage[] array = new MBMessageImpl[3];
+
+			array[0] = getByU_C_PrevAndNext(session, mbMessage, userId,
+					classNameId, orderByComparator, true);
+
+			array[1] = mbMessage;
+
+			array[2] = getByU_C_PrevAndNext(session, mbMessage, userId,
+					classNameId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBMessage getByU_C_PrevAndNext(Session session,
+		MBMessage mbMessage, long userId, long classNameId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(classNameId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(mbMessage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBMessage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long[] classNameIds)
+		throws SystemException {
+		return findByU_C(userId, classNameIds, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long[] classNameIds,
+		int start, int end) throws SystemException {
+		return findByU_C(userId, classNameIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C(long userId, long[] classNameIds,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds),
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_USERID_5);
+
+			conjunctionable = true;
+
+			if ((classNameIds == null) || (classNameIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < classNameIds.length; i++) {
+					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_5);
+
+					if ((i + 1) < classNameIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (classNameIds != null) {
+					qPos.add(classNameIds);
+				}
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -9328,6 +9908,934 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C(long userId, long classNameId,
+		long classPK) throws SystemException {
+		return findByU_C_C(userId, classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C(long userId, long classNameId,
+		long classPK, int start, int end) throws SystemException {
+		return findByU_C_C(userId, classNameId, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C(long userId, long classNameId,
+		long classPK, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, classNameId, classPK,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_C,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C_C,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C_C,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_C_First(long userId, long classNameId,
+		long classPK, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		List<MBMessage> list = findByU_C_C(userId, classNameId, classPK, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_C_Last(long userId, long classNameId,
+		long classPK, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		int count = countByU_C_C(userId, classNameId, classPK);
+
+		List<MBMessage> list = findByU_C_C(userId, classNameId, classPK,
+				count - 1, count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param messageId the primary key of the current message-boards message
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage[] findByU_C_C_PrevAndNext(long messageId, long userId,
+		long classNameId, long classPK, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		MBMessage mbMessage = findByPrimaryKey(messageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBMessage[] array = new MBMessageImpl[3];
+
+			array[0] = getByU_C_C_PrevAndNext(session, mbMessage, userId,
+					classNameId, classPK, orderByComparator, true);
+
+			array[1] = mbMessage;
+
+			array[2] = getByU_C_C_PrevAndNext(session, mbMessage, userId,
+					classNameId, classPK, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBMessage getByU_C_C_PrevAndNext(Session session,
+		MBMessage mbMessage, long userId, long classNameId, long classPK,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_C_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_U_C_C_CLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(mbMessage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBMessage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long classNameId, int status)
+		throws SystemException {
+		return findByU_C_S(userId, classNameId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long classNameId,
+		int status, int start, int end) throws SystemException {
+		return findByU_C_S(userId, classNameId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long classNameId,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, classNameId, status,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_S,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(status);
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C_S,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C_S,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_S_First(long userId, long classNameId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		List<MBMessage> list = findByU_C_S(userId, classNameId, status, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_S_Last(long userId, long classNameId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		int count = countByU_C_S(userId, classNameId, status);
+
+		List<MBMessage> list = findByU_C_S(userId, classNameId, status,
+				count - 1, count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param messageId the primary key of the current message-boards message
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage[] findByU_C_S_PrevAndNext(long messageId, long userId,
+		long classNameId, int status, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		MBMessage mbMessage = findByPrimaryKey(messageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBMessage[] array = new MBMessageImpl[3];
+
+			array[0] = getByU_C_S_PrevAndNext(session, mbMessage, userId,
+					classNameId, status, orderByComparator, true);
+
+			array[1] = mbMessage;
+
+			array[2] = getByU_C_S_PrevAndNext(session, mbMessage, userId,
+					classNameId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBMessage getByU_C_S_PrevAndNext(Session session,
+		MBMessage mbMessage, long userId, long classNameId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_S_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(classNameId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(mbMessage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBMessage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param status the status
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long[] classNameIds,
+		int status) throws SystemException {
+		return findByU_C_S(userId, classNameIds, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long[] classNameIds,
+		int status, int start, int end) throws SystemException {
+		return findByU_C_S(userId, classNameIds, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_S(long userId, long[] classNameIds,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds), status,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_S,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_S_USERID_5);
+
+			conjunctionable = true;
+
+			if ((classNameIds == null) || (classNameIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < classNameIds.length; i++) {
+					query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_5);
+
+					if ((i + 1) < classNameIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_5);
+
+			conjunctionable = true;
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (classNameIds != null) {
+					qPos.add(classNameIds);
+				}
+
+				qPos.add(status);
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C_S,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C_S,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -10469,6 +11977,410 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @return the matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C_S(long userId, long classNameId,
+		long classPK, int status) throws SystemException {
+		return findByU_C_C_S(userId, classNameId, classPK, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @return the range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C_S(long userId, long classNameId,
+		long classPK, int status, int start, int end) throws SystemException {
+		return findByU_C_C_S(userId, classNameId, classPK, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBMessage> findByU_C_C_S(long userId, long classNameId,
+		long classPK, int status, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, classNameId, classPK, status,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_C_S,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(status);
+
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_C_C_S,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_C_C_S,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_C_S_First(long userId, long classNameId,
+		long classPK, int status, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		List<MBMessage> list = findByU_C_C_S(userId, classNameId, classPK,
+				status, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage findByU_C_C_S_Last(long userId, long classNameId,
+		long classPK, int status, OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		int count = countByU_C_C_S(userId, classNameId, classPK, status);
+
+		List<MBMessage> list = findByU_C_C_S(userId, classNameId, classPK,
+				status, count - 1, count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchMessageException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param messageId the primary key of the current message-boards message
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message-boards message
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage[] findByU_C_C_S_PrevAndNext(long messageId, long userId,
+		long classNameId, long classPK, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchMessageException, SystemException {
+		MBMessage mbMessage = findByPrimaryKey(messageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBMessage[] array = new MBMessageImpl[3];
+
+			array[0] = getByU_C_C_S_PrevAndNext(session, mbMessage, userId,
+					classNameId, classPK, status, orderByComparator, true);
+
+			array[1] = mbMessage;
+
+			array[2] = getByU_C_C_S_PrevAndNext(session, mbMessage, userId,
+					classNameId, classPK, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBMessage getByU_C_C_S_PrevAndNext(Session session,
+		MBMessage mbMessage, long userId, long classNameId, long classPK,
+		int status, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_C_S_USERID_2);
+
+		query.append(_FINDER_COLUMN_U_C_C_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_U_C_C_S_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_U_C_C_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(mbMessage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBMessage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns all the message-boards messages.
 	 *
 	 * @return the message-boards messages
@@ -10719,6 +12631,20 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Removes all the message-boards messages where userId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByU_C(long userId, long classNameId)
+		throws SystemException {
+		for (MBMessage mbMessage : findByU_C(userId, classNameId)) {
+			mbMessagePersistence.remove(mbMessage);
+		}
+	}
+
+	/**
 	 * Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -10820,6 +12746,36 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByU_C_C(long userId, long classNameId, long classPK)
+		throws SystemException {
+		for (MBMessage mbMessage : findByU_C_C(userId, classNameId, classPK)) {
+			mbMessagePersistence.remove(mbMessage);
+		}
+	}
+
+	/**
+	 * Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByU_C_S(long userId, long classNameId, int status)
+		throws SystemException {
+		for (MBMessage mbMessage : findByU_C_S(userId, classNameId, status)) {
+			mbMessagePersistence.remove(mbMessage);
+		}
+	}
+
+	/**
 	 * Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -10846,6 +12802,23 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public void removeByG_C_T_S(long groupId, long categoryId, long threadId,
 		int status) throws SystemException {
 		for (MBMessage mbMessage : findByG_C_T_S(groupId, categoryId, threadId,
+				status)) {
+			mbMessagePersistence.remove(mbMessage);
+		}
+	}
+
+	/**
+	 * Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByU_C_C_S(long userId, long classNameId, long classPK,
+		int status) throws SystemException {
+		for (MBMessage mbMessage : findByU_C_C_S(userId, classNameId, classPK,
 				status)) {
 			mbMessagePersistence.remove(mbMessage);
 		}
@@ -11707,6 +13680,154 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C(long userId, long classNameId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId, classNameId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = any &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C(long userId, long[] classNameIds)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds)
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_USERID_5);
+
+			conjunctionable = true;
+
+			if ((classNameIds == null) || (classNameIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < classNameIds.length; i++) {
+					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_5);
+
+					if ((i + 1) < classNameIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (classNameIds != null) {
+					qPos.add(classNameIds);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of message-boards messages where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -12310,6 +14431,234 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C_C(long userId, long classNameId, long classPK)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId, classNameId, classPK };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C_C,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_C_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_C,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param status the status
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C_S(long userId, long classNameId, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId, classNameId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C_S,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_S,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = any &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameIds the class name IDs
+	 * @param status the status
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C_S(long userId, long[] classNameIds, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, StringUtil.merge(classNameIds), status
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C_S,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_S_USERID_5);
+
+			conjunctionable = true;
+
+			if ((classNameIds == null) || (classNameIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < classNameIds.length; i++) {
+					query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_5);
+
+					if ((i + 1) < classNameIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_5);
+
+			conjunctionable = true;
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (classNameIds != null) {
+					qPos.add(classNameIds);
+				}
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_S,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -12507,6 +14856,75 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns the number of message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param status the status
+	 * @return the number of matching message-boards messages
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByU_C_C_S(long userId, long classNameId, long classPK,
+		int status) throws SystemException {
+		Object[] finderArgs = new Object[] { userId, classNameId, classPK, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_U_C_C_S,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_USERID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_U_C_C_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_C_S,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of message-boards messages.
 	 *
 	 * @return the number of message-boards messages
@@ -12649,6 +15067,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 = "mbMessage.status = ? AND mbMessage.categoryId != -1";
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "mbMessage.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "mbMessage.status = ?";
+	private static final String _FINDER_COLUMN_U_C_USERID_2 = "mbMessage.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_USERID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_U_C_USERID_2) + ")";
+	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_2 = "mbMessage.classNameId = ?";
+	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_U_C_CLASSNAMEID_2) + ")";
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "mbMessage.classPK = ?";
 	private static final String _FINDER_COLUMN_T_P_THREADID_2 = "mbMessage.threadId = ? AND ";
@@ -12666,6 +15090,18 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 = "mbMessage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_2 = "mbMessage.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_2 = "mbMessage.status = ?";
+	private static final String _FINDER_COLUMN_U_C_C_USERID_2 = "mbMessage.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_C_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_C_CLASSPK_2 = "mbMessage.classPK = ?";
+	private static final String _FINDER_COLUMN_U_C_S_USERID_2 = "mbMessage.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_S_USERID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_U_C_S_USERID_2) + ")";
+	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2) + ")";
+	private static final String _FINDER_COLUMN_U_C_S_STATUS_2 = "mbMessage.status = ?";
+	private static final String _FINDER_COLUMN_U_C_S_STATUS_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_U_C_S_STATUS_2) + ")";
 	private static final String _FINDER_COLUMN_C_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_S_CLASSPK_2 = "mbMessage.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_S_STATUS_2 = "mbMessage.status = ?";
@@ -12673,6 +15109,21 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_G_C_T_S_CATEGORYID_2 = "mbMessage.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_T_S_THREADID_2 = "mbMessage.threadId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_T_S_STATUS_2 = "mbMessage.status = ?";
+	private static final String _FINDER_COLUMN_U_C_C_S_USERID_2 = "mbMessage.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_C_S_CLASSPK_2 = "mbMessage.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_U_C_C_S_STATUS_2 = "mbMessage.status = ?";
+
+	private static String _removeConjunction(String sql) {
+		int pos = sql.indexOf(" AND ");
+
+		if (pos != -1) {
+			sql = sql.substring(0, pos);
+		}
+
+		return sql;
+	}
+
 	private static final String _FILTER_SQL_SELECT_MBMESSAGE_WHERE = "SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ";
 	private static final String _FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ";

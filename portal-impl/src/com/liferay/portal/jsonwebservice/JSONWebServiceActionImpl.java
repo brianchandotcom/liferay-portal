@@ -19,6 +19,11 @@ import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Method;
 
+import java.util.List;
+
+import jodd.bean.BeanUtil;
+
+import jodd.util.KeyValue;
 import jodd.util.ReflectUtil;
 
 /**
@@ -103,6 +108,22 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				}
 				else {
 					parameterValue = ReflectUtil.castType(value, parameterType);
+				}
+			}
+
+			if (parameterValue != null) {
+
+				List<KeyValue<String, Object>> innerParameters =
+					_jsonWebServiceActionParameters.getInnerParameters(
+						parameterName);
+
+				if (innerParameters != null) {
+					for (KeyValue<String, Object> innerParameter :
+						innerParameters) {
+
+						BeanUtil.setPropertySilent(parameterValue,
+							innerParameter.getKey(), innerParameter.getValue());
+					}
 				}
 			}
 

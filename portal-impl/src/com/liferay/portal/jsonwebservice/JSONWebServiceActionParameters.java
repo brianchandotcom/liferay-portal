@@ -19,12 +19,16 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import jodd.util.KeyValue;
 
 /**
  * <a href="ActionParameters.java.html"><b><i>View Source</i></b></a>
@@ -46,6 +50,10 @@ public class JSONWebServiceActionParameters {
 		_collectFromPath(pathParameters);
 		_collectFromRequestParameters(request);
 		_collectFromJSONRPCRequest(jsonRpcRequest);
+	}
+
+	public List<KeyValue<String, Object>> getInnerParameters(String baseName) {
+		return _innerParameters.get(baseName);
 	}
 
 	public JSONRPCRequest getJSONRPCRequest() {
@@ -179,7 +187,11 @@ public class JSONWebServiceActionParameters {
 		}
 	}
 
+	private Map<String, List<KeyValue<String, Object>>> _innerParameters =
+		new HashMap<String, List<KeyValue<String, Object>>>();
+
 	private JSONRPCRequest _jsonRpcRequest;
+
 	private Map<String, Object> _parameters = new HashMap<String, Object>() {
 
 		@Override
@@ -189,6 +201,28 @@ public class JSONWebServiceActionParameters {
 				key = key.substring(1);
 
 				value = null;
+			}
+
+			int dotIndex = key.indexOf('.');
+
+			if (dotIndex != -1) {
+
+				String baseName = key.substring(0, dotIndex);
+
+				String innerName = key.substring(dotIndex + 1);
+
+				List<KeyValue<String, Object>> values =
+					_innerParameters.get(baseName);
+
+				if (values == null) {
+					values = new ArrayList<KeyValue<String, Object>>();
+
+					_innerParameters.put(baseName, values);
+				}
+
+				values.add(new KeyValue<String, Object>(innerName, value));
+
+				return value;
 			}
 
 			return super.put(key, value);

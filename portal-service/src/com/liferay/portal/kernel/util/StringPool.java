@@ -61,6 +61,8 @@ public class StringPool {
 
 	public static final String DOUBLE_APOSTROPHE = "''";
 
+	public static final String DOUBLE_BACK_SLASH = "\\\\";
+
 	public static final String DOUBLE_CLOSE_BRACKET = "]]";
 
 	public static final String DOUBLE_CLOSE_CURLY_BRACE = "}}";

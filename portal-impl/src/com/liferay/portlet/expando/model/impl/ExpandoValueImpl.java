@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -146,7 +147,19 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	public String[] getStringArray() throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		return StringUtil.split(getData());
+		String regex = "(?<=(?<!\\\\)(\\\\\\\\){0,100}),";
+
+		String[] dataArray = getData().split(regex);
+
+		for (int i = 0; i < dataArray.length; i++) {
+			dataArray[i] = StringUtil.replace(
+				dataArray[i], "\\,", StringPool.COMMA);
+			dataArray[i] = StringUtil.replace(
+				dataArray[i], StringPool.DOUBLE_BACK_SLASH,
+				StringPool.BACK_SLASH);
+		}
+
+		return dataArray;
 	}
 
 	public void setBoolean(boolean data)
@@ -259,6 +272,13 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		throws PortalException, SystemException {
 
 		validate(ExpandoColumnConstants.STRING_ARRAY);
+
+		for (int i = 0; i < data.length; i++) {
+			data[i] = StringUtil.replace(
+				data[i], StringPool.BACK_SLASH, StringPool.DOUBLE_BACK_SLASH);
+			data[i] = StringUtil.replace(
+				data[i], StringPool.COMMA, "\\,");
+		}
 
 		setData(StringUtil.merge(data));
 	}

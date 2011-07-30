@@ -52,6 +52,8 @@ public interface WorkflowTask {
 
 	public List<WorkflowTaskAssignee> getWorkflowTaskAssignees();
 
+	public List<WorkflowTaskForm> getWorkflowTaskForms();
+
 	public long getWorkflowTaskId();
 
 	public boolean isAssignedToSingleUser();

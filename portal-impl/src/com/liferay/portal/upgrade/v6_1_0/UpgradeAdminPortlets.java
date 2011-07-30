@@ -256,9 +256,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 			return;
 		}
 
-		for (int i = 0; i < companyIds.length; i++) {
-			long companyId = companyIds[i];
-
+		for (long companyId : companyIds) {
 			long[] newResourceIds = addResourceIds(companyId, portletTo);
 			long[] oldResourceIds = getOldResourceIds(portletFrom);
 
@@ -332,7 +330,8 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 
 				runSQL(
 					"update Permission_ set resourceId = " + newResourceId +
-						" where resourceId = " + oldResourceId);
+						" where actionId = 'ACCESS_IN_CONTROL_PANEL' and " +
+							"resourceId = " + oldResourceId);
 			}
 			catch (ArrayIndexOutOfBoundsException aioobe) {
 				return;

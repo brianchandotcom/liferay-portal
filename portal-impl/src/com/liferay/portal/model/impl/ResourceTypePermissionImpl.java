@@ -15,20 +15,20 @@
 package com.liferay.portal.model.impl;
 
 /**
- * The extended model implementation for the ResourceTypePermission service. Represents a row in the &quot;ResourceTypePermission&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.model.ResourceTypePermission} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
 public class ResourceTypePermissionImpl extends ResourceTypePermissionBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a resource type permission model instance should use the {@link com.liferay.portal.model.ResourceTypePermission} interface instead.
-	 */
-	public ResourceTypePermissionImpl() {
+	public boolean isCompanyScope() {
+		if (getGroupId() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
+
+	public boolean isGroupScope() {
+		return !isCompanyScope();
+	}
+
 }

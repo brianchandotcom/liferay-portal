@@ -53,6 +53,7 @@ import java.util.concurrent.locks.Lock;
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Connor McKay
  */
 public class ResourcePermissionLocalServiceImpl
 	extends ResourcePermissionLocalServiceBaseImpl {
@@ -313,6 +314,25 @@ public class ResourcePermissionLocalServiceImpl
 
 		return resourcePermissionPersistence.countByC_N_S_P(
 			companyId, name, scope, primKey);
+	}
+
+	/**
+	 * Returns the resource permissions that apply to the resource.
+	 *
+	 * @param  companyId the primary key of the resource's company
+	 * @param  groupId the primary key of the resource's group
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
+	 * @param  primKey the primary key of the resource
+	 * @return the resource permissions associated with the resource
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> getResourceResourcePermissions(
+			long companyId, long groupId, String name, String primKey)
+		throws SystemException {
+
+		return resourcePermissionFinder.findByResource(
+			companyId, groupId, name, primKey);
 	}
 
 	public List<ResourcePermission> getRoleResourcePermissions(long roleId)

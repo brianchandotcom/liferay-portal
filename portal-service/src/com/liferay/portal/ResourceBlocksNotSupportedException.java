@@ -14,26 +14,10 @@
 
 package com.liferay.portal;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 /**
  * @author Connor McKay
  */
-public class NoSuchResourceTypePermissionException
-	extends NoSuchModelException {
-
-	public NoSuchResourceTypePermissionException() {
-		super();
-	}
-
-	public NoSuchResourceTypePermissionException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchResourceTypePermissionException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchResourceTypePermissionException(Throwable cause) {
-		super(cause);
-	}
-
+public class ResourceBlocksNotSupportedException extends SystemException {
 }

@@ -14,12 +14,11 @@
 
 package com.liferay.portal;
 
-import com.liferay.portal.NoSuchModelException;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
-public class NoSuchResourceBlockPermissionException extends NoSuchModelException {
+public class NoSuchResourceBlockPermissionException
+	extends NoSuchModelException {
 
 	public NoSuchResourceBlockPermissionException() {
 		super();

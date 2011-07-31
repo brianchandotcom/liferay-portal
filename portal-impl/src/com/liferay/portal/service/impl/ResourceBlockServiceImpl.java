@@ -14,26 +14,132 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.service.base.ResourceBlockServiceBaseImpl;
 
+import java.util.List;
+
 /**
- * The implementation of the resource block remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.ResourceBlockService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.ResourceBlockServiceBaseImpl
- * @see com.liferay.portal.service.ResourceBlockServiceUtil
+ * @author Connor McKay
  */
 public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portal.service.ResourceBlockServiceUtil} to access the resource block remote service.
-	 */
+	public void addCompanyScopePermission(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.addCompanyScopePermission(
+			companyId, name, roleId, actionId);
+	}
+
+	public void addGroupScopePermission(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.addGroupScopePermission(
+			companyId, groupId, name, roleId, actionId);
+	}
+
+	public void addIndividualScopePermission(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(groupId, name, primKey);
+
+		resourceBlockLocalService.addIndividualScopePermission(
+			companyId, groupId, name, primKey, roleId, actionId);
+	}
+
+	public void removeAllGroupScopePermissions(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.removeAllGroupScopePermissions(
+			companyId, name, roleId, actionId);
+	}
+
+	public void removeCompanyScopePermission(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.removeCompanyScopePermission(
+			companyId, name, roleId, actionId);
+	}
+
+	public void removeGroupScopePermission(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.removeGroupScopePermission(
+			companyId, groupId, name, roleId, actionId);
+	}
+
+	public void removeIndividualScopePermission(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, String actionId)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(groupId, name, primKey);
+
+		resourceBlockLocalService.removeIndividualScopePermission(
+			companyId, groupId, name, primKey, roleId, actionId);
+	}
+
+	public void setCompanyScopePermissions(
+			long scopeGroupId, long companyId, String name, long roleId,
+			List<String> actionIds)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.setCompanyScopePermissions(
+			companyId, name, roleId, actionIds);
+	}
+
+	public void setGroupScopePermissions(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, List<String> actionIds)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(
+			scopeGroupId, Role.class.getName(), roleId);
+
+		resourceBlockLocalService.setGroupScopePermissions(
+			companyId, groupId, name, roleId, actionIds);
+	}
+
+	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, List<String> actionIds)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(groupId, name, primKey);
+
+		resourceBlockLocalService.setIndividualScopePermissions(
+			companyId, groupId, name, primKey, roleId, actionIds);
+	}
+
 }

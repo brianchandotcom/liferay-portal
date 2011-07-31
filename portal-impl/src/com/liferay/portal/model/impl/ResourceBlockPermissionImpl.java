@@ -15,20 +15,12 @@
 package com.liferay.portal.model.impl;
 
 /**
- * The extended model implementation for the ResourceBlockPermission service. Represents a row in the &quot;ResourceBlockPermission&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.model.ResourceBlockPermission} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
-public class ResourceBlockPermissionImpl extends ResourceBlockPermissionBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a resource block permission model instance should use the {@link com.liferay.portal.model.ResourceBlockPermission} interface instead.
-	 */
+public class ResourceBlockPermissionImpl
+	extends ResourceBlockPermissionBaseImpl {
+
 	public ResourceBlockPermissionImpl() {
 	}
+
 }

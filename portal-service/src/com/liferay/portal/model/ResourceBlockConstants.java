@@ -12,28 +12,19 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.model;
 
 /**
  * @author Connor McKay
  */
-public class NoSuchResourceTypePermissionException
-	extends NoSuchModelException {
+public class ResourceBlockConstants {
 
-	public NoSuchResourceTypePermissionException() {
-		super();
-	}
+	public static final int OPERATOR_ADD = 1;
 
-	public NoSuchResourceTypePermissionException(String msg) {
-		super(msg);
-	}
+	public static final int OPERATOR_REMOVE = 2;
 
-	public NoSuchResourceTypePermissionException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+	public static final int OPERATOR_SET = 3;
 
-	public NoSuchResourceTypePermissionException(Throwable cause) {
-		super(cause);
-	}
+	public static final long OWNER_USER_ID = -1;
 
 }

@@ -14,27 +14,136 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ResourceBlockConstants;
+import com.liferay.portal.model.ResourceBlockPermission;
+import com.liferay.portal.model.ResourceBlockPermissionsContainer;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.ResourceBlockPermissionPK;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * The implementation of the resource block permission local service.
+ * Manages resource block permissions.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.ResourceBlockPermissionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * Never directly access this service, always go through the resource block
+ * local service.
  * </p>
  *
- * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl
- * @see com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil
+ * @author Connor McKay
  */
 public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil} to access the resource block permission local service.
-	 */
+
+	public void addResourceBlockPermissions(
+			long resourceBlockId,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws SystemException {
+
+		Map<Long, Long> permissions =
+				resourceBlockPermissionsContainer.getPermissions();
+
+		for (Map.Entry<Long, Long> permission : permissions.entrySet()) {
+			ResourceBlockPermissionPK pk =
+				new ResourceBlockPermissionPK(resourceBlockId,
+				permission.getKey());
+
+			ResourceBlockPermission resourceBlockPermission =
+				resourceBlockPermissionPersistence.create(pk);
+
+			resourceBlockPermission.setActionIds(permission.getValue());
+			updateResourceBlockPermission(resourceBlockPermission);
+		}
+	}
+
+	public void deleteResourceBlockPermissions(long resourceBlockId)
+		throws SystemException {
+
+		resourceBlockPermissionPersistence.removeByResourceBlockId(
+			resourceBlockId);
+	}
+
+	public ResourceBlockPermissionsContainer
+			getResourceBlockPermissionsContainer(
+			long resourceBlockId)
+		throws SystemException {
+
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			resourceBlockPermissionPersistence.findByResourceBlockId(
+			resourceBlockId);
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+			new ResourceBlockPermissionsContainer();
+
+		for (ResourceBlockPermission resourceBlockPermission :
+			resourceBlockPermissions) {
+
+			resourceBlockPermissionContainer.setPermissions(
+				resourceBlockPermission.getRoleId(),
+				resourceBlockPermission.getActionIds());
+		}
+
+		return resourceBlockPermissionContainer;
+	}
+
+	public ResourceBlockPermissionsContainer
+			getResourceBlockPermissionsContainer(
+			long companyId, long groupId, String name, long primKey)
+		throws SystemException {
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+				new ResourceBlockPermissionsContainer();
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourceResourcePermissions(
+			companyId, groupId, name, String.valueOf(primKey));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourceBlockPermissionContainer.addPermission(
+				resourcePermission.getRoleId(),
+				resourcePermission.getActionIds());
+		}
+
+		return resourceBlockPermissionContainer;
+	}
+
+	public void updateResourceBlockPermission(
+			long resourceBlockId, long roleId, long actionIdsLong, int operator)
+		throws SystemException {
+
+		ResourceBlockPermissionPK pk =
+			new ResourceBlockPermissionPK(resourceBlockId, roleId);
+
+		ResourceBlockPermission resourceBlockPermission =
+			resourceBlockPermissionPersistence.fetchByPrimaryKey(pk);
+
+		if (resourceBlockPermission == null) {
+			if (actionIdsLong == 0) {
+				return;
+			}
+
+			resourceBlockPermission =
+				resourceBlockPermissionPersistence.create(pk);
+		}
+
+		if (operator == ResourceBlockConstants.OPERATOR_ADD) {
+			actionIdsLong |= resourceBlockPermission.getActionIds();
+		}
+		else if (operator == ResourceBlockConstants.OPERATOR_REMOVE) {
+			actionIdsLong =
+				resourceBlockPermission.getActionIds() & (~actionIdsLong);
+		}
+
+		if (actionIdsLong == 0) {
+			deleteResourceBlockPermission(resourceBlockPermission);
+		}
+		else {
+			resourceBlockPermission.setActionIds(actionIdsLong);
+			updateResourceBlockPermission(resourceBlockPermission);
+		}
+	}
+
 }

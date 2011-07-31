@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.UnsupportedEncodingException;
 
+import java.nio.ByteBuffer;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -31,8 +33,22 @@ import org.apache.commons.codec.binary.Hex;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Connor McKay
  */
 public class DigesterImpl implements Digester {
+
+	public String digest(ByteBuffer buffer) {
+		return digest(Digester.DEFAULT_ALGORITHM, buffer);
+	}
+
+	public String digest(String algorithm, ByteBuffer buffer) {
+		if (_BASE_64) {
+			return digestBase64(algorithm, buffer);
+		}
+		else {
+			return digestHex(algorithm, buffer);
+		}
+	}
 
 	public String digest(String text) {
 		return digest(Digester.DEFAULT_ALGORITHM, text);
@@ -47,6 +63,16 @@ public class DigesterImpl implements Digester {
 		}
 	}
 
+	public String digestBase64(ByteBuffer buffer) {
+		return digestBase64(Digester.DEFAULT_ALGORITHM, buffer);
+	}
+
+	public String digestBase64(String algorithm, ByteBuffer buffer) {
+		byte[] bytes = digestRaw(algorithm, buffer);
+
+		return Base64.encode(bytes);
+	}
+
 	public String digestBase64(String text) {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, text);
 	}
@@ -55,6 +81,16 @@ public class DigesterImpl implements Digester {
 		byte[] bytes = digestRaw(algorithm, text);
 
 		return Base64.encode(bytes);
+	}
+
+	public String digestHex(ByteBuffer buffer) {
+		return digestHex(Digester.DEFAULT_ALGORITHM, buffer);
+	}
+
+	public String digestHex(String algorithm, ByteBuffer buffer) {
+		byte[] bytes = digestRaw(algorithm, buffer);
+
+		return Hex.encodeHexString(bytes);
 	}
 
 	public String digestHex(String text) {
@@ -67,6 +103,25 @@ public class DigesterImpl implements Digester {
 		return Hex.encodeHexString(bytes);
 	}
 
+	public byte[] digestRaw(ByteBuffer buffer) {
+		return digestRaw(Digester.DEFAULT_ALGORITHM, buffer);
+	}
+
+	public byte[] digestRaw(String algorithm, ByteBuffer buffer) {
+		MessageDigest messageDigest = null;
+
+		try {
+			messageDigest = MessageDigest.getInstance(algorithm);
+
+			messageDigest.update(buffer);
+		}
+		catch (NoSuchAlgorithmException nsae) {
+			_log.error(nsae, nsae);
+		}
+
+		return messageDigest.digest();
+	}
+
 	public byte[] digestRaw(String text) {
 		return digestRaw(Digester.DEFAULT_ALGORITHM, text);
 	}
@@ -74,7 +129,7 @@ public class DigesterImpl implements Digester {
 	public byte[] digestRaw(String algorithm, String... text) {
 		MessageDigest messageDigest = null;
 
-		try{
+		try {
 			messageDigest = MessageDigest.getInstance(algorithm);
 
 			StringBundler sb = new StringBundler(text.length * 2 - 1);

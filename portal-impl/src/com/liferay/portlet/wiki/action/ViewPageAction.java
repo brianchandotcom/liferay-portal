@@ -48,8 +48,7 @@ public class ViewPageAction extends PortletAction {
 
 		if (categoryId > 0) {
 			return ViewNodeAction.viewNode(
-				mapping, renderRequest,
-				"portlet.wiki.view_categorized_pages");
+				mapping, renderRequest, "portlet.wiki.view_categorized_pages");
 		}
 		String tag = ParamUtil.getString(renderRequest, "tag");
 
@@ -57,7 +56,7 @@ public class ViewPageAction extends PortletAction {
 			return ViewNodeAction.viewNode(
 				mapping, renderRequest, "portlet.wiki.view_tagged_pages");
 		}
-	
+
 		try {
 			ActionUtil.getNode(renderRequest);
 			ActionUtil.getPage(renderRequest);

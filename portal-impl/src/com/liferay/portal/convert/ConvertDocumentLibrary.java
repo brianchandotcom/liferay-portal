@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
@@ -165,13 +164,12 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 				companyId, repositoryId, fileName, versionNumber);
 
 			if (versionNumber.equals(Store.DEFAULT_VERSION)) {
-				_targetStore.addFile(
-					companyId, repositoryId, fileName, _serviceContext, is);
+				_targetStore.addFile(companyId, repositoryId, fileName, is);
 			}
 			else {
 				_targetStore.updateFile(
-					companyId, repositoryId, fileName, versionNumber,
-					fileName, _serviceContext, is);
+					companyId, repositoryId, fileName, versionNumber, fileName,
+					is);
 			}
 		}
 		catch (Exception e) {
@@ -264,7 +262,6 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	private static Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);
 
-	private ServiceContext _serviceContext = new ServiceContext();
 	private Store _sourceStore;
 	private Store _targetStore;
 

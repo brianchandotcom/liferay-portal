@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -64,8 +63,7 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException, SystemException {
 
 		try {
@@ -91,7 +89,7 @@ public class FileSystemStore extends BaseStore {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
@@ -274,8 +272,7 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
 
 		try {

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.cmis.CMISRepositoryUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -92,13 +91,11 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {
 
 		updateFile(
-			companyId, repositoryId, fileName, DEFAULT_VERSION, null,
-			serviceContext, is);
+			companyId, repositoryId, fileName, DEFAULT_VERSION, null, is);
 	}
 
 	@Override
@@ -109,7 +106,7 @@ public class CMISStore extends BaseStore {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -355,8 +352,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -370,14 +366,14 @@ public class CMISStore extends BaseStore {
 			throw new DuplicateFileException();
 		}
 
-		createDocument(versioningFolder, title, is, serviceContext);
+		createDocument(versioningFolder, title, is);
 	}
 
 	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -403,13 +399,6 @@ public class CMISStore extends BaseStore {
 
 	protected Document createDocument(
 		Folder versioningFolder, String title, InputStream is) {
-
-		return createDocument(versioningFolder, title, is, null);
-	}
-
-	protected Document createDocument(
-		Folder versioningFolder, String title, InputStream is,
-		ServiceContext serviceContext) {
 
 		Map<String, Object> documentProperties = new HashMap<String, Object>();
 

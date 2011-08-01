@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
@@ -38,31 +37,25 @@ public class DLStoreUtil {
 
 	public static void addFile(
 			long companyId, long repositoryId, String fileName,
-			boolean validateFileExtension, ServiceContext serviceContext,
-			InputStream is)
+			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException {
 
 		getStore().addFile(
-			companyId, repositoryId, fileName, validateFileExtension,
-			serviceContext, is);
+			companyId, repositoryId, fileName, validateFileExtension, is);
 	}
 
 	public static void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
-		getStore().addFile(
-			companyId, repositoryId, fileName, serviceContext, bytes);
+		getStore().addFile(companyId, repositoryId, fileName, bytes);
 	}
 
 	public static void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
 
-		getStore().addFile(
-			companyId, repositoryId, fileName, serviceContext, file);
+		getStore().addFile(companyId, repositoryId, fileName, file);
 	}
 
 	public static void checkRoot(long companyId) throws SystemException {
@@ -72,12 +65,12 @@ public class DLStoreUtil {
 	public static void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		getStore().copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName, serviceContext);
+			toVersionNumber, sourceFileName);
 	}
 
 	public static void deleteDirectory(
@@ -196,47 +189,43 @@ public class DLStoreUtil {
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, repositoryId, fileName, fileExtension,
-			validateFileExtension, versionNumber, sourceFileName,
-			serviceContext, is);
+			validateFileExtension, versionNumber, sourceFileName, is);
 	}
 
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, byte[] bytes)
+			String versionNumber, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, repositoryId, fileName, versionNumber, sourceFileName,
-			serviceContext, bytes);
+			bytes);
 	}
 
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, File file)
+			String versionNumber, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, repositoryId, fileName, versionNumber, sourceFileName,
-			serviceContext, file);
+			file);
 	}
 
 	public static void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		getStore().updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName, serviceContext);
+			toVersionNumber, sourceFileName);
 	}
 
 	public static void validate(String fileName, boolean validateFileExtension)

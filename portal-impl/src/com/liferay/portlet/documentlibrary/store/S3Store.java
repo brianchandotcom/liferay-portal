@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
@@ -69,8 +68,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws SystemException {
 
 		try {
@@ -386,8 +384,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, InputStream is)
 		throws SystemException {
 
 		try {

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.File;
@@ -40,14 +39,13 @@ public abstract class BaseStore implements Store {
 		throws PortalException, SystemException;
 
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
 		try {
-			addFile(companyId, repositoryId, fileName, serviceContext, is);
+			addFile(companyId, repositoryId, fileName, is);
 		}
 		finally {
 			try {
@@ -60,8 +58,7 @@ public abstract class BaseStore implements Store {
 	}
 
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -69,7 +66,7 @@ public abstract class BaseStore implements Store {
 		try {
 			is = new FileInputStream(file);
 
-			addFile(companyId, repositoryId, fileName, serviceContext, is);
+			addFile(companyId, repositoryId, fileName, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -87,8 +84,7 @@ public abstract class BaseStore implements Store {
 	}
 
 	public abstract void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException, SystemException;
 
 	public abstract void checkRoot(long companyId) throws SystemException;
@@ -96,7 +92,7 @@ public abstract class BaseStore implements Store {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
@@ -104,7 +100,7 @@ public abstract class BaseStore implements Store {
 
 		updateFile(
 			companyId, repositoryId, fileName, toVersionNumber, sourceFileName,
-			serviceContext, is);
+			is);
 	}
 
 	public abstract void deleteDirectory(
@@ -193,8 +189,7 @@ public abstract class BaseStore implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, byte[] bytes)
+			String versionNumber, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
@@ -202,7 +197,7 @@ public abstract class BaseStore implements Store {
 		try {
 			updateFile(
 				companyId, repositoryId, fileName, versionNumber,
-				sourceFileName, serviceContext, is);
+				sourceFileName, is);
 		}
 		finally {
 			try {
@@ -216,8 +211,7 @@ public abstract class BaseStore implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, File file)
+			String versionNumber, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -227,7 +221,7 @@ public abstract class BaseStore implements Store {
 
 			updateFile(
 				companyId, repositoryId, fileName, versionNumber,
-				sourceFileName, serviceContext, is);
+				sourceFileName, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -246,14 +240,13 @@ public abstract class BaseStore implements Store {
 
 	public abstract void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
@@ -261,7 +254,7 @@ public abstract class BaseStore implements Store {
 
 		updateFile(
 			companyId, repositoryId, fileName, toVersionNumber, sourceFileName,
-			serviceContext, is);
+			is);
 
 		deleteFile(
 			companyId, repositoryId, fileName, fromVersionNumber);

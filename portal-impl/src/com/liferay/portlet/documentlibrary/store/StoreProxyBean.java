@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,22 +31,19 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public void addFile(
-		long companyId, long repositoryId, String fileName,
-		ServiceContext serviceContext, byte[] bytes) {
+		long companyId, long repositoryId, String fileName, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void addFile(
-		long companyId, long repositoryId, String fileName,
-		ServiceContext serviceContext, File file) {
+		long companyId, long repositoryId, String fileName, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void addFile(
-		long companyId, long repositoryId, String fileName,
-		ServiceContext serviceContext, InputStream is) {
+		long companyId, long repositoryId, String fileName, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -58,8 +54,8 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public void copyFileVersion(
 		long companyId, long repositoryId, String fileName,
-		String fromVersionNumber, String toVersionNumber, String sourceFileName,
-		ServiceContext serviceContext) {
+		String fromVersionNumber, String toVersionNumber,
+		String sourceFileName) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -152,24 +148,21 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, byte[] bytes) {
+		String versionNumber, String sourceFileName, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, File file) {
+		String versionNumber, String sourceFileName, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, InputStream is) {
+		String versionNumber, String sourceFileName, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -177,7 +170,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	public void updateFileVersion(
 		long companyId, long repositoryId, String fileName,
 		String fromVersionNumber, String toVersionNumber,
-		String sourceFileName, ServiceContext serviceContext) {
+		String sourceFileName) {
 
 		throw new UnsupportedOperationException();
 	}

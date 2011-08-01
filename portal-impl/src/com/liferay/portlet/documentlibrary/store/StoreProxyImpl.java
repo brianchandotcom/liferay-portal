@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
@@ -35,33 +34,30 @@ public class StoreProxyImpl implements Store {
 	}
 
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, serviceContext, bytes);
+		store.addFile(companyId, repositoryId, fileName, bytes);
 	}
 
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, serviceContext, file);
+		store.addFile(companyId, repositoryId, fileName, file);
 	}
 
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		store.addFile(companyId, repositoryId, fileName, serviceContext, is);
+		store.addFile(companyId, repositoryId, fileName, is);
 	}
 
 	public void checkRoot(long companyId) throws SystemException {
@@ -73,14 +69,14 @@ public class StoreProxyImpl implements Store {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName, serviceContext);
+			toVersionNumber, sourceFileName);
 	}
 
 	public void deleteDirectory(
@@ -212,54 +208,51 @@ public class StoreProxyImpl implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, byte[] bytes)
+			String versionNumber, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
 			companyId, repositoryId, fileName, versionNumber, sourceFileName,
-			serviceContext, bytes);
+			bytes);
 	}
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, File file)
-		throws PortalException, SystemException {
-
-		Store store = StoreFactory.getInstance();
-
-		store.updateFile(
-			companyId, repositoryId, fileName,
-			versionNumber, sourceFileName, serviceContext, file);
-	}
-
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, InputStream is)
+			String versionNumber, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
 			companyId, repositoryId, fileName, versionNumber, sourceFileName,
-			serviceContext, is);
+			file);
+	}
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName, InputStream is)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		store.updateFile(
+			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			is);
 	}
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			String sourceFileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName, serviceContext);
+			toVersionNumber, sourceFileName);
 	}
 
 }

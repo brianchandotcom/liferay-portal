@@ -1,6 +1,24 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockId">
+		<![CDATA[
+			 WHERE
+				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
+		<![CDATA[
+			 WHERE
+				(
+					resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]) OR
+					(
+						([$USER_ID_FIELD$] = [$USER_ID$]) AND
+						(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_IDS$]))
+					)
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
 			INNER JOIN
@@ -265,7 +283,23 @@
 				(ResourcePermission.scope = ?) AND
 				(ResourceAction.actionId = ?) AND
 				(ResourcePermission.roleId = ?) AND
-				(MOD(INTEGER_DIV(ResourcePermission.actionIds, ResourceAction.bitwiseValue), 2) = 1)
+				((ResourcePermission.actionIds & ResourceAction.bitwiseValue) != 0)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByRoleResourceTypePermissions">
+		<![CDATA[
+			INNER JOIN
+				ResourceTypePermission ON
+					(ResourceTypePermission.groupId = Group_.groupId) AND
+					(ResourceTypePermission.name = ?) AND
+					(ResourceTypePermission.roleId = ?)
+			INNER JOIN
+				ResourceAction ON
+					(ResourceAction.name = ResourceTypePermission.name) AND
+					(ResourceAction.actionId = ?) AND
+					((ResourceTypePermission.actionIds & ResourceAction.bitwiseValue) != 0)
+			WHERE
+				(Group_.liveGroupId = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinBySite">

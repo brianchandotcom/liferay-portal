@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.GroupImpl;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -105,6 +106,9 @@ public class GroupFinderImpl
 
 	public static String JOIN_BY_ROLE_RESOURCE_PERMISSIONS =
 		GroupFinder.class.getName() + ".joinByRoleResourcePermissions";
+
+	public static String JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS =
+		GroupFinder.class.getName() + ".joinByRoleResourceTypePermissions";
 
 	public static String JOIN_BY_SITE =
 		GroupFinder.class.getName() + ".joinBySite";
@@ -639,14 +643,14 @@ public class GroupFinderImpl
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
-				sb.append(getJoin(key));
+				sb.append(getJoin(key, value));
 			}
 		}
 
 		return sb.toString();
 	}
 
-	protected String getJoin(String key) {
+	protected String getJoin(String key, Object value) {
 		String join = StringPool.BLANK;
 
 		if (key.equals("groupOrg")) {
@@ -668,8 +672,17 @@ public class GroupFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_PAGE_COUNT);
 		}
 		else if (key.equals("rolePermissions")) {
+			List<Object> values = (List<Object>)value;
+			String name = (String)values.get(0);
+
 			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				join = CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS);
+				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+					join = CustomSQLUtil.get(
+						JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS);
+				}
+				else {
+					join = CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS);
+				}
 			}
 			else {
 				join = CustomSQLUtil.get(JOIN_BY_ROLE_PERMISSIONS);
@@ -747,8 +760,17 @@ public class GroupFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_PAGE_COUNT);
 		}
 		else if (key.equals("rolePermissions")) {
+			List<Object> values = (List<Object>)value;
+			String name = (String)values.get(0);
+
 			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				join = CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS);
+				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+					join = CustomSQLUtil.get(
+						JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS);
+				}
+				else {
+					join = CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_PERMISSIONS);
+				}
 			}
 			else {
 				join = CustomSQLUtil.get(JOIN_BY_ROLE_PERMISSIONS);
@@ -835,24 +857,25 @@ public class GroupFinderImpl
 				else if (key.equals("rolePermissions")) {
 					List<Object> values = (List<Object>)entry.getValue();
 
-					for (int i = 0; i < values.size(); i++) {
-						Object value = values.get(i);
+					String name = (String)values.get(0);
+					Integer scope = (Integer)values.get(1);
+					String actionId = (String)values.get(2);
+					Long roleId = (Long)values.get(3);
 
-						if (value instanceof Integer) {
-							Integer valueInteger = (Integer)value;
+					if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&
+						ResourceBlockLocalServiceUtil.isSupported(name)) {
 
-							qPos.add(valueInteger);
-						}
-						else if (value instanceof Long) {
-							Long valueLong = (Long)value;
+						// Scope is assumed to always be group
 
-							qPos.add(valueLong);
-						}
-						else if (value instanceof String) {
-							String valueString = (String)value;
-
-							qPos.add(valueString);
-						}
+						qPos.add(name);
+						qPos.add(roleId);
+						qPos.add(actionId);
+					}
+					else {
+						qPos.add(name);
+						qPos.add(scope);
+						qPos.add(actionId);
+						qPos.add(roleId);
 					}
 				}
 				else if (key.equals("types")) {

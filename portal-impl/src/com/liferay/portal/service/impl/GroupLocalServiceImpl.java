@@ -83,6 +83,7 @@ import com.liferay.util.UniqueList;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -1469,10 +1470,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			resourcePermissionLocalService.setResourcePermissions(
-				group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
-				String.valueOf(group.getGroupId()), role.getRoleId(),
-				actionIds);
+			if (resourceBlockLocalService.isSupported(name)) {
+				resourceBlockLocalService.setGroupScopePermissions(
+					role.getCompanyId(), group.getGroupId(), name,
+					role.getRoleId(), Arrays.asList(actionIds));
+			}
+			else {
+				resourcePermissionLocalService.setResourcePermissions(
+					group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+					String.valueOf(group.getGroupId()), role.getRoleId(),
+					actionIds);
+			}
 		}
 		else {
 			permissionLocalService.setRolePermissions(

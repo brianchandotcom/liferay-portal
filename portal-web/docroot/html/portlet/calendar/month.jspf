@@ -193,7 +193,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 							<td align="right">
 								<c:if test="<%= CalendarPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_EVENT) %>">
 									<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/edit_event" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="backURL" value="<%= currentURL %>" /><portlet:param name="month" value="<%= String.valueOf(tempCal.get(Calendar.MONTH)) %>" /><portlet:param name="day" value="<%= String.valueOf(tempCal.get(Calendar.DATE)) %>" /><portlet:param name="year" value="<%= String.valueOf(tempCal.get(Calendar.YEAR)) %>" /></portlet:renderURL>">
-									<img border="0" alt="<%= LanguageUtil.get(pageContext, "new-event")%>" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_plus.png" title="<liferay-ui:message key="new-event" />" />
+									<img alt="<%= LanguageUtil.get(pageContext, "new-event")%>" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_plus.png" title="<liferay-ui:message key="new-event" />" />
 									</a>
 								</c:if>
 							</td>

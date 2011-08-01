@@ -96,7 +96,7 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
-			mimeType, sourceFileName, title, description, changeLog,
+			sourceFileName, mimeType, title, description, changeLog,
 			fileEntryTypeId, fieldsMap, is, size, serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);

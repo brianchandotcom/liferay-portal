@@ -225,7 +225,6 @@
 	if (selectDisplayStyle) {
 		selectDisplayStyle.on('change', showHiddenFields);
 	}
-	
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
 
+	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
 </aui:script>

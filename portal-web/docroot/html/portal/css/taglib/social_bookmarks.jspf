@@ -14,19 +14,15 @@
  */
 --%>
 
-.js .taglib-social-bookmarks.visible {
+.taglib-social-bookmarks {
 	background: #F0F5F7;
+	clear: both;
+	margin-top: 1.5em;
 }
 
-.js .taglib-social-bookmarks .show-bookmarks {
+.taglib-social-bookmarks ul {
 	display: block;
-}
-
-.js .taglib-social-bookmarks.visible .show-bookmarks {
-}
-
-.js .taglib-social-bookmarks.visible ul {
-	display: block;
+	padding: 1em;
 }
 
 .taglib-social-bookmarks li {

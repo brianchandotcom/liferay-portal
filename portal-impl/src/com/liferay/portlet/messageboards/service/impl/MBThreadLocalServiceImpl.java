@@ -657,7 +657,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			DLStoreUtil.addFile(
 				companyId, repositoryId, newAttachmentsDir + "/" + name,
-				new ServiceContext(), fileBytes);
+				fileBytes);
 
 			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 		}

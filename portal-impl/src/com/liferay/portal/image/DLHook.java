@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -87,9 +86,7 @@ public class DLHook extends BaseHook {
 			DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, fileName);
 		}
 
-		DLStoreUtil.addFile(
-			_COMPANY_ID, _REPOSITORY_ID, fileName, true, new ServiceContext(),
-			is);
+		DLStoreUtil.addFile(_COMPANY_ID, _REPOSITORY_ID, fileName, true, is);
 	}
 
 	protected String getFileName(long imageId, String type) {

@@ -190,8 +190,8 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		DLStoreUtil.addFile(
-			user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
-			false, serviceContext, is);
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name, false,
+			is);
 
 		// Index
 
@@ -310,7 +310,7 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version,
-			dlFileEntry.getTitle(), serviceContext);
+			dlFileEntry.getTitle());
 
 		// Index
 
@@ -427,7 +427,7 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				dlFileVersion.getTitle(), serviceContext);
+				dlFileVersion.getTitle());
 
 			copyFileEntryMetadata(
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
@@ -1519,7 +1519,7 @@ public class DLFileEntryLocalServiceImpl
 				DLStoreUtil.updateFile(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(), dlFileEntry.getExtension(), false,
-					version, sourceFileName, serviceContext, is);
+					version, sourceFileName, is);
 
 				// Index
 

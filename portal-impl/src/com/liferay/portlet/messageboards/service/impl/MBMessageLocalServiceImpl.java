@@ -335,7 +335,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						new ServiceContext(), bytes);
+						bytes);
 				}
 				catch (DuplicateFileException dfe) {
 					if (_log.isDebugEnabled()) {
@@ -1387,7 +1387,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						new ServiceContext(), bytes);
+						bytes);
 				}
 				catch (DuplicateFileException dfe) {
 				}

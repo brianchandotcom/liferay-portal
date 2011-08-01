@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -21,10 +22,13 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -129,6 +133,12 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;
+		}
+
+		User user = UserLocalServiceUtil.getUserById(vote.getUserId());
+
+		if (Validator.isNotNull(user)) {
+			vote.setUserUuid(user.getUuid());
 		}
 
 		Element voteElement = questionsElement.addElement("vote");
@@ -295,6 +305,13 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 	protected static void importVote(
 			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
+
+		try {
+			UserLocalServiceUtil.getUserByUuid(vote.getUserUuid());
+		}
+		catch (NoSuchUserException nsue) {
+			return;
+		}
 
 		long userId = portletDataContext.getUserId(vote.getUserUuid());
 

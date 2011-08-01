@@ -122,6 +122,7 @@
 	<bean id="com.liferay.portal.service.ResourceBlockLocalService" class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.ResourceBlockService" class="com.liferay.portal.service.impl.ResourceBlockServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.ResourceBlockFinder" class="com.liferay.portal.service.persistence.ResourceBlockFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceBlockPermissionLocalService" class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence" class="com.liferay.portal.service.persistence.ResourceBlockPermissionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceCodeLocalService" class="com.liferay.portal.service.impl.ResourceCodeLocalServiceImpl" />
@@ -132,6 +133,7 @@
 	<bean id="com.liferay.portal.service.persistence.ResourcePermissionFinder" class="com.liferay.portal.service.persistence.ResourcePermissionFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ResourceTypePermissionLocalService" class="com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ResourceTypePermissionPersistence" class="com.liferay.portal.service.persistence.ResourceTypePermissionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder" class="com.liferay.portal.service.persistence.ResourceTypePermissionFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.RoleLocalService" class="com.liferay.portal.service.impl.RoleLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.RoleService" class="com.liferay.portal.service.impl.RoleServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.RolePersistence" class="com.liferay.portal.service.persistence.RolePersistenceImpl" parent="basePersistence" />

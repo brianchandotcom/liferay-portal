@@ -231,4 +231,25 @@ public interface ResourceBlockPermissionLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteResourceBlockPermissions(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name, long primKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateResourceBlockPermission(long resourceBlockId,
+		long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

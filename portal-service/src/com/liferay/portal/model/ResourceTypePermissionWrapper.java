@@ -224,6 +224,14 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 		_resourceTypePermission.persist();
 	}
 
+	public boolean isCompanyScope() {
+		return _resourceTypePermission.isCompanyScope();
+	}
+
+	public boolean isGroupScope() {
+		return _resourceTypePermission.isGroupScope();
+	}
+
 	public ResourceTypePermission getWrappedResourceTypePermission() {
 		return _resourceTypePermission;
 	}

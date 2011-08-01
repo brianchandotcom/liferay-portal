@@ -330,6 +330,22 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "ResourceBlock",
+	{
+		addCompanyScopePermission: true,
+		addGroupScopePermission: true,
+		addIndividualScopePermission: true,
+		removeAllGroupScopePermissions: true,
+		removeCompanyScopePermission: true,
+		removeGroupScopePermission: true,
+		removeIndividualScopePermission: true,
+		setCompanyScopePermissions: true,
+		setGroupScopePermissions: true,
+		setIndividualScopePermissions: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ResourcePermission",
 	{
 		addResourcePermission: true,

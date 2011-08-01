@@ -251,6 +251,77 @@ public class ResourceTypePermissionLocalServiceWrapper
 		_resourceTypePermissionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByRoleId(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.findByRoleId(roleId);
+	}
+
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByGroupScope(
+		long companyId, java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.findByGroupScope(companyId,
+			name, roleId);
+	}
+
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
+			groupId, name);
+	}
+
+	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.getCompanyScopeActionIds(companyId,
+			name, roleId);
+	}
+
+	public long getGroupScopeActionIds(long companyId, long groupId,
+		java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.getGroupScopeActionIds(companyId,
+			groupId, name, roleId);
+	}
+
+	public boolean hasEitherScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.hasEitherScopePermission(companyId,
+			name, roleId, actionId);
+	}
+
+	public boolean hasCompanyScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.hasCompanyScopePermission(companyId,
+			name, roleId, actionId);
+	}
+
+	public boolean hasGroupScopePermission(long companyId, long groupId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _resourceTypePermissionLocalService.hasGroupScopePermission(companyId,
+			groupId, name, roleId, actionId);
+	}
+
+	public void updateCompanyScopeResourceTypePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong, long operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceTypePermissionLocalService.updateCompanyScopeResourceTypePermissions(companyId,
+			name, roleId, actionIdsLong, operator);
+	}
+
+	public void updateGroupScopeResourceTypePermissions(long companyId,
+		long groupId, java.lang.String name, long roleId, long actionIdsLong,
+		long operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceTypePermissionLocalService.updateGroupScopeResourceTypePermissions(companyId,
+			groupId, name, roleId, actionIdsLong, operator);
+	}
+
 	public ResourceTypePermissionLocalService getWrappedResourceTypePermissionLocalService() {
 		return _resourceTypePermissionLocalService;
 	}

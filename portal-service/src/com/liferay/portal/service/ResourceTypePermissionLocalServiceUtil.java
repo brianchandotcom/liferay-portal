@@ -258,6 +258,81 @@ public class ResourceTypePermissionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByRoleId(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByRoleId(roleId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByGroupScope(
+		long companyId, java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByGroupScope(companyId, name, roleId);
+	}
+
+	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourceBlockPermissionsContainer(companyId, groupId,
+			name);
+	}
+
+	public static long getCompanyScopeActionIds(long companyId,
+		java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyScopeActionIds(companyId, name, roleId);
+	}
+
+	public static long getGroupScopeActionIds(long companyId, long groupId,
+		java.lang.String name, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupScopeActionIds(companyId, groupId, name, roleId);
+	}
+
+	public static boolean hasEitherScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasEitherScopePermission(companyId, name, roleId, actionId);
+	}
+
+	public static boolean hasCompanyScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasCompanyScopePermission(companyId, name, roleId, actionId);
+	}
+
+	public static boolean hasGroupScopePermission(long companyId, long groupId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasGroupScopePermission(companyId, groupId, name, roleId,
+			actionId);
+	}
+
+	public static void updateCompanyScopeResourceTypePermissions(
+		long companyId, java.lang.String name, long roleId, long actionIdsLong,
+		long operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateCompanyScopeResourceTypePermissions(companyId, name, roleId,
+			actionIdsLong, operator);
+	}
+
+	public static void updateGroupScopeResourceTypePermissions(long companyId,
+		long groupId, java.lang.String name, long roleId, long actionIdsLong,
+		long operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateGroupScopeResourceTypePermissions(companyId, groupId, name,
+			roleId, actionIdsLong, operator);
+	}
+
 	public static ResourceTypePermissionLocalService getService() {
 		if (_service == null) {
 			_service = (ResourceTypePermissionLocalService)PortalBeanLocatorUtil.locate(ResourceTypePermissionLocalService.class.getName());

@@ -259,6 +259,41 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResourceBlockPermissions(resourceBlockId,
+			resourceBlockPermissionsContainer);
+	}
+
+	public static void deleteResourceBlockPermissions(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourceBlockPermissions(resourceBlockId);
+	}
+
+	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResourceBlockPermissionsContainer(resourceBlockId);
+	}
+
+	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name, long primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourceBlockPermissionsContainer(companyId, groupId,
+			name, primKey);
+	}
+
+	public static void updateResourceBlockPermission(long resourceBlockId,
+		long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateResourceBlockPermission(resourceBlockId, roleId,
+			actionIdsLong, operator);
+	}
+
 	public static ResourceBlockPermissionLocalService getService() {
 		if (_service == null) {
 			_service = (ResourceBlockPermissionLocalService)PortalBeanLocatorUtil.locate(ResourceBlockPermissionLocalService.class.getName());

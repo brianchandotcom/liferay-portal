@@ -183,6 +183,7 @@ import com.liferay.portal.service.persistence.ReleasePersistence;
 import com.liferay.portal.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.service.persistence.ResourceCodePersistence;
@@ -190,6 +191,7 @@ import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+import com.liferay.portal.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
@@ -2727,6 +2729,24 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the resource block finder.
+	 *
+	 * @return the resource block finder
+	 */
+	public ResourceBlockFinder getResourceBlockFinder() {
+		return resourceBlockFinder;
+	}
+
+	/**
+	 * Sets the resource block finder.
+	 *
+	 * @param resourceBlockFinder the resource block finder
+	 */
+	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+		this.resourceBlockFinder = resourceBlockFinder;
+	}
+
+	/**
 	 * Returns the resource block permission local service.
 	 *
 	 * @return the resource block permission local service
@@ -2914,6 +2934,25 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	public void setResourceTypePermissionPersistence(
 		ResourceTypePermissionPersistence resourceTypePermissionPersistence) {
 		this.resourceTypePermissionPersistence = resourceTypePermissionPersistence;
+	}
+
+	/**
+	 * Returns the resource type permission finder.
+	 *
+	 * @return the resource type permission finder
+	 */
+	public ResourceTypePermissionFinder getResourceTypePermissionFinder() {
+		return resourceTypePermissionFinder;
+	}
+
+	/**
+	 * Sets the resource type permission finder.
+	 *
+	 * @param resourceTypePermissionFinder the resource type permission finder
+	 */
+	public void setResourceTypePermissionFinder(
+		ResourceTypePermissionFinder resourceTypePermissionFinder) {
+		this.resourceTypePermissionFinder = resourceTypePermissionFinder;
 	}
 
 	/**
@@ -4195,6 +4234,8 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	protected ResourceBlockService resourceBlockService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockFinder.class)
+	protected ResourceBlockFinder resourceBlockFinder;
 	@BeanReference(type = ResourceBlockPermissionLocalService.class)
 	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)
@@ -4215,6 +4256,8 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	protected ResourceTypePermissionLocalService resourceTypePermissionLocalService;
 	@BeanReference(type = ResourceTypePermissionPersistence.class)
 	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionFinder.class)
+	protected ResourceTypePermissionFinder resourceTypePermissionFinder;
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 	@BeanReference(type = RoleService.class)

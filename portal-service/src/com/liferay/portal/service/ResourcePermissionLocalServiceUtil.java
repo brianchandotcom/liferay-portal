@@ -426,6 +426,26 @@ public class ResourcePermissionLocalServiceUtil {
 				   .getResourcePermissionsCount(companyId, name, scope, primKey);
 	}
 
+	/**
+	* Returns the resource permissions that apply to the resource.
+	*
+	* @param companyId the primary key of the resource's company
+	* @param groupId the primary key of the resource's group
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key of the resource
+	* @return the resource permissions associated with the resource
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ResourcePermission> getResourceResourcePermissions(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourceResourcePermissions(companyId, groupId, name,
+			primKey);
+	}
+
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> getRoleResourcePermissions(
 		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRoleResourcePermissions(roleId);

@@ -17,20 +17,12 @@ package com.liferay.portal.service.persistence;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface ResourcePermissionFinder {
-	public int countByR_S(long roleId, int[] scopes)
+public interface ResourceTypePermissionFinder {
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByEitherScopeC_G_N(
+		long companyId, long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.ResourcePermission> findByResource(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
-		long roleId, int[] scopes, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<java.lang.String> findByC_N_S(long companyId,
-		java.lang.String name, int scope)
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByGroupScopeC_N_R(
+		long companyId, java.lang.String name, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

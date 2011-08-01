@@ -129,11 +129,11 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 			int daysIndex = (selCal.getFirstDayOfWeek() + i - 1) % 7;
 		%>
 
-			<td align="center" height="25" width="<%= (i == 0 || i == 6) ? "15" : "14" %>%">
+			<th align="center" height="25" width="<%= (i == 0 || i == 6) ? "15" : "14" %>%">
 				<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/view" /><portlet:param name="tabs1" value="day" /><portlet:param name="month" value="<%= String.valueOf(cal.get(Calendar.MONTH)) %>" /><portlet:param name="day" value="<%= String.valueOf(cal.get(Calendar.DATE)) %>" /><portlet:param name="year" value="<%= String.valueOf(cal.get(Calendar.YEAR)) %>" /></portlet:renderURL>">
 				<%= LanguageUtil.get(pageContext, days[daysIndex]) %>
 				</a>
-			</td>
+			</th>
 
 		<%
 			cal.add(Calendar.DATE, 1);

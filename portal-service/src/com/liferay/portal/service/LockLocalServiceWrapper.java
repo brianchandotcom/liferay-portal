@@ -285,8 +285,7 @@ public class LockLocalServiceWrapper implements LockLocalService {
 	}
 
 	public boolean isLocked(java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _lockLocalService.isLocked(className, key);
 	}
 

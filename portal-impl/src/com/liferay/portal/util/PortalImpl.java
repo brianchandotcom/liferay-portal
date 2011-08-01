@@ -5143,7 +5143,10 @@ public class PortalImpl implements Portal {
 		if (doAsUser.isDefaultUser() ||
 			UserPermissionUtil.contains(
 				permissionChecker, doAsUserId, organizationIds,
-				ActionKeys.IMPERSONATE)) {
+				ActionKeys.IMPERSONATE) &&
+				((!PortalUtil.isOmniadmin(doAsUserId)) ||
+				(PortalUtil.isOmniadmin(doAsUserId) &&
+				(permissionChecker.isOmniadmin())))) {
 
 			request.setAttribute(WebKeys.USER_ID, new Long(doAsUserId));
 

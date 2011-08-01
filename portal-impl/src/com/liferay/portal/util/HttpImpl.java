@@ -43,7 +43,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
@@ -575,14 +574,11 @@ public class HttpImpl implements Http {
 		Map<String, List<String>> tempParameterMap =
 			new LinkedHashMap<String, List<String>>();
 
-		StringTokenizer st = new StringTokenizer(
-			queryString, StringPool.AMPERSAND);
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, CharPool.EQUAL);
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
 
 				String key = kvp[0];
 
@@ -725,14 +721,12 @@ public class HttpImpl implements Http {
 
 		sb.append(url.substring(0, pos + 1));
 
-		StringTokenizer st = new StringTokenizer(
-			url.substring(pos + 1, url.length()), StringPool.AMPERSAND);
+		String[] parameters = StringUtil.split(
+			url.substring(pos + 1, url.length()), CharPool.AMPERSAND);
 
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, CharPool.EQUAL);
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
 
 				String key = kvp[0];
 

@@ -309,7 +309,7 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 		try {
 			UserLocalServiceUtil.getUserByUuid(vote.getUserUuid());
 		}
-		catch (NoSuchUserException e) {
+		catch (NoSuchUserException nsue) {
 			return;
 		}
 

@@ -881,28 +881,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
 
 				if (list == null) {
-					StringBundler query = null;
-
-					if (orderByComparator != null) {
-						query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 3));
-					}
-					else {
-						query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
-					}
-
-					query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-
-					<#include "persistence_impl_finder_cols.ftl">
-
-					if (orderByComparator != null) {
-						appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-					}
-
-					<#if entity.getOrder()??>
-						else {
-							query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-						}
-					</#if>
+					<#include "persistence_impl_find_by_query.ftl">
 
 					String sql = query.toString();
 
@@ -1126,78 +1105,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				OrderByComparator orderByComparator, boolean previous) {
 
-				StringBundler query = null;
-
-				if (orderByComparator != null) {
-					query = new StringBundler(6 + (orderByComparator.getOrderByFields().length * 6));
-				}
-				else {
-					query = new StringBundler(3);
-				}
-
-				query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-
-				<#include "persistence_impl_finder_cols.ftl">
-
-				if (orderByComparator != null) {
-					String[] orderByFields = orderByComparator.getOrderByFields();
-
-					if (orderByFields.length > 0) {
-						query.append(WHERE_AND);
-					}
-
-					for (int i = 0; i < orderByFields.length; i++) {
-						query.append(_ORDER_BY_ENTITY_ALIAS);
-						query.append(orderByFields[i]);
-
-						if ((i + 1) < orderByFields.length) {
-							if (orderByComparator.isAscending() ^ previous) {
-								query.append(WHERE_GREATER_THAN_HAS_NEXT);
-							}
-							else {
-								query.append(WHERE_LESSER_THAN_HAS_NEXT);
-							}
-						}
-						else {
-							if (orderByComparator.isAscending() ^ previous) {
-								query.append(WHERE_GREATER_THAN);
-							}
-							else {
-								query.append(WHERE_LESSER_THAN);
-							}
-						}
-					}
-
-					query.append(ORDER_BY_CLAUSE);
-
-					for (int i = 0; i < orderByFields.length; i++) {
-						query.append(_ORDER_BY_ENTITY_ALIAS);
-						query.append(orderByFields[i]);
-
-						if ((i + 1) < orderByFields.length) {
-							if (orderByComparator.isAscending() ^ previous) {
-								query.append(ORDER_BY_ASC_HAS_NEXT);
-							}
-							else {
-								query.append(ORDER_BY_DESC_HAS_NEXT);
-							}
-						}
-						else {
-							if (orderByComparator.isAscending() ^ previous) {
-								query.append(ORDER_BY_ASC);
-							}
-							else {
-								query.append(ORDER_BY_DESC);
-							}
-						}
-					}
-				}
-
-				<#if entity.getOrder()??>
-					else {
-						query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-					}
-				</#if>
+				<#include "persistence_impl_get_by_prev_and_next_query.ftl">
 
 				String sql = query.toString();
 
@@ -1364,21 +1272,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
 
 					if (list == null) {
-						StringBundler query = new StringBundler();
-
-						query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-
-						<#include "persistence_impl_finder_arrayable_cols.ftl">
-
-						if (orderByComparator != null) {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-						}
-
-						<#if entity.getOrder()??>
-							else {
-								query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-							}
-						</#if>
+						<#include "persistence_impl_find_by_arrayable_query.ftl">
 
 						String sql = query.toString();
 
@@ -1510,76 +1404,102 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						start, end, orderByComparator);
 					}
 
-					StringBundler query = null;
+					<#if entity.isPermissionedModel()>
+						<#include "persistence_impl_find_by_query.ftl">
 
-					if (orderByComparator != null) {
-						query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 3));
-					}
-					else {
-						query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
-					}
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
-					if (getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-					}
-					else {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
-					}
+						Session session = null;
 
-					<#include "persistence_impl_finder_cols.ftl">
+						try {
+							session = openSession();
 
-					if (!getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
-					}
+							Query q = session.createQuery(sql);
 
-					if (orderByComparator != null) {
+							QueryPos qPos = QueryPos.getInstance(q);
+
+							<#include "persistence_impl_finder_qpos.ftl">
+
+							return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+						}
+						catch (Exception e) {
+							throw processException(e);
+						}
+						finally {
+							closeSession(session);
+						}
+					<#else>
+						StringBundler query = null;
+
+						if (orderByComparator != null) {
+							query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 3));
+						}
+						else {
+							query = new StringBundler(<#if entity.getOrder()??>${finderColsList?size + 2}<#else>${finderColsList?size + 1}</#if>);
+						}
+
 						if (getDB().isSupportsInlineDistinct()) {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 						}
 						else {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
 						}
-					}
 
-					<#if entity.getOrder()??>
-						else {
+						<#include "persistence_impl_finder_cols.ftl">
+
+						if (!getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						}
+
+						if (orderByComparator != null) {
 							if (getDB().isSupportsInlineDistinct()) {
-								query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+								appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 							}
 							else {
-								query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+								appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
 							}
 						}
+
+						<#if entity.getOrder()??>
+							else {
+								if (getDB().isSupportsInlineDistinct()) {
+									query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+								}
+								else {
+									query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+								}
+							}
+						</#if>
+
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
+
+						Session session = null;
+
+						try {
+							session = openSession();
+
+							SQLQuery q = session.createSQLQuery(sql);
+
+							if (getDB().isSupportsInlineDistinct()) {
+								q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+							}
+							else {
+								q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+							}
+
+							QueryPos qPos = QueryPos.getInstance(q);
+
+							<#include "persistence_impl_finder_qpos.ftl">
+
+							return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+						}
+						catch (Exception e) {
+							throw processException(e);
+						}
+						finally {
+							closeSession(session);
+						}
 					</#if>
-
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
-
-					Session session = null;
-
-					try {
-						session = openSession();
-
-						SQLQuery q = session.createSQLQuery(sql);
-
-						if (getDB().isSupportsInlineDistinct()) {
-							q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
-						}
-						else {
-							q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
-						}
-
-						QueryPos qPos = QueryPos.getInstance(q);
-
-						<#include "persistence_impl_finder_qpos.ftl">
-
-						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						closeSession(session);
-					}
 				}
 
 				/**
@@ -1661,139 +1581,171 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					OrderByComparator orderByComparator, boolean previous) {
 
-					StringBundler query = null;
+					<#if entity.isPermissionedModel()>
+						<#include "persistence_impl_get_by_prev_and_next_query.ftl">
 
-					if (orderByComparator != null) {
-						query = new StringBundler(6 + (orderByComparator.getOrderByFields().length * 6));
-					}
-					else {
-						query = new StringBundler(3);
-					}
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
-					if (getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-					}
-					else {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
-					}
+						Query q = session.createQuery(sql);
 
-					<#include "persistence_impl_finder_cols.ftl">
+						q.setFirstResult(0);
+						q.setMaxResults(2);
 
-					if (!getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
-					}
+						QueryPos qPos = QueryPos.getInstance(q);
 
-					if (orderByComparator != null) {
-						String[] orderByFields = orderByComparator.getOrderByFields();
+						<#include "persistence_impl_finder_qpos.ftl">
 
-						if (orderByFields.length > 0) {
-							query.append(WHERE_AND);
-						}
+						if (orderByComparator != null) {
+							Object[] values = orderByComparator.getOrderByValues(${entity.varName});
 
-						for (int i = 0; i < orderByFields.length; i++) {
-							if (getDB().isSupportsInlineDistinct()) {
-								query.append(_ORDER_BY_ENTITY_ALIAS);
-							}
-							else {
-								query.append(_ORDER_BY_ENTITY_TABLE);
-							}
-
-							query.append(orderByFields[i]);
-
-							if ((i + 1) < orderByFields.length) {
-								if (orderByComparator.isAscending() ^ previous) {
-									query.append(WHERE_GREATER_THAN_HAS_NEXT);
-								}
-								else {
-									query.append(WHERE_LESSER_THAN_HAS_NEXT);
-								}
-							}
-							else {
-								if (orderByComparator.isAscending() ^ previous) {
-									query.append(WHERE_GREATER_THAN);
-								}
-								else {
-									query.append(WHERE_LESSER_THAN);
-								}
+							for (Object value : values) {
+								qPos.add(value);
 							}
 						}
 
-						query.append(ORDER_BY_CLAUSE);
+						List<${entity.name}> list = q.list();
 
-						for (int i = 0; i < orderByFields.length; i++) {
-							if (getDB().isSupportsInlineDistinct()) {
-								query.append(_ORDER_BY_ENTITY_ALIAS);
-							}
-							else {
-								query.append(_ORDER_BY_ENTITY_TABLE);
-							}
-
-							query.append(orderByFields[i]);
-
-							if ((i + 1) < orderByFields.length) {
-								if (orderByComparator.isAscending() ^ previous) {
-									query.append(ORDER_BY_ASC_HAS_NEXT);
-								}
-								else {
-									query.append(ORDER_BY_DESC_HAS_NEXT);
-								}
-							}
-							else {
-								if (orderByComparator.isAscending() ^ previous) {
-									query.append(ORDER_BY_ASC);
-								}
-								else {
-									query.append(ORDER_BY_DESC);
-								}
-							}
+						if (list.size() == 2) {
+							return list.get(1);
 						}
-					}
-
-					<#if entity.getOrder()??>
 						else {
-							if (getDB().isSupportsInlineDistinct()) {
-								query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+							return null;
+						}
+					<#else>
+						StringBundler query = null;
+
+						if (orderByComparator != null) {
+							query = new StringBundler(6 + (orderByComparator.getOrderByFields().length * 6));
+						}
+						else {
+							query = new StringBundler(3);
+						}
+
+						if (getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						}
+						else {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						}
+
+						<#include "persistence_impl_finder_cols.ftl">
+
+						if (!getDB().isSupportsInlineDistinct()) {
+							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						}
+
+						if (orderByComparator != null) {
+							String[] orderByFields = orderByComparator.getOrderByFields();
+
+							if (orderByFields.length > 0) {
+								query.append(WHERE_AND);
 							}
+
+							for (int i = 0; i < orderByFields.length; i++) {
+								if (getDB().isSupportsInlineDistinct()) {
+									query.append(_ORDER_BY_ENTITY_ALIAS);
+								}
+								else {
+									query.append(_ORDER_BY_ENTITY_TABLE);
+								}
+
+								query.append(orderByFields[i]);
+
+								if ((i + 1) < orderByFields.length) {
+									if (orderByComparator.isAscending() ^ previous) {
+										query.append(WHERE_GREATER_THAN_HAS_NEXT);
+									}
+									else {
+										query.append(WHERE_LESSER_THAN_HAS_NEXT);
+									}
+								}
+								else {
+									if (orderByComparator.isAscending() ^ previous) {
+										query.append(WHERE_GREATER_THAN);
+									}
+									else {
+										query.append(WHERE_LESSER_THAN);
+									}
+								}
+							}
+
+							query.append(ORDER_BY_CLAUSE);
+
+							for (int i = 0; i < orderByFields.length; i++) {
+								if (getDB().isSupportsInlineDistinct()) {
+									query.append(_ORDER_BY_ENTITY_ALIAS);
+								}
+								else {
+									query.append(_ORDER_BY_ENTITY_TABLE);
+								}
+
+								query.append(orderByFields[i]);
+
+								if ((i + 1) < orderByFields.length) {
+									if (orderByComparator.isAscending() ^ previous) {
+										query.append(ORDER_BY_ASC_HAS_NEXT);
+									}
+									else {
+										query.append(ORDER_BY_DESC_HAS_NEXT);
+									}
+								}
+								else {
+									if (orderByComparator.isAscending() ^ previous) {
+										query.append(ORDER_BY_ASC);
+									}
+									else {
+										query.append(ORDER_BY_DESC);
+									}
+								}
+							}
+						}
+
+						<#if entity.getOrder()??>
 							else {
-								query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+								if (getDB().isSupportsInlineDistinct()) {
+									query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+								}
+								else {
+									query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+								}
 							}
+						</#if>
+
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
+
+						SQLQuery q = session.createSQLQuery(sql);
+
+						q.setFirstResult(0);
+						q.setMaxResults(2);
+
+						if (getDB().isSupportsInlineDistinct()) {
+							q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+						}
+						else {
+							q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+						}
+
+						QueryPos qPos = QueryPos.getInstance(q);
+
+						<#include "persistence_impl_finder_qpos.ftl">
+
+						if (orderByComparator != null) {
+							Object[] values = orderByComparator.getOrderByValues(${entity.varName});
+
+							for (Object value : values) {
+								qPos.add(value);
+							}
+						}
+
+						List<${entity.name}> list = q.list();
+
+						if (list.size() == 2) {
+							return list.get(1);
+						}
+						else {
+							return null;
 						}
 					</#if>
-
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
-
-					SQLQuery q = session.createSQLQuery(sql);
-
-					q.setFirstResult(0);
-					q.setMaxResults(2);
-
-					if (getDB().isSupportsInlineDistinct()) {
-						q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
-					}
-					else {
-						q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
-					}
-
-					QueryPos qPos = QueryPos.getInstance(q);
-
-					<#include "persistence_impl_finder_qpos.ftl">
-
-					if (orderByComparator != null) {
-						Object[] values = orderByComparator.getOrderByValues(${entity.varName});
-
-						for (Object value : values) {
-							qPos.add(value);
-						}
-					}
-
-					List<${entity.name}> list = q.list();
-
-					if (list.size() == 2) {
-						return list.get(1);
-					}
-					else {
-						return null;
-					}
 				}
 
 				<#if finder.hasArrayableOperator()>
@@ -1934,77 +1886,111 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							start, end, orderByComparator);
 						}
 
-						StringBundler query = new StringBundler();
+						<#if entity.isPermissionedModel()>
+							<#include "persistence_impl_find_by_arrayable_query.ftl">
 
-						if (getDB().isSupportsInlineDistinct()) {
-							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-						}
-						else {
-							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
-						}
+							String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
-						<#include "persistence_impl_finder_arrayable_cols.ftl">
+							<#if finder.hasColumn("groupId")>,
+								<#if finder.getColumn("groupId").hasArrayableOperator()>
+									groupIds
+								<#else>
+									groupId
+								</#if>
+							</#if>);
 
-						if (!getDB().isSupportsInlineDistinct()) {
-							query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
-						}
+							Session session = null;
 
-						if (orderByComparator != null) {
+							try {
+								session = openSession();
+
+								Query q = session.createQuery(sql);
+
+								QueryPos qPos = QueryPos.getInstance(q);
+
+								<#include "persistence_impl_finder_arrayable_qpos.ftl">
+
+								return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+							}
+							catch (Exception e) {
+								throw processException(e);
+							}
+							finally {
+								closeSession(session);
+							}
+						<#else>
+							StringBundler query = new StringBundler();
+
 							if (getDB().isSupportsInlineDistinct()) {
-								appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+								query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 							}
 							else {
-								appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
+								query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
 							}
-						}
 
-						<#if entity.getOrder()??>
-							else {
+							<#include "persistence_impl_finder_arrayable_cols.ftl">
+
+							if (!getDB().isSupportsInlineDistinct()) {
+								query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+							}
+
+							if (orderByComparator != null) {
 								if (getDB().isSupportsInlineDistinct()) {
-									query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+									appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 								}
 								else {
-									query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+									appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
 								}
 							}
-						</#if>
 
-						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
-
-						<#if finder.hasColumn("groupId")>,
-							<#if finder.getColumn("groupId").hasArrayableOperator()>
-								groupIds
-							<#else>
-								groupId
+							<#if entity.getOrder()??>
+								else {
+									if (getDB().isSupportsInlineDistinct()) {
+										query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+									}
+									else {
+										query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+									}
+								}
 							</#if>
-						</#if>);
 
-						Session session = null;
+							String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
-						try {
-							session = openSession();
+							<#if finder.hasColumn("groupId")>,
+								<#if finder.getColumn("groupId").hasArrayableOperator()>
+									groupIds
+								<#else>
+									groupId
+								</#if>
+							</#if>);
 
-							SQLQuery q = session.createSQLQuery(sql);
+							Session session = null;
 
-							if (getDB().isSupportsInlineDistinct()) {
-								q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+							try {
+								session = openSession();
+
+								SQLQuery q = session.createSQLQuery(sql);
+
+								if (getDB().isSupportsInlineDistinct()) {
+									q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+								}
+								else {
+									q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+								}
+
+								QueryPos qPos = QueryPos.getInstance(q);
+
+								<#include "persistence_impl_finder_arrayable_qpos.ftl">
+
+								return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 							}
-							else {
-								q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+							catch (Exception e) {
+								throw processException(e);
 							}
-
-							QueryPos qPos = QueryPos.getInstance(q);
-
-							<#include "persistence_impl_finder_arrayable_qpos.ftl">
-
-							return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
-						}
-						catch (Exception e) {
-							throw processException(e);
-						}
-						finally {
-							closeSession(session);
-						}
+							finally {
+								closeSession(session);
+							}
+						</#if>
 					}
 				</#if>
 			</#if>
@@ -2431,11 +2417,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
 
 			if (count == null) {
-				StringBundler query = new StringBundler(${finderColsList?size + 1});
-
-				query.append(_SQL_COUNT_${entity.alias?upper_case}_WHERE);
-
-				<#include "persistence_impl_finder_cols.ftl">
+				<#include "persistence_impl_count_by_query.ftl">
 
 				String sql = query.toString();
 
@@ -2515,11 +2497,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
 
 				if (count == null) {
-					StringBundler query = new StringBundler();
-
-					query.append(_SQL_COUNT_${entity.alias?upper_case}_WHERE);
-
-					<#include "persistence_impl_finder_arrayable_cols.ftl">
+					<#include "persistence_impl_count_by_arrayable_query.ftl">
 
 					String sql = query.toString();
 
@@ -2589,37 +2567,65 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					);
 				}
 
-				StringBundler query = new StringBundler(${finderColsList?size + 1});
+				<#if entity.isPermissionedModel()>
+					<#include "persistence_impl_count_by_query.ftl">
 
-				query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
-				<#include "persistence_impl_finder_cols.ftl">
+					Session session = null;
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
+					try {
+						session = openSession();
 
-				Session session = null;
+						Query q = session.createQuery(sql);
 
-				try {
-					session = openSession();
+						QueryPos qPos = QueryPos.getInstance(q);
 
-					SQLQuery q = session.createSQLQuery(sql);
+						<#include "persistence_impl_finder_qpos.ftl">
 
-					q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+						Long count = (Long)q.uniqueResult();
 
-					QueryPos qPos = QueryPos.getInstance(q);
+						return count.intValue();
+					}
+					catch (Exception e) {
+						throw processException(e);
+					}
+					finally {
+						closeSession(session);
+					}
+				<#else>
+					StringBundler query = new StringBundler(${finderColsList?size + 1});
 
-					<#include "persistence_impl_finder_qpos.ftl">
+					query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-					Long count = (Long)q.uniqueResult();
+					<#include "persistence_impl_finder_cols.ftl">
 
-					return count.intValue();
-				}
-				catch (Exception e) {
-					throw processException(e);
-				}
-				finally {
-					closeSession(session);
-				}
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
+
+					Session session = null;
+
+					try {
+						session = openSession();
+
+						SQLQuery q = session.createSQLQuery(sql);
+
+						q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+						QueryPos qPos = QueryPos.getInstance(q);
+
+						<#include "persistence_impl_finder_qpos.ftl">
+
+						Long count = (Long)q.uniqueResult();
+
+						return count.intValue();
+					}
+					catch (Exception e) {
+						throw processException(e);
+					}
+					finally {
+						closeSession(session);
+					}
+				</#if>
 			}
 
 			<#if finder.hasArrayableOperator()>
@@ -2677,45 +2683,81 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						);
 					}
 
-					StringBundler query = new StringBundler();
+					<#if entity.isPermissionedModel()>
+						<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-					query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
-					<#include "persistence_impl_finder_arrayable_cols.ftl">
+						<#if finder.hasColumn("groupId")>,
+							<#if finder.getColumn("groupId").hasArrayableOperator()>
+								groupIds
+							<#else>
+								groupId
+							</#if>
+						</#if>);
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+						Session session = null;
 
-					<#if finder.hasColumn("groupId")>,
-						<#if finder.getColumn("groupId").hasArrayableOperator()>
-							groupIds
-						<#else>
-							groupId
-						</#if>
-					</#if>);
+						try {
+							session = openSession();
 
-					Session session = null;
+							Query q = session.createQuery(sql);
 
-					try {
-						session = openSession();
+							QueryPos qPos = QueryPos.getInstance(q);
 
-						SQLQuery q = session.createSQLQuery(sql);
+							<#include "persistence_impl_finder_arrayable_qpos.ftl">
 
-						q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+							Long count = (Long)q.uniqueResult();
 
-						QueryPos qPos = QueryPos.getInstance(q);
+							return count.intValue();
+						}
+						catch (Exception e) {
+							throw processException(e);
+						}
+						finally {
+							closeSession(session);
+						}
+					<#else>
+						StringBundler query = new StringBundler();
 
-						<#include "persistence_impl_finder_arrayable_qpos.ftl">
+						query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-						Long count = (Long)q.uniqueResult();
+						<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-						return count.intValue();
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						closeSession(session);
-					}
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+
+						<#if finder.hasColumn("groupId")>,
+							<#if finder.getColumn("groupId").hasArrayableOperator()>
+								groupIds
+							<#else>
+								groupId
+							</#if>
+						</#if>);
+
+						Session session = null;
+
+						try {
+							session = openSession();
+
+							SQLQuery q = session.createSQLQuery(sql);
+
+							q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+							QueryPos qPos = QueryPos.getInstance(q);
+
+							<#include "persistence_impl_finder_arrayable_qpos.ftl">
+
+							Long count = (Long)q.uniqueResult();
+
+							return count.intValue();
+						}
+						catch (Exception e) {
+							throw processException(e);
+						}
+						finally {
+							closeSession(session);
+						}
+					</#if>
 				}
 			</#if>
 		</#if>
@@ -3873,6 +3915,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
 
 		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKColumn.DBName}";
+
+		<#if entity.isPermissionedModel()>
+			<#if entity.hasColumn("userId") >
+				private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = "${entity.alias}.userId";
+			<#else>
+				private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = null;
+			</#if>
+		</#if>
 	</#if>
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "${entity.alias}.";

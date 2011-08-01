@@ -1560,6 +1560,62 @@
 			<finder-column name="actionId" />
 		</finder>
 	</entity>
+	<entity name="ResourceBlock" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="resourceBlockId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="groupId" type="long" />
+		<column name="name" type="String" />
+		<column name="permissionsHash" type="String" />
+		<column name="referenceCount" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_G_N" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="C_G_N_P" return-type="ResourceBlock" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+			<finder-column name="permissionsHash" />
+		</finder>
+		<finder name="C_N" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity name="ResourceBlockPermission" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="resourceBlockId" type="long" primary="true" />
+		<column name="roleId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="actionIds" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="ResourceBlockId" return-type="Collection">
+			<finder-column name="resourceBlockId" />
+		</finder>
+		<finder name="R_R" return-type="ResourceBlockPermission" unique="true">
+			<finder-column name="resourceBlockId" />
+			<finder-column name="roleId" />
+		</finder>
+	</entity>
 	<entity name="ResourceCode" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -1652,6 +1708,31 @@
 			<finder-column name="roleId" />
 			<finder-column name="ownerId" />
 			<finder-column name="actionIds" />
+		</finder>
+	</entity>
+	<entity name="ResourceTypePermission" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="companyId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" />
+		<column name="name" type="String" primary="true" />
+		<column name="roleId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="actionIds" type="long" />
+
+		<!-- Finder methods -->
+
+		<!-- We may want an index on actionIds for use by GroupFinder -->
+		<finder name="C_N_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="roleId" />
+		</finder>
+		<finder name="RoleId" return-type="Collection">
+			<finder-column name="roleId" />
 		</finder>
 	</entity>
 	<entity name="Role" local-service="true" remote-service="true">

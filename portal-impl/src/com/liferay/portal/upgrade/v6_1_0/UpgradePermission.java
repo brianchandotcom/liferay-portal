@@ -23,12 +23,16 @@ import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.upgrade.util.ConvertResourcePermissions;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author Connor McKay
  */
 public class UpgradePermission extends UpgradeProcess {
 
@@ -44,6 +48,14 @@ public class UpgradePermission extends UpgradeProcess {
 		updatePermissions("com.liferay.portlet.imagegallery", true, true);
 		updatePermissions("com.liferay.portlet.messageboards", true, true);
 		updatePermissions("com.liferay.portlet.shopping", true, true);
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			ConvertResourcePermissions.convertModel(
+				BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+
+			ConvertResourcePermissions.convertModel(
+				BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
+		}
 	}
 
 	protected void updatePermissions(

@@ -114,6 +114,20 @@ public class SQLTransformer {
 		return sql;
 	}
 
+	private String _replaceBitwiseCheck(String sql) {
+		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
+
+		if (_vendorDB2 || _vendorOracle) {
+			return matcher.replaceAll("BITAND($1, $2) != 0");
+		}
+		else if (_vendorDerby) {
+			return matcher.replaceAll("MOD($1 / $2, 2) != 0");
+		}
+		else {
+			return sql;
+		}
+	}
+
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
@@ -177,6 +191,7 @@ public class SQLTransformer {
 		String newSQL = sql;
 
 		newSQL = _replaceCastText(newSQL);
+		newSQL = _replaceBitwiseCheck(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
 		if (_vendorDerby) {
@@ -292,6 +307,8 @@ public class SQLTransformer {
 
 	private static SQLTransformer _instance = new SQLTransformer();
 
+	private static Pattern _bitwiseCheckPattern = Pattern.compile(
+		"\\(\\((.+?) & (.+?)\\) != 0\\)");
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(

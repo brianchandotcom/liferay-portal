@@ -1,6 +1,7 @@
 package ${packagePath}.model;
 
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -17,6 +18,10 @@ public interface ${entity.name} extends
 
 	<#if entity.hasLocalService() && entity.hasColumns()>
 		, PersistedModel
+
+		<#if entity.isPermissionedModel()>
+		, PermissionedModel
+		</#if>
 	</#if>
 
 	{

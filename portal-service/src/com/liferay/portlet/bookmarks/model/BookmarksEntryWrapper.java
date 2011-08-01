@@ -219,6 +219,24 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 	}
 
 	/**
+	* Returns the resource block ID of this bookmarks entry.
+	*
+	* @return the resource block ID of this bookmarks entry
+	*/
+	public long getResourceBlockId() {
+		return _bookmarksEntry.getResourceBlockId();
+	}
+
+	/**
+	* Sets the resource block ID of this bookmarks entry.
+	*
+	* @param resourceBlockId the resource block ID of this bookmarks entry
+	*/
+	public void setResourceBlockId(long resourceBlockId) {
+		_bookmarksEntry.setResourceBlockId(resourceBlockId);
+	}
+
+	/**
 	* Returns the folder ID of this bookmarks entry.
 	*
 	* @return the folder ID of this bookmarks entry

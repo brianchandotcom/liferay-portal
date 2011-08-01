@@ -251,6 +251,7 @@ create table BookmarksEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	folderId LONG,
 	name VARCHAR(255) null,
 	url STRING null,
@@ -268,6 +269,7 @@ create table BookmarksFolder (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	parentFolderId LONG,
 	name VARCHAR(75) null,
 	description STRING null
@@ -1460,6 +1462,31 @@ create table RepositoryEntry (
 	groupId LONG,
 	repositoryId LONG,
 	mappedId VARCHAR(75) null
+);
+
+create table ResourceBlock (
+	resourceBlockId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	name VARCHAR(75) null,
+	permissionsHash VARCHAR(75) null,
+	referenceCount LONG
+);
+
+create table ResourceBlockPermission (
+	resourceBlockId LONG not null,
+	roleId LONG not null,
+	actionIds LONG,
+	primary key (resourceBlockId, roleId)
+);
+
+create table ResourceTypePermission (
+	companyId LONG not null,
+	groupId LONG not null,
+	name VARCHAR(75) not null,
+	roleId LONG not null,
+	actionIds LONG,
+	primary key (companyId, groupId, name, roleId)
 );
 
 create table Resource_ (

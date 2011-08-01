@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
 public class PersistedModelLocalServiceRegistryUtil {
 
@@ -39,6 +40,11 @@ public class PersistedModelLocalServiceRegistryUtil {
 
 		return getPersistedModelLocalServiceRegistry().
 			getPersistedModelLocalServices();
+	}
+
+	public static boolean isPermissionedModelLocalService(String className) {
+		return getPersistedModelLocalServiceRegistry().
+			isPermissionedModelLocalService(className);
 	}
 
 	public static void register(

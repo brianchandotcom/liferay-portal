@@ -39,6 +39,9 @@ public class ResourcePermissionFinderImpl
 	public static String COUNT_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".countByR_S";
 
+	public static String FIND_BY_RESOURCE =
+		ResourcePermissionFinder.class.getName() + ".findByResource";
+
 	public static String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
 
@@ -75,6 +78,39 @@ public class ResourcePermissionFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<ResourcePermission> findByResource(
+			long companyId, long groupId, String name, String primKey)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_RESOURCE);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(name);
+			qPos.add(primKey);
+			qPos.add(groupId);
+
+			return (List<ResourcePermission>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

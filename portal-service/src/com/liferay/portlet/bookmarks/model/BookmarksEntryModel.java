@@ -193,6 +193,20 @@ public interface BookmarksEntryModel extends AuditedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the resource block ID of this bookmarks entry.
+	 *
+	 * @return the resource block ID of this bookmarks entry
+	 */
+	public long getResourceBlockId();
+
+	/**
+	 * Sets the resource block ID of this bookmarks entry.
+	 *
+	 * @param resourceBlockId the resource block ID of this bookmarks entry
+	 */
+	public void setResourceBlockId(long resourceBlockId);
+
+	/**
 	 * Returns the folder ID of this bookmarks entry.
 	 *
 	 * @return the folder ID of this bookmarks entry

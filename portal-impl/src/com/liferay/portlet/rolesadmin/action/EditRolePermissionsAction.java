@@ -32,6 +32,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.security.permission.comparator.ActionComparator;
 import com.liferay.portal.service.PermissionServiceUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
@@ -57,6 +59,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Connor McKay
  */
 public class EditRolePermissionsAction extends PortletAction {
 
@@ -145,10 +148,25 @@ public class EditRolePermissionsAction extends PortletAction {
 			throw new RolePermissionsException(roleName);
 		}
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			ResourcePermissionServiceUtil.removeResourcePermission(
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-				name, scope, primKey, roleId, actionId);
+		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+				if (scope == ResourceConstants.SCOPE_GROUP) {
+					ResourceBlockServiceUtil.removeGroupScopePermission(
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getCompanyId(), Long.valueOf(primKey),
+						name, roleId, actionId);
+				}
+				else {
+					ResourceBlockServiceUtil.removeCompanyScopePermission(
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getCompanyId(), name, roleId, actionId);
+				}
+			}
+			else {
+				ResourcePermissionServiceUtil.removeResourcePermission(
+					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+					name, scope, primKey, roleId, actionId);
+			}
 		}
 		else {
 			PermissionServiceUtil.unsetRolePermission(
@@ -269,6 +287,42 @@ public class EditRolePermissionsAction extends PortletAction {
 		}
 	}
 
+	protected void updateActions_6Blocks(
+			Role role, long scopeGroupId, String selResource, String actionId,
+			boolean selected, int scope, String[] groupIds)
+		throws Exception {
+
+		long companyId = role.getCompanyId();
+		long roleId = role.getRoleId();
+
+		if (selected) {
+			if (scope == ResourceConstants.SCOPE_GROUP) {
+				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+				ResourceBlockServiceUtil.removeCompanyScopePermission(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+
+				for (String groupId : groupIds) {
+					ResourceBlockServiceUtil.addGroupScopePermission(
+						scopeGroupId, companyId, Long.valueOf(groupId),
+						selResource, roleId, actionId);
+				}
+			}
+			else {
+				ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+				ResourceBlockServiceUtil.addCompanyScopePermission(
+					scopeGroupId, companyId, selResource, roleId, actionId);
+			}
+		}
+		else {
+			ResourceBlockServiceUtil.removeAllGroupScopePermissions(
+				scopeGroupId, companyId, selResource, roleId, actionId);
+			ResourceBlockServiceUtil.removeCompanyScopePermission(
+				scopeGroupId, companyId, selResource, roleId, actionId);
+		}
+	}
+
 	protected void updateActions(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -353,9 +407,16 @@ public class EditRolePermissionsAction extends PortletAction {
 				}
 
 				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-					updateAction_6(
-						role, themeDisplay.getScopeGroupId(), selResource,
-						actionId, selected, scope, groupIds);
+					if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
+						updateActions_6Blocks(
+							role, themeDisplay.getScopeGroupId(), selResource,
+							actionId, selected, scope, groupIds);
+					}
+					else {
+						updateAction_6(
+							role, themeDisplay.getScopeGroupId(), selResource,
+							actionId, selected, scope, groupIds);
+					}
 				}
 				else {
 					updateAction_1to5(

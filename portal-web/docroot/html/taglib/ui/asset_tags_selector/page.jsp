@@ -19,13 +19,12 @@
 <%
 themeDisplay.setIncludeServiceJs(true);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_tags_selector_page") + StringPool.UNDERLINE;
-
 String className = (String)request.getAttribute("liferay-ui:asset-tags-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-selector:classPK"));
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-tags-selector:hiddenInput");
 String curTags = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:curTags"));
 boolean focus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-selector:focus"));
+String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
 String contentCallback = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:contentCallback"));
 
 if (Validator.isNotNull(className) && (classPK > 0)) {
@@ -41,17 +40,17 @@ if (curTagsParam != null) {
 }
 %>
 
-<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetTagsSelector">
+<div class="lfr-tags-selector-content" id="<%= namespace + id %>assetTagsSelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" />
 
-	<input class="lfr-tag-selector-input" id="<%= randomNamespace %>assetTagNames" size="15" type="text" />
+	<input class="lfr-tag-selector-input" id="<%= id %>assetTagNames" size="15" title="<liferay-ui:message key="add-tags" />" type="text" />
 </div>
 
 <aui:script use="liferay-asset-tags-selector">
 	new Liferay.AssetTagsSelector(
 		{
 			allowSuggestions: <%= PropsValues.ASSET_TAG_SUGGESTIONS_ENABLED %>,
-			contentBox: '#<%= namespace + randomNamespace %>assetTagsSelector',
+			contentBox: '#<%= namespace + id %>assetTagsSelector',
 
 			<c:if test="<%= PropsValues.ASSET_TAG_SUGGESTIONS_ENABLED && Validator.isNotNull(contentCallback) %>">
 				contentCallback: function() {
@@ -64,8 +63,8 @@ if (curTagsParam != null) {
 			curEntries: '<%= HtmlUtil.escapeJS(curTags) %>',
 			focused: <%= focus %>,
 			hiddenInput: '#<%= namespace + hiddenInput %>',
-			input: '#<%= randomNamespace %>assetTagNames',
-			instanceVar: '<%= namespace + randomNamespace %>',
+			input: '#<%= id %>assetTagNames',
+			instanceVar: '<%= namespace + id %>',
 			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
 		}
 	).render();

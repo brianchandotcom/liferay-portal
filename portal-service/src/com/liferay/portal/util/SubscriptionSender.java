@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -249,6 +249,10 @@ public class SubscriptionSender implements Serializable {
 		this.groupId = groupId;
 	}
 
+	public void setScopeGroupId(long scopeGroupId) {
+		this.scopeGroupId = scopeGroupId;
+	}
+
 	public void setHtmlFormat(boolean htmlFormat) {
 		this.htmlFormat = htmlFormat;
 	}
@@ -355,10 +359,9 @@ public class SubscriptionSender implements Serializable {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		int type = group.getType();
-
 		if (!GroupLocalServiceUtil.hasUserGroup(user.getUserId(), groupId) &&
-			(type != GroupConstants.TYPE_SITE_OPEN)) {
+			(!group.isCompany()) && (LayoutServiceUtil.getDefaultPlid(
+				groupId, scopeGroupId, false, portletId)==0)) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -564,6 +567,7 @@ public class SubscriptionSender implements Serializable {
 	protected String fromAddress;
 	protected String fromName;
 	protected long groupId;
+	protected long scopeGroupId;
 	protected boolean htmlFormat;
 	protected String inReplyTo;
 	protected Map<Locale, String> localizedBodyMap;

@@ -39,6 +39,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -761,7 +762,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected void notifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
-		throws SystemException {
+		throws SystemException, PortalException {
 
 		if (!entry.isApproved()) {
 			return;
@@ -821,6 +822,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				preferences);
 		}
 
+		long groupId = entry.getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			groupId = group.getParentGroupId();
+		}	
+		
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setCompanyId(entry.getCompanyId());
@@ -828,7 +837,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			"[$BLOGS_ENTRY_URL$]", entryURL);
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setGroupId(entry.getGroupId());
+		subscriptionSender.setGroupId(groupId);
+		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());
 		subscriptionSender.setPortletId(PortletKeys.BLOGS);

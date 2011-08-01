@@ -61,6 +61,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -2967,6 +2968,14 @@ public class JournalArticleLocalServiceImpl
 			body = JournalUtil.getEmailArticleUpdatedBody(preferences);
 		}
 
+		long groupId = article.getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			groupId = group.getParentGroupId();
+		}
+		
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
@@ -2977,7 +2986,8 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setGroupId(article.getGroupId());
+		subscriptionSender.setGroupId(groupId);
+		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);

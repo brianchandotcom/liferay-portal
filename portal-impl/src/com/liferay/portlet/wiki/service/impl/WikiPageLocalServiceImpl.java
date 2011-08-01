@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -1659,6 +1661,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			body += "\n" + signature;
 		}
 
+		long groupId = node.getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			groupId = group.getParentGroupId();
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
@@ -1672,7 +1682,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$PAGE_URL$]", pageURL);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setGroupId(node.getGroupId());
+		subscriptionSender.setGroupId(groupId);
+		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
 			"wiki_page", page.getNodeId(), page.getPageId());

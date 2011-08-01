@@ -386,7 +386,6 @@ public class OrganizationServiceWrapper implements OrganizationService {
 	/**
 	* Updates the organization with additional parameters.
 	*
-	* @param organizationId the primary key of the organization
 	* @param parentOrganizationId the primary key of the organization's parent
 	organization
 	* @param name the organization's name

@@ -9,7 +9,7 @@ alter table BlogsEntry add smallImage BOOLEAN;
 alter table BlogsEntry add smallImageId VARCHAR(75) null;
 alter table BlogsEntry add smallImageURL STRING null;
 
-alter table BookmarksEntry add userName VARCHAR(75) null;
+alter table BookmarksEntry add userName VARCHAR(255) null;
 alter table BookmarksEntry add description VARCHAR(75) null;
 
 COMMIT_TRANSACTION;
@@ -17,7 +17,7 @@ COMMIT_TRANSACTION;
 update BookmarksEntry set description = comments;
 alter table BookmarksEntry drop column comments;
 
-alter table BookmarksFolder add userName VARCHAR(75) null;
+alter table BookmarksFolder add userName VARCHAR(255) null;
 
 alter table CalEvent add location STRING null;
 
@@ -231,9 +231,9 @@ alter table Group_ add site BOOLEAN;
 update Group_ set name = 'User Personal Site' where name = 'User Personal Community';
 update Group_ set type_ = 3 where classNameId = (select classNameId from ClassName_ where value = 'com.liferay.portal.model.Organization');
 
-alter table IGFolder add userName VARCHAR(75) null;
+alter table IGFolder add userName VARCHAR(255) null;
 
-alter table IGImage add userName VARCHAR(75) null;
+alter table IGImage add userName VARCHAR(255) null;
 
 alter table JournalArticle add classNameId LONG null;
 alter table JournalArticle add classPK LONG null;

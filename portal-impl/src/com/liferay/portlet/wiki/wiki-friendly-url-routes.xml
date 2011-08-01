@@ -73,6 +73,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeId:\d+}/{title:[^/]+}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
@@ -80,6 +81,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeId:\d+}/{title:[^/]+}/{p_p_state}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
@@ -138,6 +140,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeName}/{title:[^/]+}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
@@ -145,6 +148,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeName}/{title:[^/]+}/{p_p_state}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>

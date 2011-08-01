@@ -251,6 +251,7 @@ create table BookmarksEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	folderId LONG,
 	name VARCHAR(255) null,
 	url STRING null,
@@ -268,6 +269,7 @@ create table BookmarksFolder (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	parentFolderId LONG,
 	name VARCHAR(75) null,
 	description STRING null

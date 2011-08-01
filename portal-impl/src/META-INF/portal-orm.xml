@@ -1603,6 +1603,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="resourceBlockId" />
 			<basic name="folderId" />
 			<basic name="name" />
 			<basic name="url" />
@@ -1630,6 +1631,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="resourceBlockId" />
 			<basic name="parentFolderId" />
 			<basic name="name" />
 			<basic name="description" />

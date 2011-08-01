@@ -122,6 +122,14 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		%>
 
 		<div class="asset-content">
+			<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
+				<liferay-ui:social-bookmarks
+						displayStyle="<%= socialBookmarksDisplayStyle %>"
+						target="_blank"
+						title="<%= assetEntry.getTitle() %>"
+						url="<%= viewFullContentURL.toString() %>"
+					/>
+			</c:if>
 
 			<%
 			String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
@@ -141,6 +149,15 @@ request.setAttribute("view.jsp-showIconLabel", true);
 						reportedUserId="<%= assetRenderer.getUserId() %>"
 					/>
 				</div>
+			</c:if>
+
+			<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom")%>'>		
+				<liferay-ui:social-bookmarks
+					displayStyle="<%= socialBookmarksDisplayStyle %>"
+					target="_blank"					
+					title="<%= assetEntry.getTitle() %>"
+					url="<%= viewFullContentURL.toString() %>"
+				/>
 			</c:if>
 
 			<c:if test="<%= enableRatings %>">

@@ -144,15 +144,6 @@
 		margin-top: 0.5em;
 	}
 
-	.taglib-social-bookmarks {
-		clear: both;
-		margin-top: 1.5em;
-
-		ul {
-			padding: 1em;
-		}
-	}
-
 	#blogsCommentsPanelContainer {
 		border-width: 0;
 	}

@@ -1,4 +1,4 @@
-@import url(../../classic/css/custom_breadcrumbs.css);
+@import url(../../classic/css/custom_common.css);
 
 /* ---------- Base styles ---------- */
 
@@ -731,25 +731,6 @@ body.portal-popup:after, body.portal-popup:before {
 
 .portlet-document-library .portlet-content {
 	padding: 12px 0;
-}
-
-/* ---------- Hidden Accessible ---------- */
-
-#skip-to-content, #banner h2, #banner h3, #navigation h1, .site-breadcrumbs h1 {
-	clip: rect(0 0 0 0);
-	position: absolute;
-}
-
-.opens-new-window-accessible {
-	background: url(../images/common/open_window.png) no-repeat 0 50%;
-	display: inline-block;
-	font-size: 0;
-	height: 11px;
-	margin-left: 2px;
-	overflow: hidden;
-	text-indent: -9999px;
-	vertical-align: top;
-	width: 11px;
 }
 
 /*----- Extras -----*/

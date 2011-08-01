@@ -165,6 +165,7 @@ if (step == 1) {
 					document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = organizationId;
 
 					<%
+					portletURL.setParameter("cur", String.valueOf(SearchContainer.DEFAULT_CUR));
 					portletURL.setParameter("step", "2");
 					%>
 

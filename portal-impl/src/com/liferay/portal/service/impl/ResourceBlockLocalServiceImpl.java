@@ -115,7 +115,6 @@ public class ResourceBlockLocalServiceImpl
 	 *
 	 * @param  companyId the primary key of the resource block's company
 	 * @param  groupId the primary key of the resource block's group
-	 * @param  resourceBlockPermissions the resource block permissions
 	 * @return the new resource block
 	 * @throws SystemException if a system exception occurred
 	 */

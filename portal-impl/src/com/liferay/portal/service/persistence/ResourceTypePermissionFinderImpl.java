@@ -41,14 +41,15 @@ public class ResourceTypePermissionFinderImpl
 		ResourceTypePermissionFinder.class.getName() + ".findByGroupScopeC_N_R";
 
 	/**
-	 * Returns all the resource type permissions with either scope that apply
-	 * to resources of the type within the group. This method is used to find
-	 * all the resource type permissions that apply to a newly created resource.
+	 * Returns all the resource type permissions with either scope that apply to
+	 * resources of the type within the group. This method is used to find all
+	 * the resource type permissions that apply to a newly created resource.
 	 *
-	 * @param companyId the primary key of the company
-	 * @param groupId the primary key of the group
-	 * @param name the fully qualified class name of the resource type
-	 * @return all the resource type permissions that apply to resources of the type within the group
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the group
+	 * @param  name the fully qualified class name of the resource type
+	 * @return all the resource type permissions that apply to resources of the
+	 *         type within the group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<ResourceTypePermission> findByEitherScopeC_G_N(
@@ -86,14 +87,15 @@ public class ResourceTypePermissionFinderImpl
 
 	/**
 	 * Returns all of the role's group scope resource type permissions that
-	 * apply to resources of the type. This method is used during the process
-	 * of adding a company scope resource type permissions to remove all the
-	 * group scope permissions that would be overridden by it.
+	 * apply to resources of the type. This method is used during the process of
+	 * adding a company scope resource type permissions to remove all the group
+	 * scope permissions that would be overridden by it.
 	 *
-	 * @param companyId the primary key of the company
-	 * @param name the fully qualified class name of the resource type
-	 * @param roleId the primary key of the role
-	 * @return all of the role's group scope resource type permissions that apply to resources of the type
+	 * @param  companyId the primary key of the company
+	 * @param  name the fully qualified class name of the resource type
+	 * @param  roleId the primary key of the role
+	 * @return all of the role's group scope resource type permissions that
+	 *         apply to resources of the type
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<ResourceTypePermission> findByGroupScopeC_N_R(

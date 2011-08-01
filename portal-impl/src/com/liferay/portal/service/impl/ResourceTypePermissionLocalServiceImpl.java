@@ -29,8 +29,8 @@ import java.util.List;
  * Manages resource type permissions.
  *
  * <p>
- * Never call the update methods of this service directly, always go through
- * the resource block local service.
+ * Never call the update methods of this service directly, always go through the
+ * resource block local service.
  * </p>
  *
  * @author Connor McKay

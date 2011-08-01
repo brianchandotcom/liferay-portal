@@ -817,15 +817,14 @@ public class ResourceActionsImpl implements ResourceActions {
 		else {
 			if (group != null) {
 				if (group.isLayout()) {
-					long parentGroupId = group.getParentGroupId();
 					try {
-						Group parentGroup =
-							GroupServiceUtil.getGroup(parentGroupId);
-						group = parentGroup;
+						group = GroupServiceUtil.getGroup(
+							group.getParentGroupId());
 					}
 					catch (Exception e) {
 					}
 				}
+
 				if (group.isOrganization()) {
 					types = new int[] {
 						RoleConstants.TYPE_REGULAR,

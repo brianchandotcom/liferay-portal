@@ -1904,8 +1904,8 @@
 		<column name="passwordReset" type="boolean" json-enabled="false"/>
 		<column name="passwordModifiedDate" type="Date" json-enabled="false"/>
 		<column name="digest" type="String" json-enabled="false"/>
-		<column name="reminderQueryQuestion" type="String" json-enabled="false"/>
-		<column name="reminderQueryAnswer" type="String" json-enabled="false"/>
+		<column name="reminderQueryQuestion" type="String"/>
+		<column name="reminderQueryAnswer" type="String"/>
 		<column name="graceLoginCount" type="int" />
 		<column name="screenName" type="String" />
 		<column name="emailAddress" type="String" />

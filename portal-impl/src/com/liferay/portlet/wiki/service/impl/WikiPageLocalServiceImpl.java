@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -235,8 +234,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		String portletId = CompanyConstants.SYSTEM_STRING;
-		long groupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		long repositoryId = CompanyConstants.SYSTEM;
 
 		try {
@@ -246,8 +243,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		DLStoreUtil.addFile(
-			companyId, portletId, groupId, repositoryId,
-			dirName + "/" + fileName, false, new ServiceContext(), inputStream);
+			companyId, repositoryId, dirName + "/" + fileName, false,
+			new ServiceContext(), inputStream);
 	}
 
 	public void addPageAttachment(
@@ -266,8 +263,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		long companyId = page.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
-		long groupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String dirName = page.getAttachmentsDir();
 
@@ -282,8 +277,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
 
 		DLStoreUtil.addFile(
-			companyId, portletId, groupId, repositoryId,
-			dirName + "/" + fileName, new ServiceContext(), bytes);
+			companyId, repositoryId, dirName + "/" + fileName,
+			new ServiceContext(), bytes);
 	}
 
 	public void addPageAttachments(
@@ -442,13 +437,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Attachments
 
 		long companyId = page.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String dirName = page.getAttachmentsDir();
 
 		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, portletId, repositoryId, dirName);
+			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 		}
 		catch (NoSuchDirectoryException nsde) {
 		}
@@ -541,12 +534,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ActionKeys.ADD_ATTACHMENT, fileName.substring(1));
 
 		long companyId = page.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
 		long repositoryId = CompanyConstants.SYSTEM;
 
 		try {
-			DLStoreUtil.deleteFile(
-				companyId, portletId, repositoryId, fileName);
+			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 		}
 		catch (NoSuchFileException nsfe) {
 		}

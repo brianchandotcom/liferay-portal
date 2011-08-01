@@ -190,8 +190,7 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		DLStoreUtil.addFile(
-			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-			dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(), name,
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
 			false, serviceContext, is);
 
 		// Index
@@ -251,8 +250,8 @@ public class DLFileEntryLocalServiceImpl
 
 		try {
 			DLStoreUtil.deleteFile(
-				dlFileEntry.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 		}
 		catch (NoSuchFileException nsfe) {
@@ -308,8 +307,7 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		DLStoreUtil.updateFileVersion(
-			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-			dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version,
 			dlFileEntry.getTitle(), serviceContext);
@@ -418,7 +416,7 @@ public class DLFileEntryLocalServiceImpl
 
 			try {
 				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
+					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 			}
@@ -426,8 +424,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			DLStoreUtil.copyFileVersion(
-				user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
+				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 				dlFileVersion.getTitle(), serviceContext);
@@ -1209,8 +1206,8 @@ public class DLFileEntryLocalServiceImpl
 
 		try {
 			DLStoreUtil.deleteFile(
-				dlFileEntry.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -1379,8 +1376,7 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		DLStoreUtil.updateFile(
-			user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-			dlFileEntry.getGroupId(), oldDataRepositoryId,
+			user.getCompanyId(), oldDataRepositoryId,
 			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 
 		// Index
@@ -1514,16 +1510,14 @@ public class DLFileEntryLocalServiceImpl
 			if (is != null) {
 				try {
 					DLStoreUtil.deleteFile(
-						user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-						dlFileEntry.getDataRepositoryId(),
+						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), version);
 				}
 				catch (NoSuchFileException nsfe) {
 				}
 
 				DLStoreUtil.updateFile(
-					user.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-					dlFileEntry.getGroupId(), dlFileEntry.getDataRepositoryId(),
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(), dlFileEntry.getExtension(), false,
 					version, sourceFileName, serviceContext, is);
 

@@ -92,13 +92,13 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			ServiceContext serviceContext, InputStream is)
 		throws PortalException {
 
 		updateFile(
-			companyId, portletId, groupId, repositoryId, fileName,
-			DEFAULT_VERSION, null, serviceContext, is);
+			companyId, repositoryId, fileName, DEFAULT_VERSION, null,
+			serviceContext, is);
 	}
 
 	@Override
@@ -107,8 +107,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void copyFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fromVersionNumber, String toVersionNumber,
+			long companyId, long repositoryId, String fileName,
+			String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -137,7 +137,7 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-		long companyId, String portletId, long repositoryId, String dirName) {
+		long companyId, long repositoryId, String dirName) {
 
 		Folder repositoryFolder = getRepositoryFolder(companyId, repositoryId);
 
@@ -149,9 +149,7 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName)
+	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -166,8 +164,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName, String versionNumber)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws PortalException {
 
 		Document document = getVersionedDocument(
@@ -243,8 +241,7 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
 		String versionNumber = getHeadVersionNumber(
@@ -306,8 +303,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		long newRepositoryId, String fileName) {
+		long companyId, long repositoryId, long newRepositoryId,
+		String fileName) {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -331,8 +328,8 @@ public class CMISStore extends BaseStore {
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String newFileName) {
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -357,8 +354,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String versionNumber, String sourceFileName,
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException {
 
@@ -378,8 +375,8 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fromVersionNumber, String toVersionNumber,
+			long companyId, long repositoryId, String fileName,
+			String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
 		throws PortalException {
 

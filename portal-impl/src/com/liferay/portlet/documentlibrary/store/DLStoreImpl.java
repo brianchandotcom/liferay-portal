@@ -70,40 +70,34 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	}
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, boolean validateFileExtension,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, ServiceContext serviceContext,
+			InputStream is)
 		throws PortalException, SystemException {
 
 		validate(fileName, validateFileExtension, is);
 
-		store.addFile(
-			companyId, portletId, groupId, repositoryId, fileName,
-			serviceContext, is);
+		store.addFile(companyId, repositoryId, fileName, serviceContext, is);
 	}
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName,
+			ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
 
 		validate(fileName, true, bytes);
 
-		store.addFile(
-			companyId, portletId, groupId, repositoryId, fileName,
-			serviceContext, bytes);
+		store.addFile(companyId, repositoryId, fileName, serviceContext, bytes);
 	}
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName,
+			ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
 
 		validate(fileName, true, file);
 
-		store.addFile(
-			companyId, portletId, groupId, repositoryId, fileName,
-			serviceContext, file);
+		store.addFile(companyId, repositoryId, fileName, serviceContext, file);
 	}
 
 	public void checkRoot(long companyId) throws SystemException {
@@ -111,38 +105,35 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	}
 
 	public void copyFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fromVersionNumber, String toVersionNumber,
+			long companyId, long repositoryId, String fileName,
+			String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		store.copyFileVersion(
-			companyId, portletId, groupId, repositoryId, fileName,
-			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+			companyId, repositoryId, fileName, fromVersionNumber,
+			toVersionNumber, sourceFileName, serviceContext);
 	}
 
 	public void deleteDirectory(
-			long companyId, String portletId, long repositoryId, String dirName)
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		store.deleteDirectory(companyId, portletId, repositoryId, dirName);
+		store.deleteDirectory(companyId, repositoryId, dirName);
+	}
+
+	public void deleteFile(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		store.deleteFile(companyId, repositoryId, fileName);
 	}
 
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws PortalException, SystemException {
 
-		store.deleteFile(companyId, portletId, repositoryId, fileName);
-	}
-
-	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName, String versionNumber)
-		throws PortalException, SystemException {
-
-		store.deleteFile(
-			companyId, portletId, repositoryId, fileName, versionNumber);
+		store.deleteFile(companyId, repositoryId, fileName, versionNumber);
 	}
 
 	public String getBeanIdentifier() {
@@ -206,9 +197,8 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	}
 
 	public Hits search(
-			long companyId, String portletId, long groupId,
-			long userId, long[] repositoryIds, String keywords, int start,
-			int end)
+			long companyId, long userId, String portletId, long groupId,
+			long[] repositoryIds, String keywords, int start, int end)
 		throws SystemException {
 
 		try {
@@ -295,26 +285,26 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			long newRepositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		store.updateFile(
-			companyId, portletId, groupId, repositoryId, newRepositoryId,
+			companyId, repositoryId, newRepositoryId,
 			fileName);
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			String fileName, String newFileName)
 		throws PortalException, SystemException {
 
 		store.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName, newFileName);
+			companyId, repositoryId, fileName, newFileName);
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			String fileName, String fileExtension,
 			boolean validateFileExtension, String versionNumber,
 			String sourceFileName, ServiceContext serviceContext,
@@ -325,12 +315,12 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
 
 		store.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName,
+			companyId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, is);
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, byte[] bytes)
 		throws PortalException, SystemException {
@@ -338,12 +328,12 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		validate(fileName, true, bytes);
 
 		store.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName,
+			companyId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, bytes);
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			String fileName, String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, File file)
 		throws PortalException, SystemException {
@@ -351,19 +341,19 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		validate(fileName, true, file);
 
 		store.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName,
+			companyId, repositoryId, fileName,
 			versionNumber, sourceFileName, serviceContext, file);
 	}
 
 	public void updateFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
+			long companyId, long repositoryId,
 			String fileName, String fromVersionNumber, String toVersionNumber,
 			String sourceFileName, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		store.updateFileVersion(
-			companyId, portletId, groupId, repositoryId, fileName,
-			fromVersionNumber, toVersionNumber, sourceFileName, serviceContext);
+			companyId, repositoryId, fileName, fromVersionNumber,
+			toVersionNumber, sourceFileName, serviceContext);
 	}
 
 	public void validate(String fileName, boolean validateFileExtension)

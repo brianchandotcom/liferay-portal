@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
@@ -72,13 +71,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Attachments
 
 		long companyId = rootMessage.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String dirName = thread.getAttachmentsDir();
 
 		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, portletId, repositoryId, dirName);
+			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 		}
 		catch (NoSuchDirectoryException nsde) {
 		}
@@ -640,8 +637,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 
 		long companyId = message.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
-		long groupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String newAttachmentsDir = message.getAttachmentsDir();
 
@@ -661,17 +656,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				companyId, repositoryId, fileName);
 
 			DLStoreUtil.addFile(
-				companyId, portletId, groupId, repositoryId,
-				newAttachmentsDir + "/" + name, new ServiceContext(),
-				fileBytes);
+				companyId, repositoryId, newAttachmentsDir + "/" + name,
+				new ServiceContext(), fileBytes);
 
-			DLStoreUtil.deleteFile(
-				companyId, portletId, repositoryId, fileName);
+			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 		}
 
 		try {
 			DLStoreUtil.deleteDirectory(
-				companyId, portletId, repositoryId, oldAttachmentsDir);
+				companyId, repositoryId, oldAttachmentsDir);
 		}
 		catch (NoSuchDirectoryException nsde) {
 		}

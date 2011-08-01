@@ -58,11 +58,10 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 	@Override
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String newFileName) {
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
 
-		super.updateFile(
-			companyId, portletId, groupId, repositoryId, fileName, newFileName);
+		super.updateFile(companyId, repositoryId, fileName, newFileName);
 
 		File newFileNameDir = getFileNameDir(
 			companyId, repositoryId, newFileName);

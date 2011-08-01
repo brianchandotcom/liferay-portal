@@ -69,8 +69,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			ServiceContext serviceContext, InputStream is)
 		throws SystemException {
 
 		try {
@@ -93,7 +93,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, String portletId, long repositoryId, String dirName)
+			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
 		try {
@@ -113,8 +113,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName)
+			long companyId, long repositoryId, String fileName)
 		throws SystemException {
 
 		try {
@@ -134,8 +133,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName, String versionNumber)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws SystemException {
 
 		try {
@@ -279,8 +278,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName)
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
 		throws SystemException {
 
 		try {
@@ -331,8 +330,8 @@ public class S3Store extends BaseStore {
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName)
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
 		throws SystemException {
 
 		try {
@@ -386,8 +385,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String versionNumber, String sourceFileName,
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, InputStream is)
 		throws SystemException {
 

@@ -29,7 +29,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -138,8 +137,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		try {
 			DLStoreUtil.deleteDirectory(
-				group.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY, groupId,
-				StringPool.BLANK);
+				group.getCompanyId(), groupId, StringPool.BLANK);
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {
@@ -556,8 +554,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		try {
 			DLStoreUtil.deleteDirectory(
-				dlFolder.getCompanyId(), PortletKeys.DOCUMENT_LIBRARY,
-				dlFolder.getFolderId(), StringPool.BLANK);
+				dlFolder.getCompanyId(), dlFolder.getFolderId(),
+				StringPool.BLANK);
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {

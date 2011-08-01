@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -313,14 +312,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (files.size() > 0) {
 			long companyId = message.getCompanyId();
-			String portletId = CompanyConstants.SYSTEM_STRING;
-			long dlGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 			long repositoryId = CompanyConstants.SYSTEM;
 			String dirName = message.getAttachmentsDir();
 
 			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, portletId, repositoryId, dirName);
+				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 			}
 			catch (NoSuchDirectoryException nsde) {
 				if (_log.isDebugEnabled()) {
@@ -338,8 +334,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				try {
 					DLStoreUtil.addFile(
-						companyId, portletId, dlGroupId, repositoryId,
-						dirName + "/" + fileName, new ServiceContext(), bytes);
+						companyId, repositoryId, dirName + "/" + fileName,
+						new ServiceContext(), bytes);
 				}
 				catch (DuplicateFileException dfe) {
 					if (_log.isDebugEnabled()) {
@@ -528,13 +524,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (message.isAttachments()) {
 			long companyId = message.getCompanyId();
-			String portletId = CompanyConstants.SYSTEM_STRING;
 			long repositoryId = CompanyConstants.SYSTEM;
 			String dirName = message.getAttachmentsDir();
 
 			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, portletId, repositoryId, dirName);
+				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 			}
 			catch (NoSuchDirectoryException nsde) {
 				if (_log.isDebugEnabled()) {
@@ -564,13 +558,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Attachments
 
 			long companyId = message.getCompanyId();
-			String portletId = CompanyConstants.SYSTEM_STRING;
 			long repositoryId = CompanyConstants.SYSTEM;
 			String dirName = message.getThreadAttachmentsDir();
 
 			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, portletId, repositoryId, dirName);
+				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 			}
 			catch (NoSuchDirectoryException nsde) {
 				if (_log.isDebugEnabled()) {
@@ -1367,8 +1359,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Attachments
 
 		long companyId = message.getCompanyId();
-		String portletId = CompanyConstants.SYSTEM_STRING;
-		long groupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		long repositoryId = CompanyConstants.SYSTEM;
 		String dirName = message.getAttachmentsDir();
 
@@ -1384,8 +1374,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			for (String fileName: fileNames) {
 				if (!existingFiles.contains(fileName)) {
-					DLStoreUtil.deleteFile(
-						companyId, portletId, repositoryId, fileName);
+					DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 				}
 			}
 
@@ -1397,8 +1386,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				try {
 					DLStoreUtil.addFile(
-						companyId, portletId, groupId, repositoryId,
-						dirName + "/" + fileName, new ServiceContext(), bytes);
+						companyId, repositoryId, dirName + "/" + fileName,
+						new ServiceContext(), bytes);
 				}
 				catch (DuplicateFileException dfe) {
 				}
@@ -1406,8 +1395,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 		else {
 			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, portletId, repositoryId, dirName);
+				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 			}
 			catch (NoSuchDirectoryException nsde) {
 			}

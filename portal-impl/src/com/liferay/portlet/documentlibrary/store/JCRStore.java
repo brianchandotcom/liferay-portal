@@ -109,8 +109,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -192,7 +192,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, String portletId, long repositoryId, String dirName)
+			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
 		Session session = null;
@@ -229,9 +229,7 @@ public class JCRStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName)
+	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -357,8 +355,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName, String versionNumber)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws PortalException, SystemException {
 
 		String versionLabel = versionNumber;
@@ -599,8 +597,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName)
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -691,8 +689,8 @@ public class JCRStore extends BaseStore {
 	}
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName)
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
 		throws PortalException, SystemException {
 
 		Session session = null;
@@ -776,8 +774,8 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String versionNumber, String sourceFileName,
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName,
 			ServiceContext serviceContext, InputStream is)
 		throws PortalException, SystemException {
 
@@ -874,8 +872,8 @@ public class JCRStore extends BaseStore {
 	}
 
 	protected Node getFileContentNode(
-			Session session, long companyId, long repositoryId,
-			String fileName, String versionNumber)
+			Session session, long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws PortalException, SystemException {
 
 		String versionLabel = versionNumber;

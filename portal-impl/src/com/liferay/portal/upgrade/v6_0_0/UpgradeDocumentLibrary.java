@@ -30,7 +30,6 @@ import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryVersionUpgradeColumnImp
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileShortcutTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileVersionTable;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -116,7 +115,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				double version = rs.getDouble("version");
 				int size = rs.getInt("size_");
 
-				String portletId = PortletKeys.DOCUMENT_LIBRARY;
 				long repositoryId = folderId;
 
 				if (repositoryId ==
@@ -131,8 +129,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				if (!newName.equals(name)) {
 					try {
 						DLStoreUtil.updateFile(
-							companyId, portletId, groupId, repositoryId, name,
-							newName);
+							companyId, repositoryId, name, newName);
 					}
 					catch (NoSuchFileException nsfe) {
 						_log.error(nsfe);

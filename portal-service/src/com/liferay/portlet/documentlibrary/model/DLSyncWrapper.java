@@ -131,7 +131,7 @@ public class DLSyncWrapper implements DLSync {
 	*
 	* @return the file ID of this d l sync
 	*/
-	public java.lang.String getFileId() {
+	public long getFileId() {
 		return _dlSync.getFileId();
 	}
 
@@ -140,7 +140,7 @@ public class DLSyncWrapper implements DLSync {
 	*
 	* @param fileId the file ID of this d l sync
 	*/
-	public void setFileId(java.lang.String fileId) {
+	public void setFileId(long fileId) {
 		_dlSync.setFileId(fileId);
 	}
 

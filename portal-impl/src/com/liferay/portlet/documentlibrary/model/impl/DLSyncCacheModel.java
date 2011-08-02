@@ -75,13 +75,7 @@ public class DLSyncCacheModel implements CacheModel<DLSync> {
 			dlSyncImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (fileId == null) {
-			dlSyncImpl.setFileId(StringPool.BLANK);
-		}
-		else {
-			dlSyncImpl.setFileId(fileId);
-		}
-
+		dlSyncImpl.setFileId(fileId);
 		dlSyncImpl.setRepositoryId(repositoryId);
 
 		if (event == null) {
@@ -107,7 +101,7 @@ public class DLSyncCacheModel implements CacheModel<DLSync> {
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
-	public String fileId;
+	public long fileId;
 	public long repositoryId;
 	public String event;
 	public String type;

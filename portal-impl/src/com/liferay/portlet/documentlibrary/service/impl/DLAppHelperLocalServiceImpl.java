@@ -52,7 +52,7 @@ public class DLAppHelperLocalServiceImpl
 		// Sync
 
 		dlSyncLocalService.addSync(
-			fileEntry.getUuid(), fileEntry.getCompanyId(),
+			fileEntry.getFileEntryId(), fileEntry.getCompanyId(),
 			fileEntry.getRepositoryId(), DLSyncConstants.TYPE_FILE);
 
 		// Message boards
@@ -69,7 +69,7 @@ public class DLAppHelperLocalServiceImpl
 		throws SystemException {
 
 		dlSyncLocalService.addSync(
-			folder.getUuid(), folder.getCompanyId(),
+			folder.getFolderId(), folder.getCompanyId(),
 			folder.getRepositoryId(), DLSyncConstants.TYPE_FOLDER);
 	}
 
@@ -89,7 +89,7 @@ public class DLAppHelperLocalServiceImpl
 		// Sync
 
 		dlSyncLocalService.updateSync(
-			fileEntry.getUuid(), DLSyncConstants.EVENT_DELETE);
+			fileEntry.getFileEntryId(), DLSyncConstants.EVENT_DELETE);
 
 		// Asset
 
@@ -116,7 +116,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException, SystemException {
 
 		dlSyncLocalService.updateSync(
-			folder.getUuid(), DLSyncConstants.EVENT_DELETE);
+			folder.getFolderId(), DLSyncConstants.EVENT_DELETE);
 	}
 
 	public void getFileAsStream(
@@ -226,14 +226,14 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException, SystemException {
 
 		dlSyncLocalService.updateSync(
-			fileEntry.getUuid(), DLSyncConstants.EVENT_UPDATE);
+			fileEntry.getFileEntryId(), DLSyncConstants.EVENT_UPDATE);
 	}
 
 	public void updateFolder(Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		dlSyncLocalService.updateSync(
-			folder.getUuid(), DLSyncConstants.EVENT_UPDATE);
+			folder.getFolderId(), DLSyncConstants.EVENT_UPDATE);
 	}
 
 	public void updateStatus(

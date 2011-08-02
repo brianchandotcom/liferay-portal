@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -309,6 +310,8 @@ public class EditServerAction extends PortletAction {
 
 			for (Indexer indexer : indexers) {
 				for (long companyId : companyIds) {
+					ShardUtil.pushCompanyService(companyId);
+
 					try {
 						SearchEngineUtil.deletePortletDocuments(
 							companyId, portletId);
@@ -319,6 +322,8 @@ public class EditServerAction extends PortletAction {
 					catch (Exception e) {
 						_log.error(e, e);
 					}
+
+					ShardUtil.popCompanyService();
 				}
 			}
 		}

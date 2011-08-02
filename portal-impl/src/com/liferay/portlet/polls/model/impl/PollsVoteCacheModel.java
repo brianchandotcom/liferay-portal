@@ -15,6 +15,7 @@
 package com.liferay.portlet.polls.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.polls.model.PollsVote;
@@ -31,12 +32,20 @@ import java.util.Date;
 public class PollsVoteCacheModel implements CacheModel<PollsVote> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{voteId=");
 		sb.append(voteId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", questionId=");
 		sb.append(questionId);
 		sb.append(", choiceId=");
@@ -52,7 +61,30 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote> {
 		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
 
 		pollsVoteImpl.setVoteId(voteId);
+		pollsVoteImpl.setCompanyId(companyId);
 		pollsVoteImpl.setUserId(userId);
+
+		if (userName == null) {
+			pollsVoteImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			pollsVoteImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			pollsVoteImpl.setCreateDate(null);
+		}
+		else {
+			pollsVoteImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			pollsVoteImpl.setModifiedDate(null);
+		}
+		else {
+			pollsVoteImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		pollsVoteImpl.setQuestionId(questionId);
 		pollsVoteImpl.setChoiceId(choiceId);
 
@@ -69,7 +101,11 @@ public class PollsVoteCacheModel implements CacheModel<PollsVote> {
 	}
 
 	public long voteId;
+	public long companyId;
 	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public long questionId;
 	public long choiceId;
 	public long voteDate;

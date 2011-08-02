@@ -365,7 +365,11 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVoteImpl.setPrimaryKey(pollsVote.getPrimaryKey());
 
 		pollsVoteImpl.setVoteId(pollsVote.getVoteId());
+		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
 		pollsVoteImpl.setUserId(pollsVote.getUserId());
+		pollsVoteImpl.setUserName(pollsVote.getUserName());
+		pollsVoteImpl.setCreateDate(pollsVote.getCreateDate());
+		pollsVoteImpl.setModifiedDate(pollsVote.getModifiedDate());
 		pollsVoteImpl.setQuestionId(pollsVote.getQuestionId());
 		pollsVoteImpl.setChoiceId(pollsVote.getChoiceId());
 		pollsVoteImpl.setVoteDate(pollsVote.getVoteDate());

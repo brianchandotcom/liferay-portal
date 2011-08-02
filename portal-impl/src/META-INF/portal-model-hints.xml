@@ -1437,7 +1437,7 @@
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="fileId" type="String" />
+		<field name="fileId" type="long" />
 		<field name="repositoryId" type="long" />
 		<field name="event" type="String" />
 		<field name="type" type="String" />

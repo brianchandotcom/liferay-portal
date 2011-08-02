@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -79,11 +78,11 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public static final FinderPath FINDER_PATH_FETCH_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByFileId",
-			new String[] { String.class.getName() });
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByFileId",
-			new String[] { String.class.getName() });
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_M_R",
@@ -116,7 +115,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { dlSync.getFileId() }, dlSync);
+			new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
 
 		dlSync.resetOriginalValues();
 	}
@@ -167,7 +166,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			DLSyncImpl.class, dlSync.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { dlSync.getFileId() });
+			new Object[] { Long.valueOf(dlSync.getFileId()) });
 	}
 
 	/**
@@ -274,7 +273,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { dlSyncModelImpl.getFileId() });
+			new Object[] { Long.valueOf(dlSyncModelImpl.getFileId()) });
 
 		EntityCacheUtil.removeResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncImpl.class, dlSync.getPrimaryKey());
@@ -314,17 +313,15 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
 		if (!isNew &&
-				(!Validator.equals(dlSync.getFileId(),
-					dlSyncModelImpl.getOriginalFileId()))) {
+				(dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId())) {
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-				new Object[] { dlSyncModelImpl.getOriginalFileId() });
+				new Object[] { Long.valueOf(dlSyncModelImpl.getOriginalFileId()) });
 		}
 
 		if (isNew ||
-				(!Validator.equals(dlSync.getFileId(),
-					dlSyncModelImpl.getOriginalFileId()))) {
+				(dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId())) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-				new Object[] { dlSync.getFileId() }, dlSync);
+				new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
 		}
 
 		return dlSync;
@@ -458,7 +455,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a matching d l sync could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLSync findByFileId(String fileId)
+	public DLSync findByFileId(long fileId)
 		throws NoSuchSyncException, SystemException {
 		DLSync dlSync = fetchByFileId(fileId);
 
@@ -489,7 +486,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @return the matching d l sync, or <code>null</code> if a matching d l sync could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLSync fetchByFileId(String fileId) throws SystemException {
+	public DLSync fetchByFileId(long fileId) throws SystemException {
 		return fetchByFileId(fileId, true);
 	}
 
@@ -501,7 +498,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @return the matching d l sync, or <code>null</code> if a matching d l sync could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DLSync fetchByFileId(String fileId, boolean retrieveFromCache)
+	public DLSync fetchByFileId(long fileId, boolean retrieveFromCache)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { fileId };
 
@@ -517,17 +514,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 			query.append(_SQL_SELECT_DLSYNC_WHERE);
 
-			if (fileId == null) {
-				query.append(_FINDER_COLUMN_FILEID_FILEID_1);
-			}
-			else {
-				if (fileId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_FILEID_FILEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_FILEID_FILEID_2);
-				}
-			}
+			query.append(_FINDER_COLUMN_FILEID_FILEID_2);
 
 			query.append(DLSyncModelImpl.ORDER_BY_JPQL);
 
@@ -542,9 +529,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (fileId != null) {
-					qPos.add(fileId);
-				}
+				qPos.add(fileId);
 
 				List<DLSync> list = q.list();
 
@@ -561,8 +546,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 					cacheResult(dlSync);
 
-					if ((dlSync.getFileId() == null) ||
-							!dlSync.getFileId().equals(fileId)) {
+					if ((dlSync.getFileId() != fileId)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
 							finderArgs, dlSync);
 					}
@@ -1103,7 +1087,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @param fileId the file ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByFileId(String fileId)
+	public void removeByFileId(long fileId)
 		throws NoSuchSyncException, SystemException {
 		DLSync dlSync = findByFileId(fileId);
 
@@ -1143,7 +1127,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 * @return the number of matching d l syncs
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByFileId(String fileId) throws SystemException {
+	public int countByFileId(long fileId) throws SystemException {
 		Object[] finderArgs = new Object[] { fileId };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_FILEID,
@@ -1154,17 +1138,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 			query.append(_SQL_COUNT_DLSYNC_WHERE);
 
-			if (fileId == null) {
-				query.append(_FINDER_COLUMN_FILEID_FILEID_1);
-			}
-			else {
-				if (fileId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_FILEID_FILEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_FILEID_FILEID_2);
-				}
-			}
+			query.append(_FINDER_COLUMN_FILEID_FILEID_2);
 
 			String sql = query.toString();
 
@@ -1177,9 +1151,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (fileId != null) {
-					qPos.add(fileId);
-				}
+				qPos.add(fileId);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1369,9 +1341,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	private static final String _SQL_SELECT_DLSYNC_WHERE = "SELECT dlSync FROM DLSync dlSync WHERE ";
 	private static final String _SQL_COUNT_DLSYNC = "SELECT COUNT(dlSync) FROM DLSync dlSync";
 	private static final String _SQL_COUNT_DLSYNC_WHERE = "SELECT COUNT(dlSync) FROM DLSync dlSync WHERE ";
-	private static final String _FINDER_COLUMN_FILEID_FILEID_1 = "dlSync.fileId IS NULL";
 	private static final String _FINDER_COLUMN_FILEID_FILEID_2 = "dlSync.fileId = ?";
-	private static final String _FINDER_COLUMN_FILEID_FILEID_3 = "(dlSync.fileId IS NULL OR dlSync.fileId = ?)";
 	private static final String _FINDER_COLUMN_C_M_R_COMPANYID_2 = "dlSync.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_M_R_MODIFIEDDATE_1 = "dlSync.modifiedDate >= NULL AND ";
 	private static final String _FINDER_COLUMN_C_M_R_MODIFIEDDATE_2 = "dlSync.modifiedDate >= ? AND ";

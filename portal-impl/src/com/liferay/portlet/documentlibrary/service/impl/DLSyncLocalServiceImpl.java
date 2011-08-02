@@ -28,7 +28,7 @@ import java.util.Date;
 public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	public DLSync addSync(
-			String fileId, long companyId, long repositoryId,
+			long fileId, long companyId, long repositoryId,
 			String type)
 		throws SystemException {
 
@@ -51,7 +51,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		return dlSync;
 	}
 
-	public DLSync updateSync(String fileId, String event)
+	public DLSync updateSync(long fileId, String event)
 		throws PortalException, SystemException {
 
 		DLSync dlSync = dlSyncPersistence.findByFileId(fileId);

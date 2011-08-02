@@ -67,12 +67,12 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "fileId", Types.VARCHAR },
+			{ "fileId", Types.BIGINT },
 			{ "repositoryId", Types.BIGINT },
 			{ "event", Types.VARCHAR },
 			{ "type_", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLSync (syncId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,fileId VARCHAR(75) null,repositoryId LONG,event VARCHAR(75) null,type_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table DLSync (syncId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,fileId LONG,repositoryId LONG,event VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DLSync";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlSync.companyId DESC, dlSync.repositoryId DESC, dlSync.modifiedDate DESC, dlSync.type DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLSync.companyId DESC, DLSync.repositoryId DESC, DLSync.modifiedDate DESC, DLSync.type_ DESC";
@@ -190,25 +190,22 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	@JSON
-	public String getFileId() {
-		if (_fileId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _fileId;
-		}
+	public long getFileId() {
+		return _fileId;
 	}
 
-	public void setFileId(String fileId) {
-		if (_originalFileId == null) {
+	public void setFileId(long fileId) {
+		if (!_setOriginalFileId) {
+			_setOriginalFileId = true;
+
 			_originalFileId = _fileId;
 		}
 
 		_fileId = fileId;
 	}
 
-	public String getOriginalFileId() {
-		return GetterUtil.getString(_originalFileId);
+	public long getOriginalFileId() {
+		return _originalFileId;
 	}
 
 	@JSON
@@ -386,6 +383,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		DLSyncModelImpl dlSyncModelImpl = this;
 
 		dlSyncModelImpl._originalFileId = dlSyncModelImpl._fileId;
+
+		dlSyncModelImpl._setOriginalFileId = false;
 	}
 
 	@Override
@@ -415,12 +414,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		}
 
 		dlSyncCacheModel.fileId = getFileId();
-
-		String fileId = dlSyncCacheModel.fileId;
-
-		if ((fileId != null) && (fileId.length() == 0)) {
-			dlSyncCacheModel.fileId = null;
-		}
 
 		dlSyncCacheModel.repositoryId = getRepositoryId();
 
@@ -521,8 +514,9 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _fileId;
-	private String _originalFileId;
+	private long _fileId;
+	private long _originalFileId;
+	private boolean _setOriginalFileId;
 	private long _repositoryId;
 	private String _event;
 	private String _type;

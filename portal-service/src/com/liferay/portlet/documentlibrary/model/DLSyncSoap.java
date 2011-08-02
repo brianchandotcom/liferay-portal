@@ -123,11 +123,11 @@ public class DLSyncSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getFileId() {
+	public long getFileId() {
 		return _fileId;
 	}
 
-	public void setFileId(String fileId) {
+	public void setFileId(long fileId) {
 		_fileId = fileId;
 	}
 
@@ -159,7 +159,7 @@ public class DLSyncSoap implements Serializable {
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _fileId;
+	private long _fileId;
 	private long _repositoryId;
 	private String _event;
 	private String _type;

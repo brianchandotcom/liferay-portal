@@ -222,7 +222,7 @@ create table DLSync (
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
-	fileId VARCHAR(75) null,
+	fileId LONG,
 	repositoryId LONG,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null

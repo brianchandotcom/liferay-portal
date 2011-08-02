@@ -31,11 +31,11 @@ public class UpgradeUserName extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateTable("BookmarksEntry", true);
-		updateTable("BookmarksFolder", true);
-		updateTable("IGFolder", true);
-		updateTable("IGImage", true);
-		updateTable("PollsVote", false);
+		updateTable("BookmarksEntry", false);
+		updateTable("BookmarksFolder", false);
+		updateTable("IGFolder", false);
+		updateTable("IGImage", false);
+		updateTable("PollsVote", true);
 	}
 
 	protected void updateTable(String tableName, boolean setCompanyId)

@@ -26,7 +26,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
 
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,8 +63,7 @@ public class DefaultLogoutPageAction extends Action {
 		}
 
 		if (Validator.isNotNull(path)) {
-			LastPath lastPath = new LastPath(
-				StringPool.BLANK, path, new HashMap<String, String[]>());
+			LastPath lastPath = new LastPath(StringPool.BLANK, path);
 
 			HttpSession session = request.getSession();
 

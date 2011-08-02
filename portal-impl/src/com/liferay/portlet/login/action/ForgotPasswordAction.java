@@ -19,11 +19,13 @@ import com.liferay.portal.RequiredReminderQueryException;
 import com.liferay.portal.SendPasswordException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserReminderQueryException;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
@@ -39,6 +41,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -48,8 +51,13 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tibor Kovacs
  */
 public class ForgotPasswordAction extends PortletAction {
+
+	public static final String REMINDER_ATTEMPTS = "REMINDER_ATTEMPTS";
+
+	public static final String REMINDER_USER = "REMINDER_USER";
 
 	@Override
 	public void processAction(
@@ -58,29 +66,49 @@ public class ForgotPasswordAction extends PortletAction {
 		throws Exception {
 
 		try {
-			User user = getUser(actionRequest);
+			if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
+				PortletSession portletSession =
+					actionRequest.getPortletSession();
 
-			if (PropsValues.USERS_REMINDER_QUERIES_ENABLED &&
-				(PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD ||
-				 user.hasReminderQuery())) {
+				int step = ParamUtil.getInteger(actionRequest, "step");
+
+				if (step == 1) {
+					_checkCaptcha(actionRequest);
+
+					portletSession.setAttribute(REMINDER_ATTEMPTS, 0);
+					portletSession.setAttribute(
+						REMINDER_USER, StringPool.BLANK);
+				}
+
+				User user = getUser(actionRequest);
+
+				portletSession.setAttribute(
+					REMINDER_USER, user.getEmailAddress());
 
 				actionRequest.setAttribute(
 					ForgotPasswordAction.class.getName(), user);
 
-				int step = ParamUtil.getInteger(actionRequest, "step");
-
 				if (step == 2) {
-					if (PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD) {
-						CaptchaUtil.check(actionRequest);
+					Integer reminderAttempts =
+						(Integer)portletSession.getAttribute(REMINDER_ATTEMPTS);
+
+					if (reminderAttempts == null) {
+						reminderAttempts = 0;
 					}
+					else if (reminderAttempts > 2) {
+						_checkCaptcha(actionRequest);
+					}
+
+					reminderAttempts++;
+
+					portletSession.setAttribute(
+						REMINDER_ATTEMPTS, reminderAttempts);
 
 					sendPassword(actionRequest, actionResponse);
 				}
 			}
 			else {
-				if (PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD) {
-					CaptchaUtil.check(actionRequest);
-				}
+				_checkCaptcha(actionRequest);
 
 				sendPassword(actionRequest, actionResponse);
 			}
@@ -126,7 +154,19 @@ public class ForgotPasswordAction extends PortletAction {
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
 
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		String sessionEmailAddress = (String)portletSession.getAttribute(
+			REMINDER_USER);
+
 		User user = null;
+
+		if (Validator.isNotNull(sessionEmailAddress)) {
+			user = UserLocalServiceUtil.getUserByEmailAddress(
+				themeDisplay.getCompanyId(), sessionEmailAddress);
+
+			return user;
+		}
 
 		if (Validator.isNotNull(emailAddress)) {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
@@ -203,6 +243,14 @@ public class ForgotPasswordAction extends PortletAction {
 			subject, body);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private void _checkCaptcha(ActionRequest actionRequest)
+		throws CaptchaException {
+
+		if (PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD) {
+			CaptchaUtil.check(actionRequest);
+		}
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

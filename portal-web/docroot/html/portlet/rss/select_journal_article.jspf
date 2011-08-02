@@ -83,7 +83,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Title
 
-	row.addText(article.getTitle(locale), rowHREF);
+	row.addText(HtmlUtil.escape(article.getTitle(locale)), rowHREF);
 
 	// Version
 

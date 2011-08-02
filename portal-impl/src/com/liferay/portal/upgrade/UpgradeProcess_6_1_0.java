@@ -28,6 +28,7 @@ import com.liferay.portal.upgrade.v6_1_0.UpgradeLock;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeNavigation;
 import com.liferay.portal.upgrade.v6_1_0.UpgradePermission;
+import com.liferay.portal.upgrade.v6_1_0.UpgradePollsVote;
 import com.liferay.portal.upgrade.v6_1_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeResourcePermission;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeScheduler;
@@ -64,6 +65,7 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeNavigation.class);
 		upgrade(UpgradePermission.class);
+		upgrade(UpgradePollsVote.class);
 		upgrade(UpgradePortletPreferences.class);
 		upgrade(UpgradeResourcePermission.class);
 		upgrade(UpgradeScheduler.class);

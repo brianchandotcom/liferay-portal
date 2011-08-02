@@ -23,6 +23,8 @@ public interface PortalUUID {
 
 	public String generate();
 
+	public String generate(byte[] bytes);
+
 	public String toJsSafeUuid(String uuid);
 
 }

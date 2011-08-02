@@ -1120,16 +1120,64 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		addEvent(
-			userId, title, description, location, startDate.get(Calendar.MONTH),
-			startDate.get(Calendar.DAY_OF_MONTH), startDate.get(Calendar.YEAR),
-			startDate.get(Calendar.HOUR_OF_DAY),
-			startDate.get(Calendar.MINUTE), endDate.get(Calendar.MONTH),
-			endDate.get(Calendar.DAY_OF_MONTH), endDate.get(Calendar.YEAR),
-			(int)durationHours, (int)durationMins, allDay,
-			timeZoneSensitive, type, repeating, recurrence, remindBy,
-			firstReminder, secondReminder, serviceContext);
+		// Merge Event
 
+		String uuid = null;
+		CalEvent existingEvent = null;
+
+		if (event.getUid() != null) {
+			Uid uid = event.getUid();
+
+			if (existingEvent == null) {
+
+				// VEvent exported by Liferay portal
+
+				uuid = uid.getValue();
+				existingEvent = calEventPersistence.fetchByUUID_G(
+					uuid, groupId);
+			}
+
+			if (existingEvent == null) {
+
+				// VEvent exported by external application
+
+				uuid = PortalUUIDUtil.generate(uid.getValue().getBytes());
+				existingEvent = calEventPersistence.fetchByUUID_G(
+					uuid, groupId);
+			}
+		}
+
+		int startDateMonth = startDate.get(Calendar.MONTH);
+		int startDateDay = startDate.get(Calendar.DAY_OF_MONTH);
+		int startDateYear = startDate.get(Calendar.YEAR);
+		int startDateHour = startDate.get(Calendar.HOUR_OF_DAY);
+		int startDateMinute = startDate.get(Calendar.MINUTE);
+		int endDateMonth = endDate.get(Calendar.MONTH);
+		int endDateDay = endDate.get(Calendar.DAY_OF_MONTH);
+		int endDateYear = endDate.get(Calendar.YEAR);
+		int durationHour = (int)durationHours;
+		int durationMinute = (int)durationMins;
+
+		if (existingEvent == null) {
+			serviceContext.setUuid(uuid);
+
+			addEvent(
+				userId, title, description, location, startDateMonth,
+				startDateDay, startDateYear, startDateHour, startDateMinute,
+				endDateMonth, endDateDay, endDateYear, durationHour,
+				durationMinute, allDay, timeZoneSensitive, type, repeating,
+				recurrence, remindBy, firstReminder, secondReminder,
+				serviceContext);
+		}
+		else {
+			updateEvent(
+				userId, existingEvent.getEventId(), title, description,
+				location, startDateMonth, startDateDay, startDateYear,
+				startDateHour, startDateMinute, endDateMonth, endDateDay,
+				endDateYear, durationHour, durationMinute, allDay,
+				timeZoneSensitive, type, repeating, recurrence, remindBy,
+				firstReminder, secondReminder, serviceContext);
+		}
 	}
 
 	protected boolean isICal4jDateOnly(DateProperty dateProperty) {
@@ -1462,7 +1510,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// UID
 
-		Uid uid = new Uid(PortalUUIDUtil.generate());
+		Uid uid = new Uid(event.getUuid());
 
 		eventProps.add(uid);
 

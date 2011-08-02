@@ -27,6 +27,10 @@ public class PortalUUIDUtil {
 		return getPortalUUID().generate();
 	}
 
+	public static String generate(byte[] bytes) {
+		return getPortalUUID().generate(bytes);
+	}
+
 	public static PortalUUID getPortalUUID() {
 		return _portalUUID;
 	}

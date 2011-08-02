@@ -34,6 +34,10 @@ public class PortalUUIDImpl implements PortalUUID {
 		return UUID.randomUUID().toString();
 	}
 
+	public String generate(byte[] bytes) {
+		return UUID.nameUUIDFromBytes(bytes).toString();
+	}
+
 	public String toJsSafeUuid(String uuid) {
 		return StringUtil.replace(
 			uuid, StringPool.DASH, StringPool.DOUBLE_UNDERLINE);

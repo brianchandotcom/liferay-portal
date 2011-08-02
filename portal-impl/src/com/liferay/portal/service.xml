@@ -1990,13 +1990,13 @@
 
 		<column name="defaultUser" type="boolean" />
 		<column name="contactId" type="long" />
-		<column name="password" type="String" />
-		<column name="passwordEncrypted" type="boolean" />
-		<column name="passwordReset" type="boolean" />
-		<column name="passwordModifiedDate" type="Date" />
-		<column name="digest" type="String" />
-		<column name="reminderQueryQuestion" type="String" />
-		<column name="reminderQueryAnswer" type="String" />
+		<column name="password" type="String" json-enabled="false"/>
+		<column name="passwordEncrypted" type="boolean" json-enabled="false"/>
+		<column name="passwordReset" type="boolean" json-enabled="false"/>
+		<column name="passwordModifiedDate" type="Date" json-enabled="false"/>
+		<column name="digest" type="String" json-enabled="false"/>
+		<column name="reminderQueryQuestion" type="String"/>
+		<column name="reminderQueryAnswer" type="String"/>
 		<column name="graceLoginCount" type="int" />
 		<column name="screenName" type="String" />
 		<column name="emailAddress" type="String" />

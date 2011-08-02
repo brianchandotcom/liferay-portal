@@ -120,21 +120,21 @@ request.setAttribute("view_event.jsp-event", event);
 
 				<c:choose>
 					<c:when test="<%= allDay %>">
-						<abbr class="duration" title="<liferay-ui:message key="all-day" />">
+						<span class="duration" title="<liferay-ui:message key="all-day" />">
 							<liferay-ui:message key="all-day" />:
-						</abbr>
+						</span>
 					</c:when>
 					<c:otherwise>
 						<c:choose>
 							<c:when test="<%= event.isTimeZoneSensitive() %>">
-								<abbr class="dtstart" title="<%= dateFormatISO8601.format(Time.getDate(event.getStartDate(), timeZone)) %>">
+								<span class="dtstart" title="<%= dateFormatISO8601.format(Time.getDate(event.getStartDate(), timeZone)) %>">
 									<%= dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) %>
-								</abbr>
+								</span>
 							</c:when>
 							<c:otherwise>
-								<abbr class="dtstart" title="<%= dateFormatISO8601.format(event.getStartDate()) %>">
-									<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>
-								</abbr>
+								<span class="dtstart" title="<%= dateFormatISO8601.format(event.getStartDate()) %>">
+									<%= dateFormatTime.format(event.getStartDate()) %>
+								</span>
 							</c:otherwise>
 						</c:choose>
 						&#150;

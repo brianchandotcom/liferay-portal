@@ -27,6 +27,7 @@ String htmlAttributes =
 	"hspace=" + hspace + "\n" +
 	"longdesc=" + longdesc + "\n" +
 	"scrolling=" + scrolling + "\n" +
+	"title=" + title + "\n" +
 	"vspace=" + vspace + "\n";
 %>
 

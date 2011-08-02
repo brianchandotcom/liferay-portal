@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +51,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_hiddenInput = hiddenInput;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_className = null;
@@ -56,6 +63,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_curTags = null;
 		_focus = false;
 		_hiddenInput = "assetTagNames";
+		_id = null;
 	}
 
 	@Override
@@ -65,6 +73,14 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String id = _id;
+
+		if (Validator.isNull(id)) {
+			id = PortalUtil.generateRandomKey(
+				request, "taglib_ui_asset_tags_selector_page") +
+				StringPool.UNDERLINE;
+		}
+
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:className", _className);
 		request.setAttribute(
@@ -78,6 +94,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:focus", String.valueOf(_focus));
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:hiddenInput", _hiddenInput);
+		request.setAttribute(
+			"liferay-ui:asset-tags-selector:id", id);
 	}
 
 	private static final String _PAGE =
@@ -89,5 +107,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private String _curTags;
 	private boolean _focus;
 	private String _hiddenInput = "assetTagNames";
+	private String _id;
 
 }

@@ -42,24 +42,13 @@
 		text-align: center;
 		width: 209px;
 
-		h2 {
-			background: url(<%= themeImagesPath %>/calendar/day_heading.png) repeat-x 0 100%;
-			font-size: 2em;
-			margin: 0;
-			padding: 0.5em 0;
-		}
-
-		h3 {
-			font-size: 11em;
-			line-height: 1.2;
-			margin: 0;
-			vertical-align: middle;
-		}
-
 		.day-text {
 			background: #727C81;
 			color: #fff;
 			font-size: 1.6em;
+			font-weight: bold;
+			margin: 0;
+			padding: 0.5em 0;
 		}
 
 		.day-number {
@@ -67,7 +56,11 @@
 			border-bottom-width: 0;
 			font-size: 110px;
 			font-weight: normal;
+			line-height: 1.2;
+			margin: 0;
 			padding-bottom: 5px;
+			vertical-align: middle;
+
 		}
 	}
 

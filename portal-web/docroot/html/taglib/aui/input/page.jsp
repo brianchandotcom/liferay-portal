@@ -57,6 +57,7 @@
 			className="<%= model.getName() %>"
 			classPK="<%= _getClassPK(bean, classPK) %>"
 			contentCallback='<%= portletResponse.getNamespace() + "getSuggestionsContent" %>'
+			id="<%= id %>"
 		/>
 	</c:when>
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">

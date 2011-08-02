@@ -186,7 +186,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 				<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
 					<span class="aui-tab-content">
 						<c:choose>
-							<c:when test="<%= Validator.isNotNull(curURL) %>">
+							<c:when test="<%= Validator.isNotNull(curURL) && (!selected) %>">
 								<a class="aui-tab-label" href="<%= curURL %>"
 									<c:if test="<%= Validator.isNotNull(curOnClick) %>">
 										onClick="<%= curOnClick %>"
@@ -194,18 +194,18 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 								>
 							</c:when>
 							<c:otherwise>
-								<span class="aui-tab-label">
+								<em class="aui-tab-label">
 							</c:otherwise>
 						</c:choose>
 
 						<%= LanguageUtil.get(pageContext, names[i]) %>
 
 						<c:choose>
-							<c:when test="<%= Validator.isNotNull(curURL) %>">
+							<c:when test="<%= Validator.isNotNull(curURL) && (!selected) %>">
 								</a>
 							</c:when>
 							<c:otherwise>
-								</span>
+								</em>
 							</c:otherwise>
 						</c:choose>
 					</span>

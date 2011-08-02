@@ -35,7 +35,7 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,10 +47,11 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -64,7 +65,7 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
@@ -74,7 +75,7 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_125_firstName")) {
+						if (selenium.isVisible("//input[@id='_125_firstName']")) {
 							break;
 						}
 					}
@@ -85,14 +86,14 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_125_firstName",
+				selenium.type("//input[@id='_125_firstName']",
 					RuntimeVariables.replace("Selen"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_125_firstName",
+				selenium.type("//input[@id='_125_firstName']",
 					RuntimeVariables.replace("selen1"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
@@ -100,10 +101,11 @@ public class AdvancedSearchUserFirstNameTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("selenium01"));
-				selenium.type("_125_firstName", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='_125_firstName']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 100:
 				label = -1;

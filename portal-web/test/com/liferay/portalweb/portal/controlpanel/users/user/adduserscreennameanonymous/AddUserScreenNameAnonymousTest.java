@@ -30,7 +30,7 @@ public class AddUserScreenNameAnonymousTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,9 +41,15 @@ public class AddUserScreenNameAnonymousTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -51,7 +57,8 @@ public class AddUserScreenNameAnonymousTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Users")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -62,63 +69,73 @@ public class AddUserScreenNameAnonymousTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_screenName",
+		selenium.type("//input[@id='_125_screenName']",
 			RuntimeVariables.replace("anonymous-guest"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_emailAddress",
+		selenium.type("//input[@id='_125_emailAddress']",
 			RuntimeVariables.replace("testA@selenium.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_firstName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_firstName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_lastName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_lastName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid screen name."),
-			selenium.getText("//fieldset[1]/div/div"));
-		selenium.type("_125_screenName", RuntimeVariables.replace("guest"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace("guest"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid screen name."),
-			selenium.getText("//fieldset[1]/div/div"));
-		selenium.type("_125_screenName", RuntimeVariables.replace("ANONYMOUS"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace("ANONYMOUS"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid screen name."),
-			selenium.getText("//fieldset[1]/div/div"));
-		selenium.type("_125_screenName", RuntimeVariables.replace("<anonymous>"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace("<anonymous>"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid screen name."),
-			selenium.getText("//fieldset[1]/div/div"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

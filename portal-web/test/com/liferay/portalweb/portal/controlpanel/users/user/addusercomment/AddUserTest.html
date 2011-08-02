@@ -14,113 +14,133 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_prefixId</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td>label=Mr.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test01@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium01</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_suffixId</td>
+	<td>//select[@id='_125_suffixId']</td>
 	<td>label=Phd.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayMonth</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
 	<td>label=April</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayDay</td>
+	<td>//select[@id='_125_birthdayDay']</td>
 	<td>label=10</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayYear</td>
+	<td>//select[@id='_125_birthdayYear']</td>
 	<td>label=1986</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_male</td>
+	<td>//select[@id='_125_male']</td>
 	<td>label=Male</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test01@selenium.com</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium01</td>
 </tr>
 <tr>
@@ -130,27 +150,32 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_password1</td>
+	<td>//input[@id='_125_password1']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password1</td>
+	<td>//input[@id='_125_password1']</td>
 	<td>password</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password2</td>
+	<td>//input[@id='_125_password2']</td>
 	<td>password</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
@@ -161,17 +186,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -180,17 +205,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>test01@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_password</td>
+	<td>//input[@id='_58_password']</td>
 	<td>password</td>
 </tr>
 <tr>
@@ -205,8 +230,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -216,7 +241,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -231,7 +256,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='I Agree']</td>
-	<td></td>
+	<td>I Agree</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -261,7 +286,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -291,7 +316,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -306,17 +331,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -325,17 +350,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>test@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_password</td>
+	<td>//input[@id='_58_password']</td>
 	<td>test</td>
 </tr>
 <tr>
@@ -350,8 +375,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -361,7 +386,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 
 </tbody></table>

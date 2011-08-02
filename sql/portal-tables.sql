@@ -1359,7 +1359,11 @@ create table PollsQuestion (
 
 create table PollsVote (
 	voteId LONG not null primary key,
+	companyId LONG,
 	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	questionId LONG,
 	choiceId LONG,
 	voteDate DATE null

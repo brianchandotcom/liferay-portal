@@ -2654,7 +2654,15 @@
 	<mapped-superclass class="com.liferay.portlet.polls.model.impl.PollsVoteModelImpl">
 		<attributes>
 			<id name="voteId" />
+			<basic name="companyId" />
 			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="questionId" />
 			<basic name="choiceId" />
 			<basic name="voteDate">

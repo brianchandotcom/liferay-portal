@@ -69,7 +69,15 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		PollsVote newPollsVote = _persistence.create(pk);
 
+		newPollsVote.setCompanyId(nextLong());
+
 		newPollsVote.setUserId(nextLong());
+
+		newPollsVote.setUserName(randomString());
+
+		newPollsVote.setCreateDate(nextDate());
+
+		newPollsVote.setModifiedDate(nextDate());
 
 		newPollsVote.setQuestionId(nextLong());
 
@@ -82,7 +90,14 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
 		assertEquals(existingPollsVote.getVoteId(), newPollsVote.getVoteId());
+		assertEquals(existingPollsVote.getCompanyId(),
+			newPollsVote.getCompanyId());
 		assertEquals(existingPollsVote.getUserId(), newPollsVote.getUserId());
+		assertEquals(existingPollsVote.getUserName(), newPollsVote.getUserName());
+		assertEquals(Time.getShortTimestamp(existingPollsVote.getCreateDate()),
+			Time.getShortTimestamp(newPollsVote.getCreateDate()));
+		assertEquals(Time.getShortTimestamp(existingPollsVote.getModifiedDate()),
+			Time.getShortTimestamp(newPollsVote.getModifiedDate()));
 		assertEquals(existingPollsVote.getQuestionId(),
 			newPollsVote.getQuestionId());
 		assertEquals(existingPollsVote.getChoiceId(), newPollsVote.getChoiceId());
@@ -215,7 +230,15 @@ public class PollsVotePersistenceTest extends BasePersistenceTestCase {
 
 		PollsVote pollsVote = _persistence.create(pk);
 
+		pollsVote.setCompanyId(nextLong());
+
 		pollsVote.setUserId(nextLong());
+
+		pollsVote.setUserName(randomString());
+
+		pollsVote.setCreateDate(nextDate());
+
+		pollsVote.setModifiedDate(nextDate());
 
 		pollsVote.setQuestionId(nextLong());
 

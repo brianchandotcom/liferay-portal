@@ -73,6 +73,24 @@ public class PollsVoteWrapper implements PollsVote {
 	}
 
 	/**
+	* Returns the company ID of this polls vote.
+	*
+	* @return the company ID of this polls vote
+	*/
+	public long getCompanyId() {
+		return _pollsVote.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this polls vote.
+	*
+	* @param companyId the company ID of this polls vote
+	*/
+	public void setCompanyId(long companyId) {
+		_pollsVote.setCompanyId(companyId);
+	}
+
+	/**
 	* Returns the user ID of this polls vote.
 	*
 	* @return the user ID of this polls vote
@@ -108,6 +126,60 @@ public class PollsVoteWrapper implements PollsVote {
 	*/
 	public void setUserUuid(java.lang.String userUuid) {
 		_pollsVote.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this polls vote.
+	*
+	* @return the user name of this polls vote
+	*/
+	public java.lang.String getUserName() {
+		return _pollsVote.getUserName();
+	}
+
+	/**
+	* Sets the user name of this polls vote.
+	*
+	* @param userName the user name of this polls vote
+	*/
+	public void setUserName(java.lang.String userName) {
+		_pollsVote.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this polls vote.
+	*
+	* @return the create date of this polls vote
+	*/
+	public java.util.Date getCreateDate() {
+		return _pollsVote.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this polls vote.
+	*
+	* @param createDate the create date of this polls vote
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_pollsVote.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this polls vote.
+	*
+	* @return the modified date of this polls vote
+	*/
+	public java.util.Date getModifiedDate() {
+		return _pollsVote.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this polls vote.
+	*
+	* @param modifiedDate the modified date of this polls vote
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_pollsVote.setModifiedDate(modifiedDate);
 	}
 
 	/**

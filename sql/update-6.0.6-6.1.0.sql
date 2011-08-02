@@ -350,6 +350,11 @@ update MBMessage set format = 'bbcode';
 alter table MBThread add companyId LONG;
 alter table MBThread add rootMessageUserId LONG;
 
+alter table PollsVote add companyId LONG;
+alter table PollsVote add userName VARCHAR(75) null;
+alter table PollsVote add createDate DATE null,;
+alter table PollsVote add modifiedDate DATE null;
+
 create table PortalPreferences (
 	portalPreferencesId LONG not null primary key,
 	ownerId LONG,

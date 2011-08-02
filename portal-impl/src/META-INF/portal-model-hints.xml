@@ -2001,7 +2001,11 @@
 	</model>
 	<model name="com.liferay.portlet.polls.model.PollsVote">
 		<field name="voteId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="questionId" type="long" />
 		<field name="choiceId" type="long" />
 		<field name="voteDate" type="Date" />

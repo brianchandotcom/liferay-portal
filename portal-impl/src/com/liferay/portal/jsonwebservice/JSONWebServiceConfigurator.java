@@ -95,6 +95,12 @@ public class JSONWebServiceConfigurator extends FindClass {
 				libDir, "*-portlet-service.jar");
 
 			classPathFiles[1] = findFile.nextFile();
+
+			if (classPathFiles[1] == null) {
+				File classesDir = new File(libDir.getParent(), "classes");
+
+				classPathFiles[1] = classesDir;
+			}
 		}
 		else {
 			Thread currentThread = Thread.currentThread();

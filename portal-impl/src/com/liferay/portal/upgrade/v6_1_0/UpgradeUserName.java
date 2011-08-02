@@ -46,16 +46,19 @@ public class UpgradeUserName extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(11);
 
-			sb.append("select distinct User_.userId, User_.firstName, ");
-			sb.append("User_.middleName, User_.lastName from User_ ");
-			sb.append("inner join ");
+			sb.append("select distinct User_.companyId, User_.userId, ");
+			sb.append("User_.firstName, User_.middleName, User_.lastName ");
+			sb.append("User_ inner join ");
 			sb.append(tableName);
 			sb.append(" on ");
 			sb.append(tableName);
-			sb.append(".userId = User_.userId where " + tableName);
-			sb.append(".userName is null or " + tableName + ".userName = ''");
+			sb.append(".userId = User_.userId where ");
+			sb.append(tableName);
+			sb.append(".userName is null or ");
+			sb.append(tableName);
+			sb.append(".userName = ''");
 
 			ps = con.prepareStatement(sb.toString());
 
@@ -73,9 +76,28 @@ public class UpgradeUserName extends UpgradeProcess {
 				String fullName = fullNameGenerator.getFullName(
 					firstName, middleName, lastName);
 
-				runSQL(
-					"update " + tableName + " set userName = '" + fullName +
-						"' where userId = " + userId);
+				sb = new StringBundler(6);
+
+				if (tableName.equals("PollsVote")) {
+					long companyId = rs.getLong("companyId");
+
+					sb.append("update PollsVote set companyId = ");
+					sb.append(companyId);
+					sb.append(", userName = '");
+					sb.append(fullName);
+					sb.append("' where userId = ");
+					sb.append(userId);
+				}
+				else {
+					sb.append("update ");
+					sb.append(tableName);
+					sb.append(" set userName = '");
+					sb.append(fullName);
+					sb.append("' where userId = ");
+					sb.append(userId);
+				}
+
+				runSQL(sb.toString());
 			}
 		}
 		finally {

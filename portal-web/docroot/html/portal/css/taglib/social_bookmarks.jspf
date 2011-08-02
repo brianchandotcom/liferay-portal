@@ -46,19 +46,3 @@
 	background: url() no-repeat 0 50%;
 	padding: 3px 2px 3px 20px;
 }
-
-.taglib-social-bookmarks .taglib-social-bookmark-blinklist a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/blinklist.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-delicious a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/delicious.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-newsvine a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/newsvine.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-technorati a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/technorati.png);
-}

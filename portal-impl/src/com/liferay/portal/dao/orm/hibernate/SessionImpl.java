@@ -25,11 +25,9 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class SessionImpl implements Session {
 
@@ -71,9 +69,7 @@ public class SessionImpl implements Session {
 	public Query createQuery(String queryString, boolean strictName)
 		throws ORMException {
 		try {
-			queryString = SQLTransformer.transform(queryString);
-
-			queryString = _jpqlToHql(queryString);
+			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
 			return new QueryImpl(_session.createQuery(queryString), strictName);
 		}
@@ -90,9 +86,7 @@ public class SessionImpl implements Session {
 		throws ORMException {
 
 		try {
-			queryString = SQLTransformer.transform(queryString);
-
-			queryString = _jpqlToHql(queryString);
+			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
 			return new SQLQueryImpl(
 				_session.createSQLQuery(queryString), strictName);
@@ -192,26 +186,6 @@ public class SessionImpl implements Session {
 			throw ExceptionTranslator.translate(e);
 		}
 	}
-
-	private String _jpqlToHql(String queryString) {
-		Matcher matcher = _jpqlCountPattern.matcher(queryString);
-
-		if (matcher.find()) {
-			String countExpression = matcher.group(1);
-			String entityAlias = matcher.group(3);
-
-			if (entityAlias.equals(countExpression)) {
-				queryString = matcher.replaceFirst(_HQL_COUNT_SQL);
-			}
-		}
-
-		return queryString;
-	}
-
-	private static final String _HQL_COUNT_SQL = "SELECT COUNT(*) FROM $2 $3";
-
-	private static Pattern _jpqlCountPattern = Pattern.compile(
-		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
 
 	private org.hibernate.Session _session;
 

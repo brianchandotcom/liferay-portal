@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.util.SystemProperties;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;

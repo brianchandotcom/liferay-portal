@@ -16,6 +16,7 @@ package com.liferay.portlet.portletconfiguration.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +29,8 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PermissionServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -51,6 +54,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Connor McKay
  */
 public class EditPermissionsAction extends EditConfigurationAction {
 
@@ -151,7 +155,18 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			renderRequest, "portlet.portlet_configuration.edit_permissions"));
 	}
 
-	protected String[] getActionIds(ActionRequest actionRequest, long roleId) {
+	protected String[] getActionIds(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
+		List<String> actionIds = getActionIdsList(
+			actionRequest, roleId, includePreselected);
+
+		return actionIds.toArray(new String[actionIds.size()]);
+	}
+
+	protected List<String> getActionIdsList(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
 		List<String> actionIds = new ArrayList<String>();
 
 		Enumeration<String> enu = actionRequest.getParameterNames();
@@ -166,9 +181,18 @@ public class EditPermissionsAction extends EditConfigurationAction {
 
 				actionIds.add(actionId);
 			}
+			else if (includePreselected &&
+				name.startsWith(roleId + "_PRESELECTED_")) {
+
+				int pos = name.indexOf("_PRESELECTED_");
+
+				String actionId = name.substring(pos + 13);
+
+				actionIds.add(actionId);
+			}
 		}
 
-		return actionIds.toArray(new String[actionIds.size()]);
+		return actionIds;
 	}
 
 	protected void updateGroupPermissions(ActionRequest actionRequest)
@@ -277,7 +301,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
 
 		for (long roleId : roleIds) {
-			String[] actionIds = getActionIds(actionRequest, roleId);
+			String[] actionIds = getActionIds(actionRequest, roleId, false);
 
 			PermissionServiceUtil.setRolePermissions(
 				roleId, themeDisplay.getScopeGroupId(), actionIds, resourceId);
@@ -307,12 +331,25 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		String resourcePrimKey = ParamUtil.getString(
 			actionRequest, "resourcePrimKey");
 
-		for (long roleId : roleIds) {
-			String[] actionIds = getActionIds(actionRequest, roleId);
+		if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
+			for (long roleId : roleIds) {
+				List<String> actionIds =
+					getActionIdsList(actionRequest, roleId, true);
 
-			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-				selResource, resourcePrimKey, roleId, actionIds);
+				ResourceBlockServiceUtil.setIndividualScopePermissions(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					selResource, GetterUtil.getLong(resourcePrimKey), roleId,
+					actionIds);
+			}
+		}
+		else {
+			for (long roleId : roleIds) {
+				String[] actionIds = getActionIds(actionRequest, roleId, false);
+
+				ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+					selResource, resourcePrimKey, roleId, actionIds);
+			}
 		}
 	}
 

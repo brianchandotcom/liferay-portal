@@ -36,6 +36,8 @@ if (Validator.isNotNull(onChangeMethod)) {
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
 			}
+
+			delete window['<%= name %>'];
 		},
 
 		focus: function() {

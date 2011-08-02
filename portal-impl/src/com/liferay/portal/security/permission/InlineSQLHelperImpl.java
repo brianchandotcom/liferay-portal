@@ -20,13 +20,25 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Raymond Augé
+ * @author Connor McKay
  */
 public class InlineSQLHelperImpl implements InlineSQLHelper {
+
+	public static final String FILTER_BY_RESOURCE_BLOCK_ID =
+		InlineSQLHelper.class.getName() + ".filterByResourceBlockId";
+
+	public static final String FILTER_BY_RESOURCE_BLOCK_ID_OWNER =
+		InlineSQLHelper.class.getName() + ".filterByResourceBlockIdOwner";
 
 	public static final String JOIN_RESOURCE_PERMISSION =
 		InlineSQLHelper.class.getName() + ".joinResourcePermission";
@@ -168,12 +180,224 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			throw new IllegalArgumentException("className is null");
 		}
 
-		if (Validator.isNull(classPKField)) {
-			throw new IllegalArgumentException("classPKField is null");
-		}
-
 		if (Validator.isNull(sql)) {
 			return sql;
+		}
+
+		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
+			return replacePermissionCheckBlocks(
+				sql, className, classPKField, userIdField, groupIds,
+				bridgeJoin);
+		}
+		else {
+			return replacePermissionCheckJoin(
+				sql, className, classPKField, userIdField, groupIds,
+				bridgeJoin);
+		}
+	}
+
+	public String replacePermissionCheck(
+		String sql, String className, String classPKField, String userIdField,
+		String bridgeJoin) {
+
+		return replacePermissionCheck(
+			sql, className, classPKField, userIdField, 0, bridgeJoin);
+	}
+
+	protected Set<Long> getOwnerResourceBlockIds(
+		long companyId, long[] groupIds, String className) {
+
+		Set<Long> resourceBlockIds = new HashSet<Long>();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		for (long groupId : groupIds) {
+			resourceBlockIds.addAll(
+				permissionChecker.getOwnerResourceBlockIds(
+				companyId, groupId, className, ActionKeys.VIEW));
+		}
+
+		return resourceBlockIds;
+	}
+
+	protected Set<Long> getResourceBlockIds(
+		long companyId, long[] groupIds, String className) {
+
+		Set<Long> resourceBlockIds = new HashSet<Long>();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		for (long groupId : groupIds) {
+			resourceBlockIds.addAll(
+				permissionChecker.getResourceBlockIds(
+				companyId, groupId, permissionChecker.getUserId(), className,
+				ActionKeys.VIEW));
+		}
+
+		return resourceBlockIds;
+	}
+
+	protected long[] getRoleIds(long groupId) {
+		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			roleIds = permissionChecker.getRoleIds(
+				permissionChecker.getUserId(), groupId);
+		}
+
+		return roleIds;
+	}
+
+	protected long[] getRoleIds(long[] groupIds) {
+		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
+
+		for (long groupId : groupIds) {
+			for (long roleId : getRoleIds(groupId)) {
+				if (!ArrayUtil.contains(roleIds, roleId)) {
+					roleIds = ArrayUtil.append(roleIds, roleId);
+				}
+			}
+		}
+
+		return roleIds;
+	}
+
+	protected long getUserId() {
+		long userId = 0;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			userId = permissionChecker.getUserId();
+		}
+
+		return userId;
+	}
+
+	protected String replacePermissionCheckBlocks(
+		String sql, String className, String classPKField, String userIdField,
+		long[] groupIds, String bridgeJoin) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long checkGroupId = 0;
+
+		if (groupIds.length == 1) {
+			checkGroupId = groupIds[0];
+		}
+
+		long companyId = permissionChecker.getCompanyId();
+
+		long[] roleIds = permissionChecker.getRoleIds(
+			getUserId(), checkGroupId);
+
+		try {
+			for (long roleId : roleIds) {
+				if (ResourceTypePermissionLocalServiceUtil.
+						hasCompanyScopePermission(
+							companyId, className, roleId, ActionKeys.VIEW)) {
+
+					return sql;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		Set<Long> userResourceBlockIds = getResourceBlockIds(
+			companyId, groupIds, className);
+
+		String permissionWhere = StringPool.BLANK;
+
+		if (Validator.isNotNull(bridgeJoin)) {
+			permissionWhere = bridgeJoin;
+		}
+
+		Set<Long> ownerResourceBlockIds = getOwnerResourceBlockIds(
+			companyId, groupIds, className);
+
+		ownerResourceBlockIds.removeAll(userResourceBlockIds);
+
+		// A SQL syntax error occurs if there is not at least one resource block
+		// ID.
+
+		if (userResourceBlockIds.size() == 0) {
+			userResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
+		}
+
+		if (Validator.isNotNull(userIdField) &&
+			ownerResourceBlockIds.size() > 0) {
+
+			permissionWhere = permissionWhere.concat(
+				CustomSQLUtil.get(FILTER_BY_RESOURCE_BLOCK_ID_OWNER));
+
+			permissionWhere = StringUtil.replace(
+				permissionWhere,
+				new String[] {
+					"[$OWNER_RESOURCE_BLOCK_IDS$]",
+					"[$USER_ID$]",
+					"[$USER_ID_FIELD$]",
+					"[$USER_RESOURCE_BLOCK_IDS$]"
+				},
+				new String[] {
+					StringUtil.merge(ownerResourceBlockIds),
+					String.valueOf(permissionChecker.getUserId()),
+					userIdField,
+					StringUtil.merge(userResourceBlockIds)
+				});
+		}
+		else {
+			permissionWhere = permissionWhere.concat(
+				CustomSQLUtil.get(FILTER_BY_RESOURCE_BLOCK_ID));
+
+			permissionWhere = StringUtil.replace(
+				permissionWhere, "[$USER_RESOURCE_BLOCK_IDS$]",
+				StringUtil.merge(userResourceBlockIds));
+		}
+
+		int pos = sql.indexOf(_WHERE_CLAUSE);
+
+		if (pos != -1) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionWhere);
+			sb.append(" AND ");
+			sb.append(sql.substring(pos + 6));
+
+			return sb.toString();
+		}
+
+		pos = sql.indexOf(_GROUP_BY_CLAUSE);
+
+		if (pos != -1) {
+			return sql.substring(0, pos + 1).concat(permissionWhere).concat(
+				sql.substring(pos + 1));
+		}
+
+		pos = sql.indexOf(_ORDER_BY_CLAUSE);
+
+		if (pos != -1) {
+			return sql.substring(0, pos + 1).concat(permissionWhere).concat(
+				sql.substring(pos + 1));
+		}
+
+		return sql.concat(StringPool.SPACE).concat(permissionWhere);
+	}
+
+	protected String replacePermissionCheckJoin(
+		String sql, String className, String classPKField, String userIdField,
+		long[] groupIds, String bridgeJoin) {
+
+		if (Validator.isNull(classPKField)) {
+			throw new IllegalArgumentException("classPKField is null");
 		}
 
 		PermissionChecker permissionChecker =
@@ -307,58 +531,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return sql.concat(StringPool.SPACE).concat(permissionJoin);
 	}
 
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		String bridgeJoin) {
+	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, 0, bridgeJoin);
-	}
-
-	protected long[] getRoleIds(long groupId) {
-		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker != null) {
-			roleIds = permissionChecker.getRoleIds(
-				permissionChecker.getUserId(), groupId);
-		}
-
-		return roleIds;
-	}
-
-	protected long[] getRoleIds(long[] groupIds) {
-		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
-
-		for (long groupId : groupIds) {
-			for (long roleId : getRoleIds(groupId)) {
-				if (!ArrayUtil.contains(roleIds, roleId)) {
-					roleIds = ArrayUtil.append(roleIds, roleId);
-				}
-			}
-		}
-
-		return roleIds;
-	}
-
-	protected long getUserId() {
-		long userId = 0;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker != null) {
-			userId = permissionChecker.getUserId();
-		}
-
-		return userId;
-	}
+	private static final long _NO_RESOURCE_BLOCKS_ID = -1;
 
 	private static final long[] _NO_ROLE_IDS = {0};
-
-	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
 

@@ -264,6 +264,11 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void addPageAttachment(long userId, long nodeId,
+		java.lang.String title, java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void addPageAttachments(long userId, long nodeId,
 		java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, byte[]>> files)
@@ -289,6 +294,13 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String addTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException;
 
 	public void changeParent(long userId, long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
@@ -316,6 +328,9 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 	public void deletePages(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteTempPageAttachment(long userId,
+		java.lang.String fileName, java.lang.String tempFolderName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildren(
@@ -482,6 +497,10 @@ public interface WikiPageLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempPageAttachmentNames(long userId,
+		java.lang.String tempFolderName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDraftPage(long nodeId, java.lang.String title)

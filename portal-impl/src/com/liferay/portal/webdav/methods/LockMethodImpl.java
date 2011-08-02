@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.model.Lock;
-import com.liferay.util.servlet.ServletResponseUtil;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.util.List;

@@ -16,10 +16,10 @@ package com.liferay.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class UniqueList<E> extends ArrayList<E> {
 
@@ -56,36 +56,32 @@ public class UniqueList<E> extends ArrayList<E> {
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		c = new ArrayList<E>(c);
+		boolean modified = false;
 
-		Iterator<? extends E> itr = c.iterator();
+		for (E e : c) {
+			if (!contains(e)) {
+				super.add(e);
 
-		while (itr.hasNext()) {
-			E e = itr.next();
-
-			if (contains(e)) {
-				itr.remove();
+				modified = true;
 			}
 		}
 
-		return super.addAll(c);
+		return modified;
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
-		c = new ArrayList<E>(c);
+		boolean modified = false;
 
-		Iterator<? extends E> itr = c.iterator();
+		for (E e : c) {
+			if (!contains(e)) {
+				super.add(index++, e);
 
-		while (itr.hasNext()) {
-			E e = itr.next();
-
-			if (contains(e)) {
-				itr.remove();
+				modified = true;
 			}
 		}
 
-		return super.addAll(index, c);
+		return modified;
 	}
 
 	@Override

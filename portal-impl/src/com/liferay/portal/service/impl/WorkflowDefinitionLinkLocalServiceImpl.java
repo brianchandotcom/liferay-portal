@@ -17,9 +17,9 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -217,7 +217,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 		else {
 			String[] workflowDefinitionParts = StringUtil.split(
-				workflowDefinition, StringPool.AT);
+				workflowDefinition, CharPool.AT);
 
 			String workflowDefinitionName = workflowDefinitionParts[0];
 			int workflowDefinitionVersion = GetterUtil.getInteger(

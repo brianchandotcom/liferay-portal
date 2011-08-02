@@ -210,7 +210,7 @@ PortalUtil.setPageDescription(message.getSubject(), request);
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(MBMessage.class.getName(), message.getMessageId());
 
-PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"), request);
+PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 
 MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 %>

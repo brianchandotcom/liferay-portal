@@ -480,6 +480,22 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapUser.getServiceContext());
 	}
 
+	protected void addUserGroupsNotAddedByLDAPImport(
+			long userId, List<Long> userGroupIds)
+		throws Exception {
+
+		List<UserGroup> userGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(userId);
+
+		for (UserGroup userGroup : userGroups) {
+			if (!userGroupIds.contains(userGroup.getUserGroupId()) &&
+				!userGroup.isAddedByLDAPImport()) {
+
+				userGroupIds.add(userGroup.getUserGroupId());
+			}
+		}
+	}
+
 	protected String escapeValue(String value) {
 		return StringUtil.replace(value, "\\,", "\\\\,");
 	}
@@ -644,9 +660,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
-	protected void importGroup(
+	protected List<Long> importGroup(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			String fullGroupDN, User user, Properties groupMappings)
+			String fullGroupDN, User user, Properties groupMappings,
+			List<Long> newUserGroupIds)
 		throws Exception {
 
 		String userGroupIdKey = null;
@@ -664,7 +681,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			userGroupIdKey = sb.toString();
 
-			userGroupId = (Long)_userGroupIds.get(userGroupIdKey);
+			userGroupId = (Long)_portalCache.get(userGroupIdKey);
 		}
 
 		if (userGroupId != null) {
@@ -695,7 +712,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			userGroupId = userGroup.getUserGroupId();
 
 			if (PropsValues.LDAP_IMPORT_GROUP_CACHE_ENABLED) {
-				_userGroupIds.put(userGroupIdKey, userGroupId);
+				_portalCache.put(userGroupIdKey, userGroupId);
 			}
 		}
 
@@ -705,9 +722,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					"Adding " + user.getUserId() + " to group " + userGroupId);
 			}
 
-			UserGroupLocalServiceUtil.addUserUserGroups(
-				user.getUserId(), new long[] {userGroupId});
+			newUserGroupIds.add(userGroupId);
 		}
+
+		return newUserGroupIds;
 	}
 
 	protected void importGroups(
@@ -716,23 +734,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			Properties groupMappings)
 		throws Exception {
 
-		if (!LDAPSettingsUtil.isExportEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
-
-			List<UserGroup> userGroups =
-				UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
-
-			UserGroupLocalServiceUtil.clearUserUserGroups(user.getUserId());
-
-			for (UserGroup userGroup : userGroups) {
-				if (!userGroup.isAddedByLDAPImport()) {
-
-					UserGroupLocalServiceUtil.addUserUserGroups(
-						user.getUserId(),
-						new long[] {userGroup.getUserGroupId()});
-				}
-			}
-		}
+		List<Long> newUserGroupIds = new ArrayList<Long>();
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER_ENABLED)) {
@@ -781,9 +783,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					String fullGroupDN = PortalLDAPUtil.getNameInNamespace(
 						ldapServerId, companyId, searchResult);
 
-					importGroup(
+					newUserGroupIds = importGroup(
 						ldapServerId, companyId, ldapContext, fullGroupDN, user,
-						groupMappings);
+						groupMappings, newUserGroupIds);
 				}
 			}
 		}
@@ -803,9 +805,26 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			for (int i = 0; i < userGroupAttribute.size(); i++) {
 				String fullGroupDN = (String)userGroupAttribute.get(i);
 
-				importGroup(
+				newUserGroupIds = importGroup(
 					ldapServerId, companyId, ldapContext, fullGroupDN, user,
-					groupMappings);
+					groupMappings, newUserGroupIds);
+			}
+		}
+
+		addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
+
+		for (long newUserGroupId : newUserGroupIds) {
+			UserLocalServiceUtil.addUserGroupUsers(
+				newUserGroupId, new long[] {user.getUserId()});
+		}
+
+		List<UserGroup> userUserGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
+
+		for (UserGroup userGroup : userUserGroups) {
+			if (!newUserGroupIds.contains(userGroup.getUserGroupId())) {
+				UserLocalServiceUtil.deleteUserGroupUser(
+					userGroup.getUserGroupId(), user.getUserId());
 			}
 		}
 	}
@@ -921,7 +940,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			long userGroupId, Attribute attribute)
 		throws Exception {
 
-		UserLocalServiceUtil.clearUserGroupUsers(userGroupId);
+		List<Long> newUserIds = new ArrayList<Long>(attribute.size());
 
 		for (int i = 0; i < attribute.size(); i++) {
 			String fullUserDN = (String)attribute.get(i);
@@ -954,10 +973,22 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 					UserLocalServiceUtil.addUserGroupUsers(
 						userGroupId, new long[] {user.getUserId()});
+
+					newUserIds.add(user.getUserId());
 				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to load user " + userAttributes, e);
+			}
+		}
+
+		List<User> userGroupUsers = UserLocalServiceUtil.getUserGroupUsers(
+			userGroupId);
+
+		for (User user : userGroupUsers) {
+			if (!newUserIds.contains(user.getUserId())) {
+				UserLocalServiceUtil.deleteUserGroupUser(
+					userGroupId, user.getUserId());
 			}
 		}
 	}
@@ -1137,7 +1168,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		PortalLDAPImporterImpl.class);
 
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private PortalCache _userGroupIds = SingleVMPoolUtil.getCache(
+	private PortalCache _portalCache = SingleVMPoolUtil.getCache(
 		PortalLDAPImporter.class.getName(), false);
 
 }

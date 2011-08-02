@@ -21,6 +21,8 @@ Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
+boolean locked = GetterUtil.getBoolean(selLayout.getTypeSettingsProperty("locked"));
+
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 %>
@@ -109,6 +111,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			</c:choose>
 
 			<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" name="hidden" />
+
+			<c:if test="<%= group.isLayoutSetPrototype() %>">
+				<aui:input helpMessage="if-checked-this-page-cannot-be-modified" name="locked" type="checkbox" value="<%= locked %>" />
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= HtmlUtil.escapeAttribute(selLayout.getName(defaultLocale)) %>" />
@@ -151,12 +157,13 @@ StringBuilder friendlyURLBase = new StringBuilder();
 <aui:script use="aui-base">
 	var templateLink = A.one('#templateLink');
 
-	function toggleLayoutTypeFields (type) {
+	function toggleLayoutTypeFields(type) {
 		var currentType = 'layout-type-form-' + type;
 
 		A.all('.layout-type-form').each(
 			function(item, index, collection) {
 				var visible = item.hasClass(currentType);
+
 				var disabled = !visible;
 
 				item.toggle(visible);
@@ -166,13 +173,13 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		);
 
 		if (templateLink) {
-			templateLink.toggle(type == 'portlet')
+			templateLink.toggle(type == 'portlet');
 		}
 	}
 
 	toggleLayoutTypeFields('<%= selLayout.getType() %>');
 
-	var typeSelector = A.one("#<portlet:namespace />type");
+	var typeSelector = A.one('#<portlet:namespace />type');
 
 	if (typeSelector) {
 		typeSelector.on(

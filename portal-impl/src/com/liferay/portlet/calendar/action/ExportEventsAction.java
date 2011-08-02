@@ -16,6 +16,7 @@ package com.liferay.portlet.calendar.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.calendar.service.CalEventServiceUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

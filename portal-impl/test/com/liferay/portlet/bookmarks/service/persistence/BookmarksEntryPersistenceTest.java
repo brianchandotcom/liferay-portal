@@ -84,6 +84,8 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 
 		newBookmarksEntry.setModifiedDate(nextDate());
 
+		newBookmarksEntry.setResourceBlockId(nextLong());
+
 		newBookmarksEntry.setFolderId(nextLong());
 
 		newBookmarksEntry.setName(randomString());
@@ -118,6 +120,8 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getModifiedDate()));
+		assertEquals(existingBookmarksEntry.getResourceBlockId(),
+			newBookmarksEntry.getResourceBlockId());
 		assertEquals(existingBookmarksEntry.getFolderId(),
 			newBookmarksEntry.getFolderId());
 		assertEquals(existingBookmarksEntry.getName(),
@@ -269,6 +273,8 @@ public class BookmarksEntryPersistenceTest extends BasePersistenceTestCase {
 		bookmarksEntry.setCreateDate(nextDate());
 
 		bookmarksEntry.setModifiedDate(nextDate());
+
+		bookmarksEntry.setResourceBlockId(nextLong());
 
 		bookmarksEntry.setFolderId(nextLong());
 

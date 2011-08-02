@@ -184,6 +184,7 @@ create unique index IX_BC2E7E6A on DLFileEntry (uuid_, groupId);
 
 create unique index IX_7332B44F on DLFileEntryMetadata (DDMStructureId, fileVersionId);
 create index IX_4F40FE5E on DLFileEntryMetadata (fileEntryId);
+create index IX_A44636C9 on DLFileEntryMetadata (fileEntryId, fileVersionId);
 create index IX_F8E90438 on DLFileEntryMetadata (fileEntryTypeId);
 create index IX_1FE9C04 on DLFileEntryMetadata (fileVersionId);
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_);
@@ -364,10 +365,12 @@ create index IX_23922F7D on Layout (iconImageId);
 create index IX_D0822724 on Layout (uuid_);
 create unique index IX_CED31606 on Layout (uuid_, groupId);
 
-create unique index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
+create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);
+create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 
 create index IX_30616AAA on LayoutPrototype (companyId);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
+create index IX_CEF72136 on LayoutPrototype (uuid_);
 
 create index IX_314B621A on LayoutRevision (layoutSetBranchId);
 create index IX_A9AC086E on LayoutRevision (layoutSetBranchId, head);
@@ -381,6 +384,7 @@ create index IX_9329C9D6 on LayoutRevision (plid);
 
 create index IX_A40B8BEC on LayoutSet (groupId);
 create unique index IX_48550691 on LayoutSet (groupId, privateLayout);
+create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid);
 
 create index IX_8FF5D6EA on LayoutSetBranch (groupId);
 create index IX_C4079FD3 on LayoutSetBranch (groupId, privateLayout);
@@ -432,6 +436,10 @@ create index IX_75B95071 on MBMessage (threadId);
 create index IX_A7038CD7 on MBMessage (threadId, parentMessageId);
 create index IX_9DC8E57 on MBMessage (threadId, status);
 create index IX_7A040C32 on MBMessage (userId);
+create index IX_59F9CE5C on MBMessage (userId, classNameId);
+create index IX_ABEB6D07 on MBMessage (userId, classNameId, classPK);
+create index IX_4A4BB4ED on MBMessage (userId, classNameId, classPK, status);
+create index IX_3321F142 on MBMessage (userId, classNameId, status);
 create index IX_C57B16BC on MBMessage (uuid_);
 create unique index IX_8D12316E on MBMessage (uuid_, groupId);
 
@@ -546,6 +554,13 @@ create unique index IX_354AA664 on RepositoryEntry (uuid_, groupId);
 create index IX_81F2DB09 on ResourceAction (name);
 create unique index IX_EDB9986E on ResourceAction (name, actionId);
 
+create index IX_DA30B086 on ResourceBlock (companyId, groupId, name);
+create unique index IX_AEEA209C on ResourceBlock (companyId, groupId, name, permissionsHash);
+create index IX_2D4CC782 on ResourceBlock (companyId, name);
+
+create index IX_4AB3756 on ResourceBlockPermission (resourceBlockId);
+create unique index IX_D63D20BB on ResourceBlockPermission (resourceBlockId, roleId);
+
 create index IX_717FDD47 on ResourceCode (companyId);
 create unique index IX_A32C097E on ResourceCode (companyId, name, scope);
 create index IX_AACAFF40 on ResourceCode (name);
@@ -557,6 +572,10 @@ create index IX_2200AA69 on ResourcePermission (companyId, name, scope, primKey)
 create unique index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey, roleId);
 create unique index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_A37A0588 on ResourcePermission (roleId);
+
+create unique index IX_BA497163 on ResourceTypePermission (companyId, groupId, name, roleId);
+create index IX_7D81F66F on ResourceTypePermission (companyId, name, roleId);
+create index IX_A82690E2 on ResourceTypePermission (roleId);
 
 create index IX_2578FBD3 on Resource_ (codeId);
 create unique index IX_67DE7856 on Resource_ (codeId, primKey);

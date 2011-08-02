@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -112,7 +113,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], StringPool.COLON);
+				tagProperties[i], CharPool.COLON);
 
 			String key = StringPool.BLANK;
 
@@ -478,7 +479,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], StringPool.COLON);
+				tagProperties[i], CharPool.COLON);
 
 			String key = StringPool.BLANK;
 
@@ -511,7 +512,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	protected String[] getTagNames(List <AssetTag>tags) {
-		return StringUtil.split(ListUtil.toString(tags, "name"));
+		return StringUtil.split(
+			ListUtil.toString(tags, AssetTag.NAME_ACCESSOR));
 	}
 
 	protected void reindex(List<AssetEntry> entries) throws PortalException {

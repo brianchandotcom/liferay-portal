@@ -2156,6 +2156,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(pollsQuestion.uuid IS NULL OR pollsQuestion.uuid = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "pollsQuestion.groupId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "pollsQuestion.groupId = ?";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "pollsQuestion.questionId";
 	private static final String _FILTER_SQL_SELECT_POLLSQUESTION_WHERE = "SELECT DISTINCT {pollsQuestion.*} FROM PollsQuestion pollsQuestion WHERE ";
 	private static final String _FILTER_SQL_SELECT_POLLSQUESTION_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {PollsQuestion.*} FROM (SELECT DISTINCT pollsQuestion.questionId FROM PollsQuestion pollsQuestion WHERE ";
@@ -2164,7 +2165,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	private static final String _FILTER_SQL_COUNT_POLLSQUESTION_WHERE = "SELECT COUNT(DISTINCT pollsQuestion.questionId) AS COUNT_VALUE FROM PollsQuestion pollsQuestion WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "pollsQuestion";
 	private static final String _FILTER_ENTITY_TABLE = "PollsQuestion";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "pollsQuestion.questionId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "pollsQuestion.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "PollsQuestion.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PollsQuestion exists with the primary key ";

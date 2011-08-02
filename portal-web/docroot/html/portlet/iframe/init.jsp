@@ -50,6 +50,7 @@ String frameborder = preferences.getValue("frameborder", "0");
 String hspace = preferences.getValue("hspace", "0");
 String longdesc = preferences.getValue("longdesc", StringPool.BLANK);
 String scrolling = preferences.getValue("scrolling", "auto");
+String title = preferences.getValue("title", StringPool.BLANK);
 String vspace = preferences.getValue("vspace", "0");
 
 List<String> iframeVariables = new ArrayList<String>();

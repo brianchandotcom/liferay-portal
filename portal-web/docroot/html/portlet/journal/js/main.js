@@ -1239,6 +1239,7 @@ AUI().add(
 				Liferay.Util.openWindow(
 					{
 						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
 							stack: false,
 							width: 680
 						},
@@ -2967,11 +2968,23 @@ AUI().add(
 					destructor: function() {
 						var instance = this;
 
+						var source = instance.get('source');
+
+						var children = source.all('.structure-field');
+
+						children.each(
+							function(item, index, collection) {
+								var fieldInstance = instance.getFieldInstance(item);
+
+								if (fieldInstance) {
+									fieldInstance.destroy();
+								}
+							}
+						);
+
 						var fieldType = instance.get('fieldType');
 
 						if (fieldType == 'text_area') {
-							var source = instance.get('source');
-
 							var textarea = source.one('textarea');
 
 							if (textarea) {

@@ -28,6 +28,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -217,15 +218,15 @@ public class PortletURLUtil {
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
 		if (ppid.equals(portletId)) {
-			Enumeration<String> enu = request.getParameterNames();
+			Map<String, String[]> parameters = request.getParameterMap();
 
-			while (enu.hasMoreElements()) {
-				String name = enu.nextElement();
+			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+				String name = entry.getKey();
 
 				if (!PortalUtil.isReservedParameter(name) &&
 					!name.equals("currentURL")) {
 
-					String[] values = request.getParameterValues(name);
+					String[] values = entry.getValue();
 
 					for (int i = 0; i < values.length; i++) {
 						sb.append(StringPool.AMPERSAND);

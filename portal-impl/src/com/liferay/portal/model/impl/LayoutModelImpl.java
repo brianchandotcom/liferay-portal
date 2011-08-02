@@ -94,9 +94,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "wapColorSchemeId", Types.VARCHAR },
 			{ "css", Types.VARCHAR },
 			{ "priority", Types.INTEGER },
-			{ "layoutPrototypeId", Types.BIGINT }
+			{ "layoutPrototypeUuid", Types.VARCHAR },
+			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -145,7 +146,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setWapColorSchemeId(soapModel.getWapColorSchemeId());
 		model.setCss(soapModel.getCss());
 		model.setPriority(soapModel.getPriority());
-		model.setLayoutPrototypeId(soapModel.getLayoutPrototypeId());
+		model.setLayoutPrototypeUuid(soapModel.getLayoutPrototypeUuid());
+		model.setLayoutPrototypeLinkEnabled(soapModel.getLayoutPrototypeLinkEnabled());
 
 		return model;
 	}
@@ -950,12 +952,31 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	@JSON
-	public long getLayoutPrototypeId() {
-		return _layoutPrototypeId;
+	public String getLayoutPrototypeUuid() {
+		if (_layoutPrototypeUuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _layoutPrototypeUuid;
+		}
 	}
 
-	public void setLayoutPrototypeId(long layoutPrototypeId) {
-		_layoutPrototypeId = layoutPrototypeId;
+	public void setLayoutPrototypeUuid(String layoutPrototypeUuid) {
+		_layoutPrototypeUuid = layoutPrototypeUuid;
+	}
+
+	@JSON
+	public boolean getLayoutPrototypeLinkEnabled() {
+		return _layoutPrototypeLinkEnabled;
+	}
+
+	public boolean isLayoutPrototypeLinkEnabled() {
+		return _layoutPrototypeLinkEnabled;
+	}
+
+	public void setLayoutPrototypeLinkEnabled(
+		boolean layoutPrototypeLinkEnabled) {
+		_layoutPrototypeLinkEnabled = layoutPrototypeLinkEnabled;
 	}
 
 	@Override
@@ -1019,7 +1040,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setWapColorSchemeId(getWapColorSchemeId());
 		layoutImpl.setCss(getCss());
 		layoutImpl.setPriority(getPriority());
-		layoutImpl.setLayoutPrototypeId(getLayoutPrototypeId());
+		layoutImpl.setLayoutPrototypeUuid(getLayoutPrototypeUuid());
+		layoutImpl.setLayoutPrototypeLinkEnabled(getLayoutPrototypeLinkEnabled());
 
 		layoutImpl.resetOriginalValues();
 
@@ -1269,14 +1291,23 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutCacheModel.priority = getPriority();
 
-		layoutCacheModel.layoutPrototypeId = getLayoutPrototypeId();
+		layoutCacheModel.layoutPrototypeUuid = getLayoutPrototypeUuid();
+
+		String layoutPrototypeUuid = layoutCacheModel.layoutPrototypeUuid;
+
+		if ((layoutPrototypeUuid != null) &&
+				(layoutPrototypeUuid.length() == 0)) {
+			layoutCacheModel.layoutPrototypeUuid = null;
+		}
+
+		layoutCacheModel.layoutPrototypeLinkEnabled = getLayoutPrototypeLinkEnabled();
 
 		return layoutCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1330,15 +1361,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getCss());
 		sb.append(", priority=");
 		sb.append(getPriority());
-		sb.append(", layoutPrototypeId=");
-		sb.append(getLayoutPrototypeId());
+		sb.append(", layoutPrototypeUuid=");
+		sb.append(getLayoutPrototypeUuid());
+		sb.append(", layoutPrototypeLinkEnabled=");
+		sb.append(getLayoutPrototypeLinkEnabled());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -1449,8 +1482,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>layoutPrototypeId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutPrototypeId());
+			"<column><column-name>layoutPrototypeUuid</column-name><column-value><![CDATA[");
+		sb.append(getLayoutPrototypeUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>layoutPrototypeLinkEnabled</column-name><column-value><![CDATA[");
+		sb.append(getLayoutPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1498,7 +1535,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _wapColorSchemeId;
 	private String _css;
 	private int _priority;
-	private long _layoutPrototypeId;
+	private String _layoutPrototypeUuid;
+	private boolean _layoutPrototypeLinkEnabled;
 	private transient ExpandoBridge _expandoBridge;
 	private Layout _escapedModelProxy;
 }

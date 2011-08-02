@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,7 +28,6 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLExportFormat;
 import com.liferay.portlet.dynamicdatalists.util.DDLExporter;
 import com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;

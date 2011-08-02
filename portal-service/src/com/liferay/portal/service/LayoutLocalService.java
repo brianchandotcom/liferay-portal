@@ -249,7 +249,7 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -257,20 +257,28 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteLayout(com.liferay.portal.model.Layout layout,
-		boolean updateLayoutSet)
+		boolean updateLayoutSet,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteLayouts(long groupId, boolean privateLayout)
+	public void deleteLayout(long groupId, boolean privateLayout,
+		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayouts(long groupId, boolean privateLayout,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -307,6 +315,10 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout fetchLayout(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
@@ -429,7 +441,8 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds)
+		long parentLayoutId, long[] layoutIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -446,7 +459,7 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		java.lang.Boolean iconImage, byte[] iconBytes,
+		java.lang.Boolean iconImage, byte[] iconBytes, boolean locked,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

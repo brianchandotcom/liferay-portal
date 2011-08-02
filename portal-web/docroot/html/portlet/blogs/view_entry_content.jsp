@@ -53,7 +53,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<div class="entry-title">
 					<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
-						<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
+						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
 					</c:if>
 				</div>
 
@@ -61,6 +61,20 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
 				</div>
 			</div>
+
+			<portlet:renderURL windowState="<%= WindowState.NORMAL.toString() %>" var="bookmarkURL">
+				<portlet:param name="struts_action" value="/blogs/view_entry" />
+				<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+			</portlet:renderURL>
+
+			<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
+				<liferay-ui:social-bookmarks
+					displayStyle="<%= socialBookmarksDisplayStyle %>"
+					target="_blank"
+					title="<%= entry.getTitle() %>"
+					url="<%= bookmarkURL.toString() %>"
+				/>
+			</c:if>
 
 			<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 				<div class="lfr-meta-actions edit-actions entry">
@@ -151,11 +165,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:choose>
 			</div>
 
-			<portlet:renderURL windowState="<%= WindowState.NORMAL.toString() %>" var="bookmarkURL">
-				<portlet:param name="struts_action" value="/blogs/view_entry" />
-				<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
-			</portlet:renderURL>
-
 			<div class="entry-footer">
 				<div class="entry-author">
 					<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), entry.getUserName())) %>
@@ -231,11 +240,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
-					<liferay-ui:social-bookmarks
-						url="<%= bookmarkURL.toString() %>"
-						title="<%= entry.getTitle() %>"
-						target="_blank"
-					/>
+					<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") %>'>
+						<liferay-ui:social-bookmarks
+							displayStyle="<%= socialBookmarksDisplayStyle %>"
+							target="_blank"
+							title="<%= entry.getTitle() %>"
+							url="<%= bookmarkURL.toString() %>"
+						/>
+					</c:if>
 
 					<c:if test="<%= enableRatings %>">
 						<liferay-ui:ratings

@@ -201,7 +201,7 @@ public class NtlmFilter extends BasePortalFilter {
 
 				response.flushBuffer();
 
-				_serverChallenges.put(request.getRemoteAddr(), serverChallenge);
+				_portalCache.put(request.getRemoteAddr(), serverChallenge);
 
 				// Interrupt filter chain, send response. Browser will
 				// immediately post a new request.
@@ -209,7 +209,7 @@ public class NtlmFilter extends BasePortalFilter {
 				return;
 			}
 			else {
-				byte[] serverChallenge = (byte[])_serverChallenges.get(
+				byte[] serverChallenge = (byte[])_portalCache.get(
 					request.getRemoteAddr());
 
 				if (serverChallenge == null) {
@@ -234,7 +234,7 @@ public class NtlmFilter extends BasePortalFilter {
 					}
 				}
 				finally {
-					_serverChallenges.remove(request.getRemoteAddr());
+					_portalCache.remove(request.getRemoteAddr());
 				}
 
 				if (ntlmUserAccount == null) {
@@ -290,8 +290,8 @@ public class NtlmFilter extends BasePortalFilter {
 
 	private Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<Long, NtlmManager>();
-	private SecureRandom _secureRandom = new SecureRandom();
-	private PortalCache _serverChallenges = SingleVMPoolUtil.getCache(
+	private PortalCache _portalCache = SingleVMPoolUtil.getCache(
 		NtlmFilter.class.getName());
+	private SecureRandom _secureRandom = new SecureRandom();
 
 }

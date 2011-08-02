@@ -800,6 +800,10 @@ public interface UserLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteUserGroupUser(long userGroupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Encrypts the primary key of the user. Used when encrypting the user's
 	* credentials for storage in an automatic login cookie.
@@ -2469,7 +2473,7 @@ public interface UserLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void verifyEmailAddress(java.lang.String key)
+	public void verifyEmailAddress(java.lang.String ticketKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

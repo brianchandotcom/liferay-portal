@@ -141,6 +141,15 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			DLFileEntryMetadataModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByD_F",
 			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_F_V = new FinderPath(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryMetadataModelImpl.FINDER_CACHE_ENABLED,
+			DLFileEntryMetadataImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByF_V",
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_V = new FinderPath(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryMetadataModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByF_V",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryMetadataModelImpl.FINDER_CACHE_ENABLED,
 			DLFileEntryMetadataImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
@@ -162,6 +171,12 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F,
 			new Object[] {
 				Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
+				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+			}, dlFileEntryMetadata);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
+			new Object[] {
+				Long.valueOf(dlFileEntryMetadata.getFileEntryId()),
 				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
 			}, dlFileEntryMetadata);
 
@@ -217,6 +232,12 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F,
 			new Object[] {
 				Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
+				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+			});
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
+			new Object[] {
+				Long.valueOf(dlFileEntryMetadata.getFileEntryId()),
 				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
 			});
 	}
@@ -337,6 +358,12 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
 			});
 
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
+			new Object[] {
+				Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryId()),
+				Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
+			});
+
 		EntityCacheUtil.removeResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey());
 
@@ -399,6 +426,28 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F,
 				new Object[] {
 					Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
+					Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+				}, dlFileEntryMetadata);
+		}
+
+		if (!isNew &&
+				((dlFileEntryMetadata.getFileEntryId() != dlFileEntryMetadataModelImpl.getOriginalFileEntryId()) ||
+				(dlFileEntryMetadata.getFileVersionId() != dlFileEntryMetadataModelImpl.getOriginalFileVersionId()))) {
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
+				new Object[] {
+					Long.valueOf(
+						dlFileEntryMetadataModelImpl.getOriginalFileEntryId()),
+					Long.valueOf(
+						dlFileEntryMetadataModelImpl.getOriginalFileVersionId())
+				});
+		}
+
+		if (isNew ||
+				((dlFileEntryMetadata.getFileEntryId() != dlFileEntryMetadataModelImpl.getOriginalFileEntryId()) ||
+				(dlFileEntryMetadata.getFileVersionId() != dlFileEntryMetadataModelImpl.getOriginalFileVersionId()))) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
+				new Object[] {
+					Long.valueOf(dlFileEntryMetadata.getFileEntryId()),
 					Long.valueOf(dlFileEntryMetadata.getFileVersionId())
 				}, dlFileEntryMetadata);
 		}
@@ -2037,6 +2086,146 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	}
 
 	/**
+	 * Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException} if it could not be found.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param fileVersionId the file version ID
+	 * @return the matching document library file entry metadata
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata findByF_V(long fileEntryId, long fileVersionId)
+		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByF_V(fileEntryId,
+				fileVersionId);
+
+		if (dlFileEntryMetadata == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("fileEntryId=");
+			msg.append(fileEntryId);
+
+			msg.append(", fileVersionId=");
+			msg.append(fileVersionId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchFileEntryMetadataException(msg.toString());
+		}
+
+		return dlFileEntryMetadata;
+	}
+
+	/**
+	 * Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param fileVersionId the file version ID
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByF_V(long fileEntryId, long fileVersionId)
+		throws SystemException {
+		return fetchByF_V(fileEntryId, fileVersionId, true);
+	}
+
+	/**
+	 * Returns the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param fileVersionId the file version ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByF_V(long fileEntryId, long fileVersionId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { fileEntryId, fileVersionId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_F_V,
+					finderArgs, this);
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_DLFILEENTRYMETADATA_WHERE);
+
+			query.append(_FINDER_COLUMN_F_V_FILEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_F_V_FILEVERSIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(fileEntryId);
+
+				qPos.add(fileVersionId);
+
+				List<DLFileEntryMetadata> list = q.list();
+
+				result = list;
+
+				DLFileEntryMetadata dlFileEntryMetadata = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
+						finderArgs, list);
+				}
+				else {
+					dlFileEntryMetadata = list.get(0);
+
+					cacheResult(dlFileEntryMetadata);
+
+					if ((dlFileEntryMetadata.getFileEntryId() != fileEntryId) ||
+							(dlFileEntryMetadata.getFileVersionId() != fileVersionId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
+							finderArgs, dlFileEntryMetadata);
+					}
+				}
+
+				return dlFileEntryMetadata;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (DLFileEntryMetadata)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the document library file entry metadatas.
 	 *
 	 * @return the document library file entry metadatas
@@ -2208,6 +2397,21 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public void removeByD_F(long DDMStructureId, long fileVersionId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = findByD_F(DDMStructureId,
+				fileVersionId);
+
+		dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+	}
+
+	/**
+	 * Removes the document library file entry metadata where fileEntryId = &#63; and fileVersionId = &#63; from the database.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param fileVersionId the file version ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByF_V(long fileEntryId, long fileVersionId)
+		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = findByF_V(fileEntryId,
 				fileVersionId);
 
 		dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
@@ -2510,6 +2714,65 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	}
 
 	/**
+	 * Returns the number of document library file entry metadatas where fileEntryId = &#63; and fileVersionId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param fileVersionId the file version ID
+	 * @return the number of matching document library file entry metadatas
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByF_V(long fileEntryId, long fileVersionId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { fileEntryId, fileVersionId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_F_V,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DLFILEENTRYMETADATA_WHERE);
+
+			query.append(_FINDER_COLUMN_F_V_FILEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_F_V_FILEVERSIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(fileEntryId);
+
+				qPos.add(fileVersionId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of document library file entry metadatas.
 	 *
 	 * @return the number of document library file entry metadatas
@@ -2617,6 +2880,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static final String _FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2 = "dlFileEntryMetadata.fileVersionId = ?";
 	private static final String _FINDER_COLUMN_D_F_DDMSTRUCTUREID_2 = "dlFileEntryMetadata.DDMStructureId = ? AND ";
 	private static final String _FINDER_COLUMN_D_F_FILEVERSIONID_2 = "dlFileEntryMetadata.fileVersionId = ?";
+	private static final String _FINDER_COLUMN_F_V_FILEENTRYID_2 = "dlFileEntryMetadata.fileEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_F_V_FILEVERSIONID_2 = "dlFileEntryMetadata.fileVersionId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntryMetadata.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntryMetadata exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryMetadata exists with the key {";

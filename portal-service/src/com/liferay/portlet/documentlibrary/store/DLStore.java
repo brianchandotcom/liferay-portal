@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
@@ -29,45 +28,42 @@ import java.io.InputStream;
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
 
-	public void addDirectory(long companyId, long repositoryId, String dirName)
+	public void addDirectory(
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, boolean validateFileExtension,
-			ServiceContext serviceContext, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException;
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException;
 
 	public void addFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException;
 
 	public void checkRoot(long companyId) throws SystemException;
 
 	public void copyFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fromVersionNumber, String toVersionNumber,
-			String sourceFileName, ServiceContext serviceContext)
+			long companyId, long repositoryId, String fileName,
+			String fromVersionNumber, String toVersionNumber,
+			String sourceFileName)
 		throws PortalException, SystemException;
 
 	public void deleteDirectory(
-			long companyId, String portletId, long repositoryId, String dirName)
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName)
+			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException;
 
 	public void deleteFile(
-			long companyId, String portletId, long repositoryId,
-			String fileName, String versionNumber)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber)
 		throws PortalException, SystemException;
 
 	public byte[] getFile(long companyId, long repositoryId, String fileName)
@@ -102,39 +98,35 @@ public interface DLStore {
 	public void move(String srcDir, String destDir) throws SystemException;
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			long newRepositoryId, String fileName)
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
 		throws PortalException, SystemException;
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String newFileName)
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
 		throws PortalException, SystemException;
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fileExtension,
-			boolean validateFileExtension, String versionNumber,
-			String sourceFileName, ServiceContext serviceContext,
-			InputStream is)
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
+			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException;
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, byte[] bytes)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException;
 
 	public void updateFile(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String versionNumber, String sourceFileName,
-			ServiceContext serviceContext, File file)
+			long companyId, long repositoryId, String fileName,
+			String versionNumber, String sourceFileName, File file)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(
-			long companyId, String portletId, long groupId, long repositoryId,
-			String fileName, String fromVersionNumber, String toVersionNumber,
-			 String sourceFileName, ServiceContext serviceContext)
+			long companyId, long repositoryId, String fileName,
+			String fromVersionNumber, String toVersionNumber,
+			String sourceFileName)
 		throws PortalException, SystemException;
 
 	public void validate(

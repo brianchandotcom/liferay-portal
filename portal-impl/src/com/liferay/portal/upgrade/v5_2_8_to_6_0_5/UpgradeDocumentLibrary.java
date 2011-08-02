@@ -28,7 +28,6 @@ import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryTitleUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryVersionUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileShortcutTable;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -62,7 +61,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
 
-				String portletId = PortletKeys.DOCUMENT_LIBRARY;
 				long repositoryId = folderId;
 
 				if (repositoryId ==
@@ -76,8 +74,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				if (!newName.equals(name)) {
 					DLStoreUtil.updateFile(
-						companyId, portletId, groupId, repositoryId, name,
-						newName);
+						companyId, repositoryId, name, newName);
 				}
 			}
 		}

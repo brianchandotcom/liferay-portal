@@ -467,6 +467,38 @@ public interface MBMessageLocalService extends PersistedModelLocalService {
 		long threadId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, long classNameId, long classPK, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, long[] classNameIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, java.lang.String className, long classPK, int status,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long classNameId,
+		long classPK, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
+		int status) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId,
+		java.lang.String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void subscribeMessage(long userId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

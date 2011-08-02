@@ -32,3 +32,9 @@
 
 	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
 </script>
+
+<%
+if (logout) {
+	session.invalidate();
+}
+%>

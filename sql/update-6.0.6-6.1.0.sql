@@ -10,6 +10,7 @@ alter table BlogsEntry add smallImageId VARCHAR(75) null;
 alter table BlogsEntry add smallImageURL STRING null;
 
 alter table BookmarksEntry add userName VARCHAR(75) null;
+alter table BookmarksEntry add resourceBlockId LONG;
 alter table BookmarksEntry add description VARCHAR(75) null;
 
 COMMIT_TRANSACTION;
@@ -18,6 +19,7 @@ update BookmarksEntry set description = comments;
 alter table BookmarksEntry drop column comments;
 
 alter table BookmarksFolder add userName VARCHAR(75) null;
+alter table BookmarksFolder add resourceBlockId LONG;
 
 alter table CalEvent add location STRING null;
 
@@ -250,6 +252,9 @@ alter table Layout add createDate DATE null;
 alter table Layout add modifiedDate DATE null;
 alter table Layout add keywords STRING null;
 alter table Layout add robots STRING null;
+alter table Layout add layoutPrototypeUuid VARCHAR(75) null;
+alter table Layout add layoutPrototypeLinkEnabled BOOLEAN null;
+alter table Layout drop column layoutPrototypeId;
 alter table Layout drop column dlFolderId;
 
 update Layout set createDate = CURRENT_TIMESTAMP;
@@ -266,9 +271,11 @@ create table LayoutBranch (
 	layoutSetBranchId LONG,
 	plid LONG,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	master BOOLEAN
 );
+
+alter table LayoutPrototype add uuid_ VARCHAR(75) null;
 
 create table LayoutRevision (
 	layoutRevisionId LONG not null primary key,
@@ -306,6 +313,10 @@ create table LayoutRevision (
 
 drop index IX_5ABC2905 on LayoutSet;
 
+alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN null;
+alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) null;
+alter table LayoutSet drop column layoutSetPrototypeId;
+
 create table LayoutSetBranch (
 	layoutSetBranchId LONG not null primary key,
 	groupId LONG,
@@ -338,6 +349,11 @@ update MBMessage set format = 'bbcode';
 
 alter table MBThread add companyId LONG;
 alter table MBThread add rootMessageUserId LONG;
+
+alter table PollsVote add companyId LONG;
+alter table PollsVote add userName VARCHAR(75) null;
+alter table PollsVote add createDate DATE null,;
+alter table PollsVote add modifiedDate DATE null;
 
 create table PortalPreferences (
 	portalPreferencesId LONG not null primary key,

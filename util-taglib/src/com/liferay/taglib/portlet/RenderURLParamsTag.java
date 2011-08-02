@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portlet;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -97,7 +98,7 @@ public class RenderURLParamsTag extends TagSupport {
 			String token = st.nextToken();
 
 			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(token, CharPool.EQUAL);
 
 				if ((kvp != null) && (kvp.length > 0)) {
 					String key = kvp[0];

@@ -83,6 +83,7 @@ import com.liferay.util.UniqueList;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -379,21 +380,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		// Layout set branches
 
 		layoutSetBranchLocalService.deleteLayoutSetBranches(
-			group.getGroupId(), true);
+			group.getGroupId(), true, true);
 
 		layoutSetBranchLocalService.deleteLayoutSetBranches(
-			group.getGroupId(), false);
+			group.getGroupId(), false, true);
 
 		// Layout sets
 
+		ServiceContext serviceContext = new ServiceContext();
+
 		try {
-			layoutSetLocalService.deleteLayoutSet(group.getGroupId(), true);
+			layoutSetLocalService.deleteLayoutSet(
+				group.getGroupId(), true, serviceContext);
 		}
 		catch (NoSuchLayoutSetException nslse) {
 		}
 
 		try {
-			layoutSetLocalService.deleteLayoutSet(group.getGroupId(), false);
+			layoutSetLocalService.deleteLayoutSet(
+				group.getGroupId(), false, serviceContext);
 		}
 		catch (NoSuchLayoutSetException nslse) {
 		}
@@ -1144,7 +1149,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_CONTROL_PANEL, false,
-			friendlyURL, serviceContext);
+			friendlyURL, false, serviceContext);
 	}
 
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
@@ -1162,7 +1167,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
+			false, serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -1465,10 +1470,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			resourcePermissionLocalService.setResourcePermissions(
-				group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
-				String.valueOf(group.getGroupId()), role.getRoleId(),
-				actionIds);
+			if (resourceBlockLocalService.isSupported(name)) {
+				resourceBlockLocalService.setGroupScopePermissions(
+					role.getCompanyId(), group.getGroupId(), name,
+					role.getRoleId(), Arrays.asList(actionIds));
+			}
+			else {
+				resourcePermissionLocalService.setResourcePermissions(
+					group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+					String.valueOf(group.getGroupId()), role.getRoleId(),
+					actionIds);
+			}
 		}
 		else {
 			permissionLocalService.setRolePermissions(

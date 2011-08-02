@@ -119,7 +119,9 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		newLayout.setPriority(nextInt());
 
-		newLayout.setLayoutPrototypeId(nextLong());
+		newLayout.setLayoutPrototypeUuid(randomString());
+
+		newLayout.setLayoutPrototypeLinkEnabled(randomBoolean());
 
 		_persistence.update(newLayout, false);
 
@@ -158,8 +160,10 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 			newLayout.getWapColorSchemeId());
 		assertEquals(existingLayout.getCss(), newLayout.getCss());
 		assertEquals(existingLayout.getPriority(), newLayout.getPriority());
-		assertEquals(existingLayout.getLayoutPrototypeId(),
-			newLayout.getLayoutPrototypeId());
+		assertEquals(existingLayout.getLayoutPrototypeUuid(),
+			newLayout.getLayoutPrototypeUuid());
+		assertEquals(existingLayout.getLayoutPrototypeLinkEnabled(),
+			newLayout.getLayoutPrototypeLinkEnabled());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -353,7 +357,9 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		layout.setPriority(nextInt());
 
-		layout.setLayoutPrototypeId(nextLong());
+		layout.setLayoutPrototypeUuid(randomString());
+
+		layout.setLayoutPrototypeLinkEnabled(randomBoolean());
 
 		_persistence.update(layout, false);
 

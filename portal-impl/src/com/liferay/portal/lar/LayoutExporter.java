@@ -653,7 +653,7 @@ public class LayoutExporter {
 						layout, portletId);
 
 				String scopeType = GetterUtil.getString(
-					jxPreferences.getValue("lfr-scope-type", null));
+					jxPreferences.getValue("lfrScopeType", null));
 				String scopeLayoutUuid = GetterUtil.getString(
 					jxPreferences.getValue("lfrScopeLayoutUuid", null));
 
@@ -669,17 +669,12 @@ public class LayoutExporter {
 					else if (scopeType.equals("layout")) {
 						Layout scopeLayout = null;
 
-						try {
-							scopeLayout = LayoutLocalServiceUtil.
-								getLayoutByUuidAndGroupId(
-									scopeLayoutUuid,
-									portletDataContext.getGroupId());
-						}
-						catch (NoSuchLayoutException nsle) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(nsle.getMessage());
-							}
+						scopeLayout = LayoutLocalServiceUtil.
+							fetchLayoutByUuidAndGroupId(
+								scopeLayoutUuid,
+								portletDataContext.getGroupId());
 
+						if (scopeLayout == null) {
 							continue;
 						}
 

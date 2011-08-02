@@ -164,6 +164,16 @@ public class JSONWebServiceActionsManagerImpl
 	private int _getJSONWebServiceActionConfigIndex(
 		String path, String method, String[] parameterNames) {
 
+		int hint = -1;
+
+		int dotIndex = path.indexOf(CharPool.PERIOD);
+
+		if (dotIndex != -1) {
+			hint = GetterUtil.getInteger(path.substring(dotIndex + 1));
+
+			path = path.substring(0, dotIndex);
+		}
+
 		int firstIndex = _pathBinarySearch.findFirst(path);
 
 		if (firstIndex < 0) {
@@ -198,11 +208,18 @@ public class JSONWebServiceActionsManagerImpl
 			String[] jsonWebServiceActionConfigParameterNames =
 				jsonWebServiceActionConfig.getParameterNames();
 
+			int methodArgumentsCount =
+				jsonWebServiceActionConfigParameterNames.length;
+
+			if ((hint != -1) && (methodArgumentsCount != hint)) {
+				continue;
+			}
+
 			int count = _countMatchedElements(
 				parameterNames, jsonWebServiceActionConfigParameterNames);
 
 			if (count > max) {
-				if (count >= jsonWebServiceActionConfigParameterNames.length) {
+				if ((hint != -1) || (count >= methodArgumentsCount)) {
 					max = count;
 
 					index = i;

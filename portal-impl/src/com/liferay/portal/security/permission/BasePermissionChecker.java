@@ -23,6 +23,9 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -30,14 +33,34 @@ import javax.portlet.PortletRequest;
  */
 public abstract class BasePermissionChecker implements PermissionChecker {
 
+	@Override
 	public abstract PermissionChecker clone();
 
 	public long getCompanyId() {
 		return user.getCompanyId();
 	}
 
+	public List<Long> getGuestResourceBlockIds(
+		long companyId, long groupId, String name, String actionId) {
+
+		return Collections.emptyList();
+	}
+
+	public List<Long> getOwnerResourceBlockIds(
+		long companyId, long groupId, String name, String actionId) {
+
+		return Collections.emptyList();
+	}
+
 	public long getOwnerRoleId() {
 		return ownerRole.getRoleId();
+	}
+
+	public List<Long> getResourceBlockIds(
+		long companyId, long groupId, long userId, String name,
+		String actionId) {
+
+		return Collections.emptyList();
 	}
 
 	public long[] getRoleIds(long userId, long groupId) {

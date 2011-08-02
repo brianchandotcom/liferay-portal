@@ -16,9 +16,12 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,6 +39,7 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
@@ -307,6 +311,31 @@ public class PortletAction extends Action {
 		else {
 			return false;
 		}
+	}
+
+	protected void writeJSON(
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object json)
+		throws IOException {
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+		ServletResponseUtil.write(response, json.toString());
+
+		setForward(portletRequest, ActionConstants.COMMON_NULL);
+	}
+
+	protected void writeJSON(
+			PortletRequest portletRequest, MimeResponse mimeResponse,
+			Object json)
+		throws IOException {
+
+		mimeResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+		PortletResponseUtil.write(mimeResponse, json.toString());
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;

@@ -4534,10 +4534,16 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = ServiceComponentPersistence.class)
@@ -5027,6 +5033,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "organization.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "organization.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(organization.name IS NULL OR organization.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "organization.organizationId";
 	private static final String _FILTER_SQL_SELECT_ORGANIZATION_WHERE = "SELECT DISTINCT {organization.*} FROM Organization_ organization WHERE ";
 	private static final String _FILTER_SQL_SELECT_ORGANIZATION_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {Organization_.*} FROM (SELECT DISTINCT organization.organizationId FROM Organization_ organization WHERE ";
@@ -5035,7 +5042,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	private static final String _FILTER_SQL_COUNT_ORGANIZATION_WHERE = "SELECT COUNT(DISTINCT organization.organizationId) AS COUNT_VALUE FROM Organization_ organization WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "organization";
 	private static final String _FILTER_ENTITY_TABLE = "Organization_";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "organization.organizationId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "organization.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Organization_.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Organization exists with the primary key ";

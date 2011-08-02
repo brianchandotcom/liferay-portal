@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.TestCase;
 
 /**
  * @author Alexander Chow
+ * @author Shuyang Zhou
  */
 public class StringUtilTest extends TestCase {
 
@@ -136,6 +137,56 @@ public class StringUtilTest extends TestCase {
 			new String[] {"Aloha", "ALOHA"});
 
 		assertEquals(expected, actual);
+	}
+
+	public void testSplitLines() {
+		String singleLine = "abcdefg";
+
+		String[] lines = StringUtil.splitLines(singleLine);
+
+		assertEquals(1, lines.length);
+		assertEquals(singleLine, lines[0]);
+
+		String splitByReturn = "abcd\refg\rhijk\rlmn\r";
+
+		lines = StringUtil.splitLines(splitByReturn);
+
+		assertEquals(4, lines.length);
+		assertEquals("abcd", lines[0]);
+		assertEquals("efg", lines[1]);
+		assertEquals("hijk", lines[2]);
+		assertEquals("lmn", lines[3]);
+
+		String splitByNewLine = "abcd\nefg\nhijk\nlmn\n";
+
+		lines = StringUtil.splitLines(splitByNewLine);
+
+		assertEquals(4, lines.length);
+		assertEquals("abcd", lines[0]);
+		assertEquals("efg", lines[1]);
+		assertEquals("hijk", lines[2]);
+		assertEquals("lmn", lines[3]);
+
+		String splitByBoth = "abcd\r\nefg\r\nhijk\r\nlmn\r\n";
+
+		lines = StringUtil.splitLines(splitByBoth);
+
+		assertEquals(4, lines.length);
+		assertEquals("abcd", lines[0]);
+		assertEquals("efg", lines[1]);
+		assertEquals("hijk", lines[2]);
+		assertEquals("lmn", lines[3]);
+
+		String splitByMix = "abcd\refg\nhijk\n\rlmn\r\n";
+
+		lines = StringUtil.splitLines(splitByMix);
+
+		assertEquals(5, lines.length);
+		assertEquals("abcd", lines[0]);
+		assertEquals("efg", lines[1]);
+		assertEquals("hijk", lines[2]);
+		assertEquals("", lines[3]);
+		assertEquals("lmn", lines[4]);
 	}
 
 	public void testStripChar() {

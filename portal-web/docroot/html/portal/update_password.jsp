@@ -19,7 +19,7 @@
 <%
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-String ticket = ParamUtil.getString(request, "ticket");
+String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_password" %>' method="post" name="fm">
@@ -28,7 +28,7 @@ String ticket = ParamUtil.getString(request, "ticket");
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value='<%= themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId() %>' />
-	<aui:input name="ticket" type="hidden" value="<%= ticket %>" />
+	<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
 
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="please-set-a-new-password" />

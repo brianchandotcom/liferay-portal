@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.PermissionedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 <#if sessionTypeName == "Local">
@@ -43,7 +44,18 @@ import com.liferay.portal.service.PersistedModelLocalService;
 </#if>
 
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})
-public interface ${entity.name}${sessionTypeName}Service <#if (sessionTypeName == "Local") && entity.hasColumns()>extends PersistedModelLocalService</#if> {
+public interface ${entity.name}${sessionTypeName}Service
+	<#if (sessionTypeName == "Local") && entity.hasColumns()>
+		extends
+
+		<#if entity.isPermissionedModel()>
+			PermissionedModelLocalService
+		<#else>
+			PersistedModelLocalService
+		</#if>
+	</#if>
+
+	{
 
 	/*
 	 * NOTE FOR DEVELOPERS:

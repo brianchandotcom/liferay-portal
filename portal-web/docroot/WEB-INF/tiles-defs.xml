@@ -931,10 +931,6 @@
 		<put name="portlet_content" value="/portlet/my_account/view.jsp" />
 	</definition>
 
-	<!-- My Places -->
-
-	<definition name="portlet.my_places.view" path="/portlet/my_places/view.jsp" />
-
 	<!-- My Sites -->
 
 	<definition name="portlet.my_sites" extends="portlet" />
@@ -1470,7 +1466,9 @@
 
 	<!-- Staging Bar -->
 
-	<definition name="portlet.staging_bar.edit_layout_set_branch" path="/portlet/staging_bar/add_layout_set_branch.jsp" />
+	<definition name="portlet.staging_bar.edit_layout_branch" path="/portlet/staging_bar/edit_layout_branch.jsp" />
+
+	<definition name="portlet.staging_bar.edit_layout_set_branch" path="/portlet/staging_bar/edit_layout_set_branch.jsp" />
 
 	<definition name="portlet.staging_bar.error" path="/portlet/staging_bar/error.jsp" />
 
@@ -1482,9 +1480,9 @@
 
 	<definition name="portlet.staging_bar.view_layout_revisions" path="/portlet/staging_bar/view_layout_revisions.jsp" />
 
-	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
+	<definition name="portlet.staging_bar.view_layout_branches" path="/portlet/staging_bar/view_layout_branches.jsp" />
 
-	<definition name="portlet.staging_bar.view_root_layout_revisions" path="/portlet/staging_bar/view_root_layout_revisions.jsp" />
+	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
 
 	<!-- Update Manager -->
 

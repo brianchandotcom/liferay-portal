@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,22 +31,19 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public void addFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, ServiceContext serviceContext, byte[] bytes) {
+		long companyId, long repositoryId, String fileName, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void addFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, ServiceContext serviceContext, File file) {
+		long companyId, long repositoryId, String fileName, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void addFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, ServiceContext serviceContext, InputStream is) {
+		long companyId, long repositoryId, String fileName, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -57,27 +53,25 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public void copyFileVersion(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String fromVersionNumber, String toVersionNumber,
-		String sourceFileName, ServiceContext serviceContext) {
+		long companyId, long repositoryId, String fileName,
+		String fromVersionNumber, String toVersionNumber,
+		String sourceFileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void deleteDirectory(
-		long companyId, String portletId, long repositoryId, String dirName) {
+		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}
 
-	public void deleteFile(
-		long companyId, String portletId, long repositoryId, String fileName) {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		throw new UnsupportedOperationException();
 	}
 
 	public void deleteFile(
-		long companyId, String portletId, long repositoryId, String fileName,
+		long companyId, long repositoryId, String fileName,
 		String versionNumber) {
 
 		throw new UnsupportedOperationException();
@@ -139,47 +133,44 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
+		long companyId, long repositoryId,
 		long newRepositoryId, String fileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String newFileName) {
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, byte[] bytes) {
+		long companyId, long repositoryId, String fileName,
+		String versionNumber, String sourceFileName, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, File file) {
+		long companyId, long repositoryId, String fileName,
+		String versionNumber, String sourceFileName, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String versionNumber, String sourceFileName,
-		ServiceContext serviceContext, InputStream is) {
+		long companyId, long repositoryId, String fileName,
+		String versionNumber, String sourceFileName, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFileVersion(
-		long companyId, String portletId, long groupId, long repositoryId,
-		String fileName, String fromVersionNumber, String toVersionNumber,
-		String sourceFileName, ServiceContext serviceContext) {
+		long companyId, long repositoryId, String fileName,
+		String fromVersionNumber, String toVersionNumber,
+		String sourceFileName) {
 
 		throw new UnsupportedOperationException();
 	}

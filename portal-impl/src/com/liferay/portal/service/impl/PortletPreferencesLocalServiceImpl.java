@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -36,12 +35,15 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesThreadLocal;
 
+import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class PortletPreferencesLocalServiceImpl
 	extends PortletPreferencesLocalServiceBaseImpl {
@@ -323,13 +325,13 @@ public class PortletPreferencesLocalServiceImpl
 			String portletId, String defaultPreferences)
 		throws SystemException {
 
-		Map<String, BasePreferencesImpl> preferencesPool =
+		Map<Serializable, BasePreferencesImpl> preferencesPool =
 			PortletPreferencesLocalUtil.getPreferencesPool(ownerId, ownerType);
 
-		String key = encodeKey(plid, portletId);
+		PreferencesKey preferencesKey = new PreferencesKey(plid, portletId);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)preferencesPool.get(key);
+			(PortletPreferencesImpl)preferencesPool.get(preferencesKey);
 
 		if (portletPreferencesImpl == null) {
 			Portlet portlet = portletLocalService.getPortletById(
@@ -359,19 +361,45 @@ public class PortletPreferencesLocalServiceImpl
 					portletPreferences.getPreferences());
 
 			synchronized (preferencesPool) {
-				preferencesPool.put(key, portletPreferencesImpl);
+				preferencesPool.put(preferencesKey, portletPreferencesImpl);
 			}
 		}
 
 		return (PortletPreferencesImpl)portletPreferencesImpl.clone();
 	}
 
-	protected String encodeKey(long plid, String portletId) {
-		return StringUtil.toHexString(plid).concat(StringPool.POUND).concat(
-			portletId);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesLocalServiceImpl.class);
+
+	private static class PreferencesKey implements Serializable {
+
+		public PreferencesKey(long plid, String portletId) {
+			_plid = plid;
+			_portletId = portletId;
+		}
+
+		public boolean equals(Object obj) {
+			PreferencesKey preferencesKey = (PreferencesKey)obj;
+
+			if ((preferencesKey._plid == _plid) &&
+				(preferencesKey._portletId.equals(_portletId))) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public int hashCode() {
+			return (int)(_plid * 11 + _portletId.hashCode());
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _plid;
+		private final String _portletId;
+
+	}
 
 }

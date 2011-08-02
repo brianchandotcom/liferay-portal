@@ -308,3 +308,7 @@
 		}
 	}
 }
+
+.social-boomarks-options {
+	margin-left: 2em;
+}

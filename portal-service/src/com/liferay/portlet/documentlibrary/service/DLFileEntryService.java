@@ -45,8 +45,10 @@ public interface DLFileEntryService {
 	 */
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		long groupId, long repositoryId, long folderId,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -189,7 +191,9 @@ public interface DLFileEntryService {
 		long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, java.io.InputStream is, long size,
+		boolean majorVersion, long fileEntryTypeId,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

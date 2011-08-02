@@ -4,9 +4,9 @@
 	<structure>
 		<name><![CDATA[Dublin Core Metadata Iniative]]></name>
 		<description><![CDATA[Dublin Core Metadata Iniative]]></description>
-		<root>
+		<root available-locales="en_US" default-locale="en_US">
 			<dynamic-element dataType="string" name="contributor" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Contributor]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -14,7 +14,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="coverage" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Coverage]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -22,7 +22,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="creator" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Creator]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -30,7 +30,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="long" name="date" type="ddm-date">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -38,7 +38,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="description" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -46,7 +46,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="identifier" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Identifier]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -54,7 +54,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="language" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Language]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -62,7 +62,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="publisher" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Publisher]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -70,7 +70,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="relation" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Relation]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -78,7 +78,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="rights" type="textarea">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Rights]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -86,7 +86,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="source" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Source]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -94,7 +94,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="subject" type="textarea">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Subject]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -106,9 +106,9 @@
 	<structure>
 		<name><![CDATA[Default Image's Metadata Set]]></name>
 		<description><![CDATA[Default Image's Metadata Set]]></description>
-		<root>
+		<root available-locales="en_US" default-locale="en_US">
 			<dynamic-element dataType="string" name="author" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Author]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -116,7 +116,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="license" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[License]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -124,7 +124,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Location]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -136,9 +136,9 @@
 	<structure>
 		<name><![CDATA[Default Videos's Metadata Set]]></name>
 		<description><![CDATA[Default Videos's Metadata Set]]></description>
-		<root>
+		<root available-locales="en_US" default-locale="en_US">
 			<dynamic-element dataType="string" name="author" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Author]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -146,7 +146,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="license" type="textarea">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[License]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -154,7 +154,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Location]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -162,7 +162,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="runningTime" type="textarea">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Running Time]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -170,7 +170,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="subtitles" type="textarea">
-				<meta-data>
+				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Subtitles]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>

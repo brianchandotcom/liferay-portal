@@ -72,6 +72,7 @@ Liferay.Service.registerClass(
 		getUserGroup: true,
 		getUserGroupsGroups: true,
 		getUserOrganizationsGroups: true,
+		getUserSites: true,
 		getUserPlaces: true,
 		hasUserGroup: true,
 		search: true,
@@ -110,6 +111,15 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "LayoutBranch",
+	{
+		addLayoutBranch: true,
+		deleteLayoutBranch: true,
+		updateLayoutBranch: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutPrototype",
 	{
 		addLayoutPrototype: true,
@@ -123,8 +133,7 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutRevision",
 	{
-		addLayoutRevision: true,
-		deleteLayoutRevisions: true
+		addLayoutRevision: true
 	}
 );
 
@@ -317,6 +326,22 @@ Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Resource",
 	{
 		getResource: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.Portal, "ResourceBlock",
+	{
+		addCompanyScopePermission: true,
+		addGroupScopePermission: true,
+		addIndividualScopePermission: true,
+		removeAllGroupScopePermissions: true,
+		removeCompanyScopePermission: true,
+		removeGroupScopePermission: true,
+		removeIndividualScopePermission: true,
+		setCompanyScopePermissions: true,
+		setGroupScopePermissions: true,
+		setIndividualScopePermissions: true
 	}
 );
 
@@ -653,6 +678,7 @@ Liferay.Service.registerClass(
 		deleteFileEntryByTitle: true,
 		deleteFileShortcut: true,
 		deleteFolder: true,
+		deleteTempFileEntry: true,
 		getFileEntries: true,
 		getFileEntriesAndFileShortcutsCount: true,
 		getFileEntriesCount: true,
@@ -668,6 +694,7 @@ Liferay.Service.registerClass(
 		getGroupFileEntriesCount: true,
 		getMountFolders: true,
 		getSubfolderIds: true,
+		getTempFileEntryNames: true,
 		lockFolder: true,
 		moveFileEntry: true,
 		moveFolder: true,
@@ -1164,11 +1191,13 @@ Liferay.Service.registerClass(
 		changeParent: true,
 		deletePage: true,
 		deletePageAttachment: true,
+		deleteTempPageAttachment: true,
 		getDraftPage: true,
 		getNodePages: true,
 		getNodePagesRSS: true,
 		getPage: true,
 		getPagesRSS: true,
+		getTempPageAttachmentNames: true,
 		movePage: true,
 		revertPage: true,
 		subscribePage: true,

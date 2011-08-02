@@ -14,12 +14,12 @@
 
 package com.liferay.portal.sharepoint.methods;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointException;
 import com.liferay.portal.sharepoint.SharepointRequest;
 import com.liferay.portal.sharepoint.SharepointUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.List;
 

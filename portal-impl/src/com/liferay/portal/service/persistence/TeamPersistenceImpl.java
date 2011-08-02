@@ -2693,10 +2693,16 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = ServiceComponentPersistence.class)
@@ -3095,6 +3101,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "team.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "team.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(team.name IS NULL OR team.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "team.teamId";
 	private static final String _FILTER_SQL_SELECT_TEAM_WHERE = "SELECT DISTINCT {team.*} FROM Team team WHERE ";
 	private static final String _FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ";
@@ -3103,7 +3110,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _FILTER_SQL_COUNT_TEAM_WHERE = "SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "team";
 	private static final String _FILTER_ENTITY_TABLE = "Team";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "team.teamId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "team.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Team.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Team exists with the primary key ";

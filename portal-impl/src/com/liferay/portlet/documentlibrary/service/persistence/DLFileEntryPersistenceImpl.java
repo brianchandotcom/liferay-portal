@@ -8229,6 +8229,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		return sql;
 	}
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_WHERE = "SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ";
@@ -8237,7 +8238,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	private static final String _FILTER_SQL_COUNT_DLFILEENTRY_WHERE = "SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "dlFileEntry";
 	private static final String _FILTER_ENTITY_TABLE = "DLFileEntry";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntry.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFileEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntry exists with the primary key ";

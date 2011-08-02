@@ -56,7 +56,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 public class DLFolderServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
 		HttpPrincipal httpPrincipal, long groupId, long repositoryId,
-		long parentFolderId, java.lang.String name,
+		boolean mountPoint, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -66,8 +66,8 @@ public class DLFolderServiceHttp {
 					"addFolder", _addFolderParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					repositoryId, parentFolderId, name, description,
-					serviceContext);
+					repositoryId, mountPoint, parentFolderId, name,
+					description, serviceContext);
 
 			Object returnObj = null;
 
@@ -705,8 +705,7 @@ public class DLFolderServiceHttp {
 
 	public static boolean isFolderLocked(HttpPrincipal httpPrincipal,
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
 					"isFolderLocked", _isFolderLockedParameterTypes19);
@@ -719,10 +718,6 @@ public class DLFolderServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
@@ -957,7 +952,9 @@ public class DLFolderServiceHttp {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, java.lang.String name,
-		java.lang.String description,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -966,7 +963,8 @@ public class DLFolderServiceHttp {
 					"updateFolder", _updateFolderParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					folderId, name, description, serviceContext);
+					folderId, name, description, defaultFileEntryTypeId,
+					fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 
 			Object returnObj = null;
 
@@ -1034,8 +1032,8 @@ public class DLFolderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DLFolderServiceHttp.class);
 	private static final Class<?>[] _addFolderParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			long.class, long.class, boolean.class, long.class,
+			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFolderParameterTypes1 = new Class[] {
@@ -1119,6 +1117,7 @@ public class DLFolderServiceHttp {
 		};
 	private static final Class<?>[] _updateFolderParameterTypes26 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, java.util.List.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyInheritableLockParameterTypes27 = new Class[] {

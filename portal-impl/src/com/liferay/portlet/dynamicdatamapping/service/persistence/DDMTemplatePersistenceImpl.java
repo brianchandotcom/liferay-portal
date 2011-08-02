@@ -3906,6 +3906,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_S_T_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_S_T_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_S_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmTemplate.templateId";
 	private static final String _FILTER_SQL_SELECT_DDMTEMPLATE_WHERE = "SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ";
 	private static final String _FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ";
@@ -3914,7 +3915,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FILTER_SQL_COUNT_DDMTEMPLATE_WHERE = "SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "ddmTemplate";
 	private static final String _FILTER_ENTITY_TABLE = "DDMTemplate";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmTemplate.templateId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmTemplate.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMTemplate.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMTemplate exists with the primary key ";

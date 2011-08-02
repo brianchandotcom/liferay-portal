@@ -14,11 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-String id = namespace + GetterUtil.getString((String)request.getAttribute("aui:panel:id"));
-%>
+<%@ include file="/html/taglib/aui/panel/init.jsp" %>
 
 <div id="<%= id %>"></div>
 

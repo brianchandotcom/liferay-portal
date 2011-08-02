@@ -150,20 +150,20 @@ pageContext.setAttribute("portletURL", portletURL);
 		if (rowURL != null) {
 			sb.append("<a href=\"");
 			sb.append(rowURL.toString());
-			sb.append("\" target=\"_blank\"><b>");
+			sb.append("\" target=\"_blank\"><strong>");
 			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
-			sb.append("</b></a>");
+			sb.append("</strong></a>");
 		}
 		else {
-			sb.append("<b>");
+			sb.append("<strong>");
 			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
-			sb.append("</b>");
+			sb.append("</strong>");
 		}
 
 		if (!tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription())) {
-			sb.append("<br /><i>");
+			sb.append("<br /><em>");
 			sb.append(group.getDescription());
-			sb.append("</i>");
+			sb.append("</em>");
 		}
 
 		row.addText(sb.toString());

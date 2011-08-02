@@ -56,6 +56,8 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 		destroy: function() {
 			tinyMCE.editors['<%= name %>'].destroy();
+
+			delete window['<%= name %>'];
 		},
 
 		focus: function() {

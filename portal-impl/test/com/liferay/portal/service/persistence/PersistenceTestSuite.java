@@ -153,9 +153,12 @@ public class PersistenceTestSuite extends TestSuite {
 		testSuite.addTestSuite(RepositoryEntryPersistenceTest.class);
 		testSuite.addTestSuite(RepositoryPersistenceTest.class);
 		testSuite.addTestSuite(ResourceActionPersistenceTest.class);
+		testSuite.addTestSuite(ResourceBlockPermissionPersistenceTest.class);
+		testSuite.addTestSuite(ResourceBlockPersistenceTest.class);
 		testSuite.addTestSuite(ResourceCodePersistenceTest.class);
 		testSuite.addTestSuite(ResourcePermissionPersistenceTest.class);
 		testSuite.addTestSuite(ResourcePersistenceTest.class);
+		testSuite.addTestSuite(ResourceTypePermissionPersistenceTest.class);
 		testSuite.addTestSuite(RolePersistenceTest.class);
 		testSuite.addTestSuite(ServiceComponentPersistenceTest.class);
 		testSuite.addTestSuite(ShardPersistenceTest.class);

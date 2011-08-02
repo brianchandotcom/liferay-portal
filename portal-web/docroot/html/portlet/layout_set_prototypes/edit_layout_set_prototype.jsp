@@ -31,6 +31,9 @@ if (layoutSetPrototype == null) {
 
 long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "layoutSetPrototypeId");
 
+boolean allowModifications = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("allowModifications"), true);
+boolean allowLayoutAdditions = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("allowLayoutAdditions"), true);
+
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
@@ -61,10 +64,14 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		<aui:input inlineLabel="left" name="active" />
 
+		<aui:input name="allowModifications" type="checkbox" value="<%= allowModifications %>" />
+
+		<aui:input name="allowLayoutAdditions" type="checkbox" value="<%= allowLayoutAdditions %>" />
+
 		<c:if test="<%= !layoutSetPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">
-				<liferay-portlet:actionURL var="viewURL" portletName="<%= PortletKeys.MY_PLACES %>">
-					<portlet:param name="struts_action" value="/my_places/view" />
+				<liferay-portlet:actionURL var="viewURL" portletName="<%= PortletKeys.MY_SITES %>">
+					<portlet:param name="struts_action" value="/my_sites/view" />
 					<portlet:param name="groupId" value="<%= String.valueOf(layoutSetPrototype.getGroup().getGroupId()) %>" />
 					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:actionURL>

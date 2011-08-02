@@ -16,6 +16,7 @@ package com.liferay.portal.sharepoint;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.sharepoint.dws.ResponseElement;
 import com.liferay.portal.sharepoint.dws.RoleResponseElement;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.List;
 

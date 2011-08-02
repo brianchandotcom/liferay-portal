@@ -63,6 +63,13 @@ public class DLFileEntryMetadataLocalServiceImpl
 			ddmStructureId, fileVersionId);
 	}
 
+	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
+		throws SystemException {
+
+		return dlFileEntryMetadataPersistence.countByF_V(
+			fileEntryId, fileVersionId);
+	}
+
 	public void updateFileEntryMetadata(
 			long companyId, List<DDMStructure> ddmStructures,
 			long fileEntryTypeId, long fileEntryId, long fileVersionId,

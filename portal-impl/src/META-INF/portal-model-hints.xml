@@ -261,7 +261,8 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="priority" type="int" />
-		<field name="layoutPrototypeId" type="long" />
+		<field name="layoutPrototypeUuid" type="String" />
+		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutBranch">
 		<field name="LayoutBranchId" type="long" />
@@ -271,11 +272,16 @@
 		<field name="userName" type="String" />
 		<field name="layoutSetBranchId" type="long" />
 		<field name="plid" type="long" />
-		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="master" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutPrototype">
+		<field name="uuid" type="String" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="name" type="String" localized="true">
@@ -351,7 +357,8 @@
 		<field name="settings" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="layoutSetPrototypeId" type="long" />
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutSetBranch">
 		<field name="layoutSetBranchId" type="long" />
@@ -674,6 +681,20 @@
 		<field name="actionId" type="String" />
 		<field name="bitwiseValue" type="long" />
 	</model>
+	<model name="com.liferay.portal.model.ResourceBlock">
+		<field name="resourceBlockId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="permissionsHash" type="String" />
+		<field name="referenceCount" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceBlockPermission">
+		<field name="resourceBlockPermissionId" type="long" />
+		<field name="resourceBlockId" type="long" />
+		<field name="roleId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
 	<model name="com.liferay.portal.model.ResourceCode">
 		<field name="codeId" type="long" />
 		<field name="companyId" type="long" />
@@ -694,6 +715,14 @@
 		</field>
 		<field name="roleId" type="long" />
 		<field name="ownerId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceTypePermission">
+		<field name="resourceTypePermissionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="roleId" type="long" />
 		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.Role">
@@ -1188,6 +1217,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="resourceBlockId" type="long" />
 		<field name="folderId" type="long" />
 		<field name="name" type="String">
 			<hint name="max-length">255</hint>
@@ -1214,6 +1244,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="resourceBlockId" type="long" />
 		<field name="parentFolderId" type="long" />
 		<field name="name" type="String">
 			<validator name="required" />
@@ -1970,7 +2001,11 @@
 	</model>
 	<model name="com.liferay.portlet.polls.model.PollsVote">
 		<field name="voteId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="questionId" type="long" />
 		<field name="choiceId" type="long" />
 		<field name="voteDate" type="Date" />
@@ -2466,7 +2501,6 @@
 			<hint name="display-height">475</hint>
 			<hint name="display-width">99%</hint>
 			<hint name="check-tab">true</hint>
-			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="summary" type="String">
 			<hint-collection name="TEXTAREA" />

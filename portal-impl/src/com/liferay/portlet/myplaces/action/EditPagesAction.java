@@ -76,13 +76,14 @@ public class EditPagesAction extends PortletAction {
 			String type = LayoutConstants.TYPE_PORTLET;
 			boolean hidden = false;
 			String friendlyURL = StringPool.BLANK;
+			boolean locked = false;
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
-				description, type, hidden, friendlyURL, serviceContext);
+				description, type, hidden, friendlyURL, locked, serviceContext);
 		}
 
 		if (layout != null) {

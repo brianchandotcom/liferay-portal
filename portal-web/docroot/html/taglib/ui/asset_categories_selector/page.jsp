@@ -56,8 +56,8 @@ if (Validator.isNotNull(className)) {
 		if (Validator.isNotNull(className) && (classPK > 0)) {
 			List<AssetCategory> categories = AssetCategoryLocalServiceUtil.getCategories(className, classPK);
 
-			curCategoryIds = ListUtil.toString(categories, "categoryId");
-			curCategoryNames = ListUtil.toString(categories, "name");
+			curCategoryIds = ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+			curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);
 		}
 
 		String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());

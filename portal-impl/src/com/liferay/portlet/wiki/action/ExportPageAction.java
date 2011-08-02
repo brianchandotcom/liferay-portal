@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.action;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -37,7 +38,6 @@ import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

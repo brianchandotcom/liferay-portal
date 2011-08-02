@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.nio.ByteBuffer;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Connor McKay
  */
 public interface Digester {
 
@@ -28,19 +31,37 @@ public interface Digester {
 
 	public static final String SHA = "SHA";
 
+	public static final String SHA_1 = "SHA-1";
+
+	public String digest(ByteBuffer byteBuffer);
+
 	public String digest(String text);
+
+	public String digest(String algorithm, ByteBuffer byteBuffer);
 
 	public String digest(String algorithm, String... text);
 
+	public String digestBase64(ByteBuffer byteBuffer);
+
 	public String digestBase64(String text);
+
+	public String digestBase64(String algorithm, ByteBuffer byteBuffer);
 
 	public String digestBase64(String algorithm, String... text);
 
+	public String digestHex(ByteBuffer byteBuffer);
+
 	public String digestHex(String text);
+
+	public String digestHex(String algorithm, ByteBuffer byteBuffer);
 
 	public String digestHex(String algorithm, String... text);
 
+	public byte[] digestRaw(ByteBuffer byteBuffer);
+
 	public byte[] digestRaw(String text);
+
+	public byte[] digestRaw(String algorithm, ByteBuffer byteBuffer);
 
 	public byte[] digestRaw(String algorithm, String... text);
 

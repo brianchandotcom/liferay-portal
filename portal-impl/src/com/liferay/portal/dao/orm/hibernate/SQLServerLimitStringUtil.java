@@ -89,7 +89,7 @@ public class SQLServerLimitStringUtil {
 		StringBundler innerOrderBySB = new StringBundler();
 		StringBundler outerOrderBySB = new StringBundler();
 
-		String[] orderByColumns = StringUtil.split(orderBy, StringPool.COMMA);
+		String[] orderByColumns = StringUtil.split(orderBy, CharPool.COMMA);
 
 		for (String orderByColumn : orderByColumns) {
 			orderByColumn = orderByColumn.trim();

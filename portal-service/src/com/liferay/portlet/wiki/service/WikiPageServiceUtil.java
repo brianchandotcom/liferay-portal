@@ -67,6 +67,23 @@ public class WikiPageServiceUtil {
 		getService().addPageAttachments(nodeId, title, files);
 	}
 
+	public static void addPageAttachment(long nodeId, java.lang.String title,
+		java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addPageAttachment(nodeId, title, fileName, bytes);
+	}
+
+	public static java.lang.String addTempPageAttachment(long nodeId,
+		java.lang.String fileName, java.lang.String tempFolderName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.IOException {
+		return getService()
+				   .addTempPageAttachment(nodeId, fileName, tempFolderName, file);
+	}
+
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -93,6 +110,13 @@ public class WikiPageServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deletePageAttachment(nodeId, title, fileName);
+	}
+
+	public static void deleteTempPageAttachment(long nodeId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTempPageAttachment(nodeId, fileName, tempFolderName);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage getDraftPage(
@@ -149,6 +173,13 @@ public class WikiPageServiceUtil {
 		return getService()
 				   .getPagesRSS(companyId, nodeId, title, max, type, version,
 			displayStyle, feedURL, entryURL, locale);
+	}
+
+	public static java.lang.String[] getTempPageAttachmentNames(long nodeId,
+		java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTempPageAttachmentNames(nodeId, tempFolderName);
 	}
 
 	public static void movePage(long nodeId, java.lang.String title,

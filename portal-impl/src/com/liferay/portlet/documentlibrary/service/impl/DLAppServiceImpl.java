@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -35,12 +37,14 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -76,9 +80,9 @@ import java.util.List;
 public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, byte[] bytes,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			byte[] bytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (bytes == null) {
@@ -88,14 +92,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 
 		return addFileEntry(
-			repositoryId, folderId, mimeType, title, description, changeLog, is,
-			bytes.length, serviceContext);
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, bytes.length, serviceContext);
 	}
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -111,8 +115,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 
 			return addFileEntry(
-				repositoryId, folderId, mimeType, title, description, changeLog,
-				is, size, serviceContext);
+				repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, is, size, serviceContext);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new FileSizeException();
@@ -120,9 +124,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	public FileEntry addFileEntry(
-			long repositoryId, long folderId, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (is == null) {
@@ -133,8 +137,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		FileEntry fileEntry = repository.addFileEntry(
-			folderId, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			is, size, serviceContext);
 
 		DLProcessorRegistryUtil.trigger(fileEntry);
 
@@ -159,6 +163,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repository.addFolder(
 			parentFolderId, name, description, serviceContext);
+	}
+
+	public String addTempFileEntry(
+			long groupId, long folderId, String fileName, String tempFolderName,
+			File file)
+		throws IOException, PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);
+
+		return TempFileUtil.addTempFile(
+			getUserId(), fileName, tempFolderName, file);
 	}
 
 	public void cancelCheckOut(long fileEntryId)
@@ -260,6 +276,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		repository.deleteFolder(parentFolderId, name);
+	}
+
+	public void deleteTempFileEntry(
+			long groupId, long folderId, String fileName, String tempFolderName)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);
+
+		TempFileUtil.deleteTempFile(getUserId(), fileName, tempFolderName);
 	}
 
 	public List<FileEntry> getFileEntries(long repositoryId, long folderId)
@@ -643,6 +669,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getSubfolderIds(folderId, recurse);
+	}
+
+	public String[] getTempFileEntryNames(
+			long groupId, long folderId, String tempFolderName)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);
+
+		return TempFileUtil.getTempFileEntryNames(getUserId(), tempFolderName);
 	}
 
 	public Lock lockFolder(long repositoryId, long folderId)

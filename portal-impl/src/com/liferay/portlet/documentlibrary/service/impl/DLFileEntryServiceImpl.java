@@ -23,17 +23,20 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,17 +45,20 @@ import java.util.List;
 public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	public DLFileEntry addFileEntry(
-			long groupId, long repositoryId, long folderId, String mimeType,
-			String title, String description, String changeLog, InputStream is,
-			long size, ServiceContext serviceContext)
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, Fields> fieldsMap, InputStream is, long size,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);
 
 		return dlFileEntryLocalService.addFileEntry(
-			getUserId(), groupId, repositoryId, folderId, mimeType, title,
-			description, changeLog, is, size, serviceContext);
+			getUserId(), groupId, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, fileEntryTypeId,
+			fieldsMap, is, size, serviceContext);
 	}
 
 	public void cancelCheckOut(long fileEntryId)
@@ -129,17 +135,31 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
 
+		String sourceFileName = "A." + dlFileEntry.getExtension();
 		InputStream inputStream = DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getFolderId(),
 			dlFileEntry.getName());
 
-		serviceContext.setAttribute(
-			"sourceFileName", "A." + dlFileEntry.getExtension());
+		DLFileEntry newDlFileEntry = addFileEntry(
+			groupId, repositoryId, destFolderId, sourceFileName,
+			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
+			dlFileEntry.getDescription(), null,
+			dlFileEntry.getFileEntryTypeId(), null, inputStream,
+			dlFileEntry.getSize(), serviceContext);
 
-		return addFileEntry(
-			groupId, repositoryId, destFolderId, dlFileEntry.getMimeType(),
-			dlFileEntry.getTitle(), dlFileEntry.getDescription(), null,
-			inputStream, dlFileEntry.getSize(), serviceContext);
+		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
+			fileEntryId, dlFileEntry.getVersion());
+
+		DLFileVersion newDlFileVersion =
+			dlFileVersionLocalService.getFileVersion(
+				newDlFileEntry.getFileEntryId(), newDlFileEntry.getVersion());
+
+		dlFileEntryLocalService.copyFileEntryMetadata(
+			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
+			fileEntryId, newDlFileVersion.getFileVersionId(),
+			dlFileVersion.getFileVersionId(), serviceContext);
+
+		return newDlFileEntry;
 	}
 
 	public void deleteFileEntry(long fileEntryId)
@@ -375,7 +395,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public DLFileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
+			boolean majorVersion, long fileEntryTypeId,
+			Map<String, Fields> fieldsMap,  InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -384,7 +405,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, is, size, serviceContext);
+			description, changeLog, majorVersion, fileEntryTypeId, fieldsMap,
+			is, size, serviceContext);
 	}
 
 	public boolean verifyFileEntryCheckOut(long fileEntryId, String lockUuid)

@@ -107,7 +107,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long parentLayoutId, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			String type, boolean hidden, String friendlyURL,
+			String type, boolean hidden, String friendlyURL, boolean locked,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -149,6 +149,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setHidden(hidden);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
+
+		if (locked) {
+			UnicodeProperties typeSettingsProperties =
+				layout.getTypeSettingsProperties();
+
+			typeSettingsProperties.put("locked", String.valueOf(locked));
+
+			layout.setTypeSettingsProperties(typeSettingsProperties);
+		}
 
 		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 			LayoutTypePortlet layoutTypePortlet =
@@ -201,7 +210,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout addLayout(
 			long userId, long groupId, boolean privateLayout,
 			long parentLayoutId, String name, String title, String description,
-			String type, boolean hidden, String friendlyURL,
+			String type, boolean hidden, String friendlyURL, boolean locked,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -215,10 +224,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			userId, groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, serviceContext);
+			type, hidden, friendlyURL, locked, serviceContext);
 	}
 
-	public void deleteLayout(Layout layout, boolean updateLayoutSet)
+	public void deleteLayout(
+			Layout layout, boolean updateLayoutSet,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Child layouts
@@ -228,7 +239,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getLayoutId());
 
 		for (Layout childLayout : childLayouts) {
-			deleteLayout(childLayout, updateLayoutSet);
+			deleteLayout(childLayout, updateLayoutSet, serviceContext);
 		}
 
 		// Portlet preferences
@@ -303,25 +314,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
-	public void deleteLayout(long plid)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		deleteLayout(layout, true);
+		deleteLayout(layout, true, serviceContext);
 	}
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		deleteLayout(layout, true);
+		deleteLayout(layout, true, serviceContext);
 	}
 
-	public void deleteLayouts(long groupId, boolean privateLayout)
+	public void deleteLayouts(
+			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layouts
@@ -331,7 +344,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			try {
-				deleteLayout(layout, false);
+				deleteLayout(layout, false, serviceContext);
 			}
 			catch (NoSuchLayoutException nsle) {
 			}
@@ -437,6 +450,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	public Layout fetchLayout(long plid) throws SystemException {
+		return layoutPersistence.fetchByPrimaryKey(plid);
 	}
 
 	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId)
@@ -746,7 +763,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	public void setLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			long[] layoutIds)
+			long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (layoutIds == null) {
@@ -786,7 +803,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			if (!layoutIdsSet.contains(layout.getLayoutId())) {
-				deleteLayout(layout, true);
+				deleteLayout(layout, true, serviceContext);
 			}
 			else {
 				newLayoutIdsSet.add(layout.getLayoutId());
@@ -836,7 +853,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, boolean hidden, String friendlyURL, Boolean iconImage,
-			byte[] iconBytes, ServiceContext serviceContext)
+			byte[] iconBytes, boolean locked, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout
@@ -888,6 +905,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				}
 			}
 		}
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsProperties.put("locked", String.valueOf(locked));
+
+		layout.setTypeSettingsProperties(typeSettingsProperties);
 
 		layoutPersistence.update(layout, false);
 

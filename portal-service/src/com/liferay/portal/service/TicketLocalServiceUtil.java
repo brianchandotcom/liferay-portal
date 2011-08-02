@@ -261,6 +261,12 @@ public class TicketLocalServiceUtil {
 			expirationDate, serviceContext);
 	}
 
+	public static com.liferay.portal.model.Ticket fetchTicket(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchTicket(key);
+	}
+
 	public static com.liferay.portal.model.Ticket getTicket(
 		java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException,

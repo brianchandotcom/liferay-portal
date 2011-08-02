@@ -125,7 +125,7 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 				<liferay-ui:icon
 					image="add_user"
 					message="create-account"
-					url="<%= themeDisplay.getURLCreateAccount().toString() %>"
+					url="<%= LoginUtil.getCreateAccountHREF(request, themeDisplay) %>"
 				/>
 			</c:if>
 

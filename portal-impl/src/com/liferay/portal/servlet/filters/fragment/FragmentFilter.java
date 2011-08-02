@@ -16,12 +16,12 @@ package com.liferay.portal.servlet.filters.fragment;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;

@@ -373,7 +373,7 @@ public class Validator {
 		}
 
 		String[] domainNameArray = StringUtil.split(
-			domainName, StringPool.PERIOD);
+			domainName, CharPool.PERIOD);
 
 		for (String domainNamePart : domainNameArray) {
 			char[] domainNamePartCharArray = domainNamePart.toCharArray();

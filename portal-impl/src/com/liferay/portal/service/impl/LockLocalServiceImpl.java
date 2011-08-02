@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
@@ -49,7 +50,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {
-			unlock(className, key);
+			lockPersistence.remove(lock);
 
 			throw new ExpiredLockException();
 		}
@@ -70,49 +71,41 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	public boolean hasLock(long userId, String className, long key)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return hasLock(userId, className, String.valueOf(key));
 	}
 
 	public boolean hasLock(long userId, String className, String key)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		try {
-			Lock lock = getLock(className, key);
+		Lock lock = fetchLock(className, key);
 
-			if (lock.getUserId() == userId) {
-				return true;
-			}
+		if ((lock != null) && (lock.getUserId() == userId)) {
+			return true;
 		}
-		catch (ExpiredLockException ele) {
+		else {
+			return false;
 		}
-		catch (NoSuchLockException nsle) {
-		}
-
-		return false;
 	}
 
 	public boolean isLocked(String className, long key)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return isLocked(className, String.valueOf(key));
 	}
 
 	public boolean isLocked(String className, String key)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		try {
-			getLock(className, key);
+		Lock lock = fetchLock(className, key);
 
+		if (lock == null) {
+			return false;
+		}
+		else {
 			return true;
 		}
-		catch (ExpiredLockException ele) {
-		}
-		catch (NoSuchLockException nsle) {
-		}
-
-		return false;
 	}
 
 	public Lock lock(
@@ -136,7 +129,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (lock != null) {
 			if (lock.isExpired()) {
-				unlock(className, key);
+				lockPersistence.remove(lock);
 
 				lock = null;
 			}
@@ -296,6 +289,22 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		if (lock.getOwner().equals(owner)) {
 			deleteLock(lock);
 		}
+	}
+
+	protected Lock fetchLock(String className, String key)
+		throws SystemException {
+
+		Lock lock = lockPersistence.fetchByC_K(className, key);
+
+		if (lock != null) {
+			if (lock.isExpired()) {
+				lockPersistence.remove(lock);
+
+				lock = null;
+			}
+		}
+
+		return lock;
 	}
 
 }

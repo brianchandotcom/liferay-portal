@@ -53,6 +53,8 @@ import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -372,6 +374,21 @@ public abstract class BaseIndexer implements Indexer {
 		multiValueFacet.setStatic(true);
 
 		searchContext.addFacet(multiValueFacet);
+	}
+
+	protected void addSearchDDMStruture(
+			BooleanQuery searchQuery, SearchContext searchContext,
+			DDMStructure ddmStructure)
+		throws Exception {
+
+		Set<String> fieldNames = ddmStructure.getFieldNames();
+
+		for (String fieldName : fieldNames) {
+			String name = DDMIndexerUtil.encodeName(
+				ddmStructure.getStructureId(), fieldName);
+
+			addSearchTerm(searchQuery, searchContext, name, true);
+		}
 	}
 
 	protected void addSearchEntryClassNames(

@@ -110,14 +110,14 @@ public class UpdatePasswordAction extends Action {
 	}
 
 	protected Ticket getTicket(HttpServletRequest request) {
-		String token = ParamUtil.getString(request, "ticket");
+		String ticketKey = ParamUtil.getString(request, "ticketKey");
 
-		if (Validator.isNull(token)) {
+		if (Validator.isNull(ticketKey)) {
 			return null;
 		}
 
 		try {
-			Ticket ticket = TicketLocalServiceUtil.getTicket(token);
+			Ticket ticket = TicketLocalServiceUtil.getTicket(ticketKey);
 
 			if (!ticket.isExpired()) {
 				return ticket;

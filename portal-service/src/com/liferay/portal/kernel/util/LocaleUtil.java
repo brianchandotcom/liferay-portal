@@ -120,7 +120,7 @@ public class LocaleUtil {
 				}
 				else {
 					String[] languageIdParts = StringUtil.split(
-						languageId, StringPool.UNDERLINE);
+						languageId, CharPool.UNDERLINE);
 
 					String languageCode = languageIdParts[0];
 					String countryCode = languageIdParts[1];

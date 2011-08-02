@@ -249,10 +249,12 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService {
 		return _layoutSetLocalService.addLayoutSet(groupId, privateLayout);
 	}
 
-	public void deleteLayoutSet(long groupId, boolean privateLayout)
+	public void deleteLayoutSet(long groupId, boolean privateLayout,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout);
+		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout,
+			serviceContext);
 	}
 
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
@@ -267,6 +269,12 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSetLocalService.getLayoutSet(virtualHostname);
+	}
+
+	public java.util.List<com.liferay.portal.model.LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,

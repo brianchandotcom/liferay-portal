@@ -18,12 +18,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.IOException;
 
@@ -53,7 +54,7 @@ public class LanguageServlet extends HttpServlet {
 			path = path.substring(1, path.length());
 		}
 
-		String[] pathArray = StringUtil.split(path, StringPool.SLASH);
+		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 		if (pathArray.length == 0) {
 			_log.error("Language id is not specified");

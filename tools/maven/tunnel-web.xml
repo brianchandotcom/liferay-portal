@@ -5,7 +5,7 @@
 	<groupId>com.liferay.portal</groupId>
 	<artifactId>tunnel-web</artifactId>
 	<packaging>war</packaging>
-	<name>Liferay Tunnel Web<</name>
+	<name>Liferay Tunnel Web</name>
 	<version>@version@</version>
 	<description>Contains the remote endpoints for the portal services.</description>
 	<url>http://www.liferay.com</url>

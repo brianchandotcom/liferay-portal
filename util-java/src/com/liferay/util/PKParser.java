@@ -14,6 +14,7 @@
 
 package com.liferay.util;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,7 +39,7 @@ public class PKParser {
 		String[] array = StringUtil.split(pk);
 
 		for (int i = 0; i < array.length; i++) {
-			String[] kvp = StringUtil.split(array[i], StringPool.EQUAL);
+			String[] kvp = StringUtil.split(array[i], CharPool.EQUAL);
 
 			String key = kvp[0].trim();
 			String value = kvp[1].trim();

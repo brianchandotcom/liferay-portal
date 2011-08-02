@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.InputStream;
 

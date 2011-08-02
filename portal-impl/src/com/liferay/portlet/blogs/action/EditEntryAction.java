@@ -14,14 +14,12 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -51,10 +48,8 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.Calendar;
 
@@ -66,7 +61,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
@@ -159,18 +153,7 @@ public class EditEntryAction extends PortletAction {
 				jsonObject.put("redirect", redirect);
 				jsonObject.put("updateRedirect", updateRedirect);
 
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					actionRequest);
-				HttpServletResponse response =
-					PortalUtil.getHttpServletResponse(actionResponse);
-				InputStream inputStream = new UnsyncByteArrayInputStream(
-					jsonObject.toString().getBytes());
-				String contentType = ContentTypes.TEXT_JAVASCRIPT;
-
-				ServletResponseUtil.sendFile(
-					request, response, null, inputStream, contentType);
-
-				setForward(actionRequest, ActionConstants.COMMON_NULL);
+				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else if ((entry != null) &&
 					 (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {

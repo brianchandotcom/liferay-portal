@@ -15,9 +15,9 @@
 package com.liferay.portal.servlet.filters.etag;
 
 import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;

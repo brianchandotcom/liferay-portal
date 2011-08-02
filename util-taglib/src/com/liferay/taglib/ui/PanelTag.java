@@ -44,21 +44,17 @@ public class PanelTag extends IncludeTag {
 
 		String parentId = StringPool.BLANK;
 
-		try {
+		if (baseBodyTagSupport instanceof PanelContainerTag) {
+			PanelContainerTag panelContainerTag	=
+				(PanelContainerTag)baseBodyTagSupport;
+
+			parentId = panelContainerTag.getId();
+		}
+		else if (baseBodyTagSupport instanceof PanelFloatingContainerTag) {
 			PanelFloatingContainerTag panelFloatingContainerTag	=
 				(PanelFloatingContainerTag)baseBodyTagSupport;
 
 			parentId = panelFloatingContainerTag.getId();
-		}
-		catch (ClassCastException cce) {
-			try {
-				PanelContainerTag panelContainerTag	=
-					(PanelContainerTag)baseBodyTagSupport;
-
-				parentId = panelContainerTag.getId();
-			}
-			catch (ClassCastException ccee) {
-			}
 		}
 
  		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);

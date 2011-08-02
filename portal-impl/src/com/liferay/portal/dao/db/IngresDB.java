@@ -125,13 +125,13 @@ public class IngresDB extends BaseDB {
 					REWORD_TEMPLATE, template);
 			}
 			else if (line.indexOf(DROP_INDEX) != -1) {
-				String[] tokens = StringUtil.split(line, " ");
+				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"drop index @index@;", "@index@", tokens[2]);
 			}
 			else if (line.indexOf(DROP_PRIMARY_KEY) != -1) {
-				String[] tokens = StringUtil.split(line, " ");
+				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"alter table @table@ drop constraint @table@_pkey;",

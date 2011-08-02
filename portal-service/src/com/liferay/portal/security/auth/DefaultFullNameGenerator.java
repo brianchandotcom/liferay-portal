@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -51,7 +52,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String lastName = StringPool.BLANK;
 
 		if (Validator.isNotNull(fullName)) {
-			String[] name = StringUtil.split(fullName, StringPool.SPACE);
+			String[] name = StringUtil.split(fullName, CharPool.SPACE);
 
 			firstName = name[0];
 			middleName = StringPool.BLANK;

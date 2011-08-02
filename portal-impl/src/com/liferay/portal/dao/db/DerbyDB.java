@@ -123,7 +123,7 @@ public class DerbyDB extends BaseDB {
 				}
 			}
 			else if (line.indexOf(DROP_INDEX) != -1) {
-				String[] tokens = StringUtil.split(line, " ");
+				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"drop index @index@;", "@index@", tokens[2]);

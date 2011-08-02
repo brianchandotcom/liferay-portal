@@ -251,6 +251,7 @@ create table BookmarksEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	folderId LONG,
 	name VARCHAR(255) null,
 	url STRING null,
@@ -268,6 +269,7 @@ create table BookmarksFolder (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	resourceBlockId LONG,
 	parentFolderId LONG,
 	name VARCHAR(75) null,
 	description STRING null
@@ -939,7 +941,8 @@ create table Layout (
 	wapColorSchemeId VARCHAR(75) null,
 	css STRING null,
 	priority INTEGER,
-	layoutPrototypeId LONG
+	layoutPrototypeUuid VARCHAR(75) null,
+	layoutPrototypeLinkEnabled BOOLEAN
 );
 
 create table LayoutBranch (
@@ -951,11 +954,12 @@ create table LayoutBranch (
 	layoutSetBranchId LONG,
 	plid LONG,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	master BOOLEAN
 );
 
 create table LayoutPrototype (
+	uuid_ VARCHAR(75) null,
 	layoutPrototypeId LONG not null primary key,
 	companyId LONG,
 	name STRING null,
@@ -1012,7 +1016,8 @@ create table LayoutSet (
 	css STRING null,
 	pageCount INTEGER,
 	settings_ STRING null,
-	layoutSetPrototypeId LONG
+	layoutSetPrototypeUuid VARCHAR(75) null,
+	layoutSetPrototypeLinkEnabled BOOLEAN
 );
 
 create table LayoutSetBranch (
@@ -1354,7 +1359,11 @@ create table PollsQuestion (
 
 create table PollsVote (
 	voteId LONG not null primary key,
+	companyId LONG,
 	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	questionId LONG,
 	choiceId LONG,
 	voteDate DATE null
@@ -1457,6 +1466,31 @@ create table RepositoryEntry (
 	groupId LONG,
 	repositoryId LONG,
 	mappedId VARCHAR(75) null
+);
+
+create table ResourceBlock (
+	resourceBlockId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	name VARCHAR(75) null,
+	permissionsHash VARCHAR(75) null,
+	referenceCount LONG
+);
+
+create table ResourceBlockPermission (
+	resourceBlockPermissionId LONG not null primary key,
+	resourceBlockId LONG,
+	roleId LONG,
+	actionIds LONG
+);
+
+create table ResourceTypePermission (
+	resourceTypePermissionId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	name VARCHAR(75) null,
+	roleId LONG,
+	actionIds LONG
 );
 
 create table Resource_ (

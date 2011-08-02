@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.util.JavaProps;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.spring.util.SpringUtil;
-import com.liferay.util.SystemProperties;
 import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;

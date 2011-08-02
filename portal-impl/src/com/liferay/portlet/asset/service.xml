@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 
 <service-builder package-path="com.liferay.portlet.asset">
 	<namespace>Asset</namespace>
-	<entity name="AssetCategory" uuid="true" local-service="true" remote-service="true">
+	<entity name="AssetCategory" uuid="true" uuid-accessor="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="categoryId" type="long" primary="true" />
+		<column name="categoryId" type="long" primary="true" accessor="true" />
 
 		<!-- Group instance -->
 
@@ -26,7 +26,7 @@
 		<column name="parentCategoryId" type="long" />
 		<column name="leftCategoryId" type="long" />
 		<column name="rightCategoryId" type="long" />
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="vocabularyId" type="long" />
@@ -191,7 +191,7 @@
 
 		<!-- PK fields -->
 
-		<column name="linkId" type="long" primary="true" />
+		<column name="linkId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 
@@ -203,7 +203,7 @@
 		<!-- Other fields -->
 
 		<column name="entryId1" type="long" />
-		<column name="entryId2" type="long" />
+		<column name="entryId2" type="long" accessor="true" />
 		<column name="type" type="int" />
 		<column name="weight" type="int" />
 
@@ -260,7 +260,7 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="assetCount" type="int" />
 
 		<!-- Relationships -->

@@ -177,7 +177,7 @@ public class ListUtil {
 	}
 
 	public static List<String> fromString(String s) {
-		return fromArray(StringUtil.split(s, StringPool.NEW_LINE));
+		return fromArray(StringUtil.splitLines(s));
 	}
 
 	public static <E> boolean remove(List<E> list, E element) {
@@ -322,6 +322,37 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <T, V> String toString(
+		List<T> list, Accessor<T, V> accessor) {
+		return toString(list, accessor, StringPool.COMMA);
+	}
+
+	public static <T, V> String toString(
+		List<T> list, Accessor<T, V> accessor, String delimiter) {
+
+		if ((list == null) || list.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * list.size() - 1);
+
+		for (int i = 0; i < list.size(); i++) {
+			T bean = list.get(i);
+
+			V value = accessor.get(bean);
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.size()) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static String toString(List<?> list, String param) {
 		return toString(list, param, StringPool.COMMA);
 	}
@@ -340,11 +371,9 @@ public class ListUtil {
 
 			Object value = BeanPropertiesUtil.getObject(bean, param);
 
-			if (value == null) {
-				value = StringPool.BLANK;
+			if (value != null) {
+				sb.append(value);
 			}
-
-			sb.append(value.toString());
 
 			if ((i + 1) != list.size()) {
 				sb.append(delimiter);

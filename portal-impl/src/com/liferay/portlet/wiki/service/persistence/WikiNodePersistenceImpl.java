@@ -2850,6 +2850,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "wikiNode.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "wikiNode.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(wikiNode.name IS NULL OR wikiNode.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "wikiNode.nodeId";
 	private static final String _FILTER_SQL_SELECT_WIKINODE_WHERE = "SELECT DISTINCT {wikiNode.*} FROM WikiNode wikiNode WHERE ";
 	private static final String _FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {WikiNode.*} FROM (SELECT DISTINCT wikiNode.nodeId FROM WikiNode wikiNode WHERE ";
@@ -2858,7 +2859,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _FILTER_SQL_COUNT_WIKINODE_WHERE = "SELECT COUNT(DISTINCT wikiNode.nodeId) AS COUNT_VALUE FROM WikiNode wikiNode WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "wikiNode";
 	private static final String _FILTER_ENTITY_TABLE = "WikiNode";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "wikiNode.nodeId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiNode.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiNode.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WikiNode exists with the primary key ";

@@ -92,18 +92,5 @@ public class LayoutRevisionServiceSoap {
 		}
 	}
 
-	public static void deleteLayoutRevisions(long layoutSetBranchId,
-		long layoutBranchId, long plid) throws RemoteException {
-		try {
-			LayoutRevisionServiceUtil.deleteLayoutRevisions(layoutSetBranchId,
-				layoutBranchId, plid);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionServiceSoap.class);
 }

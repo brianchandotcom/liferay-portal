@@ -46,10 +46,10 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		boolean hasScopeType = GetterUtil.getBoolean(
-			portletPreferences.getValue("lfr-scope-type", "false"));
+			portletPreferences.getValue("lfrScopeType", "false"));
 
 		if (!hasScopeType) {
-			portletPreferences.setValue("lfr-scope-type", "layout");
+			portletPreferences.setValue("lfrScopeType", "layout");
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);

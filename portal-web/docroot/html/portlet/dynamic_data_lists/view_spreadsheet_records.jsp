@@ -88,15 +88,23 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, 0, 1000, null);
 
-	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size()) - records.size();
+	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size());
 	%>
 
-	var recordset = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
+	var records = <%= DDLUtil.getRecordsJSONArray(records) %>;
+
+	records.sort(
+		function(a, b) {
+			return (a.displayIndex - b.displayIndex);
+		}
+	);
+
+	var recordSet = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
 
 	A.Array.each(
-		<%= DDLUtil.getRecordsJSONArray(records) %>,
+		records,
 		function(item, index, collection) {
-			recordset.splice(item.displayIndex, 0, item);
+			recordSet.splice(item.displayIndex, 0, item);
 		}
 	);
 
@@ -106,8 +114,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			columnset: columnset,
 			contentBox: '#<portlet:namespace />dataTableCC',
 			editEvent: 'dblclick',
-			recordset: recordset,
-			recordsetId: <%= recordSet.getRecordSetId() %>,
+			recordSet: recordSet,
+			recordSetId: <%= recordSet.getRecordSetId() %>,
 			structure: structure
 		}
 	).plug(
@@ -134,11 +142,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		function(event) {
 			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-			var recordset = spreadSheet.get('recordset');
+			var recordSet = spreadSheet.get('recordSet');
 
 			spreadSheet.addEmptyRows(numberOfRecords);
 
-			spreadSheet.updateMinDisplayRows(recordset.getLength());
+			spreadSheet.updateMinDisplayRows(recordSet.getLength());
 		}
 	);
 

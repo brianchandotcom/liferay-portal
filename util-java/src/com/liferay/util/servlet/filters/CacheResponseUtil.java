@@ -15,7 +15,7 @@
 package com.liferay.util.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.Header;
-import com.liferay.util.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 
 import java.io.IOException;
 

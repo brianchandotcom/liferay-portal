@@ -678,6 +678,43 @@
 		padding-left: 20px;
 	}
 
+	.common-file-metadata-container {
+		padding: 1em;
+
+		.aui-field-element {
+			display: block;
+
+			textarea {
+				width: 100% !important;
+			}
+		}
+
+		&.selected {
+			background-color: #D3E8F1;
+		}
+
+		.selected-files-count {
+			border-bottom: 1px solid #C8C9CA;
+			color: #555;
+			font-size: 1.8em;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.document-type .lfr-panel-content {
+			min-height: 35px;
+		}
+
+		.document-type-fields {
+			clear: left;
+			padding-top: 0.5em;
+		}
+
+		.categorization-panel {
+			clear: left;
+		}
+	}
+
 	.taglib-ratings.stars {
 		border: 1px solid transparent;
 		display: inline-block;

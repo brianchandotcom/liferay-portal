@@ -184,6 +184,20 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void deleteTempFileEntry(long groupId, long folderId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.deleteTempFileEntry(groupId, folderId, fileName,
+				tempFolderName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFileEntriesAndFileShortcutsCount(long repositoryId,
 		long folderId, int status) throws RemoteException {
 		try {
@@ -357,6 +371,22 @@ public class DLAppServiceSoap {
 					folderId, recurse);
 
 			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String[] getTempFileEntryNames(long groupId,
+		long folderId, java.lang.String tempFolderName)
+		throws RemoteException {
+		try {
+			java.lang.String[] returnValue = DLAppServiceUtil.getTempFileEntryNames(groupId,
+					folderId, tempFolderName);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

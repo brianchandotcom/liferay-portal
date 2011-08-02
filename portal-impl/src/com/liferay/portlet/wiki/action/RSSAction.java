@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +30,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.util.RSSUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.Locale;
 

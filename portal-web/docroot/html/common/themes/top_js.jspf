@@ -330,7 +330,7 @@
 			%>
 
 			<c:if test="<%= !allPortlets.isEmpty() && !layoutTypePortlet.hasStateMax() %>">
-				Liferay.Portlet.list = ['<%= ListUtil.toString(allPortlets, "portletId", "','") %>'];
+				Liferay.Portlet.list = ['<%= ListUtil.toString(allPortlets, Portlet.PORTLET_ID_ACCESSOR, "','") %>'];
 			</c:if>
 		</c:if>
 	// ]]>

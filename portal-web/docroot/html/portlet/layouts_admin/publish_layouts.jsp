@@ -118,7 +118,7 @@ if (selPlid > 0) {
 else {
 	treeKey = treeKey + privateLayout;
 
-	selectedPlids = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ","));
+	selectedPlids = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
 }
 
 List results = new ArrayList();

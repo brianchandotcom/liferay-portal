@@ -51,6 +51,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -659,9 +660,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			resourcePermissionLocalService.setResourcePermissions(
-				role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY, "0",
-				role.getRoleId(), actionIds);
+			if (resourceBlockLocalService.isSupported(name)) {
+				resourceBlockLocalService.setCompanyScopePermissions(
+					role.getCompanyId(), name, role.getRoleId(),
+					Arrays.asList(actionIds));
+			}
+			else {
+				resourcePermissionLocalService.setResourcePermissions(
+					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+					"0", role.getRoleId(), actionIds);
+			}
 		}
 		else {
 			permissionLocalService.setRolePermissions(

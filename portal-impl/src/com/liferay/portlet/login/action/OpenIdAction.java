@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,6 +36,7 @@ import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Calendar;
@@ -264,15 +266,16 @@ public class OpenIdAction extends PortletAction {
 							"attributes to create an account");
 				}
 
-				PortletURL createAccountURL =
-					themeDisplay.getURLCreateAccount();
+				String createAccountURL = LoginUtil.getCreateAccountHREF(
+					request, themeDisplay);
 
-				createAccountURL.setParameter("openId", openId);
+				createAccountURL = HttpUtil.setParameter(
+					createAccountURL, "openId", openId);
 
 				session.setAttribute(
 					WebKeys.OPEN_ID_LOGIN_PENDING, Boolean.TRUE);
 
-				return createAccountURL.toString();
+				return createAccountURL;
 			}
 
 			long creatorUserId = 0;

@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.SystemProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +43,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
@@ -441,7 +440,7 @@ public class HttpImpl implements Http {
 			return StringPool.BLANK;
 		}
 
-		String[] parts = StringUtil.split(url, StringPool.QUESTION);
+		String[] parts = StringUtil.split(url, CharPool.QUESTION);
 
 		if (parts.length == 2) {
 			String[] params = null;
@@ -450,11 +449,11 @@ public class HttpImpl implements Http {
 				params = StringUtil.split(parts[1], "&amp;");
 			}
 			else {
-				params = StringUtil.split(parts[1], StringPool.AMPERSAND);
+				params = StringUtil.split(parts[1], CharPool.AMPERSAND);
 			}
 
 			for (String param : params) {
-				String[] kvp = StringUtil.split(param, StringPool.EQUAL);
+				String[] kvp = StringUtil.split(param, CharPool.EQUAL);
 
 				if ((kvp.length == 2) && kvp[0].equals(name)) {
 					return kvp[1];
@@ -575,14 +574,11 @@ public class HttpImpl implements Http {
 		Map<String, List<String>> tempParameterMap =
 			new LinkedHashMap<String, List<String>>();
 
-		StringTokenizer st = new StringTokenizer(
-			queryString, StringPool.AMPERSAND);
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, StringPool.EQUAL);
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
 
 				String key = kvp[0];
 
@@ -725,14 +721,12 @@ public class HttpImpl implements Http {
 
 		sb.append(url.substring(0, pos + 1));
 
-		StringTokenizer st = new StringTokenizer(
-			url.substring(pos + 1, url.length()), StringPool.AMPERSAND);
+		String[] parameters = StringUtil.split(
+			url.substring(pos + 1, url.length()), CharPool.AMPERSAND);
 
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			if (Validator.isNotNull(token)) {
-				String[] kvp = StringUtil.split(token, StringPool.EQUAL);
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
 
 				String key = kvp[0];
 

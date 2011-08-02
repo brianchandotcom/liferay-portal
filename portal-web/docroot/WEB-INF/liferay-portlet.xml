@@ -503,7 +503,7 @@
 	<portlet>
 		<portlet-name>49</portlet-name>
 		<icon>/html/icons/default.png</icon>
-		<struts-path>my_places</struts-path>
+		<struts-path>my_sites</struts-path>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<show-portlet-access-denied>false</show-portlet-access-denied>
@@ -1133,6 +1133,7 @@
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.usersadmin.UsersControlPanelEntry</control-panel-entry-class>
+		<atom-collection-adapter>com.liferay.portlet.usersadmin.atom.UserAtomCollectionAdapter</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.LayoutCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.OrganizationCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.usersadmin.UserCustomAttributesDisplay</custom-attributes-display>
@@ -1529,6 +1530,7 @@
 		<struts-path>wiki_admin</struts-path>
 		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>17.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
@@ -1797,6 +1799,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>
         <preferences-owned-by-group>true</preferences-owned-by-group>
         <use-default-template>false</use-default-template>
         <private-request-attributes>false</private-request-attributes>

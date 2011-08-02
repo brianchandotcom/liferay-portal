@@ -615,7 +615,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setWapColorSchemeId(layout.getWapColorSchemeId());
 		layoutImpl.setCss(layout.getCss());
 		layoutImpl.setPriority(layout.getPriority());
-		layoutImpl.setLayoutPrototypeId(layout.getLayoutPrototypeId());
+		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
+		layoutImpl.setLayoutPrototypeLinkEnabled(layout.isLayoutPrototypeLinkEnabled());
 
 		return layoutImpl;
 	}
@@ -6111,10 +6112,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = ServiceComponentPersistence.class)
@@ -6195,6 +6202,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ?";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layout.plid";
 	private static final String _FILTER_SQL_SELECT_LAYOUT_WHERE = "SELECT DISTINCT {layout.*} FROM Layout layout WHERE ";
 	private static final String _FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ";
@@ -6203,7 +6211,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FILTER_SQL_COUNT_LAYOUT_WHERE = "SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "layout";
 	private static final String _FILTER_ENTITY_TABLE = "Layout";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layout.plid";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layout.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "Layout.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Layout exists with the primary key ";

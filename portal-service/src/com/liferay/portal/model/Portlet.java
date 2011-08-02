@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Portlet service. Represents a row in the &quot;Portlet&quot; database table, with each column mapped to a property of this class.
  *
@@ -29,6 +31,11 @@ public interface Portlet extends PortletModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PortletImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Portlet, String> PORTLET_ID_ACCESSOR = new Accessor<Portlet, String>() {
+			public String get(Portlet portlet) {
+				return portlet.getPortletId();
+			}
+		};
 
 	/**
 	* Returns the root portlet of this portlet instance.

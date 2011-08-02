@@ -1,55 +1,45 @@
-@import url(custom_breadcrumbs.css);
+/* ---------- Breadcrumbs ---------- */
 
-/* ---------- Site breadcrumbs ---------- */
-
-.site-breadcrumbs {
-	margin: 0 0 5px;
-	width: auto;
+.breadcrumbs-horizontal {
+	margin-bottom: 1.5em;
 }
 
-.site-breadcrumbs ul {
-	background-color: #FFF;
-	border: 1px solid #DEDEDE;
-	border-color: #C0C2C5;
-	margin: 0;
+.breadcrumbs-horizontal li {
+	background: url(../images/arrows/05_right.png) no-repeat 100% 50%;
+	margin-right: 5px;
+	max-width: 50%;
+	padding-right: 15px;
 }
 
-.site-breadcrumbs li {
-	background-image: none;
-	margin-right: 0;
-	padding-left: 0.75em;
-	padding-right: 0;
+.breadcrumbs-vertical li {
+	background: url(../images/arrows/07_down.png) no-repeat 50% 100%;
+	padding: 0 0 9px;
+	max-width: auto;
 }
 
-.site-breadcrumbs li span {
-	background: url(../images/common/breadcrumbs.png) no-repeat 100% 50%;
+.breadcrumbs a {
 	display: block;
-	padding: 0.5em 15px 0.5em 0;
 }
 
-.site-breadcrumbs li span a {
+.breadcrumbs-vertical a {
+	text-align: center;
 	text-decoration: none;
 }
 
-.site-breadcrumbs li.first a {
-	color: #369;
+.breadcrumbs .last {
+	background-image: none;
+}
+
+.breadcrumbs-horizontal .last {
+	margin-top: 0.2em;
+}
+
+.breadcrumbs-vertical .last {
 	font-weight: bold;
 }
 
-.site-breadcrumbs li.last a {
-	color: #4B5567;
-	font-size: 1.3em;
-}
-
-.site-breadcrumbs .last {
-	font-size: 1em;
-	margin-top: 0;
-	padding-right: 0;
-}
-
-.site-breadcrumbs .last span {
-	background-image: none;
-	padding: 0;
+.breadcrumbs-horizontal .last a, .aui-tree-node-selected a {
+	color: #555;
 }
 
 /* ---------- Hidden Accessible ---------- */
@@ -72,22 +62,6 @@
 }
 
 /* ---------- Extras ---------- */
-
-.aui-tab-active:after {
-	border: 10px solid;
-	border-bottom-width: 0;
-	border-color: #333 transparent transparent;
-	bottom: -7px;
-	content: '-';
-	display: block;
-	height: 0;
-	left: 50%;
-	margin-left: -10px;
-	position: absolute;
-	text-indent: -9999px;
-	width: 0;
-	z-index: 20;
-}
 
 .lfr-title-scope-selector {
 	-moz-border-radius-bottomleft: 4px;

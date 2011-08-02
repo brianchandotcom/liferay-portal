@@ -378,6 +378,10 @@ public class StringUtil_IW {
 		return StringUtil.split(s, x);
 	}
 
+	public java.lang.String[] split(java.lang.String s, char delimiter) {
+		return StringUtil.split(s, delimiter);
+	}
+
 	public java.lang.String[] split(java.lang.String s,
 		java.lang.String delimiter) {
 		return StringUtil.split(s, delimiter);
@@ -407,6 +411,10 @@ public class StringUtil_IW {
 
 	public short[] split(java.lang.String s, java.lang.String delimiter, short x) {
 		return StringUtil.split(s, delimiter, x);
+	}
+
+	public java.lang.String[] splitLines(java.lang.String s) {
+		return StringUtil.splitLines(s);
 	}
 
 	public boolean startsWith(java.lang.String s, char begin) {

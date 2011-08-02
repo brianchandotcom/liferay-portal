@@ -2232,6 +2232,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "shoppingCategory.groupId = ?";
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "shoppingCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_2 = "shoppingCategory.parentCategoryId = ?";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "shoppingCategory.categoryId";
 	private static final String _FILTER_SQL_SELECT_SHOPPINGCATEGORY_WHERE = "SELECT DISTINCT {shoppingCategory.*} FROM ShoppingCategory shoppingCategory WHERE ";
 	private static final String _FILTER_SQL_SELECT_SHOPPINGCATEGORY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {ShoppingCategory.*} FROM (SELECT DISTINCT shoppingCategory.categoryId FROM ShoppingCategory shoppingCategory WHERE ";
@@ -2240,7 +2241,6 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	private static final String _FILTER_SQL_COUNT_SHOPPINGCATEGORY_WHERE = "SELECT COUNT(DISTINCT shoppingCategory.categoryId) AS COUNT_VALUE FROM ShoppingCategory shoppingCategory WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "shoppingCategory";
 	private static final String _FILTER_ENTITY_TABLE = "ShoppingCategory";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "shoppingCategory.categoryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "shoppingCategory.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "ShoppingCategory.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCategory exists with the primary key ";

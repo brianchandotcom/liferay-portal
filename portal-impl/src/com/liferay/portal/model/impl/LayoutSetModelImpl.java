@@ -73,9 +73,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "css", Types.VARCHAR },
 			{ "pageCount", Types.INTEGER },
 			{ "settings_", Types.VARCHAR },
-			{ "layoutSetPrototypeId", Types.BIGINT }
+			{ "layoutSetPrototypeUuid", Types.VARCHAR },
+			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -109,7 +110,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setCss(soapModel.getCss());
 		model.setPageCount(soapModel.getPageCount());
 		model.setSettings(soapModel.getSettings());
-		model.setLayoutSetPrototypeId(soapModel.getLayoutSetPrototypeId());
+		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
+		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
 
 		return model;
 	}
@@ -336,12 +338,31 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	@JSON
-	public long getLayoutSetPrototypeId() {
-		return _layoutSetPrototypeId;
+	public String getLayoutSetPrototypeUuid() {
+		if (_layoutSetPrototypeUuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _layoutSetPrototypeUuid;
+		}
 	}
 
-	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
-		_layoutSetPrototypeId = layoutSetPrototypeId;
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
+		_layoutSetPrototypeUuid = layoutSetPrototypeUuid;
+	}
+
+	@JSON
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSetPrototypeLinkEnabled;
+	}
+
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
 	@Override
@@ -392,7 +413,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetImpl.setCss(getCss());
 		layoutSetImpl.setPageCount(getPageCount());
 		layoutSetImpl.setSettings(getSettings());
-		layoutSetImpl.setLayoutSetPrototypeId(getLayoutSetPrototypeId());
+		layoutSetImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
+		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(getLayoutSetPrototypeLinkEnabled());
 
 		layoutSetImpl.resetOriginalValues();
 
@@ -522,14 +544,23 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			layoutSetCacheModel.settings = null;
 		}
 
-		layoutSetCacheModel.layoutSetPrototypeId = getLayoutSetPrototypeId();
+		layoutSetCacheModel.layoutSetPrototypeUuid = getLayoutSetPrototypeUuid();
+
+		String layoutSetPrototypeUuid = layoutSetCacheModel.layoutSetPrototypeUuid;
+
+		if ((layoutSetPrototypeUuid != null) &&
+				(layoutSetPrototypeUuid.length() == 0)) {
+			layoutSetCacheModel.layoutSetPrototypeUuid = null;
+		}
+
+		layoutSetCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
 
 		return layoutSetCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{layoutSetId=");
 		sb.append(getLayoutSetId());
@@ -557,15 +588,17 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getPageCount());
 		sb.append(", settings=");
 		sb.append(getSettings());
-		sb.append(", layoutSetPrototypeId=");
-		sb.append(getLayoutSetPrototypeId());
+		sb.append(", layoutSetPrototypeUuid=");
+		sb.append(getLayoutSetPrototypeUuid());
+		sb.append(", layoutSetPrototypeLinkEnabled=");
+		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSet");
@@ -624,8 +657,12 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getSettings());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>layoutSetPrototypeId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetPrototypeId());
+			"<column><column-name>layoutSetPrototypeUuid</column-name><column-value><![CDATA[");
+		sb.append(getLayoutSetPrototypeUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
+		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -654,7 +691,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _css;
 	private int _pageCount;
 	private String _settings;
-	private long _layoutSetPrototypeId;
+	private String _layoutSetPrototypeUuid;
+	private boolean _layoutSetPrototypeLinkEnabled;
 	private transient ExpandoBridge _expandoBridge;
 	private LayoutSet _escapedModelProxy;
 }

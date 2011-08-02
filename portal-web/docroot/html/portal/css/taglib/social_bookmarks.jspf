@@ -14,26 +14,15 @@
  */
 --%>
 
-.js .taglib-social-bookmarks.visible {
+.taglib-social-bookmarks {
 	background: #F0F5F7;
+	clear: both;
+	margin-top: 1.5em;
 }
 
-.js .taglib-social-bookmarks .show-bookmarks {
+.taglib-social-bookmarks ul {
 	display: block;
-}
-
-.js .taglib-social-bookmarks.visible .show-bookmarks {
-}
-
-.js .taglib-social-bookmarks ul {
-	border: 1px solid #828F95;
-	border-left: none;
-	border-right: none;
-	display: none;
-}
-
-.js .taglib-social-bookmarks.visible ul {
-	display: block;
+	padding: 1em;
 }
 
 .taglib-social-bookmarks li {
@@ -56,20 +45,4 @@
 .taglib-social-bookmarks li .social-bookmark-link {
 	background: url() no-repeat 0 50%;
 	padding: 3px 2px 3px 20px;
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-blinklist a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/blinklist.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-delicious a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/delicious.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-newsvine a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/newsvine.png);
-}
-
-.taglib-social-bookmarks .taglib-social-bookmark-technorati a.social-bookmark-link {
-	background-image: url(<%= themeImagesPath %>/social_bookmarks/technorati.png);
 }

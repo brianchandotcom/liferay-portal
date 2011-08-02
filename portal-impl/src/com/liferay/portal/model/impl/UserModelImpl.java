@@ -380,7 +380,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _originalContactId;
 	}
 
-	@JSON
+	@JSON(include = false)
 	public String getPassword() {
 		if (_password == null) {
 			return StringPool.BLANK;
@@ -394,7 +394,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_password = password;
 	}
 
-	@JSON
+	@JSON(include = false)
 	public boolean getPasswordEncrypted() {
 		return _passwordEncrypted;
 	}
@@ -407,7 +407,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_passwordEncrypted = passwordEncrypted;
 	}
 
-	@JSON
+	@JSON(include = false)
 	public boolean getPasswordReset() {
 		return _passwordReset;
 	}
@@ -420,7 +420,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_passwordReset = passwordReset;
 	}
 
-	@JSON
+	@JSON(include = false)
 	public Date getPasswordModifiedDate() {
 		return _passwordModifiedDate;
 	}
@@ -429,7 +429,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_passwordModifiedDate = passwordModifiedDate;
 	}
 
-	@JSON
+	@JSON(include = false)
 	public String getDigest() {
 		if (_digest == null) {
 			return StringPool.BLANK;

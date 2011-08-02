@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -28,6 +29,16 @@ import java.util.List;
  * @author Alexander Chow
  */
 public interface FileEntry extends RepositoryModel<FileEntry> {
+
+	public static final Accessor<FileEntry, Long> FILE_ENTRY_ID_ACCESSOR =
+
+		new Accessor<FileEntry, Long>() {
+
+			public Long get(FileEntry fileEntry) {
+				return fileEntry.getFileEntryId();
+			}
+
+		};
 
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)

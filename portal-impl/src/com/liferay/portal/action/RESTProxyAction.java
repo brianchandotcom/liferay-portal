@@ -16,16 +16,16 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +65,7 @@ public class RESTProxyAction extends Action {
 		}
 
 		String domain = StringUtil.split(
-			HttpUtil.getDomain(url), StringPool.COLON)[0];
+			HttpUtil.getDomain(url), CharPool.COLON)[0];
 
 		try {
 			CompanyLocalServiceUtil.getCompanyByVirtualHost(domain);

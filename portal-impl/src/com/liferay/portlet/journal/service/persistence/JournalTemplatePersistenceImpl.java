@@ -4068,6 +4068,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	private static final String _FINDER_COLUMN_G_S_STRUCTUREID_1 = "journalTemplate.structureId IS NULL";
 	private static final String _FINDER_COLUMN_G_S_STRUCTUREID_2 = "journalTemplate.structureId = ?";
 	private static final String _FINDER_COLUMN_G_S_STRUCTUREID_3 = "(journalTemplate.structureId IS NULL OR journalTemplate.structureId = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalTemplate.id_";
 	private static final String _FILTER_SQL_SELECT_JOURNALTEMPLATE_WHERE = "SELECT DISTINCT {journalTemplate.*} FROM JournalTemplate journalTemplate WHERE ";
 	private static final String _FILTER_SQL_SELECT_JOURNALTEMPLATE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {JournalTemplate.*} FROM (SELECT DISTINCT journalTemplate.id_ FROM JournalTemplate journalTemplate WHERE ";
@@ -4076,7 +4077,6 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	private static final String _FILTER_SQL_COUNT_JOURNALTEMPLATE_WHERE = "SELECT COUNT(DISTINCT journalTemplate.id_) AS COUNT_VALUE FROM JournalTemplate journalTemplate WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "journalTemplate";
 	private static final String _FILTER_ENTITY_TABLE = "JournalTemplate";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalTemplate.id_";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalTemplate.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalTemplate.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalTemplate exists with the primary key ";

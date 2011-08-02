@@ -14,16 +14,24 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
@@ -46,7 +54,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Jorge Ferrer
  */
-public class EditPageAttachmentAction extends PortletAction {
+public class EditPageAttachmentAction extends EditFileEntryAction {
 
 	@Override
 	public void processAction(
@@ -60,11 +68,27 @@ public class EditPageAttachmentAction extends PortletAction {
 			if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);
 			}
+			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
+				addMultipleFileEntries(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempAttachment(actionRequest);
+			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest);
 			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				deleteTempAttachment(actionRequest, actionResponse);
+			}
 
-			sendRedirect(actionRequest, actionResponse);
+			if (cmd.equals(Constants.ADD_TEMP) ||
+				cmd.equals(Constants.DELETE_TEMP)) {
+
+				setForward(actionRequest, ActionConstants.COMMON_NULL);
+			}
+			else {
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateFileException ||
@@ -160,6 +184,65 @@ public class EditPageAttachmentAction extends PortletAction {
 		WikiPageServiceUtil.addPageAttachments(nodeId, title, files);
 	}
 
+	protected void addMultipleFileEntries(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String selectedFileName, List<String> validFileNames,
+			List<KeyValuePair> invalidFileNameKVPs)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+
+		File file = null;
+
+		try {
+			file = TempFileUtil.getTempFile(
+				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+
+			if (file == null) {
+				return;
+			}
+
+			byte[] bytes = FileUtil.getBytes(file);
+
+			if ((bytes == null) || (bytes.length == 0)) {
+				return;
+			}
+
+			WikiPageServiceUtil.addPageAttachment(
+				nodeId, title, selectedFileName, bytes);
+
+			validFileNames.add(selectedFileName);
+		}
+		catch (Exception e) {
+			String errorMessage = getAddMultipleFileEntriesErrorMessage(
+				themeDisplay, e);
+
+			invalidFileNameKVPs.add(
+				new KeyValuePair(selectedFileName, errorMessage));
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	protected void addTempAttachment(ActionRequest actionRequest)
+		throws Exception {
+
+		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
+			actionRequest);
+
+		long nodeId = ParamUtil.getLong(uploadRequest, "nodeId");
+		File file = uploadRequest.getFile("file");
+		String sourceFileName = uploadRequest.getFileName("file");
+
+		WikiPageServiceUtil.addTempPageAttachment(
+			nodeId, sourceFileName, _TEMP_FOLDER_NAME, file);
+	}
+
 	protected void deleteAttachment(ActionRequest actionRequest)
 		throws Exception {
 
@@ -169,5 +252,38 @@ public class EditPageAttachmentAction extends PortletAction {
 
 		WikiPageServiceUtil.deletePageAttachment(nodeId, title, attachment);
 	}
+
+	protected void deleteTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			WikiPageServiceUtil.deleteTempPageAttachment(
+				nodeId, fileName, _TEMP_FOLDER_NAME);
+
+			jsonObject.put("deleted", Boolean.TRUE);
+		}
+		catch (Exception e) {
+			String errorMessage = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"an-unexpected-error-occurred-while-deleting-the-file");
+
+			jsonObject.put("deleted", Boolean.FALSE);
+			jsonObject.put("errorMessage", errorMessage);
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+	private static final String _TEMP_FOLDER_NAME =
+		EditPageAttachmentAction.class.getName();
 
 }

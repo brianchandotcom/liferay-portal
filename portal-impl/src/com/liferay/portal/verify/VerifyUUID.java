@@ -109,6 +109,10 @@ public class VerifyUUID extends VerifyProcess {
 			"plid"
 		},
 		new String[] {
+			"LayoutPrototype",
+			"layoutPrototypeId"
+		},
+		new String[] {
 			"LayoutSetPrototype",
 			"layoutSetPrototypeId"
 		},

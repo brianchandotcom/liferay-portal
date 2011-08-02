@@ -4014,10 +4014,16 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = ResourceCodePersistence.class)
 	protected ResourceCodePersistence resourceCodePersistence;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = ServiceComponentPersistence.class)
@@ -4584,6 +4590,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "userGroup.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "userGroup.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(userGroup.name IS NULL OR userGroup.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "userGroup.userGroupId";
 	private static final String _FILTER_SQL_SELECT_USERGROUP_WHERE = "SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ";
 	private static final String _FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ";
@@ -4592,7 +4599,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _FILTER_SQL_COUNT_USERGROUP_WHERE = "SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "userGroup";
 	private static final String _FILTER_ENTITY_TABLE = "UserGroup";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "userGroup.userGroupId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userGroup.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "UserGroup.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserGroup exists with the primary key ";

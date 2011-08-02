@@ -6840,6 +6840,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		return sql;
 	}
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "calEvent.eventId";
 	private static final String _FILTER_SQL_SELECT_CALEVENT_WHERE = "SELECT DISTINCT {calEvent.*} FROM CalEvent calEvent WHERE ";
 	private static final String _FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {CalEvent.*} FROM (SELECT DISTINCT calEvent.eventId FROM CalEvent calEvent WHERE ";
@@ -6848,7 +6849,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FILTER_SQL_COUNT_CALEVENT_WHERE = "SELECT COUNT(DISTINCT calEvent.eventId) AS COUNT_VALUE FROM CalEvent calEvent WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "calEvent";
 	private static final String _FILTER_ENTITY_TABLE = "CalEvent";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "calEvent.eventId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "calEvent.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "CalEvent.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CalEvent exists with the primary key ";

@@ -48,14 +48,6 @@ public class LayoutRevisionServiceWrapper implements LayoutRevisionService {
 			wapThemeId, wapColorSchemeId, css, serviceContext);
 	}
 
-	public void deleteLayoutRevisions(long layoutSetBranchId,
-		long layoutBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_layoutRevisionService.deleteLayoutRevisions(layoutSetBranchId,
-			layoutBranchId, plid);
-	}
-
 	public LayoutRevisionService getWrappedLayoutRevisionService() {
 		return _layoutRevisionService;
 	}

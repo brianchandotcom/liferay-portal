@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -31,6 +32,24 @@ public interface AssetCategory extends AssetCategoryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.asset.model.impl.AssetCategoryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AssetCategory, String> UUID_ACCESSOR = new Accessor<AssetCategory, String>() {
+			public String get(AssetCategory assetCategory) {
+				return assetCategory.getUuid();
+			}
+		};
+
+	public static final Accessor<AssetCategory, Long> CATEGORY_ID_ACCESSOR = new Accessor<AssetCategory, Long>() {
+			public Long get(AssetCategory assetCategory) {
+				return assetCategory.getCategoryId();
+			}
+		};
+
+	public static final Accessor<AssetCategory, String> NAME_ACCESSOR = new Accessor<AssetCategory, String>() {
+			public String get(AssetCategory assetCategory) {
+				return assetCategory.getName();
+			}
+		};
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

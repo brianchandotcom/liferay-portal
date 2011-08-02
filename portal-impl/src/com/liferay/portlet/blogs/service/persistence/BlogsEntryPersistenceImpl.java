@@ -10689,6 +10689,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final String _FINDER_COLUMN_G_U_LTD_S_DISPLAYDATE_1 = "blogsEntry.displayDate < NULL AND ";
 	private static final String _FINDER_COLUMN_G_U_LTD_S_DISPLAYDATE_2 = "blogsEntry.displayDate < ? AND ";
 	private static final String _FINDER_COLUMN_G_U_LTD_S_STATUS_2 = "blogsEntry.status = ?";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "blogsEntry.entryId";
 	private static final String _FILTER_SQL_SELECT_BLOGSENTRY_WHERE = "SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ";
 	private static final String _FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ";
@@ -10697,7 +10698,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final String _FILTER_SQL_COUNT_BLOGSENTRY_WHERE = "SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "blogsEntry";
 	private static final String _FILTER_ENTITY_TABLE = "BlogsEntry";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "blogsEntry.entryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "blogsEntry.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "BlogsEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BlogsEntry exists with the primary key ";

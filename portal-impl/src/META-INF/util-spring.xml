@@ -413,6 +413,11 @@
 			<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" class="com.liferay.portal.service.permission.LayoutBranchPermissionUtil">
+		<property name="layoutBranchPermission">
+			<bean class="com.liferay.portal.service.permission.LayoutBranchPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.service.permission.LayoutPermissionUtil" class="com.liferay.portal.service.permission.LayoutPermissionUtil">
 		<property name="layoutPermission">
 			<bean class="com.liferay.portal.service.permission.LayoutPermissionImpl" />
@@ -551,6 +556,11 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil">
 		<property name="conditionFactory">
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
+		<property name="DDMIndexer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil">

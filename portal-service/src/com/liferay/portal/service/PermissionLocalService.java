@@ -325,6 +325,11 @@ public interface PermissionLocalService extends PersistedModelLocalService {
 	* Returns <code>true</code> if the user has permission to perform the
 	* action on the resource.
 	*
+	* <p>
+	* This method does not support resources managed by the resource block
+	* system.
+	* </p>
+	*
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group containing the resource
 	* @param resources representations of the resource at each scope level

@@ -15,14 +15,17 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -35,6 +38,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -43,6 +47,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -313,6 +319,29 @@ public class LiferayPortlet extends GenericPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
 		}
+	}
+
+	protected void writeJSON(
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object json)
+		throws IOException {
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+		ServletResponseUtil.write(response, json.toString());
+	}
+
+	protected void writeJSON(
+			PortletRequest portletRequest, MimeResponse mimeResponse,
+			Object json)
+		throws IOException {
+
+		mimeResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+		PortletResponseUtil.write(mimeResponse, json.toString());
 	}
 
 	protected boolean addProcessActionSuccessMessage;

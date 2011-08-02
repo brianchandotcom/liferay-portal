@@ -3910,6 +3910,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		return sql;
 	}
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mbCategory.categoryId";
 	private static final String _FILTER_SQL_SELECT_MBCATEGORY_WHERE = "SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ";
 	private static final String _FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ";
@@ -3918,7 +3919,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	private static final String _FILTER_SQL_COUNT_MBCATEGORY_WHERE = "SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "mbCategory";
 	private static final String _FILTER_ENTITY_TABLE = "MBCategory";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mbCategory.categoryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbCategory.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "MBCategory.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBCategory exists with the primary key ";

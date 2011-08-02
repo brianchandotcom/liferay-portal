@@ -17,12 +17,12 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("site.group");
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 UnicodeProperties groupTypeSettings = null;
 
-if (group != null) {
-	groupTypeSettings = group.getTypeSettingsProperties();
+if (liveGroup != null) {
+	groupTypeSettings = liveGroup.getTypeSettingsProperties();
 }
 else {
 	groupTypeSettings = new UnicodeProperties();

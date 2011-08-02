@@ -198,6 +198,10 @@
 			<finder-column name="DDMStructureId" />
 			<finder-column name="fileVersionId" />
 		</finder>
+        <finder name="F_V" return-type="DLFileEntryMetadata">
+			<finder-column name="fileEntryId" />
+			<finder-column name="fileVersionId" />
+		</finder>
 
 		<!-- References -->
 
@@ -475,6 +479,7 @@
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
+		<reference package-path="com.liferay.portal" entity="WorkflowDefinitionLink" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>

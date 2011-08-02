@@ -88,7 +88,68 @@ if ((selLayout != null) && !group.isLayoutPrototype()) {
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<aui:column columnWidth="25" cssClass="manage-sitemap">
 			<div class="lfr-header-row">
-				<div class="lfr-header-row-content"> </div>
+				<div class="lfr-header-row-content">
+
+					<%
+					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+					if (layoutSetBranchId <= 0) {
+						layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user);
+					}
+
+					LayoutSetBranch layoutSetBranch = null;
+
+					if (layoutSetBranchId > 0) {
+						layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+					}
+					%>
+
+					<c:if test="<%= (stagingGroup != null) && (layoutSetBranch != null) %>">
+
+						<%
+						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+						%>
+
+						<c:choose>
+							<c:when test="<%= layoutSetBranches.size() > 1 %>">
+								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" message="<%= layoutSetBranch.getName() %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' >
+
+									<%
+									for (int i = 0; i < layoutSetBranches.size(); i++) {
+										LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
+
+										boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
+									%>
+
+										<portlet:actionURL var="layoutSetBranchURL">
+											<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+											<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
+											<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+											<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+											<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
+										</portlet:actionURL>
+
+										<liferay-ui:icon
+											cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
+											image='<%= selected ? "../arrows/01_right" : "copy"  %>'
+											message="<%= curLayoutSetBranch.getName() %>"
+											url="<%= selected ? null : layoutSetBranchURL %>"
+										/>
+
+									<%
+									}
+									%>
+
+								</liferay-ui:icon-menu>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:icon cssClass="layoutset-branch" image="../dock/staging" label="<%= true %>" message="<%= layoutSetBranch.getName() %>" />
+							</c:otherwise>
+						</c:choose>
+
+						<liferay-ui:staging cssClass="manage-pages-branch-menu" extended="<%= true %>" groupId="<%= groupId %>" icon="/common/tool.png" message="" privateLayout="<%= privateLayout %>" selPlid="<%= selPlid %>" showManageBranches="<%= true %>"  />
+					</c:if>
+				</div>
 			</div>
 
 			<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">

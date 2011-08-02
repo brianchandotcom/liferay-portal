@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,7 +35,6 @@ import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;

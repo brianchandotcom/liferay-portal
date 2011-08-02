@@ -60,11 +60,25 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		return _settingsProperties;
 	}
 
+	public String getSettingsProperty(String key) {
+		UnicodeProperties settingsProperties = getSettingsProperties();
+
+		return settingsProperties.getProperty(key);
+	}
+
 	@Override
 	public void setSettings(String settings) {
 		_settingsProperties = null;
 
 		super.setSettings(settings);
+	}
+
+	public void setSettingsProperties(
+		UnicodeProperties settingsProperties) {
+
+		_settingsProperties = settingsProperties;
+
+		super.setSettings(settingsProperties.toString());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

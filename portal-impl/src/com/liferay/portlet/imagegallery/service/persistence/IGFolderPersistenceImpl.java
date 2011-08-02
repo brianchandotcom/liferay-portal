@@ -3722,6 +3722,7 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "igFolder.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "igFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(igFolder.name IS NULL OR igFolder.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igFolder.folderId";
 	private static final String _FILTER_SQL_SELECT_IGFOLDER_WHERE = "SELECT DISTINCT {igFolder.*} FROM IGFolder igFolder WHERE ";
 	private static final String _FILTER_SQL_SELECT_IGFOLDER_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {IGFolder.*} FROM (SELECT DISTINCT igFolder.folderId FROM IGFolder igFolder WHERE ";
@@ -3730,7 +3731,6 @@ public class IGFolderPersistenceImpl extends BasePersistenceImpl<IGFolder>
 	private static final String _FILTER_SQL_COUNT_IGFOLDER_WHERE = "SELECT COUNT(DISTINCT igFolder.folderId) AS COUNT_VALUE FROM IGFolder igFolder WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "igFolder";
 	private static final String _FILTER_ENTITY_TABLE = "IGFolder";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "igFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "IGFolder.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGFolder exists with the primary key ";

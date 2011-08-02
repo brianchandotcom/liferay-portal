@@ -2414,6 +2414,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_1 = "ddlRecordSet.recordSetKey IS NULL";
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_2 = "ddlRecordSet.recordSetKey = ?";
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_3 = "(ddlRecordSet.recordSetKey IS NULL OR ddlRecordSet.recordSetKey = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddlRecordSet.recordSetId";
 	private static final String _FILTER_SQL_SELECT_DDLRECORDSET_WHERE = "SELECT DISTINCT {ddlRecordSet.*} FROM DDLRecordSet ddlRecordSet WHERE ";
 	private static final String _FILTER_SQL_SELECT_DDLRECORDSET_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DDLRecordSet.*} FROM (SELECT DISTINCT ddlRecordSet.recordSetId FROM DDLRecordSet ddlRecordSet WHERE ";
@@ -2422,7 +2423,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	private static final String _FILTER_SQL_COUNT_DDLRECORDSET_WHERE = "SELECT COUNT(DISTINCT ddlRecordSet.recordSetId) AS COUNT_VALUE FROM DDLRecordSet ddlRecordSet WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "ddlRecordSet";
 	private static final String _FILTER_ENTITY_TABLE = "DDLRecordSet";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddlRecordSet.recordSetId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddlRecordSet.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDLRecordSet.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDLRecordSet exists with the primary key ";

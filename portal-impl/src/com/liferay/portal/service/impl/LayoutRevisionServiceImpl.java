@@ -54,19 +54,4 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 			serviceContext);
 	}
 
-	public void deleteLayoutRevisions(
-			long layoutSetBranchId, long layoutBranchId, long plid)
-		throws PortalException, SystemException {
-
-		LayoutSetBranch layoutSetBranch =
-			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), layoutSetBranch.getGroupId(),
-			ActionKeys.DELETE_LAYOUT_BRANCH);
-
-		layoutRevisionLocalService.deleteLayoutRevisions(
-			layoutSetBranchId, layoutBranchId, plid);
-	}
-
 }

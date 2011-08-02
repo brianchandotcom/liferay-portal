@@ -631,16 +631,16 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					request, plid, _portletName, renderParameters);
 			}
 
-			Enumeration<String> enu = request.getParameterNames();
+			Map<String, String[]> parameters = request.getParameterMap();
 
-			while (enu.hasMoreElements()) {
-				String name = enu.nextElement();
+			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+				String name = entry.getKey();
 
 				if (isInvalidParameter(name)) {
 					continue;
 				}
 
-				String[] values = request.getParameterValues(name);
+				String[] values = entry.getValue();
 
 				if (themeDisplay.isLifecycleRender()) {
 					renderParameters.put(name, values);
@@ -685,7 +685,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_session = new PortletSessionImpl(
 			_request, _portletName, _portletContext, _portalSessionId, plid);
 
-		long userId = PortalUtil.getUserId(request);
 		String remoteUser = request.getRemoteUser();
 
 		String userPrincipalStrategy = portlet.getUserPrincipalStrategy();
@@ -707,6 +706,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 		else {
+			long userId = PortalUtil.getUserId(request);
+
 			if ((userId > 0) && (remoteUser == null)) {
 				_remoteUser = String.valueOf(userId);
 				_remoteUserId = userId;

@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

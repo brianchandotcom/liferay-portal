@@ -16,4 +16,4 @@
 
 <%@ include file="/html/portlet/my_places/init.jsp" %>
 
-<liferay-ui:my-places />
+<liferay-ui:my-sites />

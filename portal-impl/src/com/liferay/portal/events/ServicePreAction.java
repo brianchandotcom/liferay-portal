@@ -61,6 +61,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
+import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -107,10 +108,12 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -203,7 +206,7 @@ public class ServicePreAction extends Action {
 			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
+			false, serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -301,7 +304,7 @@ public class ServicePreAction extends Action {
 			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
+			false, serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -390,7 +393,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), true);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), true, serviceContext);
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
@@ -398,7 +404,10 @@ public class ServicePreAction extends Action {
 
 		Group userGroup = user.getGroup();
 
-		LayoutLocalServiceUtil.deleteLayouts(userGroup.getGroupId(), false);
+		ServiceContext serviceContext = new ServiceContext();
+
+		LayoutLocalServiceUtil.deleteLayouts(
+			userGroup.getGroupId(), false, serviceContext);
 	}
 
 	protected Object[] getDefaultLayout(
@@ -1202,6 +1211,22 @@ public class ServicePreAction extends Action {
 			}
 		}
 
+		// Dynamic Site Template
+
+		if (layout != null) {
+			try {
+				if (processLayoutSetPrototype(layout)) {
+					layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Failed to process dynamic site templates: " +
+						e.getMessage());
+				}
+			}
+		}
+
 		if (layout != null) {
 			try {
 				Group group = layout.getGroup();
@@ -1591,11 +1616,19 @@ public class ServicePreAction extends Action {
 
 			Portlet groupPagesPortlet = PortletLocalServiceUtil.getPortletById(
 				PortletKeys.GROUP_PAGES);
+
+			siteContentPortlets.remove(groupPagesPortlet);
+
+			Portlet siteMembershipsAdminPortlet =
+				PortletLocalServiceUtil.getPortletById(
+					PortletKeys.SITE_MEMBERSHIPS_ADMIN);
+
+			siteContentPortlets.remove(siteMembershipsAdminPortlet);
+
 			Portlet siteSettingsPortlet =
 				PortletLocalServiceUtil.getPortletById(
 					PortletKeys.SITE_SETTINGS);
 
-			siteContentPortlets.remove(groupPagesPortlet);
 			siteContentPortlets.remove(siteSettingsPortlet);
 
 			showSiteContentIcon = PortletPermissionUtil.contains(
@@ -1650,24 +1683,10 @@ public class ServicePreAction extends Action {
 		String siteContentURL = urlControlPanel;
 
 		siteContentURL = HttpUtil.addParameter(
-			siteContentURL, "p_p_id", PortletKeys.RECENT_CONTENT);
-		siteContentURL = HttpUtil.addParameter(
 			siteContentURL, "controlPanelCategory",
 			PortletCategoryKeys.CONTENT);
 
 		themeDisplay.setURLSiteContent(siteContentURL);
-
-		PortletURL createAccountURL = new PortletURLImpl(
-			request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
-
-		createAccountURL.setWindowState(WindowState.MAXIMIZED);
-		createAccountURL.setPortletMode(PortletMode.VIEW);
-
-		createAccountURL.setParameter("saveLastPath", "0");
-		createAccountURL.setParameter(
-			"struts_action", "/login/create_account");
-
-		themeDisplay.setURLCreateAccount(createAccountURL);
 
 		String currentURL = PortalUtil.getCurrentURL(request);
 
@@ -2117,6 +2136,31 @@ public class ServicePreAction extends Action {
 		if (deleteDefaultUserPublicLayouts && user.hasPublicLayouts()) {
 			deleteDefaultUserPublicLayouts(user);
 		}
+	}
+
+	protected boolean processLayoutSetPrototype(Layout layout)
+		throws Exception {
+
+		if (SitesUtil.isLayoutToBeUpdatedFromTemplate(layout)) {
+			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
+				layout);
+
+			SitesUtil.copyLayout(templateLayout, layout, new ServiceContext());
+
+			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+			UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
+
+			typeSettings.put(
+				"layoutSetPrototypeLastCopyDate",
+				String.valueOf((new Date()).getTime()));
+
+			LayoutLocalServiceUtil.updateLayout(layout);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected File privateLARFile;

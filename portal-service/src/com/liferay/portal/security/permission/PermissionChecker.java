@@ -16,6 +16,8 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.model.User;
 
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -34,6 +36,12 @@ public interface PermissionChecker extends Cloneable {
 	 */
 	public long getCompanyId();
 
+	public List<Long> getGuestResourceBlockIds(
+		long companyId, long groupId, String name, String actionId);
+
+	public List<Long> getOwnerResourceBlockIds(
+		long companyId, long groupId, String name, String actionId);
+
 	/**
 	 * Returns the primary key of the owner role. This role is automatically
 	 * given to the creator of a resource.
@@ -41,6 +49,10 @@ public interface PermissionChecker extends Cloneable {
 	 * @return the primary key of the owner role
 	 */
 	public long getOwnerRoleId();
+
+	public List<Long> getResourceBlockIds(
+		long companyId, long groupId, long userId, String name,
+		String actionId);
 
 	/**
 	 * Returns the primary keys of the roles the user has within the group.

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -35,7 +36,6 @@ import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.IOException;
 import java.io.Writer;

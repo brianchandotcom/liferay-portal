@@ -379,6 +379,15 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		return _layoutSetPrototype.getSettingsProperties();
 	}
 
+	public java.lang.String getSettingsProperty(java.lang.String key) {
+		return _layoutSetPrototype.getSettingsProperty(key);
+	}
+
+	public void setSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+		_layoutSetPrototype.setSettingsProperties(settingsProperties);
+	}
+
 	public LayoutSetPrototype getWrappedLayoutSetPrototype() {
 		return _layoutSetPrototype;
 	}

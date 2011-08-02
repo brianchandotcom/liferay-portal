@@ -16,8 +16,8 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.SystemProperties;
 
 /**
  * @author Brian Wing Shun Chan

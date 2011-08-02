@@ -2887,6 +2887,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "assetVocabulary.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "assetVocabulary.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetVocabulary.name IS NULL OR assetVocabulary.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "assetVocabulary.vocabularyId";
 	private static final String _FILTER_SQL_SELECT_ASSETVOCABULARY_WHERE = "SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ";
 	private static final String _FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ";
@@ -2895,7 +2896,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static final String _FILTER_SQL_COUNT_ASSETVOCABULARY_WHERE = "SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "assetVocabulary";
 	private static final String _FILTER_ENTITY_TABLE = "AssetVocabulary";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "assetVocabulary.vocabularyId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetVocabulary.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "AssetVocabulary.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetVocabulary exists with the primary key ";

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -26,7 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.sharepoint.methods.MethodFactory;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

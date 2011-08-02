@@ -620,7 +620,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
 
 		String[] friendlyUrlParts = StringUtil.split(
-			feed.getTargetLayoutFriendlyUrl(), "/");
+			feed.getTargetLayoutFriendlyUrl(), '/');
 
 		String oldGroupFriendlyURL = friendlyUrlParts[2];
 
@@ -1716,7 +1716,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
 
 		String[] friendlyUrlParts = StringUtil.split(
-			feed.getTargetLayoutFriendlyUrl(), "/");
+			feed.getTargetLayoutFriendlyUrl(), '/');
 
 		String oldGroupFriendlyURL = friendlyUrlParts[2];
 

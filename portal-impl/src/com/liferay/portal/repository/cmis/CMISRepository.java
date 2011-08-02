@@ -109,8 +109,8 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public FileEntry addFileEntry(
-			long folderId, String mimeType, String title, String description,
-			String changeLog, InputStream is, long size,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

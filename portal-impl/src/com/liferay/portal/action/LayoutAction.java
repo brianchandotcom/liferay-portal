@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -101,7 +102,6 @@ import com.liferay.portlet.ResourceResponseFactory;
 import com.liferay.portlet.ResourceResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.login.util.LoginUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.InputStream;

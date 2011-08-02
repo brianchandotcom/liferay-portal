@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,7 +40,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -49,19 +47,16 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -115,13 +110,13 @@ public class CreateAnonymousAccountAction extends PortletAction {
 				jsonObject = updateIncompleteUser(
 					actionRequest, actionResponse);
 
-				writeJSON(actionRequest, actionResponse, jsonObject.toString());
+				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 		}
 		catch (Exception e) {
 			jsonObject.putException(e);
 
-			writeJSON(actionRequest, actionResponse, jsonObject.toString());
+			writeJSON(actionRequest, actionResponse, jsonObject);
 
 			if (e instanceof DuplicateUserEmailAddressException) {
 				User user = UserLocalServiceUtil.getUserByEmailAddress(
@@ -281,21 +276,6 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		}
 
 		return jsonObject;
-	}
-
-	protected void writeJSON(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			String json)
-		throws Exception {
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
-
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
-
-		ServletResponseUtil.write(response, json);
-
-		setForward(portletRequest, ActionConstants.COMMON_NULL);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

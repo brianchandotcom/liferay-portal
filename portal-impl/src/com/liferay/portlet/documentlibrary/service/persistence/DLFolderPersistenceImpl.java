@@ -51,6 +51,7 @@ import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
+import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -5816,6 +5817,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected UserPersistence userPersistence;
 	@BeanReference(type = WebDAVPropsPersistence.class)
 	protected WebDAVPropsPersistence webDAVPropsPersistence;
+	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
+	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
@@ -6034,6 +6037,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "dlFolder.name IS NULL";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "dlFolder.name = ?";
 	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(dlFolder.name IS NULL OR dlFolder.name = ?)";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFolder.folderId";
 	private static final String _FILTER_SQL_SELECT_DLFOLDER_WHERE = "SELECT DISTINCT {dlFolder.*} FROM DLFolder dlFolder WHERE ";
 	private static final String _FILTER_SQL_SELECT_DLFOLDER_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DLFolder.*} FROM (SELECT DISTINCT dlFolder.folderId FROM DLFolder dlFolder WHERE ";
@@ -6042,7 +6046,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FILTER_SQL_COUNT_DLFOLDER_WHERE = "SELECT COUNT(DISTINCT dlFolder.folderId) AS COUNT_VALUE FROM DLFolder dlFolder WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "dlFolder";
 	private static final String _FILTER_ENTITY_TABLE = "DLFolder";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFolder.folderId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFolder.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFolder.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFolder exists with the primary key ";

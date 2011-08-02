@@ -24,12 +24,6 @@ Liferay = window.Liferay || {};
 		ajax: function(options, callback) {
 			var instance = this;
 
-			var type = 'POST';
-
-			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-				type = 'GET';
-			}
-
 			options.serviceParameters = Service.getParameters(options);
 			options.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
 

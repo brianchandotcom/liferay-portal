@@ -6157,6 +6157,7 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 		return sql;
 	}
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igImage.imageId";
 	private static final String _FILTER_SQL_SELECT_IGIMAGE_WHERE = "SELECT DISTINCT {igImage.*} FROM IGImage igImage WHERE ";
 	private static final String _FILTER_SQL_SELECT_IGIMAGE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {IGImage.*} FROM (SELECT DISTINCT igImage.imageId FROM IGImage igImage WHERE ";
@@ -6165,7 +6166,6 @@ public class IGImagePersistenceImpl extends BasePersistenceImpl<IGImage>
 	private static final String _FILTER_SQL_COUNT_IGIMAGE_WHERE = "SELECT COUNT(DISTINCT igImage.imageId) AS COUNT_VALUE FROM IGImage igImage WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "igImage";
 	private static final String _FILTER_ENTITY_TABLE = "IGImage";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "igImage.imageId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "igImage.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "IGImage.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No IGImage exists with the primary key ";

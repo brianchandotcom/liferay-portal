@@ -371,8 +371,8 @@ numberFormat.setMinimumIntegerDigits(2);
 											<%
 											for (String parameter : convertProcess.getParameterNames()) {
 												if (parameter.contains(StringPool.EQUAL) && parameter.contains(StringPool.SEMICOLON)) {
-													String[] parameterPair = StringUtil.split(parameter, StringPool.EQUAL);
-													String[] parameterSelectEntries = StringUtil.split(parameterPair[1], StringPool.SEMICOLON);
+													String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
+													String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
 											%>
 
 												<aui:select label="<%= parameterPair[0] %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterPair[0] %>">
@@ -392,7 +392,7 @@ numberFormat.setMinimumIntegerDigits(2);
 											<%
 												}
 												else {
-													String[] parameterPair = StringUtil.split(parameter, StringPool.EQUAL);
+													String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
 
 													String parameterName = null;
 													String parameterType = null;

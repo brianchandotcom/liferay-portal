@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.manage-layout-set-branches-tab, .manage-page-variations {
-		margin-left: 1em;
-	}
-
 	.staging-tabview-list {
 		border-color: #555;
 		border-width: 0 0 1px;
@@ -55,11 +51,34 @@
 	}
 
 	.aui-tab-active {
+		.layoutset-branches-menu.lfr-actions {
+			li .taglib-text {
+				color: #FFFFFF;
+			}
+			.lfr-trigger strong {
+				padding: 0;
+				text-shadow: 1px 1px #000;
+			}
+		}
+
 		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
 			background-color: #EEE;
 			background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
 		}
 	}
+
+	.branch-results {
+		min-height: 300px;
+	}
+
+	.layoutset-branches-menu.lfr-actions {
+		float: none;
+
+		.lfr-trigger strong {
+			display: inline;
+		}
+	}
+
 
 	.staging-bar {
 		background-color: #888;
@@ -71,7 +90,7 @@
 		.staging-tabview-content {
 			border-bottom: 1px solid #636364;
 			color: #EEE;
-			padding: 1em;
+			padding: 0.5em 1em;
 
 			.staging-icon {
 				float: left;
@@ -97,62 +116,69 @@
 				.variations-tabview-list {
 					margin-top: 1em;
 				}
-			}
 
-			.layout-title {
-				font-size: 1.2em;
+				.variations-tabview-content {
+					overflow: hidden;
 
-				label {
-					float: left;
-				}
+					.layout-branch-description {
+						font-style: italic;
+						margin-bottom: 0.5em;
+					}
 
-				.layout-breadcrumb {
-					font-size: 1em;
-
-					.breadcrumbs a {
+					.manage-layout-branches-tab a {
 						color: #EEE;
 					}
 
-					.breadcrumbs-horizontal {
-						margin-bottom: 0;
-						overflow: hidden;
-						padding-left: 0.5em;
+					.layout-actions:after {
+						clear: both;
+						content: ".";
+						display: block;
+						height: 0;
+						visibility: hidden;
+					}
 
-						li {
-							background-image: url(<%= themeImagesPath %>/arrows/09_right.png);
+					.layout-revision-details {
+						float: left;
+					}
 
-							&.last {
-								background-image: none;
-								font-weight: bold;
-								position: relative;
-								text-decoration: none;
-								top: -0.2em;
+					.layout-revision-id {
+						font-size: 0.6em;
+					}
+				}
+
+				.layout-title {
+					font-size: 1.2em;
+
+					label {
+						float: left;
+					}
+
+					.layout-breadcrumb {
+						font-size: 1em;
+
+						.breadcrumbs a {
+							color: #EEE;
+						}
+
+						.breadcrumbs-horizontal {
+							margin-bottom: 0;
+							overflow: hidden;
+							padding-left: 0.5em;
+
+							li {
+								background-image: url(<%= themeImagesPath %>/arrows/09_right.png);
+
+								&.last {
+									background-image: none;
+									font-weight: bold;
+									position: relative;
+									text-decoration: none;
+									top: -0.2em;
+								}
 							}
 						}
 					}
 				}
-			}
-
-			.layout-actions {
-				.manage-page-variations a {
-					color: #EEE;
-				}
-			}
-
-			.layout-actions:after {
-				clear: both;
-				content: ".";
-				display: block;
-				height: 0;
-				visibility: hidden;
-			}
-
-			.layout-revision-details {
-				float: left;
-			}
-
-			.layout-revision-id {
-				font-size: 0.6em;
 			}
 
 			.last-publication-variation-details {
@@ -200,6 +226,7 @@
 			}
 
 			.layout-revision-toolbar {
+				float: left;
 				padding-left: 1em;
 			}
 		}

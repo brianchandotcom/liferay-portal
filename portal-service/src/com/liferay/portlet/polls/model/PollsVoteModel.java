@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -38,7 +40,7 @@ import java.util.Date;
  * @see com.liferay.portlet.polls.model.impl.PollsVoteModelImpl
  * @generated
  */
-public interface PollsVoteModel extends BaseModel<PollsVote> {
+public interface PollsVoteModel extends AuditedModel, BaseModel<PollsVote> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,6 +76,20 @@ public interface PollsVoteModel extends BaseModel<PollsVote> {
 	public void setVoteId(long voteId);
 
 	/**
+	 * Returns the company ID of this polls vote.
+	 *
+	 * @return the company ID of this polls vote
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this polls vote.
+	 *
+	 * @param companyId the company ID of this polls vote
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the user ID of this polls vote.
 	 *
 	 * @return the user ID of this polls vote
@@ -101,6 +117,49 @@ public interface PollsVoteModel extends BaseModel<PollsVote> {
 	 * @param userUuid the user uuid of this polls vote
 	 */
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this polls vote.
+	 *
+	 * @return the user name of this polls vote
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this polls vote.
+	 *
+	 * @param userName the user name of this polls vote
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this polls vote.
+	 *
+	 * @return the create date of this polls vote
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this polls vote.
+	 *
+	 * @param createDate the create date of this polls vote
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this polls vote.
+	 *
+	 * @return the modified date of this polls vote
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this polls vote.
+	 *
+	 * @param modifiedDate the modified date of this polls vote
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the question ID of this polls vote.

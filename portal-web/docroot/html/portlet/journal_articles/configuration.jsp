@@ -60,10 +60,10 @@ if (Validator.isNotNull(structureId)) {
 					<aui:option label="global" selected="<%= groupId == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 
 					<%
-					List<Group> myPlaces = user.getMyPlaces();
+					List<Group> mySites = user.getMySites();
 
-					for (int i = 0; i < myPlaces.size(); i++) {
-						Group group = myPlaces.get(i);
+					for (int i = 0; i < mySites.size(); i++) {
+						Group group = mySites.get(i);
 
 						String groupName = HtmlUtil.escape(group.getDescriptiveName());
 

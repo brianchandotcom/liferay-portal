@@ -14,6 +14,7 @@
 
 package com.liferay.portal.sharepoint.methods;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,7 +23,6 @@ import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointRequest;
 import com.liferay.portal.sharepoint.SharepointStorage;
 import com.liferay.portal.sharepoint.Tree;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.InputStream;
 

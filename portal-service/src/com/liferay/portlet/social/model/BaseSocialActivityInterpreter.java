@@ -69,7 +69,7 @@ public abstract class BaseSocialActivityInterpreter
 
 			String groupDisplayURL =
 				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/my_places/view?groupId=" +  group.getGroupId();
+					"/my_sites/view?groupId=" +  group.getGroupId();
 
 			if (group.hasPublicLayouts()) {
 				groupDisplayURL = groupDisplayURL + "&privateLayout=0";

@@ -15,11 +15,11 @@
 package com.liferay.portlet.search.action;
 
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -164,7 +164,7 @@ public class DLFolderAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			groupId, repositoryId, parentFolderId, title, summary,
+			groupId, repositoryId, false, parentFolderId, title, summary,
 			serviceContext);
 
 		return dlFolder;
@@ -176,10 +176,15 @@ public class DLFolderAtomCollectionAdapter
 			String content, Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
+		long defaultFileEntryTypeId = 0;
+		List<Long> fileEntryTypeIds = new ArrayList<Long>();
+		boolean overrideFileEntryTypes = false;
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFolderServiceUtil.updateFolder(
-			dlFolder.getFolderId(), title, summary, serviceContext);
+			dlFolder.getFolderId(), title, summary, defaultFileEntryTypeId,
+			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
 	private static final String _COLLECTION_NAME = "folders";

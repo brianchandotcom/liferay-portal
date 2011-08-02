@@ -88,7 +88,7 @@ String property = (String)request.getAttribute("liferay-ui:write:property");
 				List<Organization> organizations = user2.getOrganizations();
 				%>
 
-				<%= HtmlUtil.escape(ListUtil.toString(organizations, "name", StringPool.COMMA_AND_SPACE)) %>
+				<%= HtmlUtil.escape(ListUtil.toString(organizations, Organization.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>
 			</c:when>
 			<c:when test='<%= property.equals("user-groups") %>'>
 
@@ -96,7 +96,7 @@ String property = (String)request.getAttribute("liferay-ui:write:property");
 				List<UserGroup> userGroups = user2.getUserGroups();
 				%>
 
-				<%= HtmlUtil.escape(ListUtil.toString(userGroups, "name", StringPool.COMMA_AND_SPACE)) %>
+				<%= HtmlUtil.escape(ListUtil.toString(userGroups, UserGroup.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>
 			</c:when>
 		</c:choose>
 	</c:when>

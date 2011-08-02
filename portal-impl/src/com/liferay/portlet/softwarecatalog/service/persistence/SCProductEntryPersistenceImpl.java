@@ -3681,6 +3681,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_1 = "scProductEntry.repoArtifactId IS NULL";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_2 = "lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?))";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?)))";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scProductEntry.productEntryId";
 	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT DISTINCT {scProductEntry.*} FROM SCProductEntry scProductEntry WHERE ";
 	private static final String _FILTER_SQL_SELECT_SCPRODUCTENTRY_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {SCProductEntry.*} FROM (SELECT DISTINCT scProductEntry.productEntryId FROM SCProductEntry scProductEntry WHERE ";
@@ -3689,7 +3690,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	private static final String _FILTER_SQL_COUNT_SCPRODUCTENTRY_WHERE = "SELECT COUNT(DISTINCT scProductEntry.productEntryId) AS COUNT_VALUE FROM SCProductEntry scProductEntry WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "scProductEntry";
 	private static final String _FILTER_ENTITY_TABLE = "SCProductEntry";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scProductEntry.productEntryId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scProductEntry.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "SCProductEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductEntry exists with the primary key ";

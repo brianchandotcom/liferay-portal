@@ -27,7 +27,7 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 public class ShoppingCartItemImpl implements ShoppingCartItem {
 
 	public static String[] getFieldsArray(String fields) {
-		return StringUtil.split(fields, "&");
+		return StringUtil.split(fields, '&');
 	}
 
 	public ShoppingCartItemImpl(ShoppingItem item, String fields) {

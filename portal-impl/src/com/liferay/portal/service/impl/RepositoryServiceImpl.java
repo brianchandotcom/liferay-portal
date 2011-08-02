@@ -460,10 +460,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			throw new RepositoryNameException();
 		}
 
-		serviceContext.setAttribute("mountPoint", Boolean.TRUE);
-
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
-			user.getUserId(), groupId, repositoryId, parentFolderId, name,
+			user.getUserId(), groupId, repositoryId, true, parentFolderId, name,
 			description, serviceContext);
 
 		return dlFolder.getFolderId();

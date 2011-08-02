@@ -136,7 +136,7 @@ public class SybaseDB extends BaseDB {
 					REWORD_TEMPLATE, template);
 			}
 			else if (line.indexOf(DROP_INDEX) != -1) {
-				String[] tokens = StringUtil.split(line, " ");
+				String[] tokens = StringUtil.split(line, ' ');
 
 				String tableName = tokens[4];
 

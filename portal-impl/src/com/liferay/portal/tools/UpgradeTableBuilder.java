@@ -236,7 +236,7 @@ public class UpgradeTableBuilder {
 		sb.append(className);
 		sb.append(" {\n\n");
 
-		String[] lines = StringUtil.split(content, "\n");
+		String[] lines = StringUtil.splitLines(content);
 
 		for (String line : lines) {
 			if (line.startsWith("public static") ||

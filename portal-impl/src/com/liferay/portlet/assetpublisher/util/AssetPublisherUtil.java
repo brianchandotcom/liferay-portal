@@ -17,6 +17,7 @@ package com.liferay.portlet.assetpublisher.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -305,7 +306,7 @@ public class AssetPublisherUtil {
 			for (int i = 0; i < scopeIds.length; i++) {
 				try {
 					String[] scopeIdFragments = StringUtil.split(
-						scopeIds[i], StringPool.UNDERLINE);
+						scopeIds[i], CharPool.UNDERLINE);
 
 					if (scopeIdFragments[0].equals("Layout")) {
 						long scopeIdLayoutId = GetterUtil.getLong(

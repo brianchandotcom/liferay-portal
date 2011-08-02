@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -333,7 +334,7 @@ public class AssetCategoryFinderImpl
 	protected void setJoin(QueryPos qPos, String[] categoryProperties) {
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i], StringPool.COLON);
+				categoryProperties[i], CharPool.COLON);
 
 			String key = StringPool.BLANK;
 

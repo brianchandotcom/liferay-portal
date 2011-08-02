@@ -5,6 +5,8 @@ AUI().add(
 
 		var EMPTY_FN = Lang.emptyFn;
 
+		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
+
 		var Ratings = A.Component.create(
 			{
 				ATTRS: {
@@ -35,21 +37,35 @@ AUI().add(
 						instance.ratings.after('itemSelect', instance._itemSelect, instance);
 					},
 
-					_getLabel: function(desc, totalEntries, ratingScore) {
+					_convertToIndex: function(score) {
 						var instance = this;
 
-						var labelScoreTpl = '{desc} ({totalEntries} {voteLabel}) {ratingScoreLabel}';
+						var scoreIndex = -1;
 
-						var ratingScoreLabel = '';
-
-						if (ratingScore || ratingScore == 0) {
-							ratingScoreLabelMessage = A.substitute(
-								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
-								[ratingScore, instance.get('size')]
-							);
-
-							ratingScoreLabel = '<span class="aui-helper-hidden-accessible">' + ratingScoreLabelMessage + '</span>';
+						if (score == 1.0) {
+							scoreIndex = 0;
 						}
+						else if (score == -1.0) {
+							scoreIndex = 1;
+						}
+
+						return scoreIndex;
+					},
+
+					_fixScore: function(score) {
+						var instance = this;
+
+						var prefix = '';
+
+						if (score > 0) {
+							prefix = '+';
+						}
+
+						return prefix + score;
+					},
+
+					_getLabel: function(desc, totalEntries, ratingScore) {
+						var instance = this;
 
 						var voteLabel = '';
 
@@ -60,11 +76,10 @@ AUI().add(
 							voteLabel = Liferay.Language.get('votes');
 						}
 
-						return A.substitute(
-							labelScoreTpl,
+						return Lang.sub(
+							TPL_LABEL_SCORE,
 							{
 								desc: desc,
-								ratingScoreLabel: ratingScoreLabel,
 								totalEntries: totalEntries,
 								voteLabel: voteLabel
 							}
@@ -100,6 +115,8 @@ AUI().add(
 
 						var ratingScore = instance.ratingScore;
 
+						var message = '';
+
 						var stars = ratingScore.get('selectedIndex') + 1;
 
 						if (stars == 1) {
@@ -109,32 +126,24 @@ AUI().add(
 							message = Liferay.Language.get('stars');
 						}
 
-						message = ' ' + message;
-
-						var el = event.currentTarget.getDOM();
-
-						Liferay.Portal.ToolTip.show(el, stars + message);
+						Liferay.Portal.ToolTip.show(event.currentTarget, stars + ' ' + message);
 					},
 
-					_fixScore: function(score) {
+					_updateAverageScoreText: function(averageScore) {
 						var instance = this;
 
-						return (score > 0) ? ('+' + score) : (score + '');
-					},
+						var ratingScore = instance.ratingScore;
 
-					_convertToIndex: function(score) {
-						var instance = this;
+						var firstImage = ratingScore.get('boundingBox').one('img.aui-rating-element');
 
-						var scoreindex = -1;
+						if (firstImage) {
+							var averageRatingText = Lang.sub(
+								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
+								[averageScore, instance.get('size')]
+							);
 
-						if (score == 1.0) {
-							scoreindex = 0;
+							firstImage.attr('alt', averageRatingText);
 						}
-						else if (score == -1.0) {
-							scoreindex = 1;
-						}
-
-						return scoreindex;
 					}
 				},
 
@@ -238,6 +247,8 @@ AUI().add(
 
 						ratingScore.set('label', label);
 						ratingScore.select(averageIndex);
+
+						instance._updateAverageScoreText(json.averageScore);
 					}
 				}
 			}
@@ -253,6 +264,7 @@ AUI().add(
 
 						if (themeDisplay.isSignedIn()) {
 							var description = instance._fixScore(instance.get('totalScore'));
+
 							var totalEntries = instance.get('totalEntries');
 							var averageScore = instance.get('averageScore');
 							var size = instance.get('size');

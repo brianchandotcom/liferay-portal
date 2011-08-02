@@ -2364,6 +2364,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static final String _FINDER_COLUMN_CLASSNAMEID_CLASSNAMEID_2 = "ddmStructureLink.classNameId = ?";
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 = "ddmStructureLink.classPK = ?";
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStructureLink.structureId = ?";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmStructureLink.structureLinkId";
 	private static final String _FILTER_SQL_SELECT_DDMSTRUCTURELINK_WHERE = "SELECT DISTINCT {ddmStructureLink.*} FROM DDMStructureLink ddmStructureLink WHERE ";
 	private static final String _FILTER_SQL_SELECT_DDMSTRUCTURELINK_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {DDMStructureLink.*} FROM (SELECT DISTINCT ddmStructureLink.structureLinkId FROM DDMStructureLink ddmStructureLink WHERE ";
@@ -2372,7 +2373,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static final String _FILTER_SQL_COUNT_DDMSTRUCTURELINK_WHERE = "SELECT COUNT(DISTINCT ddmStructureLink.structureLinkId) AS COUNT_VALUE FROM DDMStructureLink ddmStructureLink WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "ddmStructureLink";
 	private static final String _FILTER_ENTITY_TABLE = "DDMStructureLink";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "ddmStructureLink.structureLinkId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureLink.";
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMStructureLink.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMStructureLink exists with the primary key ";

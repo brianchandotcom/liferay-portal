@@ -52,8 +52,9 @@
 <%@ page import="com.liferay.portal.util.CustomJspRegistryUtil" %>
 <%@ page import="com.liferay.portal.util.LayoutLister" %>
 <%@ page import="com.liferay.portal.util.LayoutView" %>
-<%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 <%@ page import="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil" %>
+<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
+<%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

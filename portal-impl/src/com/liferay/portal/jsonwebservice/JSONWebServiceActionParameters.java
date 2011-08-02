@@ -19,12 +19,16 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import jodd.util.KeyValue;
 
 /**
  * <a href="ActionParameters.java.html"><b><i>View Source</i></b></a>
@@ -46,6 +50,10 @@ public class JSONWebServiceActionParameters {
 		_collectFromPath(pathParameters);
 		_collectFromRequestParameters(request);
 		_collectFromJSONRPCRequest(jsonRpcRequest);
+	}
+
+	public List<KeyValue<String, Object>> getInnerParameters(String baseName) {
+		return _innerParameters.get(baseName);
 	}
 
 	public JSONRPCRequest getJSONRPCRequest() {
@@ -112,20 +120,35 @@ public class JSONWebServiceActionParameters {
 		}
 
 		String[] pathParametersParts = StringUtil.split(
-			pathParameters, StringPool.SLASH);
+			pathParameters, CharPool.SLASH);
 
-		int length = (pathParametersParts.length / 2) * 2;
+		int i = 0;
 
-		for (int i = 0; i < length;) {
+		while (i < pathParametersParts.length) {
 			String name = pathParametersParts[i];
+
+			if (name.length() == 0) {
+				i++;
+
+				continue;
+			}
+
+			String value = null;
+
+			if (name.startsWith(StringPool.DASH)) {
+				name = name.substring(1);
+			}
+			else {
+				i++;
+
+				value = pathParametersParts[i];
+			}
 
 			name = jodd.util.StringUtil.wordsToCamelCase(name, CharPool.DASH);
 
-			String value = pathParametersParts[i + 1];
-
 			_parameters.put(name, value);
 
-			i += 2;
+			i++;
 		}
 	}
 
@@ -164,7 +187,44 @@ public class JSONWebServiceActionParameters {
 		}
 	}
 
+	private Map<String, List<KeyValue<String, Object>>> _innerParameters =
+		new HashMap<String, List<KeyValue<String, Object>>>();
 	private JSONRPCRequest _jsonRpcRequest;
-	private Map<String, Object> _parameters = new HashMap<String, Object>();
+	private Map<String, Object> _parameters = new HashMap<String, Object>() {
+
+		@Override
+		public Object put(String key, Object value) {
+
+			if (key.startsWith(StringPool.DASH)) {
+				key = key.substring(1);
+
+				value = null;
+			}
+
+			int pos = key.indexOf(CharPool.PERIOD);
+
+			if (pos != -1) {
+				String baseName = key.substring(0, pos);
+
+				String innerName = key.substring(pos + 1);
+
+				List<KeyValue<String, Object>> values =
+					_innerParameters.get(baseName);
+
+				if (values == null) {
+					values = new ArrayList<KeyValue<String, Object>>();
+
+					_innerParameters.put(baseName, values);
+				}
+
+				values.add(new KeyValue<String, Object>(innerName, value));
+
+				return value;
+			}
+
+			return super.put(key, value);
+		}
+
+	};
 
 }

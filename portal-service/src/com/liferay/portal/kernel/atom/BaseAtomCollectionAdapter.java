@@ -182,9 +182,12 @@ public abstract class BaseAtomCollectionAdapter<E>
 		}
 	}
 
-	protected abstract void doDeleteEntry(
+	protected void doDeleteEntry(
 			String resourceName, AtomRequestContext atomRequestContext)
-		throws Exception;
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected abstract E doGetEntry(
 			String resourceName, AtomRequestContext atomRequestContext)
@@ -194,10 +197,13 @@ public abstract class BaseAtomCollectionAdapter<E>
 			AtomRequestContext atomRequestContext)
 		throws Exception;
 
-	protected abstract E doPostEntry(
+	protected E doPostEntry(
 			String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
-		throws Exception;
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected E doPostMedia(
 			String mimeType, String slug, InputStream inputStream,
@@ -207,10 +213,13 @@ public abstract class BaseAtomCollectionAdapter<E>
 		throw new UnsupportedOperationException();
 	}
 
-	protected abstract void doPutEntry(
+	protected void doPutEntry(
 			E entry, String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
-		throws Exception;
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected void doPutMedia(
 			E entry, String mimeType, String slug, InputStream inputStream,

@@ -34,14 +34,6 @@ AUI().add(
 				branchDialog.show();
 			},
 
-			addRootLayoutRevision: function() {
-				var instance = this;
-
-				var variationDialog = instance._getVariationDialog();
-
-				variationDialog.show();
-			},
-
 			mergeBranch: function(options) {
 				var instance = this;
 
@@ -180,34 +172,6 @@ AUI().add(
 				updateBranchDialog.move(updateBranchDialog.get('x'), updateBranchDialog.get('y') + 100);
 
 				return updateBranchDialog;
-			},
-
-			_getVariationDialog: function() {
-				var instance = this;
-
-				var variationDialog = instance._variationDialog;
-
-				if (!variationDialog) {
-					var namespace = instance._namespace;
-
-					variationDialog = new A.Dialog(
-						{
-							align: {
-								points: ['tc', 'tc']
-							},
-							bodyContent: A.one('#' + namespace + 'addRootLayoutRevision').show(),
-							title: Liferay.Language.get('new-page-variation'),
-							modal: true,
-							width: 530
-						}
-					).render();
-
-					variationDialog.move(variationDialog.get('x'), variationDialog.get('y') + 100);
-
-					instance._variationDialog = variationDialog;
-				}
-
-				return variationDialog;
 			},
 
 			_onMergeBranch: function(node) {

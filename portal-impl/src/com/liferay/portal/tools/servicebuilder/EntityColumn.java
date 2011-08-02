@@ -21,27 +21,29 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Brian Wing Shun Chan
  * @author Charles May
+ * @author Shuyang Zhou
  */
 public class EntityColumn implements Cloneable {
 
 	public EntityColumn(String name) {
 		this(
-			name, null, null, false, false, null, null, null, true, true, null,
-			null, null, null, true, true, false, false);
+			name, null, null, false, false, false, null, null, null, true, true,
+			null, null, null, null, true, true, false, false);
 	}
 
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
-		boolean filterPrimary, String ejbName, String mappingKey,
-		String mappingTable, boolean caseSensitive, boolean orderByAscending,
-		String comparator, String arrayableOperator, String idType,
-		String idParam, boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean accessor, boolean filterPrimary, String ejbName,
+		String mappingKey, String mappingTable, boolean caseSensitive,
+		boolean orderByAscending, String comparator, String arrayableOperator,
+		String idType, String idParam, boolean convertNull, boolean lazy,
+		boolean localized, boolean jsonEnabled) {
 
 		_name = name;
 		_dbName = dbName;
 		_type = type;
 		_primary = primary;
+		_accessor = accessor;
 		_filterPrimary = filterPrimary;
 		_humanName = ServiceBuilder.toHumanName(name);
 		_methodName = TextFormatter.format(name, TextFormatter.G);
@@ -62,24 +64,25 @@ public class EntityColumn implements Cloneable {
 
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
-		boolean filterPrimary, String ejbName, String mappingKey,
-		String mappingTable, String idType, String idParam, boolean convertNull,
-		boolean lazy, boolean localized, boolean jsonEnabled) {
+		boolean accessor, boolean filterPrimary, String ejbName,
+		String mappingKey, String mappingTable, String idType, String idParam,
+		boolean convertNull, boolean lazy, boolean localized,
+		boolean jsonEnabled) {
 
 		this(
-			name, dbName, type, primary, filterPrimary, ejbName, mappingKey,
-			mappingTable, true, true, null, null, idType, idParam, convertNull,
-			lazy, localized, jsonEnabled);
+			name, dbName, type, primary, accessor, filterPrimary, ejbName,
+			mappingKey, mappingTable, true, true, null, null, idType, idParam,
+			convertNull, lazy, localized, jsonEnabled);
 	}
 
 	@Override
 	public Object clone() {
 		return new EntityColumn(
-			getName(), getDBName(), getType(), isPrimary(), isFilterPrimary(),
-			getEJBName(), getMappingKey(), getMappingTable(), isCaseSensitive(),
-			isOrderByAscending(), getComparator(), getArrayableOperator(),
-			getIdType(), getIdParam(), isConvertNull(), isLazy(), isLocalized(),
-			isJsonEnabled());
+			getName(), getDBName(), getType(), isPrimary(), isAccessor(),
+			isFilterPrimary(), getEJBName(), getMappingKey(), getMappingTable(),
+			isCaseSensitive(), isOrderByAscending(), getComparator(),
+			getArrayableOperator(), getIdType(), getIdParam(), isConvertNull(),
+			isLazy(), isLocalized(), isJsonEnabled());
 	}
 
 	@Override
@@ -202,6 +205,10 @@ public class EntityColumn implements Cloneable {
 	@Override
 	public int hashCode() {
 		return _name.hashCode();
+	}
+
+	public boolean isAccessor() {
+		return _accessor;
 	}
 
 	public boolean isArrayableAndOperator() {
@@ -379,6 +386,7 @@ public class EntityColumn implements Cloneable {
 		return comparator;
 	}
 
+	private boolean _accessor;
 	private String _arrayableOperator;
 	private boolean _caseSensitive;
 	private String _comparator;

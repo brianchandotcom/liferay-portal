@@ -443,10 +443,6 @@ public class ThemeDisplay implements Serializable {
 		return _urlControlPanel;
 	}
 
-	public PortletURL getURLCreateAccount() {
-		return _urlCreateAccount;
-	}
-
 	public String getURLCurrent() {
 		return _urlCurrent;
 	}
@@ -1155,10 +1151,6 @@ public class ThemeDisplay implements Serializable {
 		_urlControlPanel = urlControlPanel;
 	}
 
-	public void setURLCreateAccount(PortletURL urlCreateAccount) {
-		_urlCreateAccount = urlCreateAccount;
-	}
-
 	public void setURLCurrent(String urlCurrent) {
 		_urlCurrent = urlCurrent;
 	}
@@ -1343,7 +1335,6 @@ public class ThemeDisplay implements Serializable {
 	private List<Layout> _unfilteredLayouts;
 	private String _urlAddContent = StringPool.BLANK;
 	private String _urlControlPanel = StringPool.BLANK;
-	private transient PortletURL _urlCreateAccount = null;
 	private String _urlCurrent = StringPool.BLANK;
 	private String _urlHome = StringPool.BLANK;
 	private String _urlLayoutTemplates = StringPool.BLANK;

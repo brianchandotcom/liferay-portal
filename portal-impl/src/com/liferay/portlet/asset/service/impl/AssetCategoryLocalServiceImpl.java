@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.service.impl;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -115,7 +116,7 @@ public class AssetCategoryLocalServiceImpl
 
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i], StringPool.COLON);
+				categoryProperties[i], CharPool.COLON);
 
 			String key = StringPool.BLANK;
 			String value = StringPool.BLANK;
@@ -438,7 +439,7 @@ public class AssetCategoryLocalServiceImpl
 
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i], StringPool.COLON);
+				categoryProperties[i], CharPool.COLON);
 
 			String key = StringPool.BLANK;
 
@@ -461,13 +462,15 @@ public class AssetCategoryLocalServiceImpl
 		return category;
 	}
 
-	protected long[] getCategoryIds(List <AssetCategory>categories) {
+	protected long[] getCategoryIds(List<AssetCategory> categories) {
 		return StringUtil.split(
-			ListUtil.toString(categories, "categoryId"), 0L);
+			ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR),
+			0L);
 	}
 
 	protected String[] getCategoryNames(List<AssetCategory> categories) {
-		return StringUtil.split(ListUtil.toString(categories, "name"));
+		return StringUtil.split(
+			ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
 	}
 
 	protected void updateChildrenVocabularyId (

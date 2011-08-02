@@ -14,13 +14,13 @@
 
 package com.liferay.portal.servlet.filters.themepreview;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.strip.StripFilter;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

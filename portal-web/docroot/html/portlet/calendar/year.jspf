@@ -21,7 +21,7 @@
 		<tr>
 			<td>
 				<a href="<%= urlWithoutAnchor %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear - 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) + urlAnchor %>">
-				<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
+				<img alt="<liferay-ui:message key="previous" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_left.png" />
 				</a>
 			</td>
 			<td>
@@ -46,7 +46,7 @@
 			</td>
 			<td>
 				<a href="<%= urlWithoutAnchor %>&<portlet:namespace />month=<%= selMonth %>&<portlet:namespace />day=<%= selDay %>&<portlet:namespace />year=<%= selYear + 1 %>&<portlet:namespace />eventType=<%= HtmlUtil.escape(eventType) + urlAnchor %>">
-				<img border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
+				<img alt="<liferay-ui:message key="next" />" border="0" src="<%= themeDisplay.getPathThemeImages() %>/arrows/01_right.png" />
 				</a>
 			</td>
 		</tr>

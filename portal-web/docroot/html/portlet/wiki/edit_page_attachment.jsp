@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
+themeDisplay.setIncludeServiceJs(true);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
@@ -33,7 +35,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPageAttachmentURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editPageAttachmentURL %>" enctype="multipart/form-data" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -105,15 +107,116 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 %>
 
 <aui:script use="liferay-upload">
+	var params = {
+		nodeId: <%= node.getNodeId() %>,
+		tempFolderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentAction'
+	};
+
+	var service = {
+		method : Liferay.Service.Wiki.WikiPage.getTempPageAttachmentNames,
+		params : params
+	};
+
 	new Liferay.Upload(
 		{
 			allowedFileTypes: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
 			container: '#<portlet:namespace />fileUpload',
-			fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
+			deleteFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />',
 			fallbackContainer: '#<portlet:namespace />fallback',
+			fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> / 1024,
 			namespace: '<portlet:namespace />',
-			uploadFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticket=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
+			service: service,
+			uploadFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
+	);
+</aui:script>
+
+<portlet:actionURL var="editMultiplePageAttachmentsURL">
+	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
+	<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= editMultiplePageAttachmentsURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateMultiplePageAttachments();" %>'>
+	<span id="<portlet:namespace />selectedFileNameContainer"></span>
+
+	<aui:button type="submit" />
+</aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />updateMultiplePageAttachments',
+		function() {
+			var A = AUI();
+			var Lang = A.Lang;
+
+			var selectedFileNameContainer = A.one('#<portlet:namespace />selectedFileNameContainer');
+
+			var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
+
+			var values = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]:checked').val();
+
+			var buffer = [];
+			var dataBuffer = [];
+			var length = values.length;
+
+			for (var i = 0; i < length; i++) {
+				dataBuffer[0] = i;
+				dataBuffer[1] = values[i];
+
+				buffer[i] = Lang.sub(inputTpl, dataBuffer);
+			}
+
+			selectedFileNameContainer.html(buffer.join(''));
+
+			A.io.request(
+				document.<portlet:namespace />fm2.action,
+				{
+					dataType: 'json',
+					form: {
+						id: document.<portlet:namespace />fm2
+					},
+					after: {
+						success: function(event, id, obj) {
+							var jsonArray = this.get('responseData');
+
+							for (var i = 0; i < jsonArray.length; i++) {
+								var item = jsonArray[i];
+
+								var checkBox = A.one('input[data-fileName=' + item.fileName + ']');
+
+								checkBox.attr('checked', false);
+								checkBox.hide();
+
+								var li = checkBox.ancestor();
+
+								li.removeClass('selectable').removeClass('selected');
+
+								var cssClass = null;
+								var childHTML = null;
+
+								if (item.added) {
+									cssClass = 'file-saved';
+
+									childHTML = '<span class="success-message"><%= LanguageUtil.get(pageContext, "successfully-saved") %></span>';
+								}
+								else {
+									cssClass = 'upload-error';
+
+									childHTML = '<span class="error-message">' + item.errorMessage + '</span>';
+								}
+
+								li.addClass(cssClass);
+								li.append(childHTML);
+							}
+						}
+					}
+				}
+			);
+		},
+		['aui-base']
 	);
 </aui:script>

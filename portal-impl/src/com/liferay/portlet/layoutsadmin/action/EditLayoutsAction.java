@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutBranchConstants;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
@@ -58,11 +57,9 @@ import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.service.LayoutRevisionServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -146,9 +143,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				SitesUtil.deleteLayout(actionRequest, actionResponse);
 			}
-			else if (cmd.equals("add_layout_branch")) {
-				addLayoutBranch(actionRequest);
-			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
 			}
@@ -157,9 +151,6 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (cmd.equals("delete_layout_revision")) {
 				deleteLayoutRevision(actionRequest);
-			}
-			else if (cmd.equals("delete_layout_branch")) {
-				deleteLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
@@ -335,25 +326,6 @@ public class EditLayoutsAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void addLayoutBranch(ActionRequest actionRequest)
-		throws Exception {
-
-		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "mergeLayoutRevisionId");
-		String name = ParamUtil.getString(
-			actionRequest, "name",
-			LayoutBranchConstants.MASTER_BRANCH_NAME);
-		String description = ParamUtil.getString(
-			actionRequest, "description",
-			LayoutBranchConstants.MASTER_BRANCH_DESCRIPTION);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		LayoutBranchLocalServiceUtil.addLayoutBranch(
-			layoutRevisionId, name, description, false, serviceContext);
-	}
-
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
@@ -491,22 +463,6 @@ public class EditLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected void deleteLayoutBranch(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		LayoutRevisionServiceUtil.deleteLayoutRevisions(
-			layoutSetBranchId, layoutBranchId, themeDisplay.getPlid());
-	}
-
 	protected void deleteThemeSettings(
 		UnicodeProperties typeSettingsProperties, String device) {
 
@@ -543,8 +499,8 @@ public class EditLayoutsAction extends PortletAction {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		LayoutRevisionLocalServiceUtil.addLayoutRevision(
-			serviceContext.getUserId(), layoutBranchId,
-			incompleteLayoutRevision.getLayoutSetBranchId(),
+			serviceContext.getUserId(),
+			incompleteLayoutRevision.getLayoutSetBranchId(), layoutBranchId,
 			incompleteLayoutRevision.getLayoutRevisionId(), false,
 			incompleteLayoutRevision.getPlid(),
 			incompleteLayoutRevision.isPrivateLayout(),
@@ -622,8 +578,11 @@ public class EditLayoutsAction extends PortletAction {
 		long[] layoutIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "layoutIds"), 0L);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds);
+			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	protected Object[] updateLayout(
@@ -663,6 +622,7 @@ public class EditLayoutsAction extends PortletAction {
 		boolean iconImage = ParamUtil.getBoolean(uploadRequest, "iconImage");
 		byte[] iconBytes = FileUtil.getBytes(
 			uploadRequest.getFile("iconFileName"));
+		boolean locked = ParamUtil.getBoolean(uploadRequest, "locked");
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadRequest, "layoutPrototypeId");
 
@@ -692,7 +652,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
-					parentLayout.getType(), hidden, friendlyURL,
+					parentLayout.getType(), hidden, friendlyURL, locked,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -716,7 +676,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
-					layoutPrototypeLayout.getType(), false, friendlyURL,
+					layoutPrototypeLayout.getType(), false, friendlyURL, locked,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -739,7 +699,7 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap, type,
-					hidden, friendlyURL, serviceContext);
+					hidden, friendlyURL, locked, serviceContext);
 			}
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
@@ -757,7 +717,7 @@ public class EditLayoutsAction extends PortletAction {
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 				type, hidden, friendlyURL, Boolean.valueOf(iconImage),
-				iconBytes, serviceContext);
+				iconBytes, locked, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 

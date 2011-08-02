@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Permission service. Represents a row in the &quot;Permission_&quot; database table, with each column mapped to a property of this class.
  *
@@ -29,6 +31,12 @@ public interface Permission extends PermissionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.PermissionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Permission, Long> PERMISSION_ID_ACCESSOR = new Accessor<Permission, Long>() {
+			public Long get(Permission permission) {
+				return permission.getPermissionId();
+			}
+		};
+
 	public java.lang.String getName();
 
 	public java.lang.String getPrimKey();

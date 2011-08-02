@@ -388,8 +388,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<target name="test-class" depends="compile,compile-test" if="class">
 		<junit dir="${project.dir}" fork="on" forkmode="once" outputtoformatters="false" printsummary="on" showoutput="true">
 			<jvmarg line="${junit.debug.jpda}" />
-			<jvmarg value="-Xmx512m" />
-			<jvmarg value="-XX:MaxPermSize=128m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-XX:MaxPermSize=256m" />
 			<jvmarg value="-Duser.timezone=GMT" />
 			<jvmarg value="-Dexternal-properties=${test.properties}" />
 			<classpath refid="test.classpath" />

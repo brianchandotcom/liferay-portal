@@ -41,8 +41,9 @@ import java.util.List;
 public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	public DLFolder addFolder(
-			long groupId, long repositoryId, long parentFolderId, String name,
-			String description, ServiceContext serviceContext)
+			long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFolderPermission.check(
@@ -50,8 +51,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			ActionKeys.ADD_FOLDER);
 
 		return dlFolderLocalService.addFolder(
-			getUserId(), groupId, repositoryId, parentFolderId, name,
-			description, serviceContext);
+			getUserId(), groupId, repositoryId, mountPoint, parentFolderId,
+			name, description, serviceContext);
 	}
 
 	public void deleteFolder(long folderId)
@@ -270,9 +271,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return inheritable;
 	}
 
-	public boolean isFolderLocked(long folderId)
-		throws PortalException, SystemException {
-
+	public boolean isFolderLocked(long folderId) throws SystemException {
 		return lockLocalService.isLocked(DLFolder.class.getName(), folderId);
 	}
 
@@ -363,7 +362,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	public DLFolder updateFolder(
 			long folderId, String name, String description,
-			ServiceContext serviceContext)
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
@@ -385,7 +385,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		try {
 			return dlFolderLocalService.updateFolder(
-				folderId, name, description, serviceContext);
+				folderId, name, description, defaultFileEntryTypeId,
+				fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 		}
 		finally {
 			if (!hasLock) {

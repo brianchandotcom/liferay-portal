@@ -154,7 +154,7 @@ List<Group> groups = new ArrayList<Group>(mvp.keySet());
 			<portlet:param name="struts_action" value="/admin_server/edit_permissions" />
 			<portlet:param name="<%= Constants.CMD %>" value="merge" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="roleIds" value='<%= ListUtil.toString(ListUtil.fromCollection(groupRoles), "roleId") %>' />
+			<portlet:param name="roleIds" value='<%= ListUtil.toString(ListUtil.fromCollection(groupRoles), Role.ROLE_ID_ACCESSOR) %>' />
 		</portlet:actionURL>
 
 		<%

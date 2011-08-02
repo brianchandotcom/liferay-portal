@@ -17,7 +17,6 @@ package com.liferay.portlet.tagscompiler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -54,17 +53,24 @@ public class TagsCompilerPortlet extends LiferayPortlet {
 
 		Collection<String> entriesFromSession =
 			TagsCompilerSessionUtil.getEntries(renderRequest);
-		String[] entriesFromSessionArray = entriesFromSession.toArray(
-			new String[entriesFromSession.size()]);
+
+		String[] entries =
+			new String[entriesFromURLArray.length + entriesFromSession.size()];
+
+		System.arraycopy(
+			entriesFromURLArray, 0, entries, 0, entriesFromURLArray.length);
+
+		int index = entriesFromURLArray.length;
+
+		for (String entry : entriesFromSession) {
+			entries[index++] = entry;
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Entries from session " +
-					StringUtil.merge(entriesFromSessionArray));
+					StringUtil.merge(entriesFromSession.toArray()));
 		}
-
-		String[] entries = ArrayUtil.append(
-			entriesFromURLArray, entriesFromSessionArray);
 
 		renderRequest.setAttribute(WebKeys.TAGS_COMPILER_ENTRIES, entries);
 

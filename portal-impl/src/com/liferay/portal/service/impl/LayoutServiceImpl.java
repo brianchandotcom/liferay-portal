@@ -63,8 +63,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-			Map<Locale, String> robotsMap, String type, boolean hidden,
-			String friendlyURL, ServiceContext serviceContext)
+			Map<Locale, String> robotsMap, String type,	boolean hidden,
+			String friendlyURL, boolean locked, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -73,13 +73,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.addLayout(
 			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, serviceContext);
+			hidden, friendlyURL, locked, serviceContext);
 	}
 
 	public Layout addLayout(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			boolean hidden, String friendlyURL, boolean locked,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
@@ -92,26 +93,29 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, serviceContext);
+			type, hidden, friendlyURL, locked, serviceContext);
 	}
 
-	public void deleteLayout(long plid)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), plid, ActionKeys.DELETE);
 
-		layoutLocalService.deleteLayout(plid);
+		layoutLocalService.deleteLayout(plid, serviceContext);
 	}
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), groupId, privateLayout, layoutId,
 			ActionKeys.DELETE);
 
-		layoutLocalService.deleteLayout(groupId, privateLayout, layoutId);
+		layoutLocalService.deleteLayout(
+			groupId, privateLayout, layoutId, serviceContext);
 	}
 
 	public byte[] exportLayouts(
@@ -222,7 +226,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
-				jxPreferences.getValue("lfr-scope-type", null));
+				jxPreferences.getValue("lfrScopeType", null));
 
 			if (scopeGroup.isLayout()) {
 				String scopeLayoutUuid = GetterUtil.getString(
@@ -428,14 +432,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	public void setLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			long[] layoutIds)
+			long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
 
 		layoutLocalService.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds);
+			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	public void unschedulePublishToLive(
@@ -480,7 +484,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			String friendlyURL, Boolean iconImage, byte[] iconBytes,
-			ServiceContext serviceContext)
+			boolean locked, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
@@ -490,7 +494,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, iconImage, iconBytes, serviceContext);
+			hidden, friendlyURL, iconImage, iconBytes, locked, serviceContext);
 	}
 
 	public Layout updateLayout(

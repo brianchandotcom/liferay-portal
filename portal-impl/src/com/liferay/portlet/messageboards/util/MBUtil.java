@@ -593,7 +593,7 @@ public class MBUtil {
 			preferences, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
-			String[] kvp = StringUtil.split(ranks[i], StringPool.EQUAL);
+			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
 
 			String kvpName = kvp[0];
 			int kvpPosts = GetterUtil.getInteger(kvp[1]);
@@ -627,13 +627,13 @@ public class MBUtil {
 			preferences, "ranks", languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
-			String[] kvp = StringUtil.split(ranks[i], StringPool.EQUAL);
+			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
 
 			String curRank = kvp[0];
 			String curRankValue = kvp[1];
 
 			String[] curRankValueKvp = StringUtil.split(
-				curRankValue, StringPool.COLON);
+				curRankValue, CharPool.COLON);
 
 			if (curRankValueKvp.length <= 1) {
 				int posts = GetterUtil.getInteger(curRankValue);

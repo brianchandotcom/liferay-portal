@@ -14,21 +14,33 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author Connor McKay
  */
 public class UpgradePermission extends UpgradeProcess {
 
@@ -44,6 +56,13 @@ public class UpgradePermission extends UpgradeProcess {
 		updatePermissions("com.liferay.portlet.imagegallery", true, true);
 		updatePermissions("com.liferay.portlet.messageboards", true, true);
 		updatePermissions("com.liferay.portlet.shopping", true, true);
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			updatePermissions_6Blocks(
+				BookmarksEntry.class.getName(), "BookmarksEntry", "entryId");
+			updatePermissions_6Blocks(
+				BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
+		}
 	}
 
 	protected void updatePermissions(
@@ -105,5 +124,44 @@ public class UpgradePermission extends UpgradeProcess {
 		ResourcePermissionLocalServiceUtil.addResourcePermissions(
 			name, RoleConstants.OWNER, scope, actionIdsLong);
 	}
+
+	protected void updatePermissions_6Blocks(
+			String name, String tableName, String pkColumnName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select " + pkColumnName + ", companyId " +	" from " +
+					tableName);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long primKey = rs.getLong(pkColumnName);
+				long companyId = rs.getLong("companyId");
+
+				ResourceBlock resourceBlock =
+					ResourceBlockLocalServiceUtil.convertResourcePermissions(
+						companyId, name, primKey);
+
+				if (_log.isInfoEnabled() &&
+					(resourceBlock.getResourceBlockId() % 100 == 0)) {
+
+					_log.info("Processed 100 resource blocks for " + name);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
 
 }

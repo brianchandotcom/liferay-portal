@@ -89,15 +89,15 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.Group> getMyPlaces()
+	public java.util.List<com.liferay.portal.model.Group> getMySites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.Group> getMyPlaces(int max)
+	public java.util.List<com.liferay.portal.model.Group> getMySites(int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.Group> getMyPlaces(
+	public java.util.List<com.liferay.portal.model.Group> getMySites(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -178,7 +178,7 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean hasMyPlaces()
+	public boolean hasMySites()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

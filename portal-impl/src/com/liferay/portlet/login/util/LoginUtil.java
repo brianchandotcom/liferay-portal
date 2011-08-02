@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.login.util;
 
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,10 +29,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.Authenticator;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -168,6 +171,38 @@ public class LoginUtil {
 		}
 
 		return userId;
+	}
+
+	public static String getCreateAccountHREF(
+		HttpServletRequest request, ThemeDisplay themeDisplay)
+			throws Exception {
+
+		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			PortletURL createAccountURL = new PortletURLImpl(
+				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+			createAccountURL.setWindowState(WindowState.MAXIMIZED);
+			createAccountURL.setPortletMode(PortletMode.VIEW);
+
+			createAccountURL.setParameter("saveLastPath", "0");
+			createAccountURL.setParameter(
+				"struts_action", "/login/create_account");
+
+			return createAccountURL.toString();
+		}
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				themeDisplay.getScopeGroupId(), false,
+				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
+
+			return PortalUtil.getLayoutURL(layout, themeDisplay);
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public static String getEmailFromAddress(PortletPreferences preferences) {
@@ -325,7 +360,8 @@ public class LoginUtil {
 		companyIdCookie.setPath(StringPool.SLASH);
 
 		Cookie idCookie = new Cookie(
-			CookieKeys.ID, UserLocalServiceUtil.encryptUserId(userIdString));
+			CookieKeys.ID,
+			Encryptor.encrypt(company.getKeyObj(), userIdString));
 
 		if (Validator.isNotNull(domain)) {
 			idCookie.setDomain(domain);

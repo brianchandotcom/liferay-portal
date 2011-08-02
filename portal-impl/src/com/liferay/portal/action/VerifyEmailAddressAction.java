@@ -99,9 +99,9 @@ public class VerifyEmailAddressAction extends Action {
 
 		AuthTokenUtil.check(request);
 
-		String key = ParamUtil.getString(request, "key");
+		String ticketKey = ParamUtil.getString(request, "ticketKey");
 
-		UserLocalServiceUtil.verifyEmailAddress(key);
+		UserLocalServiceUtil.verifyEmailAddress(ticketKey);
 	}
 
 }

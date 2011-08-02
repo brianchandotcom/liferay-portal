@@ -61,11 +61,11 @@ body.green, .green .portlet {
 	color: #2F342C;
 }
 
-.green .my-places-menu .current-site {
+.green .my-sites-menu .current-site {
 	border-color: #42811D;
 }
 
-.green .my-places-menu .current-site a {
+.green .my-sites-menu .current-site a {
 	background-color: #68BB30;
 	color: #FFF;
 }

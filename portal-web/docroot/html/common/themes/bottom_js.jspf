@@ -49,12 +49,16 @@
 <%
 Group group = null;
 
+LayoutRevision layoutRevision = null;
+
 if (layout != null) {
 	group = layout.getGroup();
+
+	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 }
 %>
 
-<c:if test="<%= !themeDisplay.isStatePopUp() && (layout != null) && (!group.hasStagingGroup() || group.isStagingGroup()) && (LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
+<c:if test="<%= !themeDisplay.isStatePopUp() && (layout != null) && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
 	<aui:script use="liferay-layout,liferay-navigation">
 		var layoutOptions = {};
 
@@ -111,9 +115,14 @@ if (layout != null) {
 			function() {
 				new Liferay.Navigation(
 					{
-						layoutIds: [<%= ListUtil.toString(layouts, "layoutId") %>],
+						layoutIds: [<%= ListUtil.toString(layouts, Layout.LAYOUT_ID_ACCESSOR) %>],
+
+						<c:if test="<%= layoutRevision != null %>">
+							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
+						</c:if>
+
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>
 					}
 				);
 			}

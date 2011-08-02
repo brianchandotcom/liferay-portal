@@ -68,12 +68,12 @@ public class LayoutServiceSoap {
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.addLayout(groupId,
 					privateLayout, parentLayoutId, name, title, description,
-					type, hidden, friendlyURL, serviceContext);
+					type, hidden, friendlyURL, locked, serviceContext);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}
@@ -84,9 +84,11 @@ public class LayoutServiceSoap {
 		}
 	}
 
-	public static void deleteLayout(long plid) throws RemoteException {
+	public static void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			LayoutServiceUtil.deleteLayout(plid);
+			LayoutServiceUtil.deleteLayout(plid, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -96,9 +98,11 @@ public class LayoutServiceSoap {
 	}
 
 	public static void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId) throws RemoteException {
+		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId);
+			LayoutServiceUtil.deleteLayout(groupId, privateLayout, layoutId,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -157,10 +161,12 @@ public class LayoutServiceSoap {
 	}
 
 	public static void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds) throws RemoteException {
+		long parentLayoutId, long[] layoutIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			LayoutServiceUtil.setLayouts(groupId, privateLayout,
-				parentLayoutId, layoutIds);
+				parentLayoutId, layoutIds, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

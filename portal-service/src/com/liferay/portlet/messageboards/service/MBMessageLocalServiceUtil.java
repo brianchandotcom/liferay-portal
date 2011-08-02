@@ -577,6 +577,56 @@ public class MBMessageLocalServiceUtil {
 				   .getThreadRepliesMessages(threadId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, long classNameId, long classPK, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessages(userId, classNameId, classPK,
+			status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, long[] classNameIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessages(userId, classNameIds, status,
+			start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getUserDiscussionMessages(
+		long userId, java.lang.String className, long classPK, int status,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessages(userId, className, classPK,
+			status, start, end, obc);
+	}
+
+	public static int getUserDiscussionMessagesCount(long userId,
+		long classNameId, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessagesCount(userId, classNameId,
+			classPK, status);
+	}
+
+	public static int getUserDiscussionMessagesCount(long userId,
+		long[] classNameIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessagesCount(userId, classNameIds, status);
+	}
+
+	public static int getUserDiscussionMessagesCount(long userId,
+		java.lang.String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserDiscussionMessagesCount(userId, className, classPK,
+			status);
+	}
+
 	public static void subscribeMessage(long userId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

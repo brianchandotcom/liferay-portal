@@ -44,8 +44,9 @@ public interface DLFolderService {
 	 * Never modify or reference this interface directly. Always use {@link DLFolderServiceUtil} to access the document library folder remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long groupId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
+		long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -143,8 +144,7 @@ public interface DLFolderService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isFolderLocked(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Lock lockFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -178,6 +178,9 @@ public interface DLFolderService {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

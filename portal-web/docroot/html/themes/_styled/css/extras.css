@@ -28,7 +28,7 @@
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.7);
 }
 
-.my-places-menu .current-site a {
+.my-sites-menu .current-site a {
 	-moz-box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);
 	-webkit-box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);
 	box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.5);
@@ -64,19 +64,19 @@
 	border-radius: 1px 4px 4px 1px;
 }
 
-.aui-tabview-list, .aui-tab-active, body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
 
-.aui-paginator-link, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .select-documents, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote {
+.aui-paginator-link, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
 
-.lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .portlet-document-library .document-display-style {
+.lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .select-files, .portlet-document-library .document-display-style, .lfr-upload-container .upload-target, .lfr-upload-container .upload-file, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -119,6 +119,16 @@
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
+}
+
+.lfr-upload-container .upload-target {
+	-moz-box-shadow: inset 0 0 1px #FFF;
+	-webkit-box-shadow: inset 0 0 1px #FFF;
+	box-shadow: inset 0 0 1px #FFF;
+	background-image: -moz-linear-gradient(50% 0, #8FBE31 0%, #729A22 85%);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #8FBE31), color-stop(0.85, #729A22));
+	background-image: linear-gradient(50%, #8FBE31 0%, #729A22 85%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8FBE31', endColorstr='#729A22', GradientType=0);
 }
 
 .staging-tabview-list {

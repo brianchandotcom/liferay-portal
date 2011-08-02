@@ -20,10 +20,12 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
  * @author Jorge Ferrer
+ * @author Sergio González
  */
 public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 
@@ -31,6 +33,12 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		String controlPanelCategory = themeDisplay.getControlPanelCategory();
+
+		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
+			return false;
+		}
 
 		boolean visible = super.isVisible(portlet, category, themeDisplay);
 

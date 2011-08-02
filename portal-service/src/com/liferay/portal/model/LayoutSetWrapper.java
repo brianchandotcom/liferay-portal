@@ -307,21 +307,50 @@ public class LayoutSetWrapper implements LayoutSet {
 	}
 
 	/**
-	* Returns the layout set prototype ID of this layout set.
+	* Returns the layout set prototype uuid of this layout set.
 	*
-	* @return the layout set prototype ID of this layout set
+	* @return the layout set prototype uuid of this layout set
 	*/
-	public long getLayoutSetPrototypeId() {
-		return _layoutSet.getLayoutSetPrototypeId();
+	public java.lang.String getLayoutSetPrototypeUuid() {
+		return _layoutSet.getLayoutSetPrototypeUuid();
 	}
 
 	/**
-	* Sets the layout set prototype ID of this layout set.
+	* Sets the layout set prototype uuid of this layout set.
 	*
-	* @param layoutSetPrototypeId the layout set prototype ID of this layout set
+	* @param layoutSetPrototypeUuid the layout set prototype uuid of this layout set
 	*/
-	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
-		_layoutSet.setLayoutSetPrototypeId(layoutSetPrototypeId);
+	public void setLayoutSetPrototypeUuid(
+		java.lang.String layoutSetPrototypeUuid) {
+		_layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+	}
+
+	/**
+	* Returns the layout set prototype link enabled of this layout set.
+	*
+	* @return the layout set prototype link enabled of this layout set
+	*/
+	public boolean getLayoutSetPrototypeLinkEnabled() {
+		return _layoutSet.getLayoutSetPrototypeLinkEnabled();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout set is layout set prototype link enabled.
+	*
+	* @return <code>true</code> if this layout set is layout set prototype link enabled; <code>false</code> otherwise
+	*/
+	public boolean isLayoutSetPrototypeLinkEnabled() {
+		return _layoutSet.isLayoutSetPrototypeLinkEnabled();
+	}
+
+	/**
+	* Sets whether this layout set is layout set prototype link enabled.
+	*
+	* @param layoutSetPrototypeLinkEnabled the layout set prototype link enabled of this layout set
+	*/
+	public void setLayoutSetPrototypeLinkEnabled(
+		boolean layoutSetPrototypeLinkEnabled) {
+		_layoutSet.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 	}
 
 	public boolean isNew() {

@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaProps;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.util.SystemProperties;
 
 import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.ArchiveException;

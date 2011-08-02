@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProgressTracker;
@@ -341,7 +342,7 @@ public class MediaWikiImporter implements WikiImporter {
 			String key = entry;
 			byte[] value = zipReader.getEntryAsByteArray(entry);
 
-			String[] paths = StringUtil.split(key, StringPool.SLASH);
+			String[] paths = StringUtil.split(key, CharPool.SLASH);
 
 			if (!isValidImage(paths, value)) {
 				if (_log.isInfoEnabled()) {

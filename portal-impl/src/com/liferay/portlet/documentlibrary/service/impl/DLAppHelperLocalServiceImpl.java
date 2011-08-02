@@ -268,7 +268,8 @@ public class DLAppHelperLocalServiceImpl
 								AssetLinkConstants.TYPE_RELATED);
 
 						long[] assetLinkEntryIds = StringUtil.split(
-							ListUtil.toString(assetLinks, "entryId2"), 0L);
+							ListUtil.toString(
+								assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(

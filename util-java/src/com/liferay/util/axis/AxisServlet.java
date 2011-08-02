@@ -16,6 +16,7 @@ package com.liferay.util.axis;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.UncommittedServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.util.servlet.ServletResponseUtil;
 
 import java.io.IOException;
 

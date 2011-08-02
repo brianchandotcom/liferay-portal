@@ -265,43 +265,54 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.addLayout(userId, groupId, privateLayout,
 			parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap,
-			robotsMap, type, hidden, friendlyURL, serviceContext);
+			robotsMap, type, hidden, friendlyURL, locked, serviceContext);
 	}
 
 	public com.liferay.portal.model.Layout addLayout(long userId, long groupId,
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.addLayout(userId, groupId, privateLayout,
 			parentLayoutId, name, title, description, type, hidden,
-			friendlyURL, serviceContext);
+			friendlyURL, locked, serviceContext);
 	}
 
 	public void deleteLayout(com.liferay.portal.model.Layout layout,
-		boolean updateLayoutSet)
+		boolean updateLayoutSet,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutLocalService.deleteLayout(layout, updateLayoutSet);
+		_layoutLocalService.deleteLayout(layout, updateLayoutSet, serviceContext);
 	}
 
-	public void deleteLayout(long groupId, boolean privateLayout, long layoutId)
+	public void deleteLayout(long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutLocalService.deleteLayout(groupId, privateLayout, layoutId);
+		_layoutLocalService.deleteLayout(plid, serviceContext);
 	}
 
-	public void deleteLayouts(long groupId, boolean privateLayout)
+	public void deleteLayout(long groupId, boolean privateLayout,
+		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutLocalService.deleteLayouts(groupId, privateLayout);
+		_layoutLocalService.deleteLayout(groupId, privateLayout, layoutId,
+			serviceContext);
+	}
+
+	public void deleteLayouts(long groupId, boolean privateLayout,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.deleteLayouts(groupId, privateLayout, serviceContext);
 	}
 
 	public byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -351,6 +362,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.exportPortletInfoAsFile(plid, groupId,
 			portletId, parameterMap, startDate, endDate);
+	}
+
+	public com.liferay.portal.model.Layout fetchLayout(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.fetchLayout(plid);
 	}
 
 	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
@@ -512,11 +528,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 	}
 
 	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds)
+		long parentLayoutId, long[] layoutIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutLocalService.setLayouts(groupId, privateLayout, parentLayoutId,
-			layoutIds);
+			layoutIds, serviceContext);
 	}
 
 	public com.liferay.portal.model.Layout updateFriendlyURL(long plid,
@@ -534,14 +551,14 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		java.lang.Boolean iconImage, byte[] iconBytes,
+		java.lang.Boolean iconImage, byte[] iconBytes, boolean locked,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.updateLayout(groupId, privateLayout,
 			layoutId, parentLayoutId, nameMap, titleMap, descriptionMap,
 			keywordsMap, robotsMap, type, hidden, friendlyURL, iconImage,
-			iconBytes, serviceContext);
+			iconBytes, locked, serviceContext);
 	}
 
 	public com.liferay.portal.model.Layout updateLayout(long groupId,

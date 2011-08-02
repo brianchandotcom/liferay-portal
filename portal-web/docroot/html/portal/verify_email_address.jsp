@@ -19,7 +19,7 @@
 <%
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-String key = ParamUtil.getString(request, "key");
+String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>' method="post" name="fm">
@@ -58,7 +58,7 @@ String key = ParamUtil.getString(request, "key");
 		</c:choose>
 	</c:if>
 
-	<aui:input class="lfr-input-text-container" label="email-verification-code" name="key" type="text" value="<%= key %>" size="36" />
+	<aui:input class="lfr-input-text-container" label="email-verification-code" name="ticketKey" type="text" value="<%= ticketKey %>" size="36" />
 
 	<aui:button-row>
 		<aui:button type="submit" />
@@ -66,5 +66,5 @@ String key = ParamUtil.getString(request, "key");
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.fm.key);
+	Liferay.Util.focusFormField(document.fm.ticketKey);
 </aui:script>

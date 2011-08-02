@@ -29,7 +29,7 @@ import com.liferay.portal.model.LayoutSet;
 public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{layoutSetId=");
 		sb.append(layoutSetId);
@@ -57,8 +57,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 		sb.append(pageCount);
 		sb.append(", settings=");
 		sb.append(settings);
-		sb.append(", layoutSetPrototypeId=");
-		sb.append(layoutSetPrototypeId);
+		sb.append(", layoutSetPrototypeUuid=");
+		sb.append(layoutSetPrototypeUuid);
+		sb.append(", layoutSetPrototypeLinkEnabled=");
+		sb.append(layoutSetPrototypeLinkEnabled);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,7 +120,14 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 			layoutSetImpl.setSettings(settings);
 		}
 
-		layoutSetImpl.setLayoutSetPrototypeId(layoutSetPrototypeId);
+		if (layoutSetPrototypeUuid == null) {
+			layoutSetImpl.setLayoutSetPrototypeUuid(StringPool.BLANK);
+		}
+		else {
+			layoutSetImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+		}
+
+		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 
 		layoutSetImpl.resetOriginalValues();
 
@@ -138,5 +147,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet> {
 	public String css;
 	public int pageCount;
 	public String settings;
-	public long layoutSetPrototypeId;
+	public String layoutSetPrototypeUuid;
+	public boolean layoutSetPrototypeLinkEnabled;
 }

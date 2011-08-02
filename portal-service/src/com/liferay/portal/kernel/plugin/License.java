@@ -14,12 +14,24 @@
 
 package com.liferay.portal.kernel.plugin;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 import java.io.Serializable;
 
 /**
  * @author Jorge Ferrer
  */
 public class License implements Serializable {
+
+	public static final Accessor<License, String> NAME_ACCESSOR =
+
+		new Accessor<License, String>() {
+
+			public String get(License license) {
+				return license.getName();
+			}
+
+		};
 
 	public String getName() {
 		return _name;

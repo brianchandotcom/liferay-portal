@@ -911,14 +911,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				assetEntryPersistence.getAssetCategories(entry.getEntryId());
 
 			String categoryIdsString = ListUtil.toString(
-				categories, "assetCategoryId", StringPool.COMMA);
+				categories, AssetCategory.CATEGORY_ID_ACCESSOR,
+				StringPool.COMMA);
 			long[] categoryIds = StringUtil.split(
 				categoryIdsString, StringPool.COMMA, 0L);
 
 			List<AssetTag> tags = assetEntryPersistence.getAssetTags(
 				entry.getEntryId());
 
-			String tagNames = ListUtil.toString(tags, "name", ", ");
+			String tagNames = ListUtil.toString(
+				tags, AssetTag.NAME_ACCESSOR, ", ");
 
 			AssetEntryDisplay entryDisplay = new AssetEntryDisplay();
 

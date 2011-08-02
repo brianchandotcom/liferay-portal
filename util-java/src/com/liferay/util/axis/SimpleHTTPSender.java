@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.util.SystemProperties;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.InputStream;
 import java.io.OutputStream;

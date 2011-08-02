@@ -410,7 +410,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 		catch (Exception e) {
 		}
 
-		String[] fieldsArray = StringUtil.split(ShoppingUtil.getItemFields(orderItem.getItemId()), "&");
+		String[] fieldsArray = StringUtil.split(ShoppingUtil.getItemFields(orderItem.getItemId()), '&');
 
 		int quantity = orderItem.getQuantity();
 

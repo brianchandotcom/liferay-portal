@@ -351,7 +351,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			DLAppServiceUtil.addFileEntry(
-				groupId, parentFolderId, contentType, title, description,
+				groupId, parentFolderId, title, contentType, title, description,
 				changeLog, is, contentLength, serviceContext);
 		}
 	}

@@ -17,10 +17,10 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("site.group");
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
-<aui:model-context bean="<%= group %>" model="<%= Group.class %>" />
+<aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
@@ -32,12 +32,12 @@ Group group = (Group)request.getAttribute("site.group");
 
 <aui:fieldset>
 	<c:choose>
-		<c:when test="<%= (group != null) && PortalUtil.isSystemGroup(group.getName()) %>">
+		<c:when test="<%= (liveGroup != null) && PortalUtil.isSystemGroup(liveGroup.getName()) %>">
 			<aui:input name="name" type="hidden" />
 		</c:when>
-		<c:when test="<%= (group != null) && group.isOrganization() %>">
+		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<%= group.getDescriptiveName() %>
+				<%= liveGroup.getDescriptiveName() %>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -59,9 +59,9 @@ Group group = (Group)request.getAttribute("site.group");
 
 	<aui:input name="tags" type="assetTags" />
 
-	<c:if test="<%= group != null %>">
+	<c:if test="<%= liveGroup != null %>">
 		<aui:field-wrapper label="site-id">
-			<%= group.getGroupId() %>
+			<%= liveGroup.getGroupId() %>
 		</aui:field-wrapper>
 	</c:if>
 </aui:fieldset>

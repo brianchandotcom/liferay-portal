@@ -27,7 +27,7 @@ AUI().add(
 						value: STR_EMPTY
 					},
 
-					recordsetId: {
+					recordSetId: {
 						validator: Lang.isNumber,
 						value: 0
 					},
@@ -65,22 +65,22 @@ AUI().add(
 					initializer: function() {
 						var instance = this;
 
-						var recordset = instance.get('recordset');
+						var recordSet = instance.get('recordSet');
 
-						recordset.on('update', instance._onRecordUpdate, instance);
+						recordSet.on('update', instance._onRecordUpdate, instance);
 					},
 
 					addEmptyRows: function(num) {
 						var instance = this;
 
 						var columnset = instance.get('columnset');
-						var recordset = instance.get('recordset');
+						var recordSet = instance.get('recordSet');
 
 						var emptyRows = SpreadSheet.buildEmptyRecords(num, getObjectKeys(columnset.keyHash));
 
-						recordset.add(emptyRows);
+						recordSet.add(emptyRows);
 
-						instance._uiSetRecordset(recordset);
+						instance._uiSetRecordset(recordSet);
 
 						instance._fixPluginsUI();
 					},
@@ -90,7 +90,7 @@ AUI().add(
 
 						callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
 
-						var recordsetId = instance.get('recordsetId');
+						var recordSetId = instance.get('recordSetId');
 
 						var serviceParameterTypes = [
 							'long',
@@ -103,7 +103,7 @@ AUI().add(
 						DDLRecord.addRecord(
 							{
 								groupId: themeDisplay.getScopeGroupId(),
-								recordSetId: recordsetId,
+								recordSetId: recordSetId,
 								displayIndex: displayIndex,
 								fieldsMap: JSON.stringify(fieldsMap),
 								serviceContext: JSON.stringify(
@@ -124,11 +124,11 @@ AUI().add(
 
 						callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
 
-						var recordsetId = instance.get('recordsetId');
+						var recordSetId = instance.get('recordSetId');
 
 						DDLRecordSet.updateMinDisplayRows(
 							{
-								recordSetId: recordsetId,
+								recordSetId: recordSetId,
 								minDisplayRows: minDisplayRows,
 								serviceContext: JSON.stringify(
 									{
@@ -176,7 +176,7 @@ AUI().add(
 					_normalizeRecordData: function(data) {
 						var instance = this;
 
-						var recordset = instance.get('recordset');
+						var recordSet = instance.get('recordSet');
 						var structure = instance.get('structure');
 
 						var normalized = {};

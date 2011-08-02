@@ -1810,7 +1810,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userName, "[$CONTENT_URL$]", contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(groupId);
-		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
+		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
 			"mb_discussion", message.getCategoryId(), message.getMessageId());

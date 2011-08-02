@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -249,10 +250,6 @@ public class SubscriptionSender implements Serializable {
 		this.groupId = groupId;
 	}
 
-	public void setScopeGroupId(long scopeGroupId) {
-		this.scopeGroupId = scopeGroupId;
-	}
-
 	public void setHtmlFormat(boolean htmlFormat) {
 		this.htmlFormat = htmlFormat;
 	}
@@ -282,6 +279,10 @@ public class SubscriptionSender implements Serializable {
 
 	public void setReplyToAddress(String replyToAddress) {
 		this.replyToAddress = replyToAddress;
+	}
+
+	public void setScopeGroupId(long scopeGroupId) {
+		this.scopeGroupId = scopeGroupId;
 	}
 
 	public void setSMTPAccount(SMTPAccount smtpAccount) {
@@ -360,8 +361,10 @@ public class SubscriptionSender implements Serializable {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (!GroupLocalServiceUtil.hasUserGroup(user.getUserId(), groupId) &&
-			(!group.isCompany()) && (LayoutServiceUtil.getDefaultPlid(
-				groupId, scopeGroupId, false, portletId)==0)) {
+			!group.isCompany() &&
+			(LayoutServiceUtil.getDefaultPlid(
+				groupId, scopeGroupId, false, portletId)
+					== LayoutConstants.DEFAULT_PLID)) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

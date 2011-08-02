@@ -14,8 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/panel/init.jsp" %>
+<%@ page import="com.liferay.taglib.aui.ToolTag" %>
 
-<div id="<%= id %>"></div>
-
-<div id="<%= id %>bodyContent">
+<%
+List<ToolTag> toolTags = (List<ToolTag>)request.getAttribute("aui:panel:toolTags");
+%>

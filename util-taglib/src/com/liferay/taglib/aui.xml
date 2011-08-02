@@ -622,12 +622,19 @@
 			</attribute>
 		</attributes>
 	</component>
-	<!--<component name="Panel">
+	<component name="Panel" bodyContent="true">
 		<attributes>
 			<attribute>
+				<name>collapsed</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>collapsible</name>
-				<inputType>java.lang.Boolean</inputType>
-				<outputType>java.lang.Boolean</outputType>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -647,7 +654,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Script">
+	<!--<component name="Script">
 		<attributes>
 			<attribute>
 				<name>position</name>

@@ -15,19 +15,20 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.aui.base.BasePanelTag;
 import com.liferay.util.PwdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
-public class PanelTag extends IncludeTag {
+public class PanelTag extends BasePanelTag {
 
 	public void addToolTag(ToolTag toolTag) {
 		if (_toolTags == null) {
@@ -37,32 +38,20 @@ public class PanelTag extends IncludeTag {
 		_toolTags.add(toolTag);
 	}
 
+	@Override
+	public int doEndTag() throws JspException {
+		setCalledSetAttributes(false);
+
+		return super.doEndTag();
+	}
+
 	public List<ToolTag> getToolTags() {
 		return _toolTags;
 	}
 
-	public void setCollapsed(boolean collapsed) {
-		_collapsed  = collapsed;
-	}
-
-	public void setCollapsible(boolean collapsible) {
-		_collapsible = collapsible;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
-	}
-
 	@Override
 	protected void cleanUp() {
-		_collapsed = false;
-		_collapsible = false;
-		_id = null;
-		_label = null;
+		super.cleanUp();
 
 		if (_toolTags != null) {
 			for (ToolTag toolTag : _toolTags) {
@@ -74,47 +63,28 @@ public class PanelTag extends IncludeTag {
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		String id = _id;
+		super.setAttributes(request);
+
+		String id = getId();
 
 		if (Validator.isNull(id)) {
 			id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}
 
-		request.setAttribute("aui:panel:collapsed", String.valueOf(_collapsed));
-		request.setAttribute(
-			"aui:panel:collapsible", String.valueOf(_collapsible));
-		request.setAttribute("aui:panel:id", id);
-		request.setAttribute("aui:panel:label", _label);
-		request.setAttribute("aui:panel:toolTags", _toolTags);
+		setId(id);
+
+		setNamespacedAttribute(request, "id", id);
+		setNamespacedAttribute(request, "toolTags", _toolTags);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _END_PAGE = "/html/taglib/aui/panel/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/panel/start.jsp";
-
-	private boolean _collapsed;
-	private boolean _collapsible;
-	private String _id;
-	private String _label;
 	private List<ToolTag> _toolTags;
 
 }

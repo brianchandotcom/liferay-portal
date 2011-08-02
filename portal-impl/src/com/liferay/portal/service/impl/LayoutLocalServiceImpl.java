@@ -452,6 +452,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	public Layout fetchLayout(long plid) throws SystemException {
+		return layoutPersistence.fetchByPrimaryKey(plid);
+	}
+
 	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId)
 		throws SystemException {
 

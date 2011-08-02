@@ -828,8 +828,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (group.isLayout()) {
 			groupId = group.getParentGroupId();
-		}	
-		
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setCompanyId(entry.getCompanyId());
@@ -838,7 +838,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(groupId);
-		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
+		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());
 		subscriptionSender.setPortletId(PortletKeys.BLOGS);

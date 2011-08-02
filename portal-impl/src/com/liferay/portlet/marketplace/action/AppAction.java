@@ -14,12 +14,19 @@
 
 package com.liferay.portlet.marketplace.action;
 
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
@@ -103,6 +110,8 @@ public class AppAction extends JSONAction {
 			app = AppLocalServiceUtil.updateApp(
 				app.getAppId(), version, moduleContextNames, is);
 		}
+
+		sendAuditMessage("download", themeDisplay.getUser(), marketplaceAppId);
 	}
 
 	public JSONObject getApp(HttpServletRequest request) throws Exception {
@@ -129,15 +138,46 @@ public class AppAction extends JSONAction {
 	}
 
 	public void installApp(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long marketplaceAppId = ParamUtil.getLong(request, "appId");
 
 		AppLocalServiceUtil.installApp(marketplaceAppId);
+
+		sendAuditMessage("install", themeDisplay.getUser(), marketplaceAppId);
 	}
 
 	public void uninstallApp(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long marketplaceAppId = ParamUtil.getLong(request, "appId");
 
 		AppLocalServiceUtil.uninstallApp(marketplaceAppId);
+
+		sendAuditMessage("uninstall", themeDisplay.getUser(), marketplaceAppId);
 	}
+
+	protected void sendAuditMessage(
+		String action, User user, long marektpalceAppId) {
+
+		if (!MessageBusUtil.hasMessageListener(DestinationNames.AUDIT)) {
+			return;
+		}
+
+		AuditMessage auditMessage = new AuditMessage(
+			action, user.getCompanyId(), user.getUserId(), user.getFullName(),
+			App.class.getName(), String.valueOf(marektpalceAppId));
+
+		try {
+			AuditRouterUtil.route(auditMessage);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AppAction.class);
 
 }

@@ -19,7 +19,7 @@
 <%
 List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 
-LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(themeDisplay.getUserId(), stagingGroup.getGroupId(), privateLayout, 0);
+LayoutSetBranch currentLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(themeDisplay.getUserId(), stagingGroup.getGroupId(), privateLayout, 0);
 %>
 
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-branch-with-that-name-already-exists" />
@@ -66,14 +66,18 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 			>
 
 				<%
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
+				if (currentLayoutSetBranch.equals(curLayoutSetBranch)) {
 					buffer.append("<strong>");
 				}
 
 				buffer.append(LanguageUtil.get(pageContext, curLayoutSetBranch.getName()));
 
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
-					buffer.append(" (*)</strong>");
+				if (curLayoutSetBranch.isMaster()) {
+					buffer.append(" (*)");
+				}
+
+				if (currentLayoutSetBranch.equals(curLayoutSetBranch)) {
+					buffer.append("</strong>");
 				}
 				%>
 

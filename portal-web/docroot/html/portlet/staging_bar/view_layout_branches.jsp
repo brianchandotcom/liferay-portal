@@ -22,6 +22,8 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
+
+LayoutRevision currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
 %>
 
 <div class="portlet-msg-info">
@@ -71,14 +73,18 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 				<%
 				String layoutBranchName = layoutBranch.getName();
 
-				if (layoutRevision.isHead()) {
+				if (layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId()) {
 					buffer.append("<strong>");
 				}
 
 				buffer.append(LanguageUtil.get(pageContext, layoutBranchName));
 
-				if (layoutRevision.isHead()) {
-					buffer.append(" (*)</strong>");
+				if (layoutBranch.isMaster()) {
+					buffer.append(" (*)");
+				}
+
+				if (layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId()) {
+					buffer.append("</strong>");
 				}
 				%>
 

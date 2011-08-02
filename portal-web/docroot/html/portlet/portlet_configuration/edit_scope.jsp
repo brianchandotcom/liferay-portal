@@ -22,7 +22,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 PortletPreferences preferences = PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletResource);
 
-String scopeType = GetterUtil.getString(preferences.getValue("lfr-scope-type", null));
+String scopeType = GetterUtil.getString(preferences.getValue("lfrScopeType", null));
 String scopeLayoutUuid = GetterUtil.getString(preferences.getValue("lfrScopeLayoutUuid", null));
 
 Group group = layout.getGroup();

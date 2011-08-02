@@ -3190,7 +3190,7 @@ public class PortalImpl implements Portal {
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
-				portletSetup.getValue("lfr-scope-type", null));
+				portletSetup.getValue("lfrScopeType", null));
 
 			if (Validator.isNull(scopeType)) {
 				return layout.getGroupId();

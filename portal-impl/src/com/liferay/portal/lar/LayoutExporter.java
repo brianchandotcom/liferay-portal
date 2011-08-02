@@ -653,7 +653,7 @@ public class LayoutExporter {
 						layout, portletId);
 
 				String scopeType = GetterUtil.getString(
-					jxPreferences.getValue("lfr-scope-type", null));
+					jxPreferences.getValue("lfrScopeType", null));
 				String scopeLayoutUuid = GetterUtil.getString(
 					jxPreferences.getValue("lfrScopeLayoutUuid", null));
 

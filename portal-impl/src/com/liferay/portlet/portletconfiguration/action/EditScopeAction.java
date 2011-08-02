@@ -183,7 +183,7 @@ public class EditScopeAction extends EditConfigurationAction {
 				layout, portlet.getPortletId());
 
 		String scopeType = GetterUtil.getString(
-			preferences.getValue("lfr-scope-type", null));
+			preferences.getValue("lfrScopeType", null));
 
 		if (Validator.isNull(scopeType)) {
 			return null;
@@ -257,7 +257,7 @@ public class EditScopeAction extends EditConfigurationAction {
 
 		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
 
-		preferences.setValue("lfr-scope-type", scopeType);
+		preferences.setValue("lfrScopeType", scopeType);
 
 		String scopeLayoutUuid = ParamUtil.getString(
 			actionRequest, "scopeLayoutUuid");

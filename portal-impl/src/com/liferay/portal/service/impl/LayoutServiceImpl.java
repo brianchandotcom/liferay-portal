@@ -226,7 +226,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
-				jxPreferences.getValue("lfr-scope-type", null));
+				jxPreferences.getValue("lfrScopeType", null));
 
 			if (scopeGroup.isLayout()) {
 				String scopeLayoutUuid = GetterUtil.getString(

@@ -18,11 +18,12 @@
 
 <%
 User user2 = (User)request.getAttribute(ForgotPasswordAction.class.getName());
-Integer reminderAttempts = (Integer)portletSession.getAttribute(ForgotPasswordAction.REMINDER_ATTEMPTS);
 
 if (Validator.isNull(authType)) {
 	authType = company.getAuthType();
 }
+
+Integer reminderAttempts = (Integer)portletSession.getAttribute(ForgotPasswordAction.REMINDER_ATTEMPTS);
 
 if (reminderAttempts == null) {
 	reminderAttempts = 0;

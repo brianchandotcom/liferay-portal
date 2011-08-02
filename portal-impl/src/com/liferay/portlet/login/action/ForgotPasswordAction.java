@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
@@ -75,7 +76,8 @@ public class ForgotPasswordAction extends PortletAction {
 					_checkCaptcha(actionRequest);
 
 					portletSession.setAttribute(REMINDER_ATTEMPTS, 0);
-					portletSession.setAttribute(REMINDER_USER, "");
+					portletSession.setAttribute(
+						REMINDER_USER, StringPool.BLANK);
 				}
 
 				User user = getUser(actionRequest);
@@ -93,7 +95,7 @@ public class ForgotPasswordAction extends PortletAction {
 					if (reminderAttempts == null) {
 						reminderAttempts = 0;
 					}
-					else if (reminderAttempts >= 3) {
+					else if (reminderAttempts > 2) {
 						_checkCaptcha(actionRequest);
 					}
 
@@ -147,13 +149,17 @@ public class ForgotPasswordAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long userId = ParamUtil.getLong(actionRequest, "userId");
+		String screenName = ParamUtil.getString(actionRequest, "screenName");
+		String emailAddress = ParamUtil.getString(
+			actionRequest, "emailAddress");
+
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		String sessionEmailAddress = (String)portletSession.getAttribute(
+			REMINDER_USER);
+
 		User user = null;
-
-		PortletSession portletSession =
-			actionRequest.getPortletSession();
-
-		String sessionEmailAddress =
-			(String)portletSession.getAttribute(REMINDER_USER);
 
 		if (Validator.isNotNull(sessionEmailAddress)) {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
@@ -161,11 +167,6 @@ public class ForgotPasswordAction extends PortletAction {
 
 			return user;
 		}
-
-		long userId = ParamUtil.getLong(actionRequest, "userId");
-		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
 
 		if (Validator.isNotNull(emailAddress)) {
 			user = UserLocalServiceUtil.getUserByEmailAddress(

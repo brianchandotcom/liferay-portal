@@ -18,6 +18,7 @@ import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.LayoutSetBranchConstants;
@@ -63,10 +64,16 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 				updateLayoutSetBranch(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteLayoutSetBranch(actionRequest);
+				deleteLayoutSetBranch(actionRequest, portletConfig);
 			}
 			else if (cmd.equals("merge_layout_set_branch")) {
 				mergeLayoutSetBranch(actionRequest);
+			}
+
+			if (SessionErrors.isEmpty(actionRequest)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doConfigure");
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -129,11 +136,21 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 				renderRequest, "portlet.staging_bar.edit_layout_set_branch"));
 	}
 
-	protected void deleteLayoutSetBranch(ActionRequest actionRequest)
+	protected void deleteLayoutSetBranch(
+			ActionRequest actionRequest, PortletConfig portletConfig)
 		throws Exception {
 
 		long layoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "layoutSetBranchId");
+
+		long currentLayoutBranchId = ParamUtil.getLong(
+			actionRequest, "currentLayoutBranchId");
+
+		if (layoutSetBranchId == currentLayoutBranchId) {
+			SessionMessages.add(
+				actionRequest,
+				portletConfig.getPortletName() + ".notAjaxable");
+		}
 
 		LayoutSetBranchServiceUtil.deleteLayoutSetBranch(layoutSetBranchId);
 	}

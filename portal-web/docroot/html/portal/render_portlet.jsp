@@ -822,6 +822,8 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 	<div id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" class="<%= cssClasses %>" <%= freeformStyles %>>
 		<a id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></a>
+
+		<div class="portlet-body">
 </c:if>
 
 <c:choose>
@@ -990,6 +992,7 @@ else {
 				}
 			);
 		</aui:script>
+		</div>
 	</div>
 </c:if>
 

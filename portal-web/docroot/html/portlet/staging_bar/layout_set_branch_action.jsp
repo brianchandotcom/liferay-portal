@@ -20,6 +20,8 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
+
+long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId"));
 %>
 
 <liferay-ui:icon-menu>
@@ -63,6 +65,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(layoutSetBranch.getGroupId()) %>" />
 			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+			<portlet:param name="currentLayoutSetBranchId" value="<%= String.valueOf(currentLayoutSetBranchId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

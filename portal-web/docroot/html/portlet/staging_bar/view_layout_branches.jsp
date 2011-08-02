@@ -24,6 +24,8 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
 
 LayoutRevision currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
+
+request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>
 
 <div class="portlet-msg-info">
@@ -111,3 +113,21 @@ LayoutRevision currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutR
 		}
 	);
 </aui:script>
+
+<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
+	<aui:script use="aui-base">
+		if (window.parent) {
+			var stagingBarPortletBoundaryId = '#p_p_id_<%= PortletKeys.STAGING_BAR %>_';
+
+			var data;
+
+			<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
+				data = {
+					portletAjaxable: false
+				};
+			</c:if>
+
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
+		}
+	</aui:script>
+</c:if>

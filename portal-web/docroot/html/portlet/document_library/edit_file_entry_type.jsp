@@ -25,12 +25,24 @@ long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryT
 
 String headerNames = "name,null";
 
+String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
+
+String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
+
+DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
+
+long structureId = BeanParamUtil.getLong(structure, request, "structureId");
+
+String script = BeanParamUtil.getString(structure, request, "xsd");
+
 List<DDMStructure> ddmStructures = null;
 
 if (fileEntryType != null) {
 	headerNames = "name";
 
 	ddmStructures = fileEntryType.getDDMStructures();
+
+	ddmStructures.remove(structure);
 }
 %>
 
@@ -50,6 +62,8 @@ if (fileEntryType != null) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+	<aui:input name="xsd" type="hidden" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -79,15 +93,15 @@ if (fileEntryType != null) {
 				className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
 				escapedModel="<%= true %>"
 				keyProperty="structureId"
-				modelVar="structure"
+				modelVar="curStructure"
 			>
 				<liferay-ui:search-container-column-text
 					name="name"
-					value="<%= structure.getName(locale) %>"
+					value="<%= curStructure.getName(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<a class="modify-link" data-rowId="<%= structure.getStructureId() %>" href="javascript:;"><%= removeStructureIcon %></a>
+					<a class="modify-link" data-rowId="<%= curStructure.getStructureId() %>" href="javascript:;"><%= removeStructureIcon %></a>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
@@ -101,14 +115,16 @@ if (fileEntryType != null) {
 			message="select"
 			url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 		/>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
+
+<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
+
+<aui:button-row>
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
+
+	<aui:button href="<%= redirect %>" type="cancel" />
+</aui:button-row>
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
@@ -119,10 +135,10 @@ if (fileEntryType != null) {
 					width:680
 				},
 				showManageTemplates: 'false',
-				showToolbar: 'false',
+				showToolbar: 'true',
 				storageType: 'xml',
 				struts_action: '/dynamic_data_mapping/select_structure',
-				structureName: 'metadata-set',
+				structureName: '<liferay-ui:message key="metadata-sets" />',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',
 				title: '<liferay-ui:message key="metadata-sets" />',
 				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>'
@@ -149,6 +165,19 @@ if (fileEntryType != null) {
 			}
 		},
 		['liferay-search-container']
+	);
+</aui:script>
+
+<aui:script use="liferay-portlet-dynamic-data-mapping">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveStructure',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['aui-base']
 	);
 </aui:script>
 

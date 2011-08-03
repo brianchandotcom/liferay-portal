@@ -80,7 +80,7 @@ public class AddUserEmailAddressAmpersandTest extends BaseTestCase {
 			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("test&@selenium.com"));
+			RuntimeVariables.replace("test&amp;@selenium.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_firstName']",
 			RuntimeVariables.replace("testA"));
@@ -113,9 +113,5 @@ public class AddUserEmailAddressAmpersandTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

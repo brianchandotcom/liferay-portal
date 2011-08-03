@@ -77,6 +77,8 @@ public class AddUserSocialNetworkTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_socialNetworkLink']",
+				"Social Network"));
 		selenium.clickAt("//a[@id='_125_socialNetworkLink']",
 			RuntimeVariables.replace("Social Network"));
 

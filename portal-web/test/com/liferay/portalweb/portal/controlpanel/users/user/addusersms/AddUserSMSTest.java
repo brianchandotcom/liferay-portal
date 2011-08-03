@@ -77,6 +77,7 @@ public class AddUserSMSTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_smsLink']", "SMS"));
 		selenium.clickAt("//a[@id='_125_smsLink']",
 			RuntimeVariables.replace("SMS"));
 
@@ -127,9 +128,5 @@ public class AddUserSMSTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Selenium01@selenium.com",
 			selenium.getValue("//input[@id='_125_smsSn']"));
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

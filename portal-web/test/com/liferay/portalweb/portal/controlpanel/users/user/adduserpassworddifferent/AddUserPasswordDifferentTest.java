@@ -77,6 +77,8 @@ public class AddUserPasswordDifferentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
 		selenium.clickAt("//a[@id='_125_passwordLink']",
 			RuntimeVariables.replace("Password"));
 

@@ -77,6 +77,8 @@ public class AddUserCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_commentsLink']",
+				"Comments"));
 		selenium.clickAt("//a[@id='_125_commentsLink']",
 			RuntimeVariables.replace("Comments"));
 

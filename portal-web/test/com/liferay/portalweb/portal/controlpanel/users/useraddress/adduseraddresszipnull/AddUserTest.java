@@ -144,8 +144,10 @@ public class AddUserTest extends BaseTestCase {
 					selenium.getValue("//input[@id='_125_middleName']"));
 				assertEquals("nium01",
 					selenium.getValue("//input[@id='_125_lastName']"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_passwordLink']", "Password"));
 				selenium.clickAt("//a[@id='_125_passwordLink']",
-					RuntimeVariables.replace("Password Link"));
+					RuntimeVariables.replace("Password"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

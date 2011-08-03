@@ -77,6 +77,8 @@ public class AddUserPhoneNumber1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_phoneNumbersLink']",
+				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 		selenium.type("//input[@id='_125_phoneNumber0']",

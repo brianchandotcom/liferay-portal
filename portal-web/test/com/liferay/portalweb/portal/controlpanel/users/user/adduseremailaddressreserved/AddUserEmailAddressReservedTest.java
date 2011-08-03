@@ -97,8 +97,9 @@ public class AddUserEmailAddressReservedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='portlet-msg-error'])[1]")) {
+				if (RuntimeVariables.replace("Your request failed to complete.")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='portlet-msg-error'])[1]"))) {
 					break;
 				}
 			}

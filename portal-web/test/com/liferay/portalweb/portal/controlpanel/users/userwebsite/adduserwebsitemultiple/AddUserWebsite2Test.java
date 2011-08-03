@@ -77,6 +77,8 @@ public class AddUserWebsite2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_websitesLink']",
+				"Websites"));
 		selenium.clickAt("//a[@id='_125_websitesLink']",
 			RuntimeVariables.replace("Websites"));
 

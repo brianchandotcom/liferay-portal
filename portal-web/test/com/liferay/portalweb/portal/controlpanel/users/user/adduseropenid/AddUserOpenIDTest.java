@@ -79,6 +79,7 @@ public class AddUserOpenIDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_openIdLink']", "OpenID"));
 		selenium.clickAt("//a[@id='_125_openIdLink']",
 			RuntimeVariables.replace("OpenID"));
 

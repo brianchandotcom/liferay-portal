@@ -78,6 +78,9 @@ public class AddUserAdditionalEmailAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_125_additionalEmailAddressesLink']",
+				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_125_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 		selenium.type("//input[@id='_125_emailAddressAddress0']",

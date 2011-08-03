@@ -77,6 +77,8 @@ public class AddUserAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_addressesLink']",
+				"Addresses"));
 		selenium.clickAt("//a[@id='_125_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 		selenium.type("//input[@id='_125_addressStreet1_0']",

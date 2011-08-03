@@ -77,6 +77,8 @@ public class AddUserAnnouncementTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_announcementsLink']",
+				"Announcements"));
 		selenium.clickAt("//a[@id='_125_announcementsLink']",
 			RuntimeVariables.replace("Announcements"));
 		selenium.clickAt("//input[@id='_125_announcementsTypegeneralEmailCheckbox']",

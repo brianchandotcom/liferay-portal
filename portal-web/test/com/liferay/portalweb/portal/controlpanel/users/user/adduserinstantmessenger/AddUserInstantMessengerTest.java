@@ -77,6 +77,8 @@ public class AddUserInstantMessengerTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_125_instantMessengerLink']", "Instant Messenger"));
 		selenium.clickAt("//a[@id='_125_instantMessengerLink']",
 			RuntimeVariables.replace("Instant Messenger"));
 

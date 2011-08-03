@@ -115,9 +115,5 @@ public class AddUserEmailAddressPostmasterTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid email address."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

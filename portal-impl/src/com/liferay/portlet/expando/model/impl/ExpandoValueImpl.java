@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -146,13 +147,11 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	public String[] getStringArray() throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		String regex = "(?<=(?<!\\\\)(\\\\\\\\){0,100}),";
-
-		String[] dataArray = getData().split(regex);
+		String[] dataArray = StringUtil.split(getData());
 
 		for (int i = 0; i < dataArray.length; i++) {
-			dataArray[i] = StringUtil.replace(dataArray[i], "\\,", ",");
-			dataArray[i] = StringUtil.replace(dataArray[i], "\\\\", "\\");
+			dataArray[i] = StringUtil.replace(
+				dataArray[i], _EXPANDO_COMMA, StringPool.COMMA);
 		}
 
 		return dataArray;
@@ -270,8 +269,8 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
 		for (int i = 0; i < data.length; i++) {
-			data[i] = StringUtil.replace(data[i], "\\", "\\\\");
-			data[i] = StringUtil.replace(data[i], ",", "\\,");
+			data[i] = StringUtil.replace(
+				data[i], StringPool.COMMA, _EXPANDO_COMMA);
 		}
 
 		setData(StringUtil.merge(data));
@@ -299,5 +298,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		throw new ValueDataException(sb.toString());
 	}
+
+	private static String _EXPANDO_COMMA = "[$LIFERAY_EXPANDO_COMMA]";
 
 }

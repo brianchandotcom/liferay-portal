@@ -28,7 +28,7 @@ package com.liferay.portal.model.impl;
  *
  * <p>
  * These permissions can apply in one of four scopes: company, group,
- * group-template, or individual. The scope of a permission determine how
+ * group-template, or individual. The scope of a permission determines how
  * broadly it applies to resources in the portal. Company scope is the broadest,
  * and grants a user with the role permissions for every resource of the type
  * within the company. Likewise, group scope gives users with the role
@@ -77,7 +77,7 @@ package com.liferay.portal.model.impl;
  *
  * <p>
  * The <code>actionIds</code> attribute stores the bitwise IDs of all the
- * actions allowed by this permissions.
+ * actions allowed by this permission.
  * </p>
  *
  * @author Brian Wing Shun Chan

@@ -121,7 +121,7 @@ public class BookmarksEntryLocalServiceImpl
 		resourceLocalService.addResources(
 			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
 			BookmarksEntry.class.getName(), entry.getEntryId(), false,
-			addGroupPermissions, addGuestPermissions);
+			addGroupPermissions, addGuestPermissions, entry);
 	}
 
 	public void addEntryResources(
@@ -132,7 +132,7 @@ public class BookmarksEntryLocalServiceImpl
 		resourceLocalService.addModelResources(
 			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
 			BookmarksEntry.class.getName(), entry.getEntryId(),
-			groupPermissions, guestPermissions);
+			groupPermissions, guestPermissions, entry);
 	}
 
 	public void addEntryResources(
@@ -180,7 +180,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		resourceLocalService.deleteResource(
 			entry.getCompanyId(), BookmarksEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, entry.getEntryId());
+			ResourceConstants.SCOPE_INDIVIDUAL, entry.getEntryId(), entry);
 
 		// Asset
 

@@ -15,6 +15,14 @@
 package com.liferay.portal.model.impl;
 
 /**
+ * Stores the actions a role is permitted to perform on the resources in a
+ * resource block.
+ *
+ * <p>
+ * The <code>actionIds</code> attribute stores the bitwise IDs of all the
+ * actions allowed by this permission.
+ * </p>
+ *
  * @author Connor McKay
  */
 public class ResourceBlockPermissionImpl

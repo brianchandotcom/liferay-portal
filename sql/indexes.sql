@@ -93,12 +93,14 @@ create index IX_507BA031 on BlogsStatsUser (userId, lastPostDate);
 create index IX_E52FF7EF on BookmarksEntry (groupId);
 create index IX_5200100C on BookmarksEntry (groupId, folderId);
 create index IX_E2E9F129 on BookmarksEntry (groupId, userId);
+create index IX_E848278F on BookmarksEntry (resourceBlockId);
 create index IX_B670BA39 on BookmarksEntry (uuid_);
 create unique index IX_EAA02A91 on BookmarksEntry (uuid_, groupId);
 
 create index IX_2ABA25D7 on BookmarksFolder (companyId);
 create index IX_7F703619 on BookmarksFolder (groupId);
 create index IX_967799C0 on BookmarksFolder (groupId, parentFolderId);
+create index IX_28A49BB9 on BookmarksFolder (resourceBlockId);
 create index IX_451E7AE3 on BookmarksFolder (uuid_);
 create unique index IX_DC2F8927 on BookmarksFolder (uuid_, groupId);
 
@@ -572,6 +574,7 @@ create index IX_2200AA69 on ResourcePermission (companyId, name, scope, primKey)
 create unique index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey, roleId);
 create unique index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_A37A0588 on ResourcePermission (roleId);
+create index IX_F4555981 on ResourcePermission (scope);
 
 create unique index IX_BA497163 on ResourceTypePermission (companyId, groupId, name, roleId);
 create index IX_7D81F66F on ResourceTypePermission (companyId, name, roleId);

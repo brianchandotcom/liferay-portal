@@ -323,6 +323,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Set<Long> ownerResourceBlockIds = getOwnerResourceBlockIds(
 			companyId, groupIds, className);
 
+		// If a user has regular access to a resource block, it isn't necessary
+		// to check owner permissions on it as well.
+
 		ownerResourceBlockIds.removeAll(userResourceBlockIds);
 
 		// A SQL syntax error occurs if there is not at least one resource block
@@ -367,10 +370,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (pos != -1) {
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(sql.substring(0, pos + 1));
+			sb.append(sql.substring(0, pos));
 			sb.append(permissionWhere);
 			sb.append(" AND ");
-			sb.append(sql.substring(pos + 6));
+			sb.append(sql.substring(pos + 7));
 
 			return sb.toString();
 		}

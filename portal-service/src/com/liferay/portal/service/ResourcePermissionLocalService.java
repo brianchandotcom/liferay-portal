@@ -406,6 +406,11 @@ public interface ResourcePermissionLocalService
 		long roleId, int[] scopes, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ResourcePermission> getScopeResourcePermissions(
+		int[] scopes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns <code>true</code> if the resource permission grants permission to
 	* perform the resource action. Note that this method does not ensure that

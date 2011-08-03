@@ -106,6 +106,111 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the bookmarks entries where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the matching bookmarks entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByResourceBlockId(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the bookmarks entries where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param start the lower bound of the range of bookmarks entries
+	* @param end the upper bound of the range of bookmarks entries (not inclusive)
+	* @return the range of matching bookmarks entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByResourceBlockId(
+		long resourceBlockId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the bookmarks entries where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param start the lower bound of the range of bookmarks entries
+	* @param end the upper bound of the range of bookmarks entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching bookmarks entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByResourceBlockId(
+		long resourceBlockId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first bookmarks entry in the ordered set where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry findByResourceBlockId_First(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.bookmarks.NoSuchEntryException;
+
+	/**
+	* Returns the last bookmarks entry in the ordered set where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry findByResourceBlockId_Last(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.bookmarks.NoSuchEntryException;
+
+	/**
+	* Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param entryId the primary key of the current bookmarks entry
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByResourceBlockId_PrevAndNext(
+		long entryId, long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.bookmarks.NoSuchEntryException;
+
+	/**
 	* Returns all the bookmarks entries where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -921,6 +1026,15 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the bookmarks entries where resourceBlockId = &#63; from the database.
+	*
+	* @param resourceBlockId the resource block ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByResourceBlockId(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the bookmarks entries where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
@@ -975,6 +1089,16 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of bookmarks entries where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the number of matching bookmarks entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByResourceBlockId(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

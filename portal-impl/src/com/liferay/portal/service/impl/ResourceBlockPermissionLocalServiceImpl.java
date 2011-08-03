@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
-import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
 
 import java.util.List;
@@ -84,27 +83,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockPermissionContainer.setPermissions(
 				resourceBlockPermission.getRoleId(),
 				resourceBlockPermission.getActionIds());
-		}
-
-		return resourceBlockPermissionContainer;
-	}
-
-	public ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(
-				long companyId, long groupId, String name, long primKey)
-		throws SystemException {
-
-		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
-			new ResourceBlockPermissionsContainer();
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourceResourcePermissions(
-				companyId, groupId, name, String.valueOf(primKey));
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			resourceBlockPermissionContainer.addPermission(
-				resourcePermission.getRoleId(),
-				resourcePermission.getActionIds());
 		}
 
 		return resourceBlockPermissionContainer;

@@ -4388,6 +4388,8 @@ public class ServiceBuilder {
 
 		List<Element> columnElements = entityElement.elements("column");
 
+		boolean permissionedModel = false;
+
 		if (uuid) {
 			Element columnElement = SAXReaderUtil.createElement("column");
 
@@ -4399,6 +4401,12 @@ public class ServiceBuilder {
 
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
+
+			if (columnName.equals("resourceBlockId") &&
+					!ejbName.equals("ResourceBlock")) {
+
+				permissionedModel = true;
+			}
 
 			String columnDBName = columnElement.attributeValue("db-name");
 
@@ -4568,6 +4576,20 @@ public class ServiceBuilder {
 
 				finderElements.add(1, finderElement);
 			}
+		}
+
+		if (permissionedModel) {
+			Element finderElement = SAXReaderUtil.createElement("finder");
+
+			finderElement.addAttribute("name", "ResourceBlockId");
+			finderElement.addAttribute("return-type", "Collection");
+
+			Element finderColumnElement = finderElement.addElement(
+				"finder-column");
+
+			finderColumnElement.addAttribute("name", "resourceBlockId");
+
+			finderElements.add(0, finderElement);
 		}
 
 		String alias = TextFormatter.format(ejbName, TextFormatter.I);

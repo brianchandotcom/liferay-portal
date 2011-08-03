@@ -278,14 +278,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService().getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
-	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getResourceBlockPermissionsContainer(companyId, groupId,
-			name, primKey);
-	}
-
 	public static void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException {

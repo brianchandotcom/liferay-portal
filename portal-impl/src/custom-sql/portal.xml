@@ -3,13 +3,13 @@
 <custom-sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockId">
 		<![CDATA[
-			 WHERE
+			WHERE
 				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]))
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
-			 WHERE
+			WHERE
 				(
 					resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]) OR
 					(

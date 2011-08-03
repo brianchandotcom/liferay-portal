@@ -41,6 +41,8 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 
+import java.io.File;
+
 import java.util.ArrayList;
 
 import javax.portlet.ActionRequest;
@@ -173,7 +175,7 @@ public class SplitThreadAction extends PortletAction {
 			MBMessageServiceUtil.addMessage(
 				message.getGroupId(), message.getCategoryId(), oldThreadId,
 				oldParentMessageId, subject, body, format,
-				new ArrayList<ObjectValuePair<String, byte[]>>(), false,
+				new ArrayList<ObjectValuePair<String, File>>(), false,
 				MBThreadConstants.PRIORITY_NOT_GIVEN,
 				message.getAllowPingbacks(), serviceContext);
 		}

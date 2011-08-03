@@ -14,10 +14,14 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +35,35 @@ public class MBMailMessage {
 		_files.add(new ObjectValuePair<String, byte[]>(fileName, bytes));
 	}
 
-	public List<ObjectValuePair<String, byte[]>> getFiles() {
-		return _files;
+	public List<ObjectValuePair<String, File>> getFiles() throws IOException {
+		List<File> tempFiles = new ArrayList<File>(_files.size());
+
+		try {
+			List<ObjectValuePair<String, File>> files =
+					new ArrayList<ObjectValuePair<String, File>>(_files.size());
+
+			for (ObjectValuePair<String, byte[]> ovp : _files) {
+				String key = ovp.getKey();
+				byte[] bytes = ovp.getValue();
+
+				File file = FileUtil.createTempFile(FileUtil.getExtension(key));
+
+				tempFiles.add(file);
+
+				FileUtil.write(file, bytes);
+
+				files.add(new ObjectValuePair<String, File>(key, file));
+			}
+
+			return files;
+		}
+		catch (IOException ioe) {
+			for (File tempFile : tempFiles) {
+				FileUtil.delete(tempFile);
+			}
+
+			throw ioe;
+		}
 	}
 
 	public String getHtmlBody() {

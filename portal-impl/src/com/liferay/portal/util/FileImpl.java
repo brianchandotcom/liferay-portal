@@ -73,11 +73,15 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return _instance;
 	}
 
-	public void copyDirectory(String sourceDirName, String destinationDirName) {
+	public void copyDirectory(String sourceDirName, String destinationDirName)
+		throws IOException {
+
 		copyDirectory(new File(sourceDirName), new File(destinationDirName));
 	}
 
-	public void copyDirectory(File source, File destination) {
+	public void copyDirectory(File source, File destination)
+		throws IOException {
+
 		if (source.exists() && source.isDirectory()) {
 			if (!destination.exists()) {
 				destination.mkdirs();
@@ -102,19 +106,23 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
-	public void copyFile(String source, String destination) {
+	public void copyFile(String source, String destination) throws IOException {
 		copyFile(source, destination, false);
 	}
 
-	public void copyFile(String source, String destination, boolean lazy) {
+	public void copyFile(String source, String destination, boolean lazy)
+		throws IOException {
+
 		copyFile(new File(source), new File(destination), lazy);
 	}
 
-	public void copyFile(File source, File destination) {
+	public void copyFile(File source, File destination) throws IOException {
 		copyFile(source, destination, false);
 	}
 
-	public void copyFile(File source, File destination, boolean lazy) {
+	public void copyFile(File source, File destination, boolean lazy)
+		throws IOException {
+
 		if (!source.exists()) {
 			return;
 		}
@@ -148,23 +156,33 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				destination.getParentFile().mkdirs();
 			}
 
-			try {
-				StreamUtil.transfer(
-					new FileInputStream(source),
-					new FileOutputStream(destination));
-			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage());
-			}
+			StreamUtil.transfer(
+				new FileInputStream(source), new FileOutputStream(destination));
 		}
 	}
 
 	public File createTempFile() {
-		return createTempFile(null);
+		return createTempFile(StringPool.BLANK);
+	}
+
+	public File createTempFile(byte[] bytes) throws IOException {
+		File file = createTempFile(StringPool.BLANK);
+
+		write(file, bytes);
+
+		return file;
 	}
 
 	public File createTempFile(String extension) {
 		return new File(createTempFileName(extension));
+	}
+
+	public File createTempFile(InputStream is) throws IOException {
+		File file = createTempFile(StringPool.BLANK);
+
+		write(file, is);
+
+		return file;
 	}
 
 	public String createTempFileName() {

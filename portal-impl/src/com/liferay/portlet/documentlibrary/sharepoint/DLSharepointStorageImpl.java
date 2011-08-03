@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -256,35 +257,42 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		ServiceContext serviceContext = new ServiceContext();
 
 		if (fileEntry != null) {
-			long fileEntryId = fileEntry.getFileEntryId();
+			File file = null;
 
-			long folderId = fileEntry.getFolderId();
-			String mimeType = fileEntry.getMimeType();
-			String description = fileEntry.getDescription();
-			String changeLog = StringPool.BLANK;
+			try {
+				long fileEntryId = fileEntry.getFileEntryId();
 
-			InputStream is = fileEntry.getContentStream();
+				long folderId = fileEntry.getFolderId();
+				String mimeType = fileEntry.getMimeType();
+				String description = fileEntry.getDescription();
+				String changeLog = StringPool.BLANK;
 
-			byte[] bytes = FileUtil.getBytes(is);
+				InputStream is = fileEntry.getContentStream();
 
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				FileEntry.class.getName(), fileEntry.getFileEntryId());
+				file = FileUtil.createTempFile(is);
 
-			serviceContext.setAssetTagNames(assetTagNames);
+				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+					FileEntry.class.getName(), fileEntry.getFileEntryId());
 
-			fileEntry = DLAppServiceUtil.updateFileEntry(
-				fileEntryId, newName, mimeType, newName, description, changeLog,
-				false, bytes, serviceContext);
+				serviceContext.setAssetTagNames(assetTagNames);
 
-			if (folderId != newParentFolderId) {
-				fileEntry = DLAppServiceUtil.moveFileEntry(
-					fileEntryId, newParentFolderId, serviceContext);
+				fileEntry = DLAppServiceUtil.updateFileEntry(
+					fileEntryId, newName, mimeType, newName, description,
+					changeLog, false, file, serviceContext);
+
+				if (folderId != newParentFolderId) {
+					fileEntry = DLAppServiceUtil.moveFileEntry(
+						fileEntryId, newParentFolderId, serviceContext);
+				}
+
+				Tree documentTree = getFileEntryTree(
+					fileEntry, newParentFolderPath);
+
+				movedDocsTree.addChild(documentTree);
 			}
-
-			Tree documentTree = getFileEntryTree(
-				fileEntry, newParentFolderPath);
-
-			movedDocsTree.addChild(documentTree);
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 		else if (folder != null) {
 			long folderId = folder.getFolderId();

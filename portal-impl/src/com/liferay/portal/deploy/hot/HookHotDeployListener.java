@@ -299,7 +299,8 @@ public class HookHotDeployListener
 	}
 
 	protected void destroyCustomJspBag(
-		String servletContextName, CustomJspBag customJspBag) {
+			String servletContextName, CustomJspBag customJspBag)
+		throws Exception {
 
 		String customJspDir = customJspBag.getCustomJspDir();
 		boolean customJspGlobal = customJspBag.isCustomJspGlobal();

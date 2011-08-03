@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -52,6 +53,10 @@ import com.liferay.portlet.messageboards.service.persistence.MBBanUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageFlagUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -421,6 +426,85 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 	}
 
+	protected List<ObjectValuePair<String, File>> getAttachments(
+			PortletDataContext portletDataContext, Element messageElement,
+			MBMessage message)
+		throws IOException {
+
+		List<ObjectValuePair<String, File>> ovps =
+			new ArrayList<ObjectValuePair<String, File>>();
+
+		if (!(message.isAttachments() &&
+			portletDataContext.getBooleanParameter(_NAMESPACE, "attachments")))
+		{
+			return ovps;
+		}
+
+		List<File> files = new ArrayList<File>();
+
+		try {
+			List<Element> attachmentElements = messageElement.elements(
+				"attachment");
+
+			for (Element attachmentElement : attachmentElements) {
+				String name = attachmentElement.attributeValue("name");
+				String binPath = attachmentElement.attributeValue(
+					"bin-path");
+
+				InputStream is = portletDataContext.getZipEntryAsInputStream(
+					binPath);
+
+				File file = FileUtil.createTempFile(
+					FileUtil.getExtension(name));
+
+				files.add(file);
+
+				FileUtil.write(file, is);
+
+				ovps.add(new ObjectValuePair<String, File>(name, file));
+			}
+
+			if (ovps.size() <= 0) {
+				_log.error(
+					"Could not find attachments for message " +
+						message.getMessageId());
+			}
+
+			return ovps;
+		}
+		catch (IOException ioe) {
+			for (File file : files) {
+				FileUtil.delete(file);
+			}
+
+			throw ioe;
+		}
+	}
+
+	protected long getCategoryId(
+			PortletDataContext portletDataContext, MBMessage message,
+			Map<Long, Long> categoryPKs, long categoryId)
+		throws Exception {
+
+		if ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
+			(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
+			(categoryId == message.getCategoryId())) {
+
+			String path = getImportCategoryPath(
+				portletDataContext, categoryId);
+
+			MBCategory category =
+				(MBCategory)portletDataContext.getZipEntryAsObject(path);
+
+			importCategory(portletDataContext, path, category);
+
+			categoryId = MapUtil.getLong(
+				categoryPKs, message.getCategoryId(), message.getCategoryId());
+		}
+
+		return categoryId;
+	}
+
 	protected String getCategoryPath(
 		PortletDataContext portletDataContext, MBCategory category) {
 
@@ -662,65 +746,50 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			messagePKs, message.getParentMessageId(),
 			message.getParentMessageId());
 
-		List<ObjectValuePair<String, byte[]>> files =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
 		List<String> existingFiles = new ArrayList<String>();
 
-		if (portletDataContext.getBooleanParameter(_NAMESPACE, "attachments") &&
-			message.isAttachments()) {
+		List<ObjectValuePair<String, File>> files =
+			getAttachments(portletDataContext, messageElement, message);
 
-			List<Element> attachmentElements = messageElement.elements(
-				"attachment");
+		try {
+			ServiceContext serviceContext =
+				portletDataContext.createServiceContext(
+					messageElement, message, _NAMESPACE);
 
-			for (Element attachmentElement : attachmentElements) {
-				String name = attachmentElement.attributeValue("name");
-				String binPath = attachmentElement.attributeValue("bin-path");
-
-				byte[] bytes = portletDataContext.getZipEntryAsByteArray(
-					binPath);
-
-				files.add(new ObjectValuePair<String, byte[]>(name, bytes));
+			if (message.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
 
-			if (files.size() <= 0) {
-				_log.error(
-					"Could not find attachments for message " +
-						message.getMessageId());
+			categoryId = getCategoryId(
+				portletDataContext, message, categoryPKs, categoryId);
+
+			MBMessage importedMessage = null;
+
+			if (portletDataContext.isDataStrategyMirror()) {
+				MBMessage existingMessage = MBMessageUtil.fetchByUUID_G(
+					message.getUuid(), portletDataContext.getScopeGroupId());
+
+				if (existingMessage == null) {
+					serviceContext.setUuid(message.getUuid());
+
+					importedMessage = MBMessageLocalServiceUtil.addMessage(
+						userId, userName, portletDataContext.getScopeGroupId(),
+						categoryId, threadId, parentMessageId,
+						message.getSubject(), message.getBody(),
+						message.getFormat(), files, message.getAnonymous(),
+						message.getPriority(), message.getAllowPingbacks(),
+						serviceContext);
+				}
+				else {
+					importedMessage = MBMessageLocalServiceUtil.updateMessage(
+						userId, existingMessage.getMessageId(),
+						message.getSubject(), message.getBody(), files,
+						existingFiles, message.getPriority(),
+						message.getAllowPingbacks(), serviceContext);
+				}
 			}
-		}
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			messageElement, message, _NAMESPACE);
-
-		if (message.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		if ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
-			(categoryId == message.getCategoryId())) {
-
-			String path = getImportCategoryPath(portletDataContext, categoryId);
-
-			MBCategory category =
-				(MBCategory)portletDataContext.getZipEntryAsObject(path);
-
-			importCategory(portletDataContext, path, category);
-
-			categoryId = MapUtil.getLong(
-				categoryPKs, message.getCategoryId(), message.getCategoryId());
-		}
-
-		MBMessage importedMessage = null;
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			MBMessage existingMessage = MBMessageUtil.fetchByUUID_G(
-				message.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingMessage == null) {
-				serviceContext.setUuid(message.getUuid());
-
+			else {
 				importedMessage = MBMessageLocalServiceUtil.addMessage(
 					userId, userName, portletDataContext.getScopeGroupId(),
 					categoryId, threadId, parentMessageId, message.getSubject(),
@@ -728,27 +797,19 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 					message.getAnonymous(), message.getPriority(),
 					message.getAllowPingbacks(), serviceContext);
 			}
-			else {
-				importedMessage = MBMessageLocalServiceUtil.updateMessage(
-					userId, existingMessage.getMessageId(),
-					message.getSubject(), message.getBody(), files,
-					existingFiles, message.getPriority(),
-					message.getAllowPingbacks(), serviceContext);
+
+			threadPKs.put(message.getThreadId(), importedMessage.getThreadId());
+
+			portletDataContext.importClassedModel(
+				message, importedMessage, _NAMESPACE);
+		}
+		finally {
+			for (ObjectValuePair<String, File> ovp : files) {
+				File file = ovp.getValue();
+
+				FileUtil.delete(file);
 			}
 		}
-		else {
-			importedMessage = MBMessageLocalServiceUtil.addMessage(
-				userId, userName, portletDataContext.getScopeGroupId(),
-				categoryId, threadId, parentMessageId, message.getSubject(),
-				message.getBody(), message.getFormat(), files,
-				message.getAnonymous(), message.getPriority(),
-				message.getAllowPingbacks(), serviceContext);
-		}
-
-		threadPKs.put(message.getThreadId(), importedMessage.getThreadId());
-
-		portletDataContext.importClassedModel(
-			message, importedMessage, _NAMESPACE);
 	}
 
 	protected void importMessageFlag(

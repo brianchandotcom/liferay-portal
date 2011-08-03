@@ -87,6 +87,8 @@ import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateCompa
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.util.SerializableUtil;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -151,8 +153,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
 		}
 
-		List<ObjectValuePair<String, byte[]>> files =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
+		List<ObjectValuePair<String, File>> files =
+			new ArrayList<ObjectValuePair<String, File>>();
 		boolean anonymous = false;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
@@ -187,7 +189,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			long threadId, long parentMessageId, String subject, String body,
-			String format, List<ObjectValuePair<String, byte[]>> files,
+			String format, List<ObjectValuePair<String, File>> files,
 			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -327,15 +329,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
 
 			for (int i = 0; i < files.size(); i++) {
-				ObjectValuePair<String, byte[]> ovp = files.get(i);
+				ObjectValuePair<String, File> ovp = files.get(i);
 
 				String fileName = ovp.getKey();
-				byte[] bytes = ovp.getValue();
+				File file = ovp.getValue();
 
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						bytes);
+						file);
 				}
 				catch (DuplicateFileException dfe) {
 					if (_log.isDebugEnabled()) {
@@ -402,7 +404,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format,
-			List<ObjectValuePair<String, byte[]>> files, boolean anonymous,
+			List<ObjectValuePair<String, File>> files, boolean anonymous,
 			double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1304,8 +1306,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
 		}
 
-		List<ObjectValuePair<String, byte[]>> files =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
+		List<ObjectValuePair<String, File>> files =
+			new ArrayList<ObjectValuePair<String, File>>();
 		List<String> existingFiles = new ArrayList<String>();
 		double priority = 0.0;
 		boolean allowPingbacks = false;
@@ -1320,7 +1322,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	public MBMessage updateMessage(
 			long userId, long messageId, String subject, String body,
-			List<ObjectValuePair<String, byte[]>> files,
+			List<ObjectValuePair<String, File>> files,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1379,15 +1381,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 
 			for (int i = 0; i < files.size(); i++) {
-				ObjectValuePair<String, byte[]> ovp = files.get(i);
+				ObjectValuePair<String, File> ovp = files.get(i);
 
 				String fileName = ovp.getKey();
-				byte[] bytes = ovp.getValue();
+				File file = ovp.getValue();
 
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						bytes);
+						file);
 				}
 				catch (DuplicateFileException dfe) {
 				}

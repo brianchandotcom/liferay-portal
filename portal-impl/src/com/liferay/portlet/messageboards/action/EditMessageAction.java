@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -304,8 +303,8 @@ public class EditMessageAction extends PortletAction {
 		boolean attachments = ParamUtil.getBoolean(
 			actionRequest, "attachments");
 
-		List<ObjectValuePair<String, byte[]>> files =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
+		List<ObjectValuePair<String, File>> files =
+			new ArrayList<ObjectValuePair<String, File>>();
 
 		if (attachments) {
 			UploadPortletRequest uploadRequest =
@@ -314,11 +313,10 @@ public class EditMessageAction extends PortletAction {
 			for (int i = 1; i <= 5; i++) {
 				File file = uploadRequest.getFile("msgFile" + i);
 				String fileName = uploadRequest.getFileName("msgFile" + i);
-				byte[] bytes = FileUtil.getBytes(file);
 
-				if ((bytes != null) && (bytes.length > 0)) {
-					ObjectValuePair<String, byte[]> ovp =
-						new ObjectValuePair<String, byte[]>(fileName, bytes);
+				if ((file != null) && file.exists()) {
+					ObjectValuePair<String, File> ovp =
+						new ObjectValuePair<String, File>(fileName, file);
 
 					files.add(ovp);
 				}

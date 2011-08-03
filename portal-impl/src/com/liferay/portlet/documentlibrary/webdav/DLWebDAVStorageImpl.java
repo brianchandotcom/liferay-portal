@@ -162,12 +162,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String description = fileEntry.getDescription();
 			String changeLog = StringPool.BLANK;
 
-			file = FileUtil.createTempFile(
-				FileUtil.getExtension(fileEntry.getTitle()));
-
 			InputStream is = fileEntry.getContentStream();
 
-			FileUtil.write(file, is);
+			file = FileUtil.createTempFile(is);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -208,9 +205,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			throw new WebDAVException(e);
 		}
 		finally {
-			if (file != null) {
-				file.delete();
-			}
+			FileUtil.delete(file);
 		}
 	}
 
@@ -539,6 +534,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			boolean overwrite)
 		throws WebDAVException {
 
+		File file = null;
+
 		try {
 			String[] destinationArray = WebDAVUtil.getPathArray(
 				destination, true);
@@ -558,7 +555,6 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String title = WebDAVUtil.getResourceName(destinationArray);
 			String description = fileEntry.getDescription();
 			String changeLog = StringPool.BLANK;
-			byte[] bytes = null;
 
 			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 				FileEntry.class.getName(), fileEntry.getFileEntryId());
@@ -588,13 +584,13 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 					InputStream is = fileEntry.getContentStream();
 
-					bytes = FileUtil.getBytes(is);
+					file = FileUtil.createTempFile(is);
 
 					DLAppServiceUtil.updateFileEntry(
 						destFileEntry.getFileEntryId(),
 						destFileEntry.getTitle(), destFileEntry.getMimeType(),
 						destFileEntry.getTitle(),
-						destFileEntry.getDescription(), changeLog, false, bytes,
+						destFileEntry.getDescription(), changeLog, false, file,
 						serviceContext);
 
 					DLAppServiceUtil.deleteFileEntry(
@@ -609,7 +605,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), sourceFileName,
 				fileEntry.getMimeType(), title, description, changeLog, false,
-				bytes, serviceContext);
+				file, serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
 				fileEntry = DLAppServiceUtil.moveFileEntry(
@@ -633,6 +629,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
+		}
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 
@@ -723,9 +722,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			throw new WebDAVException(e);
 		}
 		finally {
-			if (file != null) {
-				file.delete();
-			}
+			FileUtil.delete(file);
 		}
 	}
 

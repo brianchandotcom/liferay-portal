@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,15 +59,23 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (bytes == null) {
-			bytes = new byte[0];
+		File file = null;
+
+		try {
+			if ((bytes != null) && (bytes.length > 0)) {
+				file = FileUtil.createTempFile(bytes);
+			}
+
+			return addFileEntry(
+				userId, repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, file, serviceContext);
 		}
-
-		InputStream is = new UnsyncByteArrayInputStream(bytes);
-
-		return addFileEntry(
-			userId, repositoryId, folderId, sourceFileName, mimeType, title,
-			description, changeLog, is, bytes.length, serviceContext);
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	public FileEntry addFileEntry(
@@ -535,17 +544,23 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean majorVersion, byte[] bytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		InputStream is = null;
-		long size = 0;
+		File file = null;
 
-		if (bytes != null) {
-			is = new UnsyncByteArrayInputStream(bytes);
-			size = bytes.length;
+		try {
+			if ((bytes != null) && (bytes.length > 0)) {
+				file = FileUtil.createTempFile(bytes);
+			}
+
+			return updateFileEntry(
+				userId, fileEntryId, sourceFileName, mimeType, title,
+				description, changeLog, majorVersion, file, serviceContext);
 		}
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	public FileEntry updateFileEntry(

@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -31,6 +30,7 @@ import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
 public abstract class BaseStore implements Store {
 
@@ -42,18 +42,18 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
-		InputStream is = new UnsyncByteArrayInputStream(bytes);
+		File file = null;
 
 		try {
-			addFile(companyId, repositoryId, fileName, is);
+			file = FileUtil.createTempFile(bytes);
+
+			addFile(companyId, repositoryId, fileName, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
 		}
 		finally {
-			try {
-				is.close();
-			}
-			catch (IOException ioe) {
-				_log.error(ioe);
-			}
+			FileUtil.delete(file);
 		}
 	}
 
@@ -192,20 +192,20 @@ public abstract class BaseStore implements Store {
 			String versionNumber, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
-		InputStream is = new UnsyncByteArrayInputStream(bytes);
+		File file = null;
 
 		try {
+			file = FileUtil.createTempFile(bytes);
+
 			updateFile(
 				companyId, repositoryId, fileName, versionNumber,
-				sourceFileName, is);
+				sourceFileName, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
 		}
 		finally {
-			try {
-				is.close();
-			}
-			catch (IOException ioe) {
-				_log.error(ioe);
-			}
+			FileUtil.delete(file);
 		}
 	}
 

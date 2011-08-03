@@ -147,6 +147,7 @@ public class EditRecordSetAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
@@ -156,7 +157,7 @@ public class EditRecordSetAction extends PortletAction {
 		if (cmd.equals(Constants.ADD)) {
 			recordSet = DDLRecordSetServiceUtil.addRecordSet(
 				groupId, ddmStructureId, null, nameMap, descriptionMap,
-				DDLConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+				DDLConstants.MIN_DISPLAY_ROWS_DEFAULT, scope, serviceContext);
 		}
 		else {
 			recordSet = DDLRecordSetServiceUtil.updateRecordSet(

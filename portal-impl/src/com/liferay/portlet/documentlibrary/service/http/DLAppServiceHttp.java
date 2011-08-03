@@ -337,7 +337,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static void checkInFileEntry(HttpPrincipal httpPrincipal,
-		long fileEntryId, boolean major, java.lang.String changeLog,
+		long fileEntryId, boolean majorVersion, java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -346,7 +346,7 @@ public class DLAppServiceHttp {
 					"checkInFileEntry", _checkInFileEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, major, changeLog, serviceContext);
+					fileEntryId, majorVersion, changeLog, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1780,7 +1780,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		HttpPrincipal httpPrincipal, long repositoryId, long userId, int start,
+		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
 		int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1788,8 +1788,8 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes46);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId, start, end);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, start, end);
 
 			Object returnObj = null;
 
@@ -1818,7 +1818,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		HttpPrincipal httpPrincipal, long repositoryId, long userId, int start,
+		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1826,8 +1826,8 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes47);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId, start, end, obc);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, start, end, obc);
 
 			Object returnObj = null;
 
@@ -1856,7 +1856,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		HttpPrincipal httpPrincipal, long repositoryId, long userId,
+		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long rootFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1864,8 +1864,8 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes48);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId, rootFolderId, start, end);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, rootFolderId, start, end);
 
 			Object returnObj = null;
 
@@ -1894,7 +1894,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		HttpPrincipal httpPrincipal, long repositoryId, long userId,
+		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long rootFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1903,8 +1903,8 @@ public class DLAppServiceHttp {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes49);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId, rootFolderId, start, end, obc);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, rootFolderId, start, end, obc);
 
 			Object returnObj = null;
 
@@ -1933,7 +1933,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static int getGroupFileEntriesCount(HttpPrincipal httpPrincipal,
-		long repositoryId, long userId)
+		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1941,8 +1941,8 @@ public class DLAppServiceHttp {
 					"getGroupFileEntriesCount",
 					_getGroupFileEntriesCountParameterTypes50);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId);
 
 			Object returnObj = null;
 
@@ -1971,7 +1971,7 @@ public class DLAppServiceHttp {
 	}
 
 	public static int getGroupFileEntriesCount(HttpPrincipal httpPrincipal,
-		long repositoryId, long userId, long rootFolderId)
+		long groupId, long userId, long rootFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1979,8 +1979,8 @@ public class DLAppServiceHttp {
 					"getGroupFileEntriesCount",
 					_getGroupFileEntriesCountParameterTypes51);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					repositoryId, userId, rootFolderId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, rootFolderId);
 
 			Object returnObj = null;
 

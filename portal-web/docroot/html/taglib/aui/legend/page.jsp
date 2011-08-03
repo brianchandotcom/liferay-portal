@@ -16,4 +16,12 @@
 
 <%@ include file="/html/taglib/aui/legend/init.jsp" %>
 
-<legend class="aui-fieldset-legend" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><span class="aui-legend <%= cssClass %>"><liferay-ui:message key="<%= label %>" /></span></legend>
+<legend class="aui-fieldset-legend" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+	<span class="aui-legend <%= cssClass %>">
+		<liferay-ui:message key="<%= label %>" />
+
+		<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+			<liferay-ui:icon-help message="<%= helpMessage %>" />
+		</c:if>
+	</span>
+</legend>

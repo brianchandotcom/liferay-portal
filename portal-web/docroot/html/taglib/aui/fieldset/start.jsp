@@ -18,7 +18,7 @@
 
 <fieldset class="aui-fieldset <%= cssClass %> <%= column ? "aui-column aui-form-column" : StringPool.BLANK %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<aui:legend label="<%= label %>" />
+		<aui:legend helpMessage="<%= helpMessage %>" label="<%= label %>" />
 	</c:if>
 
 	<div class="aui-fieldset-content <%= column ? "aui-column-content" : StringPool.BLANK %>">

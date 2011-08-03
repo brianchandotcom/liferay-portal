@@ -64,7 +64,7 @@ public interface DLAppLocalService {
 	* @param folderId the primary key of the file entry's parent folder
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param bytes the file's data (optionally <code>null</code>)
@@ -72,7 +72,6 @@ public interface DLAppLocalService {
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
 	
-	<p>
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -82,7 +81,6 @@ public interface DLAppLocalService {
 	entry type
 	</li>
 	</ul>
-	</p>
 	* @return the file entry
 	* @throws PortalException if the parent folder could not be
 	found or if the file entry's information was invalid
@@ -105,7 +103,7 @@ public interface DLAppLocalService {
 	* @param folderId the primary key of the file entry's parent folder
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param file the file's data (optionally <code>null</code>)
@@ -145,7 +143,7 @@ public interface DLAppLocalService {
 	* @param folderId the primary key of the file entry's parent folder
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param is the file's data (optionally <code>null</code>)
@@ -1033,7 +1031,7 @@ public interface DLAppLocalService {
 	* @param fileEntryId the primary key of the file entry
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param majorVersion whether the new file version is a major version
@@ -1073,7 +1071,7 @@ public interface DLAppLocalService {
 	* @param fileEntryId the primary key of the file entry
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param majorVersion whether the new file version is a major version
@@ -1113,7 +1111,7 @@ public interface DLAppLocalService {
 	* @param fileEntryId the primary key of the file entry
 	* @param sourceFileName the file's original name
 	* @param mimeType the file's MIME type
-	* @param title the file's title
+	* @param title the name to be assigned to the file
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param majorVersion whether the new file version is a major version

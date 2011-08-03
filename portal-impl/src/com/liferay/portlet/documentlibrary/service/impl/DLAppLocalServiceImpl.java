@@ -79,7 +79,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  folderId the primary key of the file entry's parent folder
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  bytes the file's data (optionally <code>null</code>)
@@ -136,7 +136,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  folderId the primary key of the file entry's parent folder
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  file the file's data (optionally <code>null</code>)
@@ -206,7 +206,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  folderId the primary key of the file entry's parent folder
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  is the file's data (optionally <code>null</code>)
@@ -1261,7 +1261,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  majorVersion whether the new file version is a major version
@@ -1318,7 +1318,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  majorVersion whether the new file version is a major version
@@ -1384,7 +1384,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  sourceFileName the file's original name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the file's title
+	 * @param  title the name to be assigned to the file
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  majorVersion whether the new file version is a major version

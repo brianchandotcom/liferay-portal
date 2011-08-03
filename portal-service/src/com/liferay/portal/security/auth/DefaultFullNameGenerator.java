@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.impl.UserLocalServiceImpl;
+import com.liferay.portal.model.UserConstants;
 
 /**
  * @author Michael C. Han
@@ -32,59 +32,32 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 	public String getFullName(
 		String firstName, String middleName, String lastName) {
 
-		StringBundler sb = new StringBundler();
+		String fullName = createFullName(
+			firstName, middleName, lastName, false);
 
-		if (Validator.isNull(middleName)) {
-			middleName = "";
+		if (fullName.length() <= UserConstants.FULL_NAME_MAX_LENGTH) {
+			return fullName;
 		}
 
-		if (Validator.isNull(lastName)) {
-			lastName = "";
+		if (_log.isInfoEnabled()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Full name exceeds ");
+			sb.append(UserConstants.FULL_NAME_MAX_LENGTH);
+			sb.append(" characters for user ");
+			sb.append(fullName);
+			sb.append(". Full name has been shortened.");
+
+			_log.info(sb.toString());
 		}
 
-		int totalLength = firstName.length() + middleName.length() +
-							lastName.length() + 2;
+		fullName = createFullName(firstName, middleName, lastName, true);
 
-		boolean tooLong = false;
-
-		while (totalLength > 75) {
-			if (middleName.length() > 1) {
-				middleName = middleName.substring(0,1);
-			}
-			else if (firstName.length() > 1) {
-				firstName = firstName.substring(0,1);
-			}
-			else {
-				lastName = lastName.substring(0, 71);
-			}
-
-			totalLength = firstName.length() + middleName.length() +
-							lastName.length() + 2;
-
-			tooLong = true;
+		if (fullName.length() <= UserConstants.FULL_NAME_MAX_LENGTH) {
+			return fullName;
 		}
 
-		sb.append(firstName);
-
-		if (!middleName.equals("")) {
-			sb.append(StringPool.SPACE);
-			sb.append(middleName);
-		}
-
-		if (!lastName.equals("")) {
-			sb.append(StringPool.SPACE);
-			sb.append(lastName);
-		}
-
-		if (tooLong) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Full name length is greater than 75 characters. " +
-						"Generating truncated version.");
-			}
-		}
-
-		return sb.toString();
+		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
 	}
 
 	public String[] splitFullName(String fullName) {
@@ -121,5 +94,36 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return new String[] {firstName, middleName, lastName};
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultFullNameGenerator.class);
+	protected String createFullName(
+		String firstName, String middleName, String lastName,
+		boolean useInitials) {
+
+		StringBundler sb = new StringBundler();
+
+		if (useInitials) {
+			firstName = firstName.substring(0,1);
+		}
+
+		sb.append(firstName);
+
+		if (Validator.isNotNull(middleName)) {
+			if (useInitials) {
+				middleName = middleName.substring(0,1);
+			}
+
+			sb.append(StringPool.SPACE);
+			sb.append(middleName);
+		}
+
+		if (Validator.isNotNull(lastName)) {
+			sb.append(StringPool.SPACE);
+			sb.append(lastName);
+		}
+
+		return sb.toString();
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultFullNameGenerator.class);
+
 }

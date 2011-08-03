@@ -94,6 +94,8 @@ public class DDLRecordSetPersistenceTest extends BasePersistenceTestCase {
 
 		newDDLRecordSet.setMinDisplayRows(nextInt());
 
+		newDDLRecordSet.setScope(nextInt());
+
 		_persistence.update(newDDLRecordSet, false);
 
 		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
@@ -124,6 +126,7 @@ public class DDLRecordSetPersistenceTest extends BasePersistenceTestCase {
 			newDDLRecordSet.getDescription());
 		assertEquals(existingDDLRecordSet.getMinDisplayRows(),
 			newDDLRecordSet.getMinDisplayRows());
+		assertEquals(existingDDLRecordSet.getScope(), newDDLRecordSet.getScope());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -280,6 +283,8 @@ public class DDLRecordSetPersistenceTest extends BasePersistenceTestCase {
 		ddlRecordSet.setDescription(randomString());
 
 		ddlRecordSet.setMinDisplayRows(nextInt());
+
+		ddlRecordSet.setScope(nextInt());
 
 		_persistence.update(ddlRecordSet, false);
 

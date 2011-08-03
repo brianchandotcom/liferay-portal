@@ -18,28 +18,28 @@ package com.liferay.portlet.dynamicdatalists.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface DDLRecordSetFinder {
-	public int countByKeywords(long companyId, long groupId,
+	public int countByKeywords(long companyId, long groupId, int scope,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_G_N_D(long companyId, long groupId,
+	public int countByC_G_S_N_D(long companyId, long groupId, int scope,
 		java.lang.String name, java.lang.String description, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, int scope, java.lang.String keywords,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_N_D(
-		long companyId, long groupId, java.lang.String name,
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_S_N_D(
+		long companyId, long groupId, int scope, java.lang.String name,
 		java.lang.String description, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_N_D(
-		long companyId, long groupId, java.lang.String[] names,
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_S_N_D(
+		long companyId, long groupId, int scope, java.lang.String[] names,
 		java.lang.String[] descriptions, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

@@ -1479,6 +1479,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="minDisplayRows" type="int" />
+		<field name="scope" type="int" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion">
 		<field name="recordVersionId" type="long" />

@@ -1588,6 +1588,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="minDisplayRows" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionImpl" table="DDLRecordVersion">
 		<cache usage="read-write" />

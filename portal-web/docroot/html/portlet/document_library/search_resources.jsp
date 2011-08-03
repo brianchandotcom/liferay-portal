@@ -289,7 +289,7 @@ int total = 0;
 		}
 
 		Liferay.fire(
-			'viewEntriesLoaded',
+			'<portlet:namespace />viewEntriesLoaded',
 			{
 				page: <%= end / (end - start) %>,
 				rowsPerPage:  <%= (end - start) %>,

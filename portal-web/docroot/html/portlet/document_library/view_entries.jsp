@@ -383,7 +383,7 @@ for (int i = 0; i < results.size(); i++) {
 
 <aui:script>
 	Liferay.fire(
-		'viewEntriesLoaded',
+		'<portlet:namespace />viewEntriesLoaded',
 		{
 			page: <%= end / (end - start) %>,
 			rowsPerPage: <%= (end - start) %>,

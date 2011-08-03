@@ -27,22 +27,31 @@ import java.util.Properties;
  */
 public interface File {
 
-	public void copyDirectory(String sourceDirName, String destinationDirName);
+	public void copyDirectory(String sourceDirName, String destinationDirName)
+		throws IOException;
 
-	public void copyDirectory(java.io.File source, java.io.File destination);
+	public void copyDirectory(java.io.File source, java.io.File destination)
+		throws IOException;
 
-	public void copyFile(String source, String destination);
+	public void copyFile(String source, String destination) throws IOException;
 
-	public void copyFile(String source, String destination, boolean lazy);
+	public void copyFile(String source, String destination, boolean lazy)
+		throws IOException;
 
-	public void copyFile(java.io.File source, java.io.File destination);
+	public void copyFile(java.io.File source, java.io.File destination)
+		throws IOException;
 
 	public void copyFile(
-		java.io.File source, java.io.File destination, boolean lazy);
+			java.io.File source, java.io.File destination, boolean lazy)
+		throws IOException;
 
 	public java.io.File createTempFile();
 
+	public java.io.File createTempFile(byte[] bytes) throws IOException;
+
 	public java.io.File createTempFile(String extension);
+
+	public java.io.File createTempFile(InputStream is) throws IOException;
 
 	public String createTempFileName();
 

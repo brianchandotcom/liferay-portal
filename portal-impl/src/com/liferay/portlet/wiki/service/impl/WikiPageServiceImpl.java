@@ -101,7 +101,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	public void addPageAttachments(
 			long nodeId, String title,
-			List<ObjectValuePair<String, byte[]>> files)
+			List<ObjectValuePair<String, File>> files)
 		throws PortalException, SystemException {
 
 		WikiNodePermission.check(
@@ -112,14 +112,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	public void addPageAttachment(
-			long nodeId, String title, String fileName,	byte[] bytes)
+			long nodeId, String title, String fileName,	File file)
 		throws PortalException, SystemException {
 
 		WikiNodePermission.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
 
 		wikiPageLocalService.addPageAttachment(
-			getUserId(), nodeId, title, fileName, bytes);
+			getUserId(), nodeId, title, fileName, file);
 	}
 
 	public String addTempPageAttachment(

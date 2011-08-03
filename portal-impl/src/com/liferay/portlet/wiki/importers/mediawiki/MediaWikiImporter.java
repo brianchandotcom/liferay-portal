@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProgressTracker;
@@ -59,6 +60,7 @@ import com.liferay.portlet.wiki.translators.MediaWikiToCreoleTranslator;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -209,7 +211,7 @@ public class MediaWikiImporter implements WikiImporter {
 		return false;
 	}
 
-	protected boolean isValidImage(String[] paths, byte[] bytes) {
+	protected boolean isValidImage(String[] paths, File file) {
 		if (ArrayUtil.contains(_SPECIAL_MEDIA_WIKI_DIRS, paths[0])) {
 			return false;
 		}
@@ -223,7 +225,7 @@ public class MediaWikiImporter implements WikiImporter {
 		String fileName = paths[paths.length - 1];
 
 		try {
-			DLStoreUtil.validate(fileName, true, bytes);
+			DLStoreUtil.validate(fileName, true, file);
 		}
 		catch (PortalException pe) {
 			return false;
@@ -331,49 +333,67 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 		}
 
-		List<ObjectValuePair<String, byte[]>> attachments =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
+		List<File> tempFiles = new ArrayList<File>();
 
-		int percentage = 50;
+		try {
+			List<ObjectValuePair<String, File>> attachments =
+				new ArrayList<ObjectValuePair<String, File>>();
 
-		for (int i = 0; i < entries.size(); i++) {
-			String entry = entries.get(i);
+			int percentage = 50;
 
-			String key = entry;
-			byte[] value = zipReader.getEntryAsByteArray(entry);
+			for (int i = 0; i < entries.size(); i++) {
+				String entry = entries.get(i);
 
-			String[] paths = StringUtil.split(key, CharPool.SLASH);
+				String key = entry;
+				InputStream is = zipReader.getEntryAsInputStream(entry);
 
-			if (!isValidImage(paths, value)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Ignoring " + key);
+				File file = FileUtil.createTempFile(FileUtil.getExtension(key));
+
+				tempFiles.add(file);
+
+				FileUtil.write(file, is);
+
+				String[] paths = StringUtil.split(key, CharPool.SLASH);
+
+				if (!isValidImage(paths, file)) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Ignoring " + key);
+					}
+
+					continue;
 				}
 
-				continue;
+				String fileName = paths[paths.length - 1].toLowerCase();
+
+				attachments.add(
+					new ObjectValuePair<String, File>(fileName, file));
+
+				count++;
+
+				if ((i % 5) == 0) {
+					WikiPageLocalServiceUtil.addPageAttachments(
+						userId, node.getNodeId(), SHARED_IMAGES_TITLE,
+						attachments);
+
+					attachments.clear();
+
+					percentage = Math.min(50 + (i * 50) / total, 99);
+
+					progressTracker.updateProgress(percentage);
+				}
 			}
 
-			String fileName = paths[paths.length - 1].toLowerCase();
-
-			attachments.add(
-				new ObjectValuePair<String, byte[]>(fileName, value));
-
-			count++;
-
-			if ((i % 5) == 0) {
+			if (!attachments.isEmpty()) {
 				WikiPageLocalServiceUtil.addPageAttachments(
 					userId, node.getNodeId(), SHARED_IMAGES_TITLE, attachments);
-
-				attachments.clear();
-
-				percentage = Math.min(50 + (i * 50) / total, 99);
-
-				progressTracker.updateProgress(percentage);
 			}
 		}
-
-		if (!attachments.isEmpty()) {
-			WikiPageLocalServiceUtil.addPageAttachments(
-				userId, node.getNodeId(), SHARED_IMAGES_TITLE, attachments);
+		finally {
+			for (File tempFile : tempFiles) {
+				if (tempFile.exists()) {
+					tempFile.delete();
+				}
+			}
 		}
 
 		zipReader.close();

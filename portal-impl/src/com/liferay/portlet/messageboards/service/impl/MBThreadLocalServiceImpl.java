@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +41,9 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -652,12 +657,22 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		for (String fileName : fileNames) {
 			String name = StringUtil.extractLast(fileName, StringPool.SLASH);
-			byte[] fileBytes = DLStoreUtil.getFile(
+			InputStream is = DLStoreUtil.getFileAsStream(
 				companyId, repositoryId, fileName);
 
-			DLStoreUtil.addFile(
-				companyId, repositoryId, newAttachmentsDir + "/" + name,
-				fileBytes);
+			try {
+				DLStoreUtil.addFile(
+					companyId, repositoryId, newAttachmentsDir + "/" + name,
+					false, is);
+			}
+			finally {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+					_log.error(ioe);
+				}
+			}
 
 			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
 		}
@@ -706,5 +721,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return messagesMoved;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		MBThreadLocalServiceImpl.class);
 
 }

@@ -37,6 +37,7 @@ import java.util.Arrays;
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
+ * @author Alexander Chow
  */
 public class FileSystemStore extends BaseStore {
 
@@ -90,7 +91,7 @@ public class FileSystemStore extends BaseStore {
 			long companyId, long repositoryId, String fileName,
 			String fromVersionNumber, String toVersionNumber,
 			String sourceFileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, fromVersionNumber);
@@ -102,7 +103,14 @@ public class FileSystemStore extends BaseStore {
 			throw new DuplicateFileException(toFileNameVersionFile.getPath());
 		}
 
-		FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+		try {
+			toFileNameVersionFile.createNewFile();
+
+			FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -244,29 +252,43 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws SystemException {
 
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-		File newFileNameDir = getFileNameDir(
-			companyId, newRepositoryId, fileName);
+		try {
+			File fileNameDir = getFileNameDir(
+				companyId, repositoryId, fileName);
+			File newFileNameDir = getFileNameDir(
+				companyId, newRepositoryId, fileName);
 
-		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
+			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
-		FileUtil.deltree(fileNameDir);
+			FileUtil.deltree(fileNameDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws SystemException {
 
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-		File newFileNameDir = getFileNameDir(
-			companyId, repositoryId, newFileName);
+		try {
+			File fileNameDir = getFileNameDir(
+				companyId, repositoryId, fileName);
+			File newFileNameDir = getFileNameDir(
+				companyId, repositoryId, newFileName);
 
-		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
+			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
-		FileUtil.deltree(fileNameDir);
+			FileUtil.deltree(fileNameDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override

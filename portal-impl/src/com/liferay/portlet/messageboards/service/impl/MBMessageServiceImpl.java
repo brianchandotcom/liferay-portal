@@ -56,6 +56,8 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -88,7 +90,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId,
 			String subject, String body, String format,
-			List<ObjectValuePair<String, byte[]>> files, boolean anonymous,
+			List<ObjectValuePair<String, File>> files, boolean anonymous,
 			double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -133,7 +135,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
-			String format, List<ObjectValuePair<String, byte[]>> files,
+			String format, List<ObjectValuePair<String, File>> files,
 			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -567,7 +569,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	public MBMessage updateMessage(
 			long messageId, String subject, String body,
-			List<ObjectValuePair<String, byte[]>> files,
+			List<ObjectValuePair<String, File>> files,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {

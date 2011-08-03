@@ -30,30 +30,40 @@ import java.util.Properties;
 public class FileUtil {
 
 	public static void copyDirectory(
-		String sourceDirName, String destinationDirName) {
+			String sourceDirName, String destinationDirName)
+		throws IOException {
 
 		getFile().copyDirectory(sourceDirName, destinationDirName);
 	}
 
-	public static void copyDirectory(File source, File destination) {
+	public static void copyDirectory(File source, File destination)
+		throws IOException {
+
 		getFile().copyDirectory(source, destination);
 	}
 
-	public static void copyFile(String source, String destination) {
+	public static void copyFile(String source, String destination)
+		throws IOException {
+
 		getFile().copyFile(source, destination);
 	}
 
 	public static void copyFile(
-		String source, String destination, boolean lazy) {
+			String source, String destination, boolean lazy)
+		throws IOException {
 
 		getFile().copyFile(source, destination, lazy);
 	}
 
-	public static void copyFile(File source, File destination) {
+	public static void copyFile(File source, File destination)
+		throws IOException {
+
 		getFile().copyFile(source, destination);
 	}
 
-	public static void copyFile(File source, File destination, boolean lazy) {
+	public static void copyFile(File source, File destination, boolean lazy)
+		throws IOException {
+
 		getFile().copyFile(source, destination, lazy);
 	}
 
@@ -61,8 +71,16 @@ public class FileUtil {
 		return getFile().createTempFile();
 	}
 
+	public static File createTempFile(byte[] bytes) throws IOException {
+		return getFile().createTempFile(bytes);
+	}
+
 	public static File createTempFile(String extension) {
 		return getFile().createTempFile(extension);
+	}
+
+	public static File createTempFile(InputStream is) throws IOException {
+		return getFile().createTempFile(is);
 	}
 
 	public static String createTempFileName() {

@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
@@ -42,6 +44,10 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
+
+import java.io.File;
+
+import java.util.List;
 
 import javax.mail.Message;
 
@@ -95,6 +101,8 @@ public class MessageListenerImpl implements MessageListener {
 
 	public void deliver(String from, String recipient, Message message)
 		throws MessageListenerException {
+
+		List<ObjectValuePair<String, File>> files = null;
 
 		try {
 			StopWatch stopWatch = null;
@@ -179,18 +187,20 @@ public class MessageListenerImpl implements MessageListener {
 					groupId, PortletKeys.MESSAGE_BOARDS));
 			serviceContext.setScopeGroupId(groupId);
 
+			files = collector.getFiles();
+
 			if (parentMessage == null) {
 				MBMessageServiceUtil.addMessage(
 					groupId, categoryId, subject, collector.getBody(),
-					MBMessageConstants.DEFAULT_FORMAT, collector.getFiles(),
-					false, 0.0, true, serviceContext);
+					MBMessageConstants.DEFAULT_FORMAT, files, false, 0.0, true,
+					serviceContext);
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
 					groupId, categoryId, parentMessage.getThreadId(),
 					parentMessage.getMessageId(), subject, collector.getBody(),
-					MBMessageConstants.DEFAULT_FORMAT, collector.getFiles(),
-					false, 0.0, true, serviceContext);
+					MBMessageConstants.DEFAULT_FORMAT, files, false, 0.0, true,
+					serviceContext);
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -211,6 +221,14 @@ public class MessageListenerImpl implements MessageListener {
 			throw new MessageListenerException(e);
 		}
 		finally {
+			if (files != null) {
+				for (ObjectValuePair<String, File> ovp : files) {
+					File file = ovp.getValue();
+
+					FileUtil.delete(file);
+				}
+			}
+
 			PermissionCheckerUtil.setThreadValues(null);
 		}
 	}

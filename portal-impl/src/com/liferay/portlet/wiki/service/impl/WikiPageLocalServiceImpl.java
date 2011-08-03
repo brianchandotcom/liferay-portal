@@ -249,7 +249,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	public void addPageAttachment(
 			long userId, long nodeId, String title, String fileName,
-			byte[] bytes)
+			File file)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -277,12 +277,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
 
 		DLStoreUtil.addFile(
-			companyId, repositoryId, dirName + "/" + fileName, bytes);
+			companyId, repositoryId, dirName + "/" + fileName, file);
 	}
 
 	public void addPageAttachments(
 			long userId, long nodeId, String title,
-			List<ObjectValuePair<String, byte[]>> files)
+			List<ObjectValuePair<String, File>> files)
 		throws PortalException, SystemException {
 
 		if (files.size() == 0) {
@@ -290,12 +290,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		for (int i = 0; i < files.size(); i++) {
-			ObjectValuePair<String, byte[]> ovp = files.get(i);
+			ObjectValuePair<String, File> ovp = files.get(i);
 
 			String fileName = ovp.getKey();
-			byte[] bytes = ovp.getValue();
+			File file = ovp.getValue();
 
-			addPageAttachment(userId, nodeId, title, fileName, bytes);
+			addPageAttachment(userId, nodeId, title, fileName, file);
 		}
 	}
 

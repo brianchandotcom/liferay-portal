@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
@@ -35,6 +37,10 @@ import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.MailingListThreadLocal;
 import com.liferay.util.mail.MailEngine;
+
+import java.io.File;
+
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.Flags;
@@ -230,18 +236,29 @@ public class MailingListMessageListener extends BaseMessageListener {
 			PortalUtil.getLayoutFullURL(groupId, PortletKeys.MESSAGE_BOARDS));
 		serviceContext.setScopeGroupId(groupId);
 
-		if (parentMessage == null) {
-			MBMessageServiceUtil.addMessage(
-				groupId, categoryId, subject, collector.getBody(),
-				MBMessageConstants.DEFAULT_FORMAT, collector.getFiles(),
-				anonymous, 0.0, true, serviceContext);
+		List<ObjectValuePair<String, File>> files = collector.getFiles();
+
+		try {
+			if (parentMessage == null) {
+				MBMessageServiceUtil.addMessage(
+					groupId, categoryId, subject, collector.getBody(),
+					MBMessageConstants.DEFAULT_FORMAT, files, anonymous, 0.0,
+					true, serviceContext);
+			}
+			else {
+				MBMessageServiceUtil.addMessage(
+					groupId, categoryId, parentMessage.getThreadId(),
+					parentMessage.getMessageId(), subject, collector.getBody(),
+					MBMessageConstants.DEFAULT_FORMAT, files, anonymous, 0.0,
+					true, serviceContext);
+			}
 		}
-		else {
-			MBMessageServiceUtil.addMessage(
-				groupId, categoryId, parentMessage.getThreadId(),
-				parentMessage.getMessageId(), subject, collector.getBody(),
-				MBMessageConstants.DEFAULT_FORMAT, collector.getFiles(),
-				anonymous, 0.0, true, serviceContext);
+		finally {
+			for (ObjectValuePair<String, File> ovp : files) {
+				File file = ovp.getValue();
+
+				FileUtil.delete(file);
+			}
 		}
 	}
 

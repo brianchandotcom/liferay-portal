@@ -21,49 +21,49 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class DDLRecordSetFinderUtil {
-	public static int countByKeywords(long companyId, long groupId,
+	public static int countByKeywords(long companyId, long groupId, int scope,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByKeywords(companyId, groupId, keywords);
+		return getFinder().countByKeywords(companyId, groupId, scope, keywords);
 	}
 
-	public static int countByC_G_N_D(long companyId, long groupId,
+	public static int countByC_G_S_N_D(long companyId, long groupId, int scope,
 		java.lang.String name, java.lang.String description, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByC_G_N_D(companyId, groupId, name, description,
-			andOperator);
+				   .countByC_G_S_N_D(companyId, groupId, scope, name,
+			description, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, int scope, java.lang.String keywords,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByKeywords(companyId, groupId, keywords, start, end,
-			orderByComparator);
+				   .findByKeywords(companyId, groupId, scope, keywords, start,
+			end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_N_D(
-		long companyId, long groupId, java.lang.String name,
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_S_N_D(
+		long companyId, long groupId, int scope, java.lang.String name,
 		java.lang.String description, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByC_G_N_D(companyId, groupId, name, description,
-			andOperator, start, end, orderByComparator);
+				   .findByC_G_S_N_D(companyId, groupId, scope, name,
+			description, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_N_D(
-		long companyId, long groupId, java.lang.String[] names,
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByC_G_S_N_D(
+		long companyId, long groupId, int scope, java.lang.String[] names,
 		java.lang.String[] descriptions, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByC_G_N_D(companyId, groupId, names, descriptions,
-			andOperator, start, end, orderByComparator);
+				   .findByC_G_S_N_D(companyId, groupId, scope, names,
+			descriptions, andOperator, start, end, orderByComparator);
 	}
 
 	public static DDLRecordSetFinder getFinder() {

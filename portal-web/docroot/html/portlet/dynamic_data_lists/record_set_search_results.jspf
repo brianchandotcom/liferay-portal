@@ -16,12 +16,12 @@
 
 <%
 if (searchTerms.isAdvancedSearch()) {
-	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, DDLConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, DDLConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
-	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords());
-	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, DDLConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.getKeywords());
+	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, DDLConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 pageContext.setAttribute("results", results);

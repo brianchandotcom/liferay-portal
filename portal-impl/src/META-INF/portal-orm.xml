@@ -1957,6 +1957,7 @@
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="minDisplayRows" />
+			<basic name="scope" />
 			<transient name="descriptionMap" />
 			<transient name="nameMap" />
 			<transient name="primaryKey" />

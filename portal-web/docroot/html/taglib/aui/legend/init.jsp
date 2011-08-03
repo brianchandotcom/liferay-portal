@@ -34,9 +34,11 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:legend:cssClass"));
+java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:legend:helpMessage"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:legend:label"));
 
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "helpMessage", helpMessage);
 _updateOptions(_options, "label", label);
 %>
 

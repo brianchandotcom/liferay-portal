@@ -41,6 +41,10 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
+	public java.lang.String getHelpMessage() {
+		return _helpMessage;
+	}
+
 	public java.lang.String getLabel() {
 		return _label;
 	}
@@ -57,6 +61,12 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("cssClass", cssClass);
 	}
 
+	public void setHelpMessage(java.lang.String helpMessage) {
+		_helpMessage = helpMessage;
+
+		setScopedAttribute("helpMessage", helpMessage);
+	}
+
 	public void setLabel(java.lang.String label) {
 		_label = label;
 
@@ -67,6 +77,7 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_column = false;
 		_cssClass = null;
+		_helpMessage = null;
 		_label = null;
 	}
 
@@ -84,6 +95,7 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "column", _column);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "label", _label);
 	}
 
@@ -97,6 +109,7 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 
 	private boolean _column = false;
 	private java.lang.String _cssClass = null;
+	private java.lang.String _helpMessage = null;
 	private java.lang.String _label = null;
 
 }

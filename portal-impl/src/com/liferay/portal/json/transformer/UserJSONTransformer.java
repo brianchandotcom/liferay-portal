@@ -25,22 +25,29 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 public class UserJSONTransformer extends FlexjsonObjectJSONTransformer {
 
 	public void transform(Object object) {
+
+		User user = (User)object;
+
+		boolean hidePrivateUserData = true;
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker != null) {
 			long userId = permissionChecker.getUserId();
 
-			User user = (User)object;
-
-			if (user.getUserId() != userId) {
-				user.setPasswordUnencrypted(StringPool.BLANK);
-				user.setReminderQueryQuestion(StringPool.BLANK);
-				user.setReminderQueryAnswer(StringPool.BLANK);
-				user.setEmailAddress(StringPool.BLANK);
-				user.setFacebookId(0);
-				user.setComments(StringPool.BLANK);
+			if (user.getUserId() == userId) {
+				hidePrivateUserData = false;
 			}
+		}
+
+		if (hidePrivateUserData) {
+			user.setPasswordUnencrypted(StringPool.BLANK);
+			user.setReminderQueryQuestion(StringPool.BLANK);
+			user.setReminderQueryAnswer(StringPool.BLANK);
+			user.setEmailAddress(StringPool.BLANK);
+			user.setFacebookId(0);
+			user.setComments(StringPool.BLANK);
 		}
 
 		super.transform(object);

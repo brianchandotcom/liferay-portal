@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
+	<liferay-util:param name="strutsAction" value="/document_library/select_file_entry_type" />
+</liferay-util:include>
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/document_library/select_file_entry_type" />
 </liferay-portlet:renderURL>

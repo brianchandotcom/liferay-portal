@@ -71,6 +71,7 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %>
+<%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>

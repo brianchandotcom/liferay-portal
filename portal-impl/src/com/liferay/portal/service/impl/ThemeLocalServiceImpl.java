@@ -685,7 +685,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				_setSpriteImages(servletContext, theme, imagesPath);
 			}
 
-			if (theme == null) {
+			if (_themes.get(themeId) == null) {
 				_themes.put(themeId, theme);
 			}
 		}

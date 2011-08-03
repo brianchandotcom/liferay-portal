@@ -129,11 +129,8 @@ public class VerifyPermission extends VerifyProcess {
 			PermissionLocalServiceUtil.getRolePermissions(defaultRoleId);
 
 		for (Permission permission : permissions) {
-
-			long resourceId = permission.getResourceId();
-
 			Resource resource = ResourceLocalServiceUtil.getResource(
-				resourceId);
+				permission.getResourceId());
 
 			ResourceCode resourceCode =
 				ResourceCodeLocalServiceUtil.getResourceCode(
@@ -154,11 +151,9 @@ public class VerifyPermission extends VerifyProcess {
 		Role defaultRole = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.GUEST);
 
-		long defaultRoleId = defaultRole.getRoleId();
-
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
-				defaultRoleId);
+				defaultRole.getRoleId());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if (isPrivateLayout(
@@ -186,9 +181,7 @@ public class VerifyPermission extends VerifyProcess {
 			return false;
 		}
 
-		String type = layout.getType();
-
-		if (type.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
+		if (layout.getType().equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
 			return false;
 		}
 

@@ -193,12 +193,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "categories")) {
 			assetCategoryIds = portletDataContext.getAssetCategoryIds(
-				FileEntry.class, fileEntry.getFileEntryId());
+				DLFileEntry.class, fileEntry.getFileEntryId());
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "tags")) {
 			assetTagNames = portletDataContext.getAssetTagNames(
-				FileEntry.class, fileEntry.getFileEntryId());
+				DLFileEntry.class, fileEntry.getFileEntryId());
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -361,7 +361,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Map<String, String> fileEntryTitles =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class.getName() + ".title");
+				DLFileEntry.class.getName() + ".title");
 
 		fileEntryTitles.put(fileEntry.getTitle(), importedFileEntry.getTitle());
 
@@ -653,7 +653,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Map<Long, Long> fileEntryPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
+				DLFileEntry.class);
 
 		long fileEntryId = MapUtil.getLong(
 			fileEntryPKs, fileRank.getFileEntryId(), fileRank.getFileEntryId());
@@ -692,7 +692,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Map<Long, Long> fileEntryPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
+				DLFileEntry.class);
 
 		long fileEntryId = MapUtil.getLong(
 			fileEntryPKs, fileShortcut.getToFileEntryId(),

@@ -23,7 +23,18 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
 
-LayoutRevision currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
+LayoutRevision currentLayoutRevision = null;
+
+if (layoutRevisionId <= 0) {
+	LayoutBranch layoutBranch =	LayoutBranchLocalServiceUtil.getMasterLayoutBranch(layoutSetBranchId, plid);
+
+	currentLayoutRevision =	LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, layoutBranch.getLayoutBranchId(), plid);
+
+	layoutRevisionId = currentLayoutRevision.getLayoutRevisionId();
+}
+else {
+	currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
+}
 
 request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>

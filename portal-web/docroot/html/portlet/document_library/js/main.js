@@ -116,7 +116,7 @@ AUI().add(
 
 						instance._documentLibraryContainer.delegate(
 							'click',
-							instance._onDocumentLibraryContainerClick,
+							A.bind(instance._onDocumentLibraryContainerClick, instance),
 							'a[data-folder=true], #' + namespace + 'breadcrumbContainer a'
 						);
 

@@ -884,7 +884,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		return getMessageDisplay(message, status, threadView, false);
+		return getMessageDisplay(userId, message, status, threadView, false);
 	}
 
 	public int getDiscussionMessagesCount(
@@ -1016,18 +1016,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	public MBMessageDisplay getMessageDisplay(
-			long messageId, int status, String threadView,
+			long userId, long messageId, int status, String threadView,
 			boolean includePrevAndNext)
 		throws PortalException, SystemException {
 
 		MBMessage message = getMessage(messageId);
 
 		return getMessageDisplay(
-			message, status, threadView, includePrevAndNext);
+			userId, message, status, threadView, includePrevAndNext);
 	}
 
 	public MBMessageDisplay getMessageDisplay(
-			MBMessage message, int status, String threadView,
+			long userId, MBMessage message, int status, String threadView,
 			boolean includePrevAndNext)
 		throws PortalException, SystemException {
 
@@ -1061,6 +1061,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.isApproved() && !message.isDiscussion()) {
 			mbThreadLocalService.updateThread(
 				thread.getThreadId(), thread.getViewCount() + 1);
+
+			MBMessage rootMessage = mbMessagePersistence.fetchByPrimaryKey(
+				thread.getRootMessageId());
+
+			if (rootMessage != null) {
+				// Social
+
+				if ((userId > 0) && (thread.getRootMessageUserId() != userId)) {
+					socialEquityLogLocalService.addEquityLogs(
+						userId, MBMessage.class.getName(),
+						rootMessage.getMessageId(), ActionKeys.VIEW,
+						StringPool.BLANK);
+				}
+			}
 		}
 
 		MBThread previousThread = null;

@@ -77,7 +77,10 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String titlePattern = null;
 
-		if (activityType == WikiActivityKeys.ADD_PAGE) {
+		if (activityType == WikiActivityKeys.ADD_COMMENT) {
+			titlePattern = "activity-wiki-add-comment";
+		}
+		else if (activityType == WikiActivityKeys.ADD_PAGE) {
 			titlePattern = "activity-wiki-add-page";
 		}
 		else if (activityType == WikiActivityKeys.UPDATE_PAGE) {

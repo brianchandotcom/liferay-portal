@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class UserConstants {
 
+	public static final int FULL_NAME_MAX_LENGTH = 75;
+
 	public static final String LIST_VIEW_FLAT_ORGANIZATIONS =
 		"flat-organizations";
 

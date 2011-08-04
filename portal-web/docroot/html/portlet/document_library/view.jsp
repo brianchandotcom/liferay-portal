@@ -42,8 +42,8 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
 }
 
-long start = ParamUtil.getLong(request, "start");
-long end = ParamUtil.getLong(request, "end", SearchContainer.DEFAULT_DELTA);
+long entryStart = ParamUtil.getLong(request, "entryStart");
+long entryEnd = ParamUtil.getLong(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -64,6 +64,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 	<aui:layout cssClass="view">
 		<aui:column columnWidth="<%= 20 %>" cssClass="navigation-pane" first="<%= true %>">
 			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
+
+			<div class="folder-paginator"></div>
 		</aui:column>
 
 		<aui:column columnWidth="<%= showFolderMenu ? 80 : 100 %>" cssClass="context-pane" last="<%= true %>">
@@ -211,14 +213,18 @@ if (folder != null) {
 		{
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
-			end: <%= SearchContainer.DEFAULT_DELTA %>,
+			entryEnd: <%= SearchContainer.DEFAULT_DELTA %>,
+			folderEnd: <%= SearchContainer.DEFAULT_DELTA %>,
 			folderId: '<%= folderId %>',
 			mainUrl: '<%= mainURL %>',
 			portletId: '<%= portletDisplay.getId() %>',
-			rowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
-			rowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+			entryRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+			folderRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			showSiblings: true,
-			start: 0,
+			entryStart: 0,
+			folderStart: 0,
 			strutsAction: '/document_library/view',
 			viewBreadcrumb: true,
 			viewEntries: true,

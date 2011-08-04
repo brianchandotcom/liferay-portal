@@ -53,8 +53,8 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
 }
 
-int start = ParamUtil.getInteger(request, "start");
-int end = ParamUtil.getInteger(request, "end", SearchContainer.DEFAULT_DELTA);
+int entryStart = ParamUtil.getInteger(request, "entryStart");
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
 
 int total = 0;
 %>
@@ -140,10 +140,10 @@ int total = 0;
 				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 				searchContext.setAttribute("paginationType", "regular");
-				searchContext.setEnd(end);
+				searchContext.setEnd(entryEnd);
 				searchContext.setFolderIds(folderIdsArray);
 				searchContext.setKeywords(keywords);
-				searchContext.setStart(start);
+				searchContext.setStart(entryStart);
 
 				results = indexer.search(searchContext);
 
@@ -291,8 +291,8 @@ int total = 0;
 		Liferay.fire(
 			'<portlet:namespace />viewEntriesLoaded',
 			{
-				page: <%= end / (end - start) %>,
-				rowsPerPage:  <%= (end - start) %>,
+				page: <%= entryEnd / (entryEnd - entryStart) %>,
+				rowsPerPage:  <%= (entryEnd - entryStart) %>,
 				total: <%= total %>
 			}
 		);

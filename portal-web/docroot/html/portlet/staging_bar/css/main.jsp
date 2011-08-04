@@ -106,7 +106,6 @@
 		}
 	}
 
-
 	.staging-bar {
 		background: #888;
 
@@ -115,8 +114,11 @@
 		}
 
 		.staging-tabview-content {
-			border-bottom: 1px solid #636364;
+			border: solid #636364;
+			border-top-color: #333;
+			border-width: 1px 0;
 			color: #EEE;
+			margin-top: -1px;
 			padding: 0.5em 1em;
 
 			.staging-icon {

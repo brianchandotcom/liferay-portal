@@ -90,7 +90,7 @@
 
 					// Title
 
-					String title = doc.get(Field.TITLE);
+					String title = HtmlUtil.escape(doc.get(Field.TITLE));
 
 					title = StringUtil.highlight(title, queryTerms);
 

@@ -184,7 +184,7 @@ type = ParamUtil.getString(request, "type", type);
 
 		// Title
 
-		row.addText(curArticle.getTitle(locale), rowHREF);
+		row.addText(HtmlUtil.escape(curArticle.getTitle(locale)), rowHREF);
 
 		// Modified date
 

@@ -14,15 +14,25 @@
 <#assign parentName = parentField.name!"">
 <#assign parentType = parentField.type!"">
 
-<#if parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))>
+<#assign isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))>
+
+<#if isChildField>
 	<#assign fieldName = parentName>
 </#if>
 
 <#assign namespacedFieldName = "${namespace}${fieldName}">
 
+<!-- Predefined value -->
+
+<#assign predefinedValue = field.predefinedValue!"">
+
+<#if isChildField>
+	<#assign predefinedValue = parentField.predefinedValue!"">
+</#if>
+
 <!-- Field value -->
 
-<#assign fieldValue = "">
+<#assign fieldValue = predefinedValue>
 
 <#if fields?? && fields.get(fieldName)??>
 	<#assign fieldValue = fields.get(fieldName).getValue()>

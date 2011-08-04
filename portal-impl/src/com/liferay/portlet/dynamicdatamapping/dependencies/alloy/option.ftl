@@ -1,10 +1,6 @@
 <#include "../init.ftl">
 
-<#if fieldValue != "">
-	<#assign selected = (field.value == fieldValue)>
-<#else>
-	<#assign selected = (field.value == parentField.predefinedValue)>
-</#if>
+<#assign selected = (field.value == fieldValue)>
 
 <#if parentType == "select">
 	<@aui.option cssClass=cssClass label=field.label selected=selected value=field.value />

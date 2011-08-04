@@ -212,7 +212,7 @@ StringBundler pageTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_TOP);
 		for (Portlet portlet : portlets) {
 			PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portlet.getPortletId());
 
-			String portletSetupCss = portletSetup.getValue("portlet-setup-css", StringPool.BLANK);
+			String portletSetupCss = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
 		%>
 
 			<c:if test="<%= Validator.isNotNull(portletSetupCss) %>">

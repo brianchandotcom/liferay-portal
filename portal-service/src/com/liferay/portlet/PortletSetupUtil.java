@@ -42,7 +42,7 @@ public class PortletSetupUtil {
 
 	public static final String cssToString(PortletPreferences portletSetup) {
 		String css = portletSetup.getValue(
-			"portlet-setup-css", StringPool.BLANK);
+			"portletSetupCss", StringPool.BLANK);
 
 		try {
 			if (Validator.isNotNull(css)) {
@@ -84,7 +84,7 @@ public class PortletSetupUtil {
 			String languageId = LocaleUtil.toLanguageId(locales[i]);
 
 			String title = portletSetup.getValue(
-				"portlet-setup-title-" + languageId, null);
+				"portletSetupTitle_" + languageId, null);
 
 			if (Validator.isNotNull(languageId)) {
 				titles.put(languageId, title);
@@ -92,11 +92,11 @@ public class PortletSetupUtil {
 		}
 
 		boolean useCustomTitle = GetterUtil.getBoolean(
-			portletSetup.getValue("portlet-setup-use-custom-title", null));
+			portletSetup.getValue("portletSetupUseCustomTitle", null));
 		boolean showBorders = GetterUtil.getBoolean(
-			portletSetup.getValue("portlet-setup-show-borders", null), true);
+			portletSetup.getValue("portletSetupShowBorders", null), true);
 		String linkToLayoutUuid = GetterUtil.getString(
-			portletSetup.getValue("portlet-setup-link-to-layout-uuid", null));
+			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
 		portletData.put("useCustomTitle", useCustomTitle);
 		portletData.put("showBorders", showBorders);

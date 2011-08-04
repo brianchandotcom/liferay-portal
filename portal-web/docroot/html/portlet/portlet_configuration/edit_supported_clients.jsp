@@ -44,7 +44,7 @@ Set allPortletModes = selPortlet.getAllPortletModes();
 	while (itr.hasNext()) {
 		String curPortletMode = (String)itr.next();
 
-		String mobileDevicesParam = "portlet-setup-supported-clients-mobile-devices-" + curPortletMode;
+		String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
 		boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
 
 		boolean mobileDevices = GetterUtil.getBoolean(portletSetup.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault)));

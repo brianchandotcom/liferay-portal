@@ -118,11 +118,6 @@ public class UpgradePortletPreferences
 		return 0;
 	}
 
-	@Override
-	protected String[] getPortletIds() {
-		return _CAMEL_CASE_UPGRADE_PORTLET_IDS;
-	}
-
 	protected long getPortletPreferencesId(
 			long ownerId, int ownerType, long plid, String portletId)
 		throws Exception {
@@ -155,6 +150,11 @@ public class UpgradePortletPreferences
 		}
 
 		return 0;
+	}
+
+	@Override
+	protected String getUpdatePortletPreferencesWhereClause() {
+		return "true";
 	}
 
 	protected void updatePortalPreferences() throws Exception {

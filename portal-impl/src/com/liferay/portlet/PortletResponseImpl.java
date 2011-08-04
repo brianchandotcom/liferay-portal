@@ -257,7 +257,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 			String linkToLayoutUuid = GetterUtil.getString(
 				portletSetup.getValue(
-					"portlet-setup-link-to-layout-uuid", null));
+					"portletSetupLinkToLayoutUuid", null));
 
 			if (Validator.isNotNull(linkToLayoutUuid)) {
 				try {

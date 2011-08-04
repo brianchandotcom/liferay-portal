@@ -285,10 +285,10 @@ public class EditScopeAction extends EditConfigurationAction {
 
 		if (!newPortletTitle.equals(portletTitle)) {
 			preferences.setValue(
-				"portlet-setup-title-" + themeDisplay.getLanguageId(),
+				"portletSetupTitle_" + themeDisplay.getLanguageId(),
 				newPortletTitle);
 			preferences.setValue(
-				"portlet-setup-use-custom-title", Boolean.TRUE.toString());
+				"portletSetupUseCustomTitle", Boolean.TRUE.toString());
 		}
 
 		preferences.store();

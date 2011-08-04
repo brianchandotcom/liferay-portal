@@ -82,7 +82,7 @@ public class AssetPublisherUtil {
 				referringPortletResource, null);
 
 		String selectionStyle = portletPreferences.getValue(
-			"selection-style", "dynamic");
+			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
 			return;

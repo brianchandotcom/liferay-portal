@@ -263,7 +263,7 @@ if (portlet.hasPortletMode(responseContentType, PortletMode.HELP)) {
 boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
 
 if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
-	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portlet-setup-supported-clients-mobile-devices-" + portletMode, String.valueOf(supportsMimeType)));
+	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
 }
 
 // Only authenticated with the correct permissions can update a layout. If

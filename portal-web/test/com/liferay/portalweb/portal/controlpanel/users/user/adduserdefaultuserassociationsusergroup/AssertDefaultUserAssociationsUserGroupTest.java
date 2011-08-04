@@ -31,7 +31,7 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,14 +42,16 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=User Groups", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
+			RuntimeVariables.replace("View"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -57,7 +59,37 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User Groups"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[4]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[4]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 					break;
 				}
@@ -69,6 +101,9 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("View Users"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");

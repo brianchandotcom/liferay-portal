@@ -41,39 +41,44 @@ public class AddNullChoicePollTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Question']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_title_en_US",
+		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Null Choice Poll Test Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_description_en_US",
+		selenium.type("//textarea[@id='_25_description_en_US']",
 			RuntimeVariables.replace("Null Choice Poll Test Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptiona_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
 			RuntimeVariables.replace("Null Choice Poll Test Choice A"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptionb_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
 			RuntimeVariables.replace("Null Choice Poll Test Choice B"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Choice']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptionc_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter valid choices."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter valid choices."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

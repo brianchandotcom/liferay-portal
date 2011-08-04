@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SearchUserTest</title>
 </head>
 <body>
@@ -17,54 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>BasicPresent</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${BasicPresent}</td>
-	<td>basicNotPresent</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>basicNotPresent</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_keywords</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>selenium</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -73,13 +45,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_keywords</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>selenium1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

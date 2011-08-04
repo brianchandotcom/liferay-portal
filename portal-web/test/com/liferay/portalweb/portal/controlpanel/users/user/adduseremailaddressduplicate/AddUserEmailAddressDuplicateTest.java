@@ -30,7 +30,7 @@ public class AddUserEmailAddressDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -45,28 +45,76 @@ public class AddUserEmailAddressDuplicateTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace("Users"));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_screenName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_emailAddress",
+		selenium.type("//input[@id='_125_emailAddress']",
 			RuntimeVariables.replace("test01@selenium.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_firstName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_firstName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_lastName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_lastName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Your request failed to complete.")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='portlet-msg-error'])[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"The email address you requested is already taken."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));

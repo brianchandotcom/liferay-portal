@@ -30,7 +30,7 @@ public class AddUserPassword1NullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,22 +41,24 @@ public class AddUserPassword1NullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_keywords", RuntimeVariables.replace("selen01"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("selen01"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_125_passwordLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -64,7 +66,7 @@ public class AddUserPassword1NullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_125_password1")) {
+				if (selenium.isVisible("//a[@id='_125_passwordLink']")) {
 					break;
 				}
 			}
@@ -75,15 +77,58 @@ public class AddUserPassword1NullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password1", RuntimeVariables.replace(""));
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
+		selenium.clickAt("//a[@id='_125_passwordLink']",
+			RuntimeVariables.replace("Password"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_password1']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password2", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_125_password1']",
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("Please enter the same value again."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_125_password2']",
+			RuntimeVariables.replace("test"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Please enter the same value again.")
+										.equals(selenium.getText("//label/div"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Please enter the same value again."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message equalTo']"));
+			selenium.getText("//label/div"));
 	}
 }

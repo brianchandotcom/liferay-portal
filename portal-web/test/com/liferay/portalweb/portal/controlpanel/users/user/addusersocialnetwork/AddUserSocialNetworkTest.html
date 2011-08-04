@@ -14,28 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_keywords</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>selen01</td>
 </tr>
 <tr>
@@ -49,53 +44,68 @@
 	<td>User Name</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_125_socialNetworkLink']</td>
+	<td>Social Network</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_socialNetworkLink']</td>
+	<td>Social Network</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>_125_socialNetworkLink</td>
-	<td></td>
+	<td>//a[@id='_125_socialNetworkLink']</td>
+	<td>Social Network</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_facebookSn</td>
+	<td>//input[@id='_125_facebookSn']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_facebookSn</td>
+	<td>//input[@id='_125_facebookSn']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_mySpaceSn</td>
+	<td>//input[@id='_125_mySpaceSn']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_twitterSn</td>
+	<td>//input[@id='_125_twitterSn']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_facebookSn</td>
+	<td>//input[@id='_125_facebookSn']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_mySpaceSn</td>
+	<td>//input[@id='_125_mySpaceSn']</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_twitterSn</td>
+	<td>//input[@id='_125_twitterSn']</td>
 	<td>selenium01</td>
 </tr>
 

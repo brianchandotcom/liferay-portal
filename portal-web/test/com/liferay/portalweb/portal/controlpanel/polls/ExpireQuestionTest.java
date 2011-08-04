@@ -41,27 +41,28 @@ public class ExpireQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Edited Test Question 2",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//span[1]/span/span/input"));
+		assertTrue(selenium.isElementPresent(
+				"//div[2]/div/span[1]/span/span/input"));
 		assertTrue(selenium.isElementPresent("//span[2]/span/span/input"));
 		assertTrue(selenium.isElementPresent("//span[3]/span/span/input"));
 		assertTrue(selenium.isElementPresent("//span[4]/span/span/input"));
 		selenium.clickAt("//input[@value='Cancel']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,7 +70,7 @@ public class ExpireQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
@@ -81,9 +82,18 @@ public class ExpireQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_25_neverExpireCheckbox']",
+			RuntimeVariables.replace("Never Expire"));
+		assertFalse(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -92,7 +102,8 @@ public class ExpireQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_25_expirationDateMonth")) {
+				if (selenium.isVisible(
+							"//select[@id='_25_expirationDateMonth']")) {
 					break;
 				}
 			}
@@ -103,18 +114,24 @@ public class ExpireQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_25_neverExpireCheckbox", RuntimeVariables.replace(""));
-		assertFalse(selenium.isChecked("_25_neverExpireCheckbox"));
-		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_25_expirationDateMonth",
-			RuntimeVariables.replace("\\38"));
-		selenium.keyPress("_25_expirationDateMinute",
-			RuntimeVariables.replace("\\39"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_25_expirationDateYear']",
+			RuntimeVariables.replace("label=2008"));
+		selenium.select("//select[@id='_25_expirationDateMonth']",
+			RuntimeVariables.replace("label=January"));
+		selenium.select("//select[@id='_25_expirationDateDay']",
+			RuntimeVariables.replace("label=1"));
+		selenium.select("//select[@name='_25_expirationDateHour']",
+			RuntimeVariables.replace("label=12"));
+		selenium.select("//select[@name='_25_expirationDateMinute']",
+			RuntimeVariables.replace("label=:00"));
+		selenium.select("//select[@name='_25_expirationDateAmPm']",
+			RuntimeVariables.replace("label=AM"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		Thread.sleep(60000);
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

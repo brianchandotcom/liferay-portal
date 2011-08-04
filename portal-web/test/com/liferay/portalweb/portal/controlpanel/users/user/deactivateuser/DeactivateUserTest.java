@@ -22,92 +22,70 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeactivateUserTest extends BaseTestCase {
 	public void testDeactivateUser() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Users")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Users", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean BasicPresent = selenium.isVisible("link=\u00ab Basic");
-
-				if (!BasicPresent) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
-
-			case 2:
-				selenium.type("_125_keywords",
-					RuntimeVariables.replace("selen01"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("selen01"),
-					selenium.getText("//td[2]/a"));
-				selenium.clickAt("_125_allRowIds", RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Deactivate']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//section/div/div/div/div[1]"));
-				assertFalse(selenium.isElementPresent("link=selen01"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("selen01"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("selen01"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//input[@name='_125_rowIds']",
+			RuntimeVariables.replace(""));
+		selenium.click(RuntimeVariables.replace("//input[@value='Deactivate']"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isElementPresent("link=selen01"));
 	}
 }

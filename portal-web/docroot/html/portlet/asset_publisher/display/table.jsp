@@ -27,19 +27,21 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-asse
 
 String title = (String)request.getAttribute("view.jsp-title");
 
-request.setAttribute("view.jsp-showIconLabel", false);
-
 if (Validator.isNull(title)) {
 	title = assetRenderer.getTitle(locale);
 }
 
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 
+request.setAttribute("view.jsp-showIconLabel", false);
+
 PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
 viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
 viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse);
 
 if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	if (assetRenderer.getGroupId() != scopeGroupId) {
@@ -57,8 +59,11 @@ String viewURL = viewInContext ? assetRenderer.getURLViewInContext(liferayPortle
 
 viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 
-boolean hasStagingGroup = themeDisplay.getScopeGroup().isLayout() ? layout.getGroup().hasStagingGroup() : themeDisplay.getScopeGroup().hasStagingGroup();
+Group stageableGroup = themeDisplay.getScopeGroup();
 
+if (themeDisplay.getScopeGroup().isLayout()) {
+	stageableGroup = layout.getGroup();
+}
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">
@@ -77,8 +82,9 @@ boolean hasStagingGroup = themeDisplay.getScopeGroup().isLayout() ? layout.getGr
 		<%
 		}
 		%>
-		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && !(hasStagingGroup) %>">
-		<th></th>
+
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<th></th>
 		</c:if>
 	</tr>
 </c:if>
@@ -180,10 +186,11 @@ boolean hasStagingGroup = themeDisplay.getScopeGroup().isLayout() ? layout.getGr
 			}
 		}
 		%>
-		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && !(hasStagingGroup) %>">
-		<td>
-			<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
-		</td>
+
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<td>
+				<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+			</td>
 		</c:if>
 	</tr>
 </c:if>

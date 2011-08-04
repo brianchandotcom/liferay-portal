@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-boolean showIconLabel = ((Boolean)request.getAttribute("view.jsp-showIconLabel") ).booleanValue();
+boolean showIconLabel = ((Boolean)request.getAttribute("view.jsp-showIconLabel")).booleanValue();
 
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 

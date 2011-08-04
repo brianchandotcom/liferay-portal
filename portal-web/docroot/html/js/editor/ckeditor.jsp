@@ -147,7 +147,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		}
 
 		<%
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(mainPath);
 		sb.append("/portal/fckeditor?p_l_id=");
@@ -158,6 +158,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		sb.append(HttpUtil.encodeURL(doAsUserId));
 		sb.append("&doAsGroupId=");
 		sb.append(HttpUtil.encodeURL(String.valueOf(doAsGroupId)));
+		sb.append(fileBrowserParams);
 
 		String connectorURL = HttpUtil.encodeURL(sb.toString());
 		%>

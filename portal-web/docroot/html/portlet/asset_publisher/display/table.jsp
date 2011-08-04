@@ -33,11 +33,15 @@ if (Validator.isNull(title)) {
 
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 
+request.setAttribute("view.jsp-showIconLabel", false);
+
 PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
 viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
 viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse);
 
 if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	if (assetRenderer.getGroupId() != scopeGroupId) {
@@ -54,6 +58,12 @@ viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redi
 String viewURL = viewInContext ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) : viewFullContentURL.toString();
 
 viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
+
+Group stageableGroup = themeDisplay.getScopeGroup();
+
+if (themeDisplay.getScopeGroup().isLayout()) {
+	stageableGroup = layout.getGroup();
+}
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">
@@ -73,7 +83,9 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 		}
 		%>
 
-		<th></th>
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<th></th>
+		</c:if>
 	</tr>
 </c:if>
 
@@ -175,7 +187,11 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 		}
 		%>
 
-		<td></td>
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<td>
+				<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+			</td>
+		</c:if>
 	</tr>
 </c:if>
 

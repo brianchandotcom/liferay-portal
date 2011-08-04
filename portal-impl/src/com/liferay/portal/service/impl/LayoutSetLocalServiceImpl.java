@@ -119,6 +119,22 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
+	public LayoutSet fetchLayoutSet(String virtualHostname)
+		throws SystemException {
+
+		virtualHostname = virtualHostname.trim().toLowerCase();
+
+		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+			virtualHostname);
+
+		if ((virtualHost == null) || (virtualHost.getLayoutSetId() == 0)) {
+			return null;
+		}
+
+		return layoutSetPersistence.fetchByPrimaryKey(
+			virtualHost.getLayoutSetId());
+	}
+
 	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 

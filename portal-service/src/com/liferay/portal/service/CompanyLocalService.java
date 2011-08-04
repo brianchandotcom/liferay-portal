@@ -254,6 +254,11 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Company fetchCompanyByVirtualHost(
+		java.lang.String virtualHostname)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Company> getCompanies()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

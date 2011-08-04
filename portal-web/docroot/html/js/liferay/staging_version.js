@@ -3,7 +3,7 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Stagingbar = Liferay.Stagingbar;
+		var StagingBar = Liferay.StagingBar;
 
 		var MAP_CMD_REVISION = {
 			redo: 'redo_layout_revision',
@@ -11,7 +11,7 @@ AUI().add(
 		};
 
 		A.mix(
-			Stagingbar,
+			StagingBar,
 			{
 				_onInit: function(options) {
 					var instance = this;
@@ -35,12 +35,12 @@ AUI().add(
 						}
 					).render();
 
-					Stagingbar.layoutRevisionToolbar = layoutRevisionToolbar;
+					StagingBar.layoutRevisionToolbar = layoutRevisionToolbar;
 
 					var redoText = Liferay.Language.get('redo');
 					var undoText = Liferay.Language.get('undo');
 
-					Stagingbar.redoButton = new A.ButtonItem(
+					StagingBar.redoButton = new A.ButtonItem(
 						{
 							handler: A.bind(instance._onRevisionChange, instance, 'redo'),
 							icon: 'arrowreturnthick-1-r',
@@ -49,7 +49,7 @@ AUI().add(
 						}
 					);
 
-					Stagingbar.undoButton = new A.ButtonItem(
+					StagingBar.undoButton = new A.ButtonItem(
 						{
 							handler: A.bind(instance._onRevisionChange, instance, 'undo'),
 							icon: 'arrowreturnthick-1-b',
@@ -209,7 +209,7 @@ AUI().add(
 			}
 		);
 
-		Liferay.on('initStagingbar', Stagingbar._onInit, Stagingbar);
+		Liferay.on('initStagingBar', StagingBar._onInit, StagingBar);
 	},
 	'',
 	{

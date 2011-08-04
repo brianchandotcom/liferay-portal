@@ -38,7 +38,7 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Stagingbar.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
+	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
 	%>
 
 	<aui:button-row>
@@ -93,7 +93,7 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 </div>
 
 <aui:script position="inline" use="liferay-staging-branch">
-	Liferay.Stagingbar.init(
+	Liferay.StagingBar.init(
 		{
 			namespace: '<portlet:namespace />'
 		}

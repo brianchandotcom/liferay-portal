@@ -3,7 +3,7 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Stagingbar = Liferay.Stagingbar;
+		var StagingBar = Liferay.StagingBar;
 
 		var MAP_TEXT_REVISION = {
 			redo: Liferay.Language.get('are-you-sure-you-want-to-redo-your-last-changes'),
@@ -11,7 +11,7 @@ AUI().add(
 		};
 
 		A.mix(
-			Stagingbar,
+			StagingBar,
 			{
 				addBranch: function(dialogTitle) {
 					var instance = this;

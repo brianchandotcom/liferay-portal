@@ -48,7 +48,7 @@ else {
 </div>
 
 <aui:script position="inline" use="liferay-staging-version">
-	var stagingBar = Liferay.Stagingbar;
+	var stagingBar = Liferay.StagingBar;
 
 	stagingBar.init(
 		{

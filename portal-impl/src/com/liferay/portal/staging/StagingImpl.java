@@ -1568,15 +1568,16 @@ public class StagingImpl implements Staging {
 		long layoutBranchId = getRecentLayoutBranchId(
 			portalPreferences, layoutSetBranchId, plid);
 
-		if (layoutBranchId <= 0) {
+		if (layoutBranchId > 0) {
 			try {
+				LayoutBranchLocalServiceUtil.getLayoutBranch(layoutBranchId);
+			}
+			catch(NoSuchLayoutBranchException nlbe) {
 				LayoutBranch layoutBranch =
 					LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
 						layoutSetBranchId, plid);
 
 				layoutBranchId = layoutBranch.getLayoutBranchId();
-			}
-			catch (NoSuchLayoutBranchException nlbe) {
 			}
 		}
 

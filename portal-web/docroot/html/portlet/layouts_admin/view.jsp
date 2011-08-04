@@ -143,7 +143,7 @@ if ((selLayout != null) && !group.isLayoutPrototype()) {
 								</liferay-ui:icon-menu>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:icon cssClass="layoutset-branch" image="../dock/staging" label="<%= true %>" message="<%= layoutSetBranch.getName() %>" />
+								<liferay-ui:icon cssClass="layoutset-branch" image="../dock/staging" label="<%= true %>" message='<%= layoutSetBranches.size() == 1 ? "staging" : layoutSetBranch.getName() %>' />
 							</c:otherwise>
 						</c:choose>
 

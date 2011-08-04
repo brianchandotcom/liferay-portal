@@ -533,6 +533,35 @@ if (currentFolderParam) {
 					<replacevalue><![CDATA[sUrl += '&CurrentFolder=' + encodeURIComponent( oConnector.CurrentFolder ) ;]]></replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></replacetoken>
+					<replacevalue><![CDATA[if (oConnector.ResourceType === 'Attachment') {
+	var frmCreateFolderLoadedInterval = window.setInterval(
+		function() {
+			var frmCreateFolder = document.getElementsByName('frmCreateFolder');
+
+			if (frmCreateFolder.length > 0) {
+				window.clearInterval(frmCreateFolderLoadedInterval);
+
+				frmCreateFolder = frmCreateFolder[0];
+
+				frmCreateFolder.setAttribute('height', '0');
+				frmCreateFolder.setAttribute('style', 'display:none');
+				frmCreateFolder.setAttribute('tabindex', '-1');
+				frmCreateFolder.setAttribute('width', '0');
+
+				var parentNode = frmCreateFolder.parentNode;
+
+				parentNode.setAttribute('cols', '0,*,0');
+			}
+		},
+		50
+	);
+}
+
+function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></replacevalue>
+				</replace>
+
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
 					<replacetoken><![CDATA[default :]]></replacetoken>
 					<replacevalue><![CDATA[

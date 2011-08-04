@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.polls.DuplicateVoteException;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.model.PollsVote;
@@ -316,8 +317,12 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		serviceContext.setCreateDate(vote.getVoteDate());
 
-		PollsVoteLocalServiceUtil.addVote(
-			userId, questionId, choiceId, serviceContext);
+		try {
+			PollsVoteLocalServiceUtil.addVote(
+				userId, questionId, choiceId, serviceContext);
+		}
+		catch (DuplicateVoteException dve) {
+		}
 	}
 
 	@Override

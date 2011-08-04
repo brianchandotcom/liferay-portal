@@ -32,7 +32,7 @@ import java.util.Date;
 public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 		sb.append(description);
 		sb.append(", minDisplayRows=");
 		sb.append(minDisplayRows);
+		sb.append(", scope=");
+		sb.append(scope);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +127,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 		}
 
 		ddlRecordSetImpl.setMinDisplayRows(minDisplayRows);
+		ddlRecordSetImpl.setScope(scope);
 
 		ddlRecordSetImpl.resetOriginalValues();
 
@@ -144,4 +147,5 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet> {
 	public String name;
 	public String description;
 	public int minDisplayRows;
+	public int scope;
 }

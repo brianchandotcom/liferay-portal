@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -85,6 +86,8 @@ import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateCompar
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.SerializableUtil;
 
 import java.io.File;
@@ -1605,25 +1608,34 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					long parentMessageId = message.getParentMessageId();
 
-					if (className.equals(BlogsEntry.class.getName()) &&
-						(parentMessageId !=
-							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+					if (parentMessageId !=
+							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-						// Social
+						int activityKey = 0;
+						GroupedModel model = null;
 
-						BlogsEntry entry =
-							blogsEntryPersistence.findByPrimaryKey(classPK);
+						if (className.equals(BlogsEntry.class.getName())) {
+							activityKey = BlogsActivityKeys.ADD_COMMENT;
+							model = blogsEntryPersistence.findByPrimaryKey(
+								classPK);
+						}
+						else if (className.equals(WikiPage.class.getName())) {
+							activityKey = WikiActivityKeys.ADD_COMMENT;
+							model = wikiPageLocalService.getPage(classPK);
+						}
 
-						JSONObject extraData =
-							JSONFactoryUtil.createJSONObject();
+						if (model != null) {
+							JSONObject extraData =
+								JSONFactoryUtil.createJSONObject();
 
-						extraData.put("messageId", message.getMessageId());
+							extraData.put("messageId", message.getMessageId());
 
-						socialActivityLocalService.addActivity(
-							userId, entry.getGroupId(),
-							BlogsEntry.class.getName(), classPK,
-							BlogsActivityKeys.ADD_COMMENT, extraData.toString(),
-							entry.getUserId());
+							socialActivityLocalService.addActivity(
+								userId, model.getGroupId(),
+								className, classPK,
+								activityKey, extraData.toString(),
+								model.getUserId());
+						}
 					}
 				}
 

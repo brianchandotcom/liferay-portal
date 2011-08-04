@@ -30,7 +30,7 @@ public class EditQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,15 +41,15 @@ public class EditQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -57,7 +57,7 @@ public class EditQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
@@ -69,19 +69,22 @@ public class EditQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_title_en_US",
+		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_description_en_US",
+		selenium.type("//textarea[@id='_25_description_en_US']",
 			RuntimeVariables.replace(
 				"This is an edited test poll 2 description."));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Choice']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -91,7 +94,8 @@ public class EditQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_25_choiceDescriptiond_en_US")) {
+				if (selenium.isVisible(
+							"//input[@id='_25_choiceDescriptiond_en_US']")) {
 					break;
 				}
 			}
@@ -102,16 +106,36 @@ public class EditQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptiond_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptiond_en_US']",
 			RuntimeVariables.replace("NEW Test Choice D"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Edited Test Question 2",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("d. NEW Test Choice D"),

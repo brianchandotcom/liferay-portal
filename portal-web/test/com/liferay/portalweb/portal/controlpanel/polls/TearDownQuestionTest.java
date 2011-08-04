@@ -35,7 +35,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,10 +47,10 @@ public class TearDownQuestionTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -64,7 +64,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -72,7 +72,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
@@ -84,6 +84,9 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -103,7 +106,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -111,7 +114,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
@@ -123,6 +126,9 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -142,7 +148,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -150,7 +156,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
@@ -162,6 +168,9 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -181,7 +190,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -189,7 +198,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
@@ -201,6 +210,9 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -220,7 +232,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -228,7 +240,7 @@ public class TearDownQuestionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
@@ -240,6 +252,9 @@ public class TearDownQuestionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");

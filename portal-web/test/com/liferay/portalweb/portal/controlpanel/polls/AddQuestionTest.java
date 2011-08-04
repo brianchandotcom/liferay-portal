@@ -30,7 +30,7 @@ public class AddQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -68,25 +68,6 @@ public class AddQuestionTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_25_choiceDescriptionc_en_US']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
 			RuntimeVariables.replace("Test Choice C"));
 		selenium.saveScreenShotAndSource();
@@ -94,28 +75,16 @@ public class AddQuestionTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Poll Question"),
 			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//td[4]/a"));
 	}
 }

@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -382,6 +384,23 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	public void incrementViewCounter(long threadId)
+		throws PortalException, SystemException {
+
+		mbThreadLocalService.incrementViewCounter(threadId, 1);
+	}
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	public void incrementViewCounter(long threadId, int increment)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		thread.setViewCount(thread.getViewCount() + increment);
+
+		mbThreadPersistence.update(thread, false);
+	}
+
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
@@ -579,6 +598,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	/**
+	 * 	@deprecated {@link #incrementViewCounter(long, int)}
+	 */
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {
 

@@ -1059,8 +1059,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
-			mbThreadLocalService.updateThread(
-				thread.getThreadId(), thread.getViewCount() + 1);
+			mbThreadLocalService.incrementViewCounter(thread.getThreadId());
 		}
 
 		MBThread previousThread = null;

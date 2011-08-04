@@ -62,7 +62,8 @@ create table DDLRecordSet (
 	recordSetKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	minDisplayRows INTEGER
+	minDisplayRows INTEGER,
+	scope INTEGER
 );
 
 create table DDMContent (

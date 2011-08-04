@@ -44,6 +44,7 @@ public class DDLRecordSetSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMinDisplayRows(model.getMinDisplayRows());
+		soapModel.setScope(model.getScope());
 
 		return soapModel;
 	}
@@ -200,6 +201,14 @@ public class DDLRecordSetSoap implements Serializable {
 		_minDisplayRows = minDisplayRows;
 	}
 
+	public int getScope() {
+		return _scope;
+	}
+
+	public void setScope(int scope) {
+		_scope = scope;
+	}
+
 	private String _uuid;
 	private long _recordSetId;
 	private long _groupId;
@@ -213,4 +222,5 @@ public class DDLRecordSetSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private int _minDisplayRows;
+	private int _scope;
 }

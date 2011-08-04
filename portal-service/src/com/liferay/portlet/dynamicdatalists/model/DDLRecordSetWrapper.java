@@ -502,6 +502,24 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		_ddlRecordSet.setMinDisplayRows(minDisplayRows);
 	}
 
+	/**
+	* Returns the scope of this d d l record set.
+	*
+	* @return the scope of this d d l record set
+	*/
+	public int getScope() {
+		return _ddlRecordSet.getScope();
+	}
+
+	/**
+	* Sets the scope of this d d l record set.
+	*
+	* @param scope the scope of this d d l record set
+	*/
+	public void setScope(int scope) {
+		_ddlRecordSet.setScope(scope);
+	}
+
 	public boolean isNew() {
 		return _ddlRecordSet.isNew();
 	}

@@ -59,7 +59,7 @@ public class DDLRecordSetServiceHttp {
 		java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
+		int minDisplayRows, int scope,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -69,7 +69,7 @@ public class DDLRecordSetServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					ddmStructureId, recordSetKey, nameMap, descriptionMap,
-					minDisplayRows, serviceContext);
+					minDisplayRows, scope, serviceContext);
 
 			Object returnObj = null;
 
@@ -293,7 +293,7 @@ public class DDLRecordSetServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordSetServiceHttp.class);
 	private static final Class<?>[] _addRecordSetParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, int.class,
+			java.util.Map.class, int.class, int.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteRecordSetParameterTypes1 = new Class[] {

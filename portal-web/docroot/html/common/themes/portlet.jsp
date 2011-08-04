@@ -60,7 +60,11 @@ if (portletDisplay.isAccess() && portletDisplay.isActive() && (portletTitle == n
 ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
 if (portletTitle == null) {
-	portletTitle = resourceBundle.getString(JavaConstants.JAVAX_PORTLET_TITLE);
+	try {
+		portletTitle = resourceBundle.getString(JavaConstants.JAVAX_PORTLET_TITLE);
+	}
+	catch (Exception e) {
+	}
 }
 
 portletDisplay.setTitle(portletTitle);

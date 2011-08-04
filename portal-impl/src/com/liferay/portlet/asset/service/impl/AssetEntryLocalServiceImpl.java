@@ -519,6 +519,23 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long[] categoryIds, String[] tagNames)
 		throws PortalException, SystemException {
 
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (entry != null) {
+			return updateEntry(
+				userId, groupId, className, classPK, entry.getClassUuid(),
+				categoryIds, tagNames, entry.getVisible(), entry.getStartDate(),
+				entry.getEndDate(), entry.getPublishDate(),
+				entry.getExpirationDate(), entry.getMimeType(),
+				entry.getTitle(), entry.getDescription(), entry.getSummary(),
+				entry.getUrl(), entry.getLayoutUuid(), entry.getHeight(),
+				entry.getWidth(), GetterUtil.getInteger(entry.getPriority()),
+				false);
+		}
+
 		return updateEntry(
 			userId, groupId, className, classPK, null, categoryIds, tagNames,
 			true, null, null, null, null, null, null, null, null, null, null, 0,

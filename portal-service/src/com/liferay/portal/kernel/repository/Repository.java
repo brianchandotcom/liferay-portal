@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -31,6 +32,12 @@ import java.util.List;
  * @author Alexander Chow
  */
 public interface Repository {
+
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
@@ -188,6 +195,12 @@ public interface Repository {
 		throws PortalException, SystemException;
 
 	public void unlockFolder(long parentFolderId, String title, String lockUuid)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry updateFileEntry(

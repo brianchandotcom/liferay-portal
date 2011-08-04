@@ -34,6 +34,11 @@ public interface DLStore {
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, File file)
+		throws PortalException, SystemException;
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException;
 
@@ -110,6 +115,12 @@ public interface DLStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
+			String versionNumber, String sourceFileName, File file)
+		throws PortalException, SystemException;
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
 			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException;
 
@@ -143,6 +154,11 @@ public interface DLStore {
 
 	public void validate(
 			String fileName, boolean validateFileExtension, InputStream is)
+		throws PortalException, SystemException;
+
+	public void validate(
+			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension, File file)
 		throws PortalException, SystemException;
 
 	public void validate(

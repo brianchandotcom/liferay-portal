@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -46,6 +47,19 @@ public class BaseRepositoryProxyBean
 		super(classLoader);
 
 		_baseRepository = baseRepository;
+	}
+
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _baseRepository.addFileEntry(
+			folderId, sourceFileName, mimeType, title, description, changeLog,
+			file, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	public FileEntry addFileEntry(
@@ -466,6 +480,19 @@ public class BaseRepositoryProxyBean
 		throws PortalException, SystemException {
 
 		_baseRepository.unlockFolder(parentFolderId, title, lockUuid);
+	}
+
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _baseRepository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	public FileEntry updateFileEntry(

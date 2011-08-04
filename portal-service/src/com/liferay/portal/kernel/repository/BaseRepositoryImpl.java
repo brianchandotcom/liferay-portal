@@ -23,9 +23,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +42,37 @@ import java.util.List;
  * @author Alexander Chow
  */
 public abstract class BaseRepositoryImpl implements BaseRepository {
+
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long size = 0;
+		InputStream is = null;
+
+		try {
+			size = file.length();
+			is = new FileInputStream(file);
+
+			return addFileEntry(
+				folderId, sourceFileName, mimeType, title, description,
+				changeLog, is, size, serviceContext);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+		}
+	}
 
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException, SystemException {
@@ -197,6 +234,36 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 		unlockFolder(folder.getFolderId(), lockUuid);
 	}
+
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long size = 0;
+		InputStream is = null;
+
+		try {
+			size = file.length();
+			is = new FileInputStream(file);
+
+			return updateFileEntry(
+				fileEntryId, sourceFileName, mimeType, title, description,
+				changeLog, majorVersion, is, size, serviceContext);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+		}	}
 
 	protected CompanyLocalService companyLocalService;
 	protected CounterLocalService counterLocalService;

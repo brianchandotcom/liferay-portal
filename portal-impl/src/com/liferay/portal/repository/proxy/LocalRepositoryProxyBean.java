@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -39,6 +40,19 @@ public class LocalRepositoryProxyBean
 		super(classLoader);
 
 		_localRepository = localRepository;
+	}
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _localRepository.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	public FileEntry addFileEntry(
@@ -243,6 +257,19 @@ public class LocalRepositoryProxyBean
 		_localRepository.updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds);
+	}
+
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = _localRepository.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		return newFileEntryProxyBean(fileEntry);
 	}
 
 	public FileEntry updateFileEntry(

@@ -32,9 +32,7 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
@@ -43,8 +41,6 @@ import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -169,24 +165,27 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		try {
-			InputStream is = null;
-			long size = 0;
+		File tempFile = null;
 
-			if ((file == null) || !file.exists()) {
-				is = new UnsyncByteArrayInputStream(new byte[0]);
-			}
-			else {
-				is = new FileInputStream(file);
-				size = file.length();
-			}
+		if (file == null || !file.exists()) {
+			tempFile = FileUtil.createTempFile();
 
-			return addFileEntry(
-				repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, is, size, serviceContext);
+			file = tempFile;
 		}
-		catch (FileNotFoundException fnfe) {
-			throw new FileSizeException();
+
+		try {
+			Repository repository = getRepository(repositoryId);
+
+			FileEntry fileEntry = repository.addFileEntry(
+				folderId, sourceFileName, mimeType, title, description,
+				changeLog, file, serviceContext);
+
+			DLProcessorRegistryUtil.trigger(fileEntry);
+
+			return fileEntry;
+		}
+		finally {
+			FileUtil.delete(tempFile);
 		}
 	}
 
@@ -1955,22 +1954,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		try {
-			InputStream is = null;
-			long size = 0;
-
-			if ((file != null) && file.exists()) {
-				is = new FileInputStream(file);
-				size = file.length();
-			}
-
-			return updateFileEntry(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, majorVersion, is, size, serviceContext);
+		if ((file != null) && !file.exists()) {
+			file = null;
 		}
-		catch (FileNotFoundException fnfe) {
-			throw new NoSuchFileException();
-		}
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		DLProcessorRegistryUtil.trigger(fileEntry);
+
+		return fileEntry;
 	}
 
 	/**

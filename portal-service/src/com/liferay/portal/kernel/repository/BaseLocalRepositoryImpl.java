@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -45,6 +46,14 @@ public class BaseLocalRepositoryImpl implements LocalRepository {
 
 	public BaseLocalRepositoryImpl(Repository repository) {
 		_repository = repository;
+	}
+
+	public FileEntry addFileEntry(
+		long userId, long folderId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog, File file,
+		ServiceContext serviceContext) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	public FileEntry addFileEntry(
@@ -223,6 +232,14 @@ public class BaseLocalRepositoryImpl implements LocalRepository {
 		long userId, FileEntry fileEntry, FileVersion fileVersion,
 		long[] assetCategoryIds, String[] assetTagNames,
 		long[] assetLinkEntryIds) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public FileEntry updateFileEntry(
+		long userId, long fileEntryId, String sourceFileName, String mimeType,
+		String title, String description, String changeLog,
+		boolean majorVersion, File file, ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

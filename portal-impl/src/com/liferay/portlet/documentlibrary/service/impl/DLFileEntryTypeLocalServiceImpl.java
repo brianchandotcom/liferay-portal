@@ -305,7 +305,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			dlFileEntryService.updateFileEntry(
 				dlFileEntry.getFileEntryId(), null, null, null, null, null,
-				false, defaultFileEntryTypeId, null, null, 0, serviceContext);
+				false, defaultFileEntryTypeId, null, null, null, 0,
+				serviceContext);
 		}
 
 		List<DLFolder> subFolders = dlFolderPersistence.findByG_P_M(

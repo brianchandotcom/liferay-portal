@@ -61,7 +61,7 @@ public class DLFileEntryServiceHttp {
 		java.lang.String description, java.lang.String changeLog,
 		long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
-		java.io.InputStream is, long size,
+		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -71,8 +71,8 @@ public class DLFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					repositoryId, folderId, sourceFileName, mimeType, title,
-					description, changeLog, fileEntryTypeId, fieldsMap, is,
-					size, serviceContext);
+					description, changeLog, fileEntryTypeId, fieldsMap, file,
+					is, size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1019,7 +1019,7 @@ public class DLFileEntryServiceHttp {
 		java.lang.String title, java.lang.String description,
 		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
-		java.io.InputStream is, long size,
+		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1029,8 +1029,8 @@ public class DLFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
-					changeLog, majorVersion, fileEntryTypeId, fieldsMap, is,
-					size, serviceContext);
+					changeLog, majorVersion, fileEntryTypeId, fieldsMap, file,
+					is, size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1101,8 +1101,8 @@ public class DLFileEntryServiceHttp {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, long.class,
-			java.util.Map.class, java.io.InputStream.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			java.util.Map.class, java.io.File.class, java.io.InputStream.class,
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _cancelCheckOutParameterTypes1 = new Class[] {
 			long.class
@@ -1192,8 +1192,8 @@ public class DLFileEntryServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, long.class,
-			java.util.Map.class, java.io.InputStream.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			java.util.Map.class, java.io.File.class, java.io.InputStream.class,
+			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes28 = new Class[] {
 			long.class, java.lang.String.class

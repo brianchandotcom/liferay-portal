@@ -71,6 +71,18 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, File file)
+		throws PortalException, SystemException {
+
+		validate(fileName, validateFileExtension, file);
+
+		AntivirusScannerUtil.scan(file);
+
+		store.addFile(companyId, repositoryId, fileName, file);
+	}
+
+	public void addFile(
+			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException {
 
@@ -339,6 +351,23 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
+			String versionNumber, String sourceFileName, File file)
+		throws PortalException, SystemException {
+
+		validate(
+			fileName, fileExtension, sourceFileName,
+			validateFileExtension, file);
+
+		AntivirusScannerUtil.scan(file);
+
+		store.updateFile(
+			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			file);
+	}
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String fileExtension, boolean validateFileExtension,
 			String versionNumber, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
 
@@ -512,19 +541,28 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension, File file)
+		throws PortalException, SystemException {
+
+		validate(
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+
+		if ((file != null) &&
+			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+			(file.length() >
+				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {
+
+			throw new FileSizeException(fileName);
+		}
+	}
+
+	public void validate(
+			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException {
 
-		String sourceFileExtension = FileUtil.getExtension(sourceFileName);
-
-		if (Validator.isNotNull(sourceFileName) &&
-			PropsValues.DL_FILE_EXTENSIONS_STRICT_CHECK &&
-			!fileExtension.equals(sourceFileExtension)) {
-
-			throw new SourceFileNameException(sourceFileExtension);
-		}
-
-		validate(fileName, validateFileExtension);
+		validate(
+			fileName, fileExtension, sourceFileName, validateFileExtension);
 
 		try {
 			if ((is != null) &&
@@ -561,6 +599,23 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		}
 
 		return true;
+	}
+
+	protected void validate(
+			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension)
+		throws PortalException, SystemException {
+
+		String sourceFileExtension = FileUtil.getExtension(sourceFileName);
+
+		if (Validator.isNotNull(sourceFileName) &&
+			PropsValues.DL_FILE_EXTENSIONS_STRICT_CHECK &&
+			!fileExtension.equals(sourceFileExtension)) {
+
+			throw new SourceFileNameException(sourceFileExtension);
+		}
+
+		validate(fileName, validateFileExtension);
 	}
 
 	private static final String[] _KEYWORDS_FIELDS = {

@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -85,6 +86,32 @@ public class LiferayLocalRepository
 
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "fileEntryTypeId", -1L);
+		Map<String, Fields> fieldsMap = getFieldsMap(
+			serviceContext, fileEntryTypeId);
+		long size = 0;
+
+		if (file != null) {
+			size = file.length();
+		}
+
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
+			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, fieldsMap, file, null, size, serviceContext);
+
+		addFileEntryResources(dlFileEntry, serviceContext);
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog, InputStream is,
 			long size, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -97,7 +124,7 @@ public class LiferayLocalRepository
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
 			userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, fieldsMap, is, size, serviceContext);
+			fileEntryTypeId, fieldsMap, null, is, size, serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);
 
@@ -332,8 +359,32 @@ public class LiferayLocalRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, fileEntryTypeId, fieldsMap, is, size,
+			changeLog, majorVersion, fileEntryTypeId, fieldsMap, null, is, size,
 			serviceContext);
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "fileEntryTypeId", -1L);
+		Map<String, Fields> fieldsMap = getFieldsMap(
+			serviceContext, fileEntryTypeId);
+		long size = 0;
+
+		if (file != null) {
+			size = file.length();
+		}
+
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, fileEntryTypeId, fieldsMap, file, null,
+			size, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

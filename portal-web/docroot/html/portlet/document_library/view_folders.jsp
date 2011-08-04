@@ -64,11 +64,13 @@ int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAU
 List<Folder> folders = DLAppServiceUtil.getFolders(repositoryId, parentFolderId, false, folderStart, folderEnd);
 List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, parentFolderId, folderStart, folderEnd);
 
-int folderTotal = 0;
+int total = 0;
 
 if ((folderId != rootFolderId) || !showRootFolder) {
-	folderTotal = DLAppServiceUtil.getFoldersCount(repositoryId, parentFolderId, false);
+	total = DLAppServiceUtil.getFoldersCount(repositoryId, parentFolderId, false);
 }
+
+request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 
 List<Folder> ancestorFolders = new ArrayList();
 
@@ -455,7 +457,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							state: {
 								page: <%= folderEnd / (folderEnd - folderStart) %>,
 								rowsPerPage: <%= (folderEnd - folderStart) %>,
-								total: <%= folderTotal %>
+								total: <%= total %>
 							}
 						}
 				   }

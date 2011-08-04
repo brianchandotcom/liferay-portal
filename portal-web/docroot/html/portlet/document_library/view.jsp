@@ -110,6 +110,9 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </div>
 
 <%
+int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view_entries.jsp-total"));
+int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
+
 if (folder != null) {
 	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 
@@ -218,10 +221,12 @@ if (folder != null) {
 			folderId: '<%= folderId %>',
 			mainUrl: '<%= mainURL %>',
 			portletId: '<%= portletDisplay.getId() %>',
+			entriesTotal: <%= entriesTotal %>,
 			entryRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
 			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+			foldersTotal: <%= foldersTotal %>,
 			showSiblings: true,
 			entryStart: 0,
 			folderStart: 0,

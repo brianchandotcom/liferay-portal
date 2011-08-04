@@ -166,6 +166,8 @@ else {
 
 searchContainer.setResults(results);
 searchContainer.setTotal(total);
+
+request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
 <c:if test='<%= !displayStyle.equals("list") %>'>

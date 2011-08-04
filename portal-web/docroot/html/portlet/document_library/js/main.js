@@ -84,7 +84,8 @@ AUI().add(
 								nextPageLinkLabel: '>',
 								prevPageLinkLabel: '<',
 								rowsPerPage: config.entryRowsPerPage,
-								rowsPerPageOptions: config.entryRowsPerPageOptions
+								rowsPerPageOptions: config.entryRowsPerPageOptions,
+								total: config.entriesTotal
 							}
 						).render();
 
@@ -100,7 +101,8 @@ AUI().add(
 								nextPageLinkLabel: '>',
 								prevPageLinkLabel: '<',
 								rowsPerPage: config.folderRowsPerPage,
-								rowsPerPageOptions: config.folderRowsPerPageOptions
+								rowsPerPageOptions: config.folderRowsPerPageOptions,
+								total: config.foldersTotal
 							}
 						).render();
 

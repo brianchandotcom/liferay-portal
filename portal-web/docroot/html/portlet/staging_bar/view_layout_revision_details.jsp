@@ -47,10 +47,10 @@ else {
 	<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
 </div>
 
-<aui:script position="inline" use="aui-io-request,liferay-staging">
-	var dockbar = Liferay.Staging.Dockbar;
+<aui:script position="inline" use="liferay-staging-version">
+	var stagingBar = Liferay.StagingBar;
 
-	dockbar.init(
+	stagingBar.init(
 		{
 			namespace: '<portlet:namespace />'
 		}
@@ -66,9 +66,9 @@ else {
 		if (firstChildLayoutRevision.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
 		%>
 
-			var redoButton = dockbar.redoButton;
+			var redoButton = stagingBar.redoButton;
 
-			dockbar.layoutRevisionToolbar.add(redoButton, 0);
+			stagingBar.layoutRevisionToolbar.add(redoButton, 0);
 
 			redoButton.get('contentBox').attr(
 				{
@@ -84,9 +84,9 @@ else {
 	</c:if>
 
 	<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-		var undoButton = dockbar.undoButton;
+		var undoButton = stagingBar.undoButton;
 
-		dockbar.layoutRevisionToolbar.add(undoButton, 0);
+		stagingBar.layoutRevisionToolbar.add(undoButton, 0);
 
 		undoButton.get('contentBox').attr(
 			{
@@ -103,7 +103,7 @@ else {
 		%>
 
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
-			dockbar.layoutRevisionToolbar.add(
+			stagingBar.layoutRevisionToolbar.add(
 				{
 					type: 'ToolbarSpacer'
 				}
@@ -119,7 +119,7 @@ else {
 				<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 			</portlet:actionURL>
 
-			dockbar.layoutRevisionToolbar.add(
+			stagingBar.layoutRevisionToolbar.add(
 				{
 					handler: function(event) {
 						A.io.request(

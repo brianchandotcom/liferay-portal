@@ -36,4 +36,8 @@ public class DDLConstants {
 	public static final String RESERVED_RECORD_SET_NAME =
 		"reserved_record_set_name";
 
+	public static final int SCOPE_ANY = -1;
+
+	public static final int SCOPE_DYNAMIC_DATA_LISTS = 0;
+
 }

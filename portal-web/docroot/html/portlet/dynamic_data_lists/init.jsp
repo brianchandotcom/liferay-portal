@@ -34,6 +34,7 @@
 <%@ page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission" %>
+<%@ page import="com.liferay.portlet.dynamicdatalists.util.DDLConstants" %>
 <%@ page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %>

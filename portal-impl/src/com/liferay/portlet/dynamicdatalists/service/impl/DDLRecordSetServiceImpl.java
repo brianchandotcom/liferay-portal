@@ -35,7 +35,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	public DDLRecordSet addRecordSet(
 			long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			int minDisplayRows, ServiceContext serviceContext)
+			int minDisplayRows, int scope, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDLPermission.check(
@@ -43,7 +43,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 
 		return ddlRecordSetLocalService.addRecordSet(
 			getUserId(), groupId, ddmStructureId, recordSetKey, nameMap,
-			descriptionMap, minDisplayRows, serviceContext);
+			descriptionMap, minDisplayRows, scope, serviceContext);
 	}
 
 	public void deleteRecordSet(long recordSetId)

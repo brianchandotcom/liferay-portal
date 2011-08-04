@@ -29,6 +29,9 @@ public class DeactivateUserTests extends BaseTests {
 
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(DeactivateUserTest.class);
+		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(User_LoginTest.class);
+		testSuite.addTestSuite(LoginTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

@@ -1538,7 +1538,17 @@
 		Util,
 		'updateCheckboxValue',
 		function(checkbox) {
-			A.one(checkbox).previous().val(checkbox.checked);
+			checkbox = A.one(checkbox);
+
+			if (checkbox) {
+				var value = '';
+
+				if (checkbox.attr('checked')) {
+					value = checkbox.val();
+				}
+
+				checkbox.previous().val(value);
+			}
 		},
 		['aui-base']
 	);

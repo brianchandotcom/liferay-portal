@@ -1,0 +1,44 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+
+if (request.getAttribute("aui:select:useNamespace") == null) {
+	useNamespace = auiFormUseNamespace;
+}
+
+if (!useNamespace) {
+	namespace = StringPool.BLANK;
+}
+
+if (Validator.isNull(label) && changesContext) {
+	StringBundler sb = new StringBundler(5);
+
+	sb.append(LanguageUtil.get(pageContext, title));
+	sb.append(StringPool.SPACE);
+	sb.append(StringPool.OPEN_PARENTHESIS);
+	sb.append(LanguageUtil.get(pageContext, "changing-the-value-of-this-field-will-reload-the-page"));
+	sb.append(StringPool.CLOSE_PARENTHESIS);
+
+	title = sb.toString();
+}
+else if (Validator.isNotNull(title)) {
+	title = LanguageUtil.get(pageContext, title);
+}
+
+String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "select", inlineField, disabled, false, first, last, cssClass);
+String inputCss = AUIUtil.buildCss(AUIUtil.INPUT_PREFIX, "select", false, false, false, false, false, inputCssClass);
+%>

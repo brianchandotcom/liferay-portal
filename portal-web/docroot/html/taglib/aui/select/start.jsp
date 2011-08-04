@@ -14,57 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:useNamespace")), auiFormUseNamespace);
-
-if (!useNamespace) {
-	namespace = StringPool.BLANK;
-}
-
-Object bean = request.getAttribute("aui:select:bean");
-boolean changesContext = GetterUtil.getBoolean((String)request.getAttribute("aui:select:changesContext"));
-String cssClass = GetterUtil.getString((String)request.getAttribute("aui:select:cssClass"));
-boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("aui:select:disabled"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("aui:select:data");
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:select:dynamicAttributes");
-boolean first = GetterUtil.getBoolean((String)request.getAttribute("aui:select:first"));
-String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:select:helpMessage"));
-String id = namespace + GetterUtil.getString((String)request.getAttribute("aui:select:id"));
-boolean inlineField = GetterUtil.getBoolean((String)request.getAttribute("aui:select:inlineField"));
-String inlineLabel = GetterUtil.getString((String)request.getAttribute("aui:select:inlineLabel"));
-String inputCssClass = GetterUtil.getString((String)request.getAttribute("aui:select:inputCssClass"));
-String label = GetterUtil.getString((String)request.getAttribute("aui:select:label"));
-boolean last = GetterUtil.getBoolean((String)request.getAttribute("aui:select:last"));
-String listType = GetterUtil.getString((String)request.getAttribute("aui:select:listType"));
-String listTypeFieldName = GetterUtil.getString((String)request.getAttribute("aui:select:listTypeFieldName"));
-boolean multiple = GetterUtil.getBoolean((String)request.getAttribute("aui:select:multiple"));
-String name = GetterUtil.getString((String)request.getAttribute("aui:select:name"));
-String onChange = GetterUtil.getString((String)request.getAttribute("aui:select:onChange"));
-String onClick = GetterUtil.getString((String)request.getAttribute("aui:select:onClick"));
-String prefix = GetterUtil.getString((String)request.getAttribute("aui:select:prefix"));
-boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("aui:select:showEmptyOption"));
-String title = GetterUtil.getString((String)request.getAttribute("aui:select:title"));
-
-if (Validator.isNull(label) && changesContext) {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append(LanguageUtil.get(pageContext, title));
-	sb.append(StringPool.SPACE);
-	sb.append(StringPool.OPEN_PARENTHESIS);
-	sb.append(LanguageUtil.get(pageContext, "changing-the-value-of-this-field-will-reload-the-page"));
-	sb.append(StringPool.CLOSE_PARENTHESIS);
-
-	title = sb.toString();
-}
-else if (Validator.isNotNull(title)) {
-	title = LanguageUtil.get(pageContext, title);
-}
-
-String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "select", inlineField, disabled, false, first, last, cssClass);
-String inputCss = AUIUtil.buildCss(AUIUtil.INPUT_PREFIX, "select", false, false, false, false, false, inputCssClass);
-%>
+<%@ include file="/html/taglib/aui/select/init.jsp" %>
 
 <span class="<%= fieldCss %>">
 	<span class="aui-field-content">

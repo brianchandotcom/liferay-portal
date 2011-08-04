@@ -539,8 +539,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 			if (theme == null) {
 				theme = new ThemeImpl(themeId);
-
-				_themes.put(themeId, theme);
 			}
 
 			theme.setTimestamp(timestamp);
@@ -685,6 +683,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 			if (!theme.isWapTheme()) {
 				_setSpriteImages(servletContext, theme, imagesPath);
+			}
+
+			if (_themes.get(themeId) == null) {
+				_themes.put(themeId, theme);
 			}
 		}
 

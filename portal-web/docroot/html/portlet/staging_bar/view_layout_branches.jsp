@@ -37,7 +37,7 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + LanguageUtil.get(pageContext, "add-page-variation") + "');";
+	String taglibOnClick = "javascript:Liferay.Stagingbar.addBranch('" + LanguageUtil.get(pageContext, "add-page-variation") + "');";
 	%>
 
 	<aui:button-row>
@@ -98,8 +98,8 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 	</liferay-ui:search-container>
 </div>
 
-<aui:script position="inline" use="liferay-staging">
-	Liferay.Staging.Branching.init(
+<aui:script position="inline" use="liferay-staging-branch">
+	Liferay.Stagingbar.init(
 		{
 			namespace: '<portlet:namespace />'
 		}

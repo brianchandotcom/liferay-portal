@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
+boolean branchingEnabled = false;
+
 LayoutRevision layoutRevision = null;
 
 LayoutSetBranch layoutSetBranch = null;
@@ -27,6 +29,8 @@ if (layout != null) {
 	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 
 	if (layoutRevision != null) {
+		branchingEnabled = true;
+
 		layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
 
 		layoutBranch = layoutRevision.getLayoutBranch();
@@ -100,7 +104,7 @@ if (layout != null) {
 								}
 
 								boolean first = (i == 0) && (liveGroup == null);
-								boolean selected = group.isStagingGroup() && (layoutRevision != null) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
+								boolean selected = group.isStagingGroup() && branchingEnabled && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 
 								String cssClass = "aui-state-default aui-tab";
 
@@ -237,10 +241,10 @@ if (layout != null) {
 			</c:if>
 		</ul>
 
-		<div class="aui-tabview-content staging-tabview-content">
+		<div class="aui-tabview-content staging-tabview-content <%= ((group.isStagingGroup() || group.isStagedRemotely()) && !branchingEnabled) ? "aui-helper-hidden" : StringPool.BLANK %>">
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
-					<c:if test="<%= layoutRevision != null %>">
+					<c:if test="<%= branchingEnabled %>">
 						<div class="layout-set-branch-info">
 							<c:if test="<%= Validator.isNotNull(layoutSetBranch.getDescription()) %>">
 								<span class="layout-set-branch-description"><%= layoutSetBranch.getDescription() %></span>
@@ -550,6 +554,16 @@ if (layout != null) {
 			</c:choose>
 		</div>
 	</div>
+
+	<c:if test="<%= !branchingEnabled %>">
+		<aui:script use="liferay-staging">
+			Liferay.Stagingbar.init(
+				{
+					namespace: '<portlet:namespace />'
+				}
+			);
+		</aui:script>
+	</c:if>
 </c:if>
 
 <%!

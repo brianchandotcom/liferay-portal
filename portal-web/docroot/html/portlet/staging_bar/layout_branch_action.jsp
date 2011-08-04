@@ -35,7 +35,7 @@ LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.Staging.Branching.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-page-variation") + "'});";
+		String taglibURL = "javascript:Liferay.Stagingbar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-page-variation") + "'});";
 		%>
 
 		<liferay-ui:icon

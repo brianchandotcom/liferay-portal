@@ -368,6 +368,18 @@ public class MBThreadLocalServiceUtil {
 		return getService().getThreadsCount(groupId, categoryId, status);
 	}
 
+	public static void incrementViewCounter(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().incrementViewCounter(threadId);
+	}
+
+	public static void incrementViewCounter(long threadId, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().incrementViewCounter(threadId, increment);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThread moveThread(
 		long groupId, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -383,6 +395,9 @@ public class MBThreadLocalServiceUtil {
 		return getService().splitThread(messageId, subject, serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #incrementViewCounter(long, long, int)}
+	*/
 	public static com.liferay.portlet.messageboards.model.MBThread updateThread(
 		long threadId, int viewCount)
 		throws com.liferay.portal.kernel.exception.PortalException,

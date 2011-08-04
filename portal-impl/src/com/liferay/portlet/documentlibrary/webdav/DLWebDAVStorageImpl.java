@@ -668,7 +668,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			FileUtil.write(file, request.getInputStream());
 
 			if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-				contentType = MimeTypesUtil.getContentType(file);
+				contentType = MimeTypesUtil.getContentType(file, title);
 			}
 
 			try {

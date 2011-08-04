@@ -337,30 +337,43 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 			request.getHeader(HttpHeaders.CONTENT_TYPE),
 			ContentTypes.APPLICATION_OCTET_STREAM);
 
-		if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-			contentType = MimeTypesUtil.getContentType(is, title);
-		}
+		String extension = FileUtil.getExtension(title);
+
+		File file = null;
 
 		try {
-			FileEntry fileEntry = getFileEntry(sharepointRequest);
+			file = FileUtil.createTempFile(extension);
 
-			long fileEntryId = fileEntry.getFileEntryId();
+			FileUtil.write(file, request.getInputStream());
 
-			description = fileEntry.getDescription();
+			if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+				contentType = MimeTypesUtil.getContentType(file, title);
+			}
 
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				FileEntry.class.getName(), fileEntry.getFileEntryId());
+			try {
+				FileEntry fileEntry = getFileEntry(sharepointRequest);
 
-			serviceContext.setAssetTagNames(assetTagNames);
+				long fileEntryId = fileEntry.getFileEntryId();
 
-			DLAppServiceUtil.updateFileEntry(
-				fileEntryId, title, contentType, title, description, changeLog,
-				false, is, contentLength, serviceContext);
+				description = fileEntry.getDescription();
+
+				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+					FileEntry.class.getName(), fileEntry.getFileEntryId());
+
+				serviceContext.setAssetTagNames(assetTagNames);
+
+				DLAppServiceUtil.updateFileEntry(
+					fileEntryId, title, contentType, title, description,
+					changeLog, false, file, serviceContext);
+			}
+			catch (NoSuchFileEntryException nsfee) {
+				DLAppServiceUtil.addFileEntry(
+					groupId, parentFolderId, title, contentType, title,
+					description, changeLog, file, serviceContext);
+			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
-			DLAppServiceUtil.addFileEntry(
-				groupId, parentFolderId, title, contentType, title, description,
-				changeLog, is, contentLength, serviceContext);
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 

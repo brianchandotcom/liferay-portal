@@ -512,6 +512,11 @@
 			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntiVirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntiVirusScannerUtil">
+		<property name="antiVirusScanner">
+			<bean class="com.liferay.portlet.documentlibrary.antivirus.ClamScanAntiVirusScanner" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.store.Store" class="com.liferay.portlet.documentlibrary.store.SafeFileNameStoreWrapper">
 		<constructor-arg>

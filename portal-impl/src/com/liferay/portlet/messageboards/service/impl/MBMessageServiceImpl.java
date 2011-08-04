@@ -452,7 +452,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), messageId, ActionKeys.VIEW);
 
 		return mbMessageLocalService.getMessageDisplay(
-			messageId, status, threadView, includePrevAndNext);
+			getGuestOrUserId(), messageId, status, threadView,
+			includePrevAndNext);
 	}
 
 	public List<MBMessage> getThreadMessages(

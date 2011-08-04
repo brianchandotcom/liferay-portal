@@ -184,7 +184,8 @@ public class DLUtil {
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("folderId", ancestorFolder.getFolderId());
+			data.put("folder-id", ancestorFolder.getFolderId());
+			data.put("refresh-folders", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString(), data);
@@ -203,7 +204,8 @@ public class DLUtil {
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("folderId", folderId);
+			data.put("folder-id", folderId);
+			data.put("refresh-folders", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString(), data);

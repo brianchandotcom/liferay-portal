@@ -33,6 +33,7 @@ public class AddUserDefaultUserAssociationsUserGroupTests extends BaseTests {
 		testSuite.addTestSuite(
 			AssertDefaultUserAssociationsUserGroupTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownUserGroupTest.class);
 		testSuite.addTestSuite(TearDownSettingsConfigurationTest.class);
 
 		return testSuite;

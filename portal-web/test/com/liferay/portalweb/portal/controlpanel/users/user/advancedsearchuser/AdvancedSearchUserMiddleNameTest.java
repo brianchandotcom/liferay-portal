@@ -54,6 +54,33 @@ public class AdvancedSearchUserMiddleNameTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 				boolean AdvancedPresent = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -71,19 +98,73 @@ public class AdvancedSearchUserMiddleNameTest extends BaseTestCase {
 				selenium.type("//input[@id='_125_middleName']",
 					RuntimeVariables.replace("lenn"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent("selenium01"));
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_middleName']",
 					RuntimeVariables.replace("lenn1"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("selenium01"));
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_middleName']",
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();

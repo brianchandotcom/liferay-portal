@@ -80,7 +80,7 @@ public class AddUserEmailAddressAmpersandTest extends BaseTestCase {
 			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("test&amp;@selenium.com"));
+			RuntimeVariables.replace("test&@selenium.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_firstName']",
 			RuntimeVariables.replace("testA"));

@@ -94,21 +94,21 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.clickAt("link=Reserved Credentials",
 			RuntimeVariables.replace("Reserved Credentials"));
 		selenium.type("//textarea[@name='_130_settings--admin.reserved.screen.names--']",
-			RuntimeVariables.replace("Screen Names"));
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_130_settings--admin.reserved.email.addresses--']",
-			RuntimeVariables.replace("Email Addresses"));
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Default User Associations",
 			RuntimeVariables.replace("Default User Associations"));
-		selenium.type("//textarea[@name='_130_settings--admin.default.group.names--']",
-			RuntimeVariables.replace("Sites"));
+		selenium.type("//textarea[@id='_130_admin.default.group.names']",
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@name='_130_settings--admin.default.role.names--']",
+		selenium.type("//textarea[@id='_130_admin.default.role.names']",
 			RuntimeVariables.replace("Power User\nUser"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@name='_130_settings--admin.default.user.group.names--']",
-			RuntimeVariables.replace("User Groups"));
+		selenium.type("//textarea[@id='_130_admin.default.user.group.names']",
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_mailHostNamesLink']",
 				"Mail Host Names"));

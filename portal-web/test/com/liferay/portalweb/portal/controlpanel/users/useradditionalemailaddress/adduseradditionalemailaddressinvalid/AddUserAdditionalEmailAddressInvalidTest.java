@@ -50,7 +50,7 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input@id='_125_keywords']",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("selen01"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -92,7 +92,7 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input@id='_125_emailAddressAddress0']")) {
+							"//input[@id='_125_emailAddressAddress0']")) {
 					break;
 				}
 			}
@@ -103,7 +103,7 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input@id='_125_emailAddressAddress0']",
+		selenium.type("//input[@id='_125_emailAddressAddress0']",
 			RuntimeVariables.replace("!!!!!!!!!!!!!!!!!!!!"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",

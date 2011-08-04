@@ -118,6 +118,15 @@ public class DLUtil {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		PortletPreferences preferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, PortalUtil.getPortletId(request));
+
+		long defaultFolderId = GetterUtil.getLong(
+			preferences.getValue(
+				"rootFolderId",
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
+
 		ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -135,9 +144,14 @@ public class DLUtil {
 			"viewFileEntrySearch", Boolean.TRUE.toString());
 		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
 
+		Map<String, Object> data = new HashMap<String, Object>();
+
+		data.put("folder-id", defaultFolderId);
+		data.put("refresh-folders", Boolean.TRUE.toString());
+
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("documents-home"),
-			portletURL.toString());
+			portletURL.toString(), data);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
@@ -217,6 +231,15 @@ public class DLUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
+		PortletPreferences preferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, PortalUtil.getPortletId(request));
+
+		long defaultFolderId = GetterUtil.getLong(
+			preferences.getValue(
+				"rootFolderId",
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
+
 		String strutsAction = ParamUtil.getString(
 			request, "struts_action");
 
@@ -237,9 +260,14 @@ public class DLUtil {
 			portletURL.setParameter("struts_action", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
 
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("folder-id", defaultFolderId);
+			data.put("refresh-folders", Boolean.TRUE.toString());
+
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("documents-home"),
-				portletURL.toString());
+				portletURL.toString(), data);
 		}
 		else {
 			portletURL.setParameter("struts_action", "/document_library/view");

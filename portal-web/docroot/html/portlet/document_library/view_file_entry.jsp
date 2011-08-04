@@ -644,6 +644,28 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 								resultRows.add(row);
 							}
+
+							if (comparableFileEntry && !results.isEmpty()) {
+								FileVersion curFileVersion = (FileVersion)results.get(0);
+							%>
+
+								<portlet:actionURL var="compareVersionsURL">
+									<portlet:param name="struts_action" value="/document_library/compare_versions" />
+								</portlet:actionURL>
+
+								<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
+									<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
+									<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
+									<aui:input name="sourceVersion" type="hidden" value="<%= curFileVersion.getVersion() %>" />
+									<aui:input name="targetVersion" type="hidden" value="<%= fileEntry.getVersion() %>" />
+
+									<aui:button-row>
+										<aui:button type="submit" value="compare-versions" />
+									</aui:button-row>
+								</aui:form>
+
+							<%
+							}
 							%>
 
 							<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />

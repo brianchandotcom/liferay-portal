@@ -338,6 +338,11 @@ public class PermissionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Permission> getUserPermissions(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPermissions(userId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Permission> getUserPermissions(
 		long userId, long resourceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserPermissions(userId, resourceId);

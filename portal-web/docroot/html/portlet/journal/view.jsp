@@ -81,9 +81,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
+					<aui:button cssClass="articles-button" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
 
-					<aui:button cssClass="delete-articles-button" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
+					<aui:button cssClass="articles-button" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
 				</aui:button-row>
 
 				<br /><br />
@@ -577,31 +577,35 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:script>
 
 <aui:script use="aui-base">
-	var deleteButtonWrapper = A.one('.delete-articles-button');
+	var buttonWrappers = A.all('.articles-button');
 
-	if (deleteButtonWrapper) {
-		var deleteButton = deleteButtonWrapper.one(':button');
+	A.each(
+		buttonWrappers,
+		function(item) 
+		{
+			var itemButton = item.one(':button');
 
-		var toggleDisabled = function(disabled) {
-			deleteButton.attr('disabled', disabled);
+			var toggleDisabled = function(disabled) {
+				itemButton.attr('disabled', disabled);
 
-			deleteButtonWrapper.toggleClass('aui-button-disabled', disabled);
-		};
+				item.toggleClass('aui-button-disabled', disabled);
+			};
 
-		var resultsGrid = A.one('.results-grid');
+			var resultsGrid = A.one('.results-grid');
 
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					var disabled = (resultsGrid.one(':checked') == null);
+			if (resultsGrid) {
+				resultsGrid.delegate(
+					'click',
+					function(event) {
+						var disabled = (resultsGrid.one(':checked') == null);
 
-					toggleDisabled(disabled);
-				},
-				':checkbox'
-			);
+						toggleDisabled(disabled);
+					},
+					':checkbox'
+				);
+			}
+
+			toggleDisabled(true);
 		}
-
-		toggleDisabled(true);
-	}
+	);
 </aui:script>

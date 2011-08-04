@@ -1083,7 +1083,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return new MBMessageDisplayImpl(
 			message, parentMessage, category, thread,
-			previousThread, nextThread, status, threadView);
+			previousThread, nextThread, status, threadView, this);
 	}
 
 	public List<MBMessage> getMessages(

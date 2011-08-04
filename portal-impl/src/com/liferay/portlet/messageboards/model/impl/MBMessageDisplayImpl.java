@@ -20,6 +20,7 @@ import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,7 +31,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	public MBMessageDisplayImpl(
 		MBMessage message, MBMessage parentMessage, MBCategory category,
 		MBThread thread, MBThread previousThread, MBThread nextThread,
-		int status, String threadView) {
+		int status, String threadView,
+		MBMessageLocalService messageLocalService) {
 
 		_message = message;
 		_parentMessage = parentMessage;
@@ -38,7 +40,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_thread = thread;
 
 		if (!threadView.equals(MBThreadConstants.THREAD_VIEW_FLAT)) {
-			_treeWalker = new MBTreeWalkerImpl(message, status);
+			_treeWalker = new MBTreeWalkerImpl(
+				message, status, messageLocalService);
 		}
 
 		_previousThread = previousThread;

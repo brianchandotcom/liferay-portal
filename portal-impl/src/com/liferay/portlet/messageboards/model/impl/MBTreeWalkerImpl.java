@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +30,14 @@ import java.util.Map;
  */
 public class MBTreeWalkerImpl implements MBTreeWalker {
 
-	public MBTreeWalkerImpl(MBMessage message, int status) {
+	public MBTreeWalkerImpl(
+		MBMessage message, int status,
+		MBMessageLocalService messageLocalService) {
+
 		_messageIdsMap = new HashMap<Long, Integer>();
 
 		try {
-			_messages = MBMessageLocalServiceUtil.getThreadMessages(
+			_messages = messageLocalService.getThreadMessages(
 				message.getThreadId(), status);
 
 			for (int i = 0; i < _messages.size(); i++) {

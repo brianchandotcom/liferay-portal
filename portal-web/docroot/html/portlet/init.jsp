@@ -24,6 +24,8 @@ PortletMode portletMode = null;
 
 PortletURL currentURLObj = null;
 
+boolean enablePortletURLAnchor = PropsValues.PORTLET_URL_ANCHOR_ENABLE;
+
 if (renderRequest != null) {
 	windowState = renderRequest.getWindowState();
 	portletMode = renderRequest.getPortletMode();

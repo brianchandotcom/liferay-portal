@@ -50,15 +50,6 @@ else {
 String publishNowDialogTitle = null;
 String publishScheduleDialogTitle = null;
 
-if (layoutSetBranchId > 0) {
-	publishNowDialogTitle = "publish-x-to-live-now";
-	publishScheduleDialogTitle = "schedule-publication-of-x-to-live";
-}
-else {
-	publishNowDialogTitle = "publish-to-live-now";
-	publishScheduleDialogTitle = "schedule-publication-to-live";
-}
-
 Group liveGroup = null;
 Group stagingGroup = null;
 
@@ -69,15 +60,6 @@ if (group.isStagingGroup()) {
 else if (group.isStaged()) {
 	if (group.isStagedRemotely()) {
 		stagingGroup = group;
-
-		if (layoutSetBranchId > 0) {
-			publishNowDialogTitle = "publish-x-to-remote-live-now";
-			publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
-		}
-		else {
-			publishNowDialogTitle = "publish-to-remote-live-now";
-			publishScheduleDialogTitle = "schedule-publication-to-remote-live";
-		}
 	}
 	else {
 		liveGroup = group;
@@ -90,6 +72,28 @@ if (groupId <= 0) {
 }
 
 layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+
+if (group.isStaged() && group.isStagedRemotely()) {
+
+	if (layoutSetBranchId > 0 && (layoutSetBranches.size() > 1)) {
+		publishNowDialogTitle = "publish-x-to-remote-live-now";
+		publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
+	}
+	else {
+		publishNowDialogTitle = "publish-to-remote-live-now";
+		publishScheduleDialogTitle = "schedule-publication-to-remote-live";
+	}
+}
+else {
+	if (layoutSetBranchId > 0 && (layoutSetBranches.size() > 1)) {
+		publishNowDialogTitle = "publish-x-to-live-now";
+		publishScheduleDialogTitle = "schedule-publication-of-x-to-live";
+	}
+	else {
+		publishNowDialogTitle = "publish-to-live-now";
+		publishScheduleDialogTitle = "schedule-publication-to-live";
+	}
+}
 %>
 
 <c:if test="<%= stagingGroup != null %>">

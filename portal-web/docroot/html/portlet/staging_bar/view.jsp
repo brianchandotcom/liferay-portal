@@ -128,7 +128,7 @@ if (layout != null) {
 								<li class="<%= cssClass %>">
 									<span class="aui-tab-content">
 										<span class="aui-tab-label">
-											<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label="<%= curLayoutSetBranch.getName() %>" />
+											<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label='<%= layoutSetBranches.size() == 1 ? "staging" : curLayoutSetBranch.getName() %>' />
 
 											<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
 										</span>

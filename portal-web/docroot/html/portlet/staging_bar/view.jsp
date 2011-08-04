@@ -90,7 +90,7 @@ if (layout != null) {
 
 				<c:choose>
 					<c:when test="<%= !layoutSetBranches.isEmpty() %>">
-						<c:if test="<%= group.isStagingGroup() || layoutSetBranches.size() < _MAX_INLINE_BRANCHES %>">
+						<c:if test="<%= group.isStagingGroup() || layoutSetBranches.size() <= _MAX_INLINE_BRANCHES %>">
 
 							<%
 							for (int i = 0; i < layoutSetBranches.size(); i++) {
@@ -146,7 +146,7 @@ if (layout != null) {
 						<c:if test="<%= layoutSetBranches.size() > _MAX_INLINE_BRANCHES %>">
 							<li class="aui-state-default aui-tab go-to-layout-set-branches-tab">
 								<span class="aui-tab-content">
-									<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' message='<%= layout.isPrivateLayout() ? "private-pages-variations" : "public-pages-variations" %>'>
+									<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
 
 										<%
 										for (int i = 0; i < layoutSetBranches.size(); i++) {
@@ -190,7 +190,7 @@ if (layout != null) {
 									id="manageLayoutSetBranches"
 									image="configuration"
 									label="<%= true %>"
-									message='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>'
+									message="manage-site-pages-variations"
 									url="<%= layoutSetBranchesURL %>"
 								/>
 							</span>
@@ -214,7 +214,7 @@ if (layout != null) {
 														width: 820
 													},
 												id: '<portlet:namespace />layoutSetBranches',
-												title: '<liferay-ui:message key='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' />',
+												title: '<liferay-ui:message key="manage-site-pages-variations" />',
 												uri: event.currentTarget.attr('href')
 											}
 										);

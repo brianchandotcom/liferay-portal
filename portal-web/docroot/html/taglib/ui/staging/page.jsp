@@ -198,7 +198,7 @@ else {
 					<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon cssClass="manage-layout-set-branches" id="manageLayoutSetBranches" image="configuration" label="<%= true %>" message='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' url="<%= layoutSetBranchesURL %>" />
+				<liferay-ui:icon cssClass="manage-layout-set-branches" id="manageLayoutSetBranches" image="configuration" label="<%= true %>" message="manage-site-pages-variations" url="<%= layoutSetBranchesURL %>" />
 
 				<aui:script use="aui-base">
 					var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
@@ -218,7 +218,7 @@ else {
 												width: 820
 											},
 										id: '<portlet:namespace />',
-										title: '<liferay-ui:message key='<%= layout.isPrivateLayout() ? "manage-private-pages-variations" : "manage-public-pages-variations" %>' />',
+										title: '<liferay-ui:message key="manage-site-pages-variations" />',
 										uri: event.currentTarget.attr('href')
 									}
 								);

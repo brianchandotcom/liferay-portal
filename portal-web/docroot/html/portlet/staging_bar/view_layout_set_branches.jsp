@@ -24,7 +24,7 @@ LayoutSetBranch currentLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getUser
 request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", String.valueOf(currentLayoutSetBranch.getLayoutSetBranchId()));
 %>
 
-<liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-branch-with-that-name-already-exists" />
+<liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-site-pages-variation-with-that-name-already-exists" />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_LONG %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_SHORT %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
 
@@ -40,11 +40,11 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
+	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, "add-site-pages-variation") + "');";
 	%>
 
 	<aui:button-row>
-		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value='<%= privateLayout ? "add-private-pages-variation" : "add-public-pages-variation" %>' />
+		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value="add-site-pages-variation" />
 	</aui:button-row>
 </c:if>
 

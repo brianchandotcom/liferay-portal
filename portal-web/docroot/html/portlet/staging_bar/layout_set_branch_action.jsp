@@ -35,7 +35,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "update-private-pages-variation" : "update-public-pages-variation") + "'});";
+		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-site-pages-variation") + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -82,7 +82,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.StagingBar.mergeBranch({uri: '" + HtmlUtil.escapeJS(mergeURL) + "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, layoutSetBranch.isPrivateLayout() ? "merge-private-pages-variation" : "merge-public-pages-variation") + "'});";
+		String taglibURL = "javascript:Liferay.StagingBar.mergeBranch({uri: '" + HtmlUtil.escapeJS(mergeURL) + "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "merge-site-pages-variation") + "'});";
 		%>
 
 		<liferay-ui:icon

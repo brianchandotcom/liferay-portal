@@ -17,7 +17,13 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
+String backURL = ParamUtil.getString(request, "backURL", currentURL);
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	redirect = backRUL;
+}
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 

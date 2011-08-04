@@ -541,7 +541,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Thread
 
-		int count = mbMessagePersistence.countByThreadId(message.getThreadId());
+		int count = mbMessagePersistence.countByT_S(
+			message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
 
 		// Message flags
 
@@ -555,7 +556,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mbMessageFlagService.deleteAnswerFlag(message.getMessageId());
 		}
 
-		if (count == 1) {
+		if ((count == 1) &&
+			(message.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
 
 			// Attachments
 
@@ -598,7 +600,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				mbCategoryPersistence.update(category, false);
 			}
 		}
-		else if (count > 1) {
+		else if ((count > 1) || ((count == 1) &&
+				(message.getStatus() != WorkflowConstants.STATUS_DRAFT))) {
+
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(
 				message.getThreadId());
 
@@ -671,7 +675,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			thread.setMessageCount(count - 1);
+			if (message.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+				thread.setMessageCount(count - 1);
+			}
 
 			mbThreadPersistence.update(thread, false);
 
@@ -680,7 +686,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if ((message.getCategoryId() !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
 				(message.getCategoryId() !=
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+					MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
+				(message.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
 
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					message.getCategoryId());

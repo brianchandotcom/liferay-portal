@@ -149,7 +149,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			category.setThreadCount(category.getThreadCount() - 1);
 			category.setMessageCount(
-				category.getMessageCount() - messages.size());
+				category.getMessageCount() - thread.getMessageCount());
 
 			mbCategoryPersistence.update(category, false);
 		}
@@ -440,7 +440,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
 			oldCategory.setThreadCount(oldCategory.getThreadCount() - 1);
 			oldCategory.setMessageCount(
-				oldCategory.getMessageCount() - messages.size());
+				oldCategory.getMessageCount() - thread.getMessageCount());
 
 			mbCategoryPersistence.update(oldCategory, false);
 		}
@@ -448,7 +448,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if ((category != null) && (categoryId != oldCategoryId)) {
 			category.setThreadCount(category.getThreadCount() + 1);
 			category.setMessageCount(
-				category.getMessageCount() + messages.size());
+				category.getMessageCount() + thread.getMessageCount());
 
 			mbCategoryPersistence.update(category, false);
 		}

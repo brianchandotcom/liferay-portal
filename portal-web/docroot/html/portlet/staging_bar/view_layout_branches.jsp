@@ -123,22 +123,16 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
+		var data = null;
+
+		<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
+			data = {
+				portletAjaxable: false
+			};
+		</c:if>
+
+		Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
+	</c:if>
 </aui:script>
-
-<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
-	<aui:script use="aui-base">
-		if (window.parent) {
-			var stagingBarPortletBoundaryId = '#p_p_id_<%= PortletKeys.STAGING_BAR %>_';
-
-			var data;
-
-			<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
-				data = {
-					portletAjaxable: false
-				};
-			</c:if>
-
-			Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
-		}
-	</aui:script>
-</c:if>

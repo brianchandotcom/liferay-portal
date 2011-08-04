@@ -972,26 +972,26 @@ else {
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
 
-		<%
-		String modules = StringPool.BLANK;
+			<%
+			String modules = StringPool.BLANK;
 
-		if (showConfigurationIcon) {
-			modules += "aui-editable";
-		}
-		%>
+			if (showConfigurationIcon) {
+				modules += "aui-editable";
+			}
+			%>
 
-		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
-			Liferay.Portlet.onLoad(
-				{
-					canEditTitle: <%= showConfigurationIcon %>,
-					columnPos: <%= columnPos %>,
-					isStatic: '<%= staticVar %>',
-					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-				}
-			);
-		</aui:script>
+			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
+				Liferay.Portlet.onLoad(
+					{
+						canEditTitle: <%= showConfigurationIcon %>,
+						columnPos: <%= columnPos %>,
+						isStatic: '<%= staticVar %>',
+						namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+						portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+						refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+					}
+				);
+			</aui:script>
 		</div>
 	</div>
 </c:if>

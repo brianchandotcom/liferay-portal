@@ -17,21 +17,32 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
+	.aui-tabview-list {
+		a, .taglib-text {
+			text-decoration: none
+		}
+	}
+
+	.manage-layout-branches-tab {
+		margin-left: 1em;
+
+		&.aui-tab-label {
+			margin-left: 0;
+		}
+	}
+
 	.staging-tabview-list {
 		border-width: 0;
 		font-size: 1.2em;
 		margin-bottom: 0;
 
-		.aui-tab-content, .aui-tab-label, .aui-tab-label a, .first, .last, li.aui-state-default {
-			background: transparent none;
-			border-color: transparent;
-			border-width: 0 0;
-			box-shadow: none;
-			text-decoration: none;
+		.aui-tab, .aui-tab-content {
+			background: none;
+			border-width: 0;
 		}
 
 		.aui-tab-active .aui-tab-content {
-			background-color: rgba(0, 0, 0, .7);
+			background-color: #333;
 
 			.aui-tab-label {
 				text-shadow: -1px -1px 0 #000;
@@ -41,9 +52,10 @@
 
 	.staging-icon-menu-container {
 		display: inline-block;
-		margin-right: -9px;
+		left: 5px;
 		margin-top: -0.1em;
 		overflow: hidden;
+		position: relative;
 		vertical-align: middle;
 
 		a {
@@ -107,10 +119,6 @@
 			color: #EEE;
 			padding: 0.5em 1em;
 
-			.aui-tabview-list a, .taglib-text {
-				text-decoration: none
-			}
-
 			.staging-icon {
 				float: left;
 				margin-right: 1em;
@@ -118,7 +126,7 @@
 
 			.layout-set-branch-info {
 				font-size: 1.1em;
-				margin: .5em 0;
+				margin: 0.5em 0;
 				text-indent: -0.5em;
 
 				.layout-set-branch-description {

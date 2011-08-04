@@ -557,7 +557,7 @@ if (layout != null) {
 
 	<c:if test="<%= !branchingEnabled %>">
 		<aui:script use="liferay-staging">
-			Liferay.Stagingbar.init(
+			Liferay.StagingBar.init(
 				{
 					namespace: '<portlet:namespace />'
 				}

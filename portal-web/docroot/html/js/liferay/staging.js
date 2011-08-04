@@ -3,7 +3,7 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Stagingbar = {
+		var StagingBar = {
 			init: function(config) {
 				var instance = this;
 
@@ -16,17 +16,17 @@ AUI().add(
 				);
 
 				Liferay.after(
-					'initStagingbar',
+					'initStagingBar',
 					function(event) {
 						A.getBody().addClass('staging-ready');
 					}
 				);
 
-				Liferay.fire('initStagingbar', config);
+				Liferay.fire('initStagingBar', config);
 			}
 		};
 
-		Liferay.Stagingbar = Stagingbar;
+		Liferay.StagingBar = StagingBar;
 	},
 	'',
 	{

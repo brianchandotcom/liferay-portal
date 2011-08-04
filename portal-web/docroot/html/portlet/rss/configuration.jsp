@@ -24,6 +24,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 String typeSelection = ParamUtil.getString(request, "typeSelection");
 
 int assetOrder = ParamUtil.getInteger(request, "assetOrder", -1);
+
+String languageId = LanguageUtil.getLanguageId(request);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationURL" />
@@ -164,8 +166,6 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 
 								<%
 								JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
-
-								String languageId = LanguageUtil.getLanguageId(request);
 								%>
 
 								<%= HtmlUtil.escape(headerArticle.getTitle(languageId, true)) %>
@@ -181,8 +181,6 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 
 								<%
 								JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
-
-								String languageId = LanguageUtil.getLanguageId(request);
 								%>
 
 								<%= HtmlUtil.escape(footerArticle.getTitle(languageId, true)) %>

@@ -23,7 +23,7 @@ String typeSelection = request.getParameter("typeSelection");
 
 String callback = ParamUtil.getString(request, "callback");
 
-String refererEntryId = ParamUtil.getString(request, "refererEntryId");
+long refererEntryId = ParamUtil.getLong(request, "refererEntryId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -82,7 +82,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
 
-			if (Validator.isNotNull(refererEntryId) && (assetEntry.getEntryId() == Long.valueOf(refererEntryId))) {
+			if (assetEntry.getEntryId() == refererEntryId) {
 				continue;
 			}
 

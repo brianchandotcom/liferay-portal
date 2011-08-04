@@ -72,7 +72,7 @@ long userId = user2.getUserId();
 		/>
 	</c:if>
 
-	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (userId != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.IMPERSONATE) && ((!PortalUtil.isOmniadmin(user2.getUserId())) || (PortalUtil.isOmniadmin(user2.getUserId()) && (permissionChecker.isOmniadmin())))%>">
+	<c:if test="<%= !PropsValues.PORTAL_JAAS_ENABLE && PropsValues.PORTAL_IMPERSONATION_ENABLE && (userId != user.getUserId()) && !themeDisplay.isImpersonated() && UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.IMPERSONATE) && !PortalUtil.isOmniadmin(user2.getUserId()) %>">
 		<liferay-security:doAsURL
 			doAsUserId="<%= userId %>"
 			var="impersonateUserURL"

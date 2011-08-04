@@ -5140,13 +5140,11 @@ public class PortalImpl implements Portal {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(realUser, checkGuest);
 
-		boolean omniAdmin = isOmniadmin(doAsUserId);
-
 		if (doAsUser.isDefaultUser() ||
-			UserPermissionUtil.contains(
+			(UserPermissionUtil.contains(
 				permissionChecker, doAsUserId, organizationIds,
-				ActionKeys.IMPERSONATE) && ((!omniAdmin) ||
-				(omniAdmin && (permissionChecker.isOmniadmin())))) {
+				ActionKeys.IMPERSONATE) &&
+			!isOmniadmin(doAsUserId))) {
 
 			request.setAttribute(WebKeys.USER_ID, new Long(doAsUserId));
 

@@ -164,9 +164,11 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 
 								<%
 								JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
+
+								String languageId = LanguageUtil.getLanguageId(request);
 								%>
 
-								<%= HtmlUtil.escape(headerArticle.getTitle()) %>
+								<%= HtmlUtil.escape(headerArticle.getTitle(languageId, true)) %>
 							</c:if>
 
 							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
@@ -179,9 +181,11 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 
 								<%
 								JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
+
+								String languageId = LanguageUtil.getLanguageId(request);
 								%>
 
-								<%= HtmlUtil.escape(footerArticle.getTitle()) %>
+								<%= HtmlUtil.escape(footerArticle.getTitle(languageId, true)) %>
 							</c:if>
 
 							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />

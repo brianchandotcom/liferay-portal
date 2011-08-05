@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="com.liferay.portlet.mobiledevicerules">
+    <author>Edward C. Han</author>
+	<namespace>Device</namespace>
+
+    <entity name="DeviceRuleGroup" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceRuleGroupId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="groupId" type="long" />
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+
+        <!-- Finder methods -->
+
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId" />
+        </finder>
+
+        <!-- References -->
+
+        <reference package-path="com.liferay.portal" entity="Group" />
+	</entity>
+    <entity name="DeviceRule" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceRuleId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="groupId" type="long" />
+        <column name="deviceRuleGroupId" type="long" />
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+        <column name="ruleType" type="String" />
+        <column name="ruleTypeSettings" type="String" />
+
+		<!-- Finder methods -->
+
+        <finder name="DeviceRuleGroupId" return-type="Collection">
+            <finder-column name="deviceRuleGroupId" />
+        </finder>
+    </entity>
+    <entity name="DeviceAction" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="deviceActionId" type="long" primary="true" />
+
+        <!-- Other fields -->
+
+        <column name="groupId" type="long" />
+        <column name="deviceRuleGroupId" type="long" />
+        <column name="deviceRuleId" type="long" />
+        <column name="name" type="String"  localized="true" />
+        <column name="description" type="String" localized="true"/>
+        <column name="type" type="String" />
+        <column name="typeSettings" type="String" />
+
+		<!-- Finder methods -->
+
+        <finder name="DeviceRuleId" return-type="Collection">
+            <finder-column name="deviceRuleId" />
+        </finder>
+    </entity>
+</service-builder>

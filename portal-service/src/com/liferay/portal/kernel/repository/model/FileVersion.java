@@ -36,6 +36,10 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public Date getCreateDate();
 
+	public long getCustom1ImageId();
+
+	public long getCustom2ImageId();
+
 	public String getDescription();
 
 	public ExpandoBridge getExpandoBridge();
@@ -54,11 +58,17 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getIcon();
 
+	public String getImageType();
+
+	public long getLargeImageId();
+
 	public String getMimeType();
 
 	public long getRepositoryId();
 
 	public long getSize();
+
+	public long getSmallImageId();
 
 	public int getStatus();
 

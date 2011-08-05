@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Image;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -91,6 +94,24 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
+	public String getImageType() {
+		if (_imageType == null) {
+			try {
+				Image largeImage = ImageLocalServiceUtil.getImage(
+					getLargeImageId());
+
+				_imageType = largeImage.getType();
+			}
+			catch (Exception e) {
+				_imageType = StringPool.BLANK;
+
+				_log.error(e);
+			}
+		}
+
+		return _imageType;
+	}
+
 	@Override
 	public void setExtraSettings(String extraSettings) {
 		_extraSettingsProperties = null;
@@ -110,5 +131,6 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	private ExpandoBridge _expandoBridge;
 	private UnicodeProperties _extraSettingsProperties;
+	private String _imageType;
 
 }

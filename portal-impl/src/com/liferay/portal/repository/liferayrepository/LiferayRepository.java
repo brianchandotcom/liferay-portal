@@ -427,6 +427,13 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), recurse);
 	}
 
+	public void getSubfolderIds(List<Long> folderIds, long folderId)
+		throws SystemException {
+
+		dlFolderService.getSubfolderIds(
+			folderIds, getGroupId(), toFolderId(folderId));
+	}
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 

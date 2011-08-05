@@ -19,6 +19,7 @@ import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -32,12 +33,14 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -46,12 +49,14 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileNameException;
+import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
@@ -76,7 +81,10 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 
+import java.awt.image.RenderedImage;
+
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -155,6 +163,16 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
 		dlFileEntry.setReadCount(DLFileEntryConstants.DEFAULT_READ_COUNT);
+		dlFileEntry.setSmallImageId(counterLocalService.increment());
+		dlFileEntry.setLargeImageId(counterLocalService.increment());
+
+		if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
+			dlFileEntry.setCustom1ImageId(counterLocalService.increment());
+		}
+
+		if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
+			dlFileEntry.setCustom2ImageId(counterLocalService.increment());
+		}
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
@@ -845,11 +863,27 @@ public class DLFileEntryLocalServiceImpl
 			visible = false;
 		}
 
+		long largeImageId = dlFileEntry.getLargeImageId();
+
+		if (dlFileVersion != null) {
+			largeImageId = dlFileVersion.getLargeImageId();
+		}
+
+		Image largeImage = imageLocalService.getImage(largeImageId);
+
+		int height = 0;
+		int width = 0;
+
+		if (largeImage != null) {
+			height = largeImage.getHeight();
+			width = largeImage.getWidth();
+		}
+
 		return dlAppHelperLocalService.updateAsset(
 			userId, new LiferayFileEntry(dlFileEntry),
 			new LiferayFileVersion(dlFileVersion), assetCategoryIds,
 			assetTagNames, assetLinkEntryIds, dlFileEntry.getMimeType(),
-			addDraftAssetEntry, visible);
+			addDraftAssetEntry, visible, height, width);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -876,6 +910,41 @@ public class DLFileEntryLocalServiceImpl
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
 			description, changeLog, majorVersion, extraSettings,
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
+	}
+
+	public void updateSmallImage(long smallImageId, long largeImageId)
+		throws PortalException, SystemException {
+
+		try {
+			RenderedImage renderedImage = null;
+
+			Image largeImage = imageLocalService.getImage(largeImageId);
+
+			byte[] bytes = largeImage.getTextObj();
+			String contentType = largeImage.getType();
+
+			if (bytes != null) {
+				renderedImage = ImageProcessorUtil.read(
+					bytes).getRenderedImage();
+
+				//validate(bytes);
+			}
+
+			if (renderedImage != null) {
+				int dimension = PrefsPropsUtil.getInteger(
+					PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION);
+
+				RenderedImage thumbnail = ImageProcessorUtil.scale(
+					renderedImage, dimension, dimension);
+
+				imageLocalService.updateImage(
+					smallImageId,
+					ImageProcessorUtil.getBytes(thumbnail, contentType));
+			}
+		}
+		catch (IOException ioe) {
+			throw new ImageSizeException(ioe);
+		}
 	}
 
 	public DLFileEntry updateStatus(
@@ -917,6 +986,12 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.setVersionUserName(dlFileVersion.getUserName());
 				dlFileEntry.setModifiedDate(dlFileVersion.getCreateDate());
 				dlFileEntry.setSize(dlFileVersion.getSize());
+				dlFileEntry.setSmallImageId(dlFileVersion.getSmallImageId());
+				dlFileEntry.setLargeImageId(dlFileVersion.getLargeImageId());
+				dlFileEntry.setCustom1ImageId(
+					dlFileVersion.getCustom1ImageId());
+				dlFileEntry.setCustom2ImageId(
+					dlFileVersion.getCustom2ImageId());
 
 				dlFileEntryPersistence.update(dlFileEntry, false);
 			}
@@ -1072,6 +1147,10 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusByUserName(user.getFullName());
 		dlFileVersion.setStatusDate(dlFileEntry.getModifiedDate());
 		dlFileVersion.setExpandoBridgeAttributes(serviceContext);
+		dlFileVersion.setSmallImageId(dlFileEntry.getSmallImageId());
+		dlFileVersion.setLargeImageId(dlFileEntry.getLargeImageId());
+		dlFileVersion.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
+		dlFileVersion.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
 
 		dlFileVersionPersistence.update(dlFileVersion, false);
 
@@ -1209,6 +1288,15 @@ public class DLFileEntryLocalServiceImpl
 
 		dlAppHelperLocalService.deleteFileEntry(
 			new LiferayFileEntry(dlFileEntry));
+
+		// Images
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			imageLocalService.deleteImage(dlFileVersion.getSmallImageId());
+			imageLocalService.deleteImage(dlFileVersion.getLargeImageId());
+			imageLocalService.deleteImage(dlFileVersion.getCustom1ImageId());
+			imageLocalService.deleteImage(dlFileVersion.getCustom2ImageId());
+		}
 
 		// File
 
@@ -1608,6 +1696,16 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusByUserName(user.getFullName());
 		dlFileVersion.setStatusDate(statusDate);
 		dlFileVersion.setExpandoBridgeAttributes(serviceContext);
+		dlFileVersion.setSmallImageId(counterLocalService.increment());
+		dlFileVersion.setLargeImageId(counterLocalService.increment());
+
+		if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
+			dlFileVersion.setCustom1ImageId(counterLocalService.increment());
+		}
+
+		if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
+			dlFileVersion.setCustom2ImageId(counterLocalService.increment());
+		}
 
 		dlFileVersionPersistence.update(dlFileVersion, false);
 

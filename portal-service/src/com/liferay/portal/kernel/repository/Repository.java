@@ -164,6 +164,9 @@ public interface Repository {
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws SystemException;
 
+	public void getSubfolderIds(List<Long> folderIds, long folderId)
+		throws SystemException;
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException;
 

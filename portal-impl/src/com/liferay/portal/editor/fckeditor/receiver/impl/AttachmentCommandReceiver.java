@@ -115,6 +115,9 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 		long wikiPageResourcePrimKey = ParamUtil.getLong(
 			request, "wikiPageResourcePrimKey");
 
+		String attachmentURLPrefix = ParamUtil.getString(
+			request, "attachmentURLPrefix");
+
 		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
 			wikiPageResourcePrimKey);
 
@@ -151,7 +154,7 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 			fileElement.setAttribute("name", fileName);
 			fileElement.setAttribute("desc", fileName);
 			fileElement.setAttribute("size", getSize(fileEntry.length));
-			fileElement.setAttribute("url", fileName);
+			fileElement.setAttribute("url", attachmentURLPrefix + fileName);
 		}
 	}
 

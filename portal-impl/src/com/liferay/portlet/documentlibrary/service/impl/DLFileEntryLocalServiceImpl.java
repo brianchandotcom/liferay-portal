@@ -64,6 +64,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
@@ -199,9 +200,15 @@ public class DLFileEntryLocalServiceImpl
 
 		// Workflow
 
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), groupId, userId, DLFileEntry.class.getName(),
-			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext);
+			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
+			workflowContext);
 
 		return dlFileEntry;
 	}
@@ -320,6 +327,11 @@ public class DLFileEntryLocalServiceImpl
 
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
+
+			Map<String, Serializable> workflowContext =
+				new HashMap<String, Serializable>();
+
+			workflowContext.put("event", DLSyncConstants.EVENT_UPDATE);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), dlFileEntry.getGroupId(), userId,
@@ -872,6 +884,7 @@ public class DLFileEntryLocalServiceImpl
 
 	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -956,7 +969,7 @@ public class DLFileEntryLocalServiceImpl
 
 		dlAppHelperLocalService.updateStatus(
 			userId, new LiferayFileEntry(dlFileEntry),
-			new LiferayFileVersion(dlFileVersion), status);
+			new LiferayFileVersion(dlFileVersion), status, workflowContext);
 
 		return dlFileEntry;
 	}

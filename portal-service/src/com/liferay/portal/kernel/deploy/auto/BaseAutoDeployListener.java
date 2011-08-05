@@ -25,6 +25,7 @@ import java.util.zip.ZipFile;
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
@@ -42,6 +43,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 			(file.getName().contains("-hook")) &&
 			(!file.getName().contains("-portlet"))) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isLiferayPackage(File file) throws AutoDeployException {
+		if (file.getName().endsWith(".lpkg")) {
 			return true;
 		}
 

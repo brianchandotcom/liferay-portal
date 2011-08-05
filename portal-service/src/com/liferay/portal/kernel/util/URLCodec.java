@@ -59,50 +59,69 @@ public class URLCodec {
 				encodedURLString, "%20", StringPool.PLUS);
 		}*/
 
-		StringBuilder sb = new StringBuilder(encodedURLString.length());
+		StringBuilder sb = null;
 
 		CharsetDecoder charsetDecoder = null;
-
-		boolean modified = false;
 
 		for (int i = 0; i < encodedURLString.length(); i++) {
 			char c = encodedURLString.charAt(i);
 
-			if (c == CharPool.PERCENT) {
-				ByteBuffer byteBuffer = _getEncodedByteBuffer(
-					encodedURLString, i);
+			switch (c) {
+				case CharPool.PERCENT :
 
-				if (charsetDecoder == null) {
-					charsetDecoder = CharsetDecoderUtil.getCharsetDecoder(
-						charsetName);
-				}
+					ByteBuffer byteBuffer = _getEncodedByteBuffer(
+						encodedURLString, i);
 
-				CharBuffer charBuffer = null;
+					if (charsetDecoder == null) {
+						charsetDecoder = CharsetDecoderUtil.getCharsetDecoder(
+							charsetName);
+					}
 
-				try {
-					charBuffer = charsetDecoder.decode(byteBuffer);
-				}
-				catch (CharacterCodingException cce) {
-					_log.error(cce, cce);
+					CharBuffer charBuffer = null;
 
-					return StringPool.BLANK;
-				}
+					try {
+						charBuffer = charsetDecoder.decode(byteBuffer);
+					}
+					catch (CharacterCodingException cce) {
+						_log.error(cce, cce);
 
-				sb.append(charBuffer);
+						return StringPool.BLANK;
+					}
 
-				i += byteBuffer.capacity() * 3 - 1;
-			}
-			else if (c == CharPool.PLUS) {
-				sb.append(CharPool.SPACE);
+					if (sb == null) {
+						sb = new StringBuilder(encodedURLString.length());
 
-				modified = true;
-			}
-			else {
-				sb.append(c);
+						if (i > 0) {
+							sb.append(sb, 0, i);
+						}
+					}
+
+					sb.append(charBuffer);
+
+					i += byteBuffer.capacity() * 3 - 1;
+
+					break;
+				case CharPool.PLUS :
+
+					if (sb == null) {
+						sb = new StringBuilder(encodedURLString.length());
+
+						if (i > 0) {
+							sb.append(sb, 0, i);
+						}
+					}
+
+					sb.append(CharPool.SPACE);
+
+					break;
+				default :
+					if (sb != null) {
+						sb.append(c);
+					}
 			}
 		}
 
-		if (!modified && (sb.length() == encodedURLString.length())) {
+		if (sb == null) {
 			return encodedURLString;
 		}
 		else {
@@ -129,67 +148,107 @@ public class URLCodec {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(rawURLString.length());
+		StringBuilder sb = null;
 
 		CharsetEncoder charsetEncoder = null;
 
 		char[] hexes = new char[2];
 
-		boolean modified = false;
-
 		for (int i = 0; i < rawURLString.length(); i++) {
 			char c = rawURLString.charAt(i);
 
 			if (_validChars.get(c)) {
-				sb.append(c);
+				if (sb != null) {
+					sb.append(c);
+				}
+
+				continue;
 			}
-			else if (c == CharPool.SPACE) {
-				if (escapeSpaces) {
-					sb.append("%20");
-				}
-				else {
-					sb.append(CharPool.PLUS);
-				}
 
-				modified = true;
+			if (sb == null) {
+				sb = new StringBuilder(rawURLString.length());
+
+				sb.append(rawURLString.substring(0, i));
 			}
-			else {
-				CharBuffer charBuffer = _getRawCharBuffer(rawURLString, i);
 
-				if (charsetEncoder == null) {
-					charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
-						charsetName);
-				}
+			// The cases are ordered by appearing frequency, don't sort it by
+			// alphabet.
+			switch (c) {
+				case CharPool.SLASH :
 
-				i += charBuffer.length() - 1;
+					sb.append("%2F");
 
-				ByteBuffer byteBuffer = null;
+					continue;
+				case CharPool.EQUAL :
 
-				try {
-					byteBuffer = charsetEncoder.encode(charBuffer);
-				}
-				catch (CharacterCodingException cce) {
-					_log.error(cce, cce);
+					sb.append("%3D");
 
-					return StringPool.BLANK;
-				}
+					continue;
+				case CharPool.AMPERSAND :
 
-				for (int j = byteBuffer.position(); j < byteBuffer.limit();
-						j++) {
+					sb.append("%26");
 
-					sb.append(CharPool.PERCENT);
+					continue;
+				case CharPool.PERCENT :
 
-					String hex = new String(
-						UnicodeFormatter.byteToHex(byteBuffer.get(), hexes));
+					sb.append("%25");
 
-					hex = hex.toUpperCase();
+					continue;
+				case CharPool.SPACE :
 
-					sb.append(hex);
-				}
+					if (escapeSpaces) {
+						sb.append("%20");
+					}
+					else {
+						sb.append(CharPool.PLUS);
+					}
+
+					continue;
+				case CharPool.COLON :
+
+					sb.append("%3A");
+
+					continue;
+				case CharPool.QUESTION :
+
+					sb.append("%3F");
+
+					continue;
+			}
+
+			CharBuffer charBuffer = _getRawCharBuffer(rawURLString, i);
+
+			if (charsetEncoder == null) {
+				charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+					charsetName);
+			}
+
+			i += charBuffer.length() - 1;
+
+			ByteBuffer byteBuffer = null;
+
+			try {
+				byteBuffer = charsetEncoder.encode(charBuffer);
+			}
+			catch (CharacterCodingException cce) {
+				_log.error(cce, cce);
+
+				return StringPool.BLANK;
+			}
+
+			for (int j = byteBuffer.position(); j < byteBuffer.limit(); j++) {
+				sb.append(CharPool.PERCENT);
+
+				String hex = new String(
+					UnicodeFormatter.byteToHex(byteBuffer.get(), hexes));
+
+				hex = hex.toUpperCase();
+
+				sb.append(hex);
 			}
 		}
 
-		if (!modified && (sb.length() == rawURLString.length())) {
+		if (sb == null) {
 			return rawURLString;
 		}
 		else {

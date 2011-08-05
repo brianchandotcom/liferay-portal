@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.image.DLHook;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -4215,6 +4216,10 @@ public class PortalImpl implements Portal {
 			PermissionCheckerFactoryUtil.create(user, true);
 
 		return permissionChecker.isGroupOwner(groupId);
+	}
+
+	public boolean isImageGalleryUsingDLHook() {
+		return PropsValues.IMAGE_HOOK_IMPL.equals(DLHook.class.getName());
 	}
 
 	public boolean isLayoutDescendant(Layout layout, long layoutId)

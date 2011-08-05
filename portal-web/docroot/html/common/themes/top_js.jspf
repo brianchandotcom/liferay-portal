@@ -276,10 +276,10 @@
 	<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
 		<c:choose>
 			<c:when test="<%= themeDisplay.isThemeJsBarebone() %>">
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/barebone.jsp", "minifierBundleId=" + HttpUtil.encodeURL("javascript.barebone.files"), javaScriptLastModified)) %>" type="text/javascript"></script>
+				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/barebone.jsp", "minifierBundleId=javascript.barebone.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 			</c:when>
 			<c:otherwise>
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/everything.jsp", "minifierBundleId=" + HttpUtil.encodeURL("javascript.everything.files"), javaScriptLastModified)) %>" type="text/javascript"></script>
+				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathJavaScript() + "/everything.jsp", "minifierBundleId=javascript.everything.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

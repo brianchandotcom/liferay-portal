@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.tools.deploy.ExtDeployer;
 import com.liferay.portal.tools.deploy.HookDeployer;
 import com.liferay.portal.tools.deploy.LayoutTemplateDeployer;
@@ -42,6 +43,7 @@ import org.apache.commons.io.FileUtils;
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public class DeployManagerImpl implements DeployManager {
 
@@ -126,6 +128,10 @@ public class DeployManagerImpl implements DeployManager {
 
 	public String getDeployDir() throws Exception {
 		return DeployUtil.getAutoDeployDestDir();
+	}
+
+	public boolean isDeployed(String context) {
+		return PluginPackageUtil.isInstalled(context);
 	}
 
 	public void redeploy(String context) throws Exception {

@@ -231,18 +231,24 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		List<DLFolder> dlFolders = dlFolderPersistence.filterFindByG_P(
-			groupId, folderId);
-
-		for (DLFolder dlFolder : dlFolders) {
-			List<Long> subFolderIds = getSubfolderIds(
-				dlFolder.getGroupId(), dlFolder.getFolderId(), recurse);
-
-			folderIds.add(dlFolder.getFolderId());
-			folderIds.addAll(subFolderIds);
-		}
+		getSubfolderIds(folderIds, groupId, folderId);
 
 		return folderIds;
+	}
+
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId)
+		throws SystemException {
+
+		List<DLFolder> folders = dlFolderPersistence.filterFindByG_P(
+			groupId, folderId);
+
+		for (DLFolder folder : folders) {
+			folderIds.add(folder.getFolderId());
+
+			getSubfolderIds(
+				folderIds, folder.getGroupId(), folder.getFolderId());
+		}
 	}
 
 	public boolean hasFolderLock(long folderId)

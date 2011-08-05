@@ -1487,6 +1487,13 @@ public class DLAppServiceUtil {
 		return getService().getSubfolderIds(repositoryId, folderId, recurse);
 	}
 
+	public static void getSubfolderIds(long repositoryId,
+		java.util.List<java.lang.Long> folderIds, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().getSubfolderIds(repositoryId, folderIds, folderId);
+	}
+
 	/**
 	* Returns all the temporary file entry names.
 	*

@@ -583,40 +583,24 @@
 		<put name="portlet_content" value="/portlet/iframe/view.jsp" />
 	</definition>
 
-	<!-- Image Gallery -->
+	<!-- Image Gallery Display -->
 
-	<definition name="portlet.image_gallery" extends="portlet" />
+	<definition name="portlet.image_gallery_display" extends="portlet" />
 
-	<definition name="portlet.image_gallery.edit_folder" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/edit_folder.jsp" />
+	<definition name="portlet.image_gallery_display.search" extends="portlet.image_gallery_display">
+		<put name="portlet_content" value="/portlet/image_gallery_display/search.jsp" />
 	</definition>
 
-	<definition name="portlet.image_gallery.edit_image" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/edit_image.jsp" />
+	<definition name="portlet.image_gallery_display.select_folder" extends="portlet.image_gallery_display">
+		<put name="portlet_content" value="/portlet/image_gallery_display/select_folder.jsp" />
 	</definition>
 
-	<definition name="portlet.image_gallery.error" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/error.jsp" />
+	<definition name="portlet.image_gallery_display.view" extends="portlet.image_gallery_display">
+		<put name="portlet_content" value="/portlet/image_gallery_display/view.jsp" />
 	</definition>
 
-	<definition name="portlet.image_gallery.search" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/search.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery.select_folder" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/select_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery.view" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/view.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery.view_image" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/view_image.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery.view_slide_show" extends="portlet.image_gallery">
-		<put name="portlet_content" value="/portlet/image_gallery/view_slide_show.jsp" />
+	<definition name="portlet.image_gallery_display.view_slide_show" extends="portlet.image_gallery_display">
+		<put name="portlet_content" value="/portlet/image_gallery_display/view_slide_show.jsp" />
 	</definition>
 
 	<!-- Invitation -->

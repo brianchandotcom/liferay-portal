@@ -674,6 +674,19 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void getSubfolderIds(long repositoryId, Long[] folderIds,
+		long folderId) throws RemoteException {
+		try {
+			DLAppServiceUtil.getSubfolderIds(repositoryId,
+				ListUtil.toList(folderIds), folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all the temporary file entry names.
 	*

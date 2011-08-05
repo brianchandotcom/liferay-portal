@@ -1735,6 +1735,10 @@
 				<column name="SIZE_" />
 			</basic>
 			<basic name="readCount" />
+			<basic name="smallImageId" />
+			<basic name="largeImageId" />
+			<basic name="custom1ImageId" />
+			<basic name="custom2ImageId" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
@@ -1851,6 +1855,10 @@
 			<basic name="statusDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="smallImageId" />
+			<basic name="largeImageId" />
+			<basic name="custom1ImageId" />
+			<basic name="custom2ImageId" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="statusByUserUuid" />

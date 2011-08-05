@@ -354,6 +354,12 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.getSubfolderIds(folderId, recurse);
 	}
 
+	public void getSubfolderIds(List<Long> folderIds, long folderId)
+		throws SystemException {
+
+		_baseRepository.getSubfolderIds(folderIds, folderId);
+	}
+
 	public String[] getSupportedConfigurations() {
 		return _baseRepository.getSupportedConfigurations();
 	}

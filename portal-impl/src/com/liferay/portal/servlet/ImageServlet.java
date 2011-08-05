@@ -44,8 +44,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.imagegallery.model.IGImage;
-import com.liferay.portlet.imagegallery.service.IGImageLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -152,7 +152,7 @@ public class ImageServlet extends HttpServlet {
 		}
 	}
 
-	protected Image getIGImageThumbnail(Image image, long igImageId)
+	protected Image getImageThumbnail(Image image, long fileEntryId)
 		throws PortalException, SystemException {
 
 		if (image == null) {
@@ -165,11 +165,11 @@ public class ImageServlet extends HttpServlet {
 		if ((image.getHeight() > igThumbnailMaxDimension) ||
 			(image.getWidth() > igThumbnailMaxDimension)) {
 
-			IGImage igImage = IGImageLocalServiceUtil.getImage(
-				igImageId);
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntryId);
 
-			IGImageLocalServiceUtil.updateSmallImage(
-				igImage.getSmallImageId(), igImage.getLargeImageId());
+			DLFileEntryLocalServiceUtil.updateSmallImage(
+				dlFileEntry.getSmallImageId(), dlFileEntry.getLargeImageId());
 
 			return ImageServiceUtil.getImage(image.getImageId());
 		}
@@ -196,12 +196,12 @@ public class ImageServlet extends HttpServlet {
 				image = getUserPortraitImageResized(image, imageId);
 			}
 			else {
-				long igImageId = ParamUtil.getLong(request, "igImageId");
-				boolean igSmallImage = ParamUtil.getBoolean(
-					request, "igSmallImage");
+				long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+				boolean dlSmallImage = ParamUtil.getBoolean(
+					request, "dlSmallImage");
 
-				if ((igImageId > 0) && igSmallImage) {
-					image = getIGImageThumbnail(image, igImageId);
+				if ((fileEntryId > 0) && dlSmallImage) {
+					image = getImageThumbnail(image, fileEntryId);
 				}
 			}
 		}
@@ -211,12 +211,13 @@ public class ImageServlet extends HttpServlet {
 
 			try {
 				if (Validator.isNotNull(uuid) && (groupId > 0)) {
-					IGImage igImage =
-						IGImageLocalServiceUtil.getImageByUuidAndGroupId(
-							uuid, groupId);
+					DLFileEntry dlFileEntry =
+						DLFileEntryLocalServiceUtil.
+							getFileEntryByUuidAndGroupId(
+								uuid, groupId);
 
 					image = ImageServiceUtil.getImage(
-						igImage.getLargeImageId());
+						dlFileEntry.getLargeImageId());
 				}
 			}
 			catch (PrincipalException pe) {

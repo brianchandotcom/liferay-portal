@@ -1988,6 +1988,18 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLUpdateManager(updateManagerURL);
 
+		PortletURL upgradeImageGalleryURL = new PortletURLImpl(
+			request, PortletKeys.ADMIN_SERVER, controlPanelPlid,
+			PortletRequest.RENDER_PHASE);
+
+		upgradeImageGalleryURL.setWindowState(WindowState.MAXIMIZED);
+		upgradeImageGalleryURL.setPortletMode(PortletMode.VIEW);
+
+		upgradeImageGalleryURL.setParameter("tabs1", "server");
+		upgradeImageGalleryURL.setParameter("tabs2", "data-migration");
+
+		themeDisplay.setURLUpgradeImageGallery(upgradeImageGalleryURL);
+
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		// Service context

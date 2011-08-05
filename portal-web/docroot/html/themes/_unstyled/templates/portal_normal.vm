@@ -50,6 +50,12 @@ $theme.include($body_top_include)
 			</div>
 		#end
 
+		#if ($upgrade_image_gallery_url)
+			<div class="popup-alert-notice">
+				<a class="required-image-gallery-upgrade" href="$upgrade_image_gallery_url">#language("required-manual-image-gallery-upgrade")</a>
+			</div>
+		#end
+
 		#if ($has_navigation || $is_signed_in)
 			#parse ("$full_templates_path/navigation.vm")
 		#end

@@ -62,6 +62,14 @@ public class FileVersionProxyBean
 		return _fileVersion.getCreateDate();
 	}
 
+	public long getCustom1ImageId() {
+		return _fileVersion.getCustom1ImageId();
+	}
+
+	public long getCustom2ImageId() {
+		return _fileVersion.getCustom2ImageId();
+	}
+
 	public String getDescription() {
 		return _fileVersion.getDescription();
 	}
@@ -103,6 +111,14 @@ public class FileVersionProxyBean
 		return _fileVersion.getIcon();
 	}
 
+	public String getImageType() {
+		return _fileVersion.getImageType();
+	}
+
+	public long getLargeImageId() {
+		return _fileVersion.getLargeImageId();
+	}
+
 	public String getMimeType() {
 		return _fileVersion.getMimeType();
 	}
@@ -137,6 +153,10 @@ public class FileVersionProxyBean
 
 	public long getSize() {
 		return _fileVersion.getSize();
+	}
+
+	public long getSmallImageId() {
+		return _fileVersion.getSmallImageId();
 	}
 
 	public int getStatus() {

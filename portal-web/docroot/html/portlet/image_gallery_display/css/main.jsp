@@ -21,7 +21,7 @@
 	text-align: right;
 }
 
-.portlet-image-gallery {
+.portlet-image-gallery-display {
 	.lfr-asset-attributes {
 		clear: both;
 	}

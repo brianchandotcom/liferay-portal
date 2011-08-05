@@ -50,6 +50,12 @@ ${theme.include(body_top_include)}
 			</div>
 		</#if>
 
+		<#if upgrade_image_gallery_url??>
+			<div class="popup-alert-notice">
+				<a class="required-image-gallery-upgrade" href="${upgrade_image_gallery_url}"><@liferay.language key="required-manual-image-gallery-upgrade" /></a>
+			</div>
+		</#if>
+
 		<#if has_navigation>
 			<#include "${full_templates_path}/navigation.ftl" />
 		</#if>

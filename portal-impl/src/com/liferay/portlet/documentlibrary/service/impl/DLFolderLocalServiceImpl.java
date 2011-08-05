@@ -332,6 +332,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolderPersistence.countByG_P_M(groupId, parentFolderId, true);
 	}
 
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId)
+		throws SystemException {
+
+		List<DLFolder> folders = dlFolderPersistence.findByG_P(
+			groupId, folderId);
+
+		for (DLFolder folder : folders) {
+			folderIds.add(folder.getFolderId());
+
+			getSubfolderIds(
+				folderIds, folder.getGroupId(), folder.getFolderId());
+		}
+	}
+
 	public DLFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -612,21 +627,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		return parentFolderId;
-	}
-
-	protected void getSubfolderIds(
-			List<Long> folderIds, long groupId, long folderId)
-		throws SystemException {
-
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
-			groupId, folderId);
-
-		for (DLFolder dlFolder : dlFolders) {
-			folderIds.add(dlFolder.getFolderId());
-
-			getSubfolderIds(
-				folderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
-		}
 	}
 
 	protected void validateFolder(

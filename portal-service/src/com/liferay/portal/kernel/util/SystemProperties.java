@@ -72,7 +72,8 @@ public class SystemProperties {
 	private SystemProperties() {
 		Properties p = new Properties();
 
-		ClassLoader classLoader = getClass().getClassLoader();
+		ClassLoader classLoader =
+			Thread.currentThread().getContextClassLoader();
 
 		// system.properties
 

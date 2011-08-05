@@ -22,8 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_LoginTest extends BaseTestCase {
 	public void testUser_Login() throws Exception {
-		selenium.setTimeout("180000");
-		selenium.open("/web/guest/home");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,42 +68,11 @@ public class User_LoginTest extends BaseTestCase {
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_58_rememberMeCheckbox']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.click("//input[@id='_58_rememberMeCheckbox']");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Sign In']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Remember Me"));
+		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));

@@ -944,6 +944,7 @@ public class GroupFinderImpl
 
 		Map<String, String> joinMap = new HashMap<String, String>();
 
+		joinMap.put("active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
 		joinMap.put(
 			"groupOrg", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUP_ORG)));
 		joinMap.put(

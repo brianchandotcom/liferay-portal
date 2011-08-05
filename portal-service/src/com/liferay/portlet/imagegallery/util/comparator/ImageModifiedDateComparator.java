@@ -23,9 +23,9 @@ import com.liferay.portlet.imagegallery.model.IGImage;
  */
 public class ImageModifiedDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "modifiedDate ASC";
+	public static String ORDER_BY_ASC = "IGImage.modifiedDate ASC";
 
-	public static String ORDER_BY_DESC = "modifiedDate DESC";
+	public static String ORDER_BY_DESC = "IGImage.modifiedDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"modifiedDate"};
 

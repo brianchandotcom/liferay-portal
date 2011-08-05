@@ -23,9 +23,9 @@ import com.liferay.portlet.imagegallery.model.IGImage;
  */
 public class ImageCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "createDate ASC";
+	public static String ORDER_BY_ASC = "IGImage.createDate ASC";
 
-	public static String ORDER_BY_DESC = "createDate DESC";
+	public static String ORDER_BY_DESC = "IGImage.createDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"createDate"};
 

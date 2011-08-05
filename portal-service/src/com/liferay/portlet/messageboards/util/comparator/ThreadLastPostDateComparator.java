@@ -27,9 +27,11 @@ import java.util.Date;
  */
 public class ThreadLastPostDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "lastPostDate ASC, threadId ASC";
+	public static String ORDER_BY_ASC = 
+		"MBThread.lastPostDate ASC, MBThread.threadId ASC";
 
-	public static String ORDER_BY_DESC = "lastPostDate DESC, threadId DESC";
+	public static String ORDER_BY_DESC = 
+		"MBThread.lastPostDate DESC, MBThread.threadId DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"lastPostDate", "threadId"};
 

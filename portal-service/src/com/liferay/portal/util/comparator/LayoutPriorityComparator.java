@@ -22,7 +22,7 @@ import com.liferay.portal.model.Layout;
  */
 public class LayoutPriorityComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "priority ASC";
+	public static String ORDER_BY_ASC = "Layout.priority ASC";
 
 	public static String[] ORDER_BY_FIELDS = {"priority"};
 

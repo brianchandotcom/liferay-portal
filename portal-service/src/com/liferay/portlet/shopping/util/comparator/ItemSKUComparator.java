@@ -22,9 +22,11 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
  */
 public class ItemSKUComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "categoryId ASC, sku ASC";
+	public static String ORDER_BY_ASC = 
+		"ShoppingItem.categoryId ASC, ShoppingItem.sku ASC";
 
-	public static String ORDER_BY_DESC = "categoryId DESC, sku DESC";
+	public static String ORDER_BY_DESC = 
+		"ShoppingItem.categoryId DESC, ShoppingItem.sku DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"categoryId", "sku"};
 

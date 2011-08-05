@@ -23,9 +23,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
  */
 public class FileRankCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "createDate ASC";
+	public static String ORDER_BY_ASC = "DLFileRank.createDate ASC";
 
-	public static String ORDER_BY_DESC = "createDate DESC";
+	public static String ORDER_BY_DESC = "DLFileRank.createDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"createDate"};
 

@@ -22,9 +22,9 @@ import com.liferay.portlet.imagegallery.model.IGImage;
  */
 public class ImageDescriptionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "description ASC";
+	public static String ORDER_BY_ASC = "IGImage.description ASC";
 
-	public static String ORDER_BY_DESC = "description DESC";
+	public static String ORDER_BY_DESC = "IGImage.description DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"description"};
 

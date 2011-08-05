@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -104,6 +105,7 @@ import javax.servlet.ServletContext;
  */
 public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
+	@Skip
 	public void addPortletCategory(long companyId, String categoryName) {
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			String.valueOf(companyId), WebKeys.PORTLET_CATEGORY);
@@ -188,6 +190,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	@Skip
 	public void clearCache() {
 
 		// Refresh security path to portlet id mapping for all portlets
@@ -202,10 +205,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	/**
 	 * @deprecated {@link #clonePortlet(String)}
 	 */
+	@Skip
 	public Portlet clonePortlet(long companyId, String portletId) {
 		return clonePortlet(portletId);
 	}
 
+	@Skip
 	public Portlet clonePortlet(String portletId) {
 		Portlet portlet = getPortletById(portletId);
 
@@ -273,6 +278,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlet;
 	}
 
+	@Skip
 	public void destroyPortlet(Portlet portlet) {
 		String portletId = portlet.getRootPortletId();
 
@@ -291,10 +297,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		clearCache();
 	}
 
+	@Skip
 	public void destroyRemotePortlet(Portlet portlet) {
 		destroyPortlet(portlet);
 	}
 
+	@Skip
 	public List<CustomAttributesDisplay> getCustomAttributesDisplays() {
 		List<CustomAttributesDisplay> customAttributesDisplays =
 			new ArrayList<CustomAttributesDisplay>(
@@ -319,6 +327,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return customAttributesDisplays;
 	}
 
+	@Skip
 	public PortletCategory getEARDisplay(String xml) throws SystemException {
 		try {
 			return _readLiferayDisplayXML(xml);
@@ -328,6 +337,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	@Skip
 	public List<Portlet> getFriendlyURLMapperPortlets() {
 		List<Portlet> portlets = new ArrayList<Portlet>(
 			_friendlyURLMapperPortlets.size());
@@ -348,6 +358,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlets;
 	}
 
+	@Skip
 	public List<FriendlyURLMapper> getFriendlyURLMappers() {
 		List<FriendlyURLMapper> friendlyURLMappers =
 			new ArrayList<FriendlyURLMapper>(_friendlyURLMapperPortlets.size());
@@ -368,10 +379,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return friendlyURLMappers;
 	}
 
+	@Skip
 	public PortletApp getPortletApp(String servletContextName) {
 		return _getPortletApp(servletContextName);
 	}
 
+	@Skip
 	public Portlet getPortletById(long companyId, String portletId)
 		throws SystemException {
 
@@ -460,28 +473,33 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlet;
 	}
 
+	@Skip
 	public Portlet getPortletById(String portletId) {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		return portletsPool.get(portletId);
 	}
 
+	@Skip
 	public Portlet getPortletByStrutsPath(long companyId, String strutsPath)
 		throws SystemException {
 
 		return getPortletById(companyId, _getPortletId(strutsPath));
 	}
 
+	@Skip
 	public List<Portlet> getPortlets() {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		return ListUtil.fromMapValues(portletsPool);
 	}
 
+	@Skip
 	public List<Portlet> getPortlets(long companyId) throws SystemException {
 		return getPortlets(companyId, true, true);
 	}
 
+	@Skip
 	public List<Portlet> getPortlets(
 			long companyId, boolean showSystem, boolean showPortal)
 		throws SystemException {
@@ -514,6 +532,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlets;
 	}
 
+	@Skip
 	public PortletCategory getWARDisplay(String servletContextName, String xml)
 		throws SystemException {
 
@@ -525,6 +544,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	@Skip
 	public boolean hasPortlet(long companyId, String portletId)
 		throws SystemException {
 
@@ -551,6 +571,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	@Skip
 	public void initEAR(
 		ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
@@ -640,6 +661,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	@Skip
 	public List<Portlet> initWAR(
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {

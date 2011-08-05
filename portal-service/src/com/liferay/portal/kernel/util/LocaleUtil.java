@@ -103,51 +103,51 @@ public class LocaleUtil {
 			return _locale;
 		}
 
-		Locale locale = null;
+		Locale locale = _locales.get(languageId);
+
+		if (locale != null) {
+			return locale;
+		}
 
 		try {
-			locale = _locales.get(languageId);
+			int pos = languageId.indexOf(CharPool.UNDERLINE);
 
-			if (locale == null) {
-				int pos = languageId.indexOf(CharPool.UNDERLINE);
+			if (pos == -1) {
+				if (Arrays.binarySearch(_isoLanguages, languageId) < 0) {
+					return _getDefault();
+				}
 
-				if (pos == -1) {
-					if (Arrays.binarySearch(_isoLanguages, languageId) < 0) {
-						return _getDefault();
-					}
+				locale = new Locale(languageId);
+			}
+			else {
+				String[] languageIdParts = StringUtil.split(
+					languageId, CharPool.UNDERLINE);
 
-					locale = new Locale(languageId);
+				String languageCode = languageIdParts[0];
+				String countryCode = languageIdParts[1];
+
+				if ((Arrays.binarySearch(
+						_isoLanguages, languageCode) < 0) ||
+					(Arrays.binarySearch(_isoCountries, countryCode) < 0)) {
+
+					return _getDefault();
+				}
+
+				String variant = null;
+
+				if (languageIdParts.length > 2) {
+					variant = languageIdParts[2];
+				}
+
+				if (Validator.isNotNull(variant)) {
+					locale = new Locale(languageCode, countryCode, variant);
 				}
 				else {
-					String[] languageIdParts = StringUtil.split(
-						languageId, CharPool.UNDERLINE);
-
-					String languageCode = languageIdParts[0];
-					String countryCode = languageIdParts[1];
-
-					if ((Arrays.binarySearch(
-							_isoLanguages, languageCode) < 0) ||
-						(Arrays.binarySearch(_isoCountries, countryCode) < 0)) {
-
-						return _getDefault();
-					}
-
-					String variant = null;
-
-					if (languageIdParts.length > 2) {
-						variant = languageIdParts[2];
-					}
-
-					if (Validator.isNotNull(variant)) {
-						locale = new Locale(languageCode, countryCode, variant);
-					}
-					else {
-						locale = new Locale(languageCode, countryCode);
-					}
+					locale = new Locale(languageCode, countryCode);
 				}
-
-				_locales.put(languageId, locale);
 			}
+
+			_locales.put(languageId, locale);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

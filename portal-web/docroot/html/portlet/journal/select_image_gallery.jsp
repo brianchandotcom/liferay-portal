@@ -14,14 +14,22 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery/init.jsp" %>
+<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-IGFolder folder = (IGFolder)request.getAttribute(WebKeys.IMAGE_GALLERY_FOLDER);
+Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
-long folderId = BeanParamUtil.getLong(folder, request, "folderId", IGFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+long repositoryId = BeanParamUtil.getLong(folder, request, "repositoryId", scopeGroupId);
 
 long groupId = ParamUtil.getLong(request, "groupId");
+
+int status = WorkflowConstants.STATUS_APPROVED;
+
+if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+	status = WorkflowConstants.STATUS_ANY;
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -50,18 +58,18 @@ if (folder != null) {
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-folders");
 
-	int total = IGFolderLocalServiceUtil.getFoldersCount(groupId, folderId);
+	int total = DLAppLocalServiceUtil.getFoldersCount(repositoryId, folderId);
 
 	searchContainer.setTotal(total);
 
-	List results = IGFolderLocalServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
+	List results = DLAppLocalServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 
 	List resultRows = searchContainer.getResultRows();
 
 	for (int i = 0; i < results.size(); i++) {
-		IGFolder curFolder = (IGFolder)results.get(i);
+		Folder curFolder = (Folder)results.get(i);
 
 		ResultRow row = new ResultRow(curFolder, curFolder.getFolderId(), i);
 
@@ -81,10 +89,10 @@ if (folder != null) {
 
 		subfolderIds.add(new Long(curFolder.getFolderId()));
 
-		IGFolderLocalServiceUtil.getSubfolderIds(subfolderIds, groupId, curFolder.getFolderId());
+		DLAppServiceUtil.getSubfolderIds(repositoryId, subfolderIds, curFolder.getFolderId());
 
 		int foldersCount = subfolderIds.size() - 1;
-		int imagesCount = IGImageLocalServiceUtil.getFoldersImagesCount(groupId, subfolderIds);
+		int imagesCount = DLAppLocalServiceUtil.getFoldersFileEntriesCount(repositoryId, subfolderIds, status);
 
 		row.addText(String.valueOf(foldersCount), rowURL);
 		row.addText(String.valueOf(imagesCount), rowURL);
@@ -113,26 +121,26 @@ if (folder != null) {
 
 	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-images-in-this-folder");
 
-	total = IGImageLocalServiceUtil.getImagesCount(groupId, folderId);
+	total = DLAppLocalServiceUtil.getFileEntriesCount(repositoryId, folderId);
 
 	searchContainer.setTotal(total);
 
-	results = IGImageLocalServiceUtil.getImages(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
+	results = DLAppLocalServiceUtil.getFileEntries(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 
 	resultRows = searchContainer.getResultRows();
 
 	for (int i = 0; i < results.size(); i++) {
-		IGImage image = (IGImage)results.get(i);
+		FileEntry image = (FileEntry)results.get(i);
 
 		Image largeImage = ImageLocalServiceUtil.getImage(image.getLargeImageId());
 
-		ResultRow row = new ResultRow(image, image.getImageId(), i);
+		ResultRow row = new ResultRow(image, image.getFileEntryId(), i);
 
 		// Thumbnail
 
-		row.addJSP("/html/portlet/image_gallery/image_thumbnail.jsp");
+		row.addJSP("/html/portlet/image_gallery_display/image_thumbnail.jsp");
 
 		// Name
 

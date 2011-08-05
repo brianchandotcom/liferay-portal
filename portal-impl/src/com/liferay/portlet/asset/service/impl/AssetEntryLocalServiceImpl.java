@@ -855,7 +855,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			return assetEntryPersistence.findByC_C(classNameId, classPK);
 		}
-		else if (portletId.equals(PortletKeys.IMAGE_GALLERY)) {
+		else if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
 			long imageId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 

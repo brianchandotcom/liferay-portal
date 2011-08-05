@@ -1076,7 +1076,7 @@ public class PortalImpl implements Portal {
 			portletId = PortletKeys.DOCUMENT_LIBRARY;
 		}
 		else if (className.startsWith("com.liferay.portlet.imagegallery")) {
-			portletId = PortletKeys.IMAGE_GALLERY;
+			portletId = PortletKeys.IMAGE_GALLERY_DISPLAY;
 		}
 		else if (className.startsWith("com.liferay.portlet.journal")) {
 			portletId = PortletKeys.JOURNAL;
@@ -3714,7 +3714,7 @@ public class PortalImpl implements Portal {
 
 		if (path.equals("/portal/session_click") ||
 			strutsAction.equals("/document_library/edit_file_entry") ||
-			strutsAction.equals("/image_gallery/edit_image") ||
+			strutsAction.equals("/image_gallery_display/edit_image") ||
 			strutsAction.equals("/wiki/edit_page_attachment") ||
 			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
 			actionName.equals("addFile")) {

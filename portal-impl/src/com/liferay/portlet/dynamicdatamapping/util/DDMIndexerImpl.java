@@ -59,7 +59,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			else {
 				String valueString = String.valueOf(value);
 
-				document.addKeyword(name, valueString);
+				document.addText(name, valueString);
 			}
 		}
 	}

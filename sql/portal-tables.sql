@@ -539,7 +539,11 @@ create table DLFileEntry (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
-	readCount INTEGER
+	readCount INTEGER,
+	smallImageId LONG,
+	largeImageId LONG,
+	custom1ImageId LONG,
+	custom2ImageId LONG
 );
 
 create table DLFileEntryMetadata (
@@ -624,7 +628,11 @@ create table DLFileVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	smallImageId LONG,
+	largeImageId LONG,
+	custom1ImageId LONG,
+	custom2ImageId LONG
 );
 
 create table DLFolder (

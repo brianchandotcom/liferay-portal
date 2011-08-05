@@ -400,6 +400,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersionImpl.setStatusByUserId(dlFileVersion.getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(dlFileVersion.getStatusByUserName());
 		dlFileVersionImpl.setStatusDate(dlFileVersion.getStatusDate());
+		dlFileVersionImpl.setSmallImageId(dlFileVersion.getSmallImageId());
+		dlFileVersionImpl.setLargeImageId(dlFileVersion.getLargeImageId());
+		dlFileVersionImpl.setCustom1ImageId(dlFileVersion.getCustom1ImageId());
+		dlFileVersionImpl.setCustom2ImageId(dlFileVersion.getCustom2ImageId());
 
 		return dlFileVersionImpl;
 	}

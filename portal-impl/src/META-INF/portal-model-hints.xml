@@ -1332,6 +1332,10 @@
 		<field name="version" type="String" />
 		<field name="size" type="long" />
 		<field name="readCount" type="int" />
+		<field name="smallImageId" type="long" />
+		<field name="largeImageId" type="long" />
+		<field name="custom1ImageId" type="long" />
+		<field name="custom2ImageId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
 		<field name="uuid" type="String" />
@@ -1408,6 +1412,10 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="smallImageId" type="long" />
+		<field name="largeImageId" type="long" />
+		<field name="custom1ImageId" type="long" />
+		<field name="custom2ImageId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFolder">
 		<field name="uuid" type="String" />

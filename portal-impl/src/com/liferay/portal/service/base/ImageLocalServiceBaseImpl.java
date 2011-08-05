@@ -218,10 +218,10 @@ import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 
-import com.liferay.portlet.imagegallery.service.IGImageLocalService;
-import com.liferay.portlet.imagegallery.service.IGImageService;
-import com.liferay.portlet.imagegallery.service.persistence.IGImageFinder;
-import com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
 
 import java.io.Serializable;
 
@@ -3937,75 +3937,77 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 	}
 
 	/**
-	 * Returns the i g image local service.
+	 * Returns the document library file entry local service.
 	 *
-	 * @return the i g image local service
+	 * @return the document library file entry local service
 	 */
-	public IGImageLocalService getIGImageLocalService() {
-		return igImageLocalService;
+	public DLFileEntryLocalService getDLFileEntryLocalService() {
+		return dlFileEntryLocalService;
 	}
 
 	/**
-	 * Sets the i g image local service.
+	 * Sets the document library file entry local service.
 	 *
-	 * @param igImageLocalService the i g image local service
+	 * @param dlFileEntryLocalService the document library file entry local service
 	 */
-	public void setIGImageLocalService(IGImageLocalService igImageLocalService) {
-		this.igImageLocalService = igImageLocalService;
+	public void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+		this.dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
 	/**
-	 * Returns the i g image remote service.
+	 * Returns the document library file entry remote service.
 	 *
-	 * @return the i g image remote service
+	 * @return the document library file entry remote service
 	 */
-	public IGImageService getIGImageService() {
-		return igImageService;
+	public DLFileEntryService getDLFileEntryService() {
+		return dlFileEntryService;
 	}
 
 	/**
-	 * Sets the i g image remote service.
+	 * Sets the document library file entry remote service.
 	 *
-	 * @param igImageService the i g image remote service
+	 * @param dlFileEntryService the document library file entry remote service
 	 */
-	public void setIGImageService(IGImageService igImageService) {
-		this.igImageService = igImageService;
+	public void setDLFileEntryService(DLFileEntryService dlFileEntryService) {
+		this.dlFileEntryService = dlFileEntryService;
 	}
 
 	/**
-	 * Returns the i g image persistence.
+	 * Returns the document library file entry persistence.
 	 *
-	 * @return the i g image persistence
+	 * @return the document library file entry persistence
 	 */
-	public IGImagePersistence getIGImagePersistence() {
-		return igImagePersistence;
+	public DLFileEntryPersistence getDLFileEntryPersistence() {
+		return dlFileEntryPersistence;
 	}
 
 	/**
-	 * Sets the i g image persistence.
+	 * Sets the document library file entry persistence.
 	 *
-	 * @param igImagePersistence the i g image persistence
+	 * @param dlFileEntryPersistence the document library file entry persistence
 	 */
-	public void setIGImagePersistence(IGImagePersistence igImagePersistence) {
-		this.igImagePersistence = igImagePersistence;
+	public void setDLFileEntryPersistence(
+		DLFileEntryPersistence dlFileEntryPersistence) {
+		this.dlFileEntryPersistence = dlFileEntryPersistence;
 	}
 
 	/**
-	 * Returns the i g image finder.
+	 * Returns the document library file entry finder.
 	 *
-	 * @return the i g image finder
+	 * @return the document library file entry finder
 	 */
-	public IGImageFinder getIGImageFinder() {
-		return igImageFinder;
+	public DLFileEntryFinder getDLFileEntryFinder() {
+		return dlFileEntryFinder;
 	}
 
 	/**
-	 * Sets the i g image finder.
+	 * Sets the document library file entry finder.
 	 *
-	 * @param igImageFinder the i g image finder
+	 * @param dlFileEntryFinder the document library file entry finder
 	 */
-	public void setIGImageFinder(IGImageFinder igImageFinder) {
-		this.igImageFinder = igImageFinder;
+	public void setDLFileEntryFinder(DLFileEntryFinder dlFileEntryFinder) {
+		this.dlFileEntryFinder = dlFileEntryFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -4435,14 +4437,14 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
-	@BeanReference(type = IGImageLocalService.class)
-	protected IGImageLocalService igImageLocalService;
-	@BeanReference(type = IGImageService.class)
-	protected IGImageService igImageService;
-	@BeanReference(type = IGImagePersistence.class)
-	protected IGImagePersistence igImagePersistence;
-	@BeanReference(type = IGImageFinder.class)
-	protected IGImageFinder igImageFinder;
+	@BeanReference(type = DLFileEntryLocalService.class)
+	protected DLFileEntryLocalService dlFileEntryLocalService;
+	@BeanReference(type = DLFileEntryService.class)
+	protected DLFileEntryService dlFileEntryService;
+	@BeanReference(type = DLFileEntryPersistence.class)
+	protected DLFileEntryPersistence dlFileEntryPersistence;
+	@BeanReference(type = DLFileEntryFinder.class)
+	protected DLFileEntryFinder dlFileEntryFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(ImageLocalServiceBaseImpl.class);

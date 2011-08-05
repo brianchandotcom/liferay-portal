@@ -40,6 +40,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -611,6 +612,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntryImpl.setVersion(dlFileEntry.getVersion());
 		dlFileEntryImpl.setSize(dlFileEntry.getSize());
 		dlFileEntryImpl.setReadCount(dlFileEntry.getReadCount());
+		dlFileEntryImpl.setSmallImageId(dlFileEntry.getSmallImageId());
+		dlFileEntryImpl.setLargeImageId(dlFileEntry.getLargeImageId());
+		dlFileEntryImpl.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
+		dlFileEntryImpl.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
 
 		return dlFileEntryImpl;
 	}
@@ -8147,6 +8152,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;
 	@BeanReference(type = ResourcePersistence.class)

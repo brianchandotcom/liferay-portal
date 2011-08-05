@@ -189,18 +189,24 @@ public class MediaWikiEngine implements WikiEngine {
 		String content, PortletURL viewPageURL, PortletURL editPageURL,
 		String attachmentURLPrefix) {
 
-		EditURLMatcher editURLMatcher = new EditURLMatcher(editPageURL);
+		if (editPageURL != null) {
+			EditURLMatcher editURLMatcher = new EditURLMatcher(editPageURL);
 
-		content = editURLMatcher.replaceMatches(content);
+			content = editURLMatcher.replaceMatches(content);
+		}
 
-		ImageURLMatcher imageURLMatcher = new ImageURLMatcher(
-			attachmentURLPrefix);
+		if (attachmentURLPrefix != null) {
+			ImageURLMatcher imageURLMatcher = new ImageURLMatcher(
+				attachmentURLPrefix);
 
-		content = imageURLMatcher.replaceMatches(content);
+			content = imageURLMatcher.replaceMatches(content);
+		}
 
-		ViewURLMatcher viewURLMatcher = new ViewURLMatcher(viewPageURL);
+		if (viewPageURL != null) {
+			ViewURLMatcher viewURLMatcher = new ViewURLMatcher(viewPageURL);
 
-		content = viewURLMatcher.replaceMatches(content);
+			content = viewURLMatcher.replaceMatches(content);
+		}
 
 		return content;
 	}

@@ -136,7 +136,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		Reference<V> valueReference = _map.remove(key);
 
 		if (valueReference != null) {
-			valueReference.get();
+			return valueReference.get();
 		}
 
 		return null;

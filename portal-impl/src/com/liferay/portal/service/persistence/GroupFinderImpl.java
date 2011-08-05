@@ -944,6 +944,7 @@ public class GroupFinderImpl
 
 		Map<String, String> joinMap = new HashMap<String, String>();
 
+		joinMap.put("active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
 		joinMap.put(
 			"groupOrg", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUP_ORG)));
 		joinMap.put(
@@ -973,7 +974,6 @@ public class GroupFinderImpl
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE)));
 		joinMap.put("usersGroups",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
-		joinMap.put("active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
 
 		_joinMap = joinMap;
 
@@ -1028,9 +1028,6 @@ public class GroupFinderImpl
 		whereMap.put(
 			"usersGroups",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
-		whereMap.put(
-			"active",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
 
 		_whereMap = whereMap;
 

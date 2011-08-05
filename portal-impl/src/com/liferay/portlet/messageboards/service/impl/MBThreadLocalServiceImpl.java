@@ -389,10 +389,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	public void incrementViewCounter(long threadId)
 		throws PortalException, SystemException {
 
-		mbThreadLocalService.incrementViewCounter(threadId, 1);
+		incrementViewCounter(threadId, 1);
 	}
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)

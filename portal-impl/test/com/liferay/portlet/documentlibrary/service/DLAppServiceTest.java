@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -42,6 +43,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 
@@ -175,7 +177,13 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, bytes, serviceContext);
 
+			DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
+				description, changeLog, true, bytes, serviceContext);
+
 			String newName = "Bytes-changed.txt";
+
+			bytes = _CONTENT.getBytes();
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), newName, ContentTypes.TEXT_PLAIN,
@@ -195,11 +203,23 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, file, serviceContext);
 
-			String newName = "File-changed.txt";
-
 			DLAppServiceUtil.updateFileEntry(
-				fileEntry.getFileEntryId(), newName, ContentTypes.TEXT_PLAIN,
-				newName, description, changeLog, true, file, serviceContext);
+				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
+				description, changeLog, true, file, serviceContext);
+
+			try {
+				String newName = "File-changed.txt";
+
+				file = FileUtil.createTempFile(_CONTENT.getBytes());
+
+				DLAppServiceUtil.updateFileEntry(
+					fileEntry.getFileEntryId(), newName,
+					ContentTypes.TEXT_PLAIN, newName, description, changeLog,
+					true, file, serviceContext);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 		catch (Exception e) {
 			fail(
@@ -215,11 +235,25 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
 				description, changeLog, is, 0, serviceContext);
 
-			String newName = "IS-changed.txt";
-
 			DLAppServiceUtil.updateFileEntry(
-				fileEntry.getFileEntryId(), newName, ContentTypes.TEXT_PLAIN,
-				newName, description, changeLog, true, is, 0, serviceContext);
+				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
+				description, changeLog, true, is, 0, serviceContext);
+
+			try {
+				String newName = "IS-changed.txt";
+
+				is = new ByteArrayInputStream(_CONTENT.getBytes());
+
+				DLAppServiceUtil.updateFileEntry(
+					fileEntry.getFileEntryId(), newName,
+					ContentTypes.TEXT_PLAIN, newName, description, changeLog,
+					true, is, 0, serviceContext);
+			}
+			finally {
+				if (is != null) {
+					is.close();
+				}
+			}
 		}
 		catch (Exception e) {
 			fail(

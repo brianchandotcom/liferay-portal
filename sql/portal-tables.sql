@@ -76,6 +76,18 @@ create table AnnouncementsFlag (
 	value INTEGER
 );
 
+create table App (
+	uuid_ VARCHAR(75) null,
+	appId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	marketplaceAppId LONG,
+	version VARCHAR(75) null
+);
+
 create table AssetCategory (
 	uuid_ VARCHAR(75) null,
 	categoryId LONG not null primary key,
@@ -1204,6 +1216,13 @@ create table MembershipRequest (
 	replyDate DATE null,
 	replierUserId LONG,
 	statusId INTEGER
+);
+
+create table Module (
+	uuid_ VARCHAR(75) null,
+	moduleId LONG not null primary key,
+	appId LONG,
+	contextName VARCHAR(75) null
 );
 
 create table Organization_ (

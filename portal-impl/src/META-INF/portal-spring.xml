@@ -444,4 +444,8 @@
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder" class="com.liferay.portlet.wiki.service.persistence.WikiPageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.wiki.service.WikiPageResourceLocalService" class="com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.marketplace.service.AppLocalService" class="com.liferay.portlet.marketplace.service.impl.AppLocalServiceImpl" />
+	<bean id="com.liferay.portlet.marketplace.service.persistence.AppPersistence" class="com.liferay.portlet.marketplace.service.persistence.AppPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.marketplace.service.ModuleLocalService" class="com.liferay.portlet.marketplace.service.impl.ModuleLocalServiceImpl" />
+	<bean id="com.liferay.portlet.marketplace.service.persistence.ModulePersistence" class="com.liferay.portlet.marketplace.service.persistence.ModulePersistenceImpl" parent="basePersistence" />
 </beans>

@@ -1040,6 +1040,12 @@
 
 		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />
 
+		<!-- Marketplace -->
+
+		<action path="/marketplace/app" type="com.liferay.portlet.marketplace.action.AppAction" />
+
+		<action path="/marketplace/view" forward="portlet.marketplace.view" />
+
 		<!-- Message Boards -->
 
 		<action path="/message_boards/ban_user" type="com.liferay.portlet.messageboards.action.BanUserAction">

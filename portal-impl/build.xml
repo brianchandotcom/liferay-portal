@@ -80,16 +80,16 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg path="src/com/liferay/portal/parsers/creole/parser" />
 			<arg path="src/com/liferay/portal/parsers/creole/grammar/Creole10.g" />
 		</java>
-        
-        <replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">		  
-			<replacetoken>public class Creole10Lexer</replacetoken>									   
+
+        <replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">
+			<replacetoken>public class Creole10Lexer</replacetoken>
 			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Lexer]]></replacevalue>
-        </replace>        
+        </replace>
 
-		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Parser.java">		  
+		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Parser.java">
 			<replacetoken>public class Creole10Parser</replacetoken>
-			<replacevalue><![CDATA[@SuppressWarnings("all") 
+			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Parser]]></replacevalue>
         </replace>
 
@@ -451,6 +451,12 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
+	<target name="build-service-portlet-marketplace">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/marketplace/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-service-portlet-messageboards">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/messageboards/service.xml" />
@@ -512,6 +518,7 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlet-flags" />
 		<antcall target="build-service-portlet-imagegallery" />
 		<antcall target="build-service-portlet-journal" />
+		<antcall target="build-service-portlet-marketplace" />
 		<antcall target="build-service-portlet-messageboards" />
 		<antcall target="build-service-portlet-polls" />
 		<antcall target="build-service-portlet-ratings" />

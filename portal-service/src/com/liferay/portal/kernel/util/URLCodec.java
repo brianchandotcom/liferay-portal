@@ -91,7 +91,7 @@ public class URLCodec {
 						sb = new StringBuilder(encodedURLString.length());
 
 						if (i > 0) {
-							sb.append(sb, 0, i);
+							sb.append(encodedURLString, 0, i);
 						}
 					}
 
@@ -106,7 +106,7 @@ public class URLCodec {
 						sb = new StringBuilder(encodedURLString.length());
 
 						if (i > 0) {
-							sb.append(sb, 0, i);
+							sb.append(encodedURLString, 0, i);
 						}
 					}
 

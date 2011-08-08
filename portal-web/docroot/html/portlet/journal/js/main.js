@@ -850,7 +850,11 @@ AUI().add(
 			getParentStructureId: function() {
 				var instance = this;
 
-				return instance.getById('parentStructureId').val();
+				var parentStructureEl = instance.getById('parentStructureId');
+
+				if (parentStructureEl) {
+					return parentStructureEl.val();
+				}
 			},
 
 			getRepeatableButtons: function() {

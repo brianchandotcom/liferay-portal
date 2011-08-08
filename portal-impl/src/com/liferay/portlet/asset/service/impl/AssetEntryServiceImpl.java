@@ -99,7 +99,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		assetEntryLocalService.incrementViewCounter(
-			getGuestOrUserId(), className, classPK);
+			getGuestOrUserId(), className, classPK, 1);
 	}
 
 	public AssetEntryDisplay[] searchEntryDisplays(

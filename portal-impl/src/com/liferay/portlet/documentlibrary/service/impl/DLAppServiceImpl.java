@@ -165,28 +165,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		File tempFile = null;
-
-		if (file == null || !file.exists()) {
-			tempFile = FileUtil.createTempFile();
-
-			file = tempFile;
+		if (file == null || !file.exists() || file.length() == 0) {
+			return addFileEntry(
+				repositoryId, folderId, sourceFileName, mimeType, title,
+				description, changeLog, null, 0, serviceContext);
 		}
 
-		try {
-			Repository repository = getRepository(repositoryId);
+		Repository repository = getRepository(repositoryId);
 
-			FileEntry fileEntry = repository.addFileEntry(
-				folderId, sourceFileName, mimeType, title, description,
-				changeLog, file, serviceContext);
+		FileEntry fileEntry = repository.addFileEntry(
+			folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
 
-			DLProcessorRegistryUtil.trigger(fileEntry);
+		DLProcessorRegistryUtil.trigger(fileEntry);
 
-			return fileEntry;
-		}
-		finally {
-			FileUtil.delete(tempFile);
-		}
+		return fileEntry;
 	}
 
 	/**
@@ -1963,8 +1956,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if ((file != null) && !file.exists()) {
-			file = null;
+		if (file == null || !file.exists() || file.length() == 0) {
+			return updateFileEntry(
+				fileEntryId, sourceFileName, mimeType, title, description,
+				changeLog, majorVersion, null, 0, serviceContext);
 		}
 
 		Repository repository = getRepository(0, fileEntryId, 0);

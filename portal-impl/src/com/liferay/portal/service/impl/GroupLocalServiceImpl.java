@@ -298,8 +298,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void checkSystemGroups(long companyId)
 		throws PortalException, SystemException {
 
+		String companyIdHexString = StringUtil.toHexString(companyId);
+
 		for (Group group : groupFinder.findBySystem(companyId)) {
-			_systemGroupsMap.put(companyId + group.getName(), group);
+			_systemGroupsMap.put(companyIdHexString.concat(group.getName()),
+				group);
 		}
 
 		long defaultUserId = userLocalService.getDefaultUserId(companyId);
@@ -307,14 +310,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String[] systemGroups = PortalUtil.getSystemGroups();
 
 		for (String name : systemGroups) {
-			Group group = _systemGroupsMap.get(companyId + name);
+			String groupCacheKey = companyIdHexString.concat(name);
 
-			try {
-				if (group == null) {
-					group = groupPersistence.findByC_N(companyId, name);
-				}
+			Group group = _systemGroupsMap.get(groupCacheKey);
+
+			if (group == null) {
+				group = groupPersistence.fetchByC_N(companyId, name);
 			}
-			catch (NoSuchGroupException nsge) {
+
+			if (group == null) {
 				String className = null;
 				long classPK = 0;
 				int type = GroupConstants.TYPE_SITE_OPEN;
@@ -364,7 +368,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 
-			_systemGroupsMap.put(companyId + name, group);
+			_systemGroupsMap.put(groupCacheKey, group);
 		}
 	}
 
@@ -568,7 +572,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group fetchGroup(long companyId, String name)
 		throws SystemException {
 
-		Group group = _systemGroupsMap.get(companyId + name);
+		Group group = _systemGroupsMap.get(
+			StringUtil.toHexString(companyId).concat(name));
 
 		if (group != null) {
 			return group;
@@ -619,7 +624,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Group group = _systemGroupsMap.get(
-			String.valueOf(companyId).concat(name));
+			StringUtil.toHexString(companyId).concat(name));
 
 		if (group != null) {
 			return group;

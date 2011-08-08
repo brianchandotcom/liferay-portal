@@ -62,6 +62,8 @@
 				<div class="results-header"><liferay-ui:message key="vocabularies" /></div>
 
 				<div class="vocabulary-list lfr-component"></div>
+
+				<div class="vocabularies-paginator"></div>
 			</aui:column>
 
 			<aui:column columnWidth="75" cssClass="vocabulary-categories-container">
@@ -95,7 +97,9 @@
 <aui:script use="liferay-category-admin">
 	new Liferay.Portlet.AssetCategoryAdmin(
 		{
-			portletId: '<%= portletDisplay.getId() %>'
+			portletId: '<%= portletDisplay.getId() %>',
+			itemsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			itemsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>]
 		}
 	);
 </aui:script>

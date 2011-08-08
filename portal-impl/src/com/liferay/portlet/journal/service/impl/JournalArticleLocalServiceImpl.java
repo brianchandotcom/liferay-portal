@@ -813,8 +813,16 @@ public class JournalArticleLocalServiceImpl
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return journalArticlePersistence.findByG_C_C(
+		List<JournalArticle> articles = journalArticlePersistence.findByG_C_C(
 			groupId, classNameId, classPK);
+
+		if (articles.size() == 0) {
+			throw new NoSuchArticleException(
+				"No approved JournalArticle with the key {groupId=" + groupId +
+					", className=" + className + ", classPK=" + classPK + "}");
+		}
+
+		return articles.get(0);
 	}
 
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
@@ -1372,6 +1380,28 @@ public class JournalArticleLocalServiceImpl
 			throw new NoSuchArticleException(
 				"No JournalArticle with the key {groupId=" + groupId +
 					", articleId=" + articleId + ", status=" + status + "}");
+		}
+
+		return articles.get(0);
+	}
+
+	public JournalArticle getLatestArticle(
+			long groupId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		List<JournalArticle> articles = null;
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		articles = journalArticlePersistence.findByG_C_C(groupId, classNameId,
+			classPK, 0, 1, orderByComparator);
+
+		if (articles.size() == 0) {
+			throw new NoSuchArticleException(
+				"No JournalArticle with the key {groupId=" + groupId +
+					", className=" + className + ", classPK =" + classPK + "}");
 		}
 
 		return articles.get(0);

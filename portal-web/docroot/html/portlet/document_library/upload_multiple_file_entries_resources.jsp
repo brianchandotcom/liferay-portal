@@ -82,7 +82,7 @@ long assetClassPK = 0;
 		<liferay-ui:panel cssClass="document-type" collapsible="<%= true %>" id="documentTypePanel" persistState="<%= true %>" title="document-type">
 			<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 
-			<div class="document-type-selector">
+			<div class="document-type-selector" id="<portlet:namespace />documentTypeSelector">
 				<liferay-ui:icon-menu align="left" direction="down" id="groupSelector" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>'>
 					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewBasicFileEntryTypeURL">
 						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
@@ -145,9 +145,9 @@ long assetClassPK = 0;
 			<aui:script use="aui-base">
 				var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
 
-				var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
+				var documentTypeSelector = A.one('#<portlet:namespace />documentTypeSelector');
 
-				groupSelectorMenu.delegate(
+				documentTypeSelector.delegate(
 					'click',
 					function(event) {
 						event.preventDefault();

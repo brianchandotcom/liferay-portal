@@ -841,7 +841,6 @@ public class EditLayoutsAction extends PortletAction {
 
 			if (inheritLookAndFeel) {
 				themeId = ThemeImpl.getDefaultRegularThemeId(companyId);
-				
 				colorSchemeId = StringPool.BLANK;
 
 				deleteThemeSettings(typeSettingsProperties, device);

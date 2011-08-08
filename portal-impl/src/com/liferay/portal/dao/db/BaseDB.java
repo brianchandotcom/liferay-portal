@@ -378,7 +378,7 @@ public abstract class BaseDB implements DB {
 									sqle.getMessage());
 
 								if (!message.startsWith("Duplicate key name")) {
-									_log.warn(message + ": " + sql);
+									_log.warn(message + ": " + buildSQL(sql));
 								}
 
 								if (message.startsWith("Duplicate entry") ||

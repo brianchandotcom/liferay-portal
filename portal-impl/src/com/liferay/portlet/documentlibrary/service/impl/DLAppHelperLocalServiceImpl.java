@@ -67,7 +67,8 @@ public class DLAppHelperLocalServiceImpl
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.addSync(
 				folder.getFolderId(), folder.getCompanyId(),
-				folder.getRepositoryId(), DLSyncConstants.TYPE_FOLDER);
+				folder.getRepositoryId(), folder.getParentFolderId(),
+				DLSyncConstants.TYPE_FOLDER);
 		}
 	}
 
@@ -88,7 +89,8 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!isStagingGroup(fileEntry.getGroupId())) {
 			dlSyncLocalService.updateSync(
-				fileEntry.getFileEntryId(), DLSyncConstants.EVENT_DELETE);
+				fileEntry.getFileEntryId(), fileEntry.getFolderId(),
+				DLSyncConstants.EVENT_DELETE);
 		}
 
 		// Asset
@@ -117,7 +119,8 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.updateSync(
-				folder.getFolderId(), DLSyncConstants.EVENT_DELETE);
+				folder.getFolderId(), folder.getParentFolderId(),
+				DLSyncConstants.EVENT_DELETE);
 		}
 	}
 
@@ -234,7 +237,8 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.updateSync(
-				folder.getFolderId(), DLSyncConstants.EVENT_UPDATE);
+				folder.getFolderId(), folder.getParentFolderId(),
+				DLSyncConstants.EVENT_UPDATE);
 		}
 	}
 
@@ -308,11 +312,13 @@ public class DLAppHelperLocalServiceImpl
 				if (event.equals(DLSyncConstants.EVENT_ADD)) {
 					dlSyncLocalService.addSync(
 						fileEntry.getFileEntryId(), fileEntry.getCompanyId(),
-						fileEntry.getRepositoryId(), DLSyncConstants.TYPE_FILE);
+						fileEntry.getRepositoryId(), fileEntry.getFolderId(),
+						DLSyncConstants.TYPE_FILE);
 				}
 				else if (event.equals(DLSyncConstants.EVENT_DELETE)) {
 					dlSyncLocalService.updateSync(
 						fileEntry.getFileEntryId(),
+						fileEntry.getFolderId(),
 						DLSyncConstants.EVENT_DELETE);
 				}
 			}

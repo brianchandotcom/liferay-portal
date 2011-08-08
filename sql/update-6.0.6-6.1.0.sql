@@ -233,6 +233,7 @@ create table DLSync (
 	modifiedDate DATE null,
 	fileId LONG,
 	repositoryId LONG,
+	parentFolderId LONG,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

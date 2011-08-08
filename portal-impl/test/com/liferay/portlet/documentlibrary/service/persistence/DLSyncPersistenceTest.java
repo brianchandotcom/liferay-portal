@@ -79,6 +79,8 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		newDLSync.setRepositoryId(nextLong());
 
+		newDLSync.setParentFolderId(nextLong());
+
 		newDLSync.setEvent(randomString());
 
 		newDLSync.setType(randomString());
@@ -96,6 +98,8 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDLSync.getFileId(), newDLSync.getFileId());
 		assertEquals(existingDLSync.getRepositoryId(),
 			newDLSync.getRepositoryId());
+		assertEquals(existingDLSync.getParentFolderId(),
+			newDLSync.getParentFolderId());
 		assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
 		assertEquals(existingDLSync.getType(), newDLSync.getType());
 	}
@@ -232,6 +236,8 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 		dlSync.setFileId(nextLong());
 
 		dlSync.setRepositoryId(nextLong());
+
+		dlSync.setParentFolderId(nextLong());
 
 		dlSync.setEvent(randomString());
 

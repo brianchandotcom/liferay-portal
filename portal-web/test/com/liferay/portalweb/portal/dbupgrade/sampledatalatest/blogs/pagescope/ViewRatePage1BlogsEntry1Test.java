@@ -46,11 +46,10 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		selenium.mouseOver(
@@ -62,7 +61,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -74,10 +73,10 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		selenium.clickAt("//div[@class='entry-title']/a",
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -85,8 +84,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		selenium.mouseOver(
@@ -98,7 +96,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -110,7 +108,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -137,18 +135,15 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.mouseOver(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Blogs Entry1 Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -156,7 +151,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -167,11 +162,18 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		selenium.clickAt("//div[@class='entry-title']/a",
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -179,8 +181,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		selenium.mouseOver(
@@ -192,7 +193,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -204,6 +205,6 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 	}
 }

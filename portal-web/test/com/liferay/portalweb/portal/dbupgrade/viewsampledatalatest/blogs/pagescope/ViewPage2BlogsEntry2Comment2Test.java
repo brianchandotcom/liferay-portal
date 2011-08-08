@@ -45,6 +45,26 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.type("//input[@id='_33_keywords']",
@@ -52,6 +72,25 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText("//td[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//td[2]/a"));
@@ -66,9 +105,9 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//a[@class='user-name'])[2]"));
+			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -92,6 +131,26 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.type("//input[@id='_33_keywords']",
@@ -99,6 +158,25 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText("//td[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//td[2]/a"));
@@ -113,9 +191,9 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//a[@class='user-name'])[2]"));
+			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -142,9 +220,10 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[2]/span/a"));
-		selenium.clickAt("//div[2]/span/a", RuntimeVariables.replace("Default"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
+		selenium.clickAt("//div/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Scope: Default"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -152,7 +231,8 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li[2]/a")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -164,18 +244,58 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//li[2]/a"));
-		selenium.clickAt("//li[2]/a",
-			RuntimeVariables.replace("Blogs Test Page2"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//div[2]/span/a"));
-		selenium.type("//input[@id='_33_keywords']",
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Scope: Blogs Test Page2")
+										.equals(selenium.getText(
+								"//div/span/ul/li/strong/a/span"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Scope: Blogs Test Page2"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
+		selenium.type("//input[@id='_161_keywords']",
 			RuntimeVariables.replace("Entry2"));
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText("//td[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//td[2]/a"));
@@ -190,8 +310,8 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//a[@class='user-name'])[2]"));
+			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 	}
 }

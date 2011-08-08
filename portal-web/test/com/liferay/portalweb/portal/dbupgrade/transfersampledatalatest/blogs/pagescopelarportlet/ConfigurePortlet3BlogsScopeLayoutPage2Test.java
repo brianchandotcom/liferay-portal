@@ -46,6 +46,26 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -96,11 +116,11 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Scope"),
-			selenium.getText("//label[@for='_86_scopeType']"));
+			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Layout"));
 		assertEquals(RuntimeVariables.replace("Scope Layout"),
-			selenium.getText("//label[@for='_86_scopeLayoutUuid']"));
+			selenium.getText("//label[@for='scopeLayoutUuid']"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.clickAt("//input[@value='Save']",
@@ -136,6 +156,26 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));

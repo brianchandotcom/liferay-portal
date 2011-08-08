@@ -45,10 +45,30 @@ public class AddPage1BlogsEntry1Comment2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("1 Comment"),
@@ -92,16 +112,36 @@ public class AddPage1BlogsEntry1Comment2Test extends BaseTestCase {
 			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='lfr-message-response portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 	}
 }

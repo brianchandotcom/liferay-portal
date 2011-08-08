@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='user-name'])[2]</td>
+	<td>xPath=(//span[@class='user-name'])[2]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[2]/div[3]/div/div[1]</td>
 	<td>Blogs Entry1 Comment2 Body</td>
 </tr>
 <tr>
@@ -95,28 +95,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
-	<td>Blogs Entry1 Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='comments']/a</td>
-	<td>2 Comments</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='comments']/a</td>
-	<td>2 Comments</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -135,12 +125,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='user-name'])[2]</td>
+	<td>xPath=(//span[@class='user-name'])[2]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[2]/div[3]/div/div[1]</td>
 	<td>Blogs Entry1 Comment2 Body</td>
 </tr>
 

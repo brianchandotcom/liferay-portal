@@ -46,10 +46,30 @@ public class PermissionsPage2BlogsEntry4GuestViewOffTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[1]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[1]/p"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
@@ -69,7 +89,7 @@ public class PermissionsPage2BlogsEntry4GuestViewOffTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.saveScreenShotAndSource();

@@ -46,8 +46,7 @@ public class ImportExportCommunityLARBlogsPageScopeTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
@@ -58,8 +57,9 @@ public class ImportExportCommunityLARBlogsPageScopeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,39 +86,53 @@ public class ImportExportCommunityLARBlogsPageScopeTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Export / Import",
-			RuntimeVariables.replace("Export / Import"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Import"),
+			selenium.getText("//button[3]"));
+		selenium.clickAt("//button[3]", RuntimeVariables.replace("Import"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_156_importFileName']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.uploadFile("//input[@id='_134_importFileName']",
+		selenium.uploadFile("//input[@id='_156_importFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Community.lar"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='_134_DELETE_MISSING_LAYOUTSCheckbox']"));
+				"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_134_DELETE_MISSING_LAYOUTSCheckbox']",
+		selenium.clickAt("//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']",
 			RuntimeVariables.replace("Delete Missing Pages"));
 		assertTrue(selenium.isChecked(
-				"//input[@id='_134_DELETE_MISSING_LAYOUTSCheckbox']"));
+				"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"//input[@id='_134_PERMISSIONSCheckbox']"));
+				"//input[@id='_156_PERMISSIONSCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_134_PERMISSIONSCheckbox']",
+		selenium.clickAt("//input[@id='_156_PERMISSIONSCheckbox']",
 			RuntimeVariables.replace("Permissions"));
-		assertTrue(selenium.isChecked("//input[@id='_134_PERMISSIONSCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_156_PERMISSIONSCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked("//input[@id='_134_CATEGORIESCheckbox']"));
+		assertFalse(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_134_CATEGORIESCheckbox']",
+		selenium.clickAt("//input[@id='_156_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
-		assertTrue(selenium.isChecked("//input[@id='_134_CATEGORIESCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[@id='_134_importMoreDiv']/a",
+		assertTrue(selenium.isPartialText("//div[@id='_156_importMoreDiv']/a",
 				"More Options"));
-		selenium.clickAt("//div[@id='_134_importMoreDiv']/a",
+		selenium.clickAt("//div[@id='_156_importMoreDiv']/a",
 			RuntimeVariables.replace("More Options"));
 
 		for (int second = 0;; second++) {
@@ -128,7 +142,7 @@ public class ImportExportCommunityLARBlogsPageScopeTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[@id='_134_DELETE_PORTLET_DATACheckbox']")) {
+							"//input[@id='_156_DELETE_PORTLET_DATACheckbox']")) {
 					break;
 				}
 			}
@@ -140,19 +154,19 @@ public class ImportExportCommunityLARBlogsPageScopeTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"//input[@id='_134_DELETE_PORTLET_DATACheckbox']"));
+				"//input[@id='_156_DELETE_PORTLET_DATACheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_134_DELETE_PORTLET_DATACheckbox']",
+		selenium.clickAt("//input[@id='_156_DELETE_PORTLET_DATACheckbox']",
 			RuntimeVariables.replace("Delete portlet data before importing"));
 		assertTrue(selenium.isChecked(
-				"//input[@id='_134_DELETE_PORTLET_DATACheckbox']"));
+				"//input[@id='_156_DELETE_PORTLET_DATACheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

@@ -47,10 +47,30 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -69,8 +89,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -89,8 +129,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -109,8 +169,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -128,8 +208,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -147,8 +247,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -167,8 +287,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -187,8 +327,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -206,8 +366,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -226,8 +406,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -265,10 +465,30 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -287,8 +507,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -307,8 +547,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -327,8 +587,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -346,8 +626,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -365,8 +665,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -385,8 +705,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry3 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
@@ -405,8 +745,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
@@ -424,8 +784,28 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
@@ -444,23 +824,6 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//span[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//span[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -468,7 +831,9 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (RuntimeVariables.replace("Blogs Entry4 Title")
+										.equals(selenium.getText(
+								"//div[@class='entry-title']/h2/a"))) {
 					break;
 				}
 			}
@@ -479,223 +844,8 @@ public class ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[2]/span/a"));
-		selenium.clickAt("//div[2]/span/a", RuntimeVariables.replace("Default"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//li[2]/a"));
-		selenium.clickAt("//li[2]/a",
-			RuntimeVariables.replace("Blogs Test Page2"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//div[2]/span/a"));
-		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//span[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//span[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
-			RuntimeVariables.replace("label=2"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
-			RuntimeVariables.replace("label=3"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//span[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//span[@class='last']"));
-		selenium.select("//select[@id='_33_page']",
-			RuntimeVariables.replace("label=1"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//span[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//span[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//span[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//span[@class='last']"));
-		selenium.clickAt("//a[@class='previous']",
-			RuntimeVariables.replace("Previous"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 2 - 2 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.clickAt("//a[@class='previous']",
-			RuntimeVariables.replace("Previous"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//span[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//span[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//a[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//a[@class='last']"));
-		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("Showing 3 - 3 of 3 results."),
-			selenium.getText("//div[@class='search-results']"));
-		assertEquals(RuntimeVariables.replace("Items per Page 1"),
-			selenium.getText("//div[@class='delta-selector']"));
-		assertEquals(RuntimeVariables.replace("First"),
-			selenium.getText("//a[@class='first']"));
-		assertEquals(RuntimeVariables.replace("Previous"),
-			selenium.getText("//a[@class='previous']"));
-		assertEquals(RuntimeVariables.replace("Next"),
-			selenium.getText("//span[@class='next']"));
-		assertEquals(RuntimeVariables.replace("Last"),
-			selenium.getText("//span[@class='last']"));
-		selenium.clickAt("//a[@class='first']",
-			RuntimeVariables.replace("First"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 1 of 3 results."),

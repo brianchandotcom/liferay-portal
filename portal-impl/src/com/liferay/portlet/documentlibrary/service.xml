@@ -513,11 +513,10 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="companyId" />
 			<order-column name="repositoryId" />
 			<order-column name="modifiedDate" />
-			<order-column name="type" case-sensitive="false" />
 		</order>
 
 		<!-- Finder methods -->

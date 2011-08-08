@@ -74,8 +74,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DLSync (syncId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,fileId LONG,repositoryId LONG,event VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DLSync";
-	public static final String ORDER_BY_JPQL = " ORDER BY dlSync.companyId DESC, dlSync.repositoryId DESC, dlSync.modifiedDate DESC, dlSync.type DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY DLSync.companyId DESC, DLSync.repositoryId DESC, DLSync.modifiedDate DESC, DLSync.type_ DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlSync.companyId ASC, dlSync.repositoryId ASC, dlSync.modifiedDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLSync.companyId ASC, DLSync.repositoryId ASC, DLSync.modifiedDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -307,8 +307,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			value = 0;
 		}
 
-		value = value * -1;
-
 		if (value != 0) {
 			return value;
 		}
@@ -323,23 +321,11 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			value = 0;
 		}
 
-		value = value * -1;
-
 		if (value != 0) {
 			return value;
 		}
 
 		value = DateUtil.compareTo(getModifiedDate(), dlSync.getModifiedDate());
-
-		value = value * -1;
-
-		if (value != 0) {
-			return value;
-		}
-
-		value = getType().toLowerCase().compareTo(dlSync.getType().toLowerCase());
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

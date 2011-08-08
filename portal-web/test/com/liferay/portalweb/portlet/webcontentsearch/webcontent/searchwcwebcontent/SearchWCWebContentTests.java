@@ -34,6 +34,7 @@ public class SearchWCWebContentTests extends BaseTests {
 		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(SelectWCWebContentTest.class);
 		testSuite.addTestSuite(SearchWCWebContentTest.class);
+		testSuite.addTestSuite(SearchWCWebContentQuotesTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

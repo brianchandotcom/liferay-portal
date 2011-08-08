@@ -31,6 +31,7 @@ public class SearchOrganizationTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDirectoryTest.class);
 		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(SearchOrganizationTest.class);
+		testSuite.addTestSuite(SearchOrganizationQuotesTest.class);
 		testSuite.addTestSuite(TearDownOrganizationTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -31,10 +31,15 @@ public class AdvancedSearchUserTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDirectoryTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AdvancedSearchUserEmailAddressTest.class);
+		testSuite.addTestSuite(AdvancedSearchUserEmailAddressQuotesTest.class);
 		testSuite.addTestSuite(AdvancedSearchUserFirstNameTest.class);
+		testSuite.addTestSuite(AdvancedSearchUserFirstNameQuotesTest.class);
 		testSuite.addTestSuite(AdvancedSearchUserLastNameTest.class);
+		testSuite.addTestSuite(AdvancedSearchUserLastNameQuotesTest.class);
 		testSuite.addTestSuite(AdvancedSearchUserMiddleNameTest.class);
+		testSuite.addTestSuite(AdvancedSearchUserMiddleNameQuotesTest.class);
 		testSuite.addTestSuite(AdvancedSearchUserScreenNameTest.class);
+		testSuite.addTestSuite(AdvancedSearchUserScreenNameQuotesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

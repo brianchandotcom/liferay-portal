@@ -31,6 +31,7 @@ public class SearchUserTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDirectoryTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(SearchUserTest.class);
+		testSuite.addTestSuite(SearchUserQuotesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

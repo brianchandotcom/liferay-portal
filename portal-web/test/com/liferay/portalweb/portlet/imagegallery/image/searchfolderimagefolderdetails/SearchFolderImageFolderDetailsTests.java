@@ -32,6 +32,7 @@ public class SearchFolderImageFolderDetailsTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderImageTest.class);
 		testSuite.addTestSuite(SearchFolderImageFolderDetailsTest.class);
+		testSuite.addTestSuite(SearchFolderImageFolderDetailsQuotesTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
 		testSuite.addTestSuite(TearDownImageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

@@ -226,7 +226,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="rootFolder" value="true" />
+						<portlet:param name="isRootFolder" value="true" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

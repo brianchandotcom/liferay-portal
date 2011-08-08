@@ -25,11 +25,11 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 
 long repositoryId = BeanParamUtil.getLong(folder, request, "repositoryId");
 
+boolean isRootFolder = ParamUtil.getBoolean(request, "isRootFolder");
+
 Folder parentFolder = null;
 
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
 boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
 
@@ -64,7 +64,7 @@ if (workflowEnabled) {
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? (rootFolder ? "documents-home" : "new-folder") : folder.getName() %>'
+		title='<%= (folder == null) ? (isRootFolder ? "documents-home" : "new-folder") : folder.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
@@ -74,7 +74,7 @@ if (workflowEnabled) {
 	<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= !rootFolder %>">
+		<c:if test="<%= !isRootFolder %>">
 			<c:if test="<%= folder != null %>">
 				<aui:field-wrapper label="parent-folder">
 
@@ -117,14 +117,14 @@ if (workflowEnabled) {
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= rootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
+		<c:if test="<%= isRootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
 
 			<%
 			DLFolder dlFolder = null;
 
 			long defaultFileEntryTypeId = 0;
 
-			if (!rootFolder) {
+			if (!isRootFolder) {
 				dlFolder = (DLFolder)folder.getModel();
 
 				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
@@ -143,7 +143,7 @@ if (workflowEnabled) {
 			%>
 
 			<aui:field-wrapper label="document-type-restrictions" helpMessage="document-type-restrictions-help">
-				<c:if test="<%= !rootFolder %>">
+				<c:if test="<%= !isRootFolder %>">
 					<div>
 						<table class="lfr-table">
 						<tr>

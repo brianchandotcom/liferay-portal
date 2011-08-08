@@ -1447,6 +1447,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="fileId" type="long" />
 		<field name="repositoryId" type="long" />
+		<field name="parentFolderId" type="long" />
 		<field name="event" type="String" />
 		<field name="type" type="String" />
 	</model>

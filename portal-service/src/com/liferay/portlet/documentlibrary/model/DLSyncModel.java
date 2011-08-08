@@ -144,6 +144,20 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	public void setRepositoryId(long repositoryId);
 
 	/**
+	 * Returns the parent folder ID of this d l sync.
+	 *
+	 * @return the parent folder ID of this d l sync
+	 */
+	public long getParentFolderId();
+
+	/**
+	 * Sets the parent folder ID of this d l sync.
+	 *
+	 * @param parentFolderId the parent folder ID of this d l sync
+	 */
+	public void setParentFolderId(long parentFolderId);
+
+	/**
 	 * Returns the event of this d l sync.
 	 *
 	 * @return the event of this d l sync

@@ -28,7 +28,8 @@ import java.util.Date;
 public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	public DLSync addSync(
-			long fileId, long companyId, long repositoryId, String type)
+			long fileId, long companyId, long repositoryId, long parentFolderId,
+			String type)
 		throws SystemException {
 
 		Date now = new Date();
@@ -42,6 +43,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setModifiedDate(now);
 		dlSync.setFileId(fileId);
 		dlSync.setRepositoryId(repositoryId);
+		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
 		dlSync.setType(type);
 
@@ -50,12 +52,13 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		return dlSync;
 	}
 
-	public DLSync updateSync(long fileId, String event)
+	public DLSync updateSync(long fileId, long parentFolderId, String event)
 		throws PortalException, SystemException {
 
 		DLSync dlSync = dlSyncPersistence.findByFileId(fileId);
 
 		dlSync.setModifiedDate(new Date());
+		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(event);
 
 		dlSyncPersistence.update(dlSync, false);

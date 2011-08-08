@@ -163,6 +163,24 @@ public class DLSyncWrapper implements DLSync {
 	}
 
 	/**
+	* Returns the parent folder ID of this d l sync.
+	*
+	* @return the parent folder ID of this d l sync
+	*/
+	public long getParentFolderId() {
+		return _dlSync.getParentFolderId();
+	}
+
+	/**
+	* Sets the parent folder ID of this d l sync.
+	*
+	* @param parentFolderId the parent folder ID of this d l sync
+	*/
+	public void setParentFolderId(long parentFolderId) {
+		_dlSync.setParentFolderId(parentFolderId);
+	}
+
+	/**
 	* Returns the event of this d l sync.
 	*
 	* @return the event of this d l sync

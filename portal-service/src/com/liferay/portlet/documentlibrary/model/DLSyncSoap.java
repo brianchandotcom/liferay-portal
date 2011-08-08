@@ -37,6 +37,7 @@ public class DLSyncSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setFileId(model.getFileId());
 		soapModel.setRepositoryId(model.getRepositoryId());
+		soapModel.setParentFolderId(model.getParentFolderId());
 		soapModel.setEvent(model.getEvent());
 		soapModel.setType(model.getType());
 
@@ -139,6 +140,14 @@ public class DLSyncSoap implements Serializable {
 		_repositoryId = repositoryId;
 	}
 
+	public long getParentFolderId() {
+		return _parentFolderId;
+	}
+
+	public void setParentFolderId(long parentFolderId) {
+		_parentFolderId = parentFolderId;
+	}
+
 	public String getEvent() {
 		return _event;
 	}
@@ -161,6 +170,7 @@ public class DLSyncSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _fileId;
 	private long _repositoryId;
+	private long _parentFolderId;
 	private String _event;
 	private String _type;
 }

@@ -319,12 +319,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return assetEntryFinder.findEntries(entryQuery);
 	}
 
-	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	public void incrementViewCounter(
 			long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		incrementViewCounter(userId, className, classPK, 1);
+		assetEntryLocalService.incrementViewCounter(
+			userId, className, classPK, 1);
 	}
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)

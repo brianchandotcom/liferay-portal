@@ -314,4 +314,26 @@
 				tagPropertyKey ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder.countByG_N">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				AssetVocabulary
+			WHERE
+				(AssetVocabulary.groupId = ?) AND
+				(AssetVocabulary.name LIKE ? OR ? IS NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder.findByG_N">
+		<![CDATA[
+			SELECT
+				{AssetVocabulary.*}
+			FROM
+				AssetVocabulary
+			WHERE
+				(AssetVocabulary.groupId = ?) AND
+				(lower(AssetVocabulary.name) = ?)
+		]]>
+	</sql>
 </custom-sql>

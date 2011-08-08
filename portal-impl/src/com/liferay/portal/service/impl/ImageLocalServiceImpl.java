@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
@@ -142,7 +143,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			return;
 		}
 
-		if (PropsValues.IMAGE_HOOK_IMPL.equals(DatabaseHook.class.getName()) &&
+		if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL) &&
+			PropsValues.IMAGE_HOOK_IMPL.equals(DatabaseHook.class.getName()) &&
 			(imagePersistence.getListeners().length == 0)) {
 
 			runSQL("delete from Image where imageId = " + imageId);

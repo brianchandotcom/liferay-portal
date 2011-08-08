@@ -45,8 +45,8 @@ public class AddPortletTest extends BaseTestCase {
 				"link=Sample Service Builder Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 

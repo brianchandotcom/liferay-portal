@@ -44,6 +44,8 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Sample Laszlo Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 

@@ -37,8 +37,19 @@
 		</if>
 	</target>
 
-	<target name="jar">
-		<antcall target="build-common-java.jar" />
+	<target name="jar" depends="compile">
+		<antcall target="manifest" />
+
+		<manifest file="classes/META-INF/MANIFEST.MF" mode="update">
+			<attribute name="Bundle-Name" value="Liferay Util Taglib" />
+			<attribute name="Bundle-SymbolicName" value="com.liferay.util.taglib;singleton:=true" />
+		</manifest>
+
+		<jar
+			basedir="classes"
+			jarfile="${jar.file}.jar"
+			manifest="classes/META-INF/MANIFEST.MF"
+		/>
 
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
 

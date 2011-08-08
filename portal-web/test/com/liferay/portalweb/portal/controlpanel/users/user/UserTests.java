@@ -82,6 +82,8 @@ import com.liferay.portalweb.portal.controlpanel.users.user.adduserscreennameres
 import com.liferay.portalweb.portal.controlpanel.users.user.addusersms.AddUserSMSTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.addusersocialnetwork.AddUserSocialNetworkTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.advancedsearchuser.AdvancedSearchUserTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpassword.ChangeUserPasswordTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpasswordinvalid.ChangeUserPasswordInvalidTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuser.DeactivateUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deleteuser.DeleteUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.restoreuser.RestoreUserTests;
@@ -165,6 +167,8 @@ public class UserTests extends BaseTests {
 		testSuite.addTest(AddUserSMSTests.suite());
 		testSuite.addTest(AddUserSocialNetworkTests.suite());
 		testSuite.addTest(AdvancedSearchUserTests.suite());
+		testSuite.addTest(ChangeUserPasswordTests.suite());
+		testSuite.addTest(ChangeUserPasswordInvalidTests.suite());
 		testSuite.addTest(DeactivateUserTests.suite());
 		testSuite.addTest(DeleteUserTests.suite());
 		testSuite.addTest(RestoreUserTests.suite());

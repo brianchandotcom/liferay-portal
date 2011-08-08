@@ -62,18 +62,22 @@ AUI().add(
 					initializer: function(config) {
 						var instance = this;
 
-						var namespace = '_' + config.portletId + '_';
+						var namespace = config.namespace;
+
+						var documentLibraryContainer = A.one('#' + namespace + 'documentLibraryContainer');
+
+						instance._documentLibraryContainer = documentLibraryContainer;
 
 						instance._dataRetrieveFailure = namespace + 'dataRetrieveFailure';
 						instance._eventDataRequest = namespace + 'dataRequest';
 						instance._eventDataRetrieveSuccess = namespace + 'dataRetrieveSuccess';
+						instance._eventPageLoaded = namespace + 'pageLoaded';
 
-						instance._documentLibraryContainer = A.one('#' + namespace + 'documentLibraryContainer');
 						instance._displayStyleToolbarNode = A.one('#' + namespace + DISPLAY_STYLE_TOOLBAR);
 						instance._entriesContainer = A.one('#' + namespace + 'documentContainer');
 
-						instance._prefxedDisplayStyle = namespace + 'displayStyle';
-						instance._prefixedFolderId = namespace + 'folderId';
+						instance._displayStyle = namespace + 'displayStyle';
+						instance._folderId = namespace + 'folderId';
 
 						var entryPaginator = new A.Paginator(
 							{
@@ -109,23 +113,23 @@ AUI().add(
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
 						Liferay.on(instance._eventDataRequest, instance._updatePaginatorValues, instance);
-
 						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
-
-						Liferay.on(namespace + 'pageLoaded', instance._onPageLoaded, instance);
+						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
 
 						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
 
 						instance._listView = new Liferay.ListView(
 							{
+								boundingBox: '#' + namespace + 'listViewContainer',
 								itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
+								contentBox: '#' + namespace + STR_FOLDER_CONTAINER,
 								srcNode: '#' + namespace + STR_FOLDER_CONTAINER
 							}
 						).render();
 
 						instance._listView.after('itemChange', instance._afterListViewItemChange, instance);
 
-						instance._documentLibraryContainer.delegate(
+						documentLibraryContainer.delegate(
 							'click',
 							A.bind(instance._onDocumentLibraryContainerClick, instance),
 							'a[data-folder=true], #' + namespace + 'breadcrumbContainer a'
@@ -133,11 +137,12 @@ AUI().add(
 
 						History.after('stateChange', instance._afterStateChange, instance);
 
-						instance._documentLibraryContainer.plug(A.LoadingMask);
+						documentLibraryContainer.plug(A.LoadingMask);
 
 						instance._config = config;
 						instance._entryPaginator = entryPaginator;
 						instance._folderPaginator = folderPaginator;
+
 						instance._namespace = namespace;
 
 						instance._restoreState();
@@ -167,21 +172,20 @@ AUI().add(
 
 						var requestParams = event.requestParams;
 
-						var namespace = instance._namespace;
-
 						var config = instance._config;
+						var namespace = instance._namespace;
 
 						var data = {};
 
-						var displayStyle = instance._prefxedDisplayStyle;
+						var displayStyle = instance._displayStyle;
 
-						data[instance._prefixedFolderId] = config.defaultParentFolderId;
+						data[instance._folderId] = config.defaultParentFolderId;
+
 						data[displayStyle] = History.get(displayStyle) || config.displayStyle;
+
 						data[namespace + 'viewFolders'] = true;
 
-						if (!AObject.isEmpty(requestParams)) {
-							A.mix(data, requestParams, true);
-						}
+						A.mix(data, requestParams, true);
 
 						instance._documentLibraryContainer.loadingmask.show();
 
@@ -199,15 +203,17 @@ AUI().add(
 					_afterStateChange: function(event) {
 						var instance = this;
 
-						var state = History.get();
+						var namespace = instance._namespace;
 
 						var requestParams = {};
 
+						var state = History.get();
+
 						AObject.each(
 							state,
-							function(value, key, collection) {
-								if (key.indexOf(instance._namespace) == 0) {
-									requestParams[key] = value;
+							function(item, index, collection) {
+								if (index.indexOf(namespace) == 0) {
+									requestParams[index] = item;
 								}
 							}
 						);
@@ -270,7 +276,7 @@ AUI().add(
 						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
 
 						if (dataFolderId) {
-							requestParams[instance._prefixedFolderId] = dataFolderId;
+							requestParams[instance._folderId] = dataFolderId;
 						}
 
 						if (dataNavigation) {
@@ -311,12 +317,14 @@ AUI().add(
 						var ioRequest = instance._ioRequest;
 
 						if (!ioRequest) {
+							var sendIOResponse = A.bind(instance._sendIOResponse, instance);
+
 							ioRequest = A.io.request(
 								instance._config.mainUrl,
 								{
 									after: {
-										success: A.bind(instance._sendIOResponse, instance),
-										failure: A.bind(instance._sendIOResponse, instance)
+										success: sendIOResponse,
+										failure: sendIOResponse
 									},
 									autoLoad: false
 								}
@@ -332,7 +340,7 @@ AUI().add(
 						var instance = this;
 
 						if (!Lang.isValue(page)) {
-							page = paginator.get('page') - 1 || 0;
+							page = (paginator.get('page') - 1) || 0;
 						}
 
 						if (!Lang.isValue(rowsPerPage)) {
@@ -343,6 +351,60 @@ AUI().add(
 						var end = start + rowsPerPage;
 
 						return [start, end];
+					},
+
+					_onDataRetrieveSuccess: function(event) {
+						var instance = this;
+
+						var responseData = event.responseData;
+
+						instance._documentLibraryContainer.loadingmask.hide();
+
+						var content = A.Node.create(responseData);
+
+						if (content) {
+							instance._setBreadcrumb(content);
+							instance._setButtons(content);
+							instance._setEntries(content);
+							instance._setFileEntrySearch(content);
+							instance._setFolders(content);
+							instance._setParentFolderTitle(content);
+							instance._syncDisplayStyleToolbar(content);
+							instance._setSearchResults(content);
+						}
+					},
+
+					_onDocumentLibraryContainerClick: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						var config = instance._config;
+						var namespace = instance._namespace;
+
+						var requestParams = {};
+
+						requestParams[namespace + STRUTS_ACTION] = config.strutsAction;
+						requestParams[namespace + 'action'] = 'browseFolder';
+						requestParams[namespace + STR_ENTRY_END] = instance._entryPaginator.get(ROWS_PER_PAGE);
+						requestParams[namespace + STR_FOLDER_END] = instance._folderPaginator.get(ROWS_PER_PAGE);
+						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
+						requestParams[namespace + REFRESH_FOLDERS] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
+						requestParams[namespace + SHOW_SIBLINGS] = true;
+						requestParams[namespace + STR_ENTRY_START] = 0;
+						requestParams[namespace + STR_FOLDER_START] = 0;
+						requestParams[namespace + VIEW_ADD_BUTTON] = true;
+						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
+						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
+						requestParams[namespace + VIEW_ENRTIES] = true;
+						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
+
+						Liferay.fire(
+							instance._eventDataRequest,
+							{
+								requestParams: requestParams
+							}
+						);
 					},
 
 					_onEntryPaginatorChangeRequest: function(event) {
@@ -397,78 +459,15 @@ AUI().add(
 						);
 					},
 
-					_onDataRetrieveSuccess: function(event) {
-						var instance = this;
-
-						var responseData = event.responseData;
-
-						instance._documentLibraryContainer.loadingmask.hide();
-
-						var content = A.Node.create(responseData);
-
-						if (content) {
-							instance._setBreadcrumb(content);
-							instance._setButtons(content);
-							instance._setEntries(content);
-							instance._setFileEntrySearch(content);
-							instance._setFolders(content);
-							instance._setParentFolderTitle(content);
-							instance._syncDisplayStyleToolbar(content);
-							instance._setSearchResults(content);
-						}
-					},
-
-					_onDocumentLibraryContainerClick: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var config = instance._config;
-						var namespace = instance._namespace;
-
-						var requestParams = {};
-
-						requestParams[namespace + STRUTS_ACTION] = config.strutsAction;
-						requestParams[namespace + 'action'] = 'browseFolder';
-						requestParams[namespace + STR_ENTRY_END] = instance._entryPaginator.get(ROWS_PER_PAGE);
-						requestParams[namespace + STR_FOLDER_END] = instance._folderPaginator.get(ROWS_PER_PAGE);
-						requestParams[instance._prefixedFolderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-						requestParams[namespace + REFRESH_FOLDERS] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
-						requestParams[namespace + SHOW_SIBLINGS] = true;
-						requestParams[namespace + STR_ENTRY_START] = 0;
-						requestParams[namespace + STR_FOLDER_START] = 0;
-						requestParams[namespace + VIEW_ADD_BUTTON] = true;
-						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
-						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
-						requestParams[namespace + VIEW_ENRTIES] = true;
-						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
-
-						Liferay.fire(
-							instance._eventDataRequest,
-							{
-								requestParams: requestParams
-							}
-						);
-					},
-
 					_onPageLoaded: function(event) {
 						var instance = this;
 
 						var paginatorData = event.paginator;
 
 						if (paginatorData) {
-							var paginatorName = paginatorData.name;
+							var paginator = instance['_' + paginatorData.name];
 
-							var paginator;
-
-							if (paginatorName == 'entryPaginator') {
-								paginator = instance._entryPaginator;
-							}
-							else if (paginatorName == 'folderPaginator') {
-								paginator = instance._folderPaginator;
-							}
-
-							if (paginator) {
+							if (A.instanceOf(paginator, A.Paginator)) {
 								paginator.setState(paginatorData.state);
 							}
 						}
@@ -529,6 +528,7 @@ AUI().add(
 							var addButtonContainer = A.one('#' + namespace + 'addButtonContainer');
 
 							addButtonContainer.plug(A.Plugin.ParseContent);
+
 							addButtonContainer.setContent(addButton);
 						}
 
@@ -540,6 +540,7 @@ AUI().add(
 							var displayStyleButtonsContainer = A.one('#' + namespace + 'displayStyleButtonsContainer');
 
 							displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
+
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
@@ -559,6 +560,7 @@ AUI().add(
 
 						if (entries) {
 							instance._entriesContainer.plug(A.Plugin.ParseContent);
+
 							instance._entriesContainer.setContent(entries);
 						}
 					},
@@ -574,6 +576,7 @@ AUI().add(
 							var fileEntrySearchContainer = A.one('#' + namespace + 'fileEntrySearchContainer');
 
 							fileEntrySearchContainer.plug(A.Plugin.ParseContent);
+
 							fileEntrySearchContainer.setContent(fileEntrySearch);
 						}
 					},
@@ -584,7 +587,7 @@ AUI().add(
 						var folders = content.one('#' + instance._namespace + STR_FOLDER_CONTAINER);
 
 						if (folders) {
-							var listViewDataContainer = A.one('.aui-liferaylistview-data-container');
+							var listViewDataContainer = A.one('.lfr-list-view-data-container');
 
 							listViewDataContainer.plug(A.Plugin.ParseContent);
 
@@ -616,7 +619,10 @@ AUI().add(
 						var searchResults = content.one('#' + instance._namespace + 'searchResults');
 
 						if (searchResults) {
+							var entriesContainer = instance._entriesContainer;
+
 							instance._entriesContainer.plug(A.Plugin.ParseContent);
+
 							instance._entriesContainer.setContent(searchResults);
 						}
 					},
@@ -649,7 +655,7 @@ AUI().add(
 
 						var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
 
-						var displayStyle = History.get(instance._prefxedDisplayStyle) || STR_ICON;
+						var displayStyle = History.get(instance._displayStyle) || STR_ICON;
 
 						displayStyleToolbar.item(0).StateInteraction.set(STR_ACTIVE, displayStyle === STR_ICON);
 						displayStyleToolbar.item(1).StateInteraction.set(STR_ACTIVE, displayStyle === 'descriptive');
@@ -666,7 +672,7 @@ AUI().add(
 						var entryStartEndParams = instance._getResultsStartEnd(instance._entryPaginator);
 						var folderStartEndParams = instance._getResultsStartEnd(instance._folderPaginator);
 
-						var customParams =  {};
+						var customParams = {};
 
 						if (requestParams) {
 							if (!owns(requestParams, namespace + STR_ENTRY_START) && !owns(requestParams, namespace + STR_ENTRY_END)) {

@@ -389,15 +389,15 @@ for (int i = 0; i < results.size(); i++) {
 <aui:script>
 	Liferay.fire(
 		'<portlet:namespace />pageLoaded',
-		 {
-			 paginator: {
-				 name: 'entryPaginator',
-				 state: {
-					 page: <%= entryEnd / (entryEnd - entryStart) %>,
-					 rowsPerPage: <%= (entryEnd - entryStart) %>,
-					 total: <%= total %>
-				 }
-			 }
+		{
+			paginator: {
+				name: 'entryPaginator',
+				state: {
+					page: <%= entryEnd / (entryEnd - entryStart) %>,
+					rowsPerPage: <%= (entryEnd - entryStart) %>,
+					total: <%= total %>
+				}
+			}
 		}
 	);
 </aui:script>

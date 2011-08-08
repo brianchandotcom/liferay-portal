@@ -106,8 +106,8 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 </div>
 
 <div class="body-row">
-	<div class="aui-liferaylistview-content" id="<portlet:namespace />listViewContainer">
-		<div class="folder-display-style" <%= refreshFolders ? "data-refresh-folders=\"true\"" : StringPool.BLANK %> id="<portlet:namespace />folderContainer">
+	<div id="<portlet:namespace />listViewContainer">
+		<div class="folder-display-style lfr-list-view-content" <%= refreshFolders ? "data-refresh-folders=\"true\"" : StringPool.BLANK %> id="<portlet:namespace />folderContainer">
 			<ul class="lfr-component">
 				<c:choose>
 					<c:when test="<%= ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID && showRootFolder)) || ((folderId == rootFolderId) && (showRootFolder)) %>">
@@ -448,9 +448,9 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 				</c:choose>
 			</ul>
 
-			<aui:script position="inline">
-			   Liferay.fire(
-				   '<portlet:namespace />pageLoaded',
+			<aui:script>
+				Liferay.fire(
+					'<portlet:namespace />pageLoaded',
 					{
 						paginator: {
 							name: 'folderPaginator',
@@ -460,9 +460,9 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								total: <%= total %>
 							}
 						}
-				   }
-			   );
-		   </aui:script>
+					}
+				);
+			</aui:script>
 		</div>
 	</div>
 </div>

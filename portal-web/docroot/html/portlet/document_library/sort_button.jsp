@@ -19,6 +19,8 @@
 <%
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 %>
 
 <liferay-ui:icon-menu align="left" direction="down" icon="" message="sort-by" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
@@ -78,19 +80,18 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	Liferay.provide(
 		window,
 		'<portlet:namespace />sortEntries',
-		function (orderByCol) {
-			var config = {
-				'<portlet:namespace />struts_action': '/document_library/view',
-				'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
-				'<portlet:namespace />viewSortButton': <%= Boolean.TRUE.toString() %>,
-				'<portlet:namespace />orderByCol': orderByCol,
-				'<portlet:namespace />orderByType': '<%= (orderByCol.equals("title") && orderByType.equals("asc")) ? "desc" : "asc" %>'
-			};
-
+		function(orderByCol) {
 			Liferay.fire(
 				'<portlet:namespace />dataRequest',
 				{
-					requestParams: config
+					requestParams: {
+						'<portlet:namespace />folderId': '<%= folderId %>',
+						'<portlet:namespace />struts_action': '/document_library/view',
+						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />viewSortButton': <%= Boolean.TRUE.toString() %>,
+						'<portlet:namespace />orderByCol': orderByCol,
+						'<portlet:namespace />orderByType': '<%= (orderByCol.equals("title") && orderByType.equals("asc")) ? "desc" : "asc" %>'
+					}
 				}
 			);
 		},

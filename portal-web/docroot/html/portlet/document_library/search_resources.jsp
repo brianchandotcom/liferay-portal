@@ -289,11 +289,16 @@ int total = 0;
 		}
 
 		Liferay.fire(
-			'<portlet:namespace />viewEntriesLoaded',
+			'<portlet:namespace />pageLoaded',
 			{
-				page: <%= entryEnd / (entryEnd - entryStart) %>,
-				rowsPerPage:  <%= (entryEnd - entryStart) %>,
-				total: <%= total %>
+				paginator: {
+					name: 'entryPaginator',
+					state: {
+						page: <%= entryEnd / (entryEnd - entryStart) %>,
+						rowsPerPage: <%= (entryEnd - entryStart) %>,
+						total: <%= total %>
+					}
+				}
 			}
 		);
 	</aui:script>

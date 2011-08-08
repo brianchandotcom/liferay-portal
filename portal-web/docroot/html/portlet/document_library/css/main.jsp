@@ -543,7 +543,7 @@
 		}
 	}
 
-	.aui-liferaylistview-content {
+	.lfr-list-view-content {
 		ul .expand-folder {
 			height: 10px;
 			padding-left: 5px;
@@ -579,7 +579,7 @@
 		}
 	}
 
-	.aui-liferaylistview-data-container {
+	.lfr-list-view-data-container {
 		background-color: #FAFAFA;
 		height: 100%;
 		position: absolute;

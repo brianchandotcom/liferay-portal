@@ -7,11 +7,9 @@ AUI().add(
 
 		var CONTENT_BOX = 'contentBox';
 
-		var EVENT_ITEM_CHOSEN = 'itemChosen';
+		var NAME = 'listview';
 
-		var NAME = 'liferaylistview';
-
-		var CSS_DATA_CONTAINER = getClassName(NAME, 'data', 'container');
+		var CSS_DATA_CONTAINER = 'lfr-list-view-data-container';
 
 		var STR_BOTTOM = 'bottom';
 
@@ -25,9 +23,14 @@ AUI().add(
 
 		var TPL_DATA_CONTAINER = '<div class="' + CSS_DATA_CONTAINER + ' aui-helper-hidden"></div>';
 
+		var UI_SRC = A.Widget.UI_SRC;
+
 		var ListView = A.Component.create(
 			{
 				ATTRS: {
+					cssClass: {
+						value: 'lfr-list-view'
+					},
 					data: {
 						setter: '_setData',
 						validator: '_validateData',
@@ -77,13 +80,6 @@ AUI().add(
 						var instance = this;
 
 						instance._transitionCompleteProxy = A.bind(instance._onTransitionCompleted, instance);
-
-						instance.publish(
-							EVENT_ITEM_CHOSEN,
-							{
-								defaultFn: instance._defaultItemChosen
-							}
-						);
 					},
 
 					renderUI: function() {
@@ -106,7 +102,7 @@ AUI().add(
 						var itemChosenEvent = instance.get('itemChosenEvent');
 						var itemSelector = instance.get('itemSelector');
 
-						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosenEvent, itemSelector, instance);
+						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosen, itemSelector, instance);
 
 						instance.after('dataChange', instance._afterDataChange);
 					},
@@ -140,10 +136,6 @@ AUI().add(
 						}
 					},
 
-					_defaultItemChosen: function(event) {
-						this.set('item', event.item);
-					},
-
 					_moveContainer: function() {
 						var instance = this;
 
@@ -162,15 +154,16 @@ AUI().add(
 						dataContainer.transition(transitionConfig, instance._transitionCompleteProxy);
 					},
 
-					_onItemChosenEvent: function(event) {
+					_onItemChosen: function(event) {
 						var instance = this;
 
 						event.preventDefault();
 
-						instance.fire(
-							EVENT_ITEM_CHOSEN,
+						instance.set(
+							'item',
+							event.currentTarget,
 							{
-								item: event.currentTarget
+								src: UI_SRC
 							}
 						);
 					},

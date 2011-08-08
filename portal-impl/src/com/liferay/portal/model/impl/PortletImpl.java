@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.security.permission.PortletPermissionHandler;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
@@ -140,8 +141,8 @@ public class PortletImpl extends PortletBaseImpl {
 		String friendlyURLMapperClass, String friendlyURLMapping,
 		String friendlyURLRoutes, String urlEncoderClass,
 		String portletDataHandlerClass, String portletLayoutListenerClass,
-		String pollerProcessorClass, String popMessageListenerClass,
-		String socialActivityInterpreterClass,
+		String portletPermissionHandlerClass, String pollerProcessorClass,
+		String popMessageListenerClass, String socialActivityInterpreterClass,
 		String socialRequestInterpreterClass, String webDAVStorageToken,
 		String webDAVStorageClass, String xmlRpcMethodClass,
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
@@ -200,6 +201,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_urlEncoderClass = urlEncoderClass;
 		_portletDataHandlerClass = portletDataHandlerClass;
 		_portletLayoutListenerClass = portletLayoutListenerClass;
+		_portletPermissionHandlerClass = portletPermissionHandlerClass;
 		_pollerProcessorClass = pollerProcessorClass;
 		_popMessageListenerClass = popMessageListenerClass;
 		_socialActivityInterpreterClass = socialActivityInterpreterClass;
@@ -829,6 +831,26 @@ public class PortletImpl extends PortletBaseImpl {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getPortletLayoutListenerInstance();
+	}
+
+	public String getPortletPermissionHandlerClass() {
+		return _portletPermissionHandlerClass;
+	}
+
+	public void setPortletPermissionHandlerClass(
+		String portletPermissionHandlerClass) {
+
+		_portletPermissionHandlerClass = portletPermissionHandlerClass;
+	}
+
+	public PortletPermissionHandler getPortletPermissionHandlerInstance() {
+		if (Validator.isNull(getPortletPermissionHandlerClass())) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getPortletPermissionHandlerInstance();
 	}
 
 	/**
@@ -3181,8 +3203,8 @@ public class PortletImpl extends PortletBaseImpl {
 			getFriendlyURLMapperClass(), getFriendlyURLMapping(),
 			getFriendlyURLRoutes(), getURLEncoderClass(),
 			getPortletDataHandlerClass(), getPortletLayoutListenerClass(),
-			getPollerProcessorClass(), getPopMessageListenerClass(),
-			getSocialActivityInterpreterClass(),
+			getPortletPermissionHandlerClass(), getPollerProcessorClass(),
+			getPopMessageListenerClass(), getSocialActivityInterpreterClass(),
 			getSocialRequestInterpreterClass(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
@@ -3367,6 +3389,8 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the portlet data layout listener class of the portlet.
 	 */
 	private String _portletLayoutListenerClass;
+
+	private String _portletPermissionHandlerClass;
 
 	/**
 	 * The name of the poller processor class of the portlet.

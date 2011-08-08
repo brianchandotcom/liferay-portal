@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.security.permission.PortletPermissionHandler;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -72,6 +73,8 @@ public interface PortletBag extends Cloneable {
 	public Portlet getPortletInstance();
 
 	public PortletLayoutListener getPortletLayoutListenerInstance();
+
+	public PortletPermissionHandler getPortletPermissionHandlerInstance();
 
 	public String getPortletName();
 

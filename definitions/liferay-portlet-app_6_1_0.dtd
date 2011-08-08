@@ -21,17 +21,17 @@ parent-struts-path?, configuration-path?, configuration-action-class?,
 indexer-class*, open-search-class?, scheduler-entry*, portlet-url-class?,
 friendly-url-mapper-class?, friendly-url-mapping?, friendly-url-routes?,
 url-encoder-class?, portlet-data-handler-class?, portlet-layout-listener-class?,
-poller-processor-class?, pop-message-listener-class?,
-social-activity-interpreter-class?, social-request-interpreter-class?,
-webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
-control-panel-entry-category?, control-panel-entry-weight?,
-control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
-custom-attributes-display*, workflow-handler*, preferences-company-wide?,
-preferences-unique-per-layout?, preferences-owned-by-group?,
-use-default-template?, show-portlet-access-denied?, show-portlet-inactive?,
-action-url-redirect?, restore-current-view?, maximize-edit?, maximize-help?,
-pop-up-print?, layout-cacheable?, instanceable?, remoteable?, scopeable?,
-user-principal-strategy?, private-request-attributes?,
+portlet-permission-handler-class?, poller-processor-class?,
+pop-message-listener-class?, social-activity-interpreter-class?,
+social-request-interpreter-class?, webdav-storage-token?,
+webdav-storage-class?, xml-rpc-method-class?, control-panel-entry-category?,
+control-panel-entry-weight?, control-panel-entry-class?,
+asset-renderer-factory*, atom-collection-adapter*, custom-attributes-display*,
+workflow-handler*, preferences-company-wide?, preferences-unique-per-layout?,
+preferences-owned-by-group?, use-default-template?, show-portlet-access-denied?,
+show-portlet-inactive?, action-url-redirect?, restore-current-view?,
+maximize-edit?, maximize-help?, pop-up-print?, layout-cacheable?, instanceable?,
+remoteable?, scopeable?, user-principal-strategy?, private-request-attributes?,
 private-session-attributes?, autopropagated-parameters?, action-timeout?,
 render-timeout?, render-weight?, ajaxable?, header-portal-css*,
 header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
@@ -256,6 +256,13 @@ http://docs.liferay.com/portal/6.0/javadocs/portal-impl/com/liferay/portlet/jour
 http://docs.liferay.com/portal/6.0/javadocs/portal-service/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
 -->
 <!ELEMENT portlet-layout-listener-class (#PCDATA)>
+
+<!--
+The portlet-permission-handler-class value must be a class that implements
+com.liferay.portal.kernel.security.permission.PortletPermissionHandler and is
+called when permissions related tasks are run.
+-->
+<!ELEMENT portlet-permission-handler-class (#PCDATA)>
 
 <!--
 The poller-processor-class value must be a class that implements

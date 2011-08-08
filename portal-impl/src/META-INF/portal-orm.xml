@@ -3593,6 +3593,7 @@
 			<transient name="portletLayoutListenerClass" />
 			<transient name="portletModes" />
 			<transient name="portletName" />
+			<transient name="portletPermissionHandlerClass" />
 			<transient name="portletURLClass" />
 			<transient name="preferencesCompanyWide" />
 			<transient name="preferencesOwnedByGroup" />

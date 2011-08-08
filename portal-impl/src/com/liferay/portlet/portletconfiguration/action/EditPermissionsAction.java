@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.portletconfiguration.action;
 
+import com.liferay.portal.kernel.security.permission.PortletPermissionHandler;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -195,6 +196,26 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		return actionIds;
 	}
 
+	protected void inheritRolePermissions(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletResource);
+
+		PortletPermissionHandler portletPermissionHandler =
+			portlet.getPortletPermissionHandlerInstance();
+
+		if (portletPermissionHandler != null) {
+			portletPermissionHandler.inheritRolePermissions();
+		}
+	}
+
 	protected void updateGroupPermissions(ActionRequest actionRequest)
 		throws Exception {
 
@@ -272,6 +293,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		else {
 			updateRolePermissions_1to4(actionRequest);
 		}
+
+		inheritRolePermissions(actionRequest);
 	}
 
 	protected void updateRolePermissions_1to4(ActionRequest actionRequest)

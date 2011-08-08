@@ -1215,6 +1215,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("portlet-layout-listener-class"),
 				portletModel.getPortletLayoutListenerClass()));
+		portletModel.setPortletPermissionHandlerClass(
+			GetterUtil.getString(
+				portletElement.elementText("portlet-permission-handler-class"),
+				portletModel.getPortletPermissionHandlerClass()));
 		portletModel.setPollerProcessorClass(
 			GetterUtil.getString(
 				portletElement.elementText("poller-processor-class"),
@@ -1225,14 +1229,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletModel.getPopMessageListenerClass()));
 		portletModel.setSocialActivityInterpreterClass(
 			GetterUtil.getString(
-				portletElement.elementText(
-					"social-activity-interpreter-class"),
-					portletModel.getSocialActivityInterpreterClass()));
+				portletElement.elementText("social-activity-interpreter-class"),
+				portletModel.getSocialActivityInterpreterClass()));
 		portletModel.setSocialRequestInterpreterClass(
 			GetterUtil.getString(
-				portletElement.elementText(
-					"social-request-interpreter-class"),
-					portletModel.getSocialRequestInterpreterClass()));
+				portletElement.elementText("social-request-interpreter-class"),
+				portletModel.getSocialRequestInterpreterClass()));
 		portletModel.setWebDAVStorageToken(
 			GetterUtil.getString(
 				portletElement.elementText("webdav-storage-token"),

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.security.permission.PortletPermissionHandler;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -59,6 +60,7 @@ public class PortletBagImpl implements PortletBag {
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
 		PortletLayoutListener portletLayoutListenerInstance,
+		PortletPermissionHandler portletPermissionHandlerInstance,
 		PollerProcessor pollerProcessorInstance,
 		MessageListener popMessageListenerInstance,
 		SocialActivityInterpreter socialActivityInterpreterInstance,
@@ -82,6 +84,7 @@ public class PortletBagImpl implements PortletBag {
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
 		_portletLayoutListenerInstance = portletLayoutListenerInstance;
+		_portletPermissionHandlerInstance = portletPermissionHandlerInstance;
 		_pollerProcessorInstance = pollerProcessorInstance;
 		_popMessageListenerInstance = popMessageListenerInstance;
 		_socialActivityInterpreterInstance = socialActivityInterpreterInstance;
@@ -104,7 +107,8 @@ public class PortletBagImpl implements PortletBag {
 			getConfigurationActionInstance(), getIndexerInstances(),
 			getOpenSearchInstance(), getFriendlyURLMapperInstance(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
-			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
+			getPortletLayoutListenerInstance(),
+			getPortletPermissionHandlerInstance(),getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstance(),
 			getSocialRequestInterpreterInstance(), getWebDAVStorageInstance(),
@@ -170,6 +174,10 @@ public class PortletBagImpl implements PortletBag {
 
 	public String getPortletName() {
 		return _portletName;
+	}
+
+	public PortletPermissionHandler getPortletPermissionHandlerInstance() {
+		return _portletPermissionHandlerInstance;
 	}
 
 	public PreferencesValidator getPreferencesValidatorInstance() {
@@ -245,6 +253,7 @@ public class PortletBagImpl implements PortletBag {
 	private PortletDataHandler _portletDataHandlerInstance;
 	private Portlet _portletInstance;
 	private PortletLayoutListener _portletLayoutListenerInstance;
+	private PortletPermissionHandler _portletPermissionHandlerInstance;
 	private String _portletName;
 	private PreferencesValidator _preferencesValidatorInstance;
 	private Map<String, ResourceBundle> _resourceBundles;

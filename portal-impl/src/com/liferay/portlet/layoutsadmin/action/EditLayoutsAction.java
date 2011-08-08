@@ -53,6 +53,7 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -839,7 +840,8 @@ public class EditLayoutsAction extends PortletAction {
 				actionRequest, device + "InheritLookAndFeel");
 
 			if (inheritLookAndFeel) {
-				themeId = StringPool.BLANK;
+				themeId = ThemeImpl.getDefaultRegularThemeId(companyId);
+				
 				colorSchemeId = StringPool.BLANK;
 
 				deleteThemeSettings(typeSettingsProperties, device);

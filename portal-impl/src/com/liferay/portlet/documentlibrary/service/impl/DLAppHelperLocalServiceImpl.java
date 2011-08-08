@@ -138,7 +138,7 @@ public class DLAppHelperLocalServiceImpl
 		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
 			assetEntryLocalService.incrementViewCounter(
 				userId, DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
+				fileEntry.getFileEntryId(), 1);
 
 			List<DLFileShortcut> fileShortcuts =
 				dlFileShortcutPersistence.findByToFileEntryId(
@@ -147,7 +147,7 @@ public class DLAppHelperLocalServiceImpl
 			for (DLFileShortcut fileShortcut : fileShortcuts) {
 				assetEntryLocalService.incrementViewCounter(
 					userId, DLFileShortcut.class.getName(),
-					fileShortcut.getFileShortcutId());
+					fileShortcut.getFileShortcutId(), 1);
 			}
 		}
 	}

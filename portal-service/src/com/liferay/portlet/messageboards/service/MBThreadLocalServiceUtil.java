@@ -368,12 +368,6 @@ public class MBThreadLocalServiceUtil {
 		return getService().getThreadsCount(groupId, categoryId, status);
 	}
 
-	public static void incrementViewCounter(long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().incrementViewCounter(threadId);
-	}
-
 	public static void incrementViewCounter(long threadId, int increment)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

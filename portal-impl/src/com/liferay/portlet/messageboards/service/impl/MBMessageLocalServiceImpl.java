@@ -1068,7 +1068,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
-			mbThreadLocalService.incrementViewCounter(thread.getThreadId());
+			mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
 
 			if (thread.getRootMessageUserId() != userId) {
 				MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(

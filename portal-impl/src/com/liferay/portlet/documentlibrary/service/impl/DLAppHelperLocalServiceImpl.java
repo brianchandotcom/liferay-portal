@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchEntryException;
@@ -36,7 +37,10 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -48,12 +52,6 @@ public class DLAppHelperLocalServiceImpl
 			FileEntry fileEntry, FileVersion fileVersion,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		// Sync
-
-		dlSyncLocalService.addSync(
-			fileEntry.getFileEntryId(), fileEntry.getCompanyId(),
-			fileEntry.getRepositoryId(), DLSyncConstants.TYPE_FILE);
 
 		// Message boards
 
@@ -68,9 +66,11 @@ public class DLAppHelperLocalServiceImpl
 	public void addFolder(Folder folder, ServiceContext serviceContext)
 		throws SystemException {
 
-		dlSyncLocalService.addSync(
-			folder.getFolderId(), folder.getCompanyId(),
-			folder.getRepositoryId(), DLSyncConstants.TYPE_FOLDER);
+		if (!isStagingGroup(folder.getGroupId())) {
+			dlSyncLocalService.addSync(
+				folder.getFolderId(), folder.getCompanyId(),
+				folder.getRepositoryId(), DLSyncConstants.TYPE_FOLDER);
+		}
 	}
 
 	public void deleteFileEntry(FileEntry fileEntry)
@@ -88,8 +88,11 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		dlSyncLocalService.updateSync(
-			fileEntry.getFileEntryId(), DLSyncConstants.EVENT_DELETE);
+		if (!isStagingGroup(fileEntry.getGroupId())) {
+
+			dlSyncLocalService.updateSync(
+				fileEntry.getFileEntryId(), DLSyncConstants.EVENT_DELETE);
+		}
 
 		// Asset
 
@@ -115,8 +118,12 @@ public class DLAppHelperLocalServiceImpl
 	public void deleteFolder(Folder folder)
 		throws PortalException, SystemException {
 
-		dlSyncLocalService.updateSync(
-			folder.getFolderId(), DLSyncConstants.EVENT_DELETE);
+		if (!isStagingGroup(folder.getGroupId())) {
+
+			dlSyncLocalService.updateSync(
+				folder.getFolderId(), DLSyncConstants.EVENT_DELETE);
+
+		}
 	}
 
 	public void getFileAsStream(
@@ -224,21 +231,20 @@ public class DLAppHelperLocalServiceImpl
 			FileEntry fileEntry, FileVersion fileVersion,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		dlSyncLocalService.updateSync(
-			fileEntry.getFileEntryId(), DLSyncConstants.EVENT_UPDATE);
 	}
 
 	public void updateFolder(Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		dlSyncLocalService.updateSync(
-			folder.getFolderId(), DLSyncConstants.EVENT_UPDATE);
+		if (!isStagingGroup(folder.getGroupId())) {
+			dlSyncLocalService.updateSync(
+				folder.getFolderId(), DLSyncConstants.EVENT_UPDATE);
+		}
 	}
 
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
-			int status)
+			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -313,6 +319,23 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getGroupId(), latestFileVersion.getCreateDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				activityType, StringPool.BLANK, 0);
+
+			// Sync
+
+			if (!isStagingGroup(fileEntry.getGroupId())) {
+				String event = (String)workflowContext.get("event");
+
+				if (event.equals(DLSyncConstants.EVENT_ADD)) {
+					dlSyncLocalService.addSync(
+						fileEntry.getFileEntryId(), fileEntry.getCompanyId(),
+						fileEntry.getRepositoryId(), DLSyncConstants.TYPE_FILE);
+				}
+				else if (event.equals(DLSyncConstants.EVENT_DELETE)) {
+					dlSyncLocalService.updateSync(
+						fileEntry.getFileEntryId(),
+						DLSyncConstants.EVENT_DELETE);
+				}
+			}
 		}
 		else {
 
@@ -323,6 +346,17 @@ public class DLAppHelperLocalServiceImpl
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId(), false);
 			}
+		}
+	}
+
+	protected boolean isStagingGroup(long groupId) {
+		try {
+			Group group = groupLocalService.getGroup(groupId);
+
+			return group.isStagingGroup();
+		}
+		catch (Exception e) {
+			return false;
 		}
 	}
 

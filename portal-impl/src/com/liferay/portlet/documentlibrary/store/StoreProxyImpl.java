@@ -68,15 +68,15 @@ public class StoreProxyImpl implements Store {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.copyFileVersion(
-			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName);
+			companyId, repositoryId, fileName, fromVersionLabel,
+			toVersionLabel, sourceFileName);
 	}
 
 	public void deleteDirectory(
@@ -98,15 +98,16 @@ public class StoreProxyImpl implements Store {
 
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		store.deleteFile(companyId, repositoryId, fileName, versionNumber);
+		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	public byte[] getFile(long companyId, long repositoryId, String fileName)
+	public File getFile(
+			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
@@ -114,14 +115,34 @@ public class StoreProxyImpl implements Store {
 		return store.getFile(companyId, repositoryId, fileName);
 	}
 
-	public byte[] getFile(
+	public File getFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		return store.getFile(companyId, repositoryId, fileName, versionNumber);
+		return store.getFile(companyId, repositoryId, fileName, versionLabel);
+	}
+
+	public byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		return store.getFileAsBytes(companyId, repositoryId, fileName);
+	}
+
+	public byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		return store.getFileAsBytes(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public InputStream getFileAsStream(
@@ -135,13 +156,13 @@ public class StoreProxyImpl implements Store {
 
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		return store.getFileAsStream(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public String[] getFileNames(long companyId, long repositoryId)
@@ -170,14 +191,22 @@ public class StoreProxyImpl implements Store {
 		return store.getFileSize(companyId, repositoryId, fileName);
 	}
 
-	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+	public boolean hasFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
-		return store.hasFile(companyId, repositoryId, fileName, versionNumber);
+		return store.hasFile(companyId, repositoryId, fileName);
+	}
+
+	public boolean hasFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public void move(String srcDir, String destDir) throws SystemException {
@@ -208,51 +237,51 @@ public class StoreProxyImpl implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, byte[] bytes)
+			String versionLabel, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
-			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			companyId, repositoryId, fileName, versionLabel, sourceFileName,
 			bytes);
 	}
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, File file)
+			String versionLabel, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
-			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			companyId, repositoryId, fileName, versionLabel, sourceFileName,
 			file);
 	}
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, InputStream is)
+			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFile(
-			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			companyId, repositoryId, fileName, versionLabel, sourceFileName,
 			is);
 	}
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
 
 		store.updateFileVersion(
-			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName);
+			companyId, repositoryId, fileName, fromVersionLabel,
+			toVersionLabel, sourceFileName);
 	}
 
 }

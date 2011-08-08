@@ -354,7 +354,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 					attachmentEl.addAttribute("name", name);
 					attachmentEl.addAttribute("bin-path", binPath);
 
-					byte[] bytes = DLStoreUtil.getFile(
+					byte[] bytes = DLStoreUtil.getFileAsBytes(
 						portletDataContext.getCompanyId(),
 						CompanyConstants.SYSTEM, attachment);
 

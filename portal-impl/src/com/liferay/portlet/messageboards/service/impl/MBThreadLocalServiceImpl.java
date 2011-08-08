@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -656,6 +658,48 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	protected void moveAttachmentFromOldThread(
+			long companyId, String fileName, String newAttachmentsDir)
+		throws PortalException, SystemException {
+
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(newAttachmentsDir);
+		sb.append(StringPool.SLASH);
+		sb.append(StringUtil.extractLast(fileName, StringPool.SLASH));
+
+		String newFileName = sb.toString();
+
+		try {
+			File file = DLStoreUtil.getFile(
+				companyId, repositoryId, fileName);
+
+			DLStoreUtil.addFile(
+				companyId, repositoryId, newFileName, false, file);
+		}
+		catch (UnsupportedOperationException uoe) {
+			InputStream is = DLStoreUtil.getFileAsStream(
+				companyId, repositoryId, fileName);
+
+			try {
+				DLStoreUtil.addFile(
+					companyId, repositoryId, newFileName, false, is);
+			}
+			finally {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+					_log.error(ioe);
+				}
+			}
+		}
+
+		DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
+	}
+
 	protected void moveAttachmentsFromOldThread(
 			MBMessage message, String oldAttachmentsDir)
 		throws PortalException, SystemException {
@@ -679,25 +723,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			companyId, repositoryId, oldAttachmentsDir);
 
 		for (String fileName : fileNames) {
-			String name = StringUtil.extractLast(fileName, StringPool.SLASH);
-			InputStream is = DLStoreUtil.getFileAsStream(
-				companyId, repositoryId, fileName);
-
-			try {
-				DLStoreUtil.addFile(
-					companyId, repositoryId, newAttachmentsDir + "/" + name,
-					false, is);
-			}
-			finally {
-				try {
-					is.close();
-				}
-				catch (IOException ioe) {
-					_log.error(ioe);
-				}
-			}
-
-			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
+			moveAttachmentFromOldThread(companyId, fileName, newAttachmentsDir);
 		}
 
 		try {

@@ -91,15 +91,15 @@ public abstract class BaseStore implements Store {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		updateFile(
-			companyId, repositoryId, fileName, toVersionNumber, sourceFileName,
+			companyId, repositoryId, fileName, toVersionLabel, sourceFileName,
 			is);
 	}
 
@@ -113,10 +113,25 @@ public abstract class BaseStore implements Store {
 
 	public abstract void deleteFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException;
 
-	public byte[] getFile(long companyId, long repositoryId, String fileName)
+	public File getFile(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		return getFile(companyId, repositoryId, fileName, StringPool.BLANK);
+	}
+
+	public File getFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		byte[] bytes = null;
@@ -133,16 +148,16 @@ public abstract class BaseStore implements Store {
 		return bytes;
 	}
 
-	public byte[] getFile(
+	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		byte[] bytes = null;
 
 		try {
 			InputStream is = getFileAsStream(
-				companyId, repositoryId, fileName, versionNumber);
+				companyId, repositoryId, fileName, versionLabel);
 
 			bytes = FileUtil.getBytes(is);
 		}
@@ -163,7 +178,7 @@ public abstract class BaseStore implements Store {
 
 	public abstract InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException;
 
 	public abstract String[] getFileNames(
@@ -174,9 +189,15 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException;
 
+	public boolean hasFile(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		return hasFile(companyId, repositoryId, fileName, VERSION_DEFAULT);
+	}
+
 	public abstract boolean hasFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException;
 
 	public abstract void move(String srcDir, String destDir)
@@ -189,7 +210,7 @@ public abstract class BaseStore implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, byte[] bytes)
+			String versionLabel, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		File file = null;
@@ -198,7 +219,7 @@ public abstract class BaseStore implements Store {
 			file = FileUtil.createTempFile(bytes);
 
 			updateFile(
-				companyId, repositoryId, fileName, versionNumber,
+				companyId, repositoryId, fileName, versionLabel,
 				sourceFileName, file);
 		}
 		catch (IOException ioe) {
@@ -211,7 +232,7 @@ public abstract class BaseStore implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, File file)
+			String versionLabel, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -220,7 +241,7 @@ public abstract class BaseStore implements Store {
 			is = new FileInputStream(file);
 
 			updateFile(
-				companyId, repositoryId, fileName, versionNumber,
+				companyId, repositoryId, fileName, versionLabel,
 				sourceFileName, is);
 		}
 		catch (FileNotFoundException fnfe) {
@@ -240,24 +261,24 @@ public abstract class BaseStore implements Store {
 
 	public abstract void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, InputStream is)
+			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		updateFile(
-			companyId, repositoryId, fileName, toVersionNumber, sourceFileName,
+			companyId, repositoryId, fileName, toVersionLabel, sourceFileName,
 			is);
 
 		deleteFile(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseStore.class);

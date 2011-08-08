@@ -353,7 +353,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 					attachmentElement.addAttribute("name", name);
 					attachmentElement.addAttribute("bin-path", binPath);
 
-					byte[] bytes = DLStoreUtil.getFile(
+					byte[] bytes = DLStoreUtil.getFileAsBytes(
 						portletDataContext.getCompanyId(),
 						CompanyConstants.SYSTEM, attachment);
 

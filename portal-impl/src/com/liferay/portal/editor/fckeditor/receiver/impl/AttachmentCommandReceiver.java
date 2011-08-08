@@ -137,7 +137,7 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 		}
 
 		for (String fileName : fileNames) {
-			byte[] fileEntry = DLStoreUtil.getFile(
+			byte[] fileEntry = DLStoreUtil.getFileAsBytes(
 				wikiPage.getCompanyId(), repositoryId, fileName);
 
 			String[] parts = StringUtil.split(fileName, StringPool.SLASH);

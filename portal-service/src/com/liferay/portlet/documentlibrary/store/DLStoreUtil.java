@@ -37,6 +37,15 @@ public class DLStoreUtil {
 
 	public static void addFile(
 			long companyId, long repositoryId, String fileName,
+			boolean validateFileExtension, byte[] bytes)
+		throws PortalException, SystemException {
+
+		getStore().addFile(
+			companyId, repositoryId, fileName, validateFileExtension, bytes);
+	}
+
+	public static void addFile(
+			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, File file)
 		throws PortalException, SystemException {
 
@@ -67,19 +76,26 @@ public class DLStoreUtil {
 		getStore().addFile(companyId, repositoryId, fileName, file);
 	}
 
+	public static void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException {
+
+		getStore().addFile(companyId, repositoryId, fileName, is);
+	}
+
 	public static void checkRoot(long companyId) throws SystemException {
 		getStore().checkRoot(companyId);
 	}
 
 	public static void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		getStore().copyFileVersion(
-			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName);
+			companyId, repositoryId, fileName, fromVersionLabel,
+			toVersionLabel, sourceFileName);
 	}
 
 	public static void deleteDirectory(
@@ -98,26 +114,42 @@ public class DLStoreUtil {
 
 	public static void deleteFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
-		getStore().deleteFile(companyId, repositoryId, fileName, versionNumber);
+		getStore().deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	public static byte[] getFile(
+	public static File getFile(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		return getStore().getFile(companyId, repositoryId, fileName);
 	}
 
-	public static byte[] getFile(
+	public static File getFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		return getStore().getFile(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
+	}
+
+	public static byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		return getStore().getFileAsBytes(companyId, repositoryId, fileName);
+	}
+
+	public static byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		return getStore().getFileAsBytes(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public static InputStream getFileAsStream(
@@ -129,11 +161,11 @@ public class DLStoreUtil {
 
 	public static InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		return getStore().getFileAsStream(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public static String[] getFileNames(
@@ -164,12 +196,19 @@ public class DLStoreUtil {
 	}
 
 	public static boolean hasFile(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		return getStore().hasFile(companyId, repositoryId, fileName);
+	}
+
+	public static boolean hasFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		return getStore().hasFile(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public static void move(String srcDir, String destDir)
@@ -198,54 +237,54 @@ public class DLStoreUtil {
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
-			String versionNumber, String sourceFileName, File file)
+			String versionLabel, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, repositoryId, fileName, fileExtension,
-			validateFileExtension, versionNumber, sourceFileName, file);
+			validateFileExtension, versionLabel, sourceFileName, file);
 	}
 
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
-			String versionNumber, String sourceFileName, InputStream is)
+			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
 			companyId, repositoryId, fileName, fileExtension,
-			validateFileExtension, versionNumber, sourceFileName, is);
+			validateFileExtension, versionLabel, sourceFileName, is);
 	}
 
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, byte[] bytes)
+			String versionLabel, String sourceFileName, byte[] bytes)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
-			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			companyId, repositoryId, fileName, versionLabel, sourceFileName,
 			bytes);
 	}
 
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, File file)
+			String versionLabel, String sourceFileName, File file)
 		throws PortalException, SystemException {
 
 		getStore().updateFile(
-			companyId, repositoryId, fileName, versionNumber, sourceFileName,
+			companyId, repositoryId, fileName, versionLabel, sourceFileName,
 			file);
 	}
 
 	public static void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
+			String fromVersionLabel, String toVersionLabel,
 			String sourceFileName)
 		throws PortalException, SystemException {
 
 		getStore().updateFileVersion(
-			companyId, repositoryId, fileName, fromVersionNumber,
-			toVersionNumber, sourceFileName);
+			companyId, repositoryId, fileName, fromVersionLabel,
+			toVersionLabel, sourceFileName);
 	}
 
 	public static void validate(String fileName, boolean validateFileExtension)

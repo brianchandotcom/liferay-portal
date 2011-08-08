@@ -25,6 +25,8 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 
 long repositoryId = BeanParamUtil.getLong(folder, request, "repositoryId");
 
+boolean isRootFolder = ParamUtil.getBoolean(request, "isRootFolder");
+
 Folder parentFolder = null;
 
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -62,7 +64,7 @@ if (workflowEnabled) {
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? "new-folder" : folder.getName() %>'
+		title='<%= (folder == null) ? (isRootFolder ? "documents-home" : "new-folder") : folder.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
@@ -72,51 +74,61 @@ if (workflowEnabled) {
 	<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= folder != null %>">
-			<aui:field-wrapper label="parent-folder">
+		<c:if test="<%= !isRootFolder %>">
+			<c:if test="<%= folder != null %>">
+				<aui:field-wrapper label="parent-folder">
 
-				<%
-				String parentFolderName = LanguageUtil.get(pageContext, "documents-home");
+					<%
+					String parentFolderName = LanguageUtil.get(pageContext, "documents-home");
 
-				try {
-					if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-						parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
+					try {
+						if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+							parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
 
-						parentFolderName = parentFolder.getName();
+							parentFolderName = parentFolder.getName();
+						}
 					}
-				}
-				catch (NoSuchFolderException nscce) {
-				}
-				%>
+					catch (NoSuchFolderException nscce) {
+					}
+					%>
 
-				<portlet:renderURL var="viewFolderURL">
-					<portlet:param name="struts_action" value="/document_library/view" />
-					<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-				</portlet:renderURL>
+					<portlet:renderURL var="viewFolderURL">
+						<portlet:param name="struts_action" value="/document_library/view" />
+						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+					</portlet:renderURL>
 
-				<aui:a href="<%= viewFolderURL %>" id="parentFolderName"><%= parentFolderName %></aui:a>
-			</aui:field-wrapper>
+					<aui:a href="<%= viewFolderURL %>" id="parentFolderName"><%= parentFolderName %></aui:a>
+				</aui:field-wrapper>
+			</c:if>
+
+			<aui:input name="name" />
+
+			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
+				<aui:input name="description" />
+
+				<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+					<liferay-ui:custom-attribute-list
+						className="<%= DLFolderConstants.getClassName() %>"
+						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</liferay-ui:custom-attributes-available>
+			</c:if>
 		</c:if>
 
-		<aui:input name="name" />
-
-		<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
-			<aui:input name="description" />
-
-			<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= DLFolderConstants.getClassName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
-		</c:if>
-
-		<c:if test="<%= (folder != null) && (folder.getModel() instanceof DLFolder) %>">
+		<c:if test="<%= isRootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
 
 			<%
-			DLFolder dlFolder = (DLFolder)folder.getModel();
+			DLFolder dlFolder = null;
+
+			long defaultFileEntryTypeId = 0;
+
+			if (!isRootFolder) {
+				dlFolder = (DLFolder)folder.getModel();
+
+				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
+			}
 
 			List<DLFileEntryType> folderDLFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, false);
 
@@ -131,18 +143,20 @@ if (workflowEnabled) {
 			%>
 
 			<aui:field-wrapper label="document-type-restrictions" helpMessage="document-type-restrictions-help">
-				<div>
-					<table class="lfr-table">
-					<tr>
-						<td class="lfr-label">
-							<liferay-ui:message key="override-inherited-restrictions" />
-						</td>
-						<td>
-							<liferay-ui:input-checkbox defaultValue="<%= dlFolder.isOverrideFileEntryTypes() %>"  param="overrideFileEntryTypes" />
-						</td>
-					</tr>
-					</table>
-				</div>
+				<c:if test="<%= !isRootFolder %>">
+					<div>
+						<table class="lfr-table">
+						<tr>
+							<td class="lfr-label">
+								<liferay-ui:message key="override-inherited-restrictions" />
+							</td>
+							<td>
+								<liferay-ui:input-checkbox defaultValue="<%= dlFolder.isOverrideFileEntryTypes() %>"  param="overrideFileEntryTypes" />
+							</td>
+						</tr>
+						</table>
+					</div>
+				</c:if>
 
 				<div id="<portlet:namespace />overrideParentSettings">
 					<c:if test="<%= workflowEnabled %>">
@@ -199,7 +213,7 @@ if (workflowEnabled) {
 							/>
 
 							<liferay-ui:search-container-column-text name="default">
-								<input class="default-file-entry-type" type="radio" name="defaultFileEntryTypeId" <%= (dlFolder.getDefaultFileEntryTypeId() == dlFileEntryType.getFileEntryTypeId()) ? "checked=\"true\"" : "" %> value="<%= dlFileEntryType.getFileEntryTypeId() %>" />
+								<input class="default-file-entry-type" type="radio" name="defaultFileEntryTypeId" <%= (defaultFileEntryTypeId == dlFileEntryType.getFileEntryTypeId()) ? "checked=\"true\"" : "" %> value="<%= dlFileEntryType.getFileEntryTypeId() %>" />
 							</liferay-ui:search-container-column-text>
 
 							<c:if test="<%= workflowEnabled %>">

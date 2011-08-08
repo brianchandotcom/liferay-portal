@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.workflow;
 
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,8 +28,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -58,9 +61,30 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 		DLFileVersion dlFileVersion =
 			DLFileVersionLocalServiceUtil.getFileVersion(classPK);
 
-		return WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(
-			companyId, groupId, DLFolder.class.getName(),
-			dlFileVersion.getFolderId(), dlFileVersion.getFileEntryTypeId());
+		long folderId = dlFileVersion.getFolderId();
+
+		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+
+			if (dlFolder.isOverrideFileEntryTypes()) {
+				break;
+			}
+
+			folderId = dlFolder.getParentFolderId();
+		}
+
+		try {
+			return WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLink(
+					companyId, groupId, DLFolder.class.getName(), folderId, 0,
+					true);
+		}
+		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+			return WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLink(
+					companyId, groupId, DLFolder.class.getName(), folderId,
+					dlFileVersion.getFileEntryTypeId(), true);
+		}
 	}
 
 	@Override

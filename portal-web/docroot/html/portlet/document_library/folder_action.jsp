@@ -220,6 +220,21 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</c:if>
 			</c:when>
 			<c:otherwise>
+				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
+					<portlet:renderURL var="editURL">
+						<portlet:param name="struts_action" value="/document_library/edit_folder" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="isRootFolder" value="true" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						image="edit"
+						url="<%= editURL %>"
+					/>
+				</c:if>
+
 				<c:if test="<%= showActions && showPermissionsURL %>">
 					<liferay-security:permissionsURL
 						modelResource="<%= modelResource %>"

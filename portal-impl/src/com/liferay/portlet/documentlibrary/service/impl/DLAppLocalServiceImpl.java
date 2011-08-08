@@ -742,7 +742,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  parentFolderId the primary key of the folder's parent folder
 	 * @param  name the folder's name
 	 * @return the folder with the name in the parent folder
-	 * @throws PortalException if the folder could not be found TODO check
+	 * @throws PortalException if the folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Folder getFolder(
@@ -1489,6 +1489,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         <li>
 	 *         overrideFileEntryTypes - boolean specifying whether to override
 	 *         ancestral folder's restriction of file entry types allowed
+	 *         </li>
+	 *         <li>
+	 *         workflowDefinitionXYZ - the workflow definition name specified
+	 *         per file entry type. The parameter name must be the string 
+	 *         <code>workflowDefinition</code> appended by the 
+	 *         <code>fileEntryTypeId</code> (optionally <code>0</code>).
 	 *         </li>
 	 *         </ul>
 	 *

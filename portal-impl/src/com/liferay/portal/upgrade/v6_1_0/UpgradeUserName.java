@@ -52,7 +52,7 @@ public class UpgradeUserName extends UpgradeProcess {
 
 			sb.append("select distinct User_.companyId, User_.userId, ");
 			sb.append("User_.firstName, User_.middleName, User_.lastName ");
-			sb.append("User_ inner join ");
+			sb.append("from User_ inner join ");
 			sb.append(tableName);
 			sb.append(" on ");
 			sb.append(tableName);

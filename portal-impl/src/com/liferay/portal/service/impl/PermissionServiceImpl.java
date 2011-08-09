@@ -43,8 +43,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.imagegallery.model.IGFolder;
-import com.liferay.portlet.imagegallery.service.permission.IGFolderPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -288,11 +286,6 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		else if (name.equals(Group.class.getName())) {
 			GroupPermissionUtil.check(
 				permissionChecker, GetterUtil.getLong(primKey),
-				ActionKeys.PERMISSIONS);
-		}
-		else if (name.equals(IGFolder.class.getName())) {
-			IGFolderPermission.check(
-				permissionChecker, groupId, GetterUtil.getLong(primKey),
 				ActionKeys.PERMISSIONS);
 		}
 		else if (name.equals(JournalArticle.class.getName())) {

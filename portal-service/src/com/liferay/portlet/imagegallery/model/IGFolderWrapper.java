@@ -350,18 +350,6 @@ public class IGFolderWrapper implements IGFolder {
 		_igFolder.persist();
 	}
 
-	public java.util.List<com.liferay.portlet.imagegallery.model.IGFolder> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _igFolder.getAncestors();
-	}
-
-	public com.liferay.portlet.imagegallery.model.IGFolder getParentFolder()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _igFolder.getParentFolder();
-	}
-
 	public boolean isRoot() {
 		return _igFolder.isRoot();
 	}

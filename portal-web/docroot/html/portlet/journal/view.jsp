@@ -493,7 +493,7 @@ portletURL.setParameter("tabs1", tabs1);
 								<aui:a href="<%= editTemplateURL %>"><%= template.getId() %></aui:a>
 							</td>
 							<td>
-								<aui:a href="<%= editTemplateURL %>"><%= template.getName() %></aui:a>
+								<aui:a href="<%= editTemplateURL %>"><%= template.getName(locale) %></aui:a>
 							</td>
 						</tr>
 

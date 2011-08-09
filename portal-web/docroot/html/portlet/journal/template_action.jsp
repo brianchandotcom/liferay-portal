@@ -37,7 +37,7 @@ JournalTemplate template = (JournalTemplate)row.getObject();
 	<c:if test="<%= JournalTemplatePermission.contains(permissionChecker, template, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= JournalTemplate.class.getName() %>"
-			modelResourceDescription="<%= template.getName() %>"
+			modelResourceDescription="<%= template.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(template.getId()) %>"
 			var="permissionsTemplateURL"
 		/>

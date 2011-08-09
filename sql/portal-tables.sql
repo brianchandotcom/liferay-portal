@@ -882,7 +882,7 @@ create table JournalTemplate (
 	modifiedDate DATE null,
 	templateId VARCHAR(75) null,
 	structureId VARCHAR(75) null,
-	name VARCHAR(75) null,
+	name STRING null,
 	description STRING null,
 	xsl TEXT null,
 	langType VARCHAR(75) null,

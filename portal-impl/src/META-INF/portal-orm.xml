@@ -2360,6 +2360,8 @@
 			<basic name="smallImage" />
 			<basic name="smallImageId" />
 			<basic name="smallImageURL" />
+			<transient name="descriptionMap" />
+			<transient name="nameMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />

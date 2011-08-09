@@ -384,7 +384,7 @@ public class S3Store extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws SystemException {
 
 		try {

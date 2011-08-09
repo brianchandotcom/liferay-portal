@@ -16,7 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.ratings.NoSuchEntryException" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsEntry" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
 <%@ page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %>
@@ -40,11 +39,7 @@ if (numberOfStars < 1) {
 }
 
 if (!setRatingsEntry) {
-	try {
-		ratingsEntry = RatingsEntryLocalServiceUtil.getEntry(themeDisplay.getUserId(), className, classPK);
-	}
-	catch (NoSuchEntryException nsee) {
-	}
+	ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), className, classPK);
 }
 
 if (!setRatingsStats) {

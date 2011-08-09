@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,10 +25,24 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
+import com.liferay.portlet.dynamicdatamapping.StructureNameException;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,6 +81,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryTypeException ||
+				e instanceof NoSuchStructureException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
@@ -96,6 +112,23 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, fileEntryType);
+
+				String ddmStructureKey = "auto_" + fileEntryTypeId;
+
+				List<DDMStructure> ddmStructures =
+					fileEntryType.getDDMStructures();
+
+				for (DDMStructure ddmStructure : ddmStructures) {
+					if (ddmStructureKey.equals(
+							ddmStructure.getStructureKey())) {
+
+						renderRequest.setAttribute(
+							WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE,
+							ddmStructure);
+
+						break;
+					}
+				}
 			}
 		}
 		catch (Exception e) {
@@ -149,9 +182,21 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-
 		long[] ddmStructureIds = getLongArray(
-			actionRequest, "structuresSearchContainerPrimaryKeys");
+			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(themeDisplay.getLocale(), name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(themeDisplay.getLocale(), description);
+
+		String xsd = ParamUtil.getString(actionRequest, "xsd");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
@@ -160,11 +205,71 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 			// Add file entry type
 
-			DLFileEntryTypeServiceUtil.addFileEntryType(
-				themeDisplay.getScopeGroupId(), name, description,
-				ddmStructureIds, serviceContext);
+			DLFileEntryType fileEntryType =
+				DLFileEntryTypeServiceUtil.addFileEntryType(
+					themeDisplay.getScopeGroupId(), name, description,
+					ddmStructureIds, serviceContext);
+
+			// Add dynamic data mapping structure
+
+			String ddmStructureKey =
+				"auto_" + fileEntryType.getFileEntryTypeId();
+
+			DDMStructure ddmStructure = null;
+
+			try {
+				ddmStructure = DDMStructureServiceUtil.addStructure(
+					themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+					ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+					serviceContext);
+			}
+			catch (Exception e) {
+				if (!(e instanceof RequiredStructureException) &&
+					 !(e instanceof StructureDuplicateElementException) &&
+					 !(e instanceof StructureNameException) &&
+					 !(e instanceof StructureXsdException)) {
+
+					throw e;
+				}
+			}
+
+			// Update file entry type
+
+			if (ddmStructure != null) {
+				ddmStructureIds = ArrayUtil.append(
+					ddmStructureIds, ddmStructure.getStructureId());
+
+				DLFileEntryTypeServiceUtil.updateFileEntryType(
+					fileEntryType.getFileEntryTypeId(), name, description,
+					ddmStructureIds, serviceContext);
+			}
 		}
 		else {
+
+			// Update dynamic data mapping structure
+
+			DDMStructure ddmStructure = null;
+
+			try {
+				ddmStructure = DDMStructureServiceUtil.updateStructure(
+					ddmStructureId, nameMap, descriptionMap, xsd,
+					serviceContext);
+			}
+			catch (Exception e) {
+				if (!(e instanceof RequiredStructureException) &&
+					 !(e instanceof StructureDuplicateElementException) &&
+					 !(e instanceof StructureNameException) &&
+					 !(e instanceof StructureXsdException)) {
+
+					throw e;
+				}
+			}
+
+			if (ddmStructure != null) {
+				ddmStructureIds = ArrayUtil.append(
+					ddmStructureIds, ddmStructure.getStructureId());
+			}
 
 			// Update file entry type
 

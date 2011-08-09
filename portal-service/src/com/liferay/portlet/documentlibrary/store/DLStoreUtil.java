@@ -226,19 +226,17 @@ public class DLStoreUtil {
 	 * @param  fileName the original's file name
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
-	 * @param  sourceFileName the file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public static void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		getStore().copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	/**
@@ -634,55 +632,6 @@ public class DLStoreUtil {
 			validateFileExtension, versionLabel, sourceFileName, is);
 	}
 
-	/**
-	 * Updates a file based on a byte array. Enforces validation of file's 
-	 * extension.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally 
-	 *         {@link CompanyConstants#SYSTEM})
-	 * @param  fileName the file name
-	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
-	 * @param  bytes the new file's data
-	 * @throws PortalException if the file's information was invalid or is found
-	 *         to contain a virus
-	 * @throws SystemException if a system exception occurred
-	 */
-	public static void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
-		throws PortalException, SystemException {
-
-		getStore().updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			bytes);
-	}
-
-	/**
-	 * Updates a file based on a {@link File} object. Enforces validation of 
-	 * file's extension.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally 
-	 *         {@link CompanyConstants#SYSTEM})
-	 * @param  fileName the file name
-	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
-	 * @param  file the new file's data
-	 * @throws PortalException if the file's information was invalid or is found
-	 *         to contain a virus
-	 * @throws SystemException if a system exception occurred
-	 */
-	public static void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
-		throws PortalException, SystemException {
-
-		getStore().updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			file);
-	}
 
 	/**
 	 * Update's a file version label. Similar to {@link 
@@ -695,19 +644,17 @@ public class DLStoreUtil {
 	 * @param  fileName the file's name
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public static void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		getStore().updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	/**

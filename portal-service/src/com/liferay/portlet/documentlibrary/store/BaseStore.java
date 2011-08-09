@@ -157,22 +157,18 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the original's file name
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
-	 * @param  sourceFileName the new file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
-		updateFile(
-			companyId, repositoryId, fileName, toVersionLabel, sourceFileName,
-			is);
+		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
 
 	/**
@@ -480,14 +476,13 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
 	 * @param  bytes the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
+			String versionLabel, byte[] bytes)
 		throws PortalException, SystemException {
 
 		File file = null;
@@ -495,9 +490,7 @@ public abstract class BaseStore implements Store {
 		try {
 			file = FileUtil.createTempFile(bytes);
 
-			updateFile(
-				companyId, repositoryId, fileName, versionLabel,
-				sourceFileName, file);
+			updateFile(companyId, repositoryId, fileName, versionLabel, file);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -515,14 +508,13 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
 	 * @param  file the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
+			String versionLabel, File file)
 		throws PortalException, SystemException {
 
 		InputStream is = null;
@@ -530,9 +522,7 @@ public abstract class BaseStore implements Store {
 		try {
 			is = new FileInputStream(file);
 
-			updateFile(
-				companyId, repositoryId, fileName, versionLabel,
-				sourceFileName, is);
+			updateFile(companyId, repositoryId, fileName, versionLabel, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(fileName);
@@ -557,14 +547,13 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
 	 * @param  is the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public abstract void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException, SystemException;
 
 	/**
@@ -578,22 +567,19 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label
-	 * @param  sourceFileName the new file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
 		updateFile(
-			companyId, repositoryId, fileName, toVersionLabel, sourceFileName,
-			is);
+			companyId, repositoryId, fileName, toVersionLabel, is);
 
 		deleteFile(
 			companyId, repositoryId, fileName, fromVersionLabel);

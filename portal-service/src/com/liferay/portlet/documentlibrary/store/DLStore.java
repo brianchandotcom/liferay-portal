@@ -63,8 +63,7 @@ public interface DLStore {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException;
 
 	public void deleteDirectory(
@@ -145,20 +144,9 @@ public interface DLStore {
 			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException, SystemException;
 
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
-		throws PortalException, SystemException;
-
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
-		throws PortalException, SystemException;
-
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException;
 
 	public void validate(

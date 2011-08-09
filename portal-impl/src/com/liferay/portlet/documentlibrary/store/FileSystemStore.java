@@ -89,8 +89,7 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
@@ -315,7 +314,7 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException, SystemException {
 
 		try {

@@ -54,8 +54,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public void copyFileVersion(
 		long companyId, long repositoryId, String fileName,
-		String fromVersionLabel, String toVersionLabel,
-		String sourceFileName) {
+		String fromVersionLabel, String toVersionLabel) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -164,29 +163,28 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionLabel, String sourceFileName, byte[] bytes) {
+		String versionLabel, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionLabel, String sourceFileName, File file) {
+		String versionLabel, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
-		String versionLabel, String sourceFileName, InputStream is) {
+		String versionLabel, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public void updateFileVersion(
 		long companyId, long repositoryId, String fileName,
-		String fromVersionLabel, String toVersionLabel,
-		String sourceFileName) {
+		String fromVersionLabel, String toVersionLabel) {
 
 		throw new UnsupportedOperationException();
 	}

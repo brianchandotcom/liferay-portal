@@ -165,13 +165,12 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	public void deleteDirectory(
@@ -393,9 +392,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 		AntivirusScannerUtil.scan(file);
 
-		store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			file);
+		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
 	}
 
 	public void updateFile(
@@ -410,8 +407,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 		if (!AntivirusScannerUtil.isActive()) {
 			store.updateFile(
-				companyId, repositoryId, fileName, versionLabel,
-				sourceFileName, is);
+				companyId, repositoryId, fileName, versionLabel, is);
 		}
 		else {
 			File tempFile = null;
@@ -425,8 +421,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 					is.reset();
 
 					store.updateFile(
-						companyId, repositoryId, fileName, versionLabel,
-						sourceFileName, is);
+						companyId, repositoryId, fileName, versionLabel, is);
 				}
 				else {
 					tempFile = FileUtil.createTempFile();
@@ -437,7 +432,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 					store.updateFile(
 						companyId, repositoryId, fileName, versionLabel,
-						sourceFileName, tempFile);
+						tempFile);
 				}
 			}
 			catch (IOException ioe) {
@@ -452,43 +447,14 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		}
 	}
 
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
-		throws PortalException, SystemException {
-
-		validate(fileName, true, bytes);
-
-		AntivirusScannerUtil.scan(bytes);
-
-		store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			bytes);
-	}
-
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
-		throws PortalException, SystemException {
-
-		validate(fileName, true, file);
-
-		AntivirusScannerUtil.scan(file);
-
-		store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			file);
-	}
-
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		store.updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	public void validate(String fileName, boolean validateFileExtension)

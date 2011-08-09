@@ -41,6 +41,9 @@ public interface Query {
 	@SuppressWarnings("rawtypes")
 	public List list(boolean unmodifiable) throws ORMException;
 
+	@SuppressWarnings("rawtypes")
+	public List list(boolean copy, boolean unmodifiable) throws ORMException;
+
 	public ScrollableResults scroll() throws ORMException;
 
 	public Query setBoolean(int pos, boolean value);

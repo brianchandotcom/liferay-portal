@@ -54,7 +54,7 @@ public class UserGroupRoleFinderImpl
 			qPos.add(userId);
 			qPos.add(groupId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

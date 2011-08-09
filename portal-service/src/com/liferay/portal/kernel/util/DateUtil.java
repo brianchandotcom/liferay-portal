@@ -86,19 +86,9 @@ public class DateUtil {
 			return equals(date1, date2);
 		}
 
-		long time1 = 0;
+		long deltaTime = date1.getTime() - date2.getTime();
 
-		if (date1 != null) {
-			time1 = date1.getTime() / Time.SECOND;
-		}
-
-		long time2 = 0;
-
-		if (date2 != null) {
-			time2 = date2.getTime() / Time.SECOND;
-		}
-
-		if (time1 == time2) {
+		if ((deltaTime > -1000) && (deltaTime < 1000)) {
 			return true;
 		}
 		else {

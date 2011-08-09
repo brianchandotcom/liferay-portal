@@ -77,44 +77,50 @@
 	<c:when test='<%= type.equals("checkbox") %>'>
 
 		<%
-		boolean valueBoolean = checked;
+		String valueString = String.valueOf(checked);
 
 		if (value != null) {
-			String valueString = value.toString();
-
-			valueBoolean = GetterUtil.getBoolean(valueString);
+			valueString = value.toString();
 		}
 
 		if (!ignoreRequestValue) {
-			valueBoolean = ParamUtil.getBoolean(request, name, valueBoolean);
+			valueString = ParamUtil.getString(request, name, valueString);
+		}
+
+		if (valueString.equalsIgnoreCase("false") || valueString.equalsIgnoreCase("true")) {
+			checked = GetterUtil.getBoolean(valueString);
+		}
+
+		String defaultValueString = Boolean.TRUE.toString();
+
+		if (Validator.isNotNull(valueString) && !valueString.equalsIgnoreCase("false") && !valueString.equalsIgnoreCase("true")) {
+			defaultValueString = valueString;
 		}
 		%>
 
-		<input id="<%= id %>" name="<%= namespace + name %>" type="hidden" value="<%= valueBoolean %>" />
+		<input id="<%= id %>" name="<%= namespace + name %>" type="hidden" value="<%= valueString %>" />
 
-		<input <%= valueBoolean ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>Checkbox" name="<%= namespace + name %>Checkbox" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="checkbox" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>Checkbox" name="<%= namespace + name %>Checkbox" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="checkbox" value="<%= defaultValueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("radio") %>'>
 
 		<%
-		boolean valueBoolean = checked;
-
-		String valueString = StringPool.BLANK;
+		String valueString = String.valueOf(checked);
 
 		if (value != null) {
 			valueString = value.toString();
+		}
 
-			if (!ignoreRequestValue) {
-				String requestValue = ParamUtil.getString(request, name);
+		if (!ignoreRequestValue) {
+			String requestValue = ParamUtil.getString(request, name);
 
-				if (Validator.isNotNull(requestValue)) {
-					valueBoolean = valueString.equals(requestValue);
-				}
+			if (Validator.isNotNull(requestValue)) {
+				checked = valueString.equals(requestValue);
 			}
 		}
 		%>
 
-		<input <%= valueBoolean ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= valueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= inputCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="radio" value="<%= valueString %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("timeZone") %>'>
 		<span class="<%= fieldCss %>">

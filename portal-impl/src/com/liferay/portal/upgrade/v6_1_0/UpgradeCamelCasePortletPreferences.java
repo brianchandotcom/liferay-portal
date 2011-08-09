@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -108,6 +109,7 @@ public class UpgradeCamelCasePortletPreferences
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	private Map<String, String> _camelCasePreferenceNames;
+	private Map<String, String> _camelCasePreferenceNames =
+		new HashMap<String, String>();
 
 }

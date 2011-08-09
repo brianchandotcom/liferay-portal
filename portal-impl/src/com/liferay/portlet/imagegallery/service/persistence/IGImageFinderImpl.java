@@ -101,7 +101,7 @@ public class IGImageFinderImpl
 
 			q.addEntity("IGImage", IGImageImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

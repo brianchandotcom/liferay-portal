@@ -70,13 +70,12 @@ public class StoreWrapper implements Store {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		_store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	public void deleteFile(long companyId, long repositoryId, String fileName)
@@ -195,43 +194,38 @@ public class StoreWrapper implements Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
+			String versionLabel, byte[] bytes)
 		throws PortalException, SystemException {
 
 		_store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			bytes);
+			companyId, repositoryId, fileName, versionLabel, bytes);
 	}
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
+			String versionLabel, File file)
 		throws PortalException, SystemException {
 
 		_store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			file);
+			companyId, repositoryId, fileName, versionLabel, file);
 	}
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException, SystemException {
 
-		_store.updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			is);
+		_store.updateFile(companyId, repositoryId, fileName, versionLabel, is);
 	}
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		_store.updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	private Store _store;

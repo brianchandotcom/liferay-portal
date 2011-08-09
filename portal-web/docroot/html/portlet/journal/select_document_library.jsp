@@ -137,7 +137,11 @@ if (folder != null) {
 
 	for (int i = 0; i < results.size(); i++) {
 		FileEntry fileEntry = (FileEntry)results.get(i);
+	%>
 
+	<%@ include file="/html/portlet/document_library/document_thumbnail.jspf" %>
+
+	<%
 		ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
 		String rowHREF = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle());
@@ -146,11 +150,11 @@ if (folder != null) {
 
 		StringBundler sb = new StringBundler(10);
 
-		sb.append("<img align=\"left\" border=\"0\" src=\"");
-		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/file_system/small/");
-		sb.append(fileEntry.getIcon());
-		sb.append(".png\">");
+		sb.append("<img alt=\"\" align=\"left\" border=\"0\" src=\"");
+		sb.append(thumbnailSrc);
+		sb.append("\" style=\"");
+		sb.append(thumbnailStyle);
+		sb.append("\">");
 		sb.append(fileEntry.getTitle());
 
 		row.addText(sb.toString(), rowHREF);
@@ -176,13 +180,26 @@ if (folder != null) {
 		sb.append("parent.");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
-		sb.append(themeDisplay.getPathContext());
-		sb.append("/documents/");
-		sb.append(groupId);
-		sb.append(StringPool.SLASH);
-		sb.append(fileEntry.getFolderId());
-		sb.append(StringPool.SLASH);
-		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+
+		if (ImageProcessor.hasImages(fileEntry.getFileVersion())) {
+			sb.append(themeDisplay.getPathImage());
+			sb.append("/image_gallery?uuid=");
+			sb.append(fileEntry.getUuid());
+			sb.append("&groupId=");
+			sb.append(fileEntry.getGroupId());
+			sb.append("&t=");
+			sb.append(ImageServletTokenUtil.getToken(fileEntry.getLargeImageId()));
+		}
+		else {
+			sb.append(themeDisplay.getPathContext());
+			sb.append("/documents/");
+			sb.append(groupId);
+			sb.append(StringPool.SLASH);
+			sb.append(fileEntry.getFolderId());
+			sb.append(StringPool.SLASH);
+			sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+		}
+
 		sb.append("'); Liferay.Util.getWindow().close();");
 
 		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());

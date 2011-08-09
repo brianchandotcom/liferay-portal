@@ -589,11 +589,6 @@
 	background-position: 3px 7px;
 }
 
-.journal-component-imagegallery {
-	background-image: url(<%= themeImagesPath %>/journal/image_gallery.png);
-	background-position: 3px 5px;
-}
-
 .journal-component-documentlibrary {
 	background-image: url(<%= themeImagesPath %>/journal/document_library.png);
 }

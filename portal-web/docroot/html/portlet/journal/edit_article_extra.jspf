@@ -52,10 +52,6 @@
 			<liferay-ui:message key="application-fields" />
 		</div>
 
-		<div class="journal-component journal-component-imagegallery" dataType="image_gallery">
-			<liferay-ui:message key="image-gallery" />
-		</div>
-
 		<div class="journal-component journal-component-image" dataType="image">
 			<liferay-ui:message key="image-uploader" />
 		</div>

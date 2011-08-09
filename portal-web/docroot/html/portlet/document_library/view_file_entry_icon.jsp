@@ -21,37 +21,10 @@ FileEntry fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntr
 
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
-String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-String thumbnailStyle = "height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "; width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + ";";
-
-if (ImageProcessor.hasSmallImage(fileEntry.getFileVersion())) {
-	Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
-
-	long smallImageId = 0;
-	int smallImageHeight = 100;
-	int smallImageWidth = 100;
-
-	if (smallImage != null) {
-		smallImageId = smallImage.getImageId();
-		smallImageHeight = smallImage.getHeight();
-		smallImageWidth = smallImage.getWidth();
-	}
-
-	int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
-	int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
-
-	thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + ImageServletTokenUtil.getToken(smallImageId);
-	thumbnailStyle = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
-}
-else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
-	thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
-}
-else if (VideoProcessor.hasVideo(fileEntry, fileEntry.getVersion())) {
-	thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&videoThumbnail=1";
-}
-
 boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
 %>
+
+<%@ include file="/html/portlet/document_library/document_thumbnail.jspf" %>
 
 <div class="document-display-style icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
 	<c:if test="<%= showCheckBox %>">

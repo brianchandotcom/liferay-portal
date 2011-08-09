@@ -80,7 +80,7 @@ public class RatingsEntryFinderImpl
 				qPos.add(userId);
 				qPos.add(classNameId);
 
-				list = q.list();
+				list = q.list(true);
 			}
 			catch (Exception e) {
 				throw new SystemException(e);

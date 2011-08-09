@@ -76,7 +76,7 @@ public class RatingsStatsFinderImpl
 
 				qPos.add(classNameId);
 
-				list = q.list();
+				list = q.list(true);
 			}
 			catch (Exception e) {
 				throw new SystemException(e);

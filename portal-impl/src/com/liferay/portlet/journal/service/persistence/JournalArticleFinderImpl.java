@@ -350,7 +350,7 @@ public class JournalArticleFinderImpl
 
 			qPos.add(expirationDateLT_TS);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -415,7 +415,7 @@ public class JournalArticleFinderImpl
 			qPos.add(reviewDateGT_TS);
 			qPos.add(reviewDateLT_TS);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

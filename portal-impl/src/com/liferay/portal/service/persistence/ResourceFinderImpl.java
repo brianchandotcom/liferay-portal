@@ -57,7 +57,7 @@ public class ResourceFinderImpl
 
 			qPos.add(name);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -86,7 +86,7 @@ public class ResourceFinderImpl
 			qPos.add(companyId);
 			qPos.add(primKey);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -115,7 +115,7 @@ public class ResourceFinderImpl
 			qPos.add(name);
 			qPos.add(scope);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

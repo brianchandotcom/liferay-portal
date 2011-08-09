@@ -245,7 +245,7 @@ public class BlogsEntryFinderImpl
 
 			q.addEntity("BlogsEntry", BlogsEntryImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

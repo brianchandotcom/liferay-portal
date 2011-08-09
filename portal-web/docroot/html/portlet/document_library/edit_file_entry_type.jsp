@@ -134,17 +134,28 @@ if (fileEntryType != null) {
 					stack: false,
 					width:680
 				},
+				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>',
 				showManageTemplates: 'false',
 				showToolbar: 'true',
 				storageType: 'xml',
-				struts_action: '/dynamic_data_mapping/select_structure',
 				structureName: '<liferay-ui:message key="metadata-sets" />',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',
-				title: '<liferay-ui:message key="metadata-sets" />',
-				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>'
+				struts_action: '/dynamic_data_mapping/select_structure',
+				title: '<liferay-ui:message key="metadata-sets" />'
 			}
 		);
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveStructure',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['liferay-portlet-dynamic-data-mapping']
+	);
 
 	Liferay.provide(
 		window,
@@ -165,19 +176,6 @@ if (fileEntryType != null) {
 			}
 		},
 		['liferay-search-container']
-	);
-</aui:script>
-
-<aui:script use="liferay-portlet-dynamic-data-mapping">
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveStructure',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
 	);
 </aui:script>
 

@@ -588,8 +588,8 @@ public class DLStoreUtil {
 	 * @param  fileExtension the file's extension
 	 * @param  validateFileExtension whether to validate the file's extension
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the file's original name
-	 * @param  file the file's data
+	 * @param  sourceFileName the new file's original name
+	 * @param  file the file's new data
 	 * @throws PortalException if the file's information was invalid or is found
 	 *         to contain a virus
 	 * @throws SystemException if a system exception occurred
@@ -605,6 +605,22 @@ public class DLStoreUtil {
 			validateFileExtension, versionLabel, sourceFileName, file);
 	}
 
+	/**
+	 * Updates a file based on a {@link InputStream} object.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally 
+	 *         {@link CompanyConstants#SYSTEM})
+	 * @param  fileName the file name
+	 * @param  fileExtension the file's extension
+	 * @param  validateFileExtension whether to validate the file's extension
+	 * @param  versionLabel the file's new version label
+	 * @param  sourceFileName the new file's original name
+	 * @param  is the new file's data
+	 * @throws PortalException if the file's information was invalid or is found
+	 *         to contain a virus
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
@@ -615,7 +631,6 @@ public class DLStoreUtil {
 			companyId, repositoryId, fileName, fileExtension,
 			validateFileExtension, versionLabel, sourceFileName, is);
 	}
-
 
 	/**
 	 * Update's a file version label. Similar to {@link 

@@ -157,7 +157,7 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the original's file name
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
-	 * @param  sourceFileName the file's original name
+	 * @param  sourceFileName the new file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -477,8 +477,8 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the file's original name
-	 * @param  bytes the file's data
+	 * @param  sourceFileName the new file's original name
+	 * @param  bytes the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -510,8 +510,8 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the file's original name
-	 * @param  file the file's data
+	 * @param  sourceFileName the new file's original name
+	 * @param  file the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -550,8 +550,8 @@ public abstract class BaseStore implements Store {
 	 *         {@link CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  versionLabel the file's new version label
-	 * @param  sourceFileName the file's original name
-	 * @param  is the file's data
+	 * @param  sourceFileName the new file's original name
+	 * @param  is the new file's data
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -571,7 +571,7 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label
-	 * @param  sourceFileName the file's original name
+	 * @param  sourceFileName the new file's original name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */

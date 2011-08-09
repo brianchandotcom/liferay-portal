@@ -81,7 +81,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
+					<aui:button cssClass="expire-articles-button" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
 
 					<aui:button cssClass="delete-articles-button" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
 				</aui:button-row>
@@ -577,15 +577,13 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:script>
 
 <aui:script use="aui-base">
-	var deleteButtonWrapper = A.one('.delete-articles-button');
+	var buttons = A.all('.delete-articles-button, .expire-articles-button');
 
-	if (deleteButtonWrapper) {
-		var deleteButton = deleteButtonWrapper.one(':button');
-
+	if (buttons.size()) {
 		var toggleDisabled = function(disabled) {
-			deleteButton.attr('disabled', disabled);
+			buttons.all(':button').attr('disabled', disabled);
 
-			deleteButtonWrapper.toggleClass('aui-button-disabled', disabled);
+			buttons.toggleClass('aui-button-disabled', disabled);
 		};
 
 		var resultsGrid = A.one('.results-grid');

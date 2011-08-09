@@ -23,6 +23,7 @@ import com.liferay.portal.upgrade.v6_1_0.util.JournalTemplateTable;
 
 /**
  * @author Juan Fernández
+ * @author Sergio González
  */
 public class UpgradeJournal extends UpgradeProcess {
 
@@ -75,6 +76,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			upgradeTable.updateTable();
 		}
+
+		upgradeStructureXsd();
+	}
+
+	protected void upgradeStructureXsd() throws Exception {
+		runSQL(
+			"update JournalStructure set xsd = " +
+			   	"replace(xsd, \"image_gallery\", \"document_library\") where " +
+				"xsd like \"%image_gallery%\"");
 	}
 
 }

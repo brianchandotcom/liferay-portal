@@ -62,11 +62,8 @@ import com.liferay.portlet.expando.service.ExpandoValueService;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.imagegallery.model.IGImage;
 import com.liferay.portlet.imagegallery.service.IGFolderLocalService;
-import com.liferay.portlet.imagegallery.service.IGFolderService;
 import com.liferay.portlet.imagegallery.service.IGImageLocalService;
-import com.liferay.portlet.imagegallery.service.IGImageService;
 import com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistence;
-import com.liferay.portlet.imagegallery.service.persistence.IGImageFinder;
 import com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
@@ -369,24 +366,6 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 	}
 
 	/**
-	 * Returns the i g folder remote service.
-	 *
-	 * @return the i g folder remote service
-	 */
-	public IGFolderService getIGFolderService() {
-		return igFolderService;
-	}
-
-	/**
-	 * Sets the i g folder remote service.
-	 *
-	 * @param igFolderService the i g folder remote service
-	 */
-	public void setIGFolderService(IGFolderService igFolderService) {
-		this.igFolderService = igFolderService;
-	}
-
-	/**
 	 * Returns the i g folder persistence.
 	 *
 	 * @return the i g folder persistence
@@ -423,24 +402,6 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 	}
 
 	/**
-	 * Returns the i g image remote service.
-	 *
-	 * @return the i g image remote service
-	 */
-	public IGImageService getIGImageService() {
-		return igImageService;
-	}
-
-	/**
-	 * Sets the i g image remote service.
-	 *
-	 * @param igImageService the i g image remote service
-	 */
-	public void setIGImageService(IGImageService igImageService) {
-		this.igImageService = igImageService;
-	}
-
-	/**
 	 * Returns the i g image persistence.
 	 *
 	 * @return the i g image persistence
@@ -456,24 +417,6 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 	 */
 	public void setIGImagePersistence(IGImagePersistence igImagePersistence) {
 		this.igImagePersistence = igImagePersistence;
-	}
-
-	/**
-	 * Returns the i g image finder.
-	 *
-	 * @return the i g image finder
-	 */
-	public IGImageFinder getIGImageFinder() {
-		return igImageFinder;
-	}
-
-	/**
-	 * Sets the i g image finder.
-	 *
-	 * @param igImageFinder the i g image finder
-	 */
-	public void setIGImageFinder(IGImageFinder igImageFinder) {
-		this.igImageFinder = igImageFinder;
 	}
 
 	/**
@@ -1123,18 +1066,12 @@ public abstract class IGImageLocalServiceBaseImpl implements IGImageLocalService
 
 	@BeanReference(type = IGFolderLocalService.class)
 	protected IGFolderLocalService igFolderLocalService;
-	@BeanReference(type = IGFolderService.class)
-	protected IGFolderService igFolderService;
 	@BeanReference(type = IGFolderPersistence.class)
 	protected IGFolderPersistence igFolderPersistence;
 	@BeanReference(type = IGImageLocalService.class)
 	protected IGImageLocalService igImageLocalService;
-	@BeanReference(type = IGImageService.class)
-	protected IGImageService igImageService;
 	@BeanReference(type = IGImagePersistence.class)
 	protected IGImagePersistence igImagePersistence;
-	@BeanReference(type = IGImageFinder.class)
-	protected IGImageFinder igImageFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ImageLocalService.class)

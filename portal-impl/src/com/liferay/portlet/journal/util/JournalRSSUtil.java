@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.imagegallery.model.IGImage;
-import com.liferay.portlet.imagegallery.service.IGImageLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -295,12 +293,12 @@ public class JournalRSSUtil {
 				String uuid = parameters.get("uuid")[0];
 				long groupId = GetterUtil.getLong(parameters.get("groupId")[0]);
 
-				IGImage igImage =
-					IGImageLocalServiceUtil.getImageByUuidAndGroupId(
+				FileEntry fileEntry =
+					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 
 				image = ImageLocalServiceUtil.getImage(
-					igImage.getLargeImageId());
+					fileEntry.getLargeImageId());
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

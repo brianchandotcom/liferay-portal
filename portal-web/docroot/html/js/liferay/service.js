@@ -881,37 +881,6 @@ Liferay.Service.registerClass(
 
 Liferay.Service.register("Liferay.Service.IG", "com.liferay.portlet.imagegallery.service");
 
-Liferay.Service.registerClass(
-	Liferay.Service.IG, "IGFolder",
-	{
-		addFolder: true,
-		copyFolder: true,
-		deleteFolder: true,
-		getFolder: true,
-		getFolders: true,
-		getFoldersCount: true,
-		getSubfolderIds: true,
-		updateFolder: true
-	}
-);
-
-Liferay.Service.registerClass(
-	Liferay.Service.IG, "IGImage",
-	{
-		deleteImage: true,
-		deleteImageByFolderIdAndNameWithExtension: true,
-		getFoldersImagesCount: true,
-		getGroupImages: true,
-		getGroupImagesCount: true,
-		getImage: true,
-		getImageByFolderIdAndNameWithExtension: true,
-		getImageByLargeImageId: true,
-		getImageBySmallImageId: true,
-		getImages: true,
-		getImagesCount: true
-	}
-);
-
 Liferay.Service.register("Liferay.Service.Journal", "com.liferay.portlet.journal.service");
 
 Liferay.Service.registerClass(

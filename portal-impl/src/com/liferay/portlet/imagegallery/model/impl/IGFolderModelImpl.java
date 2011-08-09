@@ -16,7 +16,6 @@ package com.liferay.portlet.imagegallery.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +28,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.imagegallery.model.IGFolder;
 import com.liferay.portlet.imagegallery.model.IGFolderModel;
-import com.liferay.portlet.imagegallery.model.IGFolderSoap;
 
 import java.io.Serializable;
 
@@ -37,9 +35,7 @@ import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The base model implementation for the IGFolder service. Represents a row in the &quot;IGFolder&quot; database table, with each column mapped to a property of this class.
@@ -54,7 +50,6 @@ import java.util.List;
  * @see com.liferay.portlet.imagegallery.model.IGFolderModel
  * @generated
  */
-@JSON(strict = true)
 public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 	implements IGFolderModel {
 	/*
@@ -90,46 +85,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 				"value.object.finder.cache.enabled.com.liferay.portlet.imagegallery.model.IGFolder"),
 			true);
 
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static IGFolder toModel(IGFolderSoap soapModel) {
-		IGFolder model = new IGFolderImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setFolderId(soapModel.getFolderId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setParentFolderId(soapModel.getParentFolderId());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<IGFolder> toModels(IGFolderSoap[] soapModels) {
-		List<IGFolder> models = new ArrayList<IGFolder>(soapModels.length);
-
-		for (IGFolderSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public Class<?> getModelClass() {
 		return IGFolder.class;
 	}
@@ -160,7 +115,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
-	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -182,7 +136,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@JSON
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -191,7 +144,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_folderId = folderId;
 	}
 
-	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -210,7 +162,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		return _originalGroupId;
 	}
 
-	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -219,7 +170,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_companyId = companyId;
 	}
 
-	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -236,7 +186,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_userUuid = userUuid;
 	}
 
-	@JSON
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -250,7 +199,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_userName = userName;
 	}
 
-	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -259,7 +207,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_createDate = createDate;
 	}
 
-	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -268,7 +215,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	public long getParentFolderId() {
 		return _parentFolderId;
 	}
@@ -287,7 +233,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		return _originalParentFolderId;
 	}
 
-	@JSON
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -309,7 +254,6 @@ public class IGFolderModelImpl extends BaseModelImpl<IGFolder>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@JSON
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;

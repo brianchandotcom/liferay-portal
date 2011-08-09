@@ -310,12 +310,9 @@
 	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence" class="com.liferay.portlet.expando.service.persistence.ExpandoValuePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.flags.service.FlagsEntryService" class="com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl" />
 	<bean id="com.liferay.portlet.imagegallery.service.IGFolderLocalService" class="com.liferay.portlet.imagegallery.service.impl.IGFolderLocalServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGFolderService" class="com.liferay.portlet.imagegallery.service.impl.IGFolderServiceImpl" />
 	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistence" class="com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.imagegallery.service.IGImageLocalService" class="com.liferay.portlet.imagegallery.service.impl.IGImageLocalServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGImageService" class="com.liferay.portlet.imagegallery.service.impl.IGImageServiceImpl" />
 	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence" class="com.liferay.portlet.imagegallery.service.persistence.IGImagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGImageFinder" class="com.liferay.portlet.imagegallery.service.persistence.IGImageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.journal.service.JournalArticleLocalService" class="com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalArticleService" class="com.liferay.portlet.journal.service.impl.JournalArticleServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticlePersistence" class="com.liferay.portlet.journal.service.persistence.JournalArticlePersistenceImpl" parent="basePersistence" />

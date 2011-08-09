@@ -663,10 +663,6 @@
 		<put name="portlet_content" value="/portlet/journal/select_document_library.jsp" />
 	</definition>
 
-	<definition name="portlet.journal.select_image_gallery" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/select_image_gallery.jsp" />
-	</definition>
-
 	<definition name="portlet.journal.select_structure" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/select_structure.jsp" />
 	</definition>

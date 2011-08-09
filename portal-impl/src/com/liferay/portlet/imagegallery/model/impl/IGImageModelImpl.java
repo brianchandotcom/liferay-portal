@@ -16,7 +16,6 @@ package com.liferay.portlet.imagegallery.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +28,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.imagegallery.model.IGImage;
 import com.liferay.portlet.imagegallery.model.IGImageModel;
-import com.liferay.portlet.imagegallery.model.IGImageSoap;
 
 import java.io.Serializable;
 
@@ -37,9 +35,7 @@ import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The base model implementation for the IGImage service. Represents a row in the &quot;IGImage&quot; database table, with each column mapped to a property of this class.
@@ -54,7 +50,6 @@ import java.util.List;
  * @see com.liferay.portlet.imagegallery.model.IGImageModel
  * @generated
  */
-@JSON(strict = true)
 public class IGImageModelImpl extends BaseModelImpl<IGImage>
 	implements IGImageModel {
 	/*
@@ -94,50 +89,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 				"value.object.finder.cache.enabled.com.liferay.portlet.imagegallery.model.IGImage"),
 			true);
 
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static IGImage toModel(IGImageSoap soapModel) {
-		IGImage model = new IGImageImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setImageId(soapModel.getImageId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setFolderId(soapModel.getFolderId());
-		model.setName(soapModel.getName());
-		model.setDescription(soapModel.getDescription());
-		model.setSmallImageId(soapModel.getSmallImageId());
-		model.setLargeImageId(soapModel.getLargeImageId());
-		model.setCustom1ImageId(soapModel.getCustom1ImageId());
-		model.setCustom2ImageId(soapModel.getCustom2ImageId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<IGImage> toModels(IGImageSoap[] soapModels) {
-		List<IGImage> models = new ArrayList<IGImage>(soapModels.length);
-
-		for (IGImageSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public Class<?> getModelClass() {
 		return IGImage.class;
 	}
@@ -168,7 +119,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
-	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -190,7 +140,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@JSON
 	public long getImageId() {
 		return _imageId;
 	}
@@ -199,7 +148,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_imageId = imageId;
 	}
 
-	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -218,7 +166,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		return _originalGroupId;
 	}
 
-	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -227,7 +174,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_companyId = companyId;
 	}
 
-	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -244,7 +190,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_userUuid = userUuid;
 	}
 
-	@JSON
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -258,7 +203,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_userName = userName;
 	}
 
-	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -267,7 +211,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_createDate = createDate;
 	}
 
-	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -276,7 +219,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -285,7 +227,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_folderId = folderId;
 	}
 
-	@JSON
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -299,7 +240,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_name = name;
 	}
 
-	@JSON
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -313,7 +253,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		_description = description;
 	}
 
-	@JSON
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -332,7 +271,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		return _originalSmallImageId;
 	}
 
-	@JSON
 	public long getLargeImageId() {
 		return _largeImageId;
 	}
@@ -351,7 +289,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		return _originalLargeImageId;
 	}
 
-	@JSON
 	public long getCustom1ImageId() {
 		return _custom1ImageId;
 	}
@@ -370,7 +307,6 @@ public class IGImageModelImpl extends BaseModelImpl<IGImage>
 		return _originalCustom1ImageId;
 	}
 
-	@JSON
 	public long getCustom2ImageId() {
 		return _custom2ImageId;
 	}

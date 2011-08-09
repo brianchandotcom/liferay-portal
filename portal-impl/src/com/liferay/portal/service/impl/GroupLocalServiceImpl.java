@@ -480,10 +480,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		repositoryService.unmountRepositories(group.getGroupId());
 
-		// Image gallery
-
-		igFolderLocalService.deleteFolders(group.getGroupId());
-
 		// Journal
 
 		journalArticleLocalService.deleteArticles(group.getGroupId());

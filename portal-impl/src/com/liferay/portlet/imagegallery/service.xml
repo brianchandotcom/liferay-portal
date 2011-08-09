@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.portlet.imagegallery">
 	<namespace>IG</namespace>
-	<entity name="IGFolder" uuid="true" local-service="true" remote-service="true">
+	<entity name="IGFolder" uuid="true" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -59,7 +59,7 @@
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
-	<entity name="IGImage" uuid="true" local-service="true" remote-service="true">
+	<entity name="IGImage" uuid="true" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 

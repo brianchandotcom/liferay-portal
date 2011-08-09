@@ -80,6 +80,12 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layo
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();
 
+long layoutRevisionClassNameId = PortalUtil.getClassNameId(LayoutRevision.class);
+
+if (ArrayUtil.contains(availableClassNameIds, layoutRevisionClassNameId)) {
+	availableClassNameIds = ArrayUtil.remove(availableClassNameIds, layoutRevisionClassNameId);
+}
+
 boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType", Boolean.TRUE.toString()));
 
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(preferences, availableClassNameIds);

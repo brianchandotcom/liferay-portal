@@ -76,6 +76,17 @@ public class AssetVocabularyServiceImpl
 		assetVocabularyLocalService.deleteVocabulary(vocabularyId);
 	}
 
+	public void deleteVocabularies(long[] vocabularyIds)
+		throws PortalException, SystemException {
+
+		for (long vocabularyId : vocabularyIds) {
+			AssetVocabularyPermission.check(
+				getPermissionChecker(), vocabularyId, ActionKeys.DELETE);
+
+			assetVocabularyLocalService.deleteVocabulary(vocabularyId);
+		}
+	}
+
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
 		throws PortalException, SystemException {
 

@@ -264,12 +264,108 @@ public class JournalStructureWrapper implements JournalStructure {
 	}
 
 	/**
+	* Returns the localized name of this journal structure in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this journal structure
+	*/
+	public java.lang.String getName(java.util.Locale locale) {
+		return _journalStructure.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this journal structure in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this journal structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _journalStructure.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this journal structure in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this journal structure
+	*/
+	public java.lang.String getName(java.lang.String languageId) {
+		return _journalStructure.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this journal structure in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this journal structure
+	*/
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _journalStructure.getName(languageId, useDefault);
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this journal structure.
+	*
+	* @return the locales and localized names of this journal structure
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _journalStructure.getNameMap();
+	}
+
+	/**
 	* Sets the name of this journal structure.
 	*
 	* @param name the name of this journal structure
 	*/
 	public void setName(java.lang.String name) {
 		_journalStructure.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this journal structure in the language.
+	*
+	* @param name the localized name of this journal structure
+	* @param locale the locale of the language
+	*/
+	public void setName(java.lang.String name, java.util.Locale locale) {
+		_journalStructure.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this journal structure in the language, and sets the default locale.
+	*
+	* @param name the localized name of this journal structure
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setName(java.lang.String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_journalStructure.setName(name, locale, defaultLocale);
+	}
+
+	/**
+	* Sets the localized names of this journal structure from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this journal structure
+	*/
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+		_journalStructure.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this journal structure from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this journal structure
+	* @param defaultLocale the default locale
+	*/
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Locale defaultLocale) {
+		_journalStructure.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -282,12 +378,110 @@ public class JournalStructureWrapper implements JournalStructure {
 	}
 
 	/**
+	* Returns the localized description of this journal structure in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this journal structure
+	*/
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _journalStructure.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this journal structure in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this journal structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _journalStructure.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this journal structure in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this journal structure
+	*/
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _journalStructure.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this journal structure in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this journal structure
+	*/
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _journalStructure.getDescription(languageId, useDefault);
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this journal structure.
+	*
+	* @return the locales and localized descriptions of this journal structure
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _journalStructure.getDescriptionMap();
+	}
+
+	/**
 	* Sets the description of this journal structure.
 	*
 	* @param description the description of this journal structure
 	*/
 	public void setDescription(java.lang.String description) {
 		_journalStructure.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this journal structure in the language.
+	*
+	* @param description the localized description of this journal structure
+	* @param locale the locale of the language
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale) {
+		_journalStructure.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this journal structure in the language, and sets the default locale.
+	*
+	* @param description the localized description of this journal structure
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale, java.util.Locale defaultLocale) {
+		_journalStructure.setDescription(description, locale, defaultLocale);
+	}
+
+	/**
+	* Sets the localized descriptions of this journal structure from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this journal structure
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_journalStructure.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this journal structure from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this journal structure
+	* @param defaultLocale the default locale
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		_journalStructure.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**

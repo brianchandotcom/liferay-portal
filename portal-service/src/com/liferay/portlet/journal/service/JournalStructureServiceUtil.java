@@ -39,14 +39,16 @@ public class JournalStructureServiceUtil {
 	 */
 	public static com.liferay.portlet.journal.model.JournalStructure addStructure(
 		long groupId, java.lang.String structureId, boolean autoStructureId,
-		java.lang.String parentStructureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsd,
+		java.lang.String parentStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsd,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addStructure(groupId, structureId, autoStructureId,
-			parentStructureId, name, description, xsd, serviceContext);
+			parentStructureId, nameMap, descriptionMap, xsd, serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalStructure copyStructure(
@@ -115,14 +117,16 @@ public class JournalStructureServiceUtil {
 
 	public static com.liferay.portlet.journal.model.JournalStructure updateStructure(
 		long groupId, java.lang.String structureId,
-		java.lang.String parentStructureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsd,
+		java.lang.String parentStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsd,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateStructure(groupId, structureId, parentStructureId,
-			name, description, xsd, serviceContext);
+			nameMap, descriptionMap, xsd, serviceContext);
 	}
 
 	public static JournalStructureService getService() {

@@ -65,7 +65,8 @@ public class VerifyLinksTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Joe Bloggs."),
 			selenium.getText("//section/div/div/div"));
-		selenium.clickAt("//section/div/div/div/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//section/div/div/div/a",
+			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals("test@liferay.com", selenium.getValue("_2_emailAddress"));

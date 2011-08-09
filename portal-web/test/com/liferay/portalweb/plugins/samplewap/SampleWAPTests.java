@@ -28,7 +28,8 @@ public class SampleWAPTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPortletSampleWAPPhotoTest.class);
+		testSuite.addTestSuite(AddPortletSampleWAPVideoTest.class);
 		testSuite.addTestSuite(DeletePageTest.class);
 
 		return testSuite;

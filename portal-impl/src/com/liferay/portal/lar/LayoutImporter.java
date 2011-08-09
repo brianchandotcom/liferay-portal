@@ -91,7 +91,9 @@ import com.liferay.portlet.asset.DuplicateVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
+import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
@@ -730,6 +732,58 @@ public class LayoutImporter {
 		return assetVocabulary;
 	}
 
+	protected void importArticle(
+			PortletDataContext portletDataContext, Layout layout,
+			Element layoutElement)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String articleId = typeSettingsProperties.getProperty(
+			"article-id", StringPool.BLANK);
+
+		if (Validator.isNull(articleId)) {
+			return;
+		}
+
+		JournalPortletDataHandlerImpl.importReferencedData(
+			portletDataContext, layoutElement);
+
+		Element structureElement = layoutElement.element("structure");
+
+		if (structureElement != null) {
+			JournalPortletDataHandlerImpl.importStructure(
+				portletDataContext, structureElement);
+		}
+
+		Element templateElement = layoutElement.element("template");
+
+		if (templateElement != null) {
+			JournalPortletDataHandlerImpl.importTemplate(
+				portletDataContext, templateElement);
+		}
+
+		Element articleElement = layoutElement.element("article");
+
+		if (articleElement != null) {
+			JournalPortletDataHandlerImpl.importArticle(
+				portletDataContext, articleElement);
+		}
+
+		Map<String, String> articleIds =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".articleId");
+
+		articleId = MapUtil.getString(articleIds, articleId, articleId);
+
+		typeSettingsProperties.setProperty("article-id", articleId);
+
+		JournalContentSearchLocalServiceUtil.updateContentSearch(
+			portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId(), StringPool.BLANK, articleId, true);
+	}
+
 	protected void importLayout(
 			PortletDataContext portletDataContext, User user,
 			LayoutCache layoutCache, List<Layout> previousLayouts,
@@ -967,6 +1021,11 @@ public class LayoutImporter {
 					}
 				}
 			}
+
+			importedLayout.setTypeSettings(layout.getTypeSettings());
+		}
+		else if (layout.isTypeArticle()) {
+			importArticle(portletDataContext, layout, layoutElement);
 
 			importedLayout.setTypeSettings(layout.getTypeSettings());
 		}

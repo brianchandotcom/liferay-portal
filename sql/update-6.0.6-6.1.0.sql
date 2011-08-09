@@ -440,6 +440,31 @@ create table RepositoryEntry (
 	mappedId VARCHAR(75) null
 );
 
+create table ResourceBlock (
+    resourceBlockId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    permissionsHash VARCHAR(75) null,
+    referenceCount LONG
+);
+
+create table ResourceBlockPermission (
+    resourceBlockPermissionId LONG not null primary key,
+    resourceBlockId LONG,
+    roleId LONG,
+    actionIds LONG
+);
+
+create table ResourceTypePermission (
+    resourceTypePermissionId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    roleId LONG,
+    actionIds LONG
+);
+
 alter table ResourcePermission add ownerId LONG;
 
 alter table SocialEquityLog add extraData VARCHAR(255) null;

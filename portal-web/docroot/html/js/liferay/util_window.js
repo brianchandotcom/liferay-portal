@@ -45,12 +45,29 @@ AUI().add(
 
 			var dialog = Window._map[id];
 
+			var defaultDialogConfig = null;
+
 			if (!dialog) {
 				var dialogConfig = config.dialog || {};
 
 				var dialogIframeConfig = config.dialogIframe || {};
 
-				A.mix(dialogConfig, CONFIG_DEFAULTS_DIALOG);
+				var openingUtil = A.Object.getValue(openingWindow, 'Liferay.Util'.split('.'));
+
+				if (openingUtil) {
+					var openingWindowName = openingUtil.getWindowName();
+
+					var openingDialog = Window._map[openingWindowName];
+
+					if (openingDialog) {
+						defaultDialogConfig = {
+							draggable: openingDialog.get('draggable'),
+							stack: openingDialog.get('stack')
+						};
+					}
+				}
+
+				dialogConfig = A.merge(CONFIG_DEFAULTS_DIALOG, defaultDialogConfig, dialogConfig);
 
 				A.mix(
 					dialogIframeConfig,

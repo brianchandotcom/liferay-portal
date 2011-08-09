@@ -982,12 +982,10 @@
 		function(options) {
 			if (options.uri && options.button) {
 				var button = options.button;
-
-				options.dialog = {
-					height: options.height || 640,
-					stack: !!options.stack,
-					width: options.width || 680
-				};
+				var height = options.height || 640;
+				var textarea = options.textarea;
+				var uri = options.uri;
+				var width = options.width || 680;
 
 				var editorButton = A.one(button);
 

@@ -70,16 +70,26 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * Adds a file entry and associated metadata based on a byte array.
 	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 * 
 	 * @param  userId the primary key of the file entry's creator/owner
 	 * @param  repositoryId the primary key of the file entry's repository
 	 * @param  folderId the primary key of the file entry's parent folder
-	 * @param  sourceFileName the file's original name
+	 * @param  sourceFileName the original file's name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  bytes the file's data (optionally <code>null</code>)
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -127,16 +137,26 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * Adds a file entry and associated metadata based on a {@link File} object.
 	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
 	 * @param  userId the primary key of the file entry's creator/owner
 	 * @param  repositoryId the primary key of the repository
 	 * @param  folderId the primary key of the file entry's parent folder
-	 * @param  sourceFileName the file's original name
+	 * @param  sourceFileName the original file's name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  file the file's data (optionally <code>null</code>)
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -182,18 +202,28 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * Adds a file entry and associated metadata based on an {@link InputStream}
 	 * object.
+	 * 
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
 	 *
 	 * @param  userId the primary key of the file entry's creator/owner
 	 * @param  repositoryId the primary key of the repository
 	 * @param  folderId the primary key of the file entry's parent folder
-	 * @param  sourceFileName the file's original name
+	 * @param  sourceFileName the original file's name
 	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  is the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -243,7 +273,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the file rank's creator/owner
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  serviceContext the file rank's service context
+	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -264,7 +294,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  repositoryId the primary key of the repository
 	 * @param  folderId the primary key of the file shortcut's parent folder
 	 * @param  toFileEntryId the primary key of the file entry to point to
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes.
 	 * @return the file shortcut
@@ -289,10 +319,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  parentFolderId the primary key of the folder's parent folder
 	 * @param  name the folder's name
 	 * @param  description the folder's description
-	 * @param  serviceContext the folder's service context. In a Liferay
-	 *         repository, it may include mountPoint which is a boolean specifying whether the folder is a facade
-	 *         for mounting a third-party repository
-	 *
+	 * @param  serviceContext the service context to be applied. In a Liferay
+	 *         repository, it may include mountPoint which is a boolean 
+	 *         specifying whether the folder is a facade for mounting a 
+	 *         third-party repository
 	 * @return the folder
 	 * @throws PortalException if the parent folder could not
 	 *         be found or if the new folder's information was invalid
@@ -1191,7 +1221,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  newFolderId the primary key of the new folder
-	 * @param  serviceContext the file entry's service context
+	 * @param  serviceContext the service context to be applied
 	 * @return the file entry
 	 * @throws PortalException if the file entry or the new folder could not be
 	 *         found
@@ -1213,8 +1243,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * links.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  fileEntry the file entry
-	 * @param  fileVersion the file version
+	 * @param  fileEntry the file entry to update
+	 * @param  fileVersion the file version to update
 	 * @param  assetCategoryIds the primary keys of the new asset categories
 	 * @param  assetTagNames the new asset tag names
 	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
@@ -1237,18 +1267,31 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	/**
 	 * Updates a file entry and associated metadata based on a byte array
-	 * object.
+	 * object. If the file data is <code>null</code>, then only the associated
+	 * metadata (i.e., <code>title</code>, <code>description</code>, and 
+	 * parameters in the <code>serviceContext</code>) will be updated.
+	 * 
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. 
+	 * </p>
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  sourceFileName the file's original name
-	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
-	 * @param  description the file's description
-	 * @param  changeLog the file's version change log
+	 * @param  sourceFileName the original file's name (optionally 
+	 *         <code>null</code>)
+	 * @param  mimeType the file's MIME type (optionally <code>null</code>)
+	 * @param  title the new name to be assigned to the file (optionally <code>
+	 *         null</code>)
+	 * @param  description the file's new description
+	 * @param  changeLog the file's version change log (optionally 
+	 *         <code>null</code>)
 	 * @param  majorVersion whether the new file version is a major version
 	 * @param  bytes the file's data (optionally <code>null</code>)
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -1294,18 +1337,31 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	/**
 	 * Updates a file entry and associated metadata based on a {@link File}
-	 * object.
+	 * object. If the file data is <code>null</code>, then only the associated
+	 * metadata (i.e., <code>title</code>, <code>description</code>, and
+	 * parameters in the <code>serviceContext</code>) will be updated.
+	 * 
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. 
+	 * </p>
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  sourceFileName the file's original name
-	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
-	 * @param  description the file's description
-	 * @param  changeLog the file's version change log
+	 * @param  sourceFileName the original file's name (optionally 
+	 *         <code>null</code>)
+	 * @param  mimeType the file's MIME type (optionally <code>null</code>)
+	 * @param  title the new name to be assigned to the file (optionally <code>
+	 *         null</code>)
+	 * @param  description the file's new description
+	 * @param  changeLog the file's version change log (optionally 
+	 *         <code>null</code>)
 	 * @param  majorVersion whether the new file version is a major version
 	 * @param  file EntryId the primary key of the file entry
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -1349,19 +1405,32 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	/**
 	 * Updates a file entry and associated metadata based on an {@link
-	 * InputStream} object.
+	 * InputStream} object. If the file data is <code>null</code>, then only the 
+	 * associated metadata (i.e., <code>title</code>, <code>description</code>, 
+	 * and parameters in the <code>serviceContext</code>) will be updated.
+	 * 
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. 
+	 * </p>
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  sourceFileName the file's original name
-	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file
-	 * @param  description the file's description
-	 * @param  changeLog the file's version change log
+	 * @param  sourceFileName the original file's name (optionally 
+	 *         <code>null</code>)
+	 * @param  mimeType the file's MIME type (optionally <code>null</code>)
+	 * @param  title the new name to be assigned to the file (optionally <code>
+	 *         null</code>)
+	 * @param  description the file's new description
+	 * @param  changeLog the file's version change log (optionally 
+	 *         <code>null</code>)
 	 * @param  majorVersion whether the new file version is a major version
 	 * @param  is the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
-	 * @param  serviceContext the file entry's service context. Can specify the
+	 * @param  serviceContext the service context to be applied. Can specify the
 	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes. In a Liferay repository, it may include:
 	 *
@@ -1406,7 +1475,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the file rank's company
 	 * @param  userId the primary key of the file rank's creator/owner
 	 * @param  fileEntryId the primary key of the file rank's file entry
-	 * @param  serviceContext the file rank's service context
+	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1427,8 +1496,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileShortcutId the primary key of the file shortcut
 	 * @param  folderId the primary key of the file shortcut's parent folder
 	 * @param  toFileEntryId the primary key of the file shortcut's file entry
-	 * @param  serviceContext the file shortcut's service context. Can specify
-	 *         the file entry's asset category IDs, asset tag names, and expando
+	 * @param  serviceContext the service context to be applied. Can specify the
+	 *         file entry's asset category IDs, asset tag names, and expando
 	 *         bridge attributes.
 	 * @return the file shortcut
 	 * @throws PortalException if the file shortcut, folder, or file entry could
@@ -1467,9 +1536,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  folderId the primary key of the folder
 	 * @param  parentFolderId the primary key of the folder's new parent folder
-	 * @param  name the folder's name
-	 * @param  description the folder's description
-	 * @param  serviceContext the folder's service context. In a Liferay
+	 * @param  name the folder's new name
+	 * @param  description the folder's new description
+	 * @param  serviceContext the service context to be applied. In a Liferay
 	 *         repository, it may include:
 	 *
 	 *         <ul>

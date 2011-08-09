@@ -967,6 +967,8 @@ Liferay.Service.registerClass(
 		deleteTemplate: true,
 		getStructureTemplates: true,
 		getTemplate: true,
+		search: true,
+		searchCount: true,
 		updateTemplate: true
 	}
 );

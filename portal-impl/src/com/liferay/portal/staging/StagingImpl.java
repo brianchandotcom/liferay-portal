@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -766,15 +767,19 @@ public class StagingImpl implements Staging {
 	}
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId) {
-		LayoutRevision layoutRevision = null;
+		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+			layout);
 
-		try {
-			layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(
-				layoutSetBranchId, layout.getPlid(), true);
+		if (layoutRevision == null) {
+			try {
+				layoutRevision =
+					LayoutRevisionLocalServiceUtil.getLayoutRevision(
+						layoutSetBranchId, layout.getPlid(), true);
 
-			return false;
-		}
-		catch (Exception e) {
+				return false;
+			}
+			catch (Exception e) {
+			}
 		}
 
 		try {

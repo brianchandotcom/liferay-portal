@@ -65,3 +65,10 @@
 		}
 	}
 }
+
+.ie6 .portlet-document-library-display {
+	img.entry-thumbnail {
+		height: expression(this.height > 128 ? '128px' : this.height);
+		width: expression(this.width > 128 ? '128px' : this.width);
+	}
+}

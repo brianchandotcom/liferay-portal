@@ -1936,7 +1936,15 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 			</then>
 			<elseif>
 				<or>
@@ -1972,13 +1980,32 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${sql.version}" arg2="6.0.5" />
+				<or>
+					<equals arg1="${sql.version}" arg2="6.0.5" />
+					<equals arg1="${sql.version}" arg2="6.0.6" />
+				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false
 
 resource.repositories.root=$${user.home}/liferay</echo>
 				</then>

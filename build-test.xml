@@ -262,8 +262,8 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="control-panel-sites" />
-			<param name="test.ant.script.suite" value="ControlPanelSitesTestSuite" />
+			<param name="test.ant.script.command" value="control-panel-communities" />
+			<param name="test.ant.script.suite" value="ControlPanelCommunitiesTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

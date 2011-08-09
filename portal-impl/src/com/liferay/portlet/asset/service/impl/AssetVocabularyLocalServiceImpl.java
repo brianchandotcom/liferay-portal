@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -226,6 +227,15 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return getGroupVocabularies(groupId, true);
+	}
+
+	public List<AssetVocabulary> getGroupVocabularies(
+			long groupId, String name, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return assetVocabularyPersistence.findByGroupId(
+			groupId, start, end, obc);
 	}
 
 	public List<AssetVocabulary> getGroupVocabularies(

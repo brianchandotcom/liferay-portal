@@ -81,6 +81,15 @@ public class RatingsEntryLocalServiceImpl
 			StringPool.BLANK);
 	}
 
+	public RatingsEntry fetchEntry(long userId, String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return ratingsEntryPersistence.fetchByU_C_C(
+			userId, classNameId, classPK);
+	}
+
 	public List<RatingsEntry> getEntries(
 			long userId, String className, List<Long> classPKs)
 		throws SystemException {

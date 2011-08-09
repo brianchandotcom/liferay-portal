@@ -115,8 +115,7 @@ public class MBMessageFlagLocalServiceImpl
 				}
 			}
 		}
-
-		if (!DateUtil.equals(
+		else if (!DateUtil.equals(
 				messageFlag.getModifiedDate(), thread.getLastPostDate(),
 				true)) {
 

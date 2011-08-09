@@ -375,8 +375,8 @@
 
 		<column name="structureId" type="String" />
 		<column name="parentStructureId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 		<column name="xsd" type="String" />
 
 		<!-- Order -->

@@ -97,9 +97,9 @@
 <aui:script use="liferay-category-admin">
 	new Liferay.Portlet.AssetCategoryAdmin(
 		{
-			portletId: '<%= portletDisplay.getId() %>',
 			itemsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
-			itemsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>]
+			itemsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+			portletId: '<%= portletDisplay.getId() %>'
 		}
 	);
 </aui:script>

@@ -67,7 +67,7 @@ AUI().add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance._config = config;
+						instance._originalConfig = config;
 
 						var childrenContainer = A.one(instance._categoryContainerSelector);
 
@@ -99,11 +99,8 @@ AUI().add(
 						instance._searchType.on(
 							'change',
 							function(event) {
-								var instance = this;
-
 								instance._searchInput.focus();
-							},
-							instance
+							}
 						);
 
 						instance._categoryViewContainer.on('click', instance._onCategoryViewContainerClick, instance);
@@ -368,9 +365,7 @@ AUI().add(
 							function(event) {
 								instance._restartSearch = true;
 
-								var selected = instance._searchType.val();
-
-								if (selected == 'vocabularies') {
+								if (instance._searchType.val() == 'vocabularies') {
 									instance._loadData();
 								}
 								else if (instance._selectedVocabularyId) {
@@ -653,9 +648,9 @@ AUI().add(
 										}
 
 										var auxItem = A.clone(item);
-										
+
 										auxItem.name = Liferay.Util.escapeHTML(auxItem.name);
-											
+
 										buffer.push(Lang.sub(TPL_VOCABULARY_LIST, auxItem));
 									}
 								);
@@ -665,11 +660,11 @@ AUI().add(
 								list.html(buffer.join(''));
 
 								var firstVocabulary = A.one(instance._vocabularyItemSelector);
-								var vocabularyName = instance._getVocabularyName(firstVocabulary);
-								var vocabularyId = instance._getVocabularyId(firstVocabulary);
 
-								instance._selectedVocabularyName = vocabularyName;
-								instance._selectedVocabularyId = vocabularyId;
+								if (firstVocabulary) {
+									instance._selectedVocabularyName = instance._getVocabularyName(firstVocabulary);
+									instance._selectedVocabularyId = instance._getVocabularyId(firstVocabulary);
+								}
 
 								if (callback) {
 									callback();
@@ -822,16 +817,16 @@ AUI().add(
 						var vocabulariesPaginator = instance._vocabulariesPaginator;
 
 						if (!vocabulariesPaginator) {
-							var instanceConfig = instance._config;
+							var originalConfig = instance._originalConfig;
 
 							var config = {
-								alwaysVisible: false,
+								alwaysVisible: true,
 								containers: '.vocabularies-paginator',
 								firstPageLinkLabel: '<<',
 								lastPageLinkLabel: '>>',
 								nextPageLinkLabel: '>',
 								prevPageLinkLabel: '<',
-								rowsPerPageOptions: instanceConfig.itemsPerPageOptions
+								rowsPerPageOptions: originalConfig.itemsPerPageOptions
 							};
 
 							var paginatorMap = instance._getVocabulariesPaginatorMap();
@@ -867,7 +862,7 @@ AUI().add(
 								},
 								rowsPerPage: {
 									historyEntry: instance._prefixedPortletId + 'rowsPerPage',
-									defaultValue: instance._config.itemsPerPage,
+									defaultValue: instance._originalConfig.itemsPerPage,
 									formatter: Number
 								}
 							};
@@ -876,127 +871,6 @@ AUI().add(
 						}
 
 						return paginatorMap;
-					},
-
-					_initializeCategoryPanelAdd: function(callback) {
-						var instance = this;
-
-						var categoryFormAdd = instance._categoryPanelAdd.get('contentBox').one('form.update-category-form');
-
-						categoryFormAdd.detach('submit');
-
-						categoryFormAdd.on('submit', instance._onCategoryFormSubmit, instance, categoryFormAdd);
-
-						var closeButton = categoryFormAdd.one('.aui-button-input-cancel');
-
-						closeButton.on('click', instance._onCategoryAddButtonClose, instance);
-
-						instance._categoryFormAdd = categoryFormAdd;
-
-						if (callback) {
-							callback.call(instance);
-						}
-					},
-
-					_initializeCategoryPanelEdit: function() {
-						var instance = this;
-
-						var categoryFormEdit = instance._panelEdit.get('contentBox').one('form.update-category-form');
-
-						categoryFormEdit.detach('submit');
-
-						categoryFormEdit.on('submit', instance._onCategoryFormSubmit, instance, categoryFormEdit);
-
-						var closeButton = categoryFormEdit.one('.aui-button-input-cancel');
-
-						closeButton.on(
-							'click',
-							function(event, panel) {
-								panel.hide();
-							},
-							instance,
-							instance._panelEdit
-						);
-
-						var buttonDeleteCategory = categoryFormEdit.one('#deleteCategoryButton');
-
-						if (buttonDeleteCategory) {
-							buttonDeleteCategory.on('click', instance._onCategoryDelete, instance);
-						}
-
-						var buttonChangeCategoryPermissions = categoryFormEdit.one('#updateCategoryPermissions');
-
-						if (buttonChangeCategoryPermissions) {
-							buttonChangeCategoryPermissions.on('click', instance._onChangePermissions, instance);
-						}
-
-						var inputCategoryNameNode = categoryFormEdit.one('.category-name input');
-
-						Liferay.Util.focusFormField(inputCategoryNameNode);
-					},
-
-					_initializeVocabularyPanelAdd: function(callback) {
-						var instance = this;
-
-						var vocabularyFormAdd = instance._vocabularyPanelAdd.get('contentBox').one('form.update-vocabulary-form');
-
-						vocabularyFormAdd.detach('submit');
-
-						vocabularyFormAdd.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormAdd);
-
-						var closeButton = vocabularyFormAdd.one('.aui-button-input-cancel');
-
-						closeButton.on(
-							'click',
-							function(event, panel) {
-								panel.hide();
-							},
-							instance,
-							instance._vocabularyPanelAdd
-						);
-
-						instance._vocabularyFormAdd = vocabularyFormAdd;
-
-						if (callback) {
-							callback.call(instance);
-						}
-					},
-
-					_initializeVocabularyPanelEdit: function() {
-						var instance = this;
-
-						var vocabularyFormEdit = instance._panelEdit.get('contentBox').one('form.update-vocabulary-form');
-
-						vocabularyFormEdit.detach('submit');
-
-						vocabularyFormEdit.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormEdit);
-
-						var closeButton = vocabularyFormEdit.one('.aui-button-input-cancel');
-
-						closeButton.on(
-							'click',
-							function(event, panel) {
-								panel.hide();
-							},
-							instance,
-							instance._panelEdit
-						);
-
-						var buttonDeleteVocabulary = vocabularyFormEdit.one('#deleteVocabularyButton');
-
-						if (buttonDeleteVocabulary) {
-							buttonDeleteVocabulary.on('click', instance._onVocabularyDelete, instance);
-						}
-
-						var buttonChangeVocabularyPermissions = vocabularyFormEdit.one('#vocabulary-change-permissions');
-
-						if (buttonChangeVocabularyPermissions) {
-							buttonChangeVocabularyPermissions.on('click', instance._onChangePermissions, instance);
-						}
-
-						var inputVocabularyEditNameNode = vocabularyFormEdit.one('.vocabulary-name input');
-
-						Liferay.Util.focusFormField(inputVocabularyEditNameNode);
 					},
 
 					_feedVocabularySelect: function(vocabularies, selectedVocabularyId) {
@@ -1222,6 +1096,127 @@ AUI().add(
 						if (instance._panelPermissionsChange) {
 							instance._panelPermissionsChange.hide();
 						}
+					},
+
+					_initializeCategoryPanelAdd: function(callback) {
+						var instance = this;
+
+						var categoryFormAdd = instance._categoryPanelAdd.get('contentBox').one('form.update-category-form');
+
+						categoryFormAdd.detach('submit');
+
+						categoryFormAdd.on('submit', instance._onCategoryFormSubmit, instance, categoryFormAdd);
+
+						var closeButton = categoryFormAdd.one('.aui-button-input-cancel');
+
+						closeButton.on('click', instance._onCategoryAddButtonClose, instance);
+
+						instance._categoryFormAdd = categoryFormAdd;
+
+						if (callback) {
+							callback.call(instance);
+						}
+					},
+
+					_initializeCategoryPanelEdit: function() {
+						var instance = this;
+
+						var categoryFormEdit = instance._panelEdit.get('contentBox').one('form.update-category-form');
+
+						categoryFormEdit.detach('submit');
+
+						categoryFormEdit.on('submit', instance._onCategoryFormSubmit, instance, categoryFormEdit);
+
+						var closeButton = categoryFormEdit.one('.aui-button-input-cancel');
+
+						closeButton.on(
+							'click',
+							function(event, panel) {
+								panel.hide();
+							},
+							instance,
+							instance._panelEdit
+						);
+
+						var buttonDeleteCategory = categoryFormEdit.one('#deleteCategoryButton');
+
+						if (buttonDeleteCategory) {
+							buttonDeleteCategory.on('click', instance._onCategoryDelete, instance);
+						}
+
+						var buttonChangeCategoryPermissions = categoryFormEdit.one('#updateCategoryPermissions');
+
+						if (buttonChangeCategoryPermissions) {
+							buttonChangeCategoryPermissions.on('click', instance._onChangePermissions, instance);
+						}
+
+						var inputCategoryNameNode = categoryFormEdit.one('.category-name input');
+
+						Liferay.Util.focusFormField(inputCategoryNameNode);
+					},
+
+					_initializeVocabularyPanelAdd: function(callback) {
+						var instance = this;
+
+						var vocabularyFormAdd = instance._vocabularyPanelAdd.get('contentBox').one('form.update-vocabulary-form');
+
+						vocabularyFormAdd.detach('submit');
+
+						vocabularyFormAdd.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormAdd);
+
+						var closeButton = vocabularyFormAdd.one('.aui-button-input-cancel');
+
+						closeButton.on(
+							'click',
+							function(event, panel) {
+								panel.hide();
+							},
+							instance,
+							instance._vocabularyPanelAdd
+						);
+
+						instance._vocabularyFormAdd = vocabularyFormAdd;
+
+						if (callback) {
+							callback.call(instance);
+						}
+					},
+
+					_initializeVocabularyPanelEdit: function() {
+						var instance = this;
+
+						var vocabularyFormEdit = instance._panelEdit.get('contentBox').one('form.update-vocabulary-form');
+
+						vocabularyFormEdit.detach('submit');
+
+						vocabularyFormEdit.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormEdit);
+
+						var closeButton = vocabularyFormEdit.one('.aui-button-input-cancel');
+
+						closeButton.on(
+							'click',
+							function(event, panel) {
+								panel.hide();
+							},
+							instance,
+							instance._panelEdit
+						);
+
+						var buttonDeleteVocabulary = vocabularyFormEdit.one('#deleteVocabularyButton');
+
+						if (buttonDeleteVocabulary) {
+							buttonDeleteVocabulary.on('click', instance._onVocabularyDelete, instance);
+						}
+
+						var buttonChangeVocabularyPermissions = vocabularyFormEdit.one('#vocabulary-change-permissions');
+
+						if (buttonChangeVocabularyPermissions) {
+							buttonChangeVocabularyPermissions.on('click', instance._onChangePermissions, instance);
+						}
+
+						var inputVocabularyEditNameNode = vocabularyFormEdit.one('.vocabulary-name input');
+
+						Liferay.Util.focusFormField(inputVocabularyEditNameNode);
 					},
 
 					_loadData: function() {
@@ -1539,7 +1534,7 @@ AUI().add(
 							}
 						);
 
-						if (AObject.size(paginatorState)) {
+						if (!AObject.isEmpty(paginatorState)) {
 							instance._vocabulariesPaginator.setState(paginatorState);
 
 							instance._loadData();

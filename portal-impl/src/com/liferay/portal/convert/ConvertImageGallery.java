@@ -15,6 +15,7 @@
 package com.liferay.portal.convert;
 
 import com.liferay.portal.image.DatabaseHook;
+import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -24,9 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -43,34 +42,17 @@ public class ConvertImageGallery extends ConvertProcess {
 
 	@Override
 	public String getDescription() {
-		return "migrate-images-from-one-repository-to-another";
+		return null;
 	}
 
 	@Override
 	public String getParameterDescription() {
-		return "please-select-a-new-repository-hook";
-	}
-
-	@Override
-	public String[] getParameterNames() {
-		StringBundler sb = new StringBundler(_HOOKS.length * 2 + 2);
-
-		sb.append(PropsKeys.IMAGE_HOOK_IMPL);
-		sb.append(StringPool.EQUAL);
-
-		for (String hook : _HOOKS) {
-			if (!hook.equals(PropsValues.IMAGE_HOOK_IMPL)) {
-				sb.append(hook);
-				sb.append(StringPool.SEMICOLON);
-			}
-		}
-
-		return new String[] {sb.toString()};
+		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -82,8 +64,14 @@ public class ConvertImageGallery extends ConvertProcess {
 
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
+			String sourceHookClassName = FileSystemHook.class.getName();
+
+			if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
+				sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
+			}
+
 			_sourceHook = (Hook)classLoader.loadClass(
-				PropsValues.IMAGE_HOOK_IMPL).newInstance();
+				sourceHookClassName).newInstance();
 
 			String[] values = getParameterValues();
 
@@ -99,8 +87,6 @@ public class ConvertImageGallery extends ConvertProcess {
 
 				db.runSQL("update Image set text_ = ''");
 			}
-
-			PropsValues.IMAGE_HOOK_IMPL = targetHookClassName;
 		}
 		finally {
 			CacheRegistryUtil.setActive(cacheRegistryActive);
@@ -141,12 +127,6 @@ public class ConvertImageGallery extends ConvertProcess {
 			}
 		}
 	}
-
-	private static final String[] _HOOKS = new String[] {
-		"com.liferay.portal.image.DatabaseHook",
-		"com.liferay.portal.image.DLHook",
-		"com.liferay.portal.image.FileSystemHook"
-	};
 
 	private static Log _log = LogFactoryUtil.getLog(ConvertImageGallery.class);
 

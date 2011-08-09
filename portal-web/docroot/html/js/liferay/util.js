@@ -1538,10 +1538,10 @@
 		Util,
 		'updateCheckboxValue',
 		function(checkbox) {
-			if (checkbox) {
-				var checked = checkbox.checked;
+			checkbox = A.one(checkbox);
 
-				checkbox = A.one(checkbox);
+			if (checkbox) {
+				var checked = checkbox.attr('checked');
 
 				var value = '';
 

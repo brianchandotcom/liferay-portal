@@ -48,8 +48,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.imagegallery.model.IGFolder;
-import com.liferay.portlet.imagegallery.model.IGImage;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -251,16 +249,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			DLFolder.class.getName(),
 			"DLFolder",
 			"folderId"
-		},
-		new String[] {
-			IGFolder.class.getName(),
-			"IGFolder",
-			"folderId"
-		},
-		new String[] {
-			IGImage.class.getName(),
-			"IGImage",
-			"imageId"
 		},
 		new String[] {
 			JournalArticle.class.getName(),

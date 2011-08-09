@@ -89,7 +89,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Description
 
-	row.addText(curRole.getDescription(), rowURL);
+	row.addText(curRole.getDescription(locale), rowURL);
 
 	// Add result row
 

@@ -1761,7 +1761,7 @@
 		<column name="classPK" type="long" />
 		<column name="name" type="String" accessor="true" />
 		<column name="title" type="String" localized="true" />
-		<column name="description" type="String" />
+		<column name="description" type="String" localized="true" />
 		<column name="type" type="int" />
 		<column name="subtype" type="String" />
 

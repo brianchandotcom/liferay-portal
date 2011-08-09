@@ -245,22 +245,23 @@ public class RoleLocalServiceWrapper implements RoleLocalService {
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, int type)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.addRole(userId, companyId, name, titleMap,
-			description, type);
+			descriptionMap, type);
 	}
 
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, int type, java.lang.String className,
-		long classPK)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.addRole(userId, companyId, name, titleMap,
-			description, type, className, classPK);
+			descriptionMap, type, className, classPK);
 	}
 
 	public void addUserRoles(long userId, long[] roleIds)
@@ -496,11 +497,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService {
 	public com.liferay.portal.model.Role updateRole(long roleId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, java.lang.String subtype)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String subtype)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.updateRole(roleId, name, titleMap,
-			description, subtype);
+			descriptionMap, subtype);
 	}
 
 	public RoleLocalService getWrappedRoleLocalService() {

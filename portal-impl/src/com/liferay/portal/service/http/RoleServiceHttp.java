@@ -55,7 +55,8 @@ public class RoleServiceHttp {
 	public static com.liferay.portal.model.Role addRole(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, int type)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -63,7 +64,7 @@ public class RoleServiceHttp {
 					"addRole", _addRoleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					titleMap, description, type);
+					titleMap, descriptionMap, type);
 
 			Object returnObj = null;
 
@@ -498,7 +499,8 @@ public class RoleServiceHttp {
 	public static com.liferay.portal.model.Role updateRole(
 		HttpPrincipal httpPrincipal, long roleId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, java.lang.String subtype)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String subtype)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -506,7 +508,7 @@ public class RoleServiceHttp {
 					"updateRole", _updateRoleParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
-					name, titleMap, description, subtype);
+					name, titleMap, descriptionMap, subtype);
 
 			Object returnObj = null;
 
@@ -536,7 +538,7 @@ public class RoleServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(RoleServiceHttp.class);
 	private static final Class<?>[] _addRoleParameterTypes0 = new Class[] {
-			java.lang.String.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class, java.util.Map.class, java.util.Map.class,
 			int.class
 		};
 	private static final Class<?>[] _addUserRolesParameterTypes1 = new Class[] {
@@ -577,6 +579,6 @@ public class RoleServiceHttp {
 		};
 	private static final Class<?>[] _updateRoleParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class
+			java.util.Map.class, java.lang.String.class
 		};
 }

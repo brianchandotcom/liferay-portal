@@ -256,22 +256,24 @@ public class RoleLocalServiceUtil {
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, int type)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addRole(userId, companyId, name, titleMap, description, type);
+				   .addRole(userId, companyId, name, titleMap, descriptionMap,
+			type);
 	}
 
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, int type, java.lang.String className,
-		long classPK)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addRole(userId, companyId, name, titleMap, description,
+				   .addRole(userId, companyId, name, titleMap, descriptionMap,
 			type, className, classPK);
 	}
 
@@ -508,11 +510,12 @@ public class RoleLocalServiceUtil {
 	public static com.liferay.portal.model.Role updateRole(long roleId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String description, java.lang.String subtype)
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String subtype)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateRole(roleId, name, titleMap, description, subtype);
+				   .updateRole(roleId, name, titleMap, descriptionMap, subtype);
 	}
 
 	public static RoleLocalService getService() {

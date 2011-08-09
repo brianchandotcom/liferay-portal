@@ -914,6 +914,7 @@
 				<column name="TYPE_" />
 			</basic>
 			<basic name="subtype" />
+			<transient name="descriptionMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="titleMap" />

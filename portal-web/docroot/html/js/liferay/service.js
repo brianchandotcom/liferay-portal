@@ -591,6 +591,7 @@ Liferay.Service.registerClass(
 	{
 		addVocabulary: true,
 		deleteVocabulary: true,
+		deleteVocabularies: true,
 		getCompanyVocabularies: true,
 		getGroupsVocabularies: true,
 		getGroupVocabularies: true,

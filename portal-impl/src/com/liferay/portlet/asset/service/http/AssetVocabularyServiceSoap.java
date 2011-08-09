@@ -77,6 +77,18 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	public static void deleteVocabularies(long[] vocabularyIds)
+		throws RemoteException {
+		try {
+			AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] getCompanyVocabularies(
 		long companyId) throws RemoteException {
 		try {

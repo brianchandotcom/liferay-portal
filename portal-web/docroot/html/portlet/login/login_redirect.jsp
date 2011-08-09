@@ -165,6 +165,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousAccount");
 			}
 		}
 		else {
+			window.opener.parent.location.reload();
+
 			window.close();
 		}
 	}

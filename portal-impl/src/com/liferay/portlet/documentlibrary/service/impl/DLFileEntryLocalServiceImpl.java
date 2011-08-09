@@ -362,7 +362,7 @@ public class DLFileEntryLocalServiceImpl
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), dlFileEntry.getGroupId(), userId,
 				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
-				dlFileVersion, serviceContext);
+				dlFileVersion, serviceContext, workflowContext);
 		}
 
 		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);

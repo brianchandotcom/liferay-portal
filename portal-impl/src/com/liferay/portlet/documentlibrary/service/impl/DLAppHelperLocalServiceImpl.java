@@ -306,8 +306,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			if (!isStagingGroup(fileEntry.getGroupId())) {
-				String event = (String)workflowContext.get("event");
+			String event = (String)workflowContext.get("event");
+
+			if (!isStagingGroup(fileEntry.getGroupId()) &&
+				Validator.isNotNull(event)) {
 
 				if (event.equals(DLSyncConstants.EVENT_ADD)) {
 					dlSyncLocalService.addSync(
@@ -315,10 +317,10 @@ public class DLAppHelperLocalServiceImpl
 						fileEntry.getRepositoryId(), fileEntry.getFolderId(),
 						DLSyncConstants.TYPE_FILE);
 				}
-				else if (event.equals(DLSyncConstants.EVENT_DELETE)) {
+				else if (event.equals(DLSyncConstants.EVENT_UPDATE)) {
 					dlSyncLocalService.updateSync(
 						fileEntry.getFileEntryId(), fileEntry.getFolderId(),
-						DLSyncConstants.EVENT_DELETE);
+						DLSyncConstants.EVENT_UPDATE);
 				}
 			}
 

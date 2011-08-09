@@ -490,7 +490,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *
 	 * @param  fileEntryId the file entry to check out
 	 * @param  owner the owner string for the checkout (optionally
-	 *         <code>null</code>).
+	 *         <code>null</code>)
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
 	 *         be used from <code>portal.properties>.
@@ -1729,7 +1729,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  repositoryId the primary key of the repository
 	 * @param  folderId the primary key of the folder
 	 * @param  owner the owner string for the checkout (optionally
-	 *         <code>null</code>).
+	 *         <code>null</code>)
 	 * @param  inheritable whether the lock must propagate to descendants
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will

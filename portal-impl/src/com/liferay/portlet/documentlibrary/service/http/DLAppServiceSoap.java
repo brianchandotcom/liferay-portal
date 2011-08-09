@@ -62,7 +62,7 @@ public class DLAppServiceSoap {
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file shortcut's parent folder
 	* @param toFileEntryId the primary key of the file shortcut's file entry
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes.
 	* @return the file shortcut
@@ -140,7 +140,7 @@ public class DLAppServiceSoap {
 	* @param fileEntryId the primary key of the file entry to check in
 	* @param majorVersion whether the new file version is a major version
 	* @param changeLog the file's version change log
-	* @param serviceContext the file entry's service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
@@ -722,7 +722,7 @@ public class DLAppServiceSoap {
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version to revert back to
-	* @param serviceContext serviceContext the file entry's service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry or version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -793,8 +793,8 @@ public class DLAppServiceSoap {
 	* @param fileShortcutId the primary key of the file shortcut
 	* @param folderId the primary key of the file shortcut's parent folder
 	* @param toFileEntryId the primary key of the file shortcut's file entry
-	* @param serviceContext the file shortcut's service context. Can specify
-	the file entry's asset category IDs, asset tag names, and expando
+	* @param serviceContext the service context to be applied. Can specify the
+	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes.
 	* @return the file shortcut
 	* @throws PortalException if the file shortcut, folder, or file entry could
@@ -828,8 +828,7 @@ public class DLAppServiceSoap {
 	* @param lockUuid the lock's universally unique identifier
 	* @return <code>true</code> if the file entry is checked out;
 	<code>false</code> otherwise
-	* @throws PortalException if the file entry could not be
-	found
+	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean verifyFileEntryCheckOut(long repositoryId,

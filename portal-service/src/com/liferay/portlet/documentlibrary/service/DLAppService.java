@@ -48,18 +48,28 @@ public interface DLAppService {
 	* Adds a file entry and associated metadata. It is created based on a byte
 	* array.
 	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal. If it is <code>null</code>, the <code>
+	* sourceFileName</code> will be used.
+	* </p>
+	*
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file entry's parent folder
-	* @param sourceFileName the file's original name
+	* @param sourceFileName the original file's name
 	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
+	* @param title the name to be assigned to the file (optionally <code>null
+	</code>)
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param bytes the file's data (optionally <code>null</code>)
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -70,8 +80,8 @@ public interface DLAppService {
 	</li>
 	</ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the file
-	entry's information was invalid
+	* @throws PortalException if the parent folder could not be found or if the
+	file entry's information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -86,18 +96,28 @@ public interface DLAppService {
 	* Adds a file entry and associated metadata. It is created based on a
 	* {@link File} object.
 	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal. If it is <code>null</code>, the <code>
+	* sourceFileName</code> will be used.
+	* </p>
+	*
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file entry's parent folder
-	* @param sourceFileName the file's original name
+	* @param sourceFileName the original file's name
 	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
+	* @param title the name to be assigned to the file (optionally <code>null
+	</code>)
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param file the file's data (optionally <code>null</code>)
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -108,8 +128,8 @@ public interface DLAppService {
 	</li>
 	</ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the file
-	entry's information was invalid
+	* @throws PortalException if the parent folder could not be found or if the
+	file entry's information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -125,19 +145,29 @@ public interface DLAppService {
 	* Adds a file entry and associated metadata. It is created based on a
 	* {@link InputStream} object.
 	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal. If it is <code>null</code>, the <code>
+	* sourceFileName</code> will be used.
+	* </p>
+	*
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file entry's parent folder
-	* @param sourceFileName the file's original name
+	* @param sourceFileName the original file's name
 	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
+	* @param title the name to be assigned to the file (optionally <code>null
+	</code>)
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param is the file's data (optionally <code>null</code>)
 	* @param size the file's size (optionally <code>0</code>)
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -148,8 +178,8 @@ public interface DLAppService {
 	</li>
 	</ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the file
-	entry's information was invalid
+	* @throws PortalException if the parent folder could not be found or if the
+	file entry's information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -168,7 +198,7 @@ public interface DLAppService {
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the file shortcut's parent folder
 	* @param toFileEntryId the primary key of the file shortcut's file entry
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes.
 	* @return the file shortcut
@@ -189,9 +219,9 @@ public interface DLAppService {
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	* @param description the folder's description
-	* @param serviceContext the folder's service context. In a Liferay
-	repository, it may include boolean mountPoint specifying
-	whether folder is a facade for mounting a third-party repository
+	* @param serviceContext the service context to be applied. In a Liferay
+	repository, it may include boolean mountPoint specifying whether
+	folder is a facade for mounting a third-party repository
 	* @return the folder
 	* @throws PortalException if the parent folder could not be found or if the
 	new folder's information was invalid
@@ -277,7 +307,7 @@ public interface DLAppService {
 	* @param fileEntryId the primary key of the file entry to check in
 	* @param majorVersion whether the new file version is a major version
 	* @param changeLog the file's version change log
-	* @param serviceContext the file entry's service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
@@ -356,7 +386,7 @@ public interface DLAppService {
 	*
 	* @param fileEntryId the file entry to check out
 	* @param owner the owner string for the checkout (optionally
-	<code>null</code>).
+	<code>null</code>)
 	* @param expirationTime the time in milliseconds before the lock expires.
 	If the value is <code>0</code>, the default expiration time will
 	be used from <code>portal.properties>.
@@ -379,11 +409,10 @@ public interface DLAppService {
 	* @param parentFolderId the primary key of the new folder's parent folder
 	* @param name the new folder's name
 	* @param description the new folder's description
-	* @param serviceContext the folder's service context
+	* @param serviceContext the service context to be applied
 	* @return the folder
 	* @throws PortalException if the source folder or the new parent folder
-	could not be found or if the new folder's information was
-	invalid
+	could not be found or if the new folder's information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder copyFolder(
@@ -1411,7 +1440,7 @@ public interface DLAppService {
 	* @param repositoryId the primary key of the repository
 	* @param folderId the primary key of the folder
 	* @param owner the owner string for the checkout (optionally
-	<code>null</code>).
+	<code>null</code>)
 	* @param inheritable whether the lock must propagate to descendants
 	* @param expirationTime the time in milliseconds before the lock expires.
 	If the value is <code>0</code>, the default expiration time will
@@ -1431,7 +1460,7 @@ public interface DLAppService {
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the file entry's service context
+	* @param serviceContext the service context to be applied
 	* @return the file entry
 	* @throws PortalException if the file entry or the new folder could not be
 	found
@@ -1448,7 +1477,7 @@ public interface DLAppService {
 	*
 	* @param folderId the primary key of the folder
 	* @param parentFolderId the primary key of the new parent folder
-	* @param serviceContext the folder's service context
+	* @param serviceContext the service context to be applied
 	* @return the file entry
 	* @throws PortalException if the folder could not be found
 	* @throws SystemException if a system exception occurred
@@ -1499,7 +1528,7 @@ public interface DLAppService {
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @param version the version to revert back to
-	* @param serviceContext serviceContext the file entry's service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry or version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1539,20 +1568,33 @@ public interface DLAppService {
 
 	/**
 	* Updates a file entry and associated metadata based on a byte array
-	* object.
+	* object. If the file data is <code>null</code>, then only the associated
+	* metadata (i.e., <code>title</code>, <code>description</code>, and
+	* parameters in the <code>serviceContext</code>) will be updated.
+	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal.
+	* </p>
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @param sourceFileName the file's original name
-	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
-	* @param description the file's description
-	* @param changeLog the file's version change log
+	* @param sourceFileName the original file's name (optionally
+	<code>null</code>)
+	* @param mimeType the file's MIME type (optionally <code>null</code>)
+	* @param title the new name to be assigned to the file (optionally <code>
+	null</code>)
+	* @param description the file's new description
+	* @param changeLog the file's version change log (optionally
+	<code>null</code>)
 	* @param majorVersion whether the new file version is a major version
 	* @param bytes the file's data (optionally <code>null</code>)
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1577,20 +1619,33 @@ public interface DLAppService {
 
 	/**
 	* Updates a file entry and associated metadata based on a {@link File}
-	* object.
+	* object. If the file data is <code>null</code>, then only the associated
+	* metadata (i.e., <code>title</code>, <code>description</code>, and
+	* parameters in the <code>serviceContext</code>) will be updated.
+	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal.
+	* </p>
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @param sourceFileName the file's original name
-	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
-	* @param description the file's description
-	* @param changeLog the file's version change log
+	* @param sourceFileName the original file's name (optionally
+	<code>null</code>)
+	* @param mimeType the file's MIME type (optionally <code>null</code>)
+	* @param title the new name to be assigned to the file (optionally <code>
+	null</code>)
+	* @param description the file's new description
+	* @param changeLog the file's version change log (optionally
+	<code>null</code>)
 	* @param majorVersion whether the new file version is a major version
 	* @param file EntryId the primary key of the file entry
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1615,21 +1670,34 @@ public interface DLAppService {
 
 	/**
 	* Updates a file entry and associated metadata based on an {@link
-	* InputStream} object.
+	* InputStream} object. If the file data is <code>null</code>, then only the
+	* associated metadata (i.e., <code>title</code>, <code>description</code>,
+	* and parameters in the <code>serviceContext</code>) will be updated.
+	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal.
+	* </p>
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @param sourceFileName the file's original name
-	* @param mimeType the file's MIME type
-	* @param title the name to be assigned to the file
-	* @param description the file's description
-	* @param changeLog the file's version change log
+	* @param sourceFileName the original file's name (optionally
+	<code>null</code>)
+	* @param mimeType the file's MIME type (optionally <code>null</code>)
+	* @param title the new name to be assigned to the file (optionally <code>
+	null</code>)
+	* @param description the file's new description
+	* @param changeLog the file's version change log (optionally
+	<code>null</code>)
 	* @param majorVersion whether the new file version is a major version
 	* @param is the file's data (optionally <code>null</code>)
 	* @param size the file's size (optionally <code>0</code>)
-	* @param serviceContext the file entry's service context. Can specify the
+	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1659,8 +1727,8 @@ public interface DLAppService {
 	* @param fileShortcutId the primary key of the file shortcut
 	* @param folderId the primary key of the file shortcut's parent folder
 	* @param toFileEntryId the primary key of the file shortcut's file entry
-	* @param serviceContext the file shortcut's service context. Can specify
-	the file entry's asset category IDs, asset tag names, and expando
+	* @param serviceContext the service context to be applied. Can specify the
+	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes.
 	* @return the file shortcut
 	* @throws PortalException if the file shortcut, folder, or file entry could
@@ -1677,11 +1745,11 @@ public interface DLAppService {
 	* Updates the folder.
 	*
 	* @param folderId the primary key of the folder
-	* @param name the folder's name
-	* @param description the folder's description
-	* @param serviceContext the folder's service context. In a Liferay
+	* @param name the folder's new name
+	* @param description the folder's new description
+	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-
+	
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all
@@ -1723,8 +1791,7 @@ public interface DLAppService {
 	* @param lockUuid the lock's universally unique identifier
 	* @return <code>true</code> if the file entry is checked out;
 	<code>false</code> otherwise
-	* @throws PortalException if the file entry could not be
-	found
+	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public boolean verifyFileEntryCheckOut(long repositoryId, long fileEntryId,

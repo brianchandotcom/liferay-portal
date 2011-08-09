@@ -72,6 +72,12 @@ public class AssetVocabularyServiceUtil {
 		getService().deleteVocabulary(vocabularyId);
 	}
 
+	public static void deleteVocabularies(long[] vocabularyIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteVocabularies(vocabularyIds);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getCompanyVocabularies(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,

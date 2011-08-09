@@ -61,6 +61,12 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService {
 		_assetVocabularyService.deleteVocabulary(vocabularyId);
 	}
 
+	public void deleteVocabularies(long[] vocabularyIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_assetVocabularyService.deleteVocabularies(vocabularyIds);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getCompanyVocabularies(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,

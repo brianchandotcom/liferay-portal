@@ -137,7 +137,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className.getValue(), allAssetCategoryIds, allAssetTagNames, journalStructure.getStructureId());
 
 		if (addPortletURL != null) {
-			addPortletURLs.put(className.getValue() + _CLASSNAME_SEPARATOR + journalStructure.getName(), addPortletURL);
+			addPortletURLs.put(className.getValue() + _CLASSNAME_SEPARATOR + journalStructure.getName(locale), addPortletURL);
 		}
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,18 +32,24 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -141,6 +149,49 @@ public class AssetPublisherUtil {
 		}
 
 		portletPreferences.setValues("assetEntryXml", assetEntryXmls);
+	}
+
+	public static void addUserAttributes(
+			User user, String[] customUserAttributeNames,
+			AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		if ((user == null) || (customUserAttributeNames.length == 0)) {
+			return;
+		}
+
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			user.getCompanyId());
+
+		long[] allCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+		PrimitiveLongList allCategoryIdsList = new PrimitiveLongList(
+			allCategoryIds.length + customUserAttributeNames.length);
+
+		 allCategoryIdsList.addAll(allCategoryIds);
+
+		for (String customUserAttributeName : customUserAttributeNames) {
+			ExpandoBridge userCustomAttributes = user.getExpandoBridge();
+
+			Serializable userCustomFieldValue =
+				userCustomAttributes.getAttribute(customUserAttributeName);
+
+			if (userCustomFieldValue != null) {
+				String userCustomFieldValueString =
+					userCustomFieldValue.toString();
+
+				List<AssetCategory> assetCategories =
+					AssetCategoryLocalServiceUtil.search(
+						companyGroup.getGroupId(), userCustomFieldValueString,
+						new String[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (AssetCategory assetCategory : assetCategories) {
+					 allCategoryIdsList.add(assetCategory.getCategoryId());
+				}
+			}
+		}
+
+		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(

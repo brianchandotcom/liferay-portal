@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.portlet-dynamic-data-mapping {
+.portlet-document-library, .portlet-dynamic-data-mapping {
 	.aui-form-builder-drop-container {
 		width: 70%;
 	}

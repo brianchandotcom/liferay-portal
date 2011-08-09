@@ -42,13 +42,13 @@ public class Member_AssertViewTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Test General Announcement"));
 		assertTrue(selenium.isTextPresent(
 				"This is a test General Announcement."));
 		assertTrue(selenium.isElementPresent("link=Mark as Read"));
-		assertFalse(selenium.isTextPresent("Test CA Announcement"));
+		assertFalse(selenium.isTextPresent("Test AA Announcement"));
 	}
 }

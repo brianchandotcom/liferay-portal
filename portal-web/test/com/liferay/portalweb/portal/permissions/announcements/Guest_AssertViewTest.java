@@ -42,7 +42,7 @@ public class Guest_AssertViewTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Test General Announcement"));

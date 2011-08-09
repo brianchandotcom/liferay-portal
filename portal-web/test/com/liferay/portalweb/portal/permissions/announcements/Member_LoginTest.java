@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_LoginTest extends BaseTestCase {
 	public void testMember_Login() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -39,19 +41,17 @@ public class Member_LoginTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Welcome", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_58_login",
-			RuntimeVariables.replace("member@lifera.com"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_58_login",
+		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("member@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_password", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

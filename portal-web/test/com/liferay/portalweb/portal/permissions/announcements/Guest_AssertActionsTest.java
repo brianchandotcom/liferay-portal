@@ -42,7 +42,7 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=Edit"));

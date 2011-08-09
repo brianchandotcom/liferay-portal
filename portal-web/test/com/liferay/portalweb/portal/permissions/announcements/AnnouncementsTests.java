@@ -27,27 +27,36 @@ public class AnnouncementsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SA_AddSiteTest.class);
+		testSuite.addTestSuite(SA_AddAATest.class);
+		testSuite.addTestSuite(SA_AddMemberTest.class);
+		testSuite.addTestSuite(SA_AddAARoleTest.class);
+		testSuite.addTestSuite(SA_DefineAARoleTest.class);
+		testSuite.addTestSuite(SA_AddMemberRoleTest.class);
+		testSuite.addTestSuite(SA_DefineMemberRoleTest.class);
+		testSuite.addTestSuite(SA_AssignUserRolesTest.class);
+		testSuite.addTestSuite(SA_AddSiteMembersTest.class);
 		testSuite.addTestSuite(SA_AddPageTest.class);
 		testSuite.addTestSuite(SA_AddPortletTest.class);
 		testSuite.addTestSuite(SA_AddGeneralAnnouncementTest.class);
-		testSuite.addTestSuite(SA_AddCAAnnouncementTest.class);
+		testSuite.addTestSuite(SA_AddAAAnnouncementTest.class);
 		testSuite.addTestSuite(SA_AddMemberAnnouncementTest.class);
 		testSuite.addTestSuite(SA_AddGuestAnnouncementTest.class);
-		testSuite.addTestSuite(SA_LogoutTest.class);
-		testSuite.addTestSuite(CA_LoginTest.class);
-		testSuite.addTestSuite(CA_AssertViewTest.class);
-		testSuite.addTestSuite(CA_AssertActionsTest.class);
-		testSuite.addTestSuite(CA_LogoutTest.class);
+		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(LoginUsersTest.class);
+		testSuite.addTestSuite(AA_LoginTest.class);
+		testSuite.addTestSuite(AA_AssertViewTest.class);
+		testSuite.addTestSuite(AA_AssertActionsTest.class);
+		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertViewTest.class);
 		testSuite.addTestSuite(Member_DismissAnnouncementTest.class);
 		testSuite.addTestSuite(Member_AssertActionsTest.class);
-		testSuite.addTestSuite(Member_LogoutTest.class);
+		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Guest_AssertViewTest.class);
 		testSuite.addTestSuite(Guest_AssertActionsTest.class);
-		testSuite.addTestSuite(SA_TearDownTest.class);
-		testSuite.addTestSuite(SA_LogoutTest.class);
+		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

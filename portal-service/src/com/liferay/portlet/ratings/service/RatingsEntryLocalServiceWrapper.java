@@ -253,6 +253,12 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
 	}
 
+	public com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(
+		long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ratingsEntryLocalService.fetchEntry(userId, className, classPK);
+	}
+
 	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
 		long userId, java.lang.String className,
 		java.util.List<java.lang.Long> classPKs)

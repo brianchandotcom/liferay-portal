@@ -40,11 +40,7 @@ if (numberOfStars < 1) {
 }
 
 if (!setRatingsEntry) {
-	try {
-		ratingsEntry = RatingsEntryLocalServiceUtil.getEntry(themeDisplay.getUserId(), className, classPK);
-	}
-	catch (NoSuchEntryException nsee) {
-	}
+	ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), className, classPK);
 }
 
 if (!setRatingsStats) {

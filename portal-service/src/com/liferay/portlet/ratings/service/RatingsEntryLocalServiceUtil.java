@@ -262,6 +262,12 @@ public class RatingsEntryLocalServiceUtil {
 		getService().deleteEntry(userId, className, classPK);
 	}
 
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(
+		long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchEntry(userId, className, classPK);
+	}
+
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
 		long userId, java.lang.String className,
 		java.util.List<java.lang.Long> classPKs)

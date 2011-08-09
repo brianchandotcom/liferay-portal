@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-
 /**
  * @author Hugo Huijser
  */

@@ -56,7 +56,7 @@ public class ActionUtil {
 		else if ((classNameId > 0) && (classPK > 0)) {
 			String className = PortalUtil.getClassName(classNameId);
 
-			article = JournalArticleServiceUtil.getArticle(
+			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {

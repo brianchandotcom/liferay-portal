@@ -364,17 +364,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setClassPK(long classPK) {
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
-		}
-
 		_classPK = classPK;
-	}
-
-	public long getOriginalClassPK() {
-		return _originalClassPK;
 	}
 
 	@JSON
@@ -1006,10 +996,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalClassNameId = false;
 
-		journalArticleModelImpl._originalClassPK = journalArticleModelImpl._classPK;
-
-		journalArticleModelImpl._setOriginalClassPK = false;
-
 		journalArticleModelImpl._originalArticleId = journalArticleModelImpl._articleId;
 
 		journalArticleModelImpl._originalVersion = journalArticleModelImpl._version;
@@ -1445,8 +1431,6 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _articleId;
 	private String _originalArticleId;
 	private double _version;

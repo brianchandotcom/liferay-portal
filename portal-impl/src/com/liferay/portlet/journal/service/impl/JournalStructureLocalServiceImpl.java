@@ -294,10 +294,13 @@ public class JournalStructureLocalServiceImpl
 			long classNameId = PortalUtil.getClassNameId(
 				JournalStructure.class.getName());
 
-			JournalArticle article = journalArticlePersistence.findByG_C_C(
-				structure.getGroupId(), classNameId, structure.getId());
+			List<JournalArticle> articles =
+				journalArticlePersistence.findByG_C_C(
+					structure.getGroupId(), classNameId, structure.getId());
 
-			journalArticleLocalService.deleteArticle(article, null, null);
+			for (JournalArticle article : articles) {
+				journalArticleLocalService.deleteArticle(article, null, null);
+			}
 		}
 		catch (NoSuchArticleException nsae) {
 		}

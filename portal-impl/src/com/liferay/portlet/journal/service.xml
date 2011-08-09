@@ -108,7 +108,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C" return-type="JournalArticle">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

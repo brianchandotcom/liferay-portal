@@ -118,7 +118,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 	</c:when>
 	<c:when test='<%= topLink.equals("documents-home") %>'>
 		<aui:layout>
-			<c:if test="<%= (folder != null) && (folder.getFolderId() != defaultFolderId) %>">
+			<c:if test="<%= (folder != null) %>">
 				<liferay-ui:header
 					backURL="<%= redirect %>"
 					localizeTitle="<%= false %>"

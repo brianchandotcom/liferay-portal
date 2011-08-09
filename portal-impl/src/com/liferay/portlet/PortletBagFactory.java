@@ -65,6 +65,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
+import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -226,6 +227,9 @@ public class PortletBagFactory {
 				customAttributesDisplayInstance);
 		}
 
+		PermissionPropagator permissionPropagatorInstance =
+			newPermissionPropagator(portlet);
+
 		List<WorkflowHandler> workflowHandlerInstances =
 			new ArrayList<WorkflowHandler>();
 
@@ -297,8 +301,8 @@ public class PortletBagFactory {
 			webDAVStorageInstance, xmlRpcMethodInstance,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			permissionPropagatorInstance, workflowHandlerInstances,
+			preferencesValidatorInstance, resourceBundles);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -743,6 +747,17 @@ public class PortletBagFactory {
 
 		return (OpenSearch)newInstance(
 			OpenSearch.class, portlet.getOpenSearchClass());
+	}
+
+	protected PermissionPropagator newPermissionPropagator(Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getPermissionPropagatorClass())) {
+			return null;
+		}
+
+		return (PermissionPropagator)newInstance(
+			PermissionPropagator.class, portlet.getPermissionPropagatorClass());
 	}
 
 	protected PollerProcessor newPollerProcessor(Portlet portlet)

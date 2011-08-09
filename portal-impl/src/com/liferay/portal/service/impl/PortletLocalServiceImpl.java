@@ -1233,14 +1233,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletModel.getPopMessageListenerClass()));
 		portletModel.setSocialActivityInterpreterClass(
 			GetterUtil.getString(
-				portletElement.elementText(
-					"social-activity-interpreter-class"),
-					portletModel.getSocialActivityInterpreterClass()));
+				portletElement.elementText("social-activity-interpreter-class"),
+				portletModel.getSocialActivityInterpreterClass()));
 		portletModel.setSocialRequestInterpreterClass(
 			GetterUtil.getString(
-				portletElement.elementText(
-					"social-request-interpreter-class"),
-					portletModel.getSocialRequestInterpreterClass()));
+				portletElement.elementText("social-request-interpreter-class"),
+				portletModel.getSocialRequestInterpreterClass()));
 		portletModel.setWebDAVStorageToken(
 			GetterUtil.getString(
 				portletElement.elementText("webdav-storage-token"),
@@ -1302,6 +1300,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		else {
 			_customAttributesDisplayPortlets.put(portletId, portletModel);
 		}
+
+		portletModel.setPermissionPropagatorClass(
+			GetterUtil.getString(
+				portletElement.elementText("permission-propagator"),
+				portletModel.getPermissionPropagatorClass()));
 
 		List<String> workflowHandlerClasses =
 			portletModel.getWorkflowHandlerClasses();
@@ -1511,8 +1514,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getBoolean(
 				portletElement.elementText("active"), portletModel.isActive()));
 		portletModel.setInclude(
-			GetterUtil.getBoolean(
-				portletElement.elementText("include"),
+			GetterUtil.getBoolean(portletElement.elementText("include"),
 			portletModel.isInclude()));
 
 		if (Validator.isNull(servletContextName)) {

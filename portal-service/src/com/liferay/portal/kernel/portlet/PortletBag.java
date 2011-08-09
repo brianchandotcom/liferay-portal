@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
+import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
@@ -62,6 +63,8 @@ public interface PortletBag extends Cloneable {
 	public List<Indexer> getIndexerInstances();
 
 	public OpenSearch getOpenSearchInstance();
+
+	public PermissionPropagator getPermissionPropagatorInstance();
 
 	public PollerProcessor getPollerProcessorInstance();
 

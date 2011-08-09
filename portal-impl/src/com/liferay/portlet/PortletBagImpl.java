@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
+import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -68,6 +69,7 @@ public class PortletBagImpl implements PortletBag {
 		List<AssetRendererFactory> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
+		PermissionPropagator permissionPropagatorInstance,
 		List<WorkflowHandler> workflowHandlerInstances,
 		PreferencesValidator preferencesValidatorInstance,
 		Map<String, ResourceBundle> resourceBundles) {
@@ -92,6 +94,7 @@ public class PortletBagImpl implements PortletBag {
 		_assetRendererFactoryInstances = assetRendererFactoryInstances;
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
 		_customAttributesDisplayInstances = customAttributesDisplayInstances;
+		_permissionPropagatorInstance = permissionPropagatorInstance;
 		_workflowHandlerInstances = workflowHandlerInstances;
 		_preferencesValidatorInstance = preferencesValidatorInstance;
 		_resourceBundles = resourceBundles;
@@ -112,8 +115,8 @@ public class PortletBagImpl implements PortletBag {
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
-			getWorkflowHandlerInstances(), getPreferencesValidatorInstance(),
-			getResourceBundles());
+			getPermissionPropagatorInstance(), getWorkflowHandlerInstances(),
+			getPreferencesValidatorInstance(), getResourceBundles());
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
@@ -154,6 +157,10 @@ public class PortletBagImpl implements PortletBag {
 
 	public MessageListener getPopMessageListenerInstance() {
 		return _popMessageListenerInstance;
+	}
+
+	public PermissionPropagator getPermissionPropagatorInstance() {
+		return _permissionPropagatorInstance;
 	}
 
 	public PortletDataHandler getPortletDataHandlerInstance() {
@@ -240,6 +247,7 @@ public class PortletBagImpl implements PortletBag {
 	private FriendlyURLMapper _friendlyURLMapperInstance;
 	private List<Indexer> _indexerInstances;
 	private OpenSearch _openSearchInstance;
+	private PermissionPropagator _permissionPropagatorInstance;
 	private PollerProcessor _pollerProcessorInstance;
 	private MessageListener _popMessageListenerInstance;
 	private PortletDataHandler _portletDataHandlerInstance;

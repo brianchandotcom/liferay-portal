@@ -39,13 +39,20 @@ else {
 }
 %>
 
-<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+<c:choose>
+	<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+		<liferay-ui:message arguments="<%= new Object[] {layoutRevision.getName(locale), layoutSetBranch.getName()} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+	</c:when>
+	<c:otherwise>
+		<div class="layout-actions">
+			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-<div class="layout-actions">
-	<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+		</div>
+	</c:otherwise>
+</c:choose>
 
-	<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
-</div>
+<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
 
 <aui:script position="inline" use="liferay-staging-version">
 	var stagingBar = Liferay.StagingBar;

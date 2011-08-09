@@ -379,6 +379,12 @@ public class PortletLocalServiceWrapper implements PortletLocalService {
 			xmls, pluginPackage);
 	}
 
+	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadPortletsPool(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _portletLocalService.loadPortletsPool(companyId);
+	}
+
 	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
 		java.lang.String portletId, java.lang.String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {

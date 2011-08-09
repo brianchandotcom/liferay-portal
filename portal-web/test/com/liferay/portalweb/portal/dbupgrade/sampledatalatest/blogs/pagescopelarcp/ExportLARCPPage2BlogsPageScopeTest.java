@@ -48,38 +48,10 @@ public class ExportLARCPPage2BlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[2]/span/a"));
-		selenium.clickAt("//div[2]/span/a", RuntimeVariables.replace("Default"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//li[2]/a"));
-		selenium.clickAt("//li[2]/a",
-			RuntimeVariables.replace("Blogs Test Page2"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
-			selenium.getText("//div[2]/span/a"));
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
+		selenium.clickAt("//div/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Scope: Default"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -99,23 +71,75 @@ public class ExportLARCPPage2BlogsPageScopeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Export / Import"),
+		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Blogs Test Page2"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Scope: Blogs Test Page2")
+										.equals(selenium.getText(
+								"//div/span/ul/li/strong/a/span"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Scope: Blogs Test Page2"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//menu/span/ul/li/strong/a"));
+		selenium.clickAt("//menu/span/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Export / Import"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Page2.CP.lar"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"//input[@id='_86_PORTLET_DATA_33Checkbox']"));
+				"//input[@id='_86_PORTLET_DATA_161Checkbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_86_PORTLET_DATA_33Checkbox']",
+		selenium.clickAt("//input[@id='_86_PORTLET_DATA_161Checkbox']",
 			RuntimeVariables.replace("Data"));
 		assertTrue(selenium.isChecked(
-				"//input[@id='_86_PORTLET_DATA_33Checkbox']"));
+				"//input[@id='_86_PORTLET_DATA_161Checkbox']"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_86_PERMISSIONSCheckbox']"));
 		selenium.saveScreenShotAndSource();

@@ -49,7 +49,7 @@ public class PageScopeTests extends BaseTests {
 		testSuite.addTestSuite(Guest_ViewPage2BlogsEntry3Test.class);
 		testSuite.addTestSuite(Guest_ViewPage2BlogsEntry4Test.class);
 		testSuite.addTestSuite(
-			Guest_ViewPortlet2MaximumItemsToDisplay1Test.class);
+			Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test.class);
 		testSuite.addTestSuite(SignInTest.class);
 
 		return testSuite;

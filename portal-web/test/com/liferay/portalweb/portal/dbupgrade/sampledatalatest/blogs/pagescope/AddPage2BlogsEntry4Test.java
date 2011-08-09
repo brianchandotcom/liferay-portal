@@ -45,6 +45,26 @@ public class AddPage2BlogsEntry4Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//input[@value='Add Blog Entry']",
@@ -83,18 +103,18 @@ public class AddPage2BlogsEntry4Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[1]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[1]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[2]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[2]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[2]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[3]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[3]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[3]/p"));
 		selenium.open("/web/blogs-page-scope-community/");
@@ -119,6 +139,26 @@ public class AddPage2BlogsEntry4Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -151,18 +191,38 @@ public class AddPage2BlogsEntry4Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[1]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[1]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[2]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[2]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[2]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[3]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[3]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[3]/p"));
 		selenium.open("/web/blogs-page-scope-community/");
@@ -188,18 +248,38 @@ public class AddPage2BlogsEntry4Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[1]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry4 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[1]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[2]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[2]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[2]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[3]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[3]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[3]/p"));
 	}

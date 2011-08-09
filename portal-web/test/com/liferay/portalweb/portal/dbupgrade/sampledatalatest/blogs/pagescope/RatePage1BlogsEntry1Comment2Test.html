@@ -24,13 +24,18 @@
 	<td>Blogs Test Page1</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
@@ -50,7 +55,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[2]/div[3]/div/div[1]</td>
 	<td>Blogs Entry1 Comment2 Body</td>
 </tr>
 <tr>
@@ -60,17 +65,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[1]/div/div/div/div/a[1]</td>
+	<td>xPath=(//a[contains(@class,'aui-rating-thumb-up')])[2]</td>
 	<td>Rate this as good.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[1]/div/div/div/div/a[2]</td>
+	<td>xPath=(//a[contains(@class,'aui-rating-thumb-down')])[2]</td>
 	<td>Rate this as bad.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[1]/div/div/div/div/a[2]</td>
+	<td>xPath=(//a[contains(@class,'aui-rating-thumb-down')])[2]</td>
 	<td>Rate this as bad.</td>
 </tr>
 <tr>

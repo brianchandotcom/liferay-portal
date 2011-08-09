@@ -45,6 +45,27 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry2 Title"));
@@ -83,6 +104,26 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.type("//input[@id='_33_keywords']",
@@ -90,6 +131,25 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText("//td[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//td[2]/a"));
@@ -109,8 +169,7 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		selenium.mouseOver("//div[@class='aui-rating-label-element']");
 
@@ -120,7 +179,7 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -132,11 +191,11 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -168,6 +227,25 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText("//td[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
@@ -186,8 +264,7 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
-		assertEquals(RuntimeVariables.replace(
-				"Average (1 Vote) The average rating is 4 stars out of 5."),
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		selenium.mouseOver("//div[@class='aui-rating-label-element']");
 
@@ -197,7 +274,7 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -209,10 +286,10 @@ public class Guest_ViewPage2BlogsEntry2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Comment2 Body"),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[2]/div[3]/div/div[1]"));
 	}
 }

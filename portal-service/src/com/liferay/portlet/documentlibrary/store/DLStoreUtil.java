@@ -89,13 +89,12 @@ public class DLStoreUtil {
 
 	public static void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		getStore().copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	public static void deleteDirectory(
@@ -256,35 +255,14 @@ public class DLStoreUtil {
 			validateFileExtension, versionLabel, sourceFileName, is);
 	}
 
-	public static void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
-		throws PortalException, SystemException {
-
-		getStore().updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			bytes);
-	}
-
-	public static void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
-		throws PortalException, SystemException {
-
-		getStore().updateFile(
-			companyId, repositoryId, fileName, versionLabel, sourceFileName,
-			file);
-	}
-
 	public static void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException {
 
 		getStore().updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	public static void validate(String fileName, boolean validateFileExtension)

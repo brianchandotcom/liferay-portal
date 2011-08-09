@@ -95,7 +95,7 @@ public class CMISStore extends BaseStore {
 		throws PortalException {
 
 		updateFile(
-			companyId, repositoryId, fileName, VERSION_DEFAULT, null, is);
+			companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
 
 	@Override
@@ -105,8 +105,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -352,7 +351,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -372,8 +371,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(

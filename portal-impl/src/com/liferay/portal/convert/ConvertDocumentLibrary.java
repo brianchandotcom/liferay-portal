@@ -168,8 +168,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			}
 			else {
 				_targetStore.updateFile(
-					companyId, repositoryId, fileName, versionNumber, fileName,
-					is);
+					companyId, repositoryId, fileName, versionNumber, is);
 			}
 		}
 		catch (Exception e) {

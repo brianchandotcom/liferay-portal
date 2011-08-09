@@ -343,8 +343,7 @@ public class DLFileEntryLocalServiceImpl
 		DLStoreUtil.updateFileVersion(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),
-			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version,
-			dlFileEntry.getTitle());
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
 
 		// Index
 
@@ -465,8 +464,7 @@ public class DLFileEntryLocalServiceImpl
 			DLStoreUtil.copyFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				dlFileVersion.getTitle());
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
 			copyFileEntryMetadata(
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),

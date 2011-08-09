@@ -46,8 +46,7 @@ public interface Store {
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException;
 
 	public void deleteDirectory(
@@ -122,23 +121,22 @@ public interface Store {
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, byte[] bytes)
+			String versionLabel, byte[] bytes)
 		throws PortalException, SystemException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, File file)
+			String versionLabel, File file)
 		throws PortalException, SystemException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException, SystemException;
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException;
 
 }

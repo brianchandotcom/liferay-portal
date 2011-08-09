@@ -80,7 +80,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				%>
 
 				<div>
-					<img src="<%= thumbnailSrc %>" />
+					<img class="entry-thumbnail" src="<%= thumbnailSrc %>" />
 
 					<%= fileEntry.getTitle() %>
 				</div>

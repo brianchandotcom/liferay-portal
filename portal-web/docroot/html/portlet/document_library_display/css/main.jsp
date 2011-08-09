@@ -31,6 +31,11 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
+	img.entry-thumbnail {
+		max-height: 128px;
+		max-width: 128px;
+	}
+
 	img.shortcut-icon {
 		display: inline;
 		margin-left: 10px;
@@ -58,5 +63,12 @@
 		&, a {
 			color: orange;
 		}
+	}
+}
+
+.ie6 .portlet-document-library-display {
+	img.entry-thumbnail {
+		height: expression(this.height > 128 ? '128px' : this.height);
+		width: expression(this.width > 128 ? '128px' : this.width);
 	}
 }

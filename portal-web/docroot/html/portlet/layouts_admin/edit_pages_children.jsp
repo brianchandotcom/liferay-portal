@@ -46,6 +46,13 @@ if ((selLayoutChildren != null) && !selLayoutChildren.isEmpty()) {
 if (!StringUtil.contains(tabs4Names, tabs4)) {
 	tabs4 = "new-page";
 }
+
+Group group = GroupServiceUtil.getGroup(groupId);
+
+long layoutSetPrototypeId = ClassNameServiceUtil.getClassNameId("com.liferay.portal.model.LayoutSetPrototype");
+long layoutPrototypeId = ClassNameServiceUtil.getClassNameId("com.liferay.portal.model.LayoutPrototype");
+
+boolean isPrototype = (group.getClassNameId() == layoutSetPrototypeId) || (group.getClassNameId() == layoutPrototypeId);
 %>
 
 <liferay-ui:tabs
@@ -125,6 +132,9 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 
 					<%
 					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+						if (PropsValues.LAYOUT_TYPES[i].equals("article") && isPrototype) {
+							continue;
+						}
 					%>
 
 						<option <%= type.equals(PropsValues.LAYOUT_TYPES[i]) ? "selected" : "" %> value="<%= PropsValues.LAYOUT_TYPES[i] %>"><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %></option>

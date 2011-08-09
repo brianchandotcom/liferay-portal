@@ -1117,7 +1117,8 @@ AUI().add(
 								groupId: themeDisplay.getParentGroupId(),
 								name: query,
 								start: start,
-								end: end
+								end: end,
+								obc: null
 							},
 							function(result) {
 								instance._restartSearch = false;

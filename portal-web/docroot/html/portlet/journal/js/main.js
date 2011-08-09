@@ -852,9 +852,13 @@ AUI().add(
 
 				var parentStructureEl = instance.getById('parentStructureId');
 
+				var parentStructureId;
+
 				if (parentStructureEl) {
-					return parentStructureEl.val();
+					parentStructureId = parentStructureEl.val();
 				}
+
+				return parentStructureId;
 			},
 
 			getRepeatableButtons: function() {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.security.permission.PortletPermissionHandler;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -148,6 +149,9 @@ public class PortletBagFactory {
 
 		PortletLayoutListener portletLayoutListenerInstance =
 			newPortletLayoutListener(portlet);
+
+		PortletPermissionHandler portletPermissionHandlerInstance =
+			newPortletPermissionHandler(portlet);
 
 		PollerProcessor pollerProcessorInstance = newPollerProcessor(portlet);
 
@@ -292,13 +296,13 @@ public class PortletBagFactory {
 			configurationActionInstance, indexerInstances, openSearchInstance,
 			friendlyURLMapperInstance, urlEncoderInstance,
 			portletDataHandlerInstance, portletLayoutListenerInstance,
-			pollerProcessorInstance, popMessageListenerInstance,
-			socialActivityInterpreterInstance, socialRequestInterpreterInstance,
-			webDAVStorageInstance, xmlRpcMethodInstance,
-			controlPanelEntryInstance, assetRendererFactoryInstances,
-			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			portletPermissionHandlerInstance, pollerProcessorInstance,
+			popMessageListenerInstance, socialActivityInterpreterInstance,
+			socialRequestInterpreterInstance, webDAVStorageInstance,
+			xmlRpcMethodInstance, controlPanelEntryInstance,
+			assetRendererFactoryInstances, atomCollectionAdapterInstances,
+			customAttributesDisplayInstances, workflowHandlerInstances,
+			preferencesValidatorInstance, resourceBundles);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -799,6 +803,19 @@ public class PortletBagFactory {
 		return (PortletLayoutListener)newInstance(
 			PortletLayoutListener.class,
 			portlet.getPortletLayoutListenerClass());
+	}
+
+	protected PortletPermissionHandler newPortletPermissionHandler(
+			Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getPortletPermissionHandlerClass())) {
+			return null;
+		}
+
+		return (PortletPermissionHandler)newInstance(
+			PortletPermissionHandler.class,
+			portlet.getPortletPermissionHandlerClass());
 	}
 
 	protected URLEncoder newURLEncoder(Portlet portlet) throws Exception {

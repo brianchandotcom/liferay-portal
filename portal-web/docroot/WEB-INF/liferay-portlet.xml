@@ -432,6 +432,7 @@
 		<friendly-url-mapping>wiki</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/wiki/wiki-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandlerImpl</portlet-data-handler-class>
+		<portlet-permission-handler-class>com.liferay.portlet.wiki.security.permission.WikiPortletPermissionHandlerImpl</portlet-permission-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<asset-renderer-factory>com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.wiki.WikiPageCustomAttributesDisplay</custom-attributes-display>
@@ -516,6 +517,7 @@
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiDisplayPortletDataHandlerImpl</portlet-data-handler-class>
+		<portlet-permission-handler-class>com.liferay.portlet.wiki.security.permission.WikiPortletPermissionHandlerImpl</portlet-permission-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>
@@ -1516,6 +1518,7 @@
 		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandlerImpl</portlet-data-handler-class>
+		<portlet-permission-handler-class>com.liferay.portlet.wiki.security.permission.WikiPortletPermissionHandlerImpl</portlet-permission-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>17.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>

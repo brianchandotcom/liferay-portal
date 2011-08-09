@@ -442,6 +442,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public com.liferay.portal.kernel.portlet.PortletLayoutListener getPortletLayoutListenerInstance();
 
+	public java.lang.String getPortletPermissionHandlerClass();
+
+	public void setPortletPermissionHandlerClass(
+		java.lang.String portletPermissionHandlerClass);
+
+	public com.liferay.portal.kernel.security.permission.PortletPermissionHandler getPortletPermissionHandlerInstance();
+
 	/**
 	* Returns the name of the poller processor class of the portlet.
 	*

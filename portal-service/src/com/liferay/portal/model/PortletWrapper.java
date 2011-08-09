@@ -745,6 +745,19 @@ public class PortletWrapper implements Portlet {
 		return _portlet.getPortletLayoutListenerInstance();
 	}
 
+	public java.lang.String getPortletPermissionHandlerClass() {
+		return _portlet.getPortletPermissionHandlerClass();
+	}
+
+	public void setPortletPermissionHandlerClass(
+		java.lang.String portletPermissionHandlerClass) {
+		_portlet.setPortletPermissionHandlerClass(portletPermissionHandlerClass);
+	}
+
+	public com.liferay.portal.kernel.security.permission.PortletPermissionHandler getPortletPermissionHandlerInstance() {
+		return _portlet.getPortletPermissionHandlerInstance();
+	}
+
 	/**
 	* Returns the name of the poller processor class of the portlet.
 	*

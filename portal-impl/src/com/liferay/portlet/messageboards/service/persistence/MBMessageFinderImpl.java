@@ -163,7 +163,7 @@ public class MBMessageFinderImpl
 
 			q.addEntity("MBMessage", MBMessageImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

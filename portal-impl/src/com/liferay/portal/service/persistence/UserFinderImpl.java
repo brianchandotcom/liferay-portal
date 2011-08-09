@@ -330,7 +330,7 @@ public class UserFinderImpl
 
 			qPos.add(type);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -352,7 +352,7 @@ public class UserFinderImpl
 
 			q.addEntity("User_", UserImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -374,7 +374,7 @@ public class UserFinderImpl
 
 			q.addEntity("User_", UserImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

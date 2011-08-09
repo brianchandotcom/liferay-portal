@@ -190,7 +190,7 @@ public class DLFileEntryFinderImpl
 
 			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -214,7 +214,7 @@ public class DLFileEntryFinderImpl
 
 			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

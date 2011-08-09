@@ -285,7 +285,7 @@ public class RoleFinderImpl
 
 			qPos.add(companyId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -314,7 +314,7 @@ public class RoleFinderImpl
 			qPos.add(userId);
 			qPos.add(groupId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -343,7 +343,7 @@ public class RoleFinderImpl
 			qPos.add(userId);
 			qPos.add(groupId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -426,7 +426,7 @@ public class RoleFinderImpl
 			qPos.add(userId);
 			qPos.add(groupIds);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -596,7 +596,7 @@ public class RoleFinderImpl
 			qPos.add(primKey);
 			qPos.add(actionId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

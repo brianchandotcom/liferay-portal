@@ -53,7 +53,7 @@ public class PortletPreferencesFinderImpl
 
 			qPos.add(portletId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

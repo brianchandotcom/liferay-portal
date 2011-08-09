@@ -46,7 +46,7 @@ public class BookmarksEntryFinderImpl
 
 			q.addEntity("BookmarksEntry", BookmarksEntryImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

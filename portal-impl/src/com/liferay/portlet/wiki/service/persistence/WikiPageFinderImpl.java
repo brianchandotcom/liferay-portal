@@ -218,7 +218,7 @@ public class WikiPageFinderImpl
 
 			q.addEntity("WikiPage", WikiPageImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

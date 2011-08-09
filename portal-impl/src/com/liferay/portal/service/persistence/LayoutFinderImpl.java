@@ -57,7 +57,7 @@ public class LayoutFinderImpl
 
 			q.addEntity("Layout", LayoutImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -86,7 +86,7 @@ public class LayoutFinderImpl
 			qPos.add(groupId);
 			qPos.add(privateLayout);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -987,10 +987,6 @@
 				var uri = options.uri;
 				var width = options.width || 680;
 
-				options.dialog = {
-					stack: false
-				};
-
 				var editorButton = A.one(button);
 
 				if (editorButton) {

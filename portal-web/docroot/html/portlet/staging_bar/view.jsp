@@ -122,6 +122,7 @@ if (layout != null) {
 									<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
 									<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
 									<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+									<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
 									<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
 								</portlet:actionURL>
 
@@ -160,6 +161,7 @@ if (layout != null) {
 												<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
 												<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
 												<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+												<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
 												<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
 											</portlet:actionURL>
 

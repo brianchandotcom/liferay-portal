@@ -78,7 +78,8 @@ public class GetLayoutsAction extends JSONAction {
 				User user = themeDisplay.getUser();
 
 				long recentLayoutSetBranchId =
-					StagingUtil.getRecentLayoutSetBranchId(user);
+					StagingUtil.getRecentLayoutSetBranchId(
+						user, layout.getLayoutSet().getLayoutSetId());
 
 				if (StagingUtil.isIncomplete(layout, recentLayoutSetBranchId)) {
 					jsonObject.put("incomplete", true);

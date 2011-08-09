@@ -161,14 +161,16 @@ public class StagingUtil {
 			user, layoutSetBranchId, plid);
 	}
 
-	public static long getRecentLayoutSetBranchId(HttpServletRequest request) {
-		return getStaging().getRecentLayoutSetBranchId(request);
+	public static long getRecentLayoutSetBranchId(
+		HttpServletRequest request, long layoutSetId) {
+
+		return getStaging().getRecentLayoutSetBranchId(request, layoutSetId);
 	}
 
-	public static long getRecentLayoutSetBranchId(User user)
+	public static long getRecentLayoutSetBranchId(User user, long layoutSetId)
 		throws SystemException {
 
-		return getStaging().getRecentLayoutSetBranchId(user);
+		return getStaging().getRecentLayoutSetBranchId(user, layoutSetId);
 	}
 
 	public static String getSchedulerGroupName(
@@ -307,16 +309,18 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetBranchId) {
+		HttpServletRequest request, long layoutSetId, long layoutSetBranchId) {
 
-		getStaging().setRecentLayoutSetBranchId(request, layoutSetBranchId);
+		getStaging().setRecentLayoutSetBranchId(
+			request, layoutSetId, layoutSetBranchId);
 	}
 
 	public static void setRecentLayoutSetBranchId(
-			User user, long layoutSetBranchId)
+			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException {
 
-		getStaging().setRecentLayoutSetBranchId(user, layoutSetBranchId);
+		getStaging().setRecentLayoutSetBranchId(
+			user, layoutSetId, layoutSetBranchId);
 	}
 
 	public static void unscheduleCopyFromLive(PortletRequest PortletRequest)

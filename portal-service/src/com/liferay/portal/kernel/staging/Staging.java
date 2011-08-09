@@ -100,9 +100,11 @@ public interface Staging {
 			User user, long layoutSetBranchId, long plid)
 		throws PortalException, SystemException;
 
-	public long getRecentLayoutSetBranchId(HttpServletRequest request);
+	public long getRecentLayoutSetBranchId(
+		HttpServletRequest request, long layoutSetId);
 
-	public long getRecentLayoutSetBranchId(User user) throws SystemException;
+	public long getRecentLayoutSetBranchId(User user, long layoutSetId)
+		throws SystemException;
 
 	public String getSchedulerGroupName(String destinationName, long groupId);
 
@@ -152,12 +154,12 @@ public interface Staging {
 		throws Exception;
 
 	public void setRecentLayoutBranchId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutBranchId)
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutBranchId)
 		throws SystemException;
 
 	public void setRecentLayoutBranchId(
-		User user, long layoutSetBranchId, long plid, long layoutBranchId)
+			User user, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws SystemException;
 
 	public void setRecentLayoutRevisionId(
@@ -170,9 +172,10 @@ public interface Staging {
 		throws SystemException;
 
 	public void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetBranchId);
+		HttpServletRequest request, long layoutSetId, long layoutSetBranchId);
 
-	public void setRecentLayoutSetBranchId(User user, long layoutSetBranchId)
+	public void setRecentLayoutSetBranchId(
+			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException;
 
 	public void unscheduleCopyFromLive(PortletRequest PortletRequest)

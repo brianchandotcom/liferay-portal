@@ -598,19 +598,24 @@ public class StagingImpl implements Staging {
 			portalPreferences, layoutSetBranchId, plid);
 	}
 
-	public long getRecentLayoutSetBranchId(HttpServletRequest request) {
+	public long getRecentLayoutSetBranchId(
+		HttpServletRequest request, long layoutSetId) {
+
 		return GetterUtil.getLong(
 			SessionClicks.get(
 				request, Staging.class.getName(),
-				getRecentLayoutSetBranchIdKey()));
+				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
-	public long getRecentLayoutSetBranchId(User user) throws SystemException {
+	public long getRecentLayoutSetBranchId(User user, long layoutSetId)
+		throws SystemException {
+
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
 		return GetterUtil.getLong(
 			portalPreferences.getValue(
-				Staging.class.getName(), getRecentLayoutSetBranchIdKey()));
+				Staging.class.getName(),
+				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
 	public String getSchedulerGroupName(
@@ -1075,20 +1080,22 @@ public class StagingImpl implements Staging {
 	}
 
 	public void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetBranchId) {
+		HttpServletRequest request, long layoutSetId, long layoutSetBranchId) {
 
 		SessionClicks.put(
-			request, Staging.class.getName(), getRecentLayoutSetBranchIdKey(),
+			request, Staging.class.getName(),
+			getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
 	}
 
-	public void setRecentLayoutSetBranchId(User user, long layoutSetBranchId)
+	public void setRecentLayoutSetBranchId(
+			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException {
 
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
 		portalPreferences.setValue(
-			Staging.class.getName(), getRecentLayoutSetBranchIdKey(),
+			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
 	}
 
@@ -1611,8 +1618,8 @@ public class StagingImpl implements Staging {
 		return sb.toString();
 	}
 
-	protected String getRecentLayoutSetBranchIdKey() {
-		return "layoutSetBranchId";
+	protected String getRecentLayoutSetBranchIdKey(long layoutSetId) {
+		return "layoutSetBranchId_" + layoutSetId;
 	}
 
 	protected void publishLayouts(

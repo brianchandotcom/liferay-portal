@@ -65,27 +65,6 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class JournalTemplateServiceSoap {
-	public static com.liferay.portlet.journal.model.JournalTemplateSoap addTemplate(
-		long groupId, java.lang.String templateId, boolean autoTemplateId,
-		java.lang.String structureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsl, boolean formatXsl,
-		java.lang.String langType, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portlet.journal.model.JournalTemplate returnValue = JournalTemplateServiceUtil.addTemplate(groupId,
-					templateId, autoTemplateId, structureId, name, description,
-					xsl, formatXsl, langType, cacheable, serviceContext);
-
-			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.journal.model.JournalTemplateSoap copyTemplate(
 		long groupId, java.lang.String oldTemplateId,
 		java.lang.String newTemplateId, boolean autoTemplateId)
@@ -215,27 +194,6 @@ public class JournalTemplateServiceSoap {
 					name, description, andOperator);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portlet.journal.model.JournalTemplateSoap updateTemplate(
-		long groupId, java.lang.String templateId,
-		java.lang.String structureId, java.lang.String name,
-		java.lang.String description, java.lang.String xsl, boolean formatXsl,
-		java.lang.String langType, boolean cacheable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portlet.journal.model.JournalTemplate returnValue = JournalTemplateServiceUtil.updateTemplate(groupId,
-					templateId, structureId, name, description, xsl, formatXsl,
-					langType, cacheable, serviceContext);
-
-			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

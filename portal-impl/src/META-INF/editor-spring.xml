@@ -16,9 +16,6 @@
 				<entry key="Document">
 					<bean class="com.liferay.portal.editor.fckeditor.receiver.impl.DocumentCommandReceiver" />
 				</entry>
-				<entry key="Image">
-					<bean class="com.liferay.portal.editor.fckeditor.receiver.impl.ImageCommandReceiver" />
-				</entry>
 				<entry key="Page">
 					<bean class="com.liferay.portal.editor.fckeditor.receiver.impl.PageCommandReceiver" />
 				</entry>

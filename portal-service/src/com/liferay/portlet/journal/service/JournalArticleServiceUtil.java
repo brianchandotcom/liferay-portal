@@ -217,6 +217,13 @@ public class JournalArticleServiceUtil {
 		return getService().getLatestArticle(groupId, articleId, status);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLatestArticle(groupId, className, classPK);
+	}
+
 	public static void removeArticleLocale(long companyId,
 		java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

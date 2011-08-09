@@ -269,6 +269,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, status);
 	}
 
+	public JournalArticle getLatestArticle(
+			long groupId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		JournalArticle article = journalArticleLocalService.getLatestArticle(
+			groupId, className, classPK);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, article.getArticleId(),
+			article.getVersion(), ActionKeys.VIEW);
+
+		return article;
+	}
+
 	public void removeArticleLocale(long companyId, String languageId)
 		throws PortalException, SystemException {
 

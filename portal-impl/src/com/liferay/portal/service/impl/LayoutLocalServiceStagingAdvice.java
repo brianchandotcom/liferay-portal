@@ -413,7 +413,7 @@ public class LayoutLocalServiceStagingAdvice
 					User user = UserLocalServiceUtil.getUser(userId);
 
 					layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(
-						user);
+						user, firstLayout.getLayoutSet().getLayoutSetId());
 				}
 			}
 			catch (Exception e) {

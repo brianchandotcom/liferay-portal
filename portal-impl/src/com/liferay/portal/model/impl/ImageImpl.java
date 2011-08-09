@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.image.HookFactory;
+import com.liferay.portal.image.DLHook;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,7 +31,7 @@ public class ImageImpl extends ImageBaseImpl {
 	public byte[] getTextObj() {
 		if (_textObj == null) {
 			try {
-				Hook hook = HookFactory.getInstance();
+				Hook hook = new DLHook();
 
 				_textObj = hook.getImageAsBytes(this);
 			}

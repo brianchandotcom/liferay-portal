@@ -19,6 +19,7 @@
 <%
 String tabs4 = (String)request.getAttribute("edit_pages.jsp-tab4");
 
+Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
 long groupId = ((Long)request.getAttribute("edit_pages.jsp-groupId")).longValue();
 long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
@@ -46,6 +47,11 @@ if ((selLayoutChildren != null) && !selLayoutChildren.isEmpty()) {
 if (!StringUtil.contains(tabs4Names, tabs4)) {
 	tabs4 = "new-page";
 }
+
+long layoutSetPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutSetPrototype");
+long layoutPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutPrototype");
+
+boolean prototype = (group.getClassNameId() == layoutSetPrototypeId) || (group.getClassNameId() == layoutPrototypeId);
 %>
 
 <liferay-ui:tabs
@@ -125,6 +131,9 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 
 					<%
 					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+						if (PropsValues.LAYOUT_TYPES[i].equals("article") && prototype) {
+							continue;
+						}
 					%>
 
 						<option <%= type.equals(PropsValues.LAYOUT_TYPES[i]) ? "selected" : "" %> value="<%= PropsValues.LAYOUT_TYPES[i] %>"><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %></option>

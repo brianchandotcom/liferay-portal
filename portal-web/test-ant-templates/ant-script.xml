@@ -133,6 +133,7 @@
 			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
+
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />
 		</antcall>
@@ -219,6 +220,10 @@
 		</antcall>
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
 	</target>

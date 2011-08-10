@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.changeuserpasswordinvalid;
+package com.liferay.portalweb.portal.controlpanel.users.user.changeuserpassword;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ChangeUserPasswordInvalidTest extends BaseTestCase {
-	public void testChangeUserPasswordInvalid() throws Exception {
+public class User_ChangeUserPasswordTest extends BaseTestCase {
+	public void testUser_ChangeUserPassword() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -43,6 +43,7 @@ public class ChangeUserPasswordInvalidTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=selen01 lenn nium01",
 			RuntimeVariables.replace("selen01 lenn nium01"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,13 +85,13 @@ public class ChangeUserPasswordInvalidTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_password0']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("asdf"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_password1']",
-			RuntimeVariables.replace("asdf"));
+			RuntimeVariables.replace("test2"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_password2']",
-			RuntimeVariables.replace("asdf"));
+			RuntimeVariables.replace("test2"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -103,9 +104,7 @@ public class ChangeUserPasswordInvalidTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Your request failed to complete.")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='portlet-msg-error'])[1]"))) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -117,10 +116,7 @@ public class ChangeUserPasswordInvalidTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"That password is invalid. Please enter in a different password."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

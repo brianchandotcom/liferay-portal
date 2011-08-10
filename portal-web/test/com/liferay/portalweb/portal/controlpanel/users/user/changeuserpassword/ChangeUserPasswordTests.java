@@ -31,7 +31,7 @@ public class ChangeUserPasswordTests extends BaseTests {
 		testSuite.addTestSuite(AddUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
-		testSuite.addTestSuite(ChangeUserPasswordTest.class);
+		testSuite.addTestSuite(User_ChangeUserPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

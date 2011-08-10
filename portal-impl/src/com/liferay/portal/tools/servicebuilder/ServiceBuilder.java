@@ -4641,10 +4641,9 @@ public class ServiceBuilder {
 
 				EntityColumn col = Entity.getColumn(finderColName, columnList);
 
-				if (!col.isFetchFinderPath() &&
-					!finderReturn.equals("Collection")) {
+				if (!col.isFinderPath()) {
 
-					col.setFetchFinderPath(true);
+					col.setFinderPath(true);
 				}
 
 				col = (EntityColumn)col.clone();

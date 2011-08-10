@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -120,6 +124,19 @@ public class Entity {
 		_referenceList = referenceList;
 		_txRequiredList = txRequiredList;
 
+		if (_finderList != null) {
+			Set<EntityColumn> finderColumns = new HashSet<EntityColumn>();
+
+			for (EntityFinder entityFinder : _finderList) {
+				finderColumns.addAll(entityFinder.getColumns());
+			}
+
+			_finderColumnsList = new ArrayList<EntityColumn>(finderColumns);
+		}
+		else {
+			_finderColumnsList = Collections.emptyList();
+		}
+
 		if ((_blobList != null) && !_blobList.isEmpty()) {
 			for (EntityColumn col : _blobList) {
 				if (!col.isLazy()) {
@@ -209,6 +226,10 @@ public class Entity {
 
 	public String getFinderClass() {
 		return _finderClass;
+	}
+
+	public List<EntityColumn> getFinderColumnsList() {
+		return _finderColumnsList;
 	}
 
 	public List<EntityFinder> getFinderList() {
@@ -679,6 +700,7 @@ public class Entity {
 	private List<EntityColumn> _columnList;
 	private String _dataSource;
 	private String _finderClass;
+	private List<EntityColumn> _finderColumnsList;
 	private List<EntityFinder> _finderList;
 	private String _humanName;
 	private boolean _jsonEnabled;

@@ -104,7 +104,8 @@ public class PermissionFinderImpl
 	public static final FinderPath FINDER_PATH_FIND_BY_A_R = new FinderPath(
 		PermissionModelImpl.ENTITY_CACHE_ENABLED,
 		PermissionModelImpl.FINDER_CACHE_ENABLED, PermissionImpl.class,
-		PermissionPersistenceImpl.FINDER_CLASS_NAME_LIST, "customFindByA_R",
+		PermissionPersistenceImpl.FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+		"customFindByA_R",
 		new String[] {
 			String.class.getName(), "[L" + Long.class.getName()
 		});

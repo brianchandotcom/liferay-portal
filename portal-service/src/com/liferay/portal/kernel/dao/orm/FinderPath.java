@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class FinderPath {
 
@@ -33,11 +34,21 @@ public class FinderPath {
 		Class<?> resultClass, String className, String methodName,
 		String[] params) {
 
+		this(entityCacheEnabled, finderCacheEnabled, resultClass, className,
+			methodName, -1L, params);
+	}
+
+	public FinderPath(
+		boolean entityCacheEnabled, boolean finderCacheEnabled,
+		Class<?> resultClass, String className, String methodName,
+		long columnBitMask, String[] params) {
+
 		_entityCacheEnabled = entityCacheEnabled;
 		_finderCacheEnabled = finderCacheEnabled;
 		_resultClass = resultClass;
 		_className = className;
 		_methodName = methodName;
+		_columnBitMask = columnBitMask;
 		_params = params;
 
 		_initCacheKeyPrefix();
@@ -84,6 +95,10 @@ public class FinderPath {
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public long getColumnBitMask() {
+		return _columnBitMask;
 	}
 
 	public String getMethodName() {
@@ -133,6 +148,7 @@ public class FinderPath {
 
 	private String _cacheKeyPrefix;
 	private String _className;
+	private long _columnBitMask;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 	private String _localCacheKeyPrefix;

@@ -91,6 +91,8 @@ import java.util.Set;
  */
 public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}> implements ${entity.name}Persistence {
 
+	<#assign doBitMask = (entity.finderColumnsList?size &gt; 0) && (entity.finderColumnsList?size &lt; 64)>
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -100,6 +102,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final String FINDER_CLASS_NAME_ENTITY = ${entity.name}Impl.class.getName();
 
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY + ".List";
+
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY + ".List_Page_Order";
 
 	<#list entity.getFinderList() as finder>
 		<#assign finderColsList = finder.getColumns()>
@@ -111,6 +115,38 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_LIST,
 				"findBy${finder.name}",
+				<#if doBitMask>
+					<#list finderColsList as finderCol>
+						${entity.name}ModelImpl.${finderCol.name?upper_case}_BIT_MASK
+						<#if finderCol_has_next>
+							|
+						</#if>
+					</#list>,
+				</#if>
+				new String[] {
+					<#list finderColsList as finderCol>
+						${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName()
+
+						<#if finderCol_has_next>
+							,
+						</#if>
+					</#list>
+				});
+
+			public static final FinderPath FINDER_PATH_FIND_BY_${finder.name?upper_case}_PAGE_ORDER = new FinderPath(
+				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				${entity.name}Impl.class,
+				FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+				"findBy${finder.name}",
+				<#if doBitMask>
+					<#list finderColsList as finderCol>
+						${entity.name}ModelImpl.${finderCol.name?upper_case}_BIT_MASK
+						<#if finderCol_has_next>
+							|
+						</#if>
+					</#list>,
+				</#if>
 				new String[] {
 					<#list finderColsList as finderCol>
 						${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName(),
@@ -125,6 +161,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.name}Impl.class,
 				FINDER_CLASS_NAME_ENTITY,
 				"fetchBy${finder.name}",
+				<#if doBitMask>
+					<#list finderColsList as finderCol>
+						${entity.name}ModelImpl.${finderCol.name?upper_case}_BIT_MASK
+						<#if finderCol_has_next>
+							|
+						</#if>
+					</#list>,
+				</#if>
 				new String[] {
 					<#list finderColsList as finderCol>
 						${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName()
@@ -142,6 +186,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			Long.class,
 			FINDER_CLASS_NAME_LIST,
 			"countBy${finder.name}",
+			<#if doBitMask>
+				<#list finderColsList as finderCol>
+					${entity.name}ModelImpl.${finderCol.name?upper_case}_BIT_MASK
+					<#if finderCol_has_next>
+						|
+					</#if>
+				</#list>,
+			</#if>
 			new String[] {
 				<#list finderColsList as finderCol>
 					${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName()
@@ -158,6 +210,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 		${entity.name}Impl.class,
 		FINDER_CLASS_NAME_LIST,
+		"findAll",
+		new String[0]);
+
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(
+		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+		${entity.name}Impl.class,
+		FINDER_CLASS_NAME_LIST_PAGE_ORDER,
 		"findAll",
 		new String[0]);
 
@@ -559,7 +619,51 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		<#if doBitMask>
+			<#if (uniqueFinderList?size == 0) && !entity.isHierarchicalTree() && (entity.collectionFinderList?size > 0)>
+				boolean isNew = ${entity.varName}.isNew();
+
+				${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
+			</#if>
+			if (isNew || !${entity.name}ModelImpl.COLUMN_BIT_MASK_ENABLED) {
+				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+			}
+			<#if entity.collectionFinderList?size &gt; 0>
+				else {
+					<#list entity.collectionFinderList as finder>
+						if ((${entity.varName}ModelImpl.getBitMask() & FINDER_PATH_FIND_BY_${finder.name?upper_case}.getColumnBitMask()) != 0) {
+							Object[] args = new Object[] {
+								<#list finder.getColumns() as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
+
+									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
+
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							};
+
+							FinderCacheUtil.removeResult(
+								FINDER_PATH_FIND_BY_${finder.name?upper_case}, args);
+
+							FinderCacheUtil.removeResult(
+								FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+						}
+					</#list>
+				}
+			</#if>
+		<#else>
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		</#if>
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
@@ -567,82 +671,59 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			${entity.varName}.resetOriginalValues();
 		</#if>
 
-		<#list uniqueFinderList as finder>
-			<#assign finderColsList = finder.getColumns()>
+		<#if uniqueFinderList?size &gt; 0>
+			if (isNew) {
+				<#list uniqueFinderList as finder>
+					<#assign finderColsList = finder.getColumns()>
+					FinderCacheUtil.putResult(
+						FINDER_PATH_FETCH_BY_${finder.name?upper_case},
+						new Object[] {
+							<#list finderColsList as finderCol>
+								<#if finderCol.isPrimitiveType()>
+									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+								</#if>
 
-			if (
-					!isNew && (
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-							<#else>
-								!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
-							</#if>
+								${entity.varName}.get${finderCol.methodName}()
 
-							<#if finderCol_has_next>
-								||
-							</#if>
-						</#list>
-					)
-			) {
-				FinderCacheUtil.removeResult(
-					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-					new Object[] {
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-							</#if>
+								<#if finderCol.isPrimitiveType()>
+									)
+								</#if>
 
-							${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-
-							<#if finderCol.isPrimitiveType()>
-								)
-							</#if>
-
-							<#if finderCol_has_next>
-								,
-							</#if>
-						</#list>
-					});
+								<#if finderCol_has_next>
+									,
+								</#if>
+							</#list>
+						},
+						${entity.varName});
+				</#list>
 			}
+			else {
+				<#list uniqueFinderList as finder>
+					<#assign finderColsList = finder.getColumns()>
+					if ((${entity.varName}ModelImpl.getBitMask() & FINDER_PATH_COUNT_BY_${finder.name?upper_case}.getColumnBitMask()) != 0) {
+						FinderCacheUtil.removeResult(
+							FINDER_PATH_FETCH_BY_${finder.name?upper_case},
+							new Object[] {
+								<#list finderColsList as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
 
-			if (
-					isNew || (
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-							<#else>
-								!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
-							</#if>
+									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
 
-							<#if finderCol_has_next>
-								||
-							</#if>
-						</#list>
-					)
-			) {
-				FinderCacheUtil.putResult(
-					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-					new Object[] {
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-							</#if>
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
 
-							${entity.varName}.get${finderCol.methodName}()
-
-							<#if finderCol.isPrimitiveType()>
-								)
-							</#if>
-
-							<#if finderCol_has_next>
-								,
-							</#if>
-						</#list>
-					},
-					${entity.varName});
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							});
+					}
+				</#list>
 			}
-		</#list>
+		</#if>
 
 		return ${entity.varName};
 	}
@@ -870,15 +951,35 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#list>
 
 			int start, int end, OrderByComparator orderByComparator) throws SystemException {
-				Object[] finderArgs = new Object[] {
-					<#list finderColsList as finderCol>
-						${finderCol.name},
-					</#list>
+				Object[] finderArgs = null;
+				FinderPath finderPath = null;
 
-					String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
-				};
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+					finderArgs = new Object[] {
+						<#list finderColsList as finderCol>
+							${finderCol.name}
 
-				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
+							<#if finderCol_has_next>
+							,
+							</#if>
+						</#list>
+					};
+
+					finderPath = FINDER_PATH_FIND_BY_${finder.name?upper_case};
+				}
+				else {
+					finderArgs = new Object[] {
+						<#list finderColsList as finderCol>
+							${finderCol.name},
+						</#list>
+
+						String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
+					};
+
+					finderPath = FINDER_PATH_FIND_BY_${finder.name?upper_case}_PAGE_ORDER;
+				}
+
+				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
 
 				if (list == null) {
 					<#include "persistence_impl_find_by_query.ftl">
@@ -903,12 +1004,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 					finally {
 						if (list == null) {
-							FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs);
+							FinderCacheUtil.removeResult(finderPath, finderArgs);
 						}
 						else {
 							cacheResult(list);
 
-							FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, list);
+							FinderCacheUtil.putResult(finderPath, finderArgs, list);
 						}
 
 						closeSession(session);
@@ -1256,20 +1357,43 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#list>
 
 				int start, int end, OrderByComparator orderByComparator) throws SystemException {
+					Object[] finderArgs = null;
+					FinderPath finderPath = null;
 
-					Object[] finderArgs = new Object[] {
-						<#list finderColsList as finderCol>
-							<#if finderCol.hasArrayableOperator()>
-								StringUtil.merge(${finderCol.names}),
-							<#else>
-								${finderCol.name},
-							</#if>
-						</#list>
+					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+						finderArgs = new Object[] {
+							<#list finderColsList as finderCol>
+								<#if finderCol.hasArrayableOperator()>
+									StringUtil.merge(${finderCol.names})
+								<#else>
+									${finderCol.name}
+								</#if>
 
-						String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
-					};
+								<#if finderCol_has_next>
+								,
+								</#if>
+							</#list>
+						};
 
-					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
+						finderPath = FINDER_PATH_FIND_BY_${finder.name?upper_case};
+					}
+					else {
+						finderArgs = new Object[] {
+							<#list finderColsList as finderCol>
+								<#if finderCol.hasArrayableOperator()>
+									StringUtil.merge(${finderCol.names}),
+								<#else>
+									${finderCol.name},
+								</#if>
+							</#list>
+
+							String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
+						};
+
+						finderPath = FINDER_PATH_FIND_BY_${finder.name?upper_case}_PAGE_ORDER;
+					}
+
+					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
 
 					if (list == null) {
 						<#include "persistence_impl_find_by_arrayable_query.ftl">
@@ -1294,12 +1418,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						}
 						finally {
 							if (list == null) {
-								FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs);
+								FinderCacheUtil.removeResult(finderPath, finderArgs);
 							}
 							else {
 								cacheResult(list);
 
-								FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, list);
+								FinderCacheUtil.putResult(finderPath, finderArgs, list);
 							}
 
 							closeSession(session);
@@ -2239,9 +2363,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<${entity.name}> findAll(int start, int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL, finderArgs, this);
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2285,12 +2421,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

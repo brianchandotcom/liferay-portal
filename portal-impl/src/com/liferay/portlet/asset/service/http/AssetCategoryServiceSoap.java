@@ -65,6 +65,18 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class AssetCategoryServiceSoap {
+	public static void deleteCategories(long[] categoryIds)
+		throws RemoteException {
+		try {
+			AssetCategoryServiceUtil.deleteCategories(categoryIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteCategory(long categoryId)
 		throws RemoteException {
 		try {

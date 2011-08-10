@@ -50,6 +50,12 @@ public class AssetCategoryServiceUtil {
 			vocabularyId, categoryProperties, serviceContext);
 	}
 
+	public static void deleteCategories(long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategories(categoryIds);
+	}
+
 	public static void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -517,6 +517,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetCategory",
 	{
 		addCategory: true,
+		deleteCategories: true,
 		deleteCategory: true,
 		getCategories: true,
 		getCategory: true,

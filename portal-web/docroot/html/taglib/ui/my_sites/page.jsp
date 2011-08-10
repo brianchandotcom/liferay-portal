@@ -40,6 +40,10 @@ List<Group> mySites = user.getMySites(max);
 		portletURL.setParameter("struts_action", "/my_sites/view");
 
 		for (Group mySite : mySites) {
+			if (!mySite.isActive()) {
+				continue;
+			}
+
 			mySite = mySite.toEscapedModel();
 
 			boolean regularSite = mySite.isRegularSite();

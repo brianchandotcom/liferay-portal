@@ -659,7 +659,7 @@
 	</library>
 	<library>
 		<file-name>development/postgresql.jar</file-name>
-		<version>8.4-701 JDBC 3</version>
+		<version>9.0-801 JDBC 3</version>
 		<project-name>PostgreSQL JDBC Driver</project-name>
 		<project-url>http://jdbc.postgresql.org</project-url>
 		<licenses>

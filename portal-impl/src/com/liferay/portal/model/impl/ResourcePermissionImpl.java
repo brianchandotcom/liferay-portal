@@ -14,6 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.model.ResourceAction;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
+
 /**
  * Stores the permissions assigned to roles under permissions version 6. A
  * resource permission gives a role the ability to perform a set of actions on
@@ -86,6 +89,28 @@ package com.liferay.portal.model.impl;
 public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 
 	public ResourcePermissionImpl() {
+	}
+
+	public boolean hasActionId(String actionId) {
+		ResourceAction resourceAction = null;
+
+		try {
+			resourceAction = ResourceActionLocalServiceUtil.getResourceAction(
+				getName(), actionId);
+		}
+		catch (Exception e) {
+		}
+
+		if (resourceAction != null) {
+			long bitwiseValue = resourceAction.getBitwiseValue();
+			long actionIds = getActionIds();
+
+			if ((actionIds & bitwiseValue) == bitwiseValue) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

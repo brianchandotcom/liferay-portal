@@ -73,6 +73,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.admin.util.TidyPermissionsUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -153,6 +154,9 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("shutdown")) {
 			shutdown(actionRequest);
+		}
+		else if (cmd.equals("tidyPermissions")) {
+			TidyPermissionsUtil.tidyAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.equals("threadDump")) {
 			threadDump();

@@ -255,7 +255,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 				// Name
 
-				row.addText(template.getName(), rowURL);
+				row.addText(template.getName(locale), rowURL);
 
 				// Description and image
 

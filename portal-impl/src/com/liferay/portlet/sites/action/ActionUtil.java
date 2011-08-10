@@ -17,6 +17,7 @@ package com.liferay.portlet.sites.action;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -239,15 +240,15 @@ public class ActionUtil
 			String scopeType = GetterUtil.getString(
 				sourcePreferences.getValue("lfrScopeType", null));
 
-			if (scopeType.equals("layout")) {
+			if (Validator.isNotNull(scopeType) && scopeType.equals("layout")) {
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
-
-				String languageId = themeDisplay.getLanguageId();
 
 				Layout targetScopeLayout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 						targetLayout.getUuid(), targetLayout.getGroupId());
+
+				String languageId = themeDisplay.getLanguageId();
 
 				if (!targetScopeLayout.hasScopeGroup()) {
 					GroupLocalServiceUtil.addGroup(
@@ -260,16 +261,15 @@ public class ActionUtil
 				String portletTitle = PortalUtil.getPortletTitle(
 					sourcePortletId, languageId);
 
-				String newPortletTitle =
-					PortalUtil.getNewPortletTitle(portletTitle,
-						String.valueOf(sourceLayout.getLayoutId()),
-						targetLayout.getName(languageId));
+				String newPortletTitle = PortalUtil.getNewPortletTitle(
+					portletTitle, String.valueOf(sourceLayout.getLayoutId()),
+					targetLayout.getName(languageId));
 
+				targetPreferences.setValue(
+					"groupId", String.valueOf(targetLayout.getGroupId()));
 				targetPreferences.setValue("lfrScopeType", "layout");
 				targetPreferences.setValue(
 					"lfrScopeLayoutUuid", targetLayout.getUuid());
-				targetPreferences.setValue(
-					"groupId", String.valueOf(targetLayout.getGroupId()));
 				targetPreferences.setValue(
 					"portletSetupTitle_" + languageId, newPortletTitle);
 				targetPreferences.setValue(

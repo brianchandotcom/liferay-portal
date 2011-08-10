@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ConfigurePortletFullContentViewTest</title>
+<title>ConfigurePortletAssetLinkBehaviorShowFullContentTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ConfigurePortletFullContentViewTest</td></tr>
+<tr><td rowspan="1" colspan="3">ConfigurePortletAssetLinkBehaviorShowFullContentTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -22,11 +22,6 @@
 	<td>clickAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -54,11 +49,6 @@
 	<td>Show Full Content</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_assetLinkBehavior']</td>
-	<td>Show Full Content</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -67,6 +57,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_assetLinkBehavior']</td>
+	<td>Show Full Content</td>
 </tr>
 
 </tbody></table>

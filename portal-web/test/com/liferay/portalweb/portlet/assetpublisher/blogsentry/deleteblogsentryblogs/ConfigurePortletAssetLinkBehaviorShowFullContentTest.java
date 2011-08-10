@@ -20,8 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletFullContentViewTest extends BaseTestCase {
-	public void testConfigurePortletFullContentView() throws Exception {
+public class ConfigurePortletAssetLinkBehaviorShowFullContentTest
+	extends BaseTestCase {
+	public void testConfigurePortletAssetLinkBehaviorShowFullContent()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -44,24 +46,6 @@ public class ConfigurePortletFullContentViewTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		assertTrue(selenium.isVisible(
@@ -89,8 +73,6 @@ public class ConfigurePortletFullContentViewTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_assetLinkBehavior']",
 			RuntimeVariables.replace("Show Full Content"));
-		assertEquals("Show Full Content",
-			selenium.getSelectedLabel("//select[@id='_86_assetLinkBehavior']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -98,5 +80,7 @@ public class ConfigurePortletFullContentViewTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Show Full Content",
+			selenium.getSelectedLabel("//select[@id='_86_assetLinkBehavior']"));
 	}
 }

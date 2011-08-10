@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddBlogsEntryTest</title>
+<title>AddBlogsEntry1Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddBlogsEntryTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddBlogsEntry1Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -24,11 +24,6 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Add Blog Entry']</td>
-	<td>Add Blog Entry</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
 	<td>Add Blog Entry</td>
@@ -36,7 +31,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_33_title']</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -56,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>Blogs Entry Content</td>
+	<td>Blogs Entry1 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -64,14 +59,9 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -81,12 +71,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='entry-title']/h2/a</td>
-	<td>Blogs Entry Title</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='entry-body']/p</td>
-	<td>Blogs Entry Content</td>
+	<td>Blogs Entry1 Content</td>
 </tr>
 
 </tbody></table>

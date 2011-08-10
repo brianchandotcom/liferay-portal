@@ -519,6 +519,10 @@ body.portal-popup:after, body.portal-popup:before {
 	text-decoration: none;
 }
 
+.panel-page-menu #panel-manage-marketplace .lfr-panel-title {
+	background-position: 0 -72px;
+}
+
 .panel-page-menu #panel-manage-portal .lfr-panel-title {
 	background-position: 0 -36px;
 }

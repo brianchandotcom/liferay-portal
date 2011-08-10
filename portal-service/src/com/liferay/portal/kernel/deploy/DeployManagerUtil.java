@@ -19,6 +19,7 @@ import java.io.File;
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public class DeployManagerUtil {
 
@@ -36,6 +37,10 @@ public class DeployManagerUtil {
 
 	public static DeployManager getDeployManager() {
 		return _deployManager;
+	}
+
+	public static boolean isDeployed(String context) {
+		return getDeployManager().isDeployed(context);
 	}
 
 	public static void redeploy(String context) throws Exception {

@@ -19,6 +19,7 @@ import java.io.File;
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public interface DeployManager {
 
@@ -27,6 +28,8 @@ public interface DeployManager {
 	public void deploy(File source, String context) throws Exception;
 
 	public String getDeployDir() throws Exception;
+
+	public boolean isDeployed(String context);
 
 	public void redeploy(String context) throws Exception;
 

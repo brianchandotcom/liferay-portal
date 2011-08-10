@@ -57,6 +57,12 @@ public class DDMTemplateServiceUtil {
 		getService().deleteTemplate(templateId);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long structureId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplates(structureId, type);
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

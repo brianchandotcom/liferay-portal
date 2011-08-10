@@ -130,6 +130,38 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		HttpPrincipal httpPrincipal, long structureId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+					"getTemplates", _getTemplatesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					structureId, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
 		HttpPrincipal httpPrincipal, long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -141,7 +173,7 @@ public class DDMTemplateServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
-					"updateTemplate", _updateTemplateParameterTypes2);
+					"updateTemplate", _updateTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					templateId, nameMap, descriptionMap, type, language,
@@ -183,7 +215,10 @@ public class DDMTemplateServiceHttp {
 	private static final Class<?>[] _deleteTemplateParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateTemplateParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getTemplatesParameterTypes2 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _updateTemplateParameterTypes3 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
